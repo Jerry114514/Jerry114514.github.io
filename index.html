@@ -8,7 +8,12 @@
     <!-- 从百度cdn引用JQ -->
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <style type="text/css">
-      *{
+      @font-face {
+        font-family: "SDK_SC_Web";
+        src: url(".\zh-cn.ttf")
+          format("truetype");
+      }
+      * {
         font-family: "SDK_SC_Web";
       }
       body {
@@ -286,7 +291,7 @@
             msg2[j].style.backgroundColor = "rgba(255, 255, 255, 0.6)";
           }
           /* 已经...变成jq的形状了... */
-          $("h2").css({                                                                     
+          $("h2").css({
             color: "black",
           });
 
@@ -321,9 +326,8 @@
           });
         }
         i++;
-        console.log(i)
+        console.log(i);
       });
     </script>
   </body>
 </html>
-
