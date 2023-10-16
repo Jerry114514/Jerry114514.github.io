@@ -19,7 +19,7 @@
       span {
         transition: background-color, 1s;
       }
-      a{
+      a {
         transition: color, 1s;
       }
       .info,
@@ -272,8 +272,10 @@
       let msg1 = document.querySelectorAll(".info");
       let msg2 = document.querySelectorAll(".info2");
       let i = 1;
+      /* 通过i是否能被2整除判定点击次数以调整主题 */
       dayNight.addEventListener("click", function () {
         if (i % 2 == 0) {
+          /* 切换至暗色主题 */
           for (let j = 0; j < msg1.length; j++) {
             msg1[j].style.backgroundColor = "rgba(255, 255, 255, 0.6)";
           }
@@ -281,7 +283,7 @@
             msg2[j].style.backgroundColor = "rgba(255, 255, 255, 0.6)";
           }
           /* 已经...变成jq的形状了... */
-          $("h2").css({
+          $("h2").css({                                                                     
             color: "black",
           });
 
@@ -295,6 +297,7 @@
             color: "blue",
           });
         } else {
+          /* 切换回明色主题 */
           for (let j = 0; j < msg1.length; j++) {
             msg1[j].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
           }
@@ -311,11 +314,13 @@
             color: "white",
           });
           $("a").css({
-            color: "#ffdc2a",
+            color: "#58ff00",
           });
         }
         i++;
+        console.log(i)
       });
     </script>
   </body>
 </html>
+
