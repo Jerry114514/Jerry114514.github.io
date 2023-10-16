@@ -19,9 +19,12 @@
       span {
         transition: background-color, 1s;
       }
-
-      .info,.info2{
-        border-radius: 20px
+      a{
+        transition: color, 1s;
+      }
+      .info,
+      .info2 {
+        border-radius: 20px;
       }
       /* 标题 */
       .bigti {
@@ -41,7 +44,7 @@
         z-index: 9;
       }
 
-      #circFunction{
+      #circFunction {
         display: flex;
         position: absolute;
         top: 95.8%;
@@ -281,18 +284,19 @@
           $("h2").css({
             color: "black",
           });
-          
+
           $("h3").css({
             color: "black",
-          })
+          });
           $("span").css({
             color: "black",
-          })
-
+          });
+          $("a").css({
+            color: "blue",
+          });
         } else {
           for (let j = 0; j < msg1.length; j++) {
             msg1[j].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
-           
           }
           for (let j = 0; j < msg2.length; j++) {
             msg2[j].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
@@ -302,10 +306,13 @@
           });
           $("h3").css({
             color: "white",
-          })
+          });
           $("span").css({
             color: "white",
-          })
+          });
+          $("a").css({
+            color: "yellow",
+          });
         }
         i++;
       });
