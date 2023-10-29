@@ -276,8 +276,6 @@
     </div>
     <script>
       let dayNight = document.querySelector("#circle");
-      let msg1 = document.querySelectorAll(".info");
-      let msg2 = document.querySelectorAll(".info2");
       let funTxt = document.querySelector("#circFunction")
       let i = 1;
       /* 通过i是否能被2整除判定点击次数以调整主题 */
@@ -290,7 +288,6 @@
           $(".info2").css({
             backgroundColor: "rgba(255, 255, 255, 0.6)",
           });
-          /* 已经...变成jq的形状了... */
           $("h2").css({
             color: "black",
           });
@@ -304,13 +301,12 @@
           $("a").css({
             color: "blue",
           });
-          funTxt.textContent = "切换至夜间主题"
+          funTxt.textContent = "切换至夜间主题==>"
         } else {
           /* 切换回明色主题 */
           $(".info").css({
             backgroundColor: "rgba(0, 0, 0, 0.6)",
           });
-          /* 切换至暗色主题 */
           $(".info2").css({
             backgroundColor: "rgba(0, 0, 0, 0.6)",
           });
@@ -326,8 +322,8 @@
           $("a").css({
             color: "#58ff00",
           });
+          funTxt.textContent = "切换至日间主题==>"
         }
-        funTxt.textContent = "切换至日间主题==>"
         i++;
         console.log(i);
       });
