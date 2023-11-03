@@ -1,332 +1,201 @@
-<!DOCTYPE html>
-<!-- This HTML page programed by Jerry114514@github; About this project's Github page: https://github.com/Jerry114514/bf1-web-tool-HTML-Template -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bf1网页管理工具</title>
-    <!-- 从百度cdn引用JQ -->
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <style type="text/css">
-      @font-face {
-        font-family: "SDK_SC_Web";
-        src: url(".\zh-cn.ttf") format("truetype");
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Easy Fullscreen HTML5 Background Video</title>
+  <meta name="keywords" content="css3, html5, js, background video, fullscreen video">
+  <meta name="description" content="Super easy to implement HTML5 fullscreen background video library in JavaScript.">
+
+  <style>
+    * {
+      margin: 0; padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+    }
+
+    #background_video {
+      position: absolute;
+
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+
+      object-fit: cover;
+      height: 100%; width: 100%;
+    }
+
+    #video_cover {
+      position: absolute;
+
+      width: 100%; height: 100%;
+
+      background: url('video_cover.jpeg') no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    #video_controls {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    #play img {
+      width: 100px;
+    }
+    #pause img {
+      width: 90px;
+    }
+    #pause {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #video_controls {
+        display: none;
       }
-      * {
-        font-family: "SDK_SC_Web";
-      }
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+    }
 
-      h2,
-      h3,
-      span {
-        transition: background-color, 1s;
-      }
-      a {
-        transition: color, 1s;
-      }
-      .info,
-      .info2 {
-        border-radius: 20px;
-      }
-      /* 标题 */
-      .bigti {
-        color: aqua;
-      }
+    /* Demo page specific styles */
 
-      #circle {
-        display: flex;
-        position: absolute;
-        top: 95.5%;
-        left: 96%;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: linear-gradient(to right, black, white);
-        cursor: pointer;
-        z-index: 9;
-      }
+    body {
+      text-align: center;
+      font-family: 'proxima-nova', Helvetica;
+    }
 
-      #circFunction {
-        display: flex;
-        position: absolute;
-        top: 95.8%;
-        left: 87.5%;
-        border-radius: 20px;
-        font-weight: 1000;
-        font-family: "SDK_SC_Web";
-      }
+    #container {
+      height: 100%;
+    }
 
-      /* 信息输入区域与（此处插入模块3）背景 */
-      #mainArea {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
+    #overlay {
+      position: absolute;
+      top: 0; right: 0; left: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+    }
 
-      .info {
-        display: flex;
-        /*透明度0.6*/
-        background-color: rgba(255, 255, 255, 0.6);
-        /*长宽*/
-        width: 400px;
-        height: 85vh;
-        /*高斯模糊*/
-        backdrop-filter: blur(20px);
-        /* 竖轴居中 */
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transition: background-color, 1s;
-      }
+    #main_content {
+      z-index: 2;
+      position: relative;
+      display: inline-block;
 
-      /* 输入表单 */
-      .idipt {
-        /*长宽*/
-        width: 350px;
-        height: 50px;
-        /*透明背景色*/
-        background-color: rgba(255, 255, 255, 0);
-        /*只保留底部边框*/
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        transition: background-color, 1s;
-      }
+      /* Vertical center */
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-      ::placeholder {
-        font-size: 20px;
-      }
+    #main_content h1 {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-family: 'proxima-nova-condensed', Helvetica;
+      color: #fff;
+      font-size: 35px;
+    }
 
-      input:focus {
-        /* 去除outline */
-        outline: none;
-      }
+    #main_content .sub_head {
+      color: rgba(255,255,255,0.5);
+      font-size: 18px;
+    }
 
-      .btn {
-        width: 250px;
-        height: 50px;
-        border-radius: 50px;
-        border: none;
-        cursor: pointer;
-        font-size: 15px;
-        transition: background-color, 1s;
-      }
+    #main_content .info {
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      margin-top: 10px;
+    }
 
-      #gameSearch {
-        background-color: rgb(76, 183, 255);
-      }
+    #links {
+      margin-top: 50px;
+    }
 
-      /*-------------------------------------------------------------------*/
+    #links a {
+      border: 2px solid rgba(255,255,255,0.20);
+      border-radius: 61px;
+      font-size: 12px;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 10px 25px;
+      display: inline-block;
+      margin-right: 15px;
+    }
 
-      /*战局信息模块背景*/
-      .info2 {
-        display: flex;
+    #footer {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+    }
+    #footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 10px;
+      font-size: 12px;
+    }
+    #footer a:first-child {
+      float: left;
+    }
+    #footer a:last-child {
+      float: right;
+    }
+  </style>
 
-        /*透明度0.6*/
-        background-color: rgba(255, 255, 255, 0.6);
-        /*外边距*/
-        margin-left: 2%;
-        /*长宽*/
-        width: 950px;
-        height: 85vh;
-        /*高斯模糊*/
-        backdrop-filter: blur(10px);
-        /* 竖轴居中 */
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transition: background-color, 1s;
-      }
+  <script src="https://use.typekit.net/nlq1kdt.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+</head>
+<body>
+  <div id="container">
+    <video id="background_video" loop muted></video>
+    <div id="video_cover"></div>
+    <div id="overlay"></div>
 
-      #operator {
-        margin-left: 2%;
-        transition: background-color, 1s;
-      }
-
-      #checkPlayer {
-        margin-top: 20px;
-        background-color: rgb(93, 255, 78);
-      }
-
-      #changeSide {
-        margin-top: 20px;
-        background-color: aquamarine;
-      }
-
-      #kickPlayer {
-        margin-top: 20px;
-        background-color: rgb(255, 208, 0);
-      }
-
-      #banPlayer {
-        margin-top: 20px;
-        background-color: red;
-      }
-    </style>
-    <script type="text/javascript"></script>
-  </head>
-
-  <body background=".\图包\nightTower.jpg">
-    <!-- 主题切换 -->
-    <div id="circle"></div>
-    <div id="circFunction">更换至夜间主题==></div>
-    <h1 class="bigti">战地1网页管理工具</h1>
-    <div id="mainArea">
-      <!--在此输入gameid，remid和sid-->
-      <!-- 信息输入板块 -->
-      <div class="info" id="serverInfo">
-        <h3>请先填写您的服务器的信息</h3>
-        <br />
-        <br />
-        <!-- 输入remid -->
-        <form class="remid" method="post">
-          <input
-            type="text"
-            name="remid"
-            placeholder="输入remid"
-            oninvalid="setCustomValidity('必须输入remid！')"
-            oninput="setCustomValidity"
-            required
-            class="idipt"
-          />
-          <br />
-          <span>
-            <a href=".\remid-help.html">如何获取remid？点击这里查看</a>
-          </span>
-        </form>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-        <!-- 输入sid -->
-        <form class="sid" method="post">
-          <input
-            type="text"
-            name="remid"
-            placeholder="输入sid"
-            oninvalid="setCustomValidity('必须输入sid！')"
-            oninput="setCustomValidity"
-            required
-            class="idipt"
-          />
-          <br />
-          <span>
-            <a href=".\sid-help.html">如何获取sid？点击这里查看</a>
-          </span>
-        </form>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-        <!-- 输入gameid -->
-        <form class="gameid" method="post">
-          <input
-            type="text"
-            name="remid"
-            placeholder="输入gameid"
-            oninvalid="setCustomValidity('必须输入gameid！')"
-            oninput="setCustomValidity"
-            required
-            class="idipt"
-          />
-        </form>
-        <br />
-        <button type="button" class="btn" id="gameidSearch">
-          不知道GameID？点此搜索
-        </button>
-      </div>
-
-      <!-- 服务器主要模块 -->
-      <div class="info2">
-        <div>
-          <h2>服务器名称</h2>
-          <h2>
-            <span>服务器人数：</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;<span>当前游玩地图：</span>
-          </h2>
-        </div>
-      </div>
-
-      <!-- 操作模块 -->
-      <div class="info" id="operator">
-        <br />
-        <button type="button" class="btn" id="checkPlayer">
-          查询该玩家战绩
-        </button>
-        <button type="button" class="btn" id="changeSide">
-          更换玩家所属阵营（换边）
-        </button>
-        <button type="button" class="btn" id="kickPlayer">踢出该玩家</button>
-        <button type="button" class="btn" id="banPlayer">
-          在此服务器中封禁该玩家
-        </button>
-      </div>
+    <div id="video_controls">
+      <span id="play">
+        <img src="play.png">
+      </span>
+      <span id="pause">
+        <img src="pause.png">
+      </span>
     </div>
-    <script>
-      let dayNight = document.querySelector("#circle");
-      let funTxt = document.querySelector("#circFunction")
-      let i = 1;
-      /* 通过i是否能被2整除判定点击次数以调整主题 */
-      dayNight.addEventListener("click", function () {
-        if (i % 2 == 0) {
-          $(".info").css({
-            backgroundColor: "rgba(255, 255, 255, 0.6)",
-          });
-          /* 切换至暗色主题 */
-          $(".info2").css({
-            backgroundColor: "rgba(255, 255, 255, 0.6)",
-          });
-          $("h2").css({
-            color: "black",
-          });
 
-          $("h3").css({
-            color: "black",
-          });
-          $("span").css({
-            color: "black",
-          });
-          $("a").css({
-            color: "blue",
-          });
-          funTxt.textContent = "切换至夜间主题==>"
-        } else {
-          /* 切换回明色主题 */
-          $(".info").css({
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-          });
-          $(".info2").css({
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-          });
-          $("h2").css({
-            color: "white",
-          });
-          $("h3").css({
-            color: "white",
-          });
-          $("span").css({
-            color: "white",
-          });
-          $("a").css({
-            color: "#58ff00",
-          });
-          funTxt.textContent = "切换至日间主题==>"
-        }
-        i++;
-        console.log(i);
-      });
-    </script>
-  </body>
+    <section id="main_content">
+      <div id="head">
+        <h1>Bideo.js</h1>
+        <p class="sub_head">A JS library that makes it super easy to add fullscreen background videos.</p>
+        <p class="info">(Hold on! The video might take a while to load.)</p>
+      </div>
+
+      <div id="links">
+        <a href="https://github.com/rishabhp/bideo.js">View on Github</a>
+        <a href="http://codetheory.in/html5-fullscreen-background-video/">How it works</a>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer">
+    <a href="http://twitter.com/_rishabhp">Follow on Twitter</a>
+
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="_rishabhp">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <a href="https://www.youtube.com/watch?v=w7JrHIHi8t0" target="_blank">
+      Video by shortenit
+    </a>
+  </div>
+
+  <script src="bideo.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    if (window.location.host.indexOf('github.io') !== -1 && window.location.protocol !== "https:") {
+      window.location.protocol = "https";
+    }
+  </script>
+</body>
 </html>
