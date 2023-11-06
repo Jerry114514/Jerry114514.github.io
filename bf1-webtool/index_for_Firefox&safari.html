@@ -350,22 +350,6 @@
 
         console.log(browserFlag); // 输出检测结果
       });
-      function checkBrowser() {
-        var userAgent = navigator.userAgent;
-        var isFirefox = userAgent.indexOf("Firefox") > -1;
-        var isFirefoxAndroid = userAgent.indexOf("FxiOS") > -1;
-        var isSafari =
-          userAgent.indexOf("Safari") > -1 &&
-          userAgent.indexOf("Chrome") === -1;
-        var isIOS =
-          userAgent.indexOf("OS X") > -1 && userAgent.indexOf("Chrome") > -1;
-
-        if (isFirefox || isFirefoxAndroid || isSafari || isIOS) {
-          window.location.href = "./download_chrome.html";
-        }
-      }
-
-      checkBrowser();
     </script>
   </body>
 </html>
