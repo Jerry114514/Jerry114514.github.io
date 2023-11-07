@@ -25,7 +25,7 @@ Plugin doesn't supports any overlay as it is easy to implement that with plain H
 视频需要加载一会，这是因为源代码是通过`Javascript`添加的，而这个步骤是在加载完DOM之后，到这时你或许会想展示你的视频封面为视频的第一帧（或是其他图片）\
 Video might take a few seconds to load, especially because the sources are added via JS which is something you'll load after the DOM's loading. Till then you may want to show a video cover which'll be same as the first frame or the video (or some other image).
 
-插件不支持这点，因为只通过HTML/CSS（就像覆盖一样）实现这一点相当简单。详细请看Demo！
+插件不支持这点，因为只通过HTML/CSS实现这一点相当简单（就像覆盖一样）。详细请看Demo！\
 The support for this is not in the plugin as it's fairly simple to achieve this via just HTML/CSS (just like overlays). Check the demo!
 
 ### 网络速度 || Network Speed
