@@ -130,7 +130,9 @@
       display: inline-block;
       margin-right: 15px;
     }
-
+    #githubHome{
+      cursor: pointer;
+    }
     #footer {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -175,7 +177,7 @@
       </div>
 
       <div id="links">
-        <a link="https://github.com/Jerry114514">My Github HomePage || 我的Github主页</a>
+        <a link="https://github.com/Jerry114514" id="githubHome">My Github HomePage || 我的Github主页</a>
         <br>
         <br>
         <a href=".\bf1-webtool\index.html">bf1-webtool-template || 战地1网页工具模板</a>
@@ -202,6 +204,13 @@
     if (window.location.host.indexOf('github.io') !== -1 && window.location.protocol !== "https:") {
       window.location.protocol = "https";
     }
+
+    /* ------- */
+
+    let homeBtn = document.querySelector("#githubHome").addEventListener("click",function(){
+      window.location.href = "https://github.com/Jerry114514";
+      removeEventListener();
+    })
   </script>
 </body>
 </html>
