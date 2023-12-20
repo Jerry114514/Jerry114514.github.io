@@ -7,7 +7,18 @@
     <script type="module" src="./typename.js"></script>
   </head>
   <body>
-    <h1>To be Continued...</h1>
+    <h1 id="title">战地风云1 网页百科全书</h1>
+    <br />
+    <br />
+    <div id="select">
+      <div id="home" class="func">首页</div>
+      <div id="guns" class="func">武器</div>
+      <div id="vehicle" class="func">载具</div>
+      <div id="maps" class="func">地图</div>
+      <div id="other" class="func">其他</div>
+    </div>
   </body>
-  <script type="module" src="./print.js" ></script>
+  <script type="module" src="./print.js">
+    import { weaponType } from './typename.js';
+  </script>
 </html>
