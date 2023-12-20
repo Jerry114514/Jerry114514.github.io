@@ -1,0 +1,14 @@
+* {
+  font-family: SDK_SC_Web;
+}
+#title {
+    font-size: 50px;
+}
+#select{
+    display: flex;
+    flex-direction: row;
+}
+.func{
+    font-size: 25px;
+    margin-right: 40px;
+}
