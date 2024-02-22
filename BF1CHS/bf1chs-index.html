@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollable {
+            overflow: auto;
+        }
+
+        body {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        main {
+            scroll-snap-type: y mandatory;
+            overflow: scroll;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+        }
+        #filt{
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body background="C:\Users\37420\Documents\GitHub\Jerry114514.github.io\BF1CHS\img\bf1-bg.jpg">
+    <div id="filt">
+        <main>
+            <section class="container" id="title">
+                <title>戰地風雲 1</title>
+            </section>
+            <section class="container">2</section>
+            <section class="container">3</section>
+            <section class="container">4</section>
+        </main>
+    </div>
+</body>
+<script>
+    
+</script>
+
+</html>
