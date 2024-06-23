@@ -67,9 +67,14 @@
             font-size: 60px;
             font-weight: 1000;
         }
-        .vid{
+
+        .vid {
             width: 400px;
             height: 200px;
+        }
+
+        #ance {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
     </style>
 </head>
@@ -80,7 +85,10 @@
 
             <section class="container" id="title">
                 <div width="100%">
-                    <br><br><br><br>
+                    <br><br>
+                    <div class="randomTips"></div>
+                    <hr>
+                    <br><br>
                     <h1 align="center" id="intro">欢迎来到 《战地风云 1》 简体中文项目页</h1>
                     <h1 align="center">项目内容预览</h2>
                         <br>
@@ -135,24 +143,67 @@
 
             </section>
             <section class="container" align="center">
-                <br><br><br><br>
-                    <h1 align="center" id="intro">项目概览</h1>
-                    <h1 align="center">致所有使用此项目的玩家们</h1>    
-                    <h3>
-                        我们是一群热爱《战地风云》的玩家，汉化项目由我们发起、推动、落地、推广、完成。<br>
-                        我们希望《战地风云 1》的玩家们也能享受到简体中文，这是我们的权利，也是献给所有士兵们的礼物。<br>
-                    </h3>
+                <br><br>
+                <div class="randomTips"></div>
+                <hr>
+                <br><br>
+                <h1 align="center" id="intro">免 责 声 明</h1>
+                <h1 align="center"></h1>
+                <h3 id="ance">
+                    <br><br>
+                    本项目使用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans">CC BY-NC-ND 4.0
+                    </a>许可协议授权，<br><br>
+                    一旦下载、访问或以其它方式使用本项目，即视为用户同意本协议之全部内容。<br><br>
+                    本项目依赖于替换游戏内部字体数据。一旦下载、访问或以其它方式使用本项目，<br><br>
+                    即视为用户同意自行承担该行为所可能引发的一切后果。<br><br>
+                    一切因使用本项目而引致之任何意外、账号异常等情况及其所造成的连带或附加损失，<br><br>
+                    项目组概不负责，亦不承担任何法律责任。
                     <br><br><br><br>
-                    <h1>拒绝“弓箭损坏”</h1>
-                    <h4>
-                        我们不希望出现任何可能导致误解的错译，如“弓箭损坏”，“电梯损坏”，<br>
-                        因此，我们尽可能将整个游戏的文本重新翻译了一遍。<br>
-                        在此之上，我们也对部分文本重新翻译，使观感更佳，更接地气。<br>
-                    </h4>
+                    <button type="button" class="btn btn-outline-danger"
+                        id="agree">您一旦下载、访问或以其它方式使用本项目，即视为您同意本协议之全部内容。</button>
+                </h3>
             </section>
-            <section class="container" align="center">3</section>
-            <section class="container" align="center">4</section>
+            <section class="container" align="center">
+                <br><br>
+                <div class="randomTips"></div>
+                <hr>
+                <br><br>
+                <h1 align="center" id="intro">项 目 概 览</h1>
+                <h1 align="center">致所有使用此项目的玩家们</h1>
+                <h3>
+                    我们是一群热爱《战地风云》的玩家，汉化项目由我们发起、推动、落地、推广、完成。<br>
+                    我们希望《战地风云 1》的玩家们也能享受到简体中文，这是我们的权利，也是献给所有士兵们的礼物。<br>
+                </h3>
+                <br><br><br><br>
+                <h1>拒绝“弓箭损坏”</h1>
+                <h4>
+                    我们不希望出现任何可能导致误解的错译，如“弓箭损坏”，“电梯损坏”，<br>
+                    因此，我们将整个游戏的文本重新翻译了一遍。<br>
+                    在此之上，我们也对部分文本二次翻译，使观感更佳，更接地气。<br>
+                </h4>
+            </section>
+            
+            <section class="container" align="center">
+                <br><br>
+                <div class="randomTips"></div>
+                <hr>
+                <br><br>
+            </section>
         </main>
     </div>
+    <script src="./js/randomText.js"></script>
+    <script>
+        let i = 0;
+        let agrBtn = document.querySelector("#agree").addEventListener("click", function () {
+            if (i <= 4) {
+                alert("别点我ヾ(≧▽≦*)o");
+                i++;
+            }
+            else if (i > 4) {
+                alert("没完了是吧φ(*￣0￣)");
+            }
+        });
+    </script>
 </body>
+
 </html>
