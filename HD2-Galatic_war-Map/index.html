@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HD2 真理部 · 实时战况数据面板</title>
+  <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
+  <meta name="theme-color" content="#0B0E14" />
+  <style>
+    /* ============================================================
+       主题变量
+       ============================================================ */
+    :root {
+      --bg-deep:   #0B0E14;
+      --bg-deep-2: #131826;
+      --bg-deep-3: #1A1F2E;
+      --yellow:    #F5C518;
+      --yellow-2:  #FFD54F;
+      --yellow-3:  #B8900E;
+      --text:      #FFFFFF;
+      --text-dim:  rgba(255, 255, 255, 0.72);
+      --text-mute: rgba(255, 255, 255, 0.45);
+      --border:    rgba(255, 255, 255, 0.08);
+      --border-h:  rgba(245, 197, 24, 0.4);
+      --card-bg:   rgba(255, 255, 255, 0.05);
+      --card-h:    rgba(255, 255, 255, 0.08);
+      --blur:      blur(12px);
+      --radius:    12px;
+      --radius-s:  8px;
+
+      /* 阵营色 */
+      --c-humans:     #F5C518;   /* 超级地球 */
+      --c-terminids:  #C04020;   /* 终结族 */
+      --c-automaton:  #E0457B;   /* 机器人 */
+      --c-illuminate: #5BA3D0;   /* 光能族 */
+      --c-unknown:    #6B7280;
+    }
+
+    /* ============================================================
+       全局重置与基础排版
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: radial-gradient(ellipse at top, var(--bg-deep-2) 0%, var(--bg-deep) 60%),
+                  var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(2px 2px at 12% 22%, rgba(245, 197, 24, 0.6), transparent 50%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255, 255, 255, 0.5), transparent 50%),
+        radial-gradient(1.5px 1.5px at 55% 35%, rgba(255, 255, 255, 0.45), transparent 50%),
+        radial-gradient(1px 1px at 78% 80%, rgba(255, 255, 255, 0.4), transparent 50%),
+        radial-gradient(1.5px 1.5px at 90% 15%, rgba(245, 197, 24, 0.4), transparent 50%),
+        radial-gradient(1px 1px at 45% 90%, rgba(255, 255, 255, 0.35), transparent 50%),
+        radial-gradient(1px 1px at 8% 60%, rgba(255, 255, 255, 0.3), transparent 50%),
+        radial-gradient(1px 1px at 65% 12%, rgba(255, 255, 255, 0.3), transparent 50%);
+      z-index: 0;
+      opacity: 0.6;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    h1, h2, h3, h4 {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0;
+      font-weight: 700;
+    }
+    a { color: var(--yellow); text-decoration: none; }
+    a:hover { color: var(--yellow-2); }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       通用卡片
+       ============================================================ */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .card:hover { border-color: var(--border-h); background: var(--card-h); }
+
+    /* ============================================================
+       区块0：顶部导航
+       ============================================================ */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(11, 14, 20, 0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .topnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .brand-emoji { font-size: 1.25em; }
+    .brand-title { font-size: 1rem; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .nav-cta:hover {
+      background: var(--yellow);
+      color: var(--bg-deep);
+    }
+    .topnav-meta {
+      font-size: 0.75rem;
+      color: var(--text-mute);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #2ECC71;
+      display: inline-block;
+      box-shadow: 0 0 6px #2ECC71;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .pulse-dot.stale { background: #E74C3C; box-shadow: 0 0 6px #E74C3C; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       英雄区
+       ============================================================ */
+    .hero {
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #C9CFD9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      color: var(--text-dim);
+      max-width: 640px;
+      margin: 0 auto 28px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--bg-deep);
+    }
+    .btn-primary:hover { background: var(--yellow-2); color: var(--bg-deep); }
+    .btn-ghost {
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--text);
+    }
+    .btn-ghost:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    /* ============================================================
+       通用区块标题
+       ============================================================ */
+    .block { padding: 32px 0; }
+    .block-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .block-emoji { font-size: 1.4em; }
+    .block-title {
+      font-size: 1.25rem;
+      color: var(--text);
+    }
+    .block-meta {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-mute);
+    }
+
+    /* ============================================================
+       区块1：重要指令
+       ============================================================ */
+    .mo-brief {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin: 0 0 16px;
+    }
+    .mo-brief strong {
+      color: var(--yellow);
+      font-weight: 600;
+    }
+    .mo-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .mo-task {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
+      padding: 12px 14px;
+    }
+    .mo-task-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .mo-task-progress {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--yellow-3) 0%, var(--yellow) 100%);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .mo-task-type {
+      font-size: 0.75rem;
+      color: var(--text-mute);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .mo-targets {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .mo-target-card {
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+    .mo-target-card .planet-card { margin: 0; }
+
+    /* ============================================================
+       区块2 & 区块3：星球卡片
+       ============================================================ */
+    .planet-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .planet-card {
+      flex: 1 1 240px;
+      min-width: 220px;
+      max-width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--c-unknown);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .planet-card:hover {
+      background: var(--card-h);
+      transform: translateY(-2px);
+    }
+    .planet-card.owner-humans     { border-left-color: var(--c-humans); }
+    .planet-card.owner-terminids  { border-left-color: var(--c-terminids); }
+    .planet-card.owner-automaton  { border-left-color: var(--c-automaton); }
+    .planet-card.owner-illuminate { border-left-color: var(--c-illuminate); }
+    .planet-card.owner-unknown    { border-left-color: var(--c-unknown); }
+
+    .planet-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .planet-name-en {
+      font-size: 0.7rem;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+    .planet-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    .owner-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .owner-humans     .owner-tag { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
+    .owner-terminids  .owner-tag { background: rgba(192, 64, 32, 0.18); color: #E08570; }
+    .owner-automaton  .owner-tag { background: rgba(224, 69, 123, 0.18); color: #F08CB3; }
+    .owner-illuminate .owner-tag { background: rgba(91, 163, 208, 0.18); color: #8FC4E0; }
+    .owner-unknown    .owner-tag { background: rgba(107, 114, 128, 0.18); color: #9CA3AF; }
+
+    .status-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .status-defend    { background: rgba(91, 163, 208, 0.18); color: #8FC4E0; }
+    .status-liberate  { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
+    .status-mo        { background: rgba(192, 64, 32, 0.18); color: #E08570; }
+    .status-liberated { background: rgba(46, 204, 113, 0.18); color: #5DDB8E; }
+    .status-occupied  { background: rgba(192, 64, 32, 0.18); color: #E08570; }
+
+    .hp-bar {
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .hp-bar-fill {
+      height: 100%;
+      background: var(--yellow);
+      transition: width 0.4s ease;
+    }
+    .planet-hp {
+      font-size: 0.7rem;
+      color: var(--text-mute);
+      text-align: right;
+    }
+
+    /* 区块3：星区目录 */
+    .sector-group {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+    .sector-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .sector-head:hover { background: var(--card-h); }
+    .sector-chevron {
+      display: inline-block;
+      transition: transform 0.2s;
+      color: var(--text-mute);
+      font-size: 0.7em;
+    }
+    .sector-group.open .sector-chevron { transform: rotate(90deg); }
+    .sector-name {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.95rem;
+    }
+    .sector-name-en {
+      color: var(--text-mute);
+      font-size: 0.8rem;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.01em;
+      margin-left: 4px;
+    }
+    .sector-count {
+      margin-left: auto;
+      color: var(--text-mute);
+      font-size: 0.8rem;
+    }
+    .sector-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .sector-group.open .sector-body {
+      max-height: 4000px;
+    }
+    .sector-body-inner {
+      padding: 0 12px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sector-body .planet-card {
+      flex: 1 1 200px;
+      min-width: 180px;
+      padding: 10px 12px;
+    }
+    .sector-body .planet-name { font-size: 0.9rem; }
+
+    /* ============================================================
+       悬浮资讯窗
+       ============================================================ */
+    .news-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 320px;
+      max-height: 60vh;
+      background: rgba(11, 14, 20, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .news-float.collapsed {
+      transform: translateY(calc(100% - 44px));
+    }
+    .news-float-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .news-float-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .news-float-toggle {
+      margin-left: auto;
+      color: var(--text-mute);
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+    }
+    .news-float.collapsed .news-float-toggle { transform: rotate(180deg); }
+    .news-float-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 6px 0;
+    }
+    .news-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-item-title {
+      color: var(--yellow);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .news-item-time {
+      color: var(--text-mute);
+      font-size: 0.7rem;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       页脚
+       ============================================================ */
+    footer {
+      margin-top: 64px;
+      padding: 32px 0 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 28px;
+    }
+    .footer-col h4 {
+      font-size: 0.85rem;
+      color: var(--yellow);
+      margin-bottom: 10px;
+    }
+    .footer-col p, .footer-col a {
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      display: block;
+    }
+    .footer-bottom {
+      text-align: center;
+      color: var(--text-mute);
+      font-size: 0.75rem;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ============================================================
+       工具
+       ============================================================ */
+    .loading {
+      color: var(--text-mute);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .error {
+      color: #E08570;
+      background: rgba(192, 64, 32, 0.1);
+      border: 1px solid rgba(192, 64, 32, 0.3);
+      border-radius: var(--radius-s);
+      padding: 12px 14px;
+      font-size: 0.85rem;
+    }
+    .empty {
+      color: var(--text-mute);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      background: rgba(245, 197, 24, 0.15);
+      color: var(--yellow);
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       响应式
+       ============================================================ */
+    @media (max-width: 720px) {
+      .container { padding: 0 14px; }
+      .hero { padding: 48px 0 28px; }
+      .topnav-inner { gap: 8px; }
+      .brand-title { font-size: 0.9rem; }
+      .nav-cta { padding: 6px 10px; font-size: 0.78rem; }
+      .topnav-meta { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+      .news-float {
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        width: auto;
+        max-height: 50vh;
+      }
+      .planet-card { min-width: 160px; }
+      .block-head { flex-wrap: wrap; }
+      .block-meta { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       区块0：顶部导航
+       ============================================================ -->
+  <header class="topnav">
+    <div class="container topnav-inner">
+      <div class="brand">
+        <span class="brand-emoji">⚔️</span>
+        <span class="brand-title">真理部</span>
+      </div>
+      <div class="topnav-meta">
+        <span><span id="pulse" class="pulse-dot"></span> <span id="player-count">—</span> 玩家在线</span>
+        <span>·</span>
+        <span id="last-update">尚未更新</span>
+      </div>
+      <a class="nav-cta" href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">
+        🚀 部署到QQ群
+      </a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       英雄区
+       ============================================================ -->
+  <section class="hero">
+    <div class="container">
+      <h1>绝地潜兵2 · 实时战况数据面板</h1>
+      <p class="hero-sub">超级地球需要你 —— 掌握银河战局，为自由而战</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">
+          📱 部署到QQ群
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">
+          ⭐ Star on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- ============================================================
+         区块1：重要指令
+         ============================================================ -->
+    <section class="block" id="block-mo">
+      <div class="block-head">
+        <span class="block-emoji">📡</span>
+        <h2 class="block-title">重要指令</h2>
+        <span class="block-meta" id="mo-expire"></span>
+      </div>
+      <div id="mo-content" class="card">
+        <div class="loading">正在解码超级地球作战命令…</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         区块2：当前可攻打星球
+         ============================================================ -->
+    <section class="block" id="block-attackable">
+      <div class="block-head">
+        <span class="block-emoji">⚔️</span>
+        <h2 class="block-title">当前可攻打星球</h2>
+        <span class="block-meta" id="attackable-meta"></span>
+      </div>
+      <div id="attackable-content">
+        <div class="loading">正在扫描银河战区…</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         区块3：星区 / 星球目录
+         ============================================================ -->
+    <section class="block" id="block-sectors">
+      <div class="block-head">
+        <span class="block-emoji">🌌</span>
+        <h2 class="block-title">星区 / 星球目录</h2>
+        <span class="block-meta" id="sectors-meta"></span>
+      </div>
+      <div id="sectors-content">
+        <div class="loading">正在加载星图…</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       页脚
+       ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>⚔️ 真理部</h4>
+          <p>一个为《绝地潜兵2》玩家打造的实时战况数据面板，托管于 GitHub Pages，零成本、零追踪。</p>
+          <p style="margin-top: 8px;">本站与 HD2 真理部Bot 为兄弟项目，互相引流，共同守护银河和平。</p>
+        </div>
+        <div class="footer-col">
+          <h4>联系与备案</h4>
+          <p>联系方式：<a href="https://github.com/Jerry114514" target="_blank" rel="noopener">GitHub @Jerry114514</a></p>
+          <p>备案号：<span style="color: var(--text-mute);">（待补充）</span></p>
+        </div>
+        <div class="footer-col">
+          <h4>兄弟项目</h4>
+          <a href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">🤖 HD2 真理部Bot</a>
+          <a href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">📱 部署到QQ群</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 HD2 真理部 · 数据来源 <a href="https://api.helldivers2.dev" target="_blank" rel="noopener">api.helldivers2.dev</a>
+        · 本站非官方项目，与 Arrowhead Game Studios 无任何隶属关系
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       悬浮资讯窗
+       ============================================================ -->
+  <aside class="news-float" id="news-float" aria-label="最新资讯">
+    <div class="news-float-head" id="news-float-head">
+      <div class="news-float-title">📰 最新资讯</div>
+      <span class="news-float-toggle">▼</span>
+    </div>
+    <div class="news-float-body" id="news-float-body">
+      <div class="loading" style="padding: 24px 0;">正在接收超级地球广播…</div>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       脚本
+       ============================================================ -->
+  <script>
+  "use strict";
+
+  /* ==============================================================
+     配置
+     ============================================================== */
+  const CONFIG = {
+    API_BASE: "https://api.helldivers2.dev/api/v1",
+    HEADERS: {
+      "X-Super-Client": "hd2-真理部-网站",
+      "X-Super-Contact": "https://github.com/Jerry114514/HD2-Bot-Release"
+    },
+    REFRESH_MS: 60_000,            // 60s 自动刷新
+    STALE_AFTER_MS: 180_000,       // 3 分钟无数据视为失联
+    NEWS_COUNT: 20,                // 资讯列表显示条数
+    SECTORS_PER_GROUP: "auto",     // 按 sector 自动分组
+    STAR_MAP_URL: "https://raw.githubusercontent.com/Jerry114514/HD2-Bot-Release/main/tables/starmap.json"
+  };
+
+  /* ==============================================================
+     内置数据：阵营、星区中英对照、任务类型
+     （bot 仓库 tables/starmap.json）
+     ============================================================== */
+  const FACTION_CN = {
+    "Humans":     "超级地球",
+    "Terminids":  "终结族",
+    "Automaton":  "机器人",
+    "Illuminate": "光能族"
+  };
+  const FACTION_ORDER = ["Humans", "Terminids", "Automaton", "Illuminate"];
+
+  // 常用星区中英对照（按需扩展）
+  const SECTOR_CN = {
+    "Sol": "太阳系",
+    "Rictus": "里克特斯",
+    "Jin Xi": "金西",
+    "Morgon": "摩根",
+    "Severin": "塞维林",
+    "Canis": "天狼",
+    "Tibet": "西藏",
+    "Altair": "牛郎",
+    "Vega": "织女",
+    "Capella": "五车二",
+    "Sirius": "天狼星",
+    "Barnard": "巴纳德",
+    "Castra": "卡斯特拉",
+    "Circumjovian": "木卫环",
+    "Crimsonia": "深红域",
+    "Drunus": "德鲁努斯",
+    "Enuliale": "伊努利亚",
+    "Grafmere": "格拉夫米尔",
+    "Hadar": "马腹一",
+    "Hesoe": "赫索",
+    "Hypnos": "许普诺斯",
+    "Ingmar": "英格玛",
+    "Kalephas": "卡列法斯",
+    "Kerguelen": "凯尔盖朗",
+    "Kull": "卡尔",
+    "Lacaille": "拉卡耶",
+    "Luk": "洛克",
+    "Margaux": "玛歌",
+    "Mensa": "山案",
+    "Navi": "娜薇",
+    "Norma": "矩尺",
+    "Obari": "欧巴里",
+    "Ostara": "奥斯塔拉",
+    "Pictur": "皮克图",
+    "Prasa": "普拉萨",
+    "Proxima": "比邻",
+    "Rho": "娄宿",
+    "Sagan": "萨根",
+    "Sanctum": "圣所",
+    "Stor": "斯托",
+    "Talus": "塔鲁斯",
+    "Tiburon": "蒂布龙",
+    "Tris": "特里斯",
+    "Typhon": "提丰",
+    "Ultum": "乌尔图姆",
+    "Vandal": "汪达尔",
+    "Vega Bay": "织女湾",
+    "Void": "虚域"
+  };
+
+  // 任务类型枚举（来自社区经验）
+  const TASK_TYPE_CN = {
+    2:  "解放/攻占星球",
+    3:  "消灭敌人",
+    9:  "完成任务数",
+    11: "采集样本",
+    12: "升起/引爆信号弹"
+  };
+
+  /* ==============================================================
+     工具函数
+     ============================================================== */
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => {
+    if (typeof n !== "number" || isNaN(n)) return "—";
+    return n.toLocaleString("en-US");
+  };
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+  }[c]));
+  // 将 <ci=N>...</ci> 标签解析为带颜色的 HTML
+  const richText = (s) => {
+    if (!s) return "";
+    return esc(s)
+      .replace(/&lt;ci=1&gt;/g, '<span style="color:#F5C518;font-weight:600;">')
+      .replace(/&lt;ci=3&gt;/g, '<span style="color:#5BA3D0;font-weight:700;">')
+      .replace(/&lt;\/ci&gt;/g, '</span>')
+      .replace(/\n/g, "<br>");
+  };
+  const relativeTime = (iso) => {
+    if (!iso) return "";
+    const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+    if (diff < 60)    return "刚刚";
+    if (diff < 3600)  return `${Math.floor(diff/60)} 分钟前`;
+    if (diff < 86400) return `${Math.floor(diff/3600)} 小时前`;
+    return `${Math.floor(diff/86400)} 天前`;
+  };
+  const ownerClass = (owner) => {
+    const k = (owner || "").toLowerCase();
+    return FACTION_ORDER.includes(owner) ? `owner-${k}` : "owner-unknown";
+  };
+  const ownerCn = (owner) => FACTION_CN[owner] || "未知";
+  const sectorCn = (s) => SECTOR_CN[s] || s;
+  const planetName = (p, sm) => {
+    if (!p) return { cn: null, en: "未知星球", sector: "" };
+    // starmap.json 结构：planets = { 英文名: { cn, system } }
+    let cn = null;
+    if (sm && sm.planets && sm.planets[p.name]) {
+      const entry = sm.planets[p.name];
+      cn = typeof entry === "string" ? entry : (entry.cn || null);
+    }
+    return { cn, en: p.name, sector: p.sector };
+  };
+
+  /* ==============================================================
+     数据获取层
+     ============================================================== */
+  async function fetchJson(path) {
+    const url = CONFIG.API_BASE + path;
+    const res = await fetch(url, { headers: CONFIG.HEADERS });
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} on ${path}`);
+    }
+    return res.json();
+  }
+
+  // 全部数据并行拉取，单一失败不阻塞其它区块
+  async function fetchAll() {
+    const tasks = {
+      war:        fetchJson("/war").catch((e) => ({ __err: e.message })),
+      planets:    fetchJson("/planets").catch((e) => ({ __err: e.message })),
+      campaigns:  fetchJson("/campaigns").catch((e) => ({ __err: e.message })),
+      assignments:fetchJson("/assignments").catch((e) => ({ __err: e.message })),
+      dispatches: fetchJson("/dispatches").catch((e) => ({ __err: e.message })),
+    };
+    const [war, planets, campaigns, assignments, dispatches] = await Promise.all([
+      tasks.war, tasks.planets, tasks.campaigns, tasks.assignments, tasks.dispatches
+    ]);
+
+    // 星译表：尝试拉取 bot 仓库的 tables/starmap.json，失败时静默降级
+    let starMap = null;
+    try {
+      const r = await fetch(CONFIG.STAR_MAP_URL, { cache: "no-store" });
+      if (r.ok) starMap = await r.json();
+    } catch (_) { /* ignore */ }
+
+    return { war, planets, campaigns, assignments, dispatches, starMap };
+  }
+
+  /* ==============================================================
+     数据解码：重要指令
+     valueTypes（社区经验，与 HD2-Bot 插件一致）：
+       1 = 标记/类型
+       2 = 阵营相关值
+       3 = 目标值（goal）
+       4 = max
+       5 = 次要索引
+       6 = 阵营（1=人类 2=虫 3=机器人 4=光能）
+       8/9 = 数量
+       11 = 物品/状态
+       12 = 星球索引
+     ============================================================== */
+  function decodeTask(task, currentProgress) {
+    const t = task.type;
+    const vt = task.valueTypes || [];
+    const vs = task.values || [];
+
+    const get = (type) => {
+      const i = vt.indexOf(type);
+      return i >= 0 ? vs[i] : null;
+    };
+
+    const goal    = get(3);          // 目标值
+    const current = currentProgress != null ? currentProgress : null;  // progress[i]
+    const planet  = get(12);         // 星球索引
+    const race    = get(6);          // 1=Human 2=Terminid 3=Automaton 4=Illuminate
+
+    const typeCn = TASK_TYPE_CN[t] || `任务 #${t}`;
+    const raceMap = { 1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate" };
+    const raceName = raceMap[race] || null;
+
+    return { type: t, typeCn, goal, current, planet, race, raceName };
+  }
+
+  /* ==============================================================
+     渲染：区块1 重要指令
+     ============================================================== */
+  function renderMO(data) {
+    const root = $("mo-content");
+    const expireEl = $("mo-expire");
+
+    const a = data.assignments;
+    if (!a || a.__err) {
+      root.innerHTML = `<div class="error">无法获取重要指令：${esc(a && a.__err || "未知错误")}</div>`;
+      expireEl.textContent = "";
+      return;
+    }
+    if (!a.tasks || a.tasks.length === 0) {
+      root.innerHTML = `<div class="empty">当前无重要指令，去前线休息吧，公民。</div>`;
+      expireEl.textContent = "";
+      return;
+    }
+
+    // 简报（含富文本）
+    const brief = a.briefing || a.description || "（无简报）";
+    const planetByIndex = (data.planets && !data.planets.__err)
+      ? Object.fromEntries((data.planets || []).map(p => [p.index, p]))
+      : {};
+
+    const tasksHtml = a.tasks.map((tk, i) => {
+      const decoded = decodeTask(tk, a.progress ? a.progress[i] : null);
+      let goalStr = "—", currentStr = "—", pct = 0;
+
+      if (typeof decoded.current === "number") {
+        currentStr = fmt(decoded.current);
+      }
+      if (typeof decoded.goal === "number" && decoded.goal > 0) {
+        goalStr = fmt(decoded.goal);
+        pct = Math.min(100, Math.round((decoded.current || 0) / decoded.goal * 100));
+      } else if (typeof decoded.current === "number") {
+        // 无明确 goal：按"目标=当前"处理为 100% 或留 0
+        pct = decoded.current > 0 ? 100 : 0;
+        goalStr = "—";
+      }
+      const raceTxt = decoded.raceName ? ` · 目标：${ownerCn(decoded.raceName)}` : "";
+
+      return `
+        <div class="mo-task">
+          <div class="mo-task-head">
+            <span>任务 ${i + 1}：${esc(decoded.typeCn)}${raceTxt}</span>
+            <span class="mo-task-progress">${currentStr} / ${goalStr} (${pct}%)</span>
+          </div>
+          <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        </div>
+      `;
+    }).join("");
+
+    // 收集所有相关星球（按 type=2 的 tasks 中的 planet）
+    const targetPlanets = a.tasks
+      .map(t => decodeTask(t, null))
+      .filter(d => typeof d.planet === "number")
+      .map(d => {
+        // planet 字段可能是 index（小整数）或 hash（9 位以上）
+        const p = planetByIndex[d.planet];
+        if (p) return p;
+        // 尝试用 hash 找
+        return (data.planets && !data.planets.__err)
+          ? data.planets.find(x => x.hash === d.planet)
+          : null;
+      })
+      .filter(Boolean);
+
+    const planetsHtml = targetPlanets.length === 0
+      ? `<div class="empty" style="padding: 12px 0;">未识别到目标星球（可能为任务无关）。</div>`
+      : `<div class="planet-grid">${targetPlanets.map(p => renderPlanetCard(p, data.starMap, "MO 目标", "status-mo")).join("")}</div>`;
+
+    root.innerHTML = `
+      <p class="mo-brief">${richText(brief)}</p>
+      <div class="mo-tasks">${tasksHtml}</div>
+      <div class="block-head" style="margin-top:8px;">
+        <span class="block-emoji">🎯</span>
+        <h2 class="block-title" style="font-size:1rem;">目标星球</h2>
+      </div>
+      <div class="mo-targets">${planetsHtml}</div>
+    `;
+
+    if (a.expiration) {
+      const exp = new Date(a.expiration);
+      const remaining = exp - Date.now();
+      if (!isNaN(remaining)) {
+        const hrs = Math.floor(remaining / 3600000);
+        const mins = Math.floor((remaining % 3600000) / 60000);
+        expireEl.textContent = `剩余 ${hrs}h ${mins}m`;
+      }
+    }
+  }
+
+  /* ==============================================================
+     渲染：星球卡片（通用）
+     ============================================================== */
+  function renderPlanetCard(p, starMap, statusLabel, statusClass) {
+    const name = planetName(p, starMap);
+    const owner = p.currentOwner || "Unknown";
+    const ownerKey = owner.toLowerCase();
+    const isHuman = owner === "Humans";
+
+    // HP / 解放进度
+    const hpPct = (p.maxHealth > 0) ? Math.round((p.health / p.maxHealth) * 100) : 0;
+    const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;
+    const statusTag = statusLabel
+      ? `<span class="status-tag ${esc(statusClass)}">${esc(statusLabel)}</span>`
+      : "";
+
+    return `
+      <div class="planet-card ${ownerClass(owner)}" data-planet-index="${p.index}">
+        <div class="planet-name">${esc(name.cn || name.en)}</div>
+        <div class="planet-name-en">${esc(name.en)}</div>
+        <div class="planet-meta">
+          ${ownerTag}
+          ${statusTag}
+          <span>· ${esc(sectorCn(name.sector))}</span>
+        </div>
+        ${statusLabel === "已解放" || isHuman && hpPct >= 100
+          ? `<div class="planet-hp">已解放</div>`
+          : `
+            <div class="hp-bar"><div class="hp-bar-fill" style="width:${hpPct}%"></div></div>
+            <div class="planet-hp">${hpPct}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>
+          `
+        }
+      </div>
+    `;
+  }
+
+  /* ==============================================================
+     渲染：区块2 可攻打星球
+     ============================================================== */
+  function renderAttackable(data) {
+    const root = $("attackable-content");
+    const meta = $("attackable-meta");
+
+    if (data.campaigns && data.campaigns.__err) {
+      root.innerHTML = `<div class="error">无法获取战役列表：${esc(data.campaigns.__err)}</div>`;
+      return;
+    }
+    if (data.planets && data.planets.__err) {
+      root.innerHTML = `<div class="error">无法获取星球列表：${esc(data.planets.__err)}</div>`;
+      return;
+    }
+
+    // 优先取 campaigns
+    const fromCampaigns = (data.campaigns || []).map(c => ({
+      ...c.planet,
+      _campaign: c
+    }));
+
+    // 其次取有 attacking 但不在 campaigns 里的（被入侵但暂无主要战役）
+    const seenIdx = new Set(fromCampaigns.map(p => p.index));
+    const fromAttacking = (data.planets || [])
+      .filter(p => (p.attacking || []).length > 0 && !seenIdx.has(p.index))
+      .map(p => ({ ...p, _fromAttacking: true }));
+
+    const list = [...fromCampaigns, ...fromAttacking];
+
+    if (list.length === 0) {
+      root.innerHTML = `<div class="empty">当前无可攻打目标，银河暂时和平。</div>`;
+      meta.textContent = "";
+      return;
+    }
+
+    meta.textContent = `${list.length} 个活跃目标`;
+
+    const html = list.map(p => {
+      const owner = p.currentOwner || "Unknown";
+      const isHuman = owner === "Humans";
+      // 状态判定
+      let statusLabel, statusClass;
+      if (p._campaign) {
+        const c = p._campaign;
+        // currentOwner 是攻击者阵营的反向：如果是 Humans，盟友在防御；否则超级地球要解放
+        if (isHuman) {
+          statusLabel = "防御战";
+          statusClass = "status-defend";
+        } else {
+          statusLabel = "解放战";
+          statusClass = "status-liberate";
+        }
+      } else if (p._fromAttacking) {
+        statusLabel = "防御战";
+        statusClass = "status-defend";
+      } else {
+        statusLabel = isHuman ? "已解放" : "被占领";
+        statusClass = isHuman ? "status-liberated" : "status-occupied";
+      }
+      return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
+    }).join("");
+
+    root.innerHTML = `<div class="planet-grid">${html}</div>`;
+  }
+
+  /* ==============================================================
+     渲染：区块3 星区目录
+     ============================================================== */
+  function renderSectors(data) {
+    const root = $("sectors-content");
+    const meta = $("sectors-meta");
+
+    if (data.planets && data.planets.__err) {
+      root.innerHTML = `<div class="error">无法获取星球列表：${esc(data.planets.__err)}</div>`;
+      return;
+    }
+    const planets = data.planets || [];
+    // 按 sector 分组
+    const groups = {};
+    for (const p of planets) {
+      const sec = p.sector || "未分区";
+      if (!groups[sec]) groups[sec] = [];
+      groups[sec].push(p);
+    }
+
+    // 排序：先 Sol，再按字母
+    const sorted = Object.keys(groups).sort((a, b) => {
+      if (a === "Sol") return -1;
+      if (b === "Sol") return 1;
+      return a.localeCompare(b);
+    });
+
+    meta.textContent = `${planets.length} 颗星球 · ${sorted.length} 个星区`;
+
+    const html = sorted.map(sec => {
+      const list = groups[sec].sort((a, b) => a.name.localeCompare(b.name));
+      const cards = list.map(p => {
+        const owner = p.currentOwner || "Unknown";
+        const isHuman = owner === "Humans";
+        const hpPct = (p.maxHealth > 0) ? Math.round((p.health / p.maxHealth) * 100) : 0;
+        const statusLabel = isHuman && hpPct >= 100 ? "已解放" : (isHuman ? "防御战" : "解放战");
+        const statusClass = isHuman && hpPct >= 100 ? "status-liberated" : (isHuman ? "status-defend" : "status-liberate");
+        return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
+      }).join("");
+
+      return `
+        <div class="sector-group">
+          <div class="sector-head" data-toggle>
+            <span class="sector-chevron">▶</span>
+            <span class="sector-name">${esc(sectorCn(sec))}</span>
+            <span class="sector-name-en">${esc(sec)}</span>
+            <span class="sector-count">${list.length} 颗</span>
+          </div>
+          <div class="sector-body"><div class="sector-body-inner">${cards}</div></div>
+        </div>
+      `;
+    }).join("");
+
+    root.innerHTML = html;
+
+    // 绑定展开/收起
+    root.querySelectorAll(".sector-head").forEach(head => {
+      head.addEventListener("click", () => {
+        head.parentElement.classList.toggle("open");
+      });
+    });
+  }
+
+  /* ==============================================================
+     渲染：悬浮资讯
+     ============================================================== */
+  function renderNews(data) {
+    const body = $("news-float-body");
+    if (data.dispatches && data.dispatches.__err) {
+      body.innerHTML = `<div class="error" style="margin:10px;">无法获取资讯：${esc(data.dispatches.__err)}</div>`;
+      return;
+    }
+    const list = (data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);
+    if (list.length === 0) {
+      body.innerHTML = `<div class="empty" style="padding: 24px 0;">暂无新资讯</div>`;
+      return;
+    }
+    body.innerHTML = list.map(d => `
+      <div class="news-item">
+        <div class="news-item-time">${esc(relativeTime(d.published))} · ${esc(new Date(d.published).toLocaleString("zh-CN", { hour12: false }))}</div>
+        <div class="news-item-body">${richText(d.message)}</div>
+      </div>
+    `).join("");
+  }
+
+  /* ==============================================================
+     顶部状态栏
+     ============================================================== */
+  function renderTopbar(data) {
+    const war = data.war;
+    if (war && !war.__err) {
+      $("player-count").textContent = fmt(war.statistics && war.statistics.playerCount);
+    }
+    $("last-update").textContent = "更新于 " + new Date().toLocaleTimeString("zh-CN", { hour12: false });
+  }
+
+  /* ==============================================================
+     主流程
+     ============================================================== */
+  let refreshTimer = null;
+  let lastSuccessAt = 0;
+
+  async function refresh() {
+    try {
+      const data = await fetchAll();
+      renderTopbar(data);
+      renderMO(data);
+      renderAttackable(data);
+      renderSectors(data);
+      renderNews(data);
+      lastSuccessAt = Date.now();
+      $("pulse").classList.remove("stale");
+    } catch (e) {
+      console.error("[refresh]", e);
+      $("pulse").classList.add("stale");
+    }
+  }
+
+  function startAutoRefresh() {
+    if (refreshTimer) clearInterval(refreshTimer);
+    refreshTimer = setInterval(() => {
+      if (Date.now() - lastSuccessAt > CONFIG.STALE_AFTER_MS) {
+        $("pulse").classList.add("stale");
+      }
+      refresh();
+    }, CONFIG.REFRESH_MS);
+  }
+
+  // 资讯窗折叠
+  $("news-float-head").addEventListener("click", () => {
+    $("news-float").classList.toggle("collapsed");
+  });
+
+  // 启动
+  document.addEventListener("DOMContentLoaded", () => {
+    refresh();
+    startAutoRefresh();
+  });
+  </script>
+</body>
+</html>
