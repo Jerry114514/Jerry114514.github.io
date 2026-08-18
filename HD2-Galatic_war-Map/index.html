@@ -1241,28 +1241,25 @@
     buildDssEffectMap(data.variables);
 
     const dss = data.dss;
+    const activeIds = new Set(dss ? (dss.activeEffectIds || []) : []);
 
     // 无状态：顶部红底通知
     const notice = !dss
       ? `<div class="dss-notice">🛰️ DSS 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
       : "";
 
-    if (!dss) {
-      root.innerHTML = notice;
-      meta.textContent = "未停靠";
-      return;
+    // 停靠星球（仅当有状态时）
+    let locationHtml = "";
+    if (dss) {
+      const idx = dss.planetIndex;
+      const pinfo = (data.planets && !data.planets.__err)
+        ? data.planets.find(p => p.index === idx) : null;
+      const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: `星球#${idx}` };
+      const planetNameStr = nm.cn || nm.en;
+      locationHtml = `<div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>`;
     }
 
-    // 停靠星球
-    const idx = dss.planetIndex;
-    const pinfo = (data.planets && !data.planets.__err)
-      ? data.planets.find(p => p.index === idx) : null;
-    const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: `星球#${idx}` };
-    const planetNameStr = nm.cn || nm.en;
-
-    const activeIds = new Set(dss.activeEffectIds || []);
-
-    // 被动效果：行动支持（1238）
+    // 被动效果：行动支持（1238）—— 常驻显示
     const passive = dssEffectDesc && dssEffectDesc[1238]
       ? dssEffectDesc[1238]
       : { cn: "行动支持", desc: "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。" };
@@ -1274,7 +1271,7 @@
       { key: "block",   ids: [1213, 1215], label: "🚫 轨道封锁" },
     ];
     const buffHtml = voteBuffs.map(b => {
-      const active = b.ids.some(id => activeIds.has(id));
+      const active = dss ? b.ids.some(id => activeIds.has(id)) : false;
       const info = b.ids.map(id => dssEffectDesc && dssEffectDesc[id]).find(Boolean);
       return `
         <div class="dss-buff ${active ? "dss-buff-on" : "dss-buff-off"}">
@@ -1289,7 +1286,7 @@
     root.innerHTML = `
       ${notice}
       <div class="dss-station">
-        <div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>
+        ${locationHtml}
         <div class="dss-passive">
           <div class="dss-buff-head"><strong>${esc(passive.cn)}</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
           <div class="dss-effect-desc">${esc(passive.desc)}</div>
@@ -1297,7 +1294,9 @@
         <div class="dss-votes">${buffHtml}</div>
       </div>
     `;
-    meta.textContent = `${planetNameStr} · ${activeIds.size ? activeIds.size + " 项生效" : "无投票生效"}`;
+    meta.textContent = dss
+      ? (activeIds.size ? `${activeIds.size} 项生效` : "无投票生效")
+      : "未停靠";
   }
 
 
