@@ -1536,8 +1536,9 @@
      顶部状态栏
      ============================================================== */
   // 顶部轮播状态
-  let bannerItems = [];      // banner.json 配置
-  let bannerPlayerCount = 0; // 当前玩家数
+  let bannerItems = [];           // banner.json 配置
+  let bannerDisplayItems = [];   // 实际显示的轮播项（过滤 players 后）
+  let bannerPlayerCount = 0;     // 当前玩家数
   let bannerTimer = null;
   let bannerIdx = 0;
 
@@ -1554,17 +1555,22 @@
     startBanner();
   }
 
-  // 渲染轮播轨道
+  // 渲染轮播轨道（统一用 bannerDisplayItems，渲染与轮播共用，避免错位/空项）
   function renderBanner() {
     const track = $("banner-track");
     if (!track) return;
-    const items = bannerItems.length ? bannerItems.filter(it => it.type !== "players") : [];
-    track.innerHTML = items.map((it, i) => {
+    bannerDisplayItems = bannerItems.length
+      ? bannerItems.filter(it => it.type !== "players")
+      : [];
+    if (bannerDisplayItems.length === 0) {
+      bannerDisplayItems = [{ text: "📡 数据每 5 分钟更新一次" }];
+    }
+    track.innerHTML = bannerDisplayItems.map((it, i) => {
       return `<span class="banner-item" data-idx="${i}">${esc(it.text || "")}</span>`;
     }).join("");
-    if (items.length === 0) {
-      track.innerHTML = `<span class="banner-item">📡 数据每 5 分钟更新一次</span>`;
-    }
+    // 重置轮播索引（防止显示项数量变化后错位）
+    bannerIdx = 0;
+    track.style.transform = "translateY(0)";
   }
 
   function updateBannerPlayer() {
@@ -1572,14 +1578,14 @@
     if (el) el.textContent = fmt(bannerPlayerCount);
   }
 
-  // 轮播切换（垂直滚动）
+  // 轮播切换（垂直滚动，基于显示项数组）
   function startBanner() {
     if (bannerTimer) clearInterval(bannerTimer);
-    if (bannerItems.length <= 1) return;
+    if (bannerDisplayItems.length <= 1) return;
     const track = $("banner-track");
     if (!track) return;
     bannerTimer = setInterval(() => {
-      bannerIdx = (bannerIdx + 1) % bannerItems.length;
+      bannerIdx = (bannerIdx + 1) % bannerDisplayItems.length;
       track.style.transform = `translateY(-${bannerIdx * 1.2}em)`;
     }, 4000);
   }
