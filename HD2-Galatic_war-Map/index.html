@@ -1138,7 +1138,7 @@
     }
   }
 
-  /* 血量条颜色：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
+  /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
   function hpColorClass(pct) {
     if (pct <= 30) return "hp-low";
     if (pct <= 60) return "hp-mid";
@@ -1154,8 +1154,10 @@
     const ownerKey = owner.toLowerCase();
     const isHuman = owner === "Humans";
 
-    // 解放进度（与 HD2-Bot 一致）：progress = (1 - health/maxHealth) × 100
-    const hpPct = (p.maxHealth > 0) ? Math.round((1 - (p.health || 0) / p.maxHealth) * 100) : 0;
+    // 血量百分比（用户公式 Lib = HP/MaxHP × 100%，满血=100%）
+    const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
+    // 解放进度（bot 公式 1-HP/MaxHP，用于状态判断）
+    const libPct = 100 - hpPct;
     const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;
     const statusTag = statusLabel
       ? `<span class="status-tag ${esc(statusClass)}">${esc(statusLabel)}</span>`
@@ -1170,7 +1172,7 @@
           ${statusTag}
           <span>· ${esc(sectorCn(name.sector))}</span>
         </div>
-        ${statusLabel === "已解放" || statusLabel === "控制中" || hpPct >= 99.9
+        ${statusLabel === "已解放" || statusLabel === "控制中" || libPct >= 99.9
           ? `<div class="planet-hp">${statusLabel === "控制中" ? "超级地球控制中" : "已解放"}</div>`
           : `
             <div class="hp-bar"><div class="hp-bar-fill hp-${hpColorClass(hpPct)}" style="width:${hpPct}%"></div></div>
@@ -1288,13 +1290,14 @@
       const cards = list.map(p => {
         const owner = p.currentOwner || "Unknown";
         const isHuman = owner === "Humans";
-        const hpPct = (p.maxHealth > 0) ? Math.round((1 - (p.health || 0) / p.maxHealth) * 100) : 0;
-        // 状态（与 bot 一致）：已解放 / 无战斗 / 防御战(event) / 解放战
-        const statusLabel = hpPct >= 99.9 ? "已解放"
-          : (isHuman && hpPct <= 0.01 ? "控制中"
+        const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
+        const libPct = 100 - hpPct;
+        // 状态（与 bot 一致）：已解放 / 控制中 / 防御战 / 解放战（按解放进度判断）
+        const statusLabel = libPct >= 99.9 ? "已解放"
+          : (isHuman && libPct <= 0.01 ? "控制中"
           : (isHuman ? "防御战" : "解放战"));
-        const statusClass = hpPct >= 99.9 ? "status-liberated"
-          : (isHuman && hpPct <= 0.01 ? "status-idle"
+        const statusClass = libPct >= 99.9 ? "status-liberated"
+          : (isHuman && libPct <= 0.01 ? "status-idle"
           : (isHuman ? "status-defend" : "status-liberate"));
         return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
       }).join("");
