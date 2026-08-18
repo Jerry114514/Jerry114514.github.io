@@ -1171,8 +1171,8 @@
           ${statusTag}
           <span>· ${esc(sectorCn(name.sector))}</span>
         </div>
-        ${statusLabel === "已解放" || statusLabel === "控制中" || libPct >= 99.9
-          ? `<div class="planet-hp">${statusLabel === "控制中" ? "超级地球控制中" : "已解放"}</div>`
+        ${statusLabel === "已解放" || libPct >= 99.9
+          ? `<div class="planet-hp">已解放</div>`
           : `
             <div class="hp-bar"><div class="hp-bar-fill hp-${hpColorClass(hpPct)}" style="width:${hpPct}%"></div></div>
             <div class="planet-hp">${hpPct}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>
@@ -1246,8 +1246,8 @@
         statusLabel = "防御战";
         statusClass = "status-defend";
       } else {
-        statusLabel = isHuman ? "控制中" : "被占领";
-        statusClass = isHuman ? "status-idle" : "status-occupied";
+        statusLabel = isHuman ? "已解放" : "被占领";
+        statusClass = isHuman ? "status-liberated" : "status-occupied";
       }
       return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
     }).join("");
@@ -1291,13 +1291,11 @@
         const isHuman = owner === "Humans";
         const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
         const libPct = 100 - hpPct;
-        // 状态（与 bot 一致）：已解放 / 控制中 / 防御战 / 解放战（按解放进度判断）
-        const statusLabel = libPct >= 99.9 ? "已解放"
-          : (isHuman && libPct <= 0.01 ? "控制中"
-          : (isHuman ? "防御战" : "解放战"));
-        const statusClass = libPct >= 99.9 ? "status-liberated"
-          : (isHuman && libPct <= 0.01 ? "status-idle"
-          : (isHuman ? "status-defend" : "status-liberate"));
+        // 状态：已解放（含 Humans 满血）/ 防御战 / 解放战（按解放进度判断）
+        const statusLabel = (libPct >= 99.9 || (isHuman && libPct <= 0.01)) ? "已解放"
+          : (isHuman ? "防御战" : "解放战");
+        const statusClass = (libPct >= 99.9 || (isHuman && libPct <= 0.01)) ? "status-liberated"
+          : (isHuman ? "status-defend" : "status-liberate");
         return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
       }).join("");
 
