@@ -1243,6 +1243,25 @@
     const dss = data.dss;
     const activeIds = new Set(dss ? (dss.activeEffectIds || []) : []);
 
+    // 从 hd2_variables.json 的 tactical_action 分类读取条目（数据驱动）
+    let tacEntries = [];
+    if (data.variables && Array.isArray(data.variables.categories)) {
+      for (const cat of data.variables.categories) {
+        if (cat.key === "tactical_action") {
+          tacEntries = cat.entries || [];
+          break;
+        }
+      }
+    }
+
+    // 被动：effect_ids 含 1238（行动支持）
+    const passiveEntry = tacEntries.find(e => (e.effect_ids || []).includes(1238)) || null;
+    // 投票 buff：effect_ids 非空且不含 1238
+    const voteEntries = tacEntries.filter(e => {
+      const ids = e.effect_ids || [];
+      return ids.length > 0 && !ids.includes(1238);
+    });
+
     // 无状态：顶部红底通知
     const notice = !dss
       ? `<div class="dss-notice">🛰️ DSS 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
@@ -1259,27 +1278,28 @@
       locationHtml = `<div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>`;
     }
 
-    // 被动效果：行动支持（1238）—— 常驻显示
-    const passive = dssEffectDesc && dssEffectDesc[1238]
-      ? dssEffectDesc[1238]
-      : { cn: "行动支持", desc: "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。" };
+    // 被动渲染
+    const passiveHtml = passiveEntry
+      ? `<div class="dss-passive">
+          <div class="dss-buff-head"><strong>${esc(passiveEntry.cn)}</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-effect-desc">${esc(passiveEntry.desc)}</div>
+        </div>`
+      : `<div class="dss-passive">
+          <div class="dss-buff-head"><strong>✊ 行动支持</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-effect-desc">DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。</div>
+        </div>`;
 
-    // 3 个投票 buff（轰炸/飞鹰/封锁）+ 重型军械分发
-    const voteBuffs = [
-      { key: "bombard", ids: [1208, 1211], label: "💣 星球轰炸" },
-      { key: "eagle",   ids: [1209, 1212, 1216], label: "✈ 飞鹰风暴" },
-      { key: "block",   ids: [1213, 1215], label: "🚫 轨道封锁" },
-    ];
-    const buffHtml = voteBuffs.map(b => {
-      const active = dss ? b.ids.some(id => activeIds.has(id)) : false;
-      const info = b.ids.map(id => dssEffectDesc && dssEffectDesc[id]).find(Boolean);
+    // 投票 buff 渲染（数据驱动，按 json 顺序）
+    const buffHtml = voteEntries.map(e => {
+      const ids = e.effect_ids || [];
+      const active = dss ? ids.some(id => activeIds.has(id)) : false;
       return `
         <div class="dss-buff ${active ? "dss-buff-on" : "dss-buff-off"}">
           <div class="dss-buff-head">
-            <strong>${b.label}</strong>
+            <strong>${esc(e.cn)}</strong>
             <span class="dss-buff-status ${active ? "st-on" : "st-off"}">${active ? "⚡ 生效中" : "⏸ 未激活"}</span>
           </div>
-          ${info && info.desc ? `<div class="dss-effect-desc">${esc(info.desc)}</div>` : ""}
+          <div class="dss-effect-desc">${esc(e.desc || "")}</div>
         </div>`;
     }).join("");
 
@@ -1287,11 +1307,8 @@
       ${notice}
       <div class="dss-station">
         ${locationHtml}
-        <div class="dss-passive">
-          <div class="dss-buff-head"><strong>${esc(passive.cn)}</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
-          <div class="dss-effect-desc">${esc(passive.desc)}</div>
-        </div>
-        <div class="dss-votes">${buffHtml}</div>
+        ${passiveHtml}
+        <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
       </div>
     `;
     meta.textContent = dss
