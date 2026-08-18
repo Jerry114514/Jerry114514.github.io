@@ -29,11 +29,16 @@
       --radius-s:  8px;
 
       /* 阵营色 */
-      --c-humans:     #F5C518;   /* 超级地球 */
-      --c-terminids:  #C04020;   /* 终结族 */
-      --c-automaton:  #E0457B;   /* 机器人 */
-      --c-illuminate: #5BA3D0;   /* 光能族 */
+      --c-humans:     #5BA3D0;   /* 超级地球（蓝） */
+      --c-humans-d:   #2A3948;   /* 超级地球 深 */
+      --c-terminids:  #F5C518;   /* 终结族（黄） */
+      --c-terminids-d:#C29B13;   /* 终结族 深 */
+      --c-automaton:  #D6806D;   /* 机器人（红粉） */
+      --c-automaton-d:#A36153;   /* 机器人 深 */
+      --c-illuminate: #CF64F8;   /* 光能族（紫） */
+      --c-illuminate-d:#8F45AB;  /* 光能族 深 */
       --c-unknown:    #6B7280;
+      --c-mo:         #FF8C00;   /* MO 目标 橙 */
     }
 
     /* ============================================================
@@ -191,6 +196,21 @@
     }
     .banner-item .pulse-dot {
       margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* 玩家数量独立行 */
+    .player-line {
+      background: linear-gradient(90deg, rgba(245,197,24,0.08), rgba(245,197,24,0.02));
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 4px 16px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+    .player-line .pulse-dot {
+      margin: 0 4px;
       vertical-align: middle;
     }
 
@@ -404,10 +424,10 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    .owner-humans     .owner-tag { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
-    .owner-terminids  .owner-tag { background: rgba(192, 64, 32, 0.18); color: #E08570; }
-    .owner-automaton  .owner-tag { background: rgba(224, 69, 123, 0.18); color: #F08CB3; }
-    .owner-illuminate .owner-tag { background: rgba(91, 163, 208, 0.18); color: #8FC4E0; }
+    .owner-humans     .owner-tag { background: rgba(91, 163, 208, 0.16); color: #7FC0E8; }
+    .owner-terminids  .owner-tag { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
+    .owner-automaton  .owner-tag { background: rgba(214, 128, 109, 0.18); color: #E8A08F; }
+    .owner-illuminate .owner-tag { background: rgba(207, 100, 248, 0.18); color: #D99AF5; }
     .owner-unknown    .owner-tag { background: rgba(107, 114, 128, 0.18); color: #9CA3AF; }
 
     .status-tag {
@@ -416,11 +436,11 @@
       font-size: 0.7rem;
       font-weight: 600;
     }
-    .status-defend    { background: rgba(91, 163, 208, 0.18); color: #8FC4E0; }
+    .status-defend    { background: rgba(91, 163, 208, 0.16); color: #7FC0E8; }
     .status-liberate  { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
-    .status-mo        { background: rgba(192, 64, 32, 0.18); color: #E08570; }
+    .status-mo        { background: rgba(255, 140, 0, 0.18); color: #FFA940; }
     .status-liberated { background: rgba(46, 204, 113, 0.18); color: #5DDB8E; }
-    .status-occupied  { background: rgba(192, 64, 32, 0.18); color: #E08570; }
+    .status-occupied  { background: rgba(214, 128, 109, 0.18); color: #E8A08F; }
 
     .hp-bar {
       width: 100%;
@@ -435,6 +455,10 @@
       background: var(--yellow);
       transition: width 0.4s ease;
     }
+    /* 血量条三色：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
+    .hp-low  { background: #E74C3C; }
+    .hp-mid  { background: #F5C518; }
+    .hp-high { background: #2ECC71; }
     .planet-hp {
       font-size: 0.7rem;
       color: var(--text-mute);
@@ -697,6 +721,11 @@
       </a>
     </div>
   </header>
+
+  <!-- 玩家数量独立行（不参与轮播） -->
+  <div class="player-line" id="player-line">
+    <span class="player-line-text">当前有 <span id="player-count">—</span> <span id="pulse" class="pulse-dot"></span> 位绝地潜兵在为管理式民主奋战</span>
+  </div>
 
   <!-- ============================================================
        英雄区
@@ -1106,6 +1135,13 @@
     }
   }
 
+  /* 血量条颜色：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
+  function hpColorClass(pct) {
+    if (pct <= 30) return "hp-low";
+    if (pct <= 60) return "hp-mid";
+    return "hp-high";
+  }
+
   /* ==============================================================
      渲染：星球卡片（通用）
      ============================================================== */
@@ -1134,7 +1170,7 @@
         ${statusLabel === "已解放" || isHuman && hpPct >= 100
           ? `<div class="planet-hp">已解放</div>`
           : `
-            <div class="hp-bar"><div class="hp-bar-fill" style="width:${hpPct}%"></div></div>
+            <div class="hp-bar"><div class="hp-bar-fill hp-${hpColorClass(hpPct)}" style="width:${hpPct}%"></div></div>
             <div class="planet-hp">${hpPct}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>
           `
         }
@@ -1319,23 +1355,18 @@
   function renderBanner() {
     const track = $("banner-track");
     if (!track) return;
-    const items = bannerItems.length ? bannerItems : [
-      { type: "players", prefix: "当前有 ", suffix: " 位绝地潜兵在为管理式民主奋战" }
-    ];
+    const items = bannerItems.length ? bannerItems.filter(it => it.type !== "players") : [];
     track.innerHTML = items.map((it, i) => {
-      if (it.type === "players") {
-        return `<span class="banner-item" data-idx="${i}">${esc(it.prefix || "")}<span class="banner-player-num">—</span>${esc(it.suffix || "")}<span id="pulse" class="pulse-dot"></span></span>`;
-      }
       return `<span class="banner-item" data-idx="${i}">${esc(it.text || "")}</span>`;
     }).join("");
-    // 更新玩家数字
-    updateBannerPlayer();
+    if (items.length === 0) {
+      track.innerHTML = `<span class="banner-item">📡 数据每 5 分钟更新一次</span>`;
+    }
   }
 
   function updateBannerPlayer() {
-    document.querySelectorAll(".banner-player-num").forEach(el => {
-      el.textContent = fmt(bannerPlayerCount);
-    });
+    const el = $("player-count");
+    if (el) el.textContent = fmt(bannerPlayerCount);
   }
 
   // 轮播切换（垂直滚动）
