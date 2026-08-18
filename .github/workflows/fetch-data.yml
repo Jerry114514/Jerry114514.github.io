@@ -1,0 +1,39 @@
+name: Fetch HD2 Data
+
+on:
+  schedule:
+    # 每 5 分钟更新一次（GitHub Actions schedule 最短间隔）
+    - cron: '*/5 * * * *'
+  workflow_dispatch:   # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run data fetcher
+        run: python scripts/fetch_site_data.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit and push
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2-Galatic_war-Map/data.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          else
+            echo "数据无变化，跳过提交"
+          fi

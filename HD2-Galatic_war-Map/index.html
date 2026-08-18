@@ -167,6 +167,33 @@
       50%      { opacity: 0.4; }
     }
 
+    /* 顶部轮播 */
+    .banner-wrap {
+      position: relative;
+      overflow: hidden;
+      max-width: 420px;
+      height: 1.2em;
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+    }
+    .banner-track {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+    .banner-item {
+      height: 1.2em;
+      line-height: 1.2em;
+      white-space: nowrap;
+      color: var(--text-dim);
+    }
+    .banner-item .pulse-dot {
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
     /* ============================================================
        英雄区
        ============================================================ */
@@ -659,7 +686,9 @@
         <span class="brand-title">真理部</span>
       </div>
       <div class="topnav-meta">
-        <span>当前有 <span id="player-count">—</span> <span id="pulse" class="pulse-dot"></span> 位绝地潜兵在为管理式民主奋战</span>
+        <span class="banner-wrap">
+          <span class="banner-track" id="banner-track"><!-- 轮播项由 JS 注入 --></span>
+        </span>
         <span>·</span>
         <span id="last-update">尚未更新</span>
       </div>
@@ -781,15 +810,12 @@
      配置
      ============================================================== */
   const CONFIG = {
-    API_BASE: "https://api.helldivers2.dev/api/v1",
-    HEADERS: {
-      "X-Super-Client": "hd2-真理部-网站",
-      "X-Super-Contact": "https://github.com/Jerry114514/HD2-Bot-Release"
-    },
-    REFRESH_MS: 60_000,            // 60s 自动刷新
-    STALE_AFTER_MS: 180_000,       // 3 分钟无数据视为失联
-    NEWS_COUNT: 20,                // 资讯列表显示条数
-    SECTORS_PER_GROUP: "auto",     // 按 sector 自动分组
+    DATA_URL: "data.json",          // Actions 定时生成的本地数据
+    BANNER_URL: "banner.json",      // 顶部轮播列表（可维护）
+    REFRESH_MS: 60_000,             // 60s 自动刷新（读本地 data.json）
+    STALE_AFTER_MS: 360_000,        // 6 分钟无数据视为失联（数据每 5 分钟更新）
+    NEWS_COUNT: 20,                 // 资讯列表显示条数
+    SECTORS_PER_GROUP: "auto",      // 按 sector 自动分组
     STAR_MAP_URL: "https://raw.githubusercontent.com/Jerry114514/HD2-Bot-Release/main/tables/starmap.json"
   };
 
@@ -914,36 +940,29 @@
   /* ==============================================================
      数据获取层
      ============================================================== */
-  async function fetchJson(path) {
-    const url = CONFIG.API_BASE + path;
-    const res = await fetch(url, { headers: CONFIG.HEADERS });
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} on ${path}`);
-    }
-    return res.json();
-  }
-
-  // 全部数据并行拉取，单一失败不阻塞其它区块
+  // 读取本地 data.json（GitHub Actions 生成：官方 API -> companion -> helldivers2.dev 三级回退）
   async function fetchAll() {
-    const tasks = {
-      war:        fetchJson("/war").catch((e) => ({ __err: e.message })),
-      planets:    fetchJson("/planets").catch((e) => ({ __err: e.message })),
-      campaigns:  fetchJson("/campaigns").catch((e) => ({ __err: e.message })),
-      assignments:fetchJson("/assignments").catch((e) => ({ __err: e.message })),
-      dispatches: fetchJson("/dispatches").catch((e) => ({ __err: e.message })),
-    };
-    const [war, planets, campaigns, assignments, dispatches] = await Promise.all([
-      tasks.war, tasks.planets, tasks.campaigns, tasks.assignments, tasks.dispatches
-    ]);
+    const r = await fetch(CONFIG.DATA_URL, { cache: "no-store" });
+    if (!r.ok) throw new Error(`HTTP ${r.status} on ${CONFIG.DATA_URL}`);
+    const data = await r.json();
 
     // 星译表：尝试拉取 bot 仓库的 tables/starmap.json，失败时静默降级
     let starMap = null;
     try {
-      const r = await fetch(CONFIG.STAR_MAP_URL, { cache: "no-store" });
-      if (r.ok) starMap = await r.json();
+      const sr = await fetch(CONFIG.STAR_MAP_URL, { cache: "no-store" });
+      if (sr.ok) starMap = await sr.json();
     } catch (_) { /* ignore */ }
 
-    return { war, planets, campaigns, assignments, dispatches, starMap };
+    return {
+      war:        data.war || { __err: "no war data" },
+      planets:    data.planets || { __err: "no planets data" },
+      campaigns:  data.campaigns || { __err: "no campaigns data" },
+      assignments:data.assignments || { __err: "no assignments data" },
+      dispatches: data.dispatches || { __err: "no dispatches data" },
+      starMap,
+      fetchedAt:  data.fetchedAt,
+      source:     data.source,
+    };
   }
 
   /* ==============================================================
@@ -1264,12 +1283,75 @@
   /* ==============================================================
      顶部状态栏
      ============================================================== */
+  // 顶部轮播状态
+  let bannerItems = [];      // banner.json 配置
+  let bannerPlayerCount = 0; // 当前玩家数
+  let bannerTimer = null;
+  let bannerIdx = 0;
+
+  // 加载轮播配置（banner.json）
+  async function loadBanner() {
+    try {
+      const r = await fetch(CONFIG.BANNER_URL, { cache: "no-store" });
+      if (r.ok) {
+        const d = await r.json();
+        if (d && Array.isArray(d.items)) bannerItems = d.items;
+      }
+    } catch (_) { /* ignore */ }
+    renderBanner();
+    startBanner();
+  }
+
+  // 渲染轮播轨道
+  function renderBanner() {
+    const track = $("banner-track");
+    if (!track) return;
+    const items = bannerItems.length ? bannerItems : [
+      { type: "players", prefix: "当前有 ", suffix: " 位绝地潜兵在为管理式民主奋战" }
+    ];
+    track.innerHTML = items.map((it, i) => {
+      if (it.type === "players") {
+        return `<span class="banner-item" data-idx="${i}">${esc(it.prefix || "")}<span class="banner-player-num">—</span>${esc(it.suffix || "")}<span id="pulse" class="pulse-dot"></span></span>`;
+      }
+      return `<span class="banner-item" data-idx="${i}">${esc(it.text || "")}</span>`;
+    }).join("");
+    // 更新玩家数字
+    updateBannerPlayer();
+  }
+
+  function updateBannerPlayer() {
+    document.querySelectorAll(".banner-player-num").forEach(el => {
+      el.textContent = fmt(bannerPlayerCount);
+    });
+  }
+
+  // 轮播切换（垂直滚动）
+  function startBanner() {
+    if (bannerTimer) clearInterval(bannerTimer);
+    if (bannerItems.length <= 1) return;
+    const track = $("banner-track");
+    if (!track) return;
+    bannerTimer = setInterval(() => {
+      bannerIdx = (bannerIdx + 1) % bannerItems.length;
+      track.style.transform = `translateY(-${bannerIdx * 1.2}em)`;
+    }, 4000);
+  }
+
   function renderTopbar(data) {
     const war = data.war;
     if (war && !war.__err) {
-      $("player-count").textContent = fmt(war.statistics && war.statistics.playerCount);
+      const pc = (war.statistics && war.statistics.playerCount) || 0;
+      if (pc !== bannerPlayerCount) {
+        bannerPlayerCount = pc;
+        updateBannerPlayer();
+      }
     }
-    $("last-update").textContent = "更新于 " + new Date().toLocaleTimeString("zh-CN", { hour12: false });
+    const t = data.fetchedAt ? new Date(data.fetchedAt) : new Date();
+    $("last-update").textContent = "更新于 " + t.toLocaleTimeString("zh-CN", { hour12: false });
+    // 数据源标识
+    if (data.source) {
+      document.title = `HD2 真理部 · 实时战况数据面板 [${data.source}]`;
+    }
   }
 
   /* ==============================================================
@@ -1311,6 +1393,7 @@
 
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
+    loadBanner();
     refresh();
     startAutoRefresh();
   });
