@@ -810,13 +810,13 @@
      配置
      ============================================================== */
   const CONFIG = {
-    DATA_URL: "data.json",          // Actions 定时生成的本地数据
-    BANNER_URL: "banner.json",      // 顶部轮播列表（可维护）
+    DATA_URL: "./data.json",          // Actions 定时生成的本地数据
+    BANNER_URL: "./banner.json",      // 顶部轮播列表（可维护）
     REFRESH_MS: 60_000,             // 60s 自动刷新（读本地 data.json）
     STALE_AFTER_MS: 360_000,        // 6 分钟无数据视为失联（数据每 5 分钟更新）
     NEWS_COUNT: 20,                 // 资讯列表显示条数
     SECTORS_PER_GROUP: "auto",      // 按 sector 自动分组
-    STAR_MAP_URL: "tables/starmap.json"   // 本地 tables/（每日自动从 HD2-Bot-Release 同步）
+    STAR_MAP_URL: "./tables/starmap.json"  // 页面同目录 tables/（子目录部署下用 ./ 前缀）
   };
 
   /* ==============================================================
