@@ -21,6 +21,7 @@ jobs:
           # 逐文件从 HD2-Bot-Release 仓库拉取最新对照表到网站 tables/
           mkdir -p HD2-Galatic_war-Map/tables
           BASE="https://raw.githubusercontent.com/Jerry114514/HD2-Bot-Release/main/tables"
+          # starmap.json 不在同步清单：由 Page 仓库本地维护（含手工添加的新星球 UVP BETA/VOID SOURCE）
           for f in \
             "HD2行动变量对照表.md" \
             "星图对照表_修正版.md" \
@@ -28,7 +29,6 @@ jobs:
             "dss_effects.json" \
             "effect_id_cn.json" \
             "galactic_effects.json" \
-            "starmap.json" \
             "hd2_variables.json" \
           ; do
             echo "==> $f"
