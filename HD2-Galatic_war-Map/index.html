@@ -925,7 +925,12 @@
     return FACTION_ORDER.includes(owner) ? `owner-${k}` : "owner-unknown";
   };
   const ownerCn = (owner) => FACTION_CN[owner] || "未知";
-  const sectorCn = (s) => SECTOR_CN[s] || s;
+  // 星区中文：优先 starmap.json（systems[].name_en -> name），内置 SECTOR_CN 兜底
+  let sectorEnToCn = null;  // 由 fetchAll 注入
+  const sectorCn = (s) => {
+    if (sectorEnToCn && sectorEnToCn[s]) return sectorEnToCn[s];
+    return SECTOR_CN[s] || s;
+  };
   const planetName = (p, sm) => {
     if (!p) return { cn: null, en: "未知星球", sector: "" };
     // starmap.json 结构：planets = { 英文名: { cn, system } }
@@ -952,6 +957,14 @@
       const sr = await fetch(CONFIG.STAR_MAP_URL, { cache: "no-store" });
       if (sr.ok) starMap = await sr.json();
     } catch (_) { /* ignore */ }
+
+    // 从 starmap 构建 星区英文 -> 中文 映射（覆盖内置 SECTOR_CN 的缺失/错误）
+    if (starMap && Array.isArray(starMap.systems)) {
+      sectorEnToCn = {};
+      for (const sys of starMap.systems) {
+        if (sys.name_en && sys.name) sectorEnToCn[sys.name_en] = sys.name;
+      }
+    }
 
     return {
       war:        data.war || { __err: "no war data" },

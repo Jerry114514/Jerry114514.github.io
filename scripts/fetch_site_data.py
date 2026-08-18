@@ -285,7 +285,7 @@ def main():
         print("[FATAL] 所有数据源失败")
         sys.exit(1)
 
-    # 用 hd2dev 的星球名/sector/maxHealth 补全（官方/companion 缺失）
+    # 用 hd2dev 的星球名/sector/maxHealth 统一覆盖（hd2dev sector 为社区维护、与对照表一致）
     if hd2dev and hd2dev.get("planets"):
         hd2dev_map = {p.get("index"): p for p in hd2dev["planets"]}
         for p in base.get("planets") or []:
@@ -293,8 +293,8 @@ def main():
             if h:
                 if not p.get("name") or p["name"].startswith("PLANET_"):
                     p["name"] = h.get("name", p["name"])
-                if not p.get("sector"):
-                    p["sector"] = h.get("sector", "")
+                # sector 始终用 hd2dev（官方 sector 数字 id 不可靠）
+                p["sector"] = h.get("sector", p.get("sector", ""))
                 if not p.get("maxHealth"):
                     p["maxHealth"] = h.get("maxHealth", 0)
         for c in base.get("campaigns") or []:
@@ -303,8 +303,7 @@ def main():
                 cp = c["planet"]
                 if not cp.get("name") or cp["name"].startswith("PLANET_"):
                     cp["name"] = h.get("name", cp["name"])
-                if not cp.get("sector"):
-                    cp["sector"] = h.get("sector", "")
+                cp["sector"] = h.get("sector", cp.get("sector", ""))
 
     # 玩家数：companion 各星球求和（官方 Stats 无 playerCount）
     total_players = 0
