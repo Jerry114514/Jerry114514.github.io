@@ -465,6 +465,17 @@ def main():
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
               **base}
 
+    # 解耦：翻译字段（news/major_order）由 HD2Web-Trans 单一写入，此处保留旧值不被覆盖
+    try:
+        if os.path.exists(out_path):
+            with open(out_path, encoding="utf-8") as f:
+                old = json.load(f)
+            for k in ("news", "major_order"):
+                if k in old:
+                    result[k] = old[k]
+    except Exception:
+        pass
+
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=1)
