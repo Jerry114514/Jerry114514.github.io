@@ -1125,7 +1125,7 @@
 
     const a = data.assignments;
     if (!a || a.__err || !a.tasks) {
-      root.innerHTML = `<div class="empty">📡 暂无重要指令数据（可能处于 Major Order 切换间隙，稍后自动刷新）。</div>`;
+      root.innerHTML = `<div class="empty">📡 暂无重要指令数据，等待超级地球最高指挥部下达指令中...</div>`;
       expireEl.textContent = "";
       return;
     }
