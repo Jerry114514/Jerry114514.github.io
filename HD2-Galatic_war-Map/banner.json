@@ -2,11 +2,6 @@
   "_说明": "网站顶部轮播列表（方便维护）。type: players=动态玩家数（自动渲染）, text=静态文本；bold 可选加粗",
   "items": [
     {
-      "type": "players",
-      "prefix": "当前有 ",
-      "suffix": " 位绝地潜兵在为管理式民主奋战"
-    },
-    {
       "type": "text",
       "text": "📡 数据每 5 分钟更新一次（GitHub Actions 自动抓取）"
     },
