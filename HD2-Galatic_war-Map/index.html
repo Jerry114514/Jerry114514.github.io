@@ -1140,9 +1140,8 @@
 
   /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
   function hpColorClass(pct) {
-    if (pct <= 30) return "hp-low";
-    if (pct <= 60) return "hp-mid";
-    return "hp-high";
+    if (pct < 60) return (pct <= 30 ? "hp-low" : "hp-mid");
+    return "hp-high";   // >= 60% 绿色
   }
 
   /* ==============================================================
