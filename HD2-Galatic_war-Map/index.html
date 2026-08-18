@@ -1082,7 +1082,9 @@
         pct = decoded.current > 0 ? 100 : 0;
         goalStr = "—";
       }
-      const raceTxt = decoded.raceName ? ` · 目标：${ownerCn(decoded.raceName)}` : "";
+      // race 仅敌对阵营(2/3/4)才显示；1(人类)/None 不显示（避免误显示"目标：超级地球"）
+      const raceTxt = (decoded.race === 2 || decoded.race === 3 || decoded.race === 4)
+        ? ` · 目标：${ownerCn(decoded.raceName)}` : "";
 
       return `
         <div class="mo-task">
@@ -1194,11 +1196,18 @@
       return;
     }
 
-    // 优先取 campaigns
-    const fromCampaigns = (data.campaigns || []).map(c => ({
-      ...c.planet,
-      _campaign: c
-    }));
+    // 优先取 campaigns（用 data.planets 补全 health/maxHealth，campaign.planet 不含血量）
+    const fullPlanets = (data.planets && !data.planets.__err) ? data.planets : [];
+    const fullByIndex = Object.fromEntries(fullPlanets.map(p => [p.index, p]));
+    const fromCampaigns = (data.campaigns || []).map(c => {
+      const fp = fullByIndex[c.planet.index];
+      return {
+        ...c.planet,
+        health: fp ? fp.health : 0,
+        maxHealth: fp ? fp.maxHealth : 0,
+        _campaign: c
+      };
+    });
 
     // 其次取有 attacking 但不在 campaigns 里的（被入侵但暂无主要战役）
     const seenIdx = new Set(fromCampaigns.map(p => p.index));
