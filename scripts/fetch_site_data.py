@@ -94,6 +94,15 @@ def norm_time(v):
     return v or ""
 
 
+def now_cn() -> str:
+    """当前时间（UTC+8，Asia/Hong_Kong），格式 ISO 带时区"""
+    try:
+        from datetime import datetime, timezone, timedelta
+        return datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%dT%H:%M:%S+08:00")
+    except Exception:
+        return time.strftime("%Y-%m-%dT%H:%M:%S+08:00")
+
+
 SNAPSHOT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data_snapshot.json")
 
 
@@ -112,7 +121,7 @@ def _save_snapshot(data: dict) -> None:
     """保存本次成功抓取快照（仅保留 assignments/dss 关键字段）"""
     try:
         snap = {
-            "savedAt": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
+            "savedAt": now_cn(),
             "assignments": data.get("assignments"),
             "dss": data.get("dss"),
         }
@@ -405,7 +414,7 @@ def main():
         else:
             base["dss"] = None
 
-    result = {"fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
+    result = {"fetchedAt": now_cn(),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
               **base}
 
