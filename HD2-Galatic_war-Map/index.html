@@ -210,15 +210,15 @@
     }
     .pd-section { display: flex; flex-direction: column; gap: 6px; }
     .pd-title {
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
+      font-size: 0.9rem;      /* 中文主标题，大字 */
+      letter-spacing: 0.02em;
       color: var(--yellow);
       font-weight: 700;
       display: flex;
       align-items: baseline;
       gap: 8px;
     }
-    .pd-cn { color: var(--text-dim); font-weight: 400; letter-spacing: 0.02em; font-size: 0.7rem; }
+    .pd-cn { color: var(--text-dim); font-weight: 400; letter-spacing: 0.05em; font-size: 0.66rem; text-transform: uppercase; }
     .pd-row {
       display: flex; justify-content: space-between; align-items: center;
       font-size: 0.8rem; color: var(--text-dim);
@@ -1391,18 +1391,23 @@
   // 展开详情：战略分析 / 行动变量 / 兴趣点
   function planetDetailHtml(p, starMap, statusLabel) {
     const name = planetName(p, starMap);
-    const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
+    // 解放度（用户公式 Lib = 当前HP/MaxHP × 100，两位小数）
+    const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
+    const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;
     const libPct = 100 - hpPct;
+    const libPctDetail = hpPctRaw.toFixed(2);
     const isHuman = (p.currentOwner || "") === "Humans";
 
     // 1) 战略情报分析
     const resist = p.resistance != null ? `${p.resistance}% / 小时` : "—";
-    const libText = statusLabel === "已解放" || libPct >= 99.9 ? "已解放"
+    // 解放度（用户公式 Lib = 当前HP/MaxHP，两位小数）
+    const libText = statusLabel === "已解放" || libPct >= 99.9
+      ? "已解放"
       : (isHuman && libPct <= 0.01 ? "超级地球控制中"
-      : `${libPct}% 解放进度`);
+      : `${libPctDetail}%`);
     const strat = `
       <div class="pd-section">
-        <div class="pd-title">STRATEGIC ANALYSIS<span class="pd-cn">战略情报分析</span></div>
+        <div class="pd-title">战略情报分析<span class="pd-cn">STRATEGIC ANALYSIS</span></div>
         <div class="pd-row"><span>解放度</span><strong>${esc(libText)}</strong></div>
         <div class="pd-row"><span>抵抗度</span><strong>${esc(resist)}</strong></div>
         <div class="pd-row"><span>星球血量</span><strong>${hpPct}% · ${fmt(p.health)}/${fmt(p.maxHealth)}</strong></div>
@@ -1422,7 +1427,7 @@
     }
     const oper = `
       <div class="pd-section">
-        <div class="pd-title">OPERATIONAL PARAMETERS<span class="pd-cn">行动变量</span></div>
+        <div class="pd-title">行动变量<span class="pd-cn">OPERATIONAL PARAMETERS</span></div>
         <div class="pd-chips">${effHtml}</div>
       </div>`;
 
@@ -1454,7 +1459,7 @@
         ${strat}
         ${oper}
         <div class="pd-section">
-          <div class="pd-title">POINTS OF INTEREST<span class="pd-cn">兴趣点</span></div>
+          <div class="pd-title">兴趣点<span class="pd-cn">POINTS OF INTEREST</span></div>
           <div class="pd-chips">${poiHtml}</div>
         </div>
       </div>`;
@@ -1466,8 +1471,10 @@
     const ownerKey = owner.toLowerCase();
     const isHuman = owner === "Humans";
 
-    // 血量百分比（用户公式 Lib = HP/MaxHP × 100%，满血=100%）
-    const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
+    // 血量百分比（用户公式 Lib = 当前HP/MaxHP × 100%，两位小数）
+    const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
+    const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;   // 血条/状态用整数
+    const libPctDetail = hpPctRaw.toFixed(2);                      // 详情卡解放度两位小数
     // 解放进度（bot 公式 1-HP/MaxHP，用于状态判断）
     const libPct = 100 - hpPct;
     const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;
@@ -1478,7 +1485,7 @@
     return `
       <div class="planet-card ${ownerClass(owner)}" data-planet-index="${p.index}">
         <div class="planet-name">${esc(name.cn || name.en)}</div>
-        <div class="planet-name-en">${esc(name.en)}</div>
+        ${name.cn ? `<div class="planet-name-en">${esc(name.en)}</div>` : ""}
         <div class="planet-meta">
           ${ownerTag}
           ${statusTag}

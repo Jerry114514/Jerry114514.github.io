@@ -249,23 +249,27 @@ def fetch_companion():
     ws = obj.get("warStatus") or {}
     ps_list = ws.get("planetStatus") or []
 
+    # 行动变量索引：planetIndex -> [galacticEffectId]（companion planetActiveEffects 字段为 index）
+    comp_effects = {}
+    for ef in (ws.get("planetActiveEffects") or []):
+        pi = ef.get("index") if ef.get("index") is not None else ef.get("planetIndex")
+        gid = ef.get("galacticEffectId")
+        if pi is not None and gid is not None:
+            comp_effects.setdefault(pi, []).append(gid)
+
     planets = []
     for ps in ps_list:
-        max_h = ps.get("maxHealth", 0) or 1
-        regen = ps.get("regenPerSecond") or 0
-        # 抵抗度 %/h：regenPerSecond(每秒HP) * 3600 / maxHealth * 100
-        resistance = round(regen * 3600 / max_h * 100, 2) if max_h else 0
         planets.append({
             "index": ps.get("index"),
             "name": f"PLANET_{ps.get('index')}",
             "sector": "",
             "currentOwner": norm_owner(ps.get("owner")),
             "health": ps.get("health", 0),
-            "maxHealth": max_h,
+            "maxHealth": 0,  # companion 无 maxHealth，合并阶段用 hd2dev 补
             "players": ps.get("players", 0),
             "attacking": bool(ps.get("attacking")),
-            "resistance": resistance,
-            "activeEffects": [],
+            "activeEffects": comp_effects.get(ps.get("index"), []),
+            "regenPerSecond": ps.get("regenPerSecond") or 0,
         })
 
     campaigns = []
@@ -365,7 +369,20 @@ def main():
         print("[FATAL] 所有数据源失败")
         sys.exit(1)
 
+    # 玩家数/行动变量：companion 数据最全，始终覆盖；resistance 用 companion regen + hd2dev maxHealth 统一算
+    if companion and companion.get("planets"):
+        comp_by_idx = {p.get("index"): p for p in companion["planets"]}
+        for p in base.get("planets") or []:
+            cp = comp_by_idx.get(p.get("index"))
+            if cp:
+                if cp.get("players"):
+                    p["players"] = cp["players"]
+                if cp.get("activeEffects"):
+                    p["activeEffects"] = cp["activeEffects"]
+                p["_regen"] = cp.get("regenPerSecond") or 0
+
     # 用 hd2dev 的星球名/sector/maxHealth 统一覆盖（hd2dev sector 为社区维护、与对照表一致）
+    hd2dev_map = {}
     if hd2dev and hd2dev.get("planets"):
         hd2dev_map = {p.get("index"): p for p in hd2dev["planets"]}
         for p in base.get("planets") or []:
@@ -377,13 +394,25 @@ def main():
                 p["sector"] = h.get("sector", p.get("sector", ""))
                 if not p.get("maxHealth"):
                     p["maxHealth"] = h.get("maxHealth", 0)
-        for c in base.get("campaigns") or []:
-            h = hd2dev_map.get(c.get("planet", {}).get("index"))
-            if h:
-                cp = c["planet"]
-                if not cp.get("name") or cp["name"].startswith("PLANET_"):
-                    cp["name"] = h.get("name", cp["name"])
-                cp["sector"] = h.get("sector", cp.get("sector", ""))
+
+    # campaigns 星球名/sector 用 hd2dev 补（独立循环）
+    for c in base.get("campaigns") or []:
+        h = hd2dev_map.get(c.get("planet", {}).get("index"))
+        if h:
+            cp = c["planet"]
+            if not cp.get("name") or cp["name"].startswith("PLANET_"):
+                cp["name"] = h.get("name", cp["name"])
+            cp["sector"] = h.get("sector", cp.get("sector", ""))
+
+    # 统一计算 resistance：regenPerSecond * 3600 / maxHealth * 100
+    # 官方 maxHealth 是相对值(1)；companion 无 maxHealth；缺失/无效时用 health 推断（满血 health==maxHealth）
+    for p in base.get("planets") or []:
+        regen = p.pop("_regen", None) or 0
+        max_h = p.get("maxHealth") or 0
+        if max_h < 1000 and p.get("health"):
+            max_h = p["health"]
+            p["maxHealth"] = max_h
+        p["resistance"] = round(regen * 3600 / max_h * 100, 2) if max_h else 0
 
     # 玩家数：companion 各星球求和（官方 Stats 无 playerCount）
     total_players = 0
