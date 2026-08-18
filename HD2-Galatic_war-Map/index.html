@@ -1056,6 +1056,23 @@
       for (const sys of starMap.systems) {
         if (sys.name_en && sys.name) sectorEnToCn[sys.name_en] = sys.name;
       }
+      // 官方 API 与 hd2dev 的星区拼写不一致（官方：Arturion/Gallux；hd2dev：Arkturus/Galux）
+      // 加官方拼写别名，保证官方源时也显示中文
+      const SECTOR_ALIASES = {
+        "Arturion": "Arkturus", "Cantolus": "Cantorus",
+        "Gallux": "Galux", "Gellert": "Gelert", "Gothmar": "Gottma",
+        "Guang": "Guan", "Idun": "Ipodus", "Iptus": "Ipodus",
+        "Korpus": "Corpus", "Marspira": "Maspira",
+        "Meridian": "Meridia", "Morgon": "Morgen", "Rictus": "Rectus",
+        "Sten": "Stein", "Talus": "Talos",
+        "Tarragon": "Tarago", "Ursa": "Ursa Major", "Void": "The Void",
+      };
+      // 官方特例星区直接给中文（starmap/内置表均无）或保持英文
+      if (!sectorEnToCn["Cancri"]) sectorEnToCn["Cancri"] = "坎克里";
+      if (!sectorEnToCn["Lacaille"]) sectorEnToCn["Lacaille"] = "拉卡耶";
+      for (const [off, cnKey] of Object.entries(SECTOR_ALIASES)) {
+        if (!sectorEnToCn[off] && sectorEnToCn[cnKey]) sectorEnToCn[off] = sectorEnToCn[cnKey];
+      }
     }
 
     // 行动变量对照表（DSS 效果描述等）
