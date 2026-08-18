@@ -1072,6 +1072,8 @@
       assignments:data.assignments || { __err: "no assignments data" },
       dispatches: data.dispatches || { __err: "no dispatches data" },
       dss:        data.dss || null,
+      major_order: data.major_order || {},
+      news:        data.news || [],
       starMap,
       variables,
       fetchedAt:  data.fetchedAt,
@@ -1133,8 +1135,9 @@
       return;
     }
 
-    // 简报（含富文本）
-    const brief = a.briefing || a.description || "（无简报）";
+    // 简报（优先中文翻译，降级原文）
+    const mo = data.major_order || {};
+    const brief = mo.translated_brief || a.briefing || a.description || "（无简报）";
     const planetByIndex = (data.planets && !data.planets.__err)
       ? Object.fromEntries((data.planets || []).map(p => [p.index, p]))
       : {};
@@ -1500,8 +1503,20 @@
      ============================================================== */
   function renderNews(data) {
     const body = $("news-float-body");
-    if (data.dispatches && data.dispatches.__err) {
+    // 优先中文翻译（data.news，最新 5 条）；无则降级英文 dispatches
+    const transList = (data.news || []).slice(0, 5);
+    const fallbackErr = data.dispatches && data.dispatches.__err;
+    if (transList.length === 0 && fallbackErr) {
       body.innerHTML = `<div class="error" style="margin:10px;">无法获取资讯：${esc(data.dispatches.__err)}</div>`;
+      return;
+    }
+    if (transList.length > 0) {
+      body.innerHTML = transList.map(d => `
+        <div class="news-item">
+          <div class="news-item-time">${esc(relativeTime(d.published_at || d.published))} · ${esc(new Date(d.published_at || d.published).toLocaleString("zh-CN", { hour12: false }))}</div>
+          <div class="news-item-body">${richText(d.translated || d.message || "")}</div>
+        </div>
+      `).join("");
       return;
     }
     const list = (data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);

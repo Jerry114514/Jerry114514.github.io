@@ -26,6 +26,11 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
 
+      - name: Merge translations
+        run: python scripts/merge_translations.py
+        env:
+          PYTHONIOENCODING: utf-8
+
       - name: Commit and push
         run: |
           git config user.name "Jerry Jiang"
