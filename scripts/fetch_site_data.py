@@ -424,11 +424,11 @@ def main():
         base["war"].setdefault("statistics", {})
         base["war"]["statistics"]["playerCount"] = total_players
 
-    # 重要指令：取第一个非空的（官方 -> companion -> hd2dev -> 快照兜底）
-    if official and official.get("assignments"):
-        base["assignments"] = official["assignments"]
-    elif companion and companion.get("assignments"):
+    # 重要指令：companion（社区源）优先 -> 官方 -> hd2dev -> 快照兜底（用户指定社区源）
+    if companion and companion.get("assignments"):
         base["assignments"] = companion["assignments"]
+    elif official and official.get("assignments"):
+        base["assignments"] = official["assignments"]
     elif hd2dev and hd2dev.get("assignments"):
         base["assignments"] = hd2dev["assignments"]
     else:

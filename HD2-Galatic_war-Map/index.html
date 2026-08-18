@@ -1016,11 +1016,13 @@
   };
 
   // 任务类型枚举（来自社区经验）
+  // 任务类型（companion 社区源语义；用户指定 MO 从社区源抓）
   const TASK_TYPE_CN = {
-    2:  "解放/攻占星球",
+    1:  "解放/攻占星球",
+    2:  "采集样本",
     3:  "消灭敌人",
     9:  "完成任务数",
-    11: "采集样本",
+    11: "解放星球",
     12: "升起/引爆信号弹"
   };
 
@@ -1169,10 +1171,22 @@
       return i >= 0 ? vs[i] : null;
     };
 
-    const goal    = get(3);          // 目标值
-    const current = currentProgress != null ? currentProgress : null;  // progress[i]
+    let goal    = get(3);          // 目标值
+    let current = currentProgress != null ? currentProgress : null;  // progress[i]
     const planet  = get(12);         // 星球索引
     const race    = get(6);          // 1=Human 2=Terminid 3=Automaton 4=Illuminate
+
+    // type=11 解放星球：companion 的 values 非目标值，goal=100，current 由星球解放度算
+    if (t === 11) {
+      goal = 100;
+      const pl = currentData && currentData.planets
+        ? currentData.planets.find(x => x.index === planet) : null;
+      if (pl && pl.maxHealth) {
+        current = Math.round((1 - (pl.health || 0) / pl.maxHealth) * 100);
+      } else {
+        current = 0;
+      }
+    }
 
     const typeCn = TASK_TYPE_CN[t] || `任务 #${t}`;
     const raceMap = { 1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate" };
