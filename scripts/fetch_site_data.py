@@ -143,18 +143,30 @@ def fetch_official():
     ps_by_idx = {p.get("index"): p for p in (st.get("planetStatus") or [])}
 
     planets = []
+    # 行动变量索引：planetIndex -> [galacticEffectId]
+    effects_by_planet = {}
+    for ef in (st.get("planetActiveEffects") or []):
+        pi = ef.get("planetIndex")
+        gid = ef.get("galacticEffectId")
+        if pi is not None and gid is not None:
+            effects_by_planet.setdefault(pi, []).append(gid)
     for idx in sorted(set(info_by_idx) | set(ps_by_idx)):
         info = info_by_idx.get(idx, {})
         ps = ps_by_idx.get(idx, {})
+        max_h = ps.get("maxHealth", 0) or 1
+        regen = ps.get("regenPerSecond") or 0
+        resistance = round(regen * 3600 / max_h * 100, 2) if max_h else 0
         planets.append({
             "index": idx,
             "name": info.get("name") or f"PLANET_{idx}",
             "sector": info.get("sector") if isinstance(info.get("sector"), str) else SECTOR_ID.get(info.get("sector"), ""),
             "currentOwner": norm_owner(ps.get("owner")),
             "health": ps.get("health", 0),
-            "maxHealth": ps.get("maxHealth", 0),
+            "maxHealth": max_h,
             "players": ps.get("players", 0),
             "attacking": bool(ps.get("attacking")),
+            "resistance": resistance,
+            "activeEffects": effects_by_planet.get(idx, []),
         })
 
     campaigns = []
@@ -239,15 +251,21 @@ def fetch_companion():
 
     planets = []
     for ps in ps_list:
+        max_h = ps.get("maxHealth", 0) or 1
+        regen = ps.get("regenPerSecond") or 0
+        # 抵抗度 %/h：regenPerSecond(每秒HP) * 3600 / maxHealth * 100
+        resistance = round(regen * 3600 / max_h * 100, 2) if max_h else 0
         planets.append({
             "index": ps.get("index"),
             "name": f"PLANET_{ps.get('index')}",
             "sector": "",
             "currentOwner": norm_owner(ps.get("owner")),
             "health": ps.get("health", 0),
-            "maxHealth": ps.get("maxHealth", 0),
+            "maxHealth": max_h,
             "players": ps.get("players", 0),
             "attacking": bool(ps.get("attacking")),
+            "resistance": resistance,
+            "activeEffects": [],
         })
 
     campaigns = []
