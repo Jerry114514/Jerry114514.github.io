@@ -176,8 +176,19 @@ def fetch_official():
     dispatches = [{"id": n.get("id"), "published": norm_time(n.get("published")),
                    "type": n.get("type"), "message": n.get("message")} for n in (news or [])]
 
+    # DSS 空间站（官方 Status.spaceStations）
+    dss = None
+    ss_list = st.get("spaceStations") or []
+    if ss_list:
+        s0 = ss_list[0]
+        dss = {
+            "planetIndex": s0.get("planetIndex"),
+            "activeEffectIds": s0.get("activeEffectIds") or [],
+            "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
+        }
+
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches}
+            "assignments": assignment, "dispatches": dispatches, "dss": dss}
 
 
 # ---------------- companion 源 ----------------
@@ -243,8 +254,19 @@ def fetch_companion():
         dispatches.append({"id": n.get("id"), "published": norm_time(n.get("published")),
                            "type": n.get("type"), "message": n.get("message")})
 
+    # DSS 空间站（companion spaceStations）
+    dss = None
+    ss_list = obj.get("spaceStations") or []
+    if ss_list:
+        s0 = ss_list[0]
+        dss = {
+            "planetIndex": s0.get("planetIndex"),
+            "activeEffectIds": s0.get("activeEffectIds") or [],
+            "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
+        }
+
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches}
+            "assignments": assignment, "dispatches": dispatches, "dss": dss}
 
 
 # ---------------- helldivers2.dev 源 ----------------
@@ -266,7 +288,7 @@ def fetch_hd2dev():
                       "expiration": norm_time(a0.get("expiration"))}
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches}
+            "assignments": assignment, "dispatches": dispatches, "dss": None}
 
 
 # ---------------- 合并 ----------------
@@ -329,6 +351,14 @@ def main():
         for dp in companion["dispatches"]:
             dp["published"] = ""
         base["dispatches"] = companion["dispatches"]
+
+    # DSS：官方 -> companion（hd2dev 无 spaceStations）
+    if official and official.get("dss"):
+        base["dss"] = official["dss"]
+    elif companion and companion.get("dss"):
+        base["dss"] = companion["dss"]
+    else:
+        base["dss"] = None
 
     result = {"fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
