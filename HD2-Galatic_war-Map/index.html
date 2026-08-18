@@ -177,7 +177,7 @@
       position: relative;
       overflow: hidden;
       max-width: 420px;
-      height: 1.2em;
+      /* 高度由首行内容撑开（与 JS 像素滚动对齐，避免 em 误差错位） */
       display: inline-flex;
       align-items: center;
       vertical-align: middle;
@@ -1555,6 +1555,12 @@
     startBanner();
   }
 
+  // 获取单个轮播项的实际像素高度（避免 em 近似误差导致错位）
+  function bannerItemHeight() {
+    const first = document.querySelector(".banner-track .banner-item");
+    return first ? first.offsetHeight : 14;
+  }
+
   // 渲染轮播轨道（统一用 bannerDisplayItems，渲染与轮播共用，避免错位/空项）
   function renderBanner() {
     const track = $("banner-track");
@@ -1570,7 +1576,7 @@
     }).join("");
     // 重置轮播索引（防止显示项数量变化后错位）
     bannerIdx = 0;
-    track.style.transform = "translateY(0)";
+    track.style.transform = "translateY(0px)";
   }
 
   function updateBannerPlayer() {
@@ -1584,9 +1590,10 @@
     if (bannerDisplayItems.length <= 1) return;
     const track = $("banner-track");
     if (!track) return;
+    const step = bannerItemHeight();
     bannerTimer = setInterval(() => {
       bannerIdx = (bannerIdx + 1) % bannerDisplayItems.length;
-      track.style.transform = `translateY(-${bannerIdx * 1.2}em)`;
+      track.style.transform = `translateY(-${bannerIdx * step}px)`;
     }, 4000);
   }
 
