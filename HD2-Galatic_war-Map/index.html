@@ -1153,8 +1153,8 @@
     const ownerKey = owner.toLowerCase();
     const isHuman = owner === "Humans";
 
-    // HP / 解放进度
-    const hpPct = (p.maxHealth > 0) ? Math.round((p.health / p.maxHealth) * 100) : 0;
+    // 解放进度（与 HD2-Bot 一致）：progress = (1 - health/maxHealth) × 100
+    const hpPct = (p.maxHealth > 0) ? Math.round((1 - (p.health || 0) / p.maxHealth) * 100) : 0;
     const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;
     const statusTag = statusLabel
       ? `<span class="status-tag ${esc(statusClass)}">${esc(statusLabel)}</span>`
@@ -1169,7 +1169,7 @@
           ${statusTag}
           <span>· ${esc(sectorCn(name.sector))}</span>
         </div>
-        ${statusLabel === "已解放" || isHuman && hpPct >= 100
+        ${statusLabel === "已解放" || (isHuman && hpPct >= 99.9)
           ? `<div class="planet-hp">已解放</div>`
           : `
             <div class="hp-bar"><div class="hp-bar-fill hp-${hpColorClass(hpPct)}" style="width:${hpPct}%"></div></div>
@@ -1287,9 +1287,9 @@
       const cards = list.map(p => {
         const owner = p.currentOwner || "Unknown";
         const isHuman = owner === "Humans";
-        const hpPct = (p.maxHealth > 0) ? Math.round((p.health / p.maxHealth) * 100) : 0;
-        const statusLabel = isHuman && hpPct >= 100 ? "已解放" : (isHuman ? "防御战" : "解放战");
-        const statusClass = isHuman && hpPct >= 100 ? "status-liberated" : (isHuman ? "status-defend" : "status-liberate");
+        const hpPct = (p.maxHealth > 0) ? Math.round((1 - (p.health || 0) / p.maxHealth) * 100) : 0;
+        const statusLabel = isHuman && hpPct >= 99.9 ? "已解放" : (isHuman ? "防御战" : "解放战");
+        const statusClass = isHuman && hpPct >= 99.9 ? "status-liberated" : (isHuman ? "status-defend" : "status-liberate");
         return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
       }).join("");
 
