@@ -453,6 +453,35 @@
       border-radius: 8px;
       padding: 10px 14px;
     }
+    /* DSS 红底通知（未停靠时） */
+    .dss-notice {
+      background: rgba(231, 76, 60, 0.14);
+      border: 1px solid rgba(231, 76, 60, 0.5);
+      border-radius: 10px;
+      color: #F08A7D;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    /* DSS buff 卡片 */
+    .dss-passive, .dss-buff {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .dss-passive { border-left: 3px solid var(--yellow); }
+    .dss-buff-on  { border-left: 3px solid #2ECC71; }
+    .dss-buff-off { border-left: 3px solid var(--border); opacity: 0.75; }
+    .dss-buff-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 4px;
+    }
+    .dss-buff-head strong { color: var(--text); font-size: 0.92rem; }
+    .dss-buff-status { font-size: 0.78rem; padding: 2px 8px; border-radius: 10px; }
+    .st-on { background: rgba(46, 204, 113, 0.18); color: #5DDB8E; }
+    .st-off { background: rgba(107, 114, 128, 0.15); color: #9CA3AF; }
+    .dss-votes { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .dss-passive { margin-top: 10px; }
     .dss-effect strong { color: var(--yellow); font-size: 0.92rem; }
     .dss-effect-desc {
       margin-top: 4px;
@@ -1093,8 +1122,8 @@
     const expireEl = $("mo-expire");
 
     const a = data.assignments;
-    if (!a || a.__err) {
-      root.innerHTML = `<div class="error">无法获取重要指令：${esc(a && a.__err || "未知错误")}</div>`;
+    if (!a || a.__err || !a.tasks) {
+      root.innerHTML = `<div class="empty">📡 暂无重要指令数据（可能处于 Major Order 切换间隙，稍后自动刷新）。</div>`;
       expireEl.textContent = "";
       return;
     }
@@ -1206,9 +1235,15 @@
     buildDssEffectMap(data.variables);
 
     const dss = data.dss;
+
+    // 无状态：顶部红底通知
+    const notice = !dss
+      ? `<div class="dss-notice">🛰️ DSS 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
+      : "";
+
     if (!dss) {
-      root.innerHTML = `<div class="empty">🛰️ DSS 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`;
-      meta.textContent = "";
+      root.innerHTML = notice;
+      meta.textContent = "未停靠";
       return;
     }
 
@@ -1219,36 +1254,46 @@
     const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: `星球#${idx}` };
     const planetNameStr = nm.cn || nm.en;
 
-    // 生效效果
-    const effIds = dss.activeEffectIds || [];
-    const effLines = [];
-    for (const eid of effIds) {
-      const e = dssEffectDesc && dssEffectDesc[eid];
-      if (e) {
-        effLines.push(`<div class="dss-effect"><strong>${esc(e.cn)}</strong><div class="dss-effect-desc">${esc(e.desc)}</div></div>`);
-      } else {
-        effLines.push(`<div class="dss-effect"><strong>效果 ${eid}</strong></div>`);
-      }
-    }
+    const activeIds = new Set(dss.activeEffectIds || []);
 
-    const effHtml = effLines.length
-      ? `<div class="dss-effects">${effLines.join("")}</div>`
-      : `<div class="empty">当前无生效战术行动。</div>`;
+    // 被动效果：行动支持（1238）
+    const passive = dssEffectDesc && dssEffectDesc[1238]
+      ? dssEffectDesc[1238]
+      : { cn: "行动支持", desc: "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。" };
+
+    // 3 个投票 buff（轰炸/飞鹰/封锁）+ 重型军械分发
+    const voteBuffs = [
+      { key: "bombard", ids: [1208, 1211], label: "💣 星球轰炸" },
+      { key: "eagle",   ids: [1209, 1212, 1216], label: "✈ 飞鹰风暴" },
+      { key: "block",   ids: [1213, 1215], label: "🚫 轨道封锁" },
+    ];
+    const buffHtml = voteBuffs.map(b => {
+      const active = b.ids.some(id => activeIds.has(id));
+      const info = b.ids.map(id => dssEffectDesc && dssEffectDesc[id]).find(Boolean);
+      return `
+        <div class="dss-buff ${active ? "dss-buff-on" : "dss-buff-off"}">
+          <div class="dss-buff-head">
+            <strong>${b.label}</strong>
+            <span class="dss-buff-status ${active ? "st-on" : "st-off"}">${active ? "⚡ 生效中" : "⏸ 未激活"}</span>
+          </div>
+          ${info && info.desc ? `<div class="dss-effect-desc">${esc(info.desc)}</div>` : ""}
+        </div>`;
+    }).join("");
 
     root.innerHTML = `
+      ${notice}
       <div class="dss-station">
         <div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>
-        ${effHtml}
+        <div class="dss-passive">
+          <div class="dss-buff-head"><strong>${esc(passive.cn)}</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-effect-desc">${esc(passive.desc)}</div>
+        </div>
+        <div class="dss-votes">${buffHtml}</div>
       </div>
     `;
-    meta.textContent = effIds.length ? `${effIds.length} 项效果` : "无效果";
+    meta.textContent = `${planetNameStr} · ${activeIds.size ? activeIds.size + " 项生效" : "无投票生效"}`;
   }
 
-  /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
-  function hpColorClass(pct) {
-    if (pct < 60) return (pct <= 30 ? "hp-low" : "hp-mid");
-    return "hp-high";   // >= 60% 绿色
-  }
 
   /* ==============================================================
      渲染：星球卡片（通用）

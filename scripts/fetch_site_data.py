@@ -94,6 +94,34 @@ def norm_time(v):
     return v or ""
 
 
+SNAPSHOT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data_snapshot.json")
+
+
+def _load_snapshot() -> dict:
+    """读取上次成功抓取快照（MO 空时兜底）"""
+    try:
+        if os.path.exists(SNAPSHOT_FILE):
+            with open(SNAPSHOT_FILE, encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {}
+
+
+def _save_snapshot(data: dict) -> None:
+    """保存本次成功抓取快照（仅保留 assignments/dss 关键字段）"""
+    try:
+        snap = {
+            "savedAt": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
+            "assignments": data.get("assignments"),
+            "dss": data.get("dss"),
+        }
+        with open(SNAPSHOT_FILE, "w", encoding="utf-8") as f:
+            json.dump(snap, f, ensure_ascii=False)
+    except Exception:
+        pass
+
+
 # ---------------- 官方源 ----------------
 def fetch_official():
     st = fetch_json(f"{OFFICIAL_API}/api/WarSeason/{WAR_ID}/Status", HEADERS_OFFICIAL, 20)
@@ -193,7 +221,10 @@ def fetch_official():
 
 # ---------------- companion 源 ----------------
 def fetch_companion():
-    obj = fetch_json(COMPANION_LIVE, HEADERS_HD2DEV, 25)
+    obj = fetch_json(COMPANION_LIVE, {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AstrBot-HD2-Plugin/1.0",
+        "Accept": "application/json",
+    }, 25)
     ws = obj.get("warStatus") or {}
     ps_list = ws.get("planetStatus") or []
 
@@ -337,11 +368,20 @@ def main():
         base["war"].setdefault("statistics", {})
         base["war"]["statistics"]["playerCount"] = total_players
 
-    # 重要指令：官方优先 -> companion -> hd2dev（字段级覆盖）
+    # 重要指令：取第一个非空的（官方 -> companion -> hd2dev -> 快照兜底）
     if official and official.get("assignments"):
         base["assignments"] = official["assignments"]
     elif companion and companion.get("assignments"):
         base["assignments"] = companion["assignments"]
+    elif hd2dev and hd2dev.get("assignments"):
+        base["assignments"] = hd2dev["assignments"]
+    else:
+        # 全部为空：用上次成功快照（MO 切换间隙保护）
+        snap = _load_snapshot()
+        if snap and snap.get("assignments"):
+            base["assignments"] = snap["assignments"]
+            print("  [FALLBACK] 重要指令使用上次成功快照")
+    _save_snapshot(base)
 
     # 资讯：hd2dev 优先（真实 ISO 时间）；companion 的 published 是游戏内时间戳不可用，仅兜底
     if hd2dev and hd2dev.get("dispatches"):
@@ -352,13 +392,18 @@ def main():
             dp["published"] = ""
         base["dispatches"] = companion["dispatches"]
 
-    # DSS：官方 -> companion（hd2dev 无 spaceStations）
+    # DSS：官方 -> companion（hd2dev 无 spaceStations）-> 快照兜底
     if official and official.get("dss"):
         base["dss"] = official["dss"]
     elif companion and companion.get("dss"):
         base["dss"] = companion["dss"]
     else:
-        base["dss"] = None
+        snap = _load_snapshot()
+        if snap and snap.get("dss"):
+            base["dss"] = snap["dss"]
+            print("  [FALLBACK] DSS 使用上次成功快照")
+        else:
+            base["dss"] = None
 
     result = {"fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
