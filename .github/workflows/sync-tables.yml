@@ -1,0 +1,51 @@
+name: Sync Tables Daily
+
+on:
+  schedule:
+    # 每天 08:00 UTC（16:00 北京时间）同步一次对照表
+    - cron: '0 8 * * *'
+  workflow_dispatch:   # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync-tables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch latest tables from HD2-Bot-Release
+        run: |
+          # 逐文件从 HD2-Bot-Release 仓库拉取最新对照表到网站 tables/
+          mkdir -p HD2-Galatic_war-Map/tables
+          BASE="https://raw.githubusercontent.com/Jerry114514/HD2-Bot-Release/main/tables"
+          for f in \
+            "HD2行动变量对照表.md" \
+            "星图对照表_修正版.md" \
+            "群使用说明.txt" \
+            "dss_effects.json" \
+            "effect_id_cn.json" \
+            "galactic_effects.json" \
+            "starmap.json" \
+            "hd2_variables.json" \
+          ; do
+            echo "==> $f"
+            # URL 编码中文文件名
+            ENC=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$f")
+            curl -fsSL --retry 3 "$BASE/$ENC" -o "HD2-Galatic_war-Map/tables/$f" \
+              || echo "  !! 拉取失败: $f"
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2-Galatic_war-Map/tables/
+          if ! git diff --cached --quiet; then
+            git commit -m "tables: 每日同步对照表 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          else
+            echo "对照表无变化，跳过提交"
+          fi
