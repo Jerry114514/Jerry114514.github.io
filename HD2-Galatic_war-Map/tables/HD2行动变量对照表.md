@@ -40,8 +40,8 @@
 | --- | --- | --- |
 | Eagle Air Raids | “飞鹰风暴”空袭 | 任务期间将周期性部署“飞鹰”机枪扫射 |
 | Ordnance Air Raids | 轨道轰炸支援 | 轨道火力网轰炸在任务期间周期性部署。 |
-| SEAF Garrison [effect 1400/1401] | SEAF武装部队驻守 | 战场上会周期性投放多种装备的SEAF重装部队。|
-| SEAF Forces in Region [effect 1400/1401] | 区域内有SEAF部队 | 游戏区域内存在SEAF士兵。（2026-08 新词条，英文名待确认） |
+| SEAF Garrison [effect 1400/1401] | 区域内有SEAF部队 | 战场内存在友方SEAF部队。 |
+| SEAF Forces in Region [effect 1400/1401] | SEAF武装部队驻守 | 战场上会周期性投送具有多种装备的SEAF重装部队，随时准备支援你。 |
 
 ## 👽 光能族宗派（ILLUMINATE SECT）
 | 原文/参数 | 译文 | 描述 |
