@@ -744,6 +744,16 @@
     /* ============================================================
        工具
        ============================================================ */
+    .prospect-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
     .loading {
       color: var(--text-mute);
       font-size: 0.85rem;
@@ -885,6 +895,21 @@
       </div>
       <div id="attackable-content">
         <div class="loading">正在扫描银河战区…</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         区块2.5：民主前瞻（待定星系 TBD 单独板块）
+         ============================================================ -->
+    <section class="block" id="block-prospect">
+      <div class="block-head">
+        <span class="block-emoji">🔭</span>
+        <h2 class="block-title">民主前瞻</h2>
+        <span class="block-meta" id="prospect-meta"></span>
+      </div>
+      <div class="prospect-desc">部分星球已被观测，等待确认民主情况，先遣队正在赶往现场评估潜在威胁。</div>
+      <div id="prospect-content">
+        <div class="loading">正在解析观测数据…</div>
       </div>
     </section>
 
@@ -1674,6 +1699,33 @@
   /* ==============================================================
      渲染：区块3 星区目录
      ============================================================== */
+  function renderProspect(data) {
+    const root = $("prospect-content");
+    const meta = $("prospect-meta");
+    if (!root) return;
+    const planets = (data.planets && !data.planets.__err) ? data.planets : [];
+    // 待定星系 TBD 星球（民主前瞻）
+    const tbd = planets.filter(p => (p.sector || "").toUpperCase() === "TBD");
+    if (tbd.length === 0) {
+      root.innerHTML = `<div class="empty">暂无待确认星系，民主情况一切正常。</div>`;
+      meta.textContent = "";
+      return;
+    }
+    meta.textContent = `${tbd.length} 个待确认目标`;
+    const cards = tbd.map(p => {
+      const owner = p.currentOwner || "Unknown";
+      const isHuman = owner === "Humans";
+      const hpPct = (p.maxHealth > 0) ? Math.round(((p.health || 0) / p.maxHealth) * 100) : 0;
+      const libPct = 100 - hpPct;
+      const statusLabel = (libPct >= 99.9 || (isHuman && libPct <= 0.01)) ? "已解放"
+        : (isHuman ? "防御战" : "解放战");
+      const statusClass = (libPct >= 99.9 || (isHuman && libPct <= 0.01)) ? "status-liberated"
+        : (isHuman ? "status-defend" : "status-liberate");
+      return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
+    }).join("");
+    root.innerHTML = `<div class="planet-grid">${cards}</div>`;
+  }
+
   function renderSectors(data) {
     const root = $("sectors-content");
     const meta = $("sectors-meta");
@@ -1683,10 +1735,11 @@
       return;
     }
     const planets = data.planets || [];
-    // 按 sector 分组
+    // 按 sector 分组（排除 TBD：待定星系由「民主前瞻」板块单独展示）
     const groups = {};
     for (const p of planets) {
       const sec = p.sector || "未分区";
+      if ((sec || "").toUpperCase() === "TBD") continue;
       if (!groups[sec]) groups[sec] = [];
       groups[sec].push(p);
     }
@@ -1876,6 +1929,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderMO(data);
       renderDss(data);
       renderAttackable(data);
+      renderProspect(data);
       renderSectors(data);
       renderNews(data);
       lastSuccessAt = Date.now();
