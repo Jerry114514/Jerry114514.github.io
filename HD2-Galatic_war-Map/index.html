@@ -956,6 +956,12 @@
      ============================================================== */
   const CONFIG = {
     DATA_URL: "./data.json",          // Actions 定时生成的本地数据
+    // CDN 缓存绕过：GitHub Pages CDN 会缓存 data.json 约 10 分钟，加 5 分钟粒度时间戳参数
+    // 使 CDN 每 5 分钟自然失效（fetch-data workflow 也是 5 分钟更新，节奏一致）
+    dataUrlBust: () => {
+      const m = Math.floor(Date.now() / 300_000);  // 每 5 分钟一个值
+      return `./data.json?t=${m}`;
+    },
     BANNER_URL: "./banner.json",      // 顶部轮播列表（可维护）
     REFRESH_MS: 60_000,             // 60s 自动刷新（读本地 data.json）
     STALE_AFTER_MS: 360_000,        // 6 分钟无数据视为失联（数据每 5 分钟更新）
@@ -1104,7 +1110,7 @@
      ============================================================== */
   // 读取本地 data.json（GitHub Actions 生成：官方 API -> companion -> helldivers2.dev 三级回退）
   async function fetchAll() {
-    const r = await fetch(CONFIG.DATA_URL, { cache: "no-store" });
+    const r = await fetch(CONFIG.dataUrlBust(), { cache: "no-store" });
     if (!r.ok) throw new Error(`HTTP ${r.status} on ${CONFIG.DATA_URL}`);
     const data = await r.json();
 
