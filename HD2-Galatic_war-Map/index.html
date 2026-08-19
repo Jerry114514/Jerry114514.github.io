@@ -766,7 +766,7 @@
       font-size: 0.8rem; color: var(--text);
       margin-top: 10px; font-weight: 600;
     }
-    .stratagem-toolbar { margin-bottom: 14px; }
+        .stratagem-toolbar { margin-bottom: 14px; }
     .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; }
     .stratagem-big-btn {
       background: linear-gradient(135deg, rgba(245,197,24,0.25), rgba(245,197,24,0.08));
@@ -796,9 +796,11 @@
     }
     .stratagem-btn:hover { background: rgba(245,197,24,0.25); transform: translateY(-1px); }
     .stratagem-btn:active { transform: translateY(0); }
-    .stratagem-layout { display: flex; gap: 16px; flex-wrap: wrap; }
-    .stratagem-cards { flex: 1 1 320px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    /* 布局：左卡片区 + 右评分区 */
+    .stratagem-layout { display: flex; gap: 18px; align-items: flex-start; }
+    .stratagem-cards { flex: 1 1 420px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .strat-card {
+      position: relative;
       background: rgba(255,255,255,0.04);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -806,22 +808,45 @@
       border-radius: 14px;
       padding: 14px;
       display: flex; flex-direction: column; gap: 8px;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .strat-card-name { font-size: 0.9rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    /* S级光晕 */
+    .strat-card.strat-card-S {
+      border-color: rgba(245,197,24,0.7);
+      box-shadow: 0 0 18px rgba(245,197,24,0.25), inset 0 0 12px rgba(245,197,24,0.05);
+    }
+    .strat-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .strat-card-name { font-size: 0.88rem; font-weight: 700; color: var(--text); line-height: 1.3; flex: 1; }
     .strat-card-type {
-      display: inline-block; align-self: flex-start;
-      font-size: 0.68rem; font-weight: 600;
+      display: inline-block; flex-shrink: 0;
+      font-size: 0.66rem; font-weight: 600;
       padding: 2px 10px; border-radius: 20px;
     }
-    .strat-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 12px; }
-    .strat-stat { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); }
-    .strat-stat strong { color: var(--text); font-weight: 600; }
+    /* 四维进度条 */
+    .strat-bar { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; color: var(--text-dim); }
+    .strat-bar-label { width: 52px; flex-shrink: 0; text-align: right; }
+    .strat-bar-track { flex: 1; height: 7px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .strat-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+    .strat-bar-val { width: 18px; flex-shrink: 0; text-align: right; font-weight: 700; color: var(--text); }
+    .strat-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 2px; }
     .strat-card-bonus { font-size: 0.72rem; }
     .strat-bonus-pos { color: #2ECC71; }
     .strat-bonus-neg { color: #E74C3C; }
     .strat-bonus-zero { color: var(--text-dim); }
+    .strat-swap-btn {
+      font-size: 0.66rem;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .strat-swap-btn:hover { color: var(--yellow); border-color: rgba(245,197,24,0.5); }
+    /* 右侧评分区 */
+    .strat-side { flex: 0 0 280px; display: flex; flex-direction: column; gap: 14px; }
     .strat-panel {
-      flex: 0 0 240px;
       background: rgba(255,255,255,0.04);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -829,7 +854,6 @@
       border-radius: 14px;
       padding: 16px;
       display: flex; flex-direction: column; gap: 10px;
-      align-self: flex-start;
     }
     .strat-panel-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
     .strat-panel-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-dim); }
@@ -837,18 +861,71 @@
     .strat-panel-divider { border-top: 1px dashed var(--border); margin: 2px 0; }
     .strat-total { font-size: 1.05rem; font-weight: 700; color: var(--text); }
     .strat-grade { font-size: 1.8rem; font-weight: 800; line-height: 1; }
-    .strat-grade-S { color: #F5C518; }
+    .strat-grade-S { color: #F5C518; text-shadow: 0 0 16px rgba(245,197,24,0.5); font-size: 2.3rem; }
     .strat-grade-A { color: #5BA3D0; }
     .strat-grade-B { color: #2ECC71; }
     .strat-grade-C { color: #6B7280; }
     .strat-grade-D { color: #E74C3C; }
     .strat-grade-guide { font-size: 0.66rem; color: var(--text-dim); line-height: 1.6; border-top: 1px solid var(--border); padding-top: 8px; }
-    .strat-empty { color: var(--text-dim); font-size: 0.8rem; padding: 20px 0; }
-    @media (max-width: 640px) {
-      .stratagem-cards { grid-template-columns: 1fr; }
-      .strat-panel { flex-basis: 100%; }
+    .strat-hint { font-size: 0.72rem; color: var(--text-dim); font-style: italic; }
+    /* 四维柱状统计图 */
+    .strat-chart {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
     }
-    .prospect-desc {
+    .strat-chart-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+    .strat-chart-bar { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--text-dim); }
+    .strat-chart-label { width: 60px; flex-shrink: 0; text-align: right; }
+    .strat-chart-track { flex: 1; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden; }
+    .strat-chart-fill { height: 100%; border-radius: 5px; transition: width 0.6s ease; }
+    .strat-chart-val { width: 32px; flex-shrink: 0; text-align: right; font-weight: 700; color: var(--text); }
+    .strat-empty { color: var(--text-dim); font-size: 0.8rem; padding: 20px 0; }
+    /* 换一个弹层 */
+    .strat-modal-mask {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .strat-modal {
+      background: var(--panel-bg, #141926);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      width: min(480px, 90vw);
+      max-height: 70vh;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .strat-modal-head { display: flex; justify-content: space-between; align-items: center; }
+    .strat-modal-title { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .strat-modal-close { cursor: pointer; color: var(--text-dim); font-size: 1.1rem; padding: 0 4px; }
+    .strat-modal-close:hover { color: var(--text); }
+    .strat-modal-list { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
+    .strat-modal-item {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem;
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .strat-modal-item:hover { border-color: rgba(245,197,24,0.5); background: rgba(245,197,24,0.06); }
+    .strat-modal-item-stats { color: var(--text-dim); font-size: 0.7rem; }
+    @media (max-width: 640px) {
+      .stratagem-layout { flex-direction: column; }
+      .stratagem-cards { grid-template-columns: 1fr; }
+      .strat-side { flex-basis: 100%; }
+    }
+    
+.prospect-desc {
       font-size: 0.75rem;
       color: var(--text-dim);
       background: rgba(255,255,255,0.03);
@@ -1416,7 +1493,11 @@
     "重型支援武器": "#E74C3C", "载具": "#CF64F8",
     "可部署物": "#D6806D", "背包": "#6B7280",
   };
+  // 维度配色：对单=橙红 对群=黄 穿甲=紫 第四维=蓝
+  const STRAT_DIM_COLOR = ["#FF6B4A", "#F5C518", "#CF64F8", "#5BA3D0"];
+  const STRAT_DIM_LABEL = ["对单", "对群", "穿甲"];
   let stratagemPool = [];
+  let currentLoadout = [];   // 当前配装（支持换一个微调）
 
   function stratGrade(score) {
     if (score >= 34) return { g: "S", cls: "strat-grade-S" };
@@ -1428,7 +1509,6 @@
 
   function stratDraw() {
     const pool = stratagemPool.slice();
-    // Fisher-Yates 洗牌
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -1444,54 +1524,142 @@
     if (b) b.addEventListener("click", stratRender);
   }
 
+  // 战备卡片（含进度条 + 换一个）
+  function stratCardHtml(x, isS) {
+    const d4 = STRAT_DIM4_CN[x.type] || "第四维";
+    const tc = STRAT_TYPE_COLOR[x.type] || "#6B7280";
+    const bonusCls = (x.bonus || 0) > 0 ? "strat-bonus-pos" : (x.bonus || 0) < 0 ? "strat-bonus-neg" : "strat-bonus-zero";
+    const bonusTxt = (x.bonus || 0) > 0 ? `+${x.bonus}` : `${x.bonus || 0}`;
+    const dims = [
+      { label: "对单", val: x.stats[0], color: STRAT_DIM_COLOR[0] },
+      { label: "对群", val: x.stats[1], color: STRAT_DIM_COLOR[1] },
+      { label: "穿甲", val: x.stats[2], color: STRAT_DIM_COLOR[2] },
+      { label: d4, val: x.stats[3], color: STRAT_DIM_COLOR[3] },
+    ];
+    const bars = dims.map(d => `
+      <div class="strat-bar">
+        <span class="strat-bar-label">${esc(d.label)}</span>
+        <div class="strat-bar-track"><div class="strat-bar-fill" style="width:${Math.min(100, d.val / 10 * 100)}%;background:${d.color}"></div></div>
+        <span class="strat-bar-val">${d.val}</span>
+      </div>`).join("");
+    return `
+      <div class="strat-card${isS ? " strat-card-S" : ""}">
+        <div class="strat-card-head">
+          <div class="strat-card-name">${esc(x.name)}</div>
+          <span class="strat-card-type" style="background:${tc}22;color:${tc};border:1px solid ${tc}55">${esc(x.type)}</span>
+        </div>
+        ${bars}
+        <div class="strat-card-footer">
+          <div class="strat-card-bonus ${bonusCls}">Bonus: ${bonusTxt}</div>
+          <button class="strat-swap-btn" data-swap="${esc(x.id)}">换一个</button>
+        </div>
+      </div>`;
+  }
+
+  // 换一个弹层
+  function stratOpenSwap(id) {
+    const item = stratagemPool.find(x => x.id === id);
+    if (!item) return;
+    const sameType = stratagemPool.filter(x => x.type === item.type && x.id !== id);
+    const mask = document.createElement("div");
+    mask.className = "strat-modal-mask";
+    const list = sameType.map(x => `
+      <div class="strat-modal-item" data-pick="${esc(x.id)}">
+        <span>${esc(x.name)}</span>
+        <span class="strat-modal-item-stats">${x.stats[0]}/${x.stats[1]}/${x.stats[2]}/${x.stats[3]} · B${x.bonus || 0}</span>
+      </div>`).join("") || `<div class="strat-empty">同类型无其他战备</div>`;
+    mask.innerHTML = `
+      <div class="strat-modal">
+        <div class="strat-modal-head">
+          <span class="strat-modal-title">🔄 更换「${esc(item.name)}」</span>
+          <span class="strat-modal-close">✕</span>
+        </div>
+        <div class="strat-modal-list">${list}</div>
+      </div>`;
+    document.body.appendChild(mask);
+    const close = () => mask.remove();
+    mask.querySelector(".strat-modal-close").addEventListener("click", close);
+    mask.addEventListener("click", (e) => { if (e.target === mask) close(); });
+    mask.querySelectorAll(".strat-modal-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const nid = el.dataset.pick;
+        const ni = stratagemPool.find(x => x.id === nid);
+        if (ni) {
+          const idx = currentLoadout.findIndex(x => x.id === id);
+          if (idx >= 0) currentLoadout[idx] = ni;
+          stratRenderFromLoadout();
+        }
+        close();
+      });
+    });
+  }
+
+  function stratRenderFromLoadout() {
+    stratRenderWith(currentLoadout);
+  }
+
   function stratRender() {
-    const root = $("stratagem-content");
-    if (!root) return;
     if (!stratagemPool.length) {
-      root.innerHTML = `<div class="strat-empty">战备库加载失败。</div>`;
+      $("stratagem-content").innerHTML = `<div class="strat-empty">战备库加载失败。</div>`;
       return;
     }
-    const picked = stratDraw();
+    currentLoadout = stratDraw();
+    stratRenderWith(currentLoadout);
+  }
+
+  function stratRenderWith(picked) {
+    const root = $("stratagem-content");
+    if (!root) return;
     // 评分
     const T = new Set(picked.map(x => x.type)).size;
     const M = picked.filter(x => (x.subtag && x.subtag.length > 0)).length;
     const bonusSum = picked.reduce((s, x) => s + (x.bonus || 0), 0);
     const total = (T * 5 + T * T) - (M * M * 0.5) + bonusSum;
     const grade = stratGrade(total);
+    const isS = grade.g === "S";
 
-    const cardsHtml = picked.map(x => {
-      const d4 = STRAT_DIM4_CN[x.type] || "第四维";
-      const tc = STRAT_TYPE_COLOR[x.type] || "#6B7280";
-      const bonusCls = (x.bonus || 0) > 0 ? "strat-bonus-pos" : (x.bonus || 0) < 0 ? "strat-bonus-neg" : "strat-bonus-zero";
-      const bonusTxt = (x.bonus || 0) > 0 ? `+${x.bonus}` : `${x.bonus || 0}`;
-      return `
-        <div class="strat-card">
-          <span class="strat-card-type" style="background:${tc}22;color:${tc};border:1px solid ${tc}55">${esc(x.type)}</span>
-          <div class="strat-card-name">${esc(x.name)}</div>
-          <div class="strat-card-stats">
-            <div class="strat-stat"><span>对单</span><strong>${x.stats[0]}</strong></div>
-            <div class="strat-stat"><span>对群</span><strong>${x.stats[1]}</strong></div>
-            <div class="strat-stat"><span>穿甲</span><strong>${x.stats[2]}</strong></div>
-            <div class="strat-stat"><span>${esc(d4)}</span><strong>${x.stats[3]}</strong></div>
-          </div>
-          <div class="strat-card-bonus ${bonusCls}">Bonus: ${bonusTxt}</div>
-        </div>`;
-    }).join("");
+    const cardsHtml = picked.map(x => stratCardHtml(x, isS)).join("");
+
+    // 四维柱状统计图（平均值，0-12 轴）
+    const dimAvg = [0, 1, 2, 3].map(i =>
+      picked.reduce((s, x) => s + (x.stats[i] || 0), 0) / picked.length
+    );
+    const d4Name = STRAT_DIM4_CN[picked[0]?.type] || "第四维";
+    const chartLabels = ["对单", "对群", "穿甲", d4Name];
+    const chartBars = chartLabels.map((lb, i) => `
+      <div class="strat-chart-bar">
+        <span class="strat-chart-label">${esc(lb)}</span>
+        <div class="strat-chart-track"><div class="strat-chart-fill" style="width:${Math.min(100, dimAvg[i] / 12 * 100)}%;background:${STRAT_DIM_COLOR[i]}"></div></div>
+        <span class="strat-chart-val">${dimAvg[i].toFixed(1)}</span>
+      </div>`).join("");
 
     root.innerHTML = `
       <div class="stratagem-layout">
         <div class="stratagem-cards">${cardsHtml}</div>
-        <div class="strat-panel">
-          <div class="strat-panel-title">📊 评分明细</div>
-          <div class="strat-panel-row"><span>类型数 T</span><strong>${T}</strong></div>
-          <div class="strat-panel-row"><span>多功能 M</span><strong>${M}</strong></div>
-          <div class="strat-panel-row"><span>Bonus</span><strong>${bonusSum > 0 ? "+" + bonusSum : bonusSum}</strong></div>
-          <div class="strat-panel-divider"></div>
-          <div class="strat-panel-row"><span>总评</span><strong class="strat-total">${total.toFixed(1)}</strong></div>
-          <div class="strat-grade ${grade.cls}">${grade.g} 级</div>
-          <div class="strat-grade-guide">评级标准：S≥34 · A≥22 · B≥14 · C≥8 · D&lt;8<br/>总评 = (T×5 + T²) - (M²×0.5) + ΣBonus</div>
+        <div class="strat-side">
+          <div class="strat-panel">
+            <div class="strat-panel-title">📊 评分明细</div>
+            <div class="strat-panel-row"><span>类型数 T</span><strong>${T}</strong></div>
+            <div class="strat-panel-row"><span>多功能 M</span><strong>${M}</strong></div>
+            <div class="strat-panel-row"><span>Bonus</span><strong>${bonusSum > 0 ? "+" + bonusSum : bonusSum}</strong></div>
+            <div class="strat-panel-divider"></div>
+            <div class="strat-panel-row"><span>总评</span><strong class="strat-total">${total.toFixed(1)}</strong></div>
+            <div class="strat-grade ${grade.cls}">${grade.g} 级</div>
+            <div class="strat-hint">${isS ? "🏆 顶级配装，真理部为你骄傲！" : "搭配越多样，分数越高"}</div>
+            <div class="strat-grade-guide">评级标准：S≥34 · A≥22 · B≥14 · C≥8 · D&lt;8</div>
+          </div>
+          <div class="strat-chart">
+            <div class="strat-chart-title">📈 配装能力轮廓</div>
+            ${chartBars}
+          </div>
         </div>
       </div>`;
+
+    // 换一个按钮
+    root.querySelectorAll(".strat-swap-btn").forEach(b => {
+      b.addEventListener("click", () => stratOpenSwap(b.dataset.swap));
+    });
+
     // 抽取后显示重新抽取按钮
     const tb = $("stratagem-draw-btn");
     if (tb) tb.style.display = "inline-block";
@@ -1503,7 +1671,6 @@
       stratagemPool = data.stratagems;
       if (meta) meta.textContent = `${stratagemPool.length} 个战备可选`;
     }
-    // toolbar 按钮：抽取后显示（重新抽取用）
     const btn = $("stratagem-draw-btn");
     if (btn) {
       btn.style.display = "none";
@@ -1515,7 +1682,7 @@
     stratShowBigBtn();  // 初始只显示大按钮
   }
 
-  function renderPlayers(data) {
+function renderPlayers(data) {
     const root = $("players-content");
     const meta = $("players-meta");
     if (!root) return;
