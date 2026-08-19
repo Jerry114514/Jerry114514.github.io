@@ -225,6 +225,21 @@
     }
     .pd-row strong { color: var(--text); font-weight: 600; }
     .pd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pd-chip-eff { cursor: pointer; user-select: none; transition: all 0.15s; }
+    .pd-chip-eff:hover { border-color: var(--accent); color: var(--accent); }
+    .pd-chip-eff.open { border-color: var(--accent); color: var(--accent); background: rgba(255,255,255,0.05); }
+    .pd-eff-arrow { font-size: 0.6rem; margin-left: 4px; opacity: 0.7; }
+    .pd-eff-desc {
+      width: 100%;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 2px;
+      line-height: 1.5;
+    }
     .pd-chip {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -948,7 +963,8 @@
     SECTORS_PER_GROUP: "auto",      // 按 sector 自动分组
     STAR_MAP_URL: "./tables/starmap.json",
     VARIABLES_URL: "./tables/hd2_variables.json",  // 行动变量对照表（DSS 效果描述等）
-    EFFECT_URL: "./tables/effect_id_cn.json"      // 效果 ID -> 中文（星球行动变量）
+    EFFECT_URL: "./tables/effect_id_cn.json",     // 效果 ID -> 中文（星球行动变量）
+    EFFECT_DETAIL_URL: "./tables/galactic_effects.json"  // 效果 ID -> 英文名+描述（词条详情）
   };
 
   /* ==============================================================
@@ -1137,6 +1153,12 @@
       const er = await fetch(CONFIG.EFFECT_URL, { cache: "no-store" });
       if (er.ok) effectMap = await er.json();
     } catch (_) { /* ignore */ }
+    // 效果 ID -> 英文名+描述（词条详情）
+    let effectDetailMap = {};
+    try {
+      const dr = await fetch(CONFIG.EFFECT_DETAIL_URL, { cache: "no-store" });
+      if (dr.ok) effectDetailMap = await dr.json();
+    } catch (_) { /* ignore */ }
 
     return {
       war:        data.war || { __err: "no war data" },
@@ -1150,6 +1172,7 @@
       starMap,
       variables,
       effectMap,
+      effectDetailMap,
       fetchedAt:  data.fetchedAt,
       source:     data.source,
     };
@@ -1432,7 +1455,7 @@
         <div class="pd-row"><span>解放度</span><strong>${esc(libText)}</strong></div>
         <div class="pd-row"><span>抵抗度</span><strong>${esc(resist)}</strong></div>
         <div class="pd-row"><span>星球血量</span><strong>${hpPct}% · ${fmt(p.health)}/${fmt(p.maxHealth)}</strong></div>
-        <div class="pd-row"><span>玩家数量</span><strong>${fmt(p.players || 0)}</strong></div>
+        <div class="pd-row"><span>玩家数量</span><strong>${p.players != null && p.players > 0 ? fmt(p.players) : "—"}</strong></div>
       </div>`;
 
     // 2) 行动变量（环境/变种）
@@ -1441,9 +1464,17 @@
     if (effIds.length === 0) {
       effHtml = `<div class="pd-empty">暂无已知行动变量。</div>`;
     } else {
-      effHtml = effIds.map(id => {
+      // 同中文名效果合并显示（避免视觉重复；详情列全部描述）
+      const effGroups = {};
+      effIds.forEach(id => {
         const cn = currentEffectMap[id] || `效果 #${id}`;
-        return `<div class="pd-chip">${esc(cn)}</div>`;
+        (effGroups[cn] = effGroups[cn] || []).push(id);
+      });
+      effHtml = Object.entries(effGroups).map(([cn, ids]) => {
+        const dets = ids.map(id => currentEffectDetailMap[id] || {}).filter(d => d && d.description);
+        const detDesc = dets.map(d => `${d.name ? d.name + "\n" : ""}${d.description}`).join("\n\n");
+        return `<div class="pd-chip pd-chip-eff" data-eff="${esc(ids.join(","))}" title="${esc(dets[0] ? dets[0].name : cn)}">${esc(cn)}${detDesc ? `<span class="pd-eff-arrow">▾</span>` : ""}</div>` +
+               (detDesc ? `<div class="pd-eff-desc" style="display:none">${esc(detDesc)}</div>` : "");
       }).join("");
     }
     const oper = `
@@ -1530,6 +1561,19 @@
   document.addEventListener("click", (e) => {
     const card = e.target.closest(".planet-card");
     if (!card) return;
+    // 行动变量词条点击展开详情
+    const effChip = e.target.closest(".pd-chip-eff");
+    if (effChip) {
+      // desc div 紧跟 chip 之后（nextElementSibling），精确定位不串台
+      let desc = effChip.nextElementSibling;
+      if (desc && !desc.classList.contains("pd-eff-desc")) desc = null;
+      if (desc) {
+        const isOpen = desc.style.display !== "none";
+        desc.style.display = isOpen ? "none" : "block";
+        effChip.classList.toggle("open", !isOpen);
+      }
+      return;  // 词条点击不触发卡片展开
+    }
     const wrap = card.querySelector(".planet-detail-wrap");
     if (!wrap) return;
     const isOpen = wrap.style.display !== "none";
@@ -1717,6 +1761,7 @@
      ============================================================== */
   // 顶部轮播状态
   let currentEffectMap = {};       // 效果 ID -> 中文（星球行动变量）
+let currentEffectDetailMap = {};  // 效果 ID -> 英文名+描述（词条详情）
   let currentData = null;         // 最新数据（详情卡片用）
 
   let bannerItems = [];           // banner.json 配置
@@ -1808,6 +1853,7 @@
       const data = await fetchAll();
       currentData = data;
       currentEffectMap = data.effectMap || {};
+      currentEffectDetailMap = data.effectDetailMap || {};
       renderTopbar(data);
       renderMO(data);
       renderDss(data);

@@ -441,6 +441,17 @@ def main():
         if snap and snap.get("assignments"):
             base["assignments"] = snap["assignments"]
             print("  [FALLBACK] 重要指令使用上次成功快照")
+    # activeEffects 快照兜底：companion 限流时保留上次全量效果（否则只剩官方 MO 星球）
+    if not companion or not companion.get("planets"):
+        snap = _load_snapshot()
+        snap_eff = {}
+        if snap and snap.get("planets"):
+            snap_eff = {p.get("index"): p.get("activeEffects") or [] for p in snap["planets"]}
+        for p in base.get("planets") or []:
+            if not p.get("activeEffects") and p.get("index") in snap_eff:
+                p["activeEffects"] = snap_eff[p["index"]]
+        print("  [FALLBACK] activeEffects 使用上次成功快照")
+
     _save_snapshot(base)
 
     # 资讯：hd2dev 优先（真实 ISO 时间）；companion 的 published 是游戏内时间戳不可用，仅兜底
