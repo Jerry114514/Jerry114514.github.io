@@ -104,6 +104,27 @@ def now_cn() -> str:
 
 
 SNAPSHOT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data_snapshot.json")
+MAXH_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".maxhealth_cache.json")
+
+
+def _load_maxh_cache() -> dict:
+    """读取 maxHealth 缓存（hd2dev 成功时写入，失败时兜底）"""
+    try:
+        if os.path.exists(MAXH_CACHE_FILE):
+            with open(MAXH_CACHE_FILE, encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {}
+
+
+def _save_maxh_cache(mapping: dict) -> None:
+    """保存 maxHealth 缓存：{index: maxHealth}"""
+    try:
+        with open(MAXH_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(mapping, f, ensure_ascii=False)
+    except Exception:
+        pass
 
 
 def _load_snapshot() -> dict:
@@ -396,8 +417,9 @@ def main():
                     p["name"] = h.get("name", p["name"])
                 # sector 始终用 hd2dev（官方 sector 数字 id 不可靠）
                 p["sector"] = h.get("sector", p.get("sector", ""))
-                if not p.get("maxHealth"):
-                    p["maxHealth"] = h.get("maxHealth", 0)
+                # maxHealth：官方为相对值(1) 不可用，hd2dev 绝对值覆盖（缺失/<=1000 时）
+                if not p.get("maxHealth") or p.get("maxHealth", 0) < 1000:
+                    p["maxHealth"] = h.get("maxHealth", 0) or p.get("maxHealth", 0)
 
     # campaigns 星球名/sector 用 hd2dev 补（独立循环）
     for c in base.get("campaigns") or []:
@@ -408,13 +430,26 @@ def main():
                 cp["name"] = h.get("name", cp["name"])
             cp["sector"] = h.get("sector", cp.get("sector", ""))
 
+    # maxHealth：hd2dev 成功时更新缓存；失败/缺失时用缓存兜底（避免满血 bug）
+    maxh_cache = _load_maxh_cache()
+    maxh_updated = False
+    for p in base.get("planets") or []:
+        mh = p.get("maxHealth") or 0
+        if mh >= 1000:
+            maxh_cache[str(p.get("index"))] = mh
+            maxh_updated = True
+    if maxh_updated:
+        _save_maxh_cache(maxh_cache)
+
     # 统一计算 resistance：regenPerSecond * 3600 / maxHealth * 100
-    # 官方 maxHealth 是相对值(1)；companion 无 maxHealth；缺失/无效时用 health 推断（满血 health==maxHealth）
+    # 官方 maxHealth 无/相对值(1)；companion 无 maxHealth；hd2dev 失败时用缓存，最后才用 health 推断
     for p in base.get("planets") or []:
         regen = p.pop("_regen", None) or 0
         max_h = p.get("maxHealth") or 0
-        if max_h < 1000 and p.get("health"):
-            max_h = p["health"]
+        if max_h < 1000:
+            # 优先 hd2dev 已覆盖值 -> 缓存 -> health 推断（仅最后手段）
+            cached = maxh_cache.get(str(p.get("index"))) or 0
+            max_h = cached if cached >= 1000 else (p.get("health") or 0)
             p["maxHealth"] = max_h
         p["resistance"] = round(regen * 3600 / max_h * 100, 2) if max_h else 0
 
