@@ -311,6 +311,87 @@
      "effect_ids": [
       1241
      ]
+    },
+    {
+     "key": "Gloom",
+     "name": "Gloom",
+     "cn": "阴影迷雾",
+     "desc": "一朵阴霾云笼罩着这个世界。",
+     "effect_ids": [
+      1187
+     ]
+    },
+    {
+     "key": "Dense Gloom",
+     "name": "Dense Gloom",
+     "cn": "浓阴影迷雾",
+     "desc": "一片厚厚的阴霾云遮住了这个世界。",
+     "effect_ids": [
+      1188
+     ]
+    },
+    {
+     "key": "Unreachable",
+     "name": "Unreachable",
+     "cn": "无法抵达",
+     "desc": "我们的传感器无法再监测这个星球。",
+     "effect_ids": [
+      1190
+     ]
+    },
+    {
+     "key": "Gloom Border",
+     "name": "Gloom Border",
+     "cn": "阴影迷雾边界",
+     "desc": "这个世界位于阴霾星际墙的边界上。",
+     "effect_ids": [
+      1193
+     ]
+    },
+    {
+     "key": "MERIDIAN BLACK HOLE",
+     "name": "MERIDIAN BLACK HOLE",
+     "cn": "梅里迪亚黑洞",
+     "desc": "繁荣的梅里迪亚被腐蚀成终结族超级殖民地，需要使用神秘的暗流将其摧毁。剩下的只有这道银河疤痕。",
+     "effect_ids": [
+      1229
+     ]
+    },
+    {
+     "key": "FRACTURED PLANET",
+     "name": "FRACTURED PLANET",
+     "cn": "碎裂星球",
+     "desc": "一颗被梅里迪亚奇点撕裂的行星所剩的一切，是暴政在身后留下荒凉的庄严警示。",
+     "effect_ids": [
+      1252
+     ]
+    },
+    {
+     "key": "OUTPOST ALPHA",
+     "name": "OUTPOST ALPHA",
+     "cn": "阿尔法前哨",
+     "desc": "在阴霾肆虐的太空中建立的第一个载人航天站。",
+     "effect_ids": [
+      1304
+     ]
+    },
+    {
+     "key": "HIVE WORLD",
+     "name": "HIVE WORLD",
+     "cn": "巢穴世界",
+     "desc": "这颗星球已被终结族完全侵扰，里里外外都变成了暴政的巢穴。它是阴霾孢子的来源。",
+     "effect_ids": [
+      1311
+     ]
+    },
+    {
+     "key": "CONVENTIONAL BLACK HOLE",
+     "name": "CONVENTIONAL BLACK HOLE",
+     "cn": "常规黑洞",
+     "desc": "这颗前行星现在只不过是一个正常、稳定的黑洞。",
+     "effect_ids": [
+      1352
+     ]
     }
    ],
    "key": "cosmic_horror"
@@ -548,6 +629,157 @@
      "desc": "小队可用的最大增援 -1。",
      "effect_ids": [
       1318
+     ]
+    }
+   ]
+  },
+  {
+   "key": "facility",
+   "name": "设施与场所",
+   "name_en": "FACILITY",
+   "entries": [
+    {
+     "key": "Xenoentomology Center",
+     "name": "Xenoentomology Center",
+     "cn": "异虫学研究中心",
+     "desc": "那些研究终结族行为、生态学和E-710潜力的人聚集在这里进行跨学科研究。",
+     "effect_ids": [
+      1197
+     ]
+    },
+    {
+     "key": "Deep Mantle Forge Complex",
+     "name": "Deep Mantle Forge Complex",
+     "cn": "深地幔锻造综合体",
+     "desc": "这个星球上的冶炼厂和炼油厂将原材料转化为可用的硬件。",
+     "effect_ids": [
+      1198
+     ]
+    },
+    {
+     "key": "DEMOCRACY SPACE STATION",
+     "name": "DEMOCRACY SPACE STATION",
+     "cn": "民主空间站",
+     "desc": "由绝地潜兵操作的大规模解放武器。以士兵的鲜血与纳税人的信用点铸造，这一技术奇迹正是民主的具现。",
+     "effect_ids": [
+      1217
+     ]
+    },
+    {
+     "key": "FACTORY HUB",
+     "name": "FACTORY HUB",
+     "cn": "工厂枢纽",
+     "desc": "这个星球上的辛勤劳动者生产着对战争努力以及超级地球繁荣至关重要的商品。",
+     "effect_ids": [
+      1232
+     ]
+    },
+    {
+     "key": "CENTER OF SCIENCE",
+     "name": "CENTER OF SCIENCE",
+     "cn": "科学中心",
+     "desc": "在这个星球上，科学部最优秀、最聪明的人正在努力实现他们的下一个突破。",
+     "effect_ids": [
+      1234
+     ]
+    },
+    {
+     "key": "CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY",
+     "name": "CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY",
+     "cn": "平民监控与安全中心",
+     "desc": "真理部在这里分析公民的活动、言语、数据、DNA、RNA和神经拓扑结构。",
+     "effect_ids": [
+      1236
+     ]
+    },
+    {
+     "key": "JET BRIGADE FACTORIES",
+     "name": "JET BRIGADE FACTORIES",
+     "cn": "喷气旅工厂",
+     "desc": "这里生产了垂直增强的喷气旅士兵。",
+     "effect_ids": [
+      1239
+     ]
+    },
+    {
+     "key": "CAMPAIGN BLOCKER",
+     "name": "CAMPAIGN BLOCKER",
+     "cn": "非军事化",
+     "desc": "无法在此星球发动战役。",
+     "effect_ids": [
+      1246
+     ]
+    },
+    {
+     "key": "ARSENAL AUGMENTATION: M-102 FAST RECONNAISSANCE VEHICLE",
+     "name": "ARSENAL AUGMENTATION: M-102 FAST RECONNAISSANCE VEHICLE",
+     "cn": "战备增强：M-102 快速侦察车",
+     "desc": "最高指挥部已授权在所有绝地潜兵装载中临时增加M-102快速侦察车战略配备。",
+     "effect_ids": [
+      1279
+     ]
+    },
+    {
+     "key": "HELLDIVER TRAINING FACILITIES",
+     "name": "HELLDIVER TRAINING FACILITIES",
+     "cn": "绝地潜兵训练设施",
+     "desc": "在这里，最优秀的人会接受严格的绝地潜兵训练，这将为他们赢得斗篷。",
+     "effect_ids": [
+      1282
+     ]
+    },
+    {
+     "key": "NEW HOPE CITY",
+     "name": "NEW HOPE CITY",
+     "cn": "新希望城",
+     "desc": "旗舰级最高安全城市。暴政无法攻克；这是联邦的未来。",
+     "effect_ids": [
+      1287
+     ]
+    },
+    {
+     "key": "NEW ASPIRATION CITY",
+     "name": "NEW ASPIRATION CITY",
+     "cn": "新憧憬城",
+     "desc": "三大最高安全城市之一。暴政无法攻克；这是联邦的未来。",
+     "effect_ids": [
+      1291
+     ]
+    },
+    {
+     "key": "NEW YEARNING CITY",
+     "name": "NEW YEARNING CITY",
+     "cn": "新渴望城",
+     "desc": "三大最高安全城市之一。暴政无法攻克；这是联邦的未来。",
+     "effect_ids": [
+      1292
+     ]
+    },
+    {
+     "key": "ULTRAMAFIC MINE",
+     "name": "ULTRAMAFIC MINE",
+     "cn": "超镁铁质矿场",
+     "desc": "从火成岩深部矿床中提取铂的矿山。",
+     "effect_ids": [
+      1324
+     ]
+    },
+    {
+     "key": "PANDORA BASE",
+     "name": "PANDORA BASE",
+     "cn": "潘多拉基地",
+     "desc": "绝密基地，民主空间站的强化组件在此建造。",
+     "effect_ids": [
+      1344
+     ]
+    },
+    {
+     "key": "DATA CENTER",
+     "name": "DATA CENTER",
+     "cn": "数据中心",
+     "desc": "机器人在这里存储了大量加密信息。",
+     "effect_ids": [
+      1353
      ]
     }
    ]
