@@ -1335,11 +1335,15 @@
   function buildDssEffectMap(variables) {
     if (!variables || !Array.isArray(variables.categories)) return;
     dssEffectDesc = {};
+    effectCnDescMap = {};  // 效果 ID -> 中文条目（词条详情中文优先；DSS 分类除外——DSS 面板已展示）
     for (const cat of variables.categories) {
-      if (cat.key !== "tactical_action") continue;
+      const isTactical = cat.key === "tactical_action";
       for (const e of cat.entries || []) {
         for (const id of e.effect_ids || []) {
-          dssEffectDesc[id] = { cn: e.cn, desc: e.desc };
+          dssEffectDesc[id] = { cn: e.cn, desc: e.desc };  // DSS 面板映射保留
+          if (!isTactical) {  // 词条详情映射排除 DSS
+            effectCnDescMap[id] = { cn: e.cn, desc: e.desc, cat: cat.name || cat.key || "" };
+          }
         }
       }
     }
@@ -1477,9 +1481,14 @@
         (effGroups[cn] = effGroups[cn] || []).push(id);
       });
       effHtml = Object.entries(effGroups).map(([cn, ids]) => {
-        const dets = ids.map(id => currentEffectDetailMap[id] || {}).filter(d => d && d.description);
-        const detDesc = dets.map(d => `${d.name ? d.name + "\n" : ""}${d.description}`).join("\n\n");
-        return `<div class="pd-chip pd-chip-eff" data-eff="${esc(ids.join(","))}" title="${esc(dets[0] ? dets[0].name : cn)}">${esc(cn)}${detDesc ? `<span class="pd-eff-arrow">▾</span>` : ""}</div>` +
+        // 中文描述优先（hd2_variables 对照表），英文描述降级（galactic_effects）
+        const cnDets = ids.map(id => effectCnDescMap[id] || {}).filter(d => d && d.desc);
+        const enDets = ids.map(id => currentEffectDetailMap[id] || {}).filter(d => d && d.description);
+        // 中文描述去重（同一效果多 ID 共享描述时只显示一次）
+        const cnDescs = [...new Set(cnDets.map(d => d.desc))];
+        const enDescs = [...new Set(enDets.map(d => `${d.name ? d.name + "\n" : ""}${d.description}`))];
+        const detDesc = cnDescs.join("\n\n") || enDescs.join("\n\n");
+        return `<div class="pd-chip pd-chip-eff" data-eff="${esc(ids.join(","))}" title="${esc(cnDets[0] ? cnDets[0].cn : cn)}">${esc(cn)}${detDesc ? `<span class="pd-eff-arrow">▾</span>` : ""}</div>` +
                (detDesc ? `<div class="pd-eff-desc" style="display:none">${esc(detDesc)}</div>` : "");
       }).join("");
     }
@@ -1768,6 +1777,7 @@
   // 顶部轮播状态
   let currentEffectMap = {};       // 效果 ID -> 中文（星球行动变量）
 let currentEffectDetailMap = {};  // 效果 ID -> 英文名+描述（词条详情）
+let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，词条详情中文优先）
   let currentData = null;         // 最新数据（详情卡片用）
 
   let bannerItems = [];           // banner.json 配置
@@ -1860,6 +1870,7 @@ let currentEffectDetailMap = {};  // 效果 ID -> 英文名+描述（词条详�
       currentData = data;
       currentEffectMap = data.effectMap || {};
       currentEffectDetailMap = data.effectDetailMap || {};
+      buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
       renderDss(data);
