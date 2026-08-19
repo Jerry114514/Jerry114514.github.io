@@ -25,6 +25,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
 
 OFFICIAL_API = "https://api.live.prod.thehelldiversgame.com"
 COMPANION_LIVE = "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live"
+EXTENDED_API_URL = "https://cdn.helldiverscompanion.com/live/extendedApiInformation/2days.json"
 HD2DEV = "https://api.helldivers2.dev/api/v1"
 WAR_ID = 801
 
@@ -357,6 +358,27 @@ def fetch_companion():
 
 
 # ---------------- helldivers2.dev 源 ----------------
+def fetch_player_distribution():
+    """抓取玩家分布（extendedApiInformation 最新条目）"""
+    try:
+        obj = fetch_json(EXTENDED_API_URL, {"User-Agent": "Mozilla/5.0"}, 25)
+        data = obj.get("data") or []
+        if not data:
+            return None
+        latest = data[-1]
+        return {
+            "total": latest.get("totalPlayerCount") or 0,
+            "humans": latest.get("playerCountHumans") or 0,
+            "terminids": latest.get("playerCountTerminids") or 0,
+            "automatons": latest.get("playerCountAutomatons") or 0,
+            "illuminate": latest.get("playerCountIlluminate") or 0,
+            "updatedAt": latest.get("timestampUtc") or "",
+        }
+    except Exception as e:
+        print(f"  [FAIL] 玩家分布: {type(e).__name__}: {e}")
+        return None
+
+
 def fetch_hd2dev():
     war = fetch_json(f"{HD2DEV}/war", HEADERS_HD2DEV, 25)
     planets = fetch_json(f"{HD2DEV}/planets", HEADERS_HD2DEV, 25)
@@ -388,6 +410,8 @@ def main():
     companion = try_fetch("companion", fetch_companion)
     print("=== 抓取 helldivers2.dev ===")
     hd2dev = try_fetch("helldivers2.dev", fetch_hd2dev)
+    print("=== 抓取玩家分布 ===")
+    player_dist = fetch_player_distribution()
 
     base = official or companion or hd2dev
     if base is None:
@@ -513,6 +537,7 @@ def main():
 
     result = {"fetchedAt": now_cn(),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
+              "player_distribution": player_dist,
               **base}
 
     # 解耦：翻译字段（news/major_order）由 HD2Web-Trans 单一写入，此处保留旧值不被覆盖

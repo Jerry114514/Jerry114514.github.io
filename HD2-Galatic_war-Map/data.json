@@ -1,6 +1,14 @@
 {
- "fetchedAt": "2026-08-19T13:47:26+08:00",
+ "fetchedAt": "2026-08-19T13:47:32+08:00",
  "source": "official",
+ "player_distribution": {
+  "total": 95176,
+  "humans": 1161,
+  "terminids": 16165,
+  "automatons": 7449,
+  "illuminate": 70401,
+  "updatedAt": "2026-08-19T05:31:02.5293715Z"
+ },
  "war": {
   "statistics": {
    "playerCount": 90385,
@@ -3556,7 +3564,7 @@
    "name": "UVP ALPHA",
    "sector": "TBD",
    "currentOwner": "Illuminate",
-   "health": 350596,
+   "health": 350623,
    "maxHealth": 1000000,
    "players": 0,
    "attacking": false,
@@ -3591,7 +3599,7 @@
    "name": "VOID SOURCE PLANET",
    "sector": "Void",
    "currentOwner": "Illuminate",
-   "health": 2601710,
+   "health": 2601758,
    "maxHealth": 3000000,
    "players": 53324,
    "attacking": false,

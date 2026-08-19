@@ -746,6 +746,26 @@
     /* ============================================================
        工具
        ============================================================ */
+    .player-dist-bar {
+      display: flex;
+      height: 10px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 10px 0 14px;
+      background: rgba(255,255,255,0.04);
+    }
+    .player-dist-seg { height: 100%; transition: width 0.6s ease; }
+    .player-dist-legend { display: flex; flex-wrap: wrap; gap: 14px; }
+    .player-dist-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; color: var(--text-dim);
+    }
+    .player-dist-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .player-dist-item strong { color: var(--text); font-weight: 600; }
+    .player-dist-total {
+      font-size: 0.8rem; color: var(--text);
+      margin-top: 10px; font-weight: 600;
+    }
     .prospect-desc {
       font-size: 0.75rem;
       color: var(--text-dim);
@@ -875,6 +895,20 @@
     <!-- ============================================================
          DSS 民主空间站（重要指令下方）
          ============================================================ -->
+    <!-- ============================================================
+         区块1.5：在线玩家分布
+         ============================================================ -->
+    <section class="block" id="block-players">
+      <div class="block-head">
+        <span class="block-emoji">👥</span>
+        <h2 class="block-title">在线玩家分布</h2>
+        <span class="block-meta" id="players-meta"></span>
+      </div>
+      <div id="players-content">
+        <div class="loading">正在统计在线士兵…</div>
+      </div>
+    </section>
+
     <section class="block" id="block-dss">
       <div class="block-head">
         <span class="block-emoji">🛰️</span>
@@ -1206,6 +1240,7 @@
       variables,
       effectMap,
       effectDetailMap,
+      player_distribution: data.player_distribution || null,
       fetchedAt:  data.fetchedAt,
       source:     data.source,
     };
@@ -1261,6 +1296,41 @@
   /* ==============================================================
      渲染：区块1 重要指令
      ============================================================== */
+  function renderPlayers(data) {
+    const root = $("players-content");
+    const meta = $("players-meta");
+    if (!root) return;
+    const pd = data.player_distribution;
+    if (!pd || !pd.total) {
+      root.innerHTML = `<div class="empty">暂时无法获取在线玩家数据。</div>`;
+      meta.textContent = "";
+      return;
+    }
+    const items = [
+      { key: "humans",     label: "超级地球", color: "var(--c-humans)" },
+      { key: "terminids",  label: "终结族",   color: "var(--c-terminids)" },
+      { key: "automatons", label: "机器人",   color: "var(--c-automaton)" },
+      { key: "illuminate", label: "光能族",   color: "var(--c-illuminate)" },
+    ];
+    const total = pd.total || 1;
+    const segs = items.map(it => {
+      const cnt = pd[it.key] || 0;
+      const pct = (cnt / total * 100);
+      return `<div class="player-dist-seg" style="width:${pct.toFixed(2)}%;background:${it.color}"></div>`;
+    }).join("");
+    const legend = items.map(it => {
+      const cnt = pd[it.key] || 0;
+      const pct = (cnt / total * 100);
+      return `<div class="player-dist-item"><span class="player-dist-dot" style="background:${it.color}"></span>${esc(it.label)} <strong>${fmt(cnt)}</strong>（${pct.toFixed(1)}%）</div>`;
+    }).join("");
+    meta.textContent = `${fmt(total)} 名士兵在线`;
+    root.innerHTML = `
+      <div class="player-dist-bar">${segs}</div>
+      <div class="player-dist-legend">${legend}</div>
+      <div class="player-dist-total">总计：${fmt(total)} 名玩家在线</div>
+    `;
+  }
+
   function renderMO(data) {
     const root = $("mo-content");
     const expireEl = $("mo-expire");
@@ -1935,6 +2005,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
+      renderPlayers(data);
       renderDss(data);
       renderAttackable(data);
       renderProspect(data);
