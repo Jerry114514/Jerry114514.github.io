@@ -302,6 +302,15 @@
      "effect_ids": [
       1395
      ]
+    },
+    {
+     "key": "SCORCHED",
+     "name": "SCORCHED",
+     "cn": "焚毁星球",
+     "desc": "这颗星球已被民主武器毁灭，只留满地疮痍。",
+     "effect_ids": [
+      1241
+     ]
     }
    ],
    "key": "cosmic_horror"
@@ -479,6 +488,69 @@
     }
    ],
    "key": "environmental_condition"
+  },
+  {
+   "key": "combat_restriction",
+   "name": "作战限制",
+   "name_en": "COMBAT RESTRICTION",
+   "entries": [
+    {
+     "key": "班机延误",
+     "name": "班机延误",
+     "cn": "班机延误",
+     "desc": "撤离时间额外延迟 30 秒。",
+     "effect_ids": [
+      1313
+     ]
+    },
+    {
+     "key": "缺少飞行员",
+     "name": "缺少飞行员",
+     "cn": "缺少飞行员",
+     "desc": "“飞鹰”的重新装填时间增加 20%。",
+     "effect_ids": [
+      1314
+     ]
+    },
+    {
+     "key": "班机延误",
+     "name": "班机延误",
+     "cn": "班机延误",
+     "desc": "撤离时间额外延迟 40 秒。",
+     "effect_ids": [
+      1315
+     ]
+    },
+    {
+     "key": "缺少飞行员",
+     "name": "缺少飞行员",
+     "cn": "缺少飞行员",
+     "desc": "“飞鹰”的重新装填时间增加 30%。",
+     "effect_ids": [
+      1316,
+      1320
+     ]
+    },
+    {
+     "key": "补给不足",
+     "name": "补给不足",
+     "cn": "补给不足",
+     "desc": "弹药箱与补给箱的补给数量减少 50%。",
+     "effect_ids": [
+      1317,
+      1319
+     ]
+    },
+    {
+     "key": "预算削减",
+     "name": "预算削减",
+     "cn": "预算削减",
+     "desc": "小队可用的最大增援 -1。",
+     "effect_ids": [
+      1318
+     ]
+    }
+   ]
   }
  ]
 }
