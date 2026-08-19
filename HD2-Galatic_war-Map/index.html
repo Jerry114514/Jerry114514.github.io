@@ -1412,11 +1412,11 @@
   // 展开详情：战略分析 / 行动变量 / 兴趣点
   function planetDetailHtml(p, starMap, statusLabel) {
     const name = planetName(p, starMap);
-    // 解放度（用户公式 Lib = 当前HP/MaxHP × 100，两位小数）
+    // 解放度（用户公式 Lib = 100% - HP%，直接反推，两位小数）
     const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
     const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;
     const libPct = 100 - hpPct;
-    const libPctDetail = hpPctRaw.toFixed(2);
+    const libPctDetail = (100 - hpPctRaw).toFixed(2);
     const isHuman = (p.currentOwner || "") === "Humans";
 
     // 1) 战略情报分析
@@ -1436,7 +1436,7 @@
       </div>`;
 
     // 2) 行动变量（环境/变种）
-    const effIds = p.activeEffects || [];
+    const effIds = [...new Set(p.activeEffects || [])];  // 去重：数据源偶发重复效果
     let effHtml;
     if (effIds.length === 0) {
       effHtml = `<div class="pd-empty">暂无已知行动变量。</div>`;
@@ -1495,7 +1495,7 @@
     // 血量百分比（用户公式 Lib = 当前HP/MaxHP × 100%，两位小数）
     const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
     const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;   // 血条/状态用整数
-    const libPctDetail = hpPctRaw.toFixed(2);                      // 详情卡解放度两位小数
+    const libPctDetail = (100 - hpPctRaw).toFixed(2);              // 解放度 = 100% - HP%（两位小数）
     // 解放进度（bot 公式 1-HP/MaxHP，用于状态判断）
     const libPct = 100 - hpPct;
     const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;

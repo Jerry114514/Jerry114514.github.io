@@ -149,7 +149,9 @@ def fetch_official():
         pi = ef.get("planetIndex")
         gid = ef.get("galacticEffectId")
         if pi is not None and gid is not None:
-            effects_by_planet.setdefault(pi, []).append(gid)
+            lst = effects_by_planet.setdefault(pi, [])
+            if gid not in lst:  # 去重：官方数据偶发同星球重复效果
+                lst.append(gid)
     for idx in sorted(set(info_by_idx) | set(ps_by_idx)):
         info = info_by_idx.get(idx, {})
         ps = ps_by_idx.get(idx, {})
@@ -255,7 +257,9 @@ def fetch_companion():
         pi = ef.get("index") if ef.get("index") is not None else ef.get("planetIndex")
         gid = ef.get("galacticEffectId")
         if pi is not None and gid is not None:
-            comp_effects.setdefault(pi, []).append(gid)
+            lst = comp_effects.setdefault(pi, [])
+            if gid not in lst:  # 去重：companion 偶发同星球重复效果（如 HEZE BAY 1375）
+                lst.append(gid)
 
     planets = []
     for ps in ps_list:
