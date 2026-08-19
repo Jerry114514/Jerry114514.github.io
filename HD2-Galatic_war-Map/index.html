@@ -1618,10 +1618,11 @@
     const fullByIndex = Object.fromEntries(fullPlanets.map(p => [p.index, p]));
     const fromCampaigns = (data.campaigns || []).map(c => {
       const fp = fullByIndex[c.planet.index];
+      // 完整合并 fullPlanets 字段（health/maxHealth/activeEffects/players/resistance 等），
+      // 否则可攻打区块的行动变量/玩家数/抵抗度缺失
       return {
         ...c.planet,
-        health: fp ? fp.health : 0,
-        maxHealth: fp ? fp.maxHealth : 0,
+        ...(fp || {}),
         _campaign: c
       };
     });
