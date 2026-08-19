@@ -767,6 +767,22 @@
       margin-top: 10px; font-weight: 600;
     }
     .stratagem-toolbar { margin-bottom: 14px; }
+    .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; }
+    .stratagem-big-btn {
+      background: linear-gradient(135deg, rgba(245,197,24,0.25), rgba(245,197,24,0.08));
+      border: 1px solid rgba(245,197,24,0.5);
+      color: var(--yellow);
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 18px 48px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(245,197,24,0.15);
+      letter-spacing: 0.03em;
+    }
+    .stratagem-big-btn:hover { background: rgba(245,197,24,0.3); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(245,197,24,0.25); }
+    .stratagem-big-btn:active { transform: translateY(0); }
     .stratagem-btn {
       background: linear-gradient(135deg, rgba(245,197,24,0.2), rgba(245,197,24,0.05));
       border: 1px solid rgba(245,197,24,0.4);
@@ -1420,6 +1436,14 @@
     return pool.slice(0, 4);
   }
 
+  function stratShowBigBtn() {
+    const root = $("stratagem-content");
+    if (!root) return;
+    root.innerHTML = `<div class="stratagem-big-btn-wrap"><button class="stratagem-big-btn" id="stratagem-big-btn">🎲 抽取你的随机战备</button></div>`;
+    const b = $("stratagem-big-btn");
+    if (b) b.addEventListener("click", stratRender);
+  }
+
   function stratRender() {
     const root = $("stratagem-content");
     if (!root) return;
@@ -1468,6 +1492,9 @@
           <div class="strat-grade-guide">评级标准：S≥34 · A≥22 · B≥14 · C≥8 · D&lt;8<br/>总评 = (T×5 + T²) - (M²×0.5) + ΣBonus</div>
         </div>
       </div>`;
+    // 抽取后显示重新抽取按钮
+    const tb = $("stratagem-draw-btn");
+    if (tb) tb.style.display = "inline-block";
   }
 
   function renderStratagem(data) {
@@ -1476,12 +1503,16 @@
       stratagemPool = data.stratagems;
       if (meta) meta.textContent = `${stratagemPool.length} 个战备可选`;
     }
+    // toolbar 按钮：抽取后显示（重新抽取用）
     const btn = $("stratagem-draw-btn");
-    if (btn && !btn.dataset.bound) {
-      btn.dataset.bound = "1";
-      btn.addEventListener("click", stratRender);
+    if (btn) {
+      btn.style.display = "none";
+      if (!btn.dataset.bound) {
+        btn.dataset.bound = "1";
+        btn.addEventListener("click", stratRender);
+      }
     }
-    stratRender();  // 初始抽一次
+    stratShowBigBtn();  // 初始只显示大按钮
   }
 
   function renderPlayers(data) {
