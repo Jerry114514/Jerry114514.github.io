@@ -226,6 +226,8 @@
     .pd-row strong { color: var(--text); font-weight: 600; }
     .pd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .pd-chip-eff { cursor: pointer; user-select: none; transition: all 0.15s; }
+    .pd-chip.pd-chip-neg { border-color: rgba(231, 76, 60, 0.6) !important; color: #E74C3C !important; }
+    .pd-chip.pd-chip-neg:hover, .pd-chip.pd-chip-neg.open { border-color: #E74C3C !important; color: #FF6B5E !important; background: rgba(231, 76, 60, 0.08) !important; }
     .pd-chip-eff:hover { border-color: var(--accent); color: var(--accent); }
     .pd-chip-eff.open { border-color: var(--accent); color: var(--accent); background: rgba(255,255,255,0.05); }
     .pd-eff-arrow { font-size: 0.6rem; margin-left: 4px; opacity: 0.7; }
@@ -1506,6 +1508,11 @@
         (effGroups[cn] = effGroups[cn] || []).push(id);
       });
       effHtml = Object.entries(effGroups).map(([cn, ids]) => {
+        // 负面效果标记：作战限制分类（combat_restriction）红色提示
+        const isNegative = ids.some(id => {
+          const d = effectCnDescMap[id];
+          return d && (d.cat === "作战限制" || d.cat === "combat_restriction");
+        });
         // 中文描述优先（hd2_variables 对照表），英文描述降级（galactic_effects）
         const cnDets = ids.map(id => effectCnDescMap[id] || {}).filter(d => d && d.desc);
         const enDets = ids.map(id => currentEffectDetailMap[id] || {}).filter(d => d && d.description);
@@ -1513,7 +1520,8 @@
         const cnDescs = [...new Set(cnDets.map(d => d.desc))];
         const enDescs = [...new Set(enDets.map(d => `${d.name ? d.name + "\n" : ""}${d.description}`))];
         const detDesc = cnDescs.join("\n\n") || enDescs.join("\n\n");
-        return `<div class="pd-chip pd-chip-eff" data-eff="${esc(ids.join(","))}" title="${esc(cnDets[0] ? cnDets[0].cn : cn)}">${esc(cn)}${detDesc ? `<span class="pd-eff-arrow">▾</span>` : ""}</div>` +
+        const chipCls = isNegative ? "pd-chip pd-chip-eff pd-chip-neg" : "pd-chip pd-chip-eff";
+        return `<div class="${chipCls}" data-eff="${esc(ids.join(","))}" title="${esc(cnDets[0] ? cnDets[0].cn : cn)}">${esc(cn)}${detDesc ? `<span class="pd-eff-arrow">▾</span>` : ""}</div>` +
                (detDesc ? `<div class="pd-eff-desc" style="display:none">${esc(detDesc)}</div>` : "");
       }).join("");
     }
