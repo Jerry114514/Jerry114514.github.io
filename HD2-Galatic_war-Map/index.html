@@ -2112,7 +2112,7 @@ function renderPlayers(data) {
   }
 
   // 侦察战 RECON 卡片（数据缺失显示 -- 不报错）
-  function renderReconCard(p, recon) {
+  function renderReconCard(p, recon, starMap) {
     recon = recon || {};
     const fmt = (v, digits) => (v == null || isNaN(v)) ? "--" : Number(v).toFixed(digits == null ? 2 : digits);
     const rate = recon.successRate;
@@ -2297,7 +2297,7 @@ function renderPlayers(data) {
       // 侦察战（Recon）：recon_stats 有该星球数据时用专用卡片
       const reconIdx = p.index != null ? String(p.index) : "";
       if (data.recon_stats && data.recon_stats[reconIdx]) {
-        return renderReconCard(p, data.recon_stats[reconIdx]);
+        return renderReconCard(p, data.recon_stats[reconIdx], data.starMap);
       }
       // 状态判定：优先用 campaign.type（官方语义：0=解放战 1/4=防御战 defense=防御事件）
       let statusLabel, statusClass;

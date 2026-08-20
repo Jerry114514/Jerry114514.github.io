@@ -622,27 +622,34 @@ def main():
             else:
                 c["defendersRate"] = None
 
-    # 侦察战（Recon）解析：降级判断 health=null/maxHealth=0 + 有 missions 统计
-    # 当前官方 API 无 recon 事件，未来提供时自动生效；无数据时 recon_stats 为空
+    # 侦察战（Recon）识别：campaign type=1 且星球无 PlanetEvent（event=null）→ 侦察战
+    # 数据源：hd2dev statistics（missionsWon/missionsLost/missionTime/击杀/阵亡）
     recon_stats = {}
-    if companion and companion.get("planets"):
-        for p in companion["planets"]:
-            mh = p.get("maxHealth") or 0
-            stats = p.get("statistics") or {}
-            if not mh and (stats.get("missionsWon") is not None or stats.get("totalMissions") is not None):
-                total = stats.get("totalMissions")
-                won = stats.get("missionsWon")
-                dur = stats.get("missionTime") or 0
-                dur_h = dur / 3600 if dur else None
-                recon_stats[str(p.get("index"))] = {
-                    "healthImpact": None,  # 侦察战不参与解放进度
-                    "successPerHour": round(won / dur_h, 2) if (won is not None and dur_h) else None,
-                    "failPerHour": round((total - won) / dur_h, 2) if (total is not None and won is not None and dur_h) else None,
-                    "enemiesPerHour": round((stats.get("terminidKills") or 0) / dur_h, 2) if dur_h else None,
-                    "deathsPerHour": round((stats.get("helldiversDeaths") or 0) / dur_h, 2) if dur_h else None,
-                    "successRate": round(won / total * 100, 4) if (total and won is not None) else None,
-                    "failRate": round((1 - won / total) * 100, 4) if (total and won is not None) else None,
-                }
+    hd2_stats_map = {}
+    if hd2dev and hd2dev.get("planets"):
+        hd2_stats_map = {p.get("index"): (p.get("statistics") or {}) for p in hd2dev["planets"]}
+    for c in base.get("campaigns") or []:
+        pi = c.get("planet", {}).get("index")
+        # type=1 且该星球无 event（PlanetEvent 为 null）→ 侦察战
+        if c.get("type") == 1 and c.get("eventType") is None and pi is not None:
+            c["campaignType"] = "recon"
+            stats = hd2_stats_map.get(pi) or {}
+            won = stats.get("missionsWon")
+            lost = stats.get("missionsLost")
+            total = (won + lost) if (won is not None and lost is not None) else None
+            dur_s = stats.get("missionTime") or 0
+            dur_h = dur_s / 3600 if dur_s else None
+            kills = (stats.get("terminidKills") or 0) + (stats.get("automatonKills") or 0) + (stats.get("illuminateKills") or 0)
+            deaths = stats.get("deaths") or stats.get("helldiversDeaths") or 0
+            recon_stats[str(pi)] = {
+                "healthImpact": None,  # 侦察战不参与解放进度
+                "successPerHour": round(won / dur_h, 2) if (won is not None and dur_h) else None,
+                "failPerHour": round(lost / dur_h, 2) if (lost is not None and dur_h) else None,
+                "enemiesPerHour": round(kills / dur_h, 2) if dur_h else None,
+                "deathsPerHour": round(deaths / dur_h, 2) if dur_h else None,
+                "successRate": round(won / total * 100, 4) if (total and won is not None) else None,
+                "failRate": round(lost / total * 100, 4) if (total and lost is not None) else None,
+            }
 
     result = {"fetchedAt": now_cn(),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
