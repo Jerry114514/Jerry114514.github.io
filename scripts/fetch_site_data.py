@@ -144,8 +144,10 @@ def _save_snapshot(data: dict) -> None:
     try:
         snap = {
             "savedAt": now_cn(),
+            "savedAtUnix": time.time(),
             "assignments": data.get("assignments"),
             "dss": data.get("dss"),
+            "campaigns": data.get("campaigns"),
         }
         with open(SNAPSHOT_FILE, "w", encoding="utf-8") as f:
             json.dump(snap, f, ensure_ascii=False)
@@ -216,9 +218,10 @@ def fetch_official():
         ps = ps_by_idx.get(pi, {})
         max_h = ev.get("maxHealth") or ps.get("maxHealth") or 0
         cur_h = ev.get("health") or 0
-        # 双进度：防守方=血量比例，进攻方=1-血量比例
-        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else 0
-        attackers_prog = round(100 - defenders_prog, 2) if max_h else 0
+        # 双进度（血量拆解法，独立计算，不强制互补100%）：
+        # 防守方 = 当前剩余血量占比；进攻方 = 已造成血量损失占比
+        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else None
+        attackers_prog = round((max_h - cur_h) / max_h * 100, 2) if max_h else None
         # 剩余时间（战争时钟秒）：expireTime - 当前战争时间（用 status 的 time 字段）
         war_now = st.get("time") or 0
         remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
@@ -349,8 +352,8 @@ def fetch_companion():
         pi = ev.get("planetIndex")
         max_h = ev.get("maxHealth") or 0
         cur_h = ev.get("health") or 0
-        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else 0
-        attackers_prog = round(100 - defenders_prog, 2) if max_h else 0
+        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else None
+        attackers_prog = round((max_h - cur_h) / max_h * 100, 2) if max_h else None
         war_now = ws.get("time") or comp.get("timeSinceStart") or 0
         remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
         campaigns.append({
@@ -580,9 +583,54 @@ def main():
         else:
             base["dss"] = None
 
+    # 防御战速率：与上次抓取的进度差值计算（% / 小时），非总时间推算
+    prev_snap = _load_snapshot()
+    prev_camps = {c.get("planet", {}).get("index"): c for c in (prev_snap.get("campaigns") or [])}
+    now_ts = time.time()
+    prev_ts = prev_snap.get("savedAtUnix") or 0
+    for c in base.get("campaigns") or []:
+        if c.get("type") == "defense" or c.get("eventType") == 1:
+            pi = c.get("planet", {}).get("index")
+            prev = prev_camps.get(pi) or {}
+            atk = c.get("attackersProgress")
+            def_ = c.get("defendersProgress")
+            patk = prev.get("attackersProgress")
+            pdef = prev.get("defendersProgress")
+            if atk is not None and patk is not None and prev_ts and (now_ts - prev_ts) > 0:
+                c["attackersRate"] = round((atk - patk) / ((now_ts - prev_ts) / 3600), 3)
+            else:
+                c["attackersRate"] = None
+            if def_ is not None and pdef is not None and prev_ts and (now_ts - prev_ts) > 0:
+                c["defendersRate"] = round((def_ - pdef) / ((now_ts - prev_ts) / 3600), 3)
+            else:
+                c["defendersRate"] = None
+
+    # 侦察战（Recon）解析：降级判断 health=null/maxHealth=0 + 有 missions 统计
+    # 当前官方 API 无 recon 事件，未来提供时自动生效；无数据时 recon_stats 为空
+    recon_stats = {}
+    if companion and companion.get("planets"):
+        for p in companion["planets"]:
+            mh = p.get("maxHealth") or 0
+            stats = p.get("statistics") or {}
+            if not mh and (stats.get("missionsWon") is not None or stats.get("totalMissions") is not None):
+                total = stats.get("totalMissions")
+                won = stats.get("missionsWon")
+                dur = stats.get("missionTime") or 0
+                dur_h = dur / 3600 if dur else None
+                recon_stats[str(p.get("index"))] = {
+                    "healthImpact": None,  # 侦察战不参与解放进度
+                    "successPerHour": round(won / dur_h, 2) if (won is not None and dur_h) else None,
+                    "failPerHour": round((total - won) / dur_h, 2) if (total is not None and won is not None and dur_h) else None,
+                    "enemiesPerHour": round((stats.get("terminidKills") or 0) / dur_h, 2) if dur_h else None,
+                    "deathsPerHour": round((stats.get("helldiversDeaths") or 0) / dur_h, 2) if dur_h else None,
+                    "successRate": round(won / total * 100, 4) if (total and won is not None) else None,
+                    "failRate": round((1 - won / total) * 100, 4) if (total and won is not None) else None,
+                }
+
     result = {"fetchedAt": now_cn(),
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
               "player_distribution": player_dist,
+              "recon_stats": recon_stats,
               **base}
 
     # 解耦：翻译字段（news/major_order）由 HD2Web-Trans 单一写入，此处保留旧值不被覆盖
