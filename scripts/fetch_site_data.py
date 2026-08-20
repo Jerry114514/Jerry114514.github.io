@@ -204,6 +204,8 @@ def fetch_official():
             "id": c.get("id"),
             "faction": norm_owner(c.get("faction") if c.get("faction") else ps.get("owner")),
             "type": c.get("type", 0),
+            # 官方 type 语义：0=解放战，1/4=防御战
+            "campaignType": "defense" if c.get("type") in (1, 4, "1", "4", "defense") else "liberation",
             "count": c.get("campaignId"),
             "planet": {
                 "index": pi,
@@ -217,22 +219,29 @@ def fetch_official():
         info = info_by_idx.get(pi, {})
         ps = ps_by_idx.get(pi, {})
         max_h = ev.get("maxHealth") or ps.get("maxHealth") or 0
-        cur_h = ev.get("health") or 0
-        # 双进度（血量拆解法，独立计算，不强制互补100%）：
-        # 防守方 = 当前剩余血量占比；进攻方 = 已造成血量损失占比
-        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else None
-        attackers_prog = round((max_h - cur_h) / max_h * 100, 2) if max_h else None
-        # 剩余时间（战争时钟秒）：expireTime - 当前战争时间（用 status 的 time 字段）
+        # 入侵等级：maxHealth / 50000（四舍五入）
+        invasion_level = round(max_h / 50000) if max_h else None
+        # 时间比值法（官方设计）：进攻方 = 已消耗时间/总时间；防守方 = 剩余时间/总时间
         war_now = st.get("time") or 0
-        remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
+        s_t = ev.get("startTime") or 0
+        e_t = ev.get("expireTime") or 0
+        total_t = (e_t - s_t) if (e_t and s_t) else 0
+        if war_now and total_t > 0:
+            attackers_prog = round(max(0, min(1, (war_now - s_t) / total_t)) * 100, 2)
+            defenders_prog = round(max(0, min(1, (e_t - war_now) / total_t)) * 100, 2)
+            remain_s = max(0, e_t - war_now)
+        else:
+            attackers_prog = defenders_prog = remain_s = None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
             "faction": norm_owner(ev.get("race") if ev.get("race") is not None else ev.get("faction")),
             "type": "defense",
             "eventType": ev.get("eventType", 1),
+            "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
             "remainingTime": remain_s,
+            "invasionLevel": invasion_level,
             "count": 0,
             "planet": {
                 "index": pi,
@@ -351,19 +360,27 @@ def fetch_companion():
     for ev in (ws.get("planetEvents") or []):
         pi = ev.get("planetIndex")
         max_h = ev.get("maxHealth") or 0
-        cur_h = ev.get("health") or 0
-        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else None
-        attackers_prog = round((max_h - cur_h) / max_h * 100, 2) if max_h else None
+        invasion_level = round(max_h / 50000) if max_h else None
         war_now = ws.get("time") or comp.get("timeSinceStart") or 0
-        remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
+        s_t = ev.get("startTime") or 0
+        e_t = ev.get("expireTime") or 0
+        total_t = (e_t - s_t) if (e_t and s_t) else 0
+        if war_now and total_t > 0:
+            attackers_prog = round(max(0, min(1, (war_now - s_t) / total_t)) * 100, 2)
+            defenders_prog = round(max(0, min(1, (e_t - war_now) / total_t)) * 100, 2)
+            remain_s = max(0, e_t - war_now)
+        else:
+            attackers_prog = defenders_prog = remain_s = None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
             "faction": norm_owner(ev.get("race")),
             "type": "defense",
             "eventType": ev.get("eventType", 1),
+            "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
             "remainingTime": remain_s,
+            "invasionLevel": invasion_level,
             "count": 0,
             "planet": {"index": pi, "name": f"PLANET_{pi}", "sector": "", "currentOwner": "Humans"},
         })
