@@ -226,6 +226,17 @@ def fetch_official():
             },
         })
 
+    # 去重：同一星球可能同时出现在 campaigns 与 planetEvents（官方双来源），保留 type 数字版（信息更全）
+    seen_planet = {}
+    for c in campaigns:
+        pi = c.get("planet", {}).get("index")
+        if pi is None:
+            continue
+        # 优先保留已有条目；若新条目 type 是数字（0/1/4 官方战役）则覆盖 defense 字符串版
+        if pi not in seen_planet or (isinstance(c.get("type"), int) and not isinstance(seen_planet[pi].get("type"), int)):
+            seen_planet[pi] = c
+    campaigns = list(seen_planet.values())
+
     assignment = None
     if ass:
         a0 = ass[0] if isinstance(ass, list) else ass

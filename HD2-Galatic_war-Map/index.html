@@ -2145,12 +2145,12 @@ function renderPlayers(data) {
     const html = list.map(p => {
       const owner = p.currentOwner || "Unknown";
       const isHuman = owner === "Humans";
-      // 状态判定（campaigns 里有战役 = 战斗中；按攻守方区分）
+      // 状态判定：优先用 campaign.type（官方语义：0=解放战 1/4=防御战 defense=防御事件）
       let statusLabel, statusClass;
       if (p._campaign) {
-        const c = p._campaign;
-        // 有战役 = 正在被攻打：owner 是敌人则我们在解放，owner 是 Humans 则敌人在入侵(防御)
-        if (isHuman) {
+        const ctype = p._campaign.type;
+        const isDefense = ctype === "defense" || ctype === 1 || ctype === 4 || ctype === "1" || ctype === "4";
+        if (isDefense) {
           statusLabel = "防御战";
           statusClass = "status-defend";
         } else {
