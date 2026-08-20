@@ -766,7 +766,20 @@
       font-size: 0.8rem; color: var(--text);
       margin-top: 10px; font-weight: 600;
     }
-        .stratagem-toolbar { margin-bottom: 14px; }
+        /* 防御战双进度条 */
+    .defense-bars { display: flex; flex-direction: column; gap: 5px; margin: 4px 0; }
+    .defense-bar-row { display: flex; align-items: center; gap: 6px; font-size: 0.66rem; color: var(--text-dim); }
+    .defense-bar-label { width: 46px; flex-shrink: 0; text-align: right; }
+    .defense-bar-track { flex: 1; height: 7px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .defense-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+    .defense-bar-val { width: 44px; flex-shrink: 0; text-align: right; font-weight: 700; color: var(--text); font-size: 0.7rem; }
+    .defense-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 3px; font-size: 0.68rem; }
+    .defense-timer { color: var(--yellow); font-weight: 600; }
+    .defense-status { font-weight: 700; font-size: 0.7rem; padding: 1px 8px; border-radius: 10px; }
+    .defense-status-winning { color: #2ECC71; background: rgba(46,204,113,0.15); }
+    .defense-status-losing { color: #E74C3C; background: rgba(231,76,60,0.15); }
+    .defense-alert { font-size: 0.62rem; color: #E74C3C; font-weight: 700; letter-spacing: 0.08em; }
+    .stratagem-toolbar { margin-bottom: 14px; }
     .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; }
     .stratagem-big-btn {
       background: linear-gradient(135deg, rgba(245,197,24,0.25), rgba(245,197,24,0.08));
@@ -2048,6 +2061,19 @@ function renderPlayers(data) {
       ? `<span class="status-tag ${esc(statusClass)}">${esc(statusLabel)}</span>`
       : "";
 
+    // 防御战：双进度条（进攻方 vs 防守方）
+    const camp = p._campaign || {};
+    const isDefense = camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    let hpSection = "";
+    if (statusLabel === "已解放" || libPct >= 99.9) {
+      hpSection = `<div class="planet-hp">已解放</div>`;
+    } else if (isDefense) {
+      hpSection = renderDefenseBars(p, camp);
+    } else {
+      hpSection = `
+        <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(hpPct)}" style="width:${hpPctShow}%"></div></div>
+        <div class="planet-hp">${hpPctShow}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>`;
+    }
     return `
       <div class="planet-card ${ownerClass(owner)}" data-planet-index="${p.index}">
         <div class="planet-name">${esc(name.cn || name.en)}</div>
@@ -2057,18 +2083,86 @@ function renderPlayers(data) {
           ${statusTag}
           <span>· ${esc(sectorCn(name.sector))}</span>
         </div>
-        ${statusLabel === "已解放" || libPct >= 99.9
-          ? `<div class="planet-hp">已解放</div>`
-          : `
-            <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(hpPct)}" style="width:${hpPctShow}%"></div></div>
-            <div class="planet-hp">${hpPctShow}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>
-          `
-        }
+        ${hpSection}
         <div class="planet-detail-wrap" style="display:none">
           ${planetDetailHtml(p, starMap, statusLabel)}
         </div>
       </div>
     `;
+  }
+
+  // 防御战双进度条
+  function renderDefenseBars(p, camp) {
+    // type=1 防御战无 planetEvents 数据时，用星球血量推断：进攻方 = 100 - health%
+    let atk = camp.attackersProgress;
+    let def = camp.defendersProgress;
+    if (atk == null && p.maxHealth > 0) {
+      const hpPct = (p.health || 0) / p.maxHealth * 100;
+      def = Math.max(0, Math.min(100, hpPct));
+      atk = 100 - def;
+    }
+    atk = atk || 0;
+    def = def || 0;
+    const atkFaction = camp.faction || "Unknown";
+    const atkColor = {
+      "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)",
+      "Illuminate": "var(--c-illuminate)", "Humans": "var(--c-humans)",
+    }[atkFaction] || "#E74C3C";
+    const atkLabel = ownerCn(atkFaction) || atkFaction;
+    // 剩余时间（type=1 防御战无 event 数据时为 0）
+    const remainS = camp.remainingTime || 0;
+    const timerTxt = fmtDuration(remainS);
+    const hasTimer = remainS > 0;
+    // 战局状态：进攻方 > 防守方 = 防守方失利
+    const winning = def >= atk;
+    const statusTxt = winning ? "WINNING" : "LOSING";
+    const statusCls = winning ? "defense-status-winning" : "defense-status-losing";
+    // 每小时变化率（仅在有剩余时间时计算，避免满血推断失真）
+    let ratesHtml = "";
+    if (hasTimer) {
+      const remainH = remainS / 3600;
+      const atkRate = ((100 - def) / remainH);
+      const defRate = (def / remainH);
+      ratesHtml = `<div class="defense-meta" style="font-size:0.62rem;color:var(--text-dim)">
+        <span>进攻 ${atkRate.toFixed(3)}% / h</span>
+        <span>防守 ${defRate.toFixed(3)}% / h</span>
+      </div>`;
+    }
+    return `
+      <div class="defense-alert">⚠ INVASION DETECTED</div>
+      <div class="defense-bars">
+        <div class="defense-bar-row">
+          <span class="defense-bar-label">${esc(atkLabel)}</span>
+          <div class="defense-bar-track"><div class="defense-bar-fill" style="width:${atk.toFixed(2)}%;background:${atkColor}"></div></div>
+          <span class="defense-bar-val">${atk.toFixed(2)}%</span>
+        </div>
+        <div class="defense-bar-row">
+          <span class="defense-bar-label">超级地球</span>
+          <div class="defense-bar-track"><div class="defense-bar-fill" style="width:${def.toFixed(2)}%;background:var(--c-humans)"></div></div>
+          <span class="defense-bar-val">${def.toFixed(2)}%</span>
+        </div>
+      </div>
+      <div class="defense-meta">
+        <span class="defense-status ${statusCls}">${statusTxt}</span>
+        ${hasTimer ? `<span class="defense-timer">⏳ ${timerTxt}</span>` : ""}
+      </div>
+      ${ratesHtml}
+    `;
+  }
+
+  // 时长格式化：2W 3D 24h 17m
+  function fmtDuration(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    const d = Math.floor(s / 86400);
+    const h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const w = Math.floor(d / 7);
+    const rd = d % 7;
+    let out = "";
+    if (w) out += `${w}W `;
+    if (rd || w) out += `${rd}D `;
+    out += `${h}h ${m}m`;
+    return out.trim();
   }
 
   // 点击卡片切换展开详情（事件委托）

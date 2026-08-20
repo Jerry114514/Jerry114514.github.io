@@ -213,28 +213,52 @@ def fetch_official():
     for ev in (st.get("planetEvents") or []):
         pi = ev.get("planetIndex")
         info = info_by_idx.get(pi, {})
+        ps = ps_by_idx.get(pi, {})
+        max_h = ev.get("maxHealth") or ps.get("maxHealth") or 0
+        cur_h = ev.get("health") or 0
+        # 双进度：防守方=血量比例，进攻方=1-血量比例
+        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else 0
+        attackers_prog = round(100 - defenders_prog, 2) if max_h else 0
+        # 剩余时间（战争时钟秒）：expireTime - 当前战争时间（用 status 的 time 字段）
+        war_now = st.get("time") or 0
+        remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
         campaigns.append({
-            "id": ev.get("eventId"),
-            "faction": norm_owner(ev.get("faction")),
+            "id": ev.get("id") or ev.get("eventId"),
+            "faction": norm_owner(ev.get("race") if ev.get("race") is not None else ev.get("faction")),
             "type": "defense",
+            "eventType": ev.get("eventType", 1),
+            "attackersProgress": attackers_prog,
+            "defendersProgress": defenders_prog,
+            "remainingTime": remain_s,
             "count": 0,
             "planet": {
                 "index": pi,
                 "name": info.get("name") or f"PLANET_{pi}",
                 "sector": info.get("sector") if isinstance(info.get("sector"), str) else SECTOR_ID.get(info.get("sector"), ""),
-                "currentOwner": norm_owner((ps_by_idx.get(pi) or {}).get("owner")),
+                "currentOwner": norm_owner(ps.get("owner")),
             },
         })
 
-    # 去重：同一星球可能同时出现在 campaigns 与 planetEvents（官方双来源），保留 type 数字版（信息更全）
+    # 去重：同一星球可能同时出现在 campaigns 与 planetEvents（官方双来源）
+    # 优先保留 defense 版（含双进度/剩余时间数据）；解放战保留 campaigns 数字版
     seen_planet = {}
     for c in campaigns:
         pi = c.get("planet", {}).get("index")
         if pi is None:
             continue
-        # 优先保留已有条目；若新条目 type 是数字（0/1/4 官方战役）则覆盖 defense 字符串版
-        if pi not in seen_planet or (isinstance(c.get("type"), int) and not isinstance(seen_planet[pi].get("type"), int)):
+        is_defense = c.get("type") == "defense" or c.get("eventType") is not None
+        if pi not in seen_planet:
             seen_planet[pi] = c
+        else:
+            exist = seen_planet[pi]
+            exist_is_defense = exist.get("type") == "defense" or exist.get("eventType") is not None
+            # 新条目是 defense 且现有不是 -> 覆盖（保留双进度）
+            if is_defense and not exist_is_defense:
+                seen_planet[pi] = c
+            # 两个都是 defense -> 保留 eventType 非 None 的（官方版信息全）
+            elif is_defense and exist_is_defense:
+                if c.get("eventType") is not None and exist.get("eventType") is None:
+                    seen_planet[pi] = c
     campaigns = list(seen_planet.values())
 
     assignment = None
@@ -323,10 +347,20 @@ def fetch_companion():
         })
     for ev in (ws.get("planetEvents") or []):
         pi = ev.get("planetIndex")
+        max_h = ev.get("maxHealth") or 0
+        cur_h = ev.get("health") or 0
+        defenders_prog = round(cur_h / max_h * 100, 2) if max_h else 0
+        attackers_prog = round(100 - defenders_prog, 2) if max_h else 0
+        war_now = ws.get("time") or comp.get("timeSinceStart") or 0
+        remain_s = max(0, (ev.get("expireTime") or 0) - war_now) if war_now else 0
         campaigns.append({
-            "id": ev.get("eventId"),
+            "id": ev.get("id") or ev.get("eventId"),
             "faction": norm_owner(ev.get("race")),
             "type": "defense",
+            "eventType": ev.get("eventType", 1),
+            "attackersProgress": attackers_prog,
+            "defendersProgress": defenders_prog,
+            "remainingTime": remain_s,
             "count": 0,
             "planet": {"index": pi, "name": f"PLANET_{pi}", "sector": "", "currentOwner": "Humans"},
         })
