@@ -459,7 +459,9 @@ def fetch_hd2dev():
         assignment = {"id": a0.get("id"), "briefing": a0.get("briefing") or "",
                       "title": a0.get("title") or "MAJOR ORDER",
                       "tasks": a0.get("tasks") or [], "progress": a0.get("progress") or [],
-                      "expiration": norm_time(a0.get("expiration"))}
+                      "expiration": norm_time(a0.get("expiration")),
+                      "deadline": a0.get("expiration") or "",
+                      "serverTime": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
             "assignments": assignment, "dispatches": dispatches, "dss": None}
@@ -565,6 +567,15 @@ def main():
         if snap and snap.get("assignments"):
             base["assignments"] = snap["assignments"]
             print("  [FALLBACK] 重要指令使用上次成功快照")
+
+    # 从 hd2dev 补 deadline 和 serverTime（必须在 assignments 覆盖逻辑之后，否则被覆盖清空）
+    if hd2dev and hd2dev.get("assignments") and hd2dev["assignments"].get("deadline"):
+        ass = base.get("assignments")
+        if ass and isinstance(ass, dict):
+            ass["deadline"] = hd2dev["assignments"]["deadline"]
+            ass["serverTime"] = hd2dev["assignments"]["serverTime"]
+            print(f"  [OK] deadline: {ass['deadline']}")
+
     # activeEffects 快照兜底：companion 限流时保留上次全量效果（否则只剩官方 MO 星球）
     if not companion or not companion.get("planets"):
         snap = _load_snapshot()

@@ -1855,15 +1855,53 @@ function renderPlayers(data) {
       <div class="mo-targets">${planetsHtml}</div>
     `;
 
-    if (a.expiration) {
-      const exp = new Date(a.expiration);
-      const remaining = exp - Date.now();
-      if (!isNaN(remaining)) {
-        const hrs = Math.floor(remaining / 3600000);
-        const mins = Math.floor((remaining % 3600000) / 60000);
-        expireEl.textContent = `剩余 ${hrs}h ${mins}m`;
+    // 实时倒计时：用 deadline（ISO 截止时间）+ serverTime（抓取时服务器时间，用于本地校对）
+    if (a.deadline || a.expiration) {
+      const deadlineTs = new Date(a.deadline || a.expiration).getTime();
+      // serverTime 校对：本地时间 + (serverTime - 抓取时刻本地时间) 偏差
+      let timeOffset = 0;
+      if (a.serverTime) {
+        const serverTs = new Date(a.serverTime).getTime();
+        if (!isNaN(serverTs) && !isNaN(deadlineTs)) {
+          // serverTime 是抓取时刻 UTC，本地此刻 = Date.now()；偏差 = serverTs - 抓取时刻
+          // 前端无法知道抓取时刻本地时间，用 serverTime 与 now 近似（抓取频率 5min，偏差可接受）
+          timeOffset = serverTs - Date.now();
+        }
+      }
+      startMoCountdown(deadlineTs, timeOffset, expireEl);
+    } else {
+      expireEl.textContent = "";
+    }
+  }
+
+  let moCountdownTimer = null;
+  function startMoCountdown(deadlineTs, timeOffset, expireEl) {
+    if (moCountdownTimer) clearInterval(moCountdownTimer);
+    function tick() {
+      const serverNow = Date.now() + timeOffset;  // 修正后的"服务器时间"
+      const remaining = deadlineTs - serverNow;
+      if (remaining <= 0) {
+        expireEl.textContent = "⏳ 指令已过期";
+        expireEl.style.color = "";
+        if (moCountdownTimer) clearInterval(moCountdownTimer);
+        return;
+      }
+      const d = Math.floor(remaining / 86400000);
+      const h = Math.floor((remaining % 86400000) / 3600000);
+      const m = Math.floor((remaining % 3600000) / 60000);
+      const s = Math.floor((remaining % 60000) / 1000);
+      expireEl.textContent = `⏳ 剩余 ${d}天 ${h}时 ${m}分 ${s}秒`;
+      // 颜色分级：<1h 红，<24h 橙，否则默认
+      if (remaining < 3600000) {
+        expireEl.style.color = "#E74C3C";
+      } else if (remaining < 86400000) {
+        expireEl.style.color = "#F5C518";
+      } else {
+        expireEl.style.color = "";
       }
     }
+    tick();
+    moCountdownTimer = setInterval(tick, 1000);
   }
 
   /* ==============================================================
