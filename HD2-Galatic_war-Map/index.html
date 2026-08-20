@@ -1134,6 +1134,20 @@
     </section>
 
 <!-- ============================================================
+         区块2：紧急战情（防御战+侦察战）
+         ============================================================ -->
+    <section class="block" id="block-urgent">
+      <div class="block-head">
+        <span class="block-emoji">🚨</span>
+        <h2 class="block-title">紧急战情</h2>
+        <span class="block-meta" id="urgent-meta"></span>
+      </div>
+      <div id="urgent-content">
+        <div class="loading">正在扫描紧急战情…</div>
+      </div>
+    </section>
+
+<!-- ============================================================
          区块2：当前可攻打星球
          ============================================================ -->
     <section class="block" id="block-attackable">
@@ -2248,6 +2262,47 @@ function renderPlayers(data) {
   /* ==============================================================
      渲染：区块2 可攻打星球
      ============================================================== */
+  function renderDefenseRecon(data) {
+    const root = $("urgent-content");
+    const meta = $("urgent-meta");
+    if (!root) return;
+    const fullPlanets = (data.planets && !data.planets.__err) ? data.planets : [];
+    const fullByIndex = Object.fromEntries(fullPlanets.map(p => [p.index, p]));
+    const fromCampaigns = (data.campaigns || []).map(c => {
+      const fp = fullByIndex[c.planet.index];
+      return { ...c.planet, ...(fp || {}), _campaign: c };
+    });
+    // 只取防御战+侦察战
+    const urgent = fromCampaigns.filter(p => {
+      if (!p._campaign) return false;
+      const c = p._campaign;
+      return c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1;
+    });
+    if (urgent.length === 0) {
+      root.innerHTML = `<div class="empty">当前无紧急战情。</div>`;
+      meta.textContent = "";
+      return;
+    }
+    meta.textContent = `${urgent.length} 个紧急目标`;
+    const html = urgent.map(p => {
+      const reconIdx = p.index != null ? String(p.index) : "";
+      if (data.recon_stats && data.recon_stats[reconIdx]) {
+        return renderReconCard(p, data.recon_stats[reconIdx], data.starMap);
+      }
+      // 防御战渲染（与 attackable 内逻辑一致）
+      const isHuman = (p.currentOwner || "") === "Humans";
+      const camp = p._campaign || {};
+      const isDefense = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+      const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
+      const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;
+      const libPct = 100 - hpPct;
+      const statusLabel = isDefense ? "防御战" : (libPct >= 99.9 || (isHuman && libPct <= 0.01) ? "已解放" : (isHuman ? "防御战" : "解放战"));
+      const statusClass = isDefense ? "status-defend" : (libPct >= 99.9 || (isHuman && libPct <= 0.01) ? "status-liberated" : (isHuman ? "status-defend" : "status-liberate"));
+      return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
+    }).join("");
+    root.innerHTML = `<div class="planet-grid">${html}</div>`;
+  }
+
   function renderAttackable(data) {
     const root = $("attackable-content");
     const meta = $("attackable-meta");
@@ -2266,13 +2321,15 @@ function renderPlayers(data) {
     const fullByIndex = Object.fromEntries(fullPlanets.map(p => [p.index, p]));
     const fromCampaigns = (data.campaigns || []).map(c => {
       const fp = fullByIndex[c.planet.index];
-      // 完整合并 fullPlanets 字段（health/maxHealth/activeEffects/players/resistance 等），
-      // 否则可攻打区块的行动变量/玩家数/抵抗度缺失
       return {
         ...c.planet,
         ...(fp || {}),
         _campaign: c
       };
+    // 排除防御战+侦察战（由紧急战情模块独立展示）
+    }).filter(p => {
+      const c = p._campaign;
+      return !(c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1);
     });
 
     // 其次取有 attacking 但不在 campaigns 里的（被入侵但暂无主要战役）
@@ -2559,6 +2616,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderMO(data);
       renderPlayers(data);
       renderDss(data);
+      renderDefenseRecon(data);
       renderAttackable(data);
       renderProspect(data);
       renderSectors(data);
