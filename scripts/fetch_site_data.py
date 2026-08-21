@@ -219,19 +219,19 @@ def fetch_official():
         info = info_by_idx.get(pi, {})
         ps = ps_by_idx.get(pi, {})
         max_h = ev.get("maxHealth") or ps.get("maxHealth") or 0
+        cur_h = ev.get("health") or ps.get("health") or 0
         # 入侵等级：maxHealth / 50000（四舍五入）
         invasion_level = round(max_h / 50000) if max_h else None
-        # 时间比值法（官方设计）：进攻方 = 已消耗时间/总时间；防守方 = 剩余时间/总时间
-        war_now = st.get("time") or 0
-        s_t = ev.get("startTime") or 0
-        e_t = ev.get("expireTime") or 0
-        total_t = (e_t - s_t) if (e_t and s_t) else 0
-        if war_now and total_t > 0:
-            attackers_prog = round(max(0, min(1, (war_now - s_t) / total_t)) * 100, 2)
-            defenders_prog = round(max(0, min(1, (e_t - war_now) / total_t)) * 100, 2)
-            remain_s = max(0, e_t - war_now)
+        # 血量赛跑模型（独立计算，不互补）：进攻方 = 已损失血量/总血量；防守方 = 剩余血量/总血量
+        # 注：API 无独立 attackerHealth/defenderHealth 字段，仅 planetEvents.health（星球当前血量）
+        if max_h:
+            attackers_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2)
+            defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2)
         else:
-            attackers_prog = defenders_prog = remain_s = None
+            attackers_prog = defenders_prog = None
+        war_now = st.get("time") or 0
+        e_t = ev.get("expireTime") or 0
+        remain_s = max(0, e_t - war_now) if (war_now and e_t) else None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
             "faction": norm_owner(ev.get("race") if ev.get("race") is not None else ev.get("faction")),
@@ -360,17 +360,17 @@ def fetch_companion():
     for ev in (ws.get("planetEvents") or []):
         pi = ev.get("planetIndex")
         max_h = ev.get("maxHealth") or 0
+        cur_h = ev.get("health") or 0
         invasion_level = round(max_h / 50000) if max_h else None
-        war_now = ws.get("time") or comp.get("timeSinceStart") or 0
-        s_t = ev.get("startTime") or 0
-        e_t = ev.get("expireTime") or 0
-        total_t = (e_t - s_t) if (e_t and s_t) else 0
-        if war_now and total_t > 0:
-            attackers_prog = round(max(0, min(1, (war_now - s_t) / total_t)) * 100, 2)
-            defenders_prog = round(max(0, min(1, (e_t - war_now) / total_t)) * 100, 2)
-            remain_s = max(0, e_t - war_now)
+        # 血量赛跑模型（独立计算，不互补）：进攻方 = 已损失血量；防守方 = 剩余血量
+        if max_h:
+            attackers_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2)
+            defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2)
         else:
-            attackers_prog = defenders_prog = remain_s = None
+            attackers_prog = defenders_prog = None
+        war_now = ws.get("time") or comp.get("timeSinceStart") or 0
+        e_t = ev.get("expireTime") or 0
+        remain_s = max(0, e_t - war_now) if (war_now and e_t) else None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
             "faction": norm_owner(ev.get("race")),

@@ -797,6 +797,7 @@
     .defense-status { font-weight: 700; font-size: 0.7rem; padding: 1px 8px; border-radius: 10px; }
     .defense-status-winning { color: #2ECC71; background: rgba(46,204,113,0.15); }
     .defense-status-losing { color: #E74C3C; background: rgba(231,76,60,0.15); }
+    .defense-status-stalemate { color: #F5C518; background: rgba(245,197,24,0.15); }
     .defense-alert { font-size: 0.62rem; color: #E74C3C; font-weight: 700; letter-spacing: 0.08em; }
     .stratagem-toolbar { margin-bottom: 14px; }
     .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; }
@@ -2171,12 +2172,14 @@ function renderPlayers(data) {
     const rateCls = rate == null ? "" : (rate >= 50 ? "recon-rate-big-good" : "recon-rate-big-bad");
     const name = planetName(p, starMap);
     const sec = sectorCn(name.sector);
+    // 数值以千（K）为单位（与游戏内风格一致）
+    const k = (v, digits) => (v == null || isNaN(v)) ? "--" : Number(v).toFixed(digits == null ? 2 : digits) + "K";
     const grid = `
       <div class="recon-grid">
-        <div class="recon-metric"><div class="recon-metric-label">✓ 成功任务 / h</div><div class="recon-metric-val recon-metric-val-good">${fmt(recon.successPerHour)}</div></div>
-        <div class="recon-metric"><div class="recon-metric-label">✗ 失败任务 / h</div><div class="recon-metric-val recon-metric-val-bad">${fmt(recon.failPerHour)}</div></div>
-        <div class="recon-metric"><div class="recon-metric-label">👾 敌人侦察数 / h</div><div class="recon-metric-val recon-metric-val-info">${fmt(recon.enemiesPerHour)}</div></div>
-        <div class="recon-metric"><div class="recon-metric-label">💀 绝地潜兵阵亡 / h</div><div class="recon-metric-val recon-metric-val-death">${fmt(recon.deathsPerHour)}</div></div>
+        <div class="recon-metric"><div class="recon-metric-label">✓ 成功任务 / h</div><div class="recon-metric-val recon-metric-val-good">${k(recon.successPerHour)}</div></div>
+        <div class="recon-metric"><div class="recon-metric-label">✗ 失败任务 / h</div><div class="recon-metric-val recon-metric-val-bad">${k(recon.failPerHour)}</div></div>
+        <div class="recon-metric"><div class="recon-metric-label">👾 敌人侦察数 / h</div><div class="recon-metric-val recon-metric-val-info">${k(recon.enemiesPerHour)}</div></div>
+        <div class="recon-metric"><div class="recon-metric-label">💀 绝地潜兵阵亡 / h</div><div class="recon-metric-val recon-metric-val-death">${k(recon.deathsPerHour)}</div></div>
       </div>`;
     const rateTxt = rate == null ? "--" : rate.toFixed(4) + "%";
     return `
@@ -2191,6 +2194,7 @@ function renderPlayers(data) {
         ${grid}
         <div class="recon-footer">
           <span>星球血量影响：—（侦察战不参与解放进度）</span>
+          <span>数值以千（K）为单位</span>
         </div>
       </div>`;
   }
@@ -2218,10 +2222,19 @@ function renderPlayers(data) {
     const remainS = camp.remainingTime || 0;
     const timerTxt = fmtDuration(remainS);
     const hasTimer = remainS > 0;
-    // 战局状态：进攻方 > 防守方 = 防守方失利
-    const winning = def >= atk;
-    const statusTxt = winning ? "WINNING" : "LOSING";
-    const statusCls = winning ? "defense-status-winning" : "defense-status-losing";
+    // 战局状态：基于速率对比（防守方速率 > 进攻方 = WINNING；接近 = STALEMATE）
+    let statusTxt, statusCls;
+    const aR = camp.attackersRate, dR = camp.defendersRate;
+    if (aR != null && dR != null) {
+      if (dR > aR * 1.05) { statusTxt = "WINNING"; statusCls = "defense-status-winning"; }
+      else if (aR > dR * 1.05) { statusTxt = "LOSING"; statusCls = "defense-status-losing"; }
+      else { statusTxt = "STALEMATE"; statusCls = "defense-status-stalemate"; }
+    } else {
+      // 无速率数据时用进度对比兜底
+      const winning = def >= atk;
+      statusTxt = winning ? "WINNING" : "LOSING";
+      statusCls = winning ? "defense-status-winning" : "defense-status-losing";
+    }
     // 每小时变化率：优先用抓取差值（attackersRate/defendersRate，真实数据差值）
     // 无差值数据时隐藏（不再用总时间推算）
     let ratesHtml = "";
@@ -2252,7 +2265,7 @@ function renderPlayers(data) {
         <span class="defense-status ${statusCls}">${statusTxt}</span>
         ${hasTimer ? `<span class="defense-timer">⏳ ${timerTxt}</span>` : ""}
       </div>
-      ${camp.invasionLevel != null ? `<div class="defense-meta" style="font-size:0.68rem"><span>⚔️ 入侵等级：${esc(camp.invasionLevel)}</span></div>` : ""}
+      ${camp.invasionLevel != null ? `<div class="defense-meta" style="font-size:0.68rem"><span>⚔️ 入侵等级：${esc(camp.invasionLevel)}</span></div><div class="defense-meta" style="font-size:0.6rem;color:var(--text-dim)">💡 入侵等级越高，敌方兵力越强，需完成更多任务以抵挡攻势</div>` : ""}
       ${ratesHtml}
     `;
   }
