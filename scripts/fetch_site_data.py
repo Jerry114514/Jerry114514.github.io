@@ -240,6 +240,7 @@ def fetch_official():
             "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
+            "startTime": ev.get("startTime"),
             "remainingTime": remain_s,
             "invasionLevel": invasion_level,
             "count": 0,
@@ -286,7 +287,7 @@ def fetch_official():
             "expiration": norm_time(a0.get("expiration")),
         }
 
-    war = {}
+    war = {"time": st.get("time") or 0}
     if stats:
         war["statistics"] = {"playerCount": (stats.get("statistics") or {}).get("playerCount", 0),
                              "missionsWon": 0, "missionsLost": 0}
@@ -379,6 +380,7 @@ def fetch_companion():
             "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
+            "startTime": ev.get("startTime"),
             "remainingTime": remain_s,
             "invasionLevel": invasion_level,
             "count": 0,
@@ -611,27 +613,39 @@ def main():
         else:
             base["dss"] = None
 
-    # 防御战速率：与上次抓取的进度差值计算（% / 小时），非总时间推算
+    # 防御战速率与独立进度：
+    # - 进攻方进度 = 固定速率 × 已历经时间（速率：优先两次抓取差值，无则用已损失血量/历经时间估算）
+    # - 防守方进度 = 实时 health / maxHealth（直接读取，不计算）
     prev_snap = _load_snapshot()
     prev_camps = {c.get("planet", {}).get("index"): c for c in (prev_snap.get("campaigns") or [])}
     now_ts = time.time()
     prev_ts = prev_snap.get("savedAtUnix") or 0
+    war_now = (official or {}).get("war", {}).get("time") or 0
     for c in base.get("campaigns") or []:
         if c.get("type") == "defense" or c.get("eventType") == 1:
             pi = c.get("planet", {}).get("index")
             prev = prev_camps.get(pi) or {}
-            atk = c.get("attackersProgress")
-            def_ = c.get("defendersProgress")
+            atk = c.get("attackersProgress")   # 当前血量模型值（已损失血量%）
+            def_ = c.get("defendersProgress")  # 当前防守值（剩余血量%）
             patk = prev.get("attackersProgress")
             pdef = prev.get("defendersProgress")
-            if atk is not None and patk is not None and prev_ts and (now_ts - prev_ts) > 0:
+            # 进攻方速率：优先两次抓取差值，无则用已损失血量/历经时间估算
+            if atk is not None and patk is not None and prev_ts and (now_ts - prev_ts) > 0 and abs(atk - patk) > 0.01:
                 c["attackersRate"] = round((atk - patk) / ((now_ts - prev_ts) / 3600), 3)
             else:
-                c["attackersRate"] = None
-            if def_ is not None and pdef is not None and prev_ts and (now_ts - prev_ts) > 0:
+                st_t = c.get("startTime") or 0
+                if st_t and war_now and (war_now - st_t) > 0:
+                    elapsed_h = (war_now - st_t) / 3600
+                    c["attackersRate"] = round(atk / elapsed_h, 3) if atk else None
+                else:
+                    c["attackersRate"] = None
+            # 防守方速率：两次抓取差值（可为负，防守方掉血）
+            if def_ is not None and pdef is not None and prev_ts and (now_ts - prev_ts) > 0 and abs(def_ - pdef) > 0.01:
                 c["defendersRate"] = round((def_ - pdef) / ((now_ts - prev_ts) / 3600), 3)
             else:
                 c["defendersRate"] = None
+            # 进攻方进度：保持血量模型值（已损失血量%），独立于防守方
+            # （固定速率×历经时间与已损失血量本质一致；速率供前端展示）
 
     # 侦察战（Recon）识别：campaign type=1 且星球无 PlanetEvent（event=null）→ 侦察战
     # 数据源：hd2dev statistics（missionsWon/missionsLost/missionTime/击杀/阵亡）

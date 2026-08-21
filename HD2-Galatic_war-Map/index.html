@@ -2201,7 +2201,7 @@ function renderPlayers(data) {
 
   // 防御战双进度条（时间比值法：进攻=已消耗时间占比，防守=剩余时间占比，数据由抓取脚本提供）
   function renderDefenseBars(p, camp) {
-    // 直接使用脚本提供的时间比值进度（若缺失则用血量兜底，避免空白）
+    // 独立双进度（血量赛跑模型）：进攻方=已损失血量%，防守方=剩余血量%（各自独立计算）
     let atk = camp.attackersProgress;
     let def = camp.defendersProgress;
     if ((atk == null || def == null) && p.maxHealth > 0) {
