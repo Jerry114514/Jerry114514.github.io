@@ -225,8 +225,8 @@ def fetch_official():
         war_now = st.get("time") or 0
         s_t = ev.get("startTime") or 0
         e_t = ev.get("expireTime") or 0
-        # 防守方进度 = 实时血量 / 总血量（独立，直接读取）
-        defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2) if max_h else None
+        # 防守方进度 = (总血量 - 剩余血量) / 总血量 × 100%（已造成伤害占比，独立）
+        defenders_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2) if max_h else None
         # 进攻方固定速率 = 100 / 总时长小时（游戏机制：总时长确定进攻速率，如 48h → 2.083%/h）
         total_h = (e_t - s_t) / 3600 if (e_t and s_t and e_t > s_t) else 0
         attacker_rate_fixed = round(100 / total_h, 3) if total_h > 0 else None
@@ -372,8 +372,8 @@ def fetch_companion():
         war_now = ws.get("time") or comp.get("timeSinceStart") or 0
         s_t = ev.get("startTime") or 0
         e_t = ev.get("expireTime") or 0
-        # 防守方进度 = 实时血量 / 总血量（独立，直接读取）
-        defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2) if max_h else None
+        # 防守方进度 = (总血量 - 剩余血量) / 总血量 × 100%（已造成伤害占比，独立）
+        defenders_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2) if max_h else None
         # 进攻方固定速率 = 100 / 总时长小时
         total_h = (e_t - s_t) / 3600 if (e_t and s_t and e_t > s_t) else 0
         attacker_rate_fixed = round(100 / total_h, 3) if total_h > 0 else None
