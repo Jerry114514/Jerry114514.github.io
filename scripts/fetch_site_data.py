@@ -222,15 +222,20 @@ def fetch_official():
         cur_h = ev.get("health") or ps.get("health") or 0
         # 入侵等级：maxHealth / 50000（四舍五入）
         invasion_level = round(max_h / 50000) if max_h else None
-        # 血量赛跑模型（独立计算，不互补）：进攻方 = 已损失血量/总血量；防守方 = 剩余血量/总血量
-        # 注：API 无独立 attackerHealth/defenderHealth 字段，仅 planetEvents.health（星球当前血量）
-        if max_h:
-            attackers_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2)
-            defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2)
-        else:
-            attackers_prog = defenders_prog = None
         war_now = st.get("time") or 0
+        s_t = ev.get("startTime") or 0
         e_t = ev.get("expireTime") or 0
+        # 防守方进度 = 实时血量 / 总血量（独立，直接读取）
+        defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2) if max_h else None
+        # 进攻方固定速率 = 100 / 总时长小时（游戏机制：总时长确定进攻速率，如 48h → 2.083%/h）
+        total_h = (e_t - s_t) / 3600 if (e_t and s_t and e_t > s_t) else 0
+        attacker_rate_fixed = round(100 / total_h, 3) if total_h > 0 else None
+        # 进攻方进度 = 固定速率 × 已历经时间（独立计算，非互补）
+        if attacker_rate_fixed is not None and s_t and war_now and (war_now - s_t) > 0:
+            elapsed_h = (war_now - s_t) / 3600
+            attackers_prog = round(min(100, attacker_rate_fixed * elapsed_h), 2)
+        else:
+            attackers_prog = None
         remain_s = max(0, e_t - war_now) if (war_now and e_t) else None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
@@ -240,7 +245,8 @@ def fetch_official():
             "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
-            "startTime": ev.get("startTime"),
+            "attackersRate": attacker_rate_fixed,
+            "startTime": s_t,
             "remainingTime": remain_s,
             "invasionLevel": invasion_level,
             "count": 0,
@@ -363,14 +369,20 @@ def fetch_companion():
         max_h = ev.get("maxHealth") or 0
         cur_h = ev.get("health") or 0
         invasion_level = round(max_h / 50000) if max_h else None
-        # 血量赛跑模型（独立计算，不互补）：进攻方 = 已损失血量；防守方 = 剩余血量
-        if max_h:
-            attackers_prog = round(max(0, min(1, (max_h - cur_h) / max_h)) * 100, 2)
-            defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2)
-        else:
-            attackers_prog = defenders_prog = None
         war_now = ws.get("time") or comp.get("timeSinceStart") or 0
+        s_t = ev.get("startTime") or 0
         e_t = ev.get("expireTime") or 0
+        # 防守方进度 = 实时血量 / 总血量（独立，直接读取）
+        defenders_prog = round(max(0, min(1, cur_h / max_h)) * 100, 2) if max_h else None
+        # 进攻方固定速率 = 100 / 总时长小时
+        total_h = (e_t - s_t) / 3600 if (e_t and s_t and e_t > s_t) else 0
+        attacker_rate_fixed = round(100 / total_h, 3) if total_h > 0 else None
+        # 进攻方进度 = 固定速率 × 已历经时间
+        if attacker_rate_fixed is not None and s_t and war_now and (war_now - s_t) > 0:
+            elapsed_h = (war_now - s_t) / 3600
+            attackers_prog = round(min(100, attacker_rate_fixed * elapsed_h), 2)
+        else:
+            attackers_prog = None
         remain_s = max(0, e_t - war_now) if (war_now and e_t) else None
         campaigns.append({
             "id": ev.get("id") or ev.get("eventId"),
@@ -380,7 +392,8 @@ def fetch_companion():
             "campaignType": "defense",
             "attackersProgress": attackers_prog,
             "defendersProgress": defenders_prog,
-            "startTime": ev.get("startTime"),
+            "attackersRate": attacker_rate_fixed,
+            "startTime": s_t,
             "remainingTime": remain_s,
             "invasionLevel": invasion_level,
             "count": 0,
@@ -613,39 +626,22 @@ def main():
         else:
             base["dss"] = None
 
-    # 防御战速率与独立进度：
-    # - 进攻方进度 = 固定速率 × 已历经时间（速率：优先两次抓取差值，无则用已损失血量/历经时间估算）
-    # - 防守方进度 = 实时 health / maxHealth（直接读取，不计算）
+    # 防守方实时速率：两次抓取 defendersProgress 差值（进攻方速率已为固定值，不覆盖）
     prev_snap = _load_snapshot()
     prev_camps = {c.get("planet", {}).get("index"): c for c in (prev_snap.get("campaigns") or [])}
     now_ts = time.time()
     prev_ts = prev_snap.get("savedAtUnix") or 0
-    war_now = (official or {}).get("war", {}).get("time") or 0
     for c in base.get("campaigns") or []:
         if c.get("type") == "defense" or c.get("eventType") == 1:
             pi = c.get("planet", {}).get("index")
             prev = prev_camps.get(pi) or {}
-            atk = c.get("attackersProgress")   # 当前血量模型值（已损失血量%）
-            def_ = c.get("defendersProgress")  # 当前防守值（剩余血量%）
-            patk = prev.get("attackersProgress")
+            def_ = c.get("defendersProgress")
             pdef = prev.get("defendersProgress")
-            # 进攻方速率：优先两次抓取差值，无则用已损失血量/历经时间估算
-            if atk is not None and patk is not None and prev_ts and (now_ts - prev_ts) > 0 and abs(atk - patk) > 0.01:
-                c["attackersRate"] = round((atk - patk) / ((now_ts - prev_ts) / 3600), 3)
-            else:
-                st_t = c.get("startTime") or 0
-                if st_t and war_now and (war_now - st_t) > 0:
-                    elapsed_h = (war_now - st_t) / 3600
-                    c["attackersRate"] = round(atk / elapsed_h, 3) if atk else None
-                else:
-                    c["attackersRate"] = None
             # 防守方速率：两次抓取差值（可为负，防守方掉血）
             if def_ is not None and pdef is not None and prev_ts and (now_ts - prev_ts) > 0 and abs(def_ - pdef) > 0.01:
                 c["defendersRate"] = round((def_ - pdef) / ((now_ts - prev_ts) / 3600), 3)
             else:
                 c["defendersRate"] = None
-            # 进攻方进度：保持血量模型值（已损失血量%），独立于防守方
-            # （固定速率×历经时间与已损失血量本质一致；速率供前端展示）
 
     # 侦察战（Recon）识别：campaign type=1 且星球无 PlanetEvent（event=null）→ 侦察战
     # 数据源：hd2dev statistics（missionsWon/missionsLost/missionTime/击杀/阵亡）
