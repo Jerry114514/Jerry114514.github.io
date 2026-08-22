@@ -23,7 +23,6 @@
   let voidNodes = [], voidLinks = [], voidSupplyLines = [];
   let metaData = {};
 
-  // ============ 加载数据 ============
   async function loadAndRender() {
     loadingEl.classList.remove("hidden");
     try {
@@ -105,49 +104,49 @@
     renderer.zoomAt(factor, mx, my);
   }, { passive: false });
 
-  // ============ 拖拽平移 ============
-  let hasDragged = false;
+  // ============ 拖拽平移（使用 document 监听，确保捕获） ============
+  let isDragging = false, dragStartX = 0, dragStartY = 0;
+  let dragOffX = 0, dragOffY = 0, hasDragged = false;
+
+  canvas.style.touchAction = "none";
 
   canvas.addEventListener("mousedown", (e) => {
-    if (e.button === 0 || e.button === 1) {
-      hasDragged = false;
-      renderer.isDragging = true;
-      renderer.dragStartX = e.clientX;
-      renderer.dragStartY = e.clientY;
-      renderer.dragOffsetX = renderer.offsetX;
-      renderer.dragOffsetY = renderer.offsetY;
-      canvas.style.cursor = "grabbing";
-    }
+    if (e.button !== 0) return;
+    hasDragged = false;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragOffX = renderer.offsetX;
+    dragOffY = renderer.offsetY;
+    canvas.style.cursor = "grabbing";
+    e.preventDefault();
   });
 
-  window.addEventListener("mousemove", (e) => {
-    if (renderer.isDragging) {
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
       hasDragged = true;
-      const dx = e.clientX - renderer.dragStartX;
-      const dy = e.clientY - renderer.dragStartY;
-      renderer.offsetX = renderer.dragOffsetX + dx;
-      renderer.offsetY = renderer.dragOffsetY + dy;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      renderer.offsetX = dragOffX + dx;
+      renderer.offsetY = dragOffY + dy;
       renderer.sectorBoundsCache = null;
     } else {
-      // 悬停检测
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      renderer.hoveredNode = renderer.getNodeAt(mx, my);
-      canvas.style.cursor = renderer.hoveredNode ? "pointer" : "default";
+      if (mx >= 0 && mx <= rect.width && my >= 0 && my <= rect.height) {
+        renderer.hoveredNode = renderer.getNodeAt(mx, my);
+        canvas.style.cursor = renderer.hoveredNode ? "pointer" : "default";
+      }
     }
   });
 
-  window.addEventListener("mouseup", () => {
-    renderer.isDragging = false;
-  });
+  document.addEventListener("mouseup", () => { isDragging = false; });
 
   canvas.addEventListener("mouseleave", () => {
-    renderer.isDragging = false;
     renderer.hoveredNode = null;
-    canvas.style.cursor = "default";
+    if (!isDragging) canvas.style.cursor = "default";
   });
 
-  // ============ 点击（拖拽后不触发） ============
   canvas.addEventListener("click", (e) => {
     if (hasDragged) { hasDragged = false; return; }
     if (renderer.hoveredNode) {
