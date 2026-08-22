@@ -2860,7 +2860,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     var terminids = hist.map(function(h) { return h.factions.Terminids; });
     var automatons = hist.map(function(h) { return h.factions.Automatons; });
     var illuminate = hist.map(function(h) { return h.factions.Illuminate; });
-    var impact = hist.map(function(h) { return (h.impactMultiplier || 0) * 100; });
+    var impact = hist.map(function(h) { return (h.impactMultiplier || 0); });
         // 尺寸由 CSS 容器控制
     impactChart = new Chart(canvas.getContext("2d"), {
       type: "line",
@@ -2885,7 +2885,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
         scales: {
           x: { ticks: { color: "#64748b", maxTicksLimit: 12, font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" } },
           y: { type: "linear", position: "left", ticks: { color: "#64748b", font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" }, title: { display: true, text: "\u73a9\u5bb6\u6570", color: "#94a3b8" } },
-          y1: { type: "linear", position: "right", min: 0, max: 100, ticks: { color: "#64748b", font: { size: 10 }, callback: function(v) { return v + "%"; } }, grid: { drawOnChartArea: false }, title: { display: true, text: "\u5f71\u54cd\u529b\u7cfb\u6570", color: "#94a3b8" } }
+          y1: { type: "linear", position: "right", min: 0, max: 0.025, ticks: { color: "#64748b", font: { size: 10 }, stepSize: 0.005, callback: function(v) { return (v * 100).toFixed(1) + "%"; } }, grid: { drawOnChartArea: false }, title: { display: true, text: "\u5f71\u54cd\u529b\u7cfb\u6570", color: "#94a3b8" } }
         }
       }
     });
