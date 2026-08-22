@@ -676,7 +676,50 @@ def main():
               "source": "official" if official else ("companion" if companion else "helldivers2.dev"),
               "player_distribution": player_dist,
               "recon_stats": recon_stats,
+              "impactMultiplier": None,
               **base}
+
+    # 历史数据：从 extended API 获取玩家分布和影响力系数
+    try:
+        ext_req = urllib.request.Request("https://cdn.helldiverscompanion.com/live/extendedApiInformation/2days.json")
+        ext_req.add_header("User-Agent", "Mozilla/5.0")
+        ext_resp = urllib.request.urlopen(ext_req, timeout=15)
+        ext_raw = json.loads(ext_resp.read())
+        ext_entries = ext_raw.get("data", [])
+        if ext_entries:
+            latest = ext_entries[-1]
+            new_record = {
+                "timestamp": latest["timestampUtc"],
+                "totalPlayers": latest.get("totalPlayerCount", 0),
+                "factions": {
+                    "Humans": latest.get("playerCountHumans", 0),
+                    "Terminids": latest.get("playerCountTerminids", 0),
+                    "Automatons": latest.get("playerCountAutomatons", 0),
+                    "Illuminate": latest.get("playerCountIlluminate", 0),
+                },
+                "impactMultiplier": latest.get("impactMultiplier", 0),
+            }
+            hist_dir = os.path.join(os.path.dirname(out_path), "data", "history")
+            hist_path = os.path.join(hist_dir, "player_distribution.json")
+            os.makedirs(hist_dir, exist_ok=True)
+            history = {"history": [], "maxRecords": 288}
+            if os.path.exists(hist_path):
+                with open(hist_path, encoding="utf-8") as f:
+                    old = json.load(f)
+                    history["history"] = old.get("history", [])
+            timestamps = {h["timestamp"] for h in history["history"]}
+            if new_record["timestamp"] not in timestamps:
+                history["history"].append(new_record)
+            if len(history["history"]) > 288:
+                history["history"] = history["history"][-288:]
+            with open(hist_path, "w", encoding="utf-8") as f:
+                json.dump(history, f, ensure_ascii=False, indent=1)
+            print(f"  [HISTORY] 已追加: {new_record['timestamp'][:19]} impact={new_record['impactMultiplier']:.4f} total={new_record['totalPlayers']}")
+            result["impactMultiplier"] = new_record["impactMultiplier"]
+        else:
+            print("  [HISTORY] extended API 无数据")
+    except Exception as e:
+        print(f"  [HISTORY] 失败: {e}")
 
     # 解耦：翻译字段（news/major_order）由 HD2Web-Trans 单一写入，此处保留旧值不被覆盖
     try:

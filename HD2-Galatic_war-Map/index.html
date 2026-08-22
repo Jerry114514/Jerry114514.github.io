@@ -1035,6 +1035,7 @@
       .block-meta { width: 100%; margin-left: 0; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -1110,6 +1111,17 @@
       </div>
       <div id="players-content">
         <div class="loading">正在统计在线士兵…</div>
+      </div>
+    </section>
+
+    <section class="block" id="block-impact">
+      <div class="block-head">
+        <span class="block-emoji">👥</span>
+        <h2 class="block-title">玩家分布与银河影响力</h2>
+        <span class="block-meta" id="impact-meta"></span>
+      </div>
+      <div id="impact-content">
+        <div class="loading">正在加载影响力数据…</div>
       </div>
     </section>
 
@@ -2735,6 +2747,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderTopbar(data);
       renderMO(data);
       renderPlayers(data);
+      renderImpact(data);
       renderDss(data);
       renderDefenseRecon(data);
       renderAttackable(data);
@@ -2764,6 +2777,108 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   $("news-float-head").addEventListener("click", () => {
     $("news-float").classList.toggle("collapsed");
   });
+
+    // ============ 银河影响力与趋势图 ============
+  function renderImpact(data) {
+    const root = $("#impact-content");
+    const meta = $("#impact-meta");
+    const histUrl = "./data/history/player_distribution.json?t=" + Math.floor(Date.now() / 300_000);
+    fetch(histUrl, { cache: "no-store" })
+      .then(r => r.ok ? r.json() : Promise.reject("HTTP " + r.status))
+      .then(hd => {
+        const hist = hd.history || [];
+        if (hist.length < 2) {
+          root.innerHTML = '<div class="empty">数据收集中…需要更多数据点以绘制趋势图</div>';
+          return;
+        }
+        const latest = hist[hist.length - 1];
+        const prev = hist.length > 1 ? hist[hist.length - 2] : null;
+        const im = latest.impactMultiplier || 0;
+        const imPct = (im * 100).toFixed(2);
+        const imColor = im > 0.9 ? "#22c55e" : im > 0.7 ? "#f59e0b" : "#ef4444";
+        let trendHtml = "";
+        if (prev) {
+          const diff = latest.totalPlayers - prev.totalPlayers;
+          const arrow = diff >= 0 ? "\u2191" : "\u2193";
+          const color = diff >= 0 ? "#22c55e" : "#ef4444";
+          trendHtml = '<span style="color:' + color + ';font-size:0.85rem">' + arrow + ' ' + Math.abs(diff).toLocaleString() + '</span>';
+        }
+        root.innerHTML =
+          '<div class="card" style="margin-bottom:12px">' +
+            '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">' +
+              '<div>' +
+                '<div style="font-size:0.7rem;color:var(--text-dim)">当前总玩家</div>' +
+                '<div style="font-size:1.5rem;font-weight:700">' + latest.totalPlayers.toLocaleString() + ' <span style="font-size:0.8rem;font-weight:400;color:var(--text-dim)">人</span></div>' +
+                trendHtml +
+              '</div>' +
+              '<div>' +
+                '<div style="font-size:0.7rem;color:var(--text-dim)">银河影响力系数</div>' +
+                '<div style="font-size:1.5rem;font-weight:700;color:' + imColor + '">' + imPct + '%</div>' +
+                '<div style="font-size:0.65rem;color:var(--text-dim);max-width:280px">银河影响力系数表示当前全银河玩家对战争进程的影响效率。系数越高，每个玩家的贡献越有效。</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card">' +
+            '<div style="font-size:0.85rem;margin-bottom:8px;color:var(--text-dim)">\ud83d\udcc8 24小时趋势图</div>' +
+            '<canvas id="impact-chart" style="width:100%;height:300px"></canvas>' +
+          '</div>';
+        meta.textContent = "更新于 " + new Date(latest.timestamp).toLocaleTimeString();
+        renderImpactChart(hist);
+      })
+      .catch(function(e) {
+        console.warn("renderImpact error:", e);
+        root.innerHTML = '<div class="empty">\ud83d\udcca 影响力数据加载中…</div>';
+        meta.textContent = "";
+      });
+  }
+
+  var impactChart = null;
+  function renderImpactChart(hist) {
+    var canvas = document.getElementById("impact-chart");
+    if (!canvas) return;
+    if (impactChart) { impactChart.destroy(); impactChart = null; }
+    var labels = hist.map(function(h) {
+      var d = new Date(h.timestamp);
+      return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+    });
+    var humans = hist.map(function(h) { return h.factions.Humans; });
+    var terminids = hist.map(function(h) { return h.factions.Terminids; });
+    var automatons = hist.map(function(h) { return h.factions.Automatons; });
+    var illuminate = hist.map(function(h) { return h.factions.Illuminate; });
+    var impact = hist.map(function(h) { return (h.impactMultiplier || 0) * 100; });
+    var parent = canvas.parentElement;
+    canvas.width = parent.clientWidth * (window.devicePixelRatio || 1);
+    canvas.height = 300 * (window.devicePixelRatio || 1);
+    canvas.style.width = "100%";
+    canvas.style.height = "300px";
+    impactChart = new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          { label: "\u8d85\u7ea7\u5730\u7403", data: humans, borderColor: "#3b82f6", backgroundColor: "rgba(59,130,246,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
+          { label: "\u7ec8\u7ed3\u65cf", data: terminids, borderColor: "#f59e0b", backgroundColor: "rgba(245,158,11,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
+          { label: "\u673a\u5668\u4eba", data: automatons, borderColor: "#ef4444", backgroundColor: "rgba(239,68,68,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
+          { label: "\u5149\u80fd\u65cf", data: illuminate, borderColor: "#8b5cf6", backgroundColor: "rgba(139,92,246,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
+          { label: "\u5f71\u54cd\u529b\u7cfb\u6570", data: impact, borderColor: "#ffffff", borderDash: [5,5], fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y1" },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { labels: { color: "#94a3b8", font: { size: 11 } } },
+          tooltip: { backgroundColor: "rgba(10,14,26,0.94)", titleColor: "#e2e8f0", bodyColor: "#94a3b8", borderColor: "#334155", borderWidth: 1 }
+        },
+        scales: {
+          x: { ticks: { color: "#64748b", maxTicksLimit: 12, font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" } },
+          y: { type: "linear", position: "left", ticks: { color: "#64748b", font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" }, title: { display: true, text: "\u73a9\u5bb6\u6570", color: "#94a3b8" } },
+          y1: { type: "linear", position: "right", min: 0, max: 100, ticks: { color: "#64748b", font: { size: 10 }, callback: function(v) { return v + "%"; } }, grid: { drawOnChartArea: false }, title: { display: true, text: "\u5f71\u54cd\u529b\u7cfb\u6570", color: "#94a3b8" } }
+        }
+      }
+    });
+  }
 
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
