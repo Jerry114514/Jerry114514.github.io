@@ -2280,7 +2280,9 @@ function renderPlayers(data) {
     }
     atk = (atk == null) ? 0 : atk;
     def = (def == null) ? 0 : def;
-    const atkFaction = camp.faction || "Unknown";
+    // 防御战：进攻方是 planet.currentOwner（敌方），不是 camp.faction（固定 Humans）
+    const isDef = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    const atkFaction = isDef ? (p.currentOwner || "Unknown") : (camp.faction || "Unknown");
     const atkColor = {
       "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)",
       "Illuminate": "var(--c-illuminate)", "Humans": "var(--c-humans)",
