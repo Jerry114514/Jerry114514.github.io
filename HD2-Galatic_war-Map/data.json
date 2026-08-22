@@ -1,13 +1,13 @@
 {
- "fetchedAt": "2026-08-23T03:01:55+08:00",
+ "fetchedAt": "2026-08-23T03:11:03+08:00",
  "source": "official",
  "player_distribution": {
-  "total": 153401,
-  "humans": 14758,
-  "terminids": 31194,
-  "automatons": 14171,
-  "illuminate": 93278,
-  "updatedAt": "2026-08-22T18:45:31.0310232Z"
+  "total": 155512,
+  "humans": 14894,
+  "terminids": 31307,
+  "automatons": 14441,
+  "illuminate": 94870,
+  "updatedAt": "2026-08-22T19:00:32.537763Z"
  },
  "recon_stats": {
   "275": {
@@ -16,8 +16,8 @@
    "failPerHour": 0.08,
    "enemiesPerHour": 302.71,
    "deathsPerHour": 8.29,
-   "successRate": 92.7952,
-   "failRate": 7.2048
+   "successRate": 92.7948,
+   "failRate": 7.2052
   },
   "278": {
    "healthImpact": null,
@@ -25,8 +25,8 @@
    "failPerHour": 0.12,
    "enemiesPerHour": 330.28,
    "deathsPerHour": 9.92,
-   "successRate": 87.7518,
-   "failRate": 12.2482
+   "successRate": 87.7512,
+   "failRate": 12.2488
   },
   "280": {
    "healthImpact": null,
@@ -34,42 +34,42 @@
    "failPerHour": 0.07,
    "enemiesPerHour": 497.29,
    "deathsPerHour": 6.68,
-   "successRate": 93.8776,
-   "failRate": 6.1224
+   "successRate": 93.8773,
+   "failRate": 6.1227
   },
   "279": {
    "healthImpact": null,
    "successPerHour": 1.07,
    "failPerHour": 0.17,
-   "enemiesPerHour": 351.79,
+   "enemiesPerHour": 351.81,
    "deathsPerHour": 10.14,
-   "successRate": 85.9556,
-   "failRate": 14.0444
+   "successRate": 85.9522,
+   "failRate": 14.0478
   },
   "281": {
    "healthImpact": null,
    "successPerHour": 0.89,
    "failPerHour": 0.13,
-   "enemiesPerHour": 357.9,
+   "enemiesPerHour": 357.89,
    "deathsPerHour": 9.57,
-   "successRate": 87.5827,
-   "failRate": 12.4173
+   "successRate": 87.5801,
+   "failRate": 12.4199
   },
   "277": {
    "healthImpact": null,
    "successPerHour": 1.09,
    "failPerHour": 0.12,
-   "enemiesPerHour": 326.57,
+   "enemiesPerHour": 326.55,
    "deathsPerHour": 8.6,
-   "successRate": 90.2162,
-   "failRate": 9.7838
+   "successRate": 90.2137,
+   "failRate": 9.7863
   }
  },
- "impactMultiplier": 0.008751412,
+ "impactMultiplier": 0.008668714,
  "war": {
-  "time": 79489450,
+  "time": 79489990,
   "statistics": {
-   "playerCount": 155559,
+   "playerCount": 157159,
    "missionsWon": 0,
    "missionsLost": 0
   },
@@ -84,7 +84,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 480,
+   "players": 474,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -96,7 +96,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 5,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -108,7 +108,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -120,7 +120,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 5,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -132,7 +132,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -156,7 +156,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -168,7 +168,7 @@
    "currentOwner": "Illuminate",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 200,
+   "players": 192,
    "attacking": false,
    "resistance": 2.94,
    "activeEffects": []
@@ -180,7 +180,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -192,7 +192,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -204,7 +204,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -228,7 +228,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -264,7 +264,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -290,7 +290,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -302,7 +302,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -326,7 +326,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -338,7 +338,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -350,7 +350,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -364,7 +364,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -388,7 +388,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 10,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": [
@@ -403,7 +403,7 @@
    "currentOwner": "Humans",
    "health": 999987,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 4,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -415,7 +415,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": []
@@ -427,7 +427,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 3,
+   "players": 2,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -451,7 +451,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -463,7 +463,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -475,7 +475,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -489,7 +489,7 @@
    "currentOwner": "Humans",
    "health": 2300000,
    "maxHealth": 2300000,
-   "players": 12,
+   "players": 13,
    "attacking": false,
    "resistance": 0.11,
    "activeEffects": []
@@ -501,7 +501,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 30,
+   "players": 27,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -529,7 +529,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 0.88,
    "activeEffects": []
@@ -541,7 +541,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -565,7 +565,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -577,7 +577,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -589,7 +589,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -601,7 +601,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.94,
    "activeEffects": [
@@ -615,7 +615,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 9,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -627,7 +627,7 @@
    "currentOwner": "Humans",
    "health": 2400000,
    "maxHealth": 2400000,
-   "players": 11,
+   "players": 12,
    "attacking": false,
    "resistance": 0.1,
    "activeEffects": []
@@ -639,7 +639,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -678,7 +678,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -690,7 +690,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 7,
+   "players": 10,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": [
@@ -705,7 +705,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 4,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": []
@@ -717,7 +717,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 12,
+   "players": 16,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -731,7 +731,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -767,7 +767,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -779,7 +779,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": []
@@ -791,7 +791,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 11,
+   "players": 9,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": []
@@ -803,7 +803,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 6,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": []
@@ -815,7 +815,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 8,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -827,7 +827,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 6,
+   "players": 9,
    "attacking": false,
    "resistance": 0.88,
    "activeEffects": []
@@ -851,7 +851,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -875,7 +875,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 80,
+   "players": 78,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [
@@ -889,7 +889,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -901,7 +901,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 10,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -913,7 +913,7 @@
    "currentOwner": "Humans",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 20,
+   "players": 16,
    "attacking": false,
    "resistance": 1.15,
    "activeEffects": []
@@ -925,7 +925,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 6,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": []
@@ -937,7 +937,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 3,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": []
@@ -949,7 +949,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 355,
+   "players": 312,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": []
@@ -961,7 +961,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -973,7 +973,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 5,
+   "players": 3,
    "attacking": false,
    "resistance": 0.62,
    "activeEffects": [
@@ -1000,7 +1000,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1012,7 +1012,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1031,7 +1031,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 21,
+   "players": 17,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1045,7 +1045,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 17,
+   "players": 12,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -1057,7 +1057,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 29,
+   "players": 25,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1073,7 +1073,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 18,
+   "players": 12,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -1085,7 +1085,7 @@
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 12,
+   "players": 37,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": []
@@ -1109,7 +1109,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 6,
+   "players": 8,
    "attacking": false,
    "resistance": 0.94,
    "activeEffects": [
@@ -1123,7 +1123,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 4,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": []
@@ -1135,7 +1135,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1147,7 +1147,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1185,7 +1185,7 @@
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 4,
+   "players": 6,
    "attacking": false,
    "resistance": 0.83,
    "activeEffects": []
@@ -1197,7 +1197,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -1209,7 +1209,7 @@
    "currentOwner": "Illuminate",
    "health": 1900000,
    "maxHealth": 1900000,
-   "players": 253,
+   "players": 245,
    "attacking": false,
    "resistance": 0.53,
    "activeEffects": []
@@ -1221,7 +1221,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -1233,7 +1233,7 @@
    "currentOwner": "Illuminate",
    "health": 2100000,
    "maxHealth": 2100000,
-   "players": 807,
+   "players": 828,
    "attacking": false,
    "resistance": 0.48,
    "activeEffects": [
@@ -1247,7 +1247,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1523,
+   "players": 1535,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1263,7 +1263,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 1498,
+   "players": 1578,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": [
@@ -1279,7 +1279,7 @@
    "currentOwner": "Illuminate",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 6671,
+   "players": 6735,
    "attacking": false,
    "resistance": 0.62,
    "activeEffects": [
@@ -1295,7 +1295,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1307,7 +1307,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1322,7 +1322,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1350,7 +1350,7 @@
    "currentOwner": "Terminids",
    "health": 1900000,
    "maxHealth": 1900000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 1.05,
    "activeEffects": []
@@ -1362,7 +1362,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1374,7 +1374,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1398,7 +1398,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1410,7 +1410,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1422,7 +1422,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1446,7 +1446,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1458,7 +1458,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -1470,7 +1470,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 8,
+   "players": 4,
    "attacking": false,
    "resistance": 0.31,
    "activeEffects": []
@@ -1494,7 +1494,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 23,
+   "players": 19,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": []
@@ -1506,7 +1506,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 14,
+   "players": 11,
    "attacking": false,
    "resistance": 3.0,
    "activeEffects": []
@@ -1518,7 +1518,7 @@
    "currentOwner": "Automaton",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 2409,
+   "players": 2417,
    "attacking": false,
    "resistance": 3.13,
    "activeEffects": [
@@ -1533,7 +1533,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 94,
+   "players": 84,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -1548,7 +1548,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 7,
+   "players": 5,
    "attacking": false,
    "resistance": 0.88,
    "activeEffects": []
@@ -1560,7 +1560,7 @@
    "currentOwner": "Humans",
    "health": 1200000,
    "maxHealth": 1200000,
-   "players": 13,
+   "players": 20,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -1599,7 +1599,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1611,7 +1611,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1623,7 +1623,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [
@@ -1640,7 +1640,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1658,7 +1658,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1967,
+   "players": 1918,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1674,7 +1674,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 8,
+   "players": 11,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": [
@@ -1688,7 +1688,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 28,
+   "players": 29,
    "attacking": false,
    "resistance": 0.25,
    "activeEffects": [
@@ -1705,7 +1705,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 9,
+   "players": 14,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -1719,7 +1719,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 16,
+   "players": 21,
    "attacking": false,
    "resistance": 0.36,
    "activeEffects": [
@@ -1733,7 +1733,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 54,
+   "players": 56,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": []
@@ -1745,7 +1745,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 3,
+   "players": 8,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [
@@ -1760,7 +1760,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 20,
+   "players": 22,
    "attacking": false,
    "resistance": 0.25,
    "activeEffects": [
@@ -1774,7 +1774,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1786,7 +1786,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 7,
+   "players": 6,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1798,7 +1798,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1810,7 +1810,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -1822,7 +1822,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 600,
+   "players": 599,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1837,7 +1837,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1872,7 +1872,7 @@
    "currentOwner": "Illuminate",
    "health": 2300000,
    "maxHealth": 2300000,
-   "players": 1013,
+   "players": 997,
    "attacking": false,
    "resistance": 0.22,
    "activeEffects": [
@@ -1888,7 +1888,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 1,
+   "players": 4,
    "attacking": false,
    "resistance": 1.67,
    "activeEffects": [
@@ -1920,7 +1920,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 0.94,
    "activeEffects": []
@@ -1932,7 +1932,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": [
@@ -1964,7 +1964,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1976,7 +1976,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1988,7 +1988,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2000,7 +2000,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2024,7 +2024,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.68,
    "activeEffects": []
@@ -2060,7 +2060,7 @@
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 3,
+   "players": 9,
    "attacking": false,
    "resistance": 0.83,
    "activeEffects": []
@@ -2084,7 +2084,7 @@
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 0,
+   "players": 3,
    "attacking": false,
    "resistance": 0.83,
    "activeEffects": []
@@ -2096,7 +2096,7 @@
    "currentOwner": "Automaton",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 453,
+   "players": 457,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2108,7 +2108,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1207,
+   "players": 1199,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": []
@@ -2120,7 +2120,7 @@
    "currentOwner": "Humans",
    "health": 3200000,
    "maxHealth": 3200000,
-   "players": 19,
+   "players": 25,
    "attacking": false,
    "resistance": 0.16,
    "activeEffects": []
@@ -2132,7 +2132,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1892,
+   "players": 1929,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": []
@@ -2144,7 +2144,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 10,
+   "players": 11,
    "attacking": false,
    "resistance": 4.5,
    "activeEffects": [
@@ -2158,7 +2158,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 0.23,
    "activeEffects": [
@@ -2172,7 +2172,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 18,
+   "players": 13,
    "attacking": false,
    "resistance": 2.35,
    "activeEffects": [
@@ -2186,7 +2186,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2198,7 +2198,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2210,7 +2210,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2222,7 +2222,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 6.0,
    "activeEffects": [
@@ -2237,7 +2237,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 6.0,
    "activeEffects": [
@@ -2252,7 +2252,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 70,
+   "players": 52,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -2266,7 +2266,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 9,
+   "players": 10,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2278,7 +2278,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 29,
+   "players": 25,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [
@@ -2292,7 +2292,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1272,
+   "players": 1336,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2304,7 +2304,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 666,
+   "players": 657,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2316,7 +2316,7 @@
    "currentOwner": "Terminids",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 5832,
+   "players": 5809,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": []
@@ -2328,7 +2328,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 18,
+   "players": 21,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2340,7 +2340,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 43,
+   "players": 36,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -2354,7 +2354,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2366,7 +2366,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2378,7 +2378,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 185,
+   "players": 182,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2402,7 +2402,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 1778,
+   "players": 1816,
    "attacking": false,
    "resistance": 2.78,
    "activeEffects": [
@@ -2418,7 +2418,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 508,
+   "players": 509,
    "attacking": false,
    "resistance": 4.0,
    "activeEffects": []
@@ -2430,7 +2430,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 11,
+   "players": 8,
    "attacking": false,
    "resistance": 1.39,
    "activeEffects": [
@@ -2449,7 +2449,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 8,
+   "players": 15,
    "attacking": false,
    "resistance": 0.68,
    "activeEffects": [
@@ -2464,7 +2464,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 4,
+   "players": 10,
    "attacking": false,
    "resistance": 1.07,
    "activeEffects": [
@@ -2503,7 +2503,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 8,
+   "players": 9,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -2533,7 +2533,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2545,7 +2545,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2557,7 +2557,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2569,7 +2569,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2593,7 +2593,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2605,7 +2605,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 16,
+   "players": 15,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2629,7 +2629,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 2,
+   "players": 5,
    "attacking": false,
    "resistance": 1.07,
    "activeEffects": []
@@ -2641,7 +2641,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 4,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2653,7 +2653,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 34,
+   "players": 45,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [
@@ -2668,7 +2668,7 @@
    "currentOwner": "Automaton",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 2128,
+   "players": 2239,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2680,7 +2680,7 @@
    "currentOwner": "Automaton",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 3757,
+   "players": 3785,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": []
@@ -2692,7 +2692,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 23,
+   "players": 41,
    "attacking": false,
    "resistance": 4.5,
    "activeEffects": [
@@ -2720,7 +2720,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 13,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2732,7 +2732,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 4,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": [
@@ -2746,7 +2746,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 849,
+   "players": 904,
    "attacking": false,
    "resistance": 7.0,
    "activeEffects": []
@@ -2770,7 +2770,7 @@
    "currentOwner": "Automaton",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 1347,
+   "players": 1377,
    "attacking": false,
    "resistance": 1.15,
    "activeEffects": [
@@ -2786,7 +2786,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2798,7 +2798,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 6.0,
    "activeEffects": [
@@ -2828,7 +2828,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2055,
+   "players": 2088,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -2844,7 +2844,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 17,
+   "players": 14,
    "attacking": false,
    "resistance": 5.0,
    "activeEffects": [
@@ -2876,7 +2876,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1841,
+   "players": 1894,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2888,7 +2888,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2900,7 +2900,7 @@
    "currentOwner": "Terminids",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.54,
    "activeEffects": []
@@ -2912,7 +2912,7 @@
    "currentOwner": "Terminids",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 15019,
+   "players": 14977,
    "attacking": false,
    "resistance": 1.14,
    "activeEffects": []
@@ -2924,7 +2924,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 22,
+   "players": 25,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -2940,7 +2940,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 5,
+   "players": 1,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -2952,7 +2952,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2976,7 +2976,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2988,7 +2988,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3000,7 +3000,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 560,
+   "players": 574,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3012,7 +3012,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3024,7 +3024,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 129,
+   "players": 146,
    "attacking": false,
    "resistance": 1.14,
    "activeEffects": [
@@ -3040,7 +3040,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 8,
    "attacking": false,
    "resistance": 8.0,
    "activeEffects": [
@@ -3058,7 +3058,7 @@
    "currentOwner": "Illuminate",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.77,
    "activeEffects": [
@@ -3088,7 +3088,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": []
@@ -3100,7 +3100,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 578,
+   "players": 541,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3115,7 +3115,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3139,7 +3139,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3175,7 +3175,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3199,7 +3199,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 1,
+   "players": 4,
    "attacking": false,
    "resistance": 0.68,
    "activeEffects": []
@@ -3211,7 +3211,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -3247,7 +3247,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 0,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3259,7 +3259,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 13,
+   "players": 14,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": []
@@ -3271,7 +3271,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 6,
+   "players": 4,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -3283,7 +3283,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 8,
+   "players": 9,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3295,7 +3295,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 8,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3322,7 +3322,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 9,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -3334,7 +3334,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 8,
+   "players": 6,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -3346,7 +3346,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 4,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -3361,7 +3361,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 6,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3373,7 +3373,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3385,7 +3385,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3397,7 +3397,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3409,7 +3409,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 6.0,
    "activeEffects": [
@@ -3457,7 +3457,7 @@
    "currentOwner": "Terminids",
    "health": 3000000,
    "maxHealth": 3000000,
-   "players": 2600,
+   "players": 2651,
    "attacking": false,
    "resistance": 3.33,
    "activeEffects": [
@@ -3479,7 +3479,7 @@
    "currentOwner": "Automaton",
    "health": 15000000,
    "maxHealth": 15000000,
-   "players": 111,
+   "players": 116,
    "attacking": false,
    "resistance": 6.67,
    "activeEffects": [
@@ -3495,7 +3495,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 3,
+   "players": 2,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3510,7 +3510,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -3564,7 +3564,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 10,
+   "players": 7,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3588,7 +3588,7 @@
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 9,
+   "players": 8,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": []
@@ -3600,7 +3600,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 35,
+   "players": 24,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -3614,7 +3614,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 5,
+   "players": 4,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -3628,7 +3628,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 7,
+   "players": 9,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -3658,7 +3658,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 3,
+   "players": 1,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -3685,7 +3685,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 699,
+   "players": 687,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3703,9 +3703,9 @@
    "name": "VOID SOURCE PLANET",
    "sector": "Void",
    "currentOwner": "Illuminate",
-   "health": 1021280,
+   "health": 1014155,
    "maxHealth": 3000000,
-   "players": 84708,
+   "players": 85570,
    "attacking": false,
    "resistance": 0.33,
    "activeEffects": [
@@ -3730,7 +3730,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 354,
+   "players": 374,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3750,7 +3750,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2976,
+   "players": 3068,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3772,7 +3772,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 400,
+   "players": 377,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3792,7 +3792,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1765,
+   "players": 1782,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3815,7 +3815,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 835,
+   "players": 870,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3834,11 +3834,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 37.05,
-   "defendersProgress": 3.55,
+   "attackersProgress": 37.68,
+   "defendersProgress": 3.61,
    "attackersRate": 4.167,
    "startTime": 79457440,
-   "remainingTime": 54390,
+   "remainingTime": 53850,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -3868,11 +3868,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 36.96,
-   "defendersProgress": 1.57,
+   "attackersProgress": 37.58,
+   "defendersProgress": 1.58,
    "attackersRate": 4.167,
    "startTime": 79457520,
-   "remainingTime": 54470,
+   "remainingTime": 53930,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -3902,11 +3902,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 9.75,
-   "defendersProgress": 0.18,
+   "attackersProgress": 10.37,
+   "defendersProgress": 0.2,
    "attackersRate": 4.167,
    "startTime": 79481030,
-   "remainingTime": 77980,
+   "remainingTime": 77440,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4300,11 +4300,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 21.61,
-   "defendersProgress": 0.52,
+   "attackersProgress": 22.24,
+   "defendersProgress": 0.53,
    "attackersRate": 4.167,
    "startTime": 79470780,
-   "remainingTime": 67730,
+   "remainingTime": 67190,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4321,11 +4321,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 21.53,
-   "defendersProgress": 0.29,
+   "attackersProgress": 22.15,
+   "defendersProgress": 0.3,
    "attackersRate": 4.167,
    "startTime": 79470850,
-   "remainingTime": 67800,
+   "remainingTime": 67260,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4360,8 +4360,8 @@
    0
   ],
   "expiration": "",
-  "deadline": "2026-08-24T12:03:02.2778646Z",
-  "serverTime": "2026-08-22T19:01:55Z"
+  "deadline": "2026-08-24T12:03:02.5409797Z",
+  "serverTime": "2026-08-22T19:11:03Z"
  },
  "dispatches": [
   {
