@@ -1,0 +1,186 @@
+/* ============================================================
+   HD2 银河战争态势图 - 星图专用样式
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a0e1a;
+  --bg-mid: #141b33;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --text-mute: #94a3b8;
+  --yellow: #facc15;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  background: var(--bg-deep);
+  color: var(--text);
+}
+
+/* ============ 顶部工具栏 ============ */
+.map-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 18px;
+  background: rgba(10, 14, 26, 0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.toolbar-left { display: flex; align-items: center; gap: 14px; }
+.map-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--yellow);
+}
+.nav-back {
+  font-size: 0.8rem;
+  color: var(--text-mute);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-back:hover { color: var(--yellow); }
+.toolbar-right { display: flex; align-items: center; gap: 14px; }
+.toolbar-stat { font-size: 0.75rem; color: var(--text-mute); }
+.toolbar-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.toolbar-btn:hover { background: var(--yellow); color: var(--bg-deep); border-color: var(--yellow); }
+
+/* ============ Canvas 画布 ============ */
+.map-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 52px - 40px); /* 减去工具栏和图例 */
+}
+#star-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 加载提示 */
+.map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(10, 14, 26, 0.7);
+  z-index: 10;
+  transition: opacity 0.4s;
+}
+.map-loading.hidden { opacity: 0; pointer-events: none; }
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid var(--border);
+  border-top-color: var(--yellow);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 0.9rem; color: var(--text-mute); }
+
+/* ============ 图例 ============ */
+.map-legend {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-deep);
+  font-size: 0.72rem;
+  color: var(--text-mute);
+}
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.line-sample {
+  width: 22px;
+  height: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+  border-radius: 2px;
+  display: inline-block;
+}
+.ring-sample {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 3px solid #22c55e;
+  display: inline-block;
+}
+.badge-sample {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 768px) {
+  .toolbar-stat { display: none; }
+  .map-title { font-size: 0.9rem; }
+  .map-canvas-wrap { height: calc(100vh - 52px - 70px); }
+  .map-legend {
+    height: 70px;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-content: center;
+  }
+}
+
+/* ============ 缩放控件 ============ */
+.zoom-controls {
+  position: absolute;
+  bottom: 50px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 20;
+}
+.zoom-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(10, 14, 26, 0.85);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  backdrop-filter: blur(8px);
+}
+.zoom-btn:hover {
+  background: var(--yellow);
+  color: var(--bg-deep);
+  border-color: var(--yellow);
+}

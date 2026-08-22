@@ -381,6 +381,13 @@
       font-weight: 700;
       color: var(--text);
     }
+    .mo-sub {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
+      padding: 14px;
+      margin-top: 4px;
+    }
     .progress-bar {
       width: 100%;
       height: 8px;
@@ -1050,6 +1057,7 @@
       <a class="nav-cta" href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">
         🚀 部署到QQ群
       </a>
+      <a class="nav-cta nav-cta-map" href="map.html">🗺️ 查看银河战役星图</a>
     </div>
   </header>
 
@@ -1326,7 +1334,8 @@
     "Ultum": "乌尔图姆",
     "Vandal": "汪达尔",
     "Vega Bay": "织女湾",
-    "Void": "虚域"
+    "Void": "虚域",
+    "Ymir": "土卫十九"
   };
 
   // 任务类型枚举（来自社区经验）
@@ -1472,6 +1481,7 @@
       dispatches: data.dispatches || { __err: "no dispatches data" },
       dss:        data.dss || null,
       major_order: data.major_order || {},
+      personal_order: data.personal_order || null,
       news:        data.news || [],
       starMap,
       variables,
@@ -1774,6 +1784,62 @@ function renderPlayers(data) {
     `;
   }
 
+  // ============ 战略机遇 ============
+  function renderStrategicOpportunities(data) {
+    const a = data.assignments;
+    if (!a || !a.tasks || a.tasks.length < 2) return "";
+    // 从 tasks 中提取副任务作为战略机遇
+    const tasks = a.tasks.slice(1).map((tk, i) => {
+      const d = decodeTask(tk, a.progress ? a.progress[i + 1] : null);
+      let goal = "—", current = "—", pct = 0;
+      if (typeof d.current === "number") current = fmt(d.current);
+      if (typeof d.goal === "number" && d.goal > 0) {
+        goal = fmt(d.goal);
+        pct = Math.min(100, Math.round((d.current || 0) / d.goal * 100));
+      }
+      return { typeCn: d.typeCn || "未知任务", current, goal, pct };
+    });
+    if (tasks.length === 0) return "";
+    return `
+      <div class="block-head" style="margin-top:12px;">
+        <span class="block-emoji">🎯</span>
+        <h2 class="block-title" style="font-size:1rem;">战略机遇</h2>
+      </div>
+      <div class="card mo-sub">
+        ${tasks.map(t => `
+          <div class="mo-task" style="opacity:0.85;">
+            <div class="mo-task-head">
+              <span>${esc(t.typeCn)}</span>
+              <span class="mo-task-progress">${t.current} / ${t.goal} (${t.pct}%)</span>
+            </div>
+            <div class="progress-bar"><div class="progress-bar-fill" style="width:${t.pct}%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  // ============ 个人指令 ============
+  function renderPersonalOrder(data) {
+    const po = data.personal_order;
+    if (!po || !po.title) return "";
+    const expires = po.expiresIn || po.expires_in || 86400;
+    const hours = Math.floor(expires / 3600);
+    const mins = Math.floor((expires % 3600) / 60);
+    return `
+      <div class="block-head" style="margin-top:12px;">
+        <span class="block-emoji">📋</span>
+        <h2 class="block-title" style="font-size:1rem;">个人指令</h2>
+      </div>
+      <div class="card mo-sub" style="border-left: 3px solid #3b82f6;">
+        <p style="margin-bottom:6px;">${esc(po.title)}</p>
+        ${po.description ? `<p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;">${esc(po.description)}</p>` : ""}
+        ${po.reward ? `<p style="font-size:0.85rem;color:var(--yellow);">🎖️ 奖励：${esc(po.reward)}</p>` : ""}
+        <p style="font-size:0.8rem;color:var(--text-dim);margin-top:6px;">⏳ 剩余时间：${hours}小时 ${mins}分钟</p>
+      </div>
+    `;
+  }
+
   function renderMO(data) {
     const root = $("mo-content");
     const expireEl = $("mo-expire");
@@ -1854,6 +1920,8 @@ function renderPlayers(data) {
         <h2 class="block-title" style="font-size:1rem;">目标星球</h2>
       </div>
       <div class="mo-targets">${planetsHtml}</div>
+      ${renderStrategicOpportunities(data)}
+      ${renderPersonalOrder(data)}
     `;
 
     // 实时倒计时：用 deadline（ISO 截止时间）+ serverTime（抓取时服务器时间，用于本地校对）

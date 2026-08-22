@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HD2 银河战争态势图</title>
+  <meta name="description" content="绝地潜兵2 银河战争态势图：攻击路径可视化，节点-连线星图。" />
+  <link rel="stylesheet" href="./css/map.css">
+</head>
+<body>
+  <!-- 顶部工具栏 -->
+  <header class="map-toolbar">
+    <div class="toolbar-left">
+      <span class="map-title">🚀 银河战争态势图</span>
+      <a class="nav-back" href="./index.html">◀ 返回战况面板</a>
+    </div>
+    <div class="toolbar-right">
+      <span class="toolbar-stat" id="stat-nodes">节点 --</span>
+      <span class="toolbar-stat" id="stat-nodes">节点 --</span>
+      <span class="toolbar-stat" id="stat-links">连线 --</span>
+      <span class="toolbar-stat" id="last-update">最后更新: --</span>
+      <span class="toolbar-stat" id="zoom-indicator">🔍 100%</span>
+      <button id="btn-layer-toggle" class="toolbar-btn" title="切换寂域/银河">🌌 寂域</button>
+      <button id="btn-refresh" class="toolbar-btn" title="刷新数据">🔄 刷新</button>
+    </div>
+  </header>
+
+  <!-- Canvas 画布 -->
+  <main class="map-canvas-wrap">
+    <canvas id="star-map"></canvas>
+    <div class="map-loading" id="map-loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">正在加载银河态势数据…</div>
+    </div>
+  </main>
+
+  <!-- 缩放控件（右下角浮动） -->
+  <div class="zoom-controls">
+    <button id="btn-zoom-in" class="zoom-btn" title="放大">+</button>
+    <button id="btn-zoom-out" class="zoom-btn" title="缩小">−</button>
+    <button id="btn-zoom-reset" class="zoom-btn" title="重置视角">⟲</button>
+  </div>
+
+  <!-- 图例 -->
+  <footer class="map-legend">
+    <div class="legend-item"><span class="dot" style="background:#3b82f6"></span>超级地球</div>
+    <div class="legend-item"><span class="dot" style="background:#ef4444"></span>机器人</div>
+    <div class="legend-item"><span class="dot" style="background:#8b5cf6"></span>光能族</div>
+    <div class="legend-item"><span class="dot" style="background:#f59e0b"></span>终结族</div>
+    <div class="legend-item"><span class="line-sample"></span>攻击线（粗细 = 进攻速率）</div>
+    <div class="legend-item"><span class="ring-sample"></span>进度环（绿/黄/红）</div>
+    <div class="legend-item"><span class="badge-sample">D</span>防御战</div>
+  </footer>
+
+  <!-- 脚本（按依赖顺序加载） -->
+  <script src="./js/map/dataLayer.js"></script>
+  <script src="./js/map/coordinateTransform.js"></script>
+  <script src="./js/map/renderer.js"></script>
+  <script src="./js/map/main.js"></script>
+</body>
+</html>
