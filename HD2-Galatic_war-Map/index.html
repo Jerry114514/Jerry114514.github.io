@@ -2780,8 +2780,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
 
     // ============ 银河影响力与趋势图 ============
   function renderImpact(data) {
-    const root = $("#impact-content");
-    const meta = $("#impact-meta");
+    const root = $("impact-content");
+    const meta = $("impact-meta");
     const histUrl = "./data/history/player_distribution.json?t=" + Math.floor(Date.now() / 300_000);
     fetch(histUrl, { cache: "no-store" })
       .then(r => r.ok ? r.json() : Promise.reject("HTTP " + r.status))
