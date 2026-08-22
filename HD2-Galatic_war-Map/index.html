@@ -1034,7 +1034,22 @@
       .block-head { flex-wrap: wrap; }
       .block-meta { width: 100%; margin-left: 0; }
     }
-  </style>
+  
+    .trend-chart-container {
+      width: 100%;
+      height: 250px;
+      max-height: 250px;
+      min-height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    .trend-chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+</style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -2820,7 +2835,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
           '</div>' +
           '<div class="card">' +
             '<div style="font-size:0.85rem;margin-bottom:8px;color:var(--text-dim)">\ud83d\udcc8 24小时趋势图</div>' +
-            '<canvas id="impact-chart" style="width:100%;height:300px"></canvas>' +
+            '<div class="trend-chart-container"><canvas id="impact-chart"></canvas></div>' +
           '</div>';
         meta.textContent = "更新于 " + new Date(latest.timestamp).toLocaleTimeString();
         renderImpactChart(hist);
@@ -2846,11 +2861,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     var automatons = hist.map(function(h) { return h.factions.Automatons; });
     var illuminate = hist.map(function(h) { return h.factions.Illuminate; });
     var impact = hist.map(function(h) { return (h.impactMultiplier || 0) * 100; });
-    var parent = canvas.parentElement;
-    canvas.width = parent.clientWidth * (window.devicePixelRatio || 1);
-    canvas.height = 300 * (window.devicePixelRatio || 1);
-    canvas.style.width = "100%";
-    canvas.style.height = "300px";
+        // 尺寸由 CSS 容器控制
     impactChart = new Chart(canvas.getContext("2d"), {
       type: "line",
       data: {
