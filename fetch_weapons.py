@@ -21,9 +21,9 @@ CATEGORY_MAP = {
 }
 
 SUBCATEGORY_CN = {
-    "Assault Rifles": "突击步枪", "SMGs": "冲锋枪", "Shotguns": "霰弹枪",
+    "Assault Rifles": "突击步枪", "SMGs": "冲锋枪", "Submachine Guns": "冲锋枪", "Shotguns": "霰弹枪",
     "Marksman Rifles": "精确射手步枪", "Sniper Rifles": "狙击步枪",
-    "Energy Weapons": "能量武器", "Crossbows": "弩", "Explosive": "爆炸武器",
+    "Energy Weapons": "能量武器", "Crossbows": "弩", "Explosive": "爆炸武器", "Special": "特殊武器",
     "Pistols": "手枪", "Revolvers": "左轮手枪", "Grenade Pistols": "手雷手枪",
     "Grenades": "手雷", "Standard Throwables": "标准投掷物", "Special Throwables": "特殊投掷物",
     "Throwables": "投掷物", "Energy-Based": "能量武器", "Explosives": "爆炸武器",

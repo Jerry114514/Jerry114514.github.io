@@ -226,7 +226,7 @@
     },
     {
       "id": "ar_32_pacifier",
-      "name": "AR-32 Pacifier",
+      "name": "AR-32 安抚者",
       "name_en": "AR-32 Pacifier",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -500,7 +500,7 @@
     },
     {
       "id": "cqc_5_combat_hatchet",
-      "name": "CQC-5 Combat Hatchet",
+      "name": "CQC-5 战斗斧",
       "name_en": "CQC-5 Combat Hatchet",
       "category": "secondary",
       "subcategory": "melee",
@@ -524,11 +524,11 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Melee"
+        "中甲穿透",
+        "单手",
+        "近战"
       ],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "1.006.202 2026-04-28",
       "lore": "",
       "variants": [],
@@ -538,7 +538,7 @@
     },
     {
       "id": "cqc_19_stun_lance",
-      "name": "CQC-19 Stun Lance",
+      "name": "CQC-19 眩晕长矛",
       "name_en": "CQC-19 Stun Lance",
       "category": "secondary",
       "subcategory": "melee",
@@ -562,12 +562,12 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Stun",
-        "Melee"
+        "中甲穿透",
+        "单手",
+        "眩晕",
+        "近战"
       ],
-      "unlock": "Urban Legends P1",
+      "unlock": "都市传奇 第一章节",
       "description": "1.006.202 2026-04-28",
       "lore": "",
       "variants": [],
@@ -577,7 +577,7 @@
     },
     {
       "id": "cqc_30_stun_baton",
-      "name": "CQC-30 Stun Baton",
+      "name": "CQC-30 眩晕警棍",
       "name_en": "CQC-30 Stun Baton",
       "category": "secondary",
       "subcategory": "melee",
@@ -601,12 +601,12 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Stun",
-        "Melee"
+        "中甲穿透",
+        "单手",
+        "眩晕",
+        "近战"
       ],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "1.006.202 2026-04-28",
       "lore": "",
       "variants": [],
@@ -616,7 +616,7 @@
     },
     {
       "id": "cqc_42_machete",
-      "name": "CQC-42 Machete",
+      "name": "CQC-42 砍刀",
       "name_en": "CQC-42 Machete",
       "category": "secondary",
       "subcategory": "melee",
@@ -640,11 +640,11 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Melee"
+        "中甲穿透",
+        "单手",
+        "近战"
       ],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -654,7 +654,7 @@
     },
     {
       "id": "dbs_2_double_freedom",
-      "name": "DBS-2 Double Freedom",
+      "name": "DBS-2 双重自由",
       "name_en": "DBS-2 Double Freedom",
       "category": "primary",
       "subcategory": "shotguns",
@@ -680,10 +680,10 @@
         "dps": 1680
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Rounds Reload"
+        "中甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -693,11 +693,11 @@
     },
     {
       "id": "flam_66_torcher",
-      "name": "FLAM-66 Torcher",
+      "name": "FLAM-66 火炬手",
       "name_en": "FLAM-66 Torcher",
       "category": "primary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 150.0,
         "capacity": 100,
@@ -719,9 +719,9 @@
         "dps": null
       },
       "traits": [
-        "Incendiary"
+        "燃烧弹"
       ],
-      "unlock": "Freedom's Flame P2",
+      "unlock": "自由烈焰 第二章节",
       "description": "1.006.100 2026-03-17",
       "lore": "",
       "variants": [],
@@ -731,7 +731,7 @@
     },
     {
       "id": "g_3_smoke",
-      "name": "G-3 Smoke",
+      "name": "G-3 烟雾弹",
       "name_en": "G-3 Smoke",
       "category": "throwables",
       "subcategory": "throwables",
@@ -755,7 +755,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Helldivers Mobilize! P8",
+      "unlock": "绝地潜兵总动员 第八章节",
       "description": "",
       "lore": "",
       "variants": [],
@@ -765,7 +765,7 @@
     },
     {
       "id": "g_4_gas",
-      "name": "G-4 Gas",
+      "name": "G-4 毒气榴弹",
       "name_en": "G-4 Gas",
       "category": "throwables",
       "subcategory": "throwables",
@@ -789,7 +789,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Chemical Agents P1",
+      "unlock": "化学专家 第一章节",
       "description": "1.006.202 2026-04-28",
       "lore": "",
       "variants": [],
@@ -799,7 +799,7 @@
     },
     {
       "id": "g_6_frag",
-      "name": "G-6 Frag",
+      "name": "G-6 破片榴弹",
       "name_en": "G-6 Frag",
       "category": "throwables",
       "subcategory": "throwables",
@@ -823,7 +823,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Helldivers Mobilize! P1",
+      "unlock": "绝地潜兵总动员 第一章节",
       "description": "1.004.100 2025-10-23",
       "lore": "",
       "variants": [],
@@ -833,7 +833,7 @@
     },
     {
       "id": "g_7_pineapple",
-      "name": "G-7 Pineapple",
+      "name": "G-7 菠萝",
       "name_en": "G-7 Pineapple",
       "category": "throwables",
       "subcategory": "throwables",
@@ -857,7 +857,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Dust Devils P3",
+      "unlock": "尘卷风 第三章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -867,7 +867,7 @@
     },
     {
       "id": "g_10_incendiary",
-      "name": "G-10 Incendiary",
+      "name": "G-10 燃烧弹",
       "name_en": "G-10 Incendiary",
       "category": "throwables",
       "subcategory": "throwables",
@@ -891,7 +891,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Steeled Veterans P2",
+      "unlock": "铁血老兵 第二章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -901,7 +901,7 @@
     },
     {
       "id": "g_12_high_explosive",
-      "name": "G-12 High Explosive",
+      "name": "G-12 高爆弹",
       "name_en": "G-12 High Explosive",
       "category": "throwables",
       "subcategory": "throwables",
@@ -925,7 +925,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Starter Equipment",
+      "unlock": "初始装备",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -935,7 +935,7 @@
     },
     {
       "id": "g_13_incendiary_impact",
-      "name": "G-13 Incendiary Impact",
+      "name": "G-13 燃烧冲击弹",
       "name_en": "G-13 Incendiary Impact",
       "category": "throwables",
       "subcategory": "throwables",
@@ -959,7 +959,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Polar Patriots P2",
+      "unlock": "极地爱国者 第二章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -969,7 +969,7 @@
     },
     {
       "id": "g_16_impact",
-      "name": "G-16 Impact",
+      "name": "G-16 冲击弹",
       "name_en": "G-16 Impact",
       "category": "throwables",
       "subcategory": "throwables",
@@ -993,7 +993,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Helldivers Mobilize! P5",
+      "unlock": "绝地潜兵总动员 第五章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -1003,7 +1003,7 @@
     },
     {
       "id": "g_23_stun",
-      "name": "G-23 Stun",
+      "name": "G-23 眩晕榴弹",
       "name_en": "G-23 Stun",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1027,7 +1027,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Cutting Edge P2",
+      "unlock": "遥遥领先 第二章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -1037,7 +1037,7 @@
     },
     {
       "id": "g_31_arc",
-      "name": "G-31 Arc",
+      "name": "G-31 电弧",
       "name_en": "G-31 Arc",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1061,7 +1061,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Control Group P3",
+      "unlock": "变量控制 第三章节",
       "description": "1.006.100 2026-03-17",
       "lore": "",
       "variants": [],
@@ -1071,7 +1071,7 @@
     },
     {
       "id": "g_48_giga_grenade",
-      "name": "G-48 Giga Grenade",
+      "name": "G-48 千兆级榴弹",
       "name_en": "G-48 Giga Grenade",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1095,7 +1095,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Entrenched Division P2",
+      "unlock": "堑壕之师 第二章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -1105,7 +1105,7 @@
     },
     {
       "id": "g_50_seeker",
-      "name": "G-50 Seeker",
+      "name": "G-50 寻踪者",
       "name_en": "G-50 Seeker",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1129,7 +1129,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Servants of Freedom P3",
+      "unlock": "自由公仆 第三章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -1139,7 +1139,7 @@
     },
     {
       "id": "g_89_smokescreen",
-      "name": "G-89 Smokescreen",
+      "name": "G-89 烟幕",
       "name_en": "G-89 Smokescreen",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1163,7 +1163,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "1.005.002 2026-01-22",
       "lore": "",
       "variants": [],
@@ -1173,7 +1173,7 @@
     },
     {
       "id": "g_109_urchin",
-      "name": "G-109 Urchin",
+      "name": "G-109 海胆",
       "name_en": "G-109 Urchin",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1197,7 +1197,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Force of Law P3",
+      "unlock": "法律铁腕 第三章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -1207,7 +1207,7 @@
     },
     {
       "id": "g_123_thermite",
-      "name": "G-123 Thermite",
+      "name": "G-123 铝热弹",
       "name_en": "G-123 Thermite",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1231,7 +1231,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Democratic Detonation P1",
+      "unlock": "民主爆破 第一章节",
       "description": "1.003.000 2025-05-13",
       "lore": "",
       "variants": [],
@@ -1241,7 +1241,7 @@
     },
     {
       "id": "g_142_pyrotech",
-      "name": "G-142 Pyrotech",
+      "name": "G-142 烟花术",
       "name_en": "G-142 Pyrotech",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1265,7 +1265,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Masters of Ceremony P3",
+      "unlock": "典礼官 第三章节",
       "description": "1.003.000 2025-05-13",
       "lore": "",
       "variants": [],
@@ -1275,11 +1275,11 @@
     },
     {
       "id": "gp_20_ultimatum",
-      "name": "GP-20 Ultimatum",
+      "name": "GP-20 最后通牒",
       "name_en": "GP-20 Ultimatum",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 1000.0,
         "capacity": 1,
@@ -1299,10 +1299,10 @@
         "dps": null
       },
       "traits": [
-        "One Handed",
-        "Explosive"
+        "单手操作",
+        "爆炸物"
       ],
-      "unlock": "Servants of Freedom P2",
+      "unlock": "自由公仆 第二章节",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -1312,11 +1312,11 @@
     },
     {
       "id": "gp_31_grenade_pistol",
-      "name": "GP-31 Grenade Pistol",
+      "name": "GP-31 榴弹手枪",
       "name_en": "GP-31 Grenade Pistol",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 250.0,
         "capacity": 1,
@@ -1336,10 +1336,10 @@
         "dps": null
       },
       "traits": [
-        "One Handed",
-        "Explosive"
+        "单手操作",
+        "爆炸物"
       ],
-      "unlock": "Democratic Detonation P3",
+      "unlock": "民主爆破 第三章节",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -1349,11 +1349,11 @@
     },
     {
       "id": "jar_5_dominator",
-      "name": "JAR-5 Dominator",
+      "name": "JAR-5 主宰",
       "name_en": "JAR-5 Dominator",
       "category": "primary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 275.0,
         "capacity": 15,
@@ -1376,9 +1376,9 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Steeled Veterans P3",
+      "unlock": "铁血老兵 第三章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1388,7 +1388,7 @@
     },
     {
       "id": "k_2_throwing_knife",
-      "name": "K-2 Throwing Knife",
+      "name": "K-2 飞刀",
       "name_en": "K-2 Throwing Knife",
       "category": "throwables",
       "subcategory": "throwables",
@@ -1412,7 +1412,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Viper Commandos P3",
+      "unlock": "蟒蛇突击兵 第三章节",
       "description": "1.004.100 2025-10-23",
       "lore": "",
       "variants": [],
@@ -1422,7 +1422,7 @@
     },
     {
       "id": "las_5_scythe",
-      "name": "LAS-5 Scythe",
+      "name": "LAS-5 长柄镰",
       "name_en": "LAS-5 Scythe",
       "category": "primary",
       "subcategory": "energy_based",
@@ -1446,11 +1446,11 @@
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Beam",
-        "Heat"
+        "轻甲穿透",
+        "激光束",
+        "高温"
       ],
-      "unlock": "Helldivers Mobilize! P5",
+      "unlock": "绝地潜兵总动员 第五章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1460,11 +1460,11 @@
     },
     {
       "id": "las_7_dagger",
-      "name": "LAS-7 Dagger",
+      "name": "LAS-7 匕首",
       "name_en": "LAS-7 Dagger",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 250.0,
         "capacity": 6,
@@ -1484,12 +1484,12 @@
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed",
-        "Beam",
-        "Heat"
+        "轻甲穿透",
+        "单手操作",
+        "激光束",
+        "高温"
       ],
-      "unlock": "Cutting Edge P3",
+      "unlock": "遥遥领先 第三章节",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -1499,7 +1499,7 @@
     },
     {
       "id": "las_13_trident",
-      "name": "LAS-13 Trident",
+      "name": "LAS-13 三叉戟",
       "name_en": "LAS-13 Trident",
       "category": "primary",
       "subcategory": "energy_based",
@@ -1525,10 +1525,10 @@
         "dps": 1800
       },
       "traits": [
-        "Heat",
-        "Light Armor Penetrating"
+        "过热",
+        "轻甲穿透"
       ],
-      "unlock": "Siege Breakers P1",
+      "unlock": "破围先锋 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1538,7 +1538,7 @@
     },
     {
       "id": "las_16_sickle",
-      "name": "LAS-16 Sickle",
+      "name": "LAS-16 镰刀",
       "name_en": "LAS-16 Sickle",
       "category": "primary",
       "subcategory": "energy_based",
@@ -1564,10 +1564,10 @@
         "dps": 750
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Heat"
+        "轻甲穿透",
+        "过热"
       ],
-      "unlock": "Cutting Edge P1",
+      "unlock": "遥遥领先 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1577,7 +1577,7 @@
     },
     {
       "id": "las_17_double_edge_sickle",
-      "name": "LAS-17 Double-Edge Sickle",
+      "name": "LAS-17 双刃镰刀",
       "name_en": "LAS-17 Double-Edge Sickle",
       "category": "primary",
       "subcategory": "energy_based",
@@ -1603,12 +1603,12 @@
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Medium Armor Penetrating",
-        "Heavy Armor Penetrating",
-        "Heat"
+        "轻甲穿透",
+        "中甲穿透",
+        "重甲穿透",
+        "过热"
       ],
-      "unlock": "Servants of Freedom P1",
+      "unlock": "自由公仆 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1618,11 +1618,11 @@
     },
     {
       "id": "las_58_talon",
-      "name": "LAS-58 Talon",
+      "name": "LAS-58 猛爪",
       "name_en": "LAS-58 Talon",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 200.0,
         "capacity": 7,
@@ -1644,11 +1644,11 @@
         "dps": null
       },
       "traits": [
-        "One Handed",
-        "Heat",
-        "Medium Armor Penetrating"
+        "单手操作",
+        "过热",
+        "中甲穿透"
       ],
-      "unlock": "Borderline Justice P2",
+      "unlock": "临界正义 第二章节",
       "description": "1.007.000 2026-08-12",
       "lore": "",
       "variants": [],
@@ -1658,11 +1658,11 @@
     },
     {
       "id": "m7s_smg",
-      "name": "M7S SMG",
+      "name": "M7S 冲锋枪",
       "name_en": "M7S SMG",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 90.0,
         "capacity": 48,
@@ -1677,20 +1677,20 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Full",
-          "Semi",
-          "Burst"
+          "全自动",
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 90,
         "reload_time": "",
         "dps": 1308
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed",
-        "Suppressed"
+        "轻甲穿透",
+        "单手操作",
+        "消音"
       ],
-      "unlock": "Halo: ODST P2",
+      "unlock": "民主光环驰援部队 第二章节",
       "description": "This weapon doesn't support attachments",
       "lore": "",
       "variants": [],
@@ -1700,7 +1700,7 @@
     },
     {
       "id": "m90a_shotgun",
-      "name": "M90A Shotgun",
+      "name": "M90A 霰弹枪",
       "name_en": "M90A Shotgun",
       "category": "primary",
       "subcategory": "shotguns",
@@ -1719,17 +1719,17 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Rounds Reload"
+        "轻甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Halo: ODST P3",
+      "unlock": "民主光环驰援部队 第三章节",
       "description": "This weapon doesn't support attachments.",
       "lore": "",
       "variants": [],
@@ -1739,7 +1739,7 @@
     },
     {
       "id": "ma5c_assault_rifle",
-      "name": "MA5C Assault Rifle",
+      "name": "MA5C 突击步枪",
       "name_en": "MA5C Assault Rifle",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -1758,18 +1758,18 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi",
-          "Burst",
-          "Full"
+          "半自动",
+          "三连发",
+          "全自动"
         ],
         "ergonomics": 60,
         "reload_time": "",
         "dps": 960
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Halo: ODST P1",
+      "unlock": "民主光环驰援部队 第一章节",
       "description": "This weapon doesn't support attachments.",
       "lore": "",
       "variants": [],
@@ -1779,11 +1779,11 @@
     },
     {
       "id": "mp_98_knight",
-      "name": "MP-98 Knight",
+      "name": "MP-98 骑士",
       "name_en": "MP-98 Knight",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 90.0,
         "capacity": 50,
@@ -1798,19 +1798,19 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Auto",
-          "Semi",
-          "Burst"
+          "全自动",
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 90,
         "reload_time": "2.5s",
         "dps": 2070
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手操作"
       ],
-      "unlock": "Super Citizen Edition",
+      "unlock": "购买 超级公民版 获得",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -1820,7 +1820,7 @@
     },
     {
       "id": "p_2_peacemaker",
-      "name": "P-2 Peacemaker",
+      "name": "P-2 和平制造者",
       "name_en": "P-2 Peacemaker",
       "category": "secondary",
       "subcategory": "pistols",
@@ -1846,10 +1846,10 @@
         "dps": 1500
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手操作"
       ],
-      "unlock": "Starter Equipment",
+      "unlock": "新兵装备",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -1859,7 +1859,7 @@
     },
     {
       "id": "p_4_senator",
-      "name": "P-4 Senator",
+      "name": "P-4 参议员",
       "name_en": "P-4 Senator",
       "category": "secondary",
       "subcategory": "pistols",
@@ -1885,11 +1885,11 @@
         "dps": null
       },
       "traits": [
-        "Heavy Armor Penetrating",
-        "One Handed",
-        "Rounds Reload"
+        "重甲穿透",
+        "单手操作",
+        "逐发装填"
       ],
-      "unlock": "Steeled Veterans P1",
+      "unlock": "铁血老兵 第一章节",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -1899,11 +1899,11 @@
     },
     {
       "id": "p_11_stim_pistol",
-      "name": "P-11 Stim Pistol",
+      "name": "P-11 治疗手枪",
       "name_en": "P-11 Stim Pistol",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 0.0,
         "capacity": 6,
@@ -1925,12 +1925,12 @@
         "dps": null
       },
       "traits": [
-        "One Handed",
-        "Rounds Reload",
-        "Stimulative"
+        "单手操作",
+        "逐发装填",
+        "治疗剂"
       ],
-      "unlock": "Chemical Agents P3",
-      "description": "The Stim Pistol is a revolver with a cylinder holding 6 Stim darts. Upon hitting a teammate, it gradually restores roughly 90% of their HP over approximately four seconds. The darts' effects otherwise function identically to Stims, healing injured body parts, restoring stamina, and benefiting from the Experimental Infusion booster and both the Med-Kit Passive and the Adreno-Defibrillator Passive if the weapon wielder is wearing the appropriate armor.",
+      "unlock": "化学专家 第三章节",
+      "description": "治疗手枪是一把左轮手枪，其转轮中装有6支兴奋剂飞镖。击中队友后，会在约四秒内逐渐恢复其大约90%的生命值。除此之外，飞镖的效果与兴奋剂完全相同，可治愈受伤部位、恢复体力，并且如果武器持有者穿着相应护甲，还会受益于实验输液增强器以及医疗包被动技能和肾上腺素除颤器被动技能。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -1939,7 +1939,7 @@
     },
     {
       "id": "p_19_redeemer",
-      "name": "P-19 Redeemer",
+      "name": "P-19 救世主",
       "name_en": "P-19 Redeemer",
       "category": "secondary",
       "subcategory": "pistols",
@@ -1958,18 +1958,18 @@
         "penetration": "light",
         "reserve_ammo": 6,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 95,
         "reload_time": "2.1s",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手操作"
       ],
-      "unlock": "Helldivers Mobilize! P2",
+      "unlock": "绝地潜兵总动员 第二章节",
       "description": "1.007.000 2026-08-12",
       "lore": "",
       "variants": [],
@@ -1979,11 +1979,11 @@
     },
     {
       "id": "p_33_missile_pistol",
-      "name": "P-33 Missile Pistol",
+      "name": "P-33 制导手枪",
       "name_en": "P-33 Missile Pistol",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 1000.0,
         "capacity": 1,
@@ -1998,22 +1998,22 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Guided",
-          "Non-Guided"
+          "制导",
+          "非制导"
         ],
         "ergonomics": 45,
         "reload_time": "",
         "dps": 1300
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Anti-Tank",
-        "One Handed",
-        "Guided",
-        "Explosive"
+        "中甲穿透",
+        "反坦克",
+        "单手操作",
+        "制导",
+        "爆炸物"
       ],
-      "unlock": "Exo Experts P2",
-      "description": "The Missile Pistol has two firing modes: Guided and Non-Guided .",
+      "unlock": "外骨骼机甲专家 第二部分",
+      "description": "导弹手枪有两种发射模式：制导和非制导。在制导模式下，导弹会自动追踪目标，直到击中为止。非制导模式下，导弹会沿着发射方向飞行，直到击中第一个物体为止。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -2022,11 +2022,11 @@
     },
     {
       "id": "p_35_re_educator",
-      "name": "P-35 Re-Educator",
+      "name": "P-35 思想改造",
       "name_en": "P-35 Re-Educator",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 60.0,
         "capacity": 6,
@@ -2041,18 +2041,18 @@
         "penetration": "heavy",
         "reserve_ammo": 2,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 100,
         "reload_time": "",
         "dps": 110
       },
       "traits": [
-        "One Handed",
-        "Caustic",
-        "Heavy Armor Penetrating"
+        "单手操作",
+        "腐蚀气体",
+        "重甲穿透"
       ],
-      "unlock": "Redacted Regiment P1",
+      "unlock": "绝密军团 第一章节",
       "description": "1.005.002 2026-01-22",
       "lore": "",
       "variants": [],
@@ -2062,7 +2062,7 @@
     },
     {
       "id": "p_69_veto",
-      "name": "P-69 Veto",
+      "name": "P-69 否决者",
       "name_en": "P-69 Veto",
       "category": "secondary",
       "subcategory": "pistols",
@@ -2081,18 +2081,18 @@
         "penetration": "medium",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 100,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Rounds Reload"
+        "中甲穿透",
+        "单手操作",
+        "逐发装填"
       ],
-      "unlock": "Entrenched Division P3",
+      "unlock": "堑壕之师 第三章节",
       "description": "1.007.000 2026-08-12",
       "lore": "",
       "variants": [],
@@ -2102,11 +2102,11 @@
     },
     {
       "id": "p_72_crisper",
-      "name": "P-72 Crisper",
+      "name": "P-72 迅击",
       "name_en": "P-72 Crisper",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 150.0,
         "capacity": 50,
@@ -2126,10 +2126,10 @@
         "dps": null
       },
       "traits": [
-        "Incendiary",
-        "One Handed"
+        "燃烧弹",
+        "单手操作"
       ],
-      "unlock": "Freedom's Flame P3",
+      "unlock": "自由烈焰 第三章节",
       "description": "1.006.100 2026-03-17",
       "lore": "",
       "variants": [],
@@ -2139,7 +2139,7 @@
     },
     {
       "id": "p_92_warrant",
-      "name": "P-92 Warrant",
+      "name": "P-92 法令",
       "name_en": "P-92 Warrant",
       "category": "secondary",
       "subcategory": "pistols",
@@ -2158,19 +2158,19 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Guided",
-          "Non-Guided"
+          "制导",
+          "非制导"
         ],
         "ergonomics": 100,
         "reload_time": "",
         "dps": 600
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Guided"
+        "中甲穿透",
+        "单手操作",
+        "制导"
       ],
-      "unlock": "Superstore",
+      "unlock": "超级商店",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -2180,7 +2180,7 @@
     },
     {
       "id": "p_113_verdict",
-      "name": "P-113 Verdict",
+      "name": "P-113 裁决",
       "name_en": "P-113 Verdict",
       "category": "secondary",
       "subcategory": "pistols",
@@ -2199,17 +2199,17 @@
         "penetration": "medium",
         "reserve_ammo": 10,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 100,
         "reload_time": "",
         "dps": 1050
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed"
+        "中甲穿透",
+        "单手操作"
       ],
-      "unlock": "Polar Patriots P3",
+      "unlock": "极地爱国者 第三章节",
       "description": "1.007.000 2026-08-12",
       "lore": "",
       "variants": [],
@@ -2219,7 +2219,7 @@
     },
     {
       "id": "plas_1_scorcher",
-      "name": "PLAS-1 Scorcher",
+      "name": "PLAS-1 焦土",
       "name_en": "PLAS-1 Scorcher",
       "category": "primary",
       "subcategory": "energy_based",
@@ -2238,19 +2238,19 @@
         "penetration": "light",
         "reserve_ammo": 5,
         "fire_modes": [
-          "Semi",
-          "Auto"
+          "半自动",
+          "全自动"
         ],
         "ergonomics": 65,
         "reload_time": "2.5s",
         "dps": 1166
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Explosive"
+        "轻甲穿透",
+        "爆炸"
       ],
-      "unlock": "Helldivers Mobilize! P10",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "unlock": "绝地潜兵总动员 第八章节",
+      "description": "恭喜你解锁了唯一能够称得上“通解”的武器。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -2259,11 +2259,11 @@
     },
     {
       "id": "plas_15_loyalist",
-      "name": "PLAS-15 Loyalist",
+      "name": "PLAS-15 忠诚者",
       "name_en": "PLAS-15 Loyalist",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 75.0,
         "capacity": 8,
@@ -2283,12 +2283,12 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Explosive",
-        "Chargeup"
+        "中甲穿透",
+        "单手操作",
+        "爆炸",
+        "充能"
       ],
-      "unlock": "Truth Enforcers P3",
+      "unlock": "真理执行者 第三章节",
       "description": "1.006.100 2026-03-17",
       "lore": "",
       "variants": [],
@@ -2298,7 +2298,7 @@
     },
     {
       "id": "plas_39_accelerator_rifle",
-      "name": "PLAS-39 Accelerator Rifle",
+      "name": "PLAS-39 加速步枪",
       "name_en": "PLAS-39 Accelerator Rifle",
       "category": "primary",
       "subcategory": "energy_based",
@@ -2317,17 +2317,17 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Burst Fire"
+          "三连发"
         ],
         "ergonomics": 60,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Explosive",
-        "Medium Armor Penetrating"
+        "爆炸",
+        "中甲穿透"
       ],
-      "unlock": "Righteous Revenants P2",
+      "unlock": "正义复仇者 第二章节",
       "description": "This weapon doesn't support attachments.",
       "lore": "",
       "variants": [],
@@ -2337,7 +2337,7 @@
     },
     {
       "id": "plas_101_purifier",
-      "name": "PLAS-101 Purifier",
+      "name": "PLAS-101 净化者",
       "name_en": "PLAS-101 Purifier",
       "category": "primary",
       "subcategory": "energy_based",
@@ -2361,11 +2361,11 @@
         "dps": 2916
       },
       "traits": [
-        "Chargeup",
-        "Explosive",
-        "Medium Armor Penetrating"
+        "充能",
+        "爆炸",
+        "中甲穿透"
       ],
-      "unlock": "Polar Patriots P3",
+      "unlock": "极地爱国者 第三章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2375,7 +2375,7 @@
     },
     {
       "id": "r_2_amendment",
-      "name": "R-2 Amendment",
+      "name": "R-2 修正",
       "name_en": "R-2 Amendment",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2394,17 +2394,17 @@
         "penetration": "light",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi",
-          "Burst"
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 50,
         "reload_time": "3.5s",
         "dps": 1600
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Masters of Ceremony P1",
+      "unlock": "典礼官 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2414,7 +2414,7 @@
     },
     {
       "id": "r_4_hyena",
-      "name": "R-4 Hyena",
+      "name": "R-4 鬣狗",
       "name_en": "R-4 Hyena",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2433,17 +2433,17 @@
         "penetration": "medium",
         "reserve_ammo": 5,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 30,
         "reload_time": "2.5s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Incendiary"
+        "中甲穿透",
+        "燃烧"
       ],
-      "unlock": "Celestial Fence",
+      "unlock": "赢得“天体包围圈”战役",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2453,7 +2453,7 @@
     },
     {
       "id": "r_6_deadeye",
-      "name": "R-6 Deadeye",
+      "name": "R-6 鹰眼",
       "name_en": "R-6 Deadeye",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2472,17 +2472,17 @@
         "penetration": "medium",
         "reserve_ammo": null,
         "fire_modes": [
-          "Lever-Action"
+          "杠杆式"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": 500
       },
       "traits": [
-        "Rounds Reload",
-        "Medium Armor Penetrating"
+        "逐发装填",
+        "中甲穿透"
       ],
-      "unlock": "Borderline Justice P1",
+      "unlock": "临界正义 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2492,7 +2492,7 @@
     },
     {
       "id": "r_36_eruptor",
-      "name": "R-36 Eruptor",
+      "name": "R-36 爆裂铳",
       "name_en": "R-36 Eruptor",
       "category": "primary",
       "subcategory": "explosives",
@@ -2511,18 +2511,18 @@
         "penetration": "light",
         "reserve_ammo": 6,
         "fire_modes": [
-          "Bolt-Action"
+          "栓动"
         ],
         "ergonomics": 25,
         "reload_time": "4.67s",
         "dps": null
       },
       "traits": [
-        "Explosive",
-        "Heavy Armor Penetrating"
+        "爆炸",
+        "重甲穿透"
       ],
-      "unlock": "Democratic Detonation P2",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "unlock": "民主爆破 第二部分",
+      "description": "比起担心弹药消耗，你更应该担心四散的弹片是否会被敌人策反。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -2531,7 +2531,7 @@
     },
     {
       "id": "r_63_diligence",
-      "name": "R-63 Diligence",
+      "name": "R-63 勤勉",
       "name_en": "R-63 Diligence",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2557,9 +2557,9 @@
         "dps": 962
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Helldivers Mobilize! P2",
+      "unlock": "绝地潜兵总动员 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2569,7 +2569,7 @@
     },
     {
       "id": "r_63cs_diligence_counter_sniper",
-      "name": "R-63CS Diligence Counter Sniper",
+      "name": "R-63CS 反狙击勤勉",
       "name_en": "R-63CS Diligence Counter Sniper",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2588,16 +2588,16 @@
         "penetration": "medium",
         "reserve_ammo": 6,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 35,
         "reload_time": "3s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Helldivers Mobilize! P7",
+      "unlock": "绝地潜兵总动员 第七章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2607,7 +2607,7 @@
     },
     {
       "id": "r_72_censor",
-      "name": "R-72 Censor",
+      "name": "R-72 审查官",
       "name_en": "R-72 Censor",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2626,17 +2626,17 @@
         "penetration": "light",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 60,
         "reload_time": "2.5s",
         "dps": 1100
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Suppressed"
+        "轻甲穿透",
+        "消音"
       ],
-      "unlock": "Redacted Regiment P1",
+      "unlock": "绝密军团 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2646,7 +2646,7 @@
     },
     {
       "id": "r_2124_constitution",
-      "name": "R-2124 Constitution",
+      "name": "R-2124 宪法",
       "name_en": "R-2124 Constitution",
       "category": "primary",
       "subcategory": "marksman_rifles",
@@ -2665,17 +2665,17 @@
         "penetration": "medium",
         "reserve_ammo": null,
         "fire_modes": [
-          "Bolt-Action"
+          "栓动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": 180
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Rounds Reload"
+        "中甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Liberty Day",
+      "unlock": "“解放日”统一发放",
       "description": "The Constitution does not have any attachments.",
       "lore": "",
       "variants": [],
@@ -2685,7 +2685,7 @@
     },
     {
       "id": "sg_8_punisher",
-      "name": "SG-8 Punisher",
+      "name": "SG-8 制裁者",
       "name_en": "SG-8 Punisher",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2704,17 +2704,17 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Rounds Reload"
+        "轻甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Helldivers Mobilize! P1",
+      "unlock": "绝地潜兵总动员 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2724,7 +2724,7 @@
     },
     {
       "id": "sg_8p_punisher_plasma",
-      "name": "SG-8P Punisher Plasma",
+      "name": "SG-8P 等离子制裁者",
       "name_en": "SG-8P Punisher Plasma",
       "category": "primary",
       "subcategory": "energy_based",
@@ -2743,16 +2743,16 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi-automatic"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "2.5s",
         "dps": null
       },
       "traits": [
-        "Explosive"
+        "爆炸"
       ],
-      "unlock": "Cutting Edge P2",
+      "unlock": "遥遥领先 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2762,7 +2762,7 @@
     },
     {
       "id": "sg_8s_slugger",
-      "name": "SG-8S Slugger",
+      "name": "SG-8S 重炮手",
       "name_en": "SG-8S Slugger",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2781,17 +2781,17 @@
         "penetration": "medium",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": 440
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Rounds Reload"
+        "中甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Helldivers Mobilize! P8",
+      "unlock": "绝地潜兵总动员 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2801,7 +2801,7 @@
     },
     {
       "id": "sg_20_halt",
-      "name": "SG-20 Halt",
+      "name": "SG-20 止息",
       "name_en": "SG-20 Halt",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2820,18 +2820,18 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Medium Armor Penetrating",
-        "Rounds Reload"
+        "轻甲穿透",
+        "中甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Truth Enforcers P1",
+      "unlock": "真理执行者 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -2841,11 +2841,11 @@
     },
     {
       "id": "sg_22_bushwhacker",
-      "name": "SG-22 Bushwhacker",
+      "name": "SG-22 游击兵",
       "name_en": "SG-22 Bushwhacker",
       "category": "secondary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 405.0,
         "capacity": 3,
@@ -2860,19 +2860,19 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi",
-          "All Barrel"
+          "半自动",
+          "全射"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": 1215
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed",
-        "Rounds Reload"
+        "轻甲穿透",
+        "单手操作",
+        "逐发装填"
       ],
-      "unlock": "Viper Commandos P2",
+      "unlock": "毒蛇突击兵 第二章节",
       "description": "1.006.001 2026-02-03",
       "lore": "",
       "variants": [],
@@ -2882,7 +2882,7 @@
     },
     {
       "id": "sg_97_sweeper",
-      "name": "SG-97 Sweeper",
+      "name": "SG-97 扫荡者",
       "name_en": "SG-97 Sweeper",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2901,18 +2901,18 @@
         "penetration": "medium",
         "reserve_ammo": null,
         "fire_modes": [
-          "Auto"
+          "全自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": 1260
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Rounds Reload"
+        "中甲穿透",
+        "逐发装填"
       ],
-      "unlock": "Superstore",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "unlock": "超级商店",
+      "description": "你告诉我，什么叫“全自动泵动式霰弹枪”？",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -2921,7 +2921,7 @@
     },
     {
       "id": "sg_225_breaker",
-      "name": "SG-225 Breaker",
+      "name": "SG-225 破裂者",
       "name_en": "SG-225 Breaker",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2940,18 +2940,18 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "2.5s",
         "dps": 1650
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Helldivers Mobilize! P4",
-      "description": "A fully-automatic shotgun with a high rate of fire, excellent for controlling crowds. Requires frequent reloading.",
+      "unlock": "绝地潜兵总动员 第四章节",
+      "description": "新手之友。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -2960,7 +2960,7 @@
     },
     {
       "id": "sg_225ie_breaker_incendiary",
-      "name": "SG-225IE Breaker Incendiary",
+      "name": "SG-225IE 高燃破裂者",
       "name_en": "SG-225IE Breaker Incendiary",
       "category": "primary",
       "subcategory": "shotguns",
@@ -2979,19 +2979,19 @@
         "penetration": "light",
         "reserve_ammo": 4,
         "fire_modes": [
-          "Burst",
-          "Semi"
+          "三连发",
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "3s",
         "dps": 1200
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Incendiary"
+        "轻甲穿透",
+        "燃烧"
       ],
       "unlock": "Steeled Veterans P2",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "description": "基于破裂者的改进型霰弹枪，使用高燃弹药，能够在击中目标后引发燃烧效果。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -3000,7 +3000,7 @@
     },
     {
       "id": "sg_225sp_breaker_spray_pray",
-      "name": "SG-225SP Breaker Spray&Pray",
+      "name": "SG-225SP 千发百中破裂者",
       "name_en": "SG-225SP Breaker Spray&Pray",
       "category": "primary",
       "subcategory": "shotguns",
@@ -3019,17 +3019,17 @@
         "penetration": "light",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "3s",
         "dps": 1320
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Helldivers Mobilize! P9",
+      "unlock": "绝地潜兵总动员 第九章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -3039,7 +3039,7 @@
     },
     {
       "id": "sg_451_cookout",
-      "name": "SG-451 Cookout",
+      "name": "SG-451 野炊",
       "name_en": "SG-451 Cookout",
       "category": "primary",
       "subcategory": "shotguns",
@@ -3058,18 +3058,18 @@
         "penetration": "light",
         "reserve_ammo": null,
         "fire_modes": [
-          "Semi"
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Rounds Reload",
-        "Incendiary"
+        "轻甲穿透",
+        "弹药补充",
+        "燃烧"
       ],
-      "unlock": "Freedom's Flame P1",
+      "unlock": "自由烈焰 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -3079,11 +3079,11 @@
     },
     {
       "id": "smg_32_reprimand",
-      "name": "SMG-32 Reprimand",
+      "name": "SMG-32 训斥",
       "name_en": "SMG-32 Reprimand",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 140.0,
         "capacity": 25,
@@ -3098,18 +3098,18 @@
         "penetration": "medium",
         "reserve_ammo": 9,
         "fire_modes": [
-          "Auto",
-          "Burst",
-          "Semi"
+          "全自动",
+          "三连发",
+          "半自动"
         ],
         "ergonomics": 55,
         "reload_time": "3.5s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Truth Enforcers P2",
+      "unlock": "真理执行官 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -3119,11 +3119,11 @@
     },
     {
       "id": "smg_37_defender",
-      "name": "SMG-37 Defender",
+      "name": "SMG-37 防卫者",
       "name_en": "SMG-37 Defender",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 110.0,
         "capacity": 45,
@@ -3138,19 +3138,19 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Full",
-          "Semi",
-          "Burst"
+          "全自动",
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 90,
         "reload_time": "2.8s",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手持握"
       ],
-      "unlock": "Helldivers Mobilize! P3",
+      "unlock": "绝地潜兵总动员 第三章节",
       "description": "A high-caliber submachine gun which can be fired with one hand. Has a relatively low rate of fire.",
       "lore": "",
       "variants": [],
@@ -3160,11 +3160,11 @@
     },
     {
       "id": "smg_72_pummeler",
-      "name": "SMG-72 Pummeler",
+      "name": "SMG-72 暴击斗士",
       "name_en": "SMG-72 Pummeler",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 85.0,
         "capacity": 45,
@@ -3179,19 +3179,19 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Auto",
-          "Burst",
-          "Semi"
+          "全自动",
+          "三连发",
+          "半自动"
         ],
         "ergonomics": 90,
         "reload_time": "2.8s",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手持握"
       ],
-      "unlock": "Polar Patriots P2",
+      "unlock": "极地爱国者 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -3201,11 +3201,11 @@
     },
     {
       "id": "smg_203_gallant",
-      "name": "SMG-203 Gallant",
+      "name": "SMG-203 英勇无畏",
       "name_en": "SMG-203 Gallant",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 65.0,
         "capacity": 50,
@@ -3220,19 +3220,19 @@
         "penetration": "medium",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Auto",
-          "Semi",
-          "Burst"
+          "全自动",
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 75,
         "reload_time": "2.5s",
         "dps": 1495
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed"
+        "中甲穿透",
+        "单手持握"
       ],
-      "unlock": "Exo Experts P1",
+      "unlock": "外骨骼机甲专家 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -3242,11 +3242,11 @@
     },
     {
       "id": "sta_11_smg",
-      "name": "StA-11 SMG",
+      "name": "StA-11 冲锋枪",
       "name_en": "StA-11 SMG",
       "category": "primary",
       "subcategory": "submachine_guns",
-      "subcategory_name": "Submachine Guns",
+      "subcategory_name": "冲锋枪",
       "stats_short": {
         "damage": 90.0,
         "capacity": 48,
@@ -3261,17 +3261,17 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Auto"
+          "全自动"
         ],
         "ergonomics": 80,
         "reload_time": "",
         "dps": 1575
       },
       "traits": [
-        "Light Armor Penetrating",
-        "One Handed"
+        "轻甲穿透",
+        "单手持握"
       ],
-      "unlock": "Righteous Revenants P3",
+      "unlock": "正义复仇者 第三章节",
       "description": "This weapon doesn't support attachments.",
       "lore": "",
       "variants": [],
@@ -3281,7 +3281,7 @@
     },
     {
       "id": "sta_52_assault_rifle",
-      "name": "StA-52 Assault Rifle",
+      "name": "StA-52 突击步枪",
       "name_en": "StA-52 Assault Rifle",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -3300,17 +3300,17 @@
         "penetration": "light",
         "reserve_ammo": 6,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 55,
         "reload_time": "",
         "dps": 1185
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Righteous Revenants P1",
+      "unlock": "正义复仇者 第一章节",
       "description": "This weapon doesn't support attachments.",
       "lore": "",
       "variants": [],
@@ -3320,7 +3320,7 @@
     },
     {
       "id": "ted_63_dynamite",
-      "name": "TED-63 Dynamite",
+      "name": "TED-63 炸药",
       "name_en": "TED-63 Dynamite",
       "category": "throwables",
       "subcategory": "throwables",
@@ -3344,7 +3344,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Borderline Justice P3",
+      "unlock": "临界正义 第三章节",
       "description": "1.006.300 2026-06-16",
       "lore": "",
       "variants": [],
@@ -3354,7 +3354,7 @@
     },
     {
       "id": "tm_1_lure_mine",
-      "name": "TM-1 Lure Mine",
+      "name": "TM-1 诱饵地雷",
       "name_en": "TM-1 Lure Mine",
       "category": "throwables",
       "subcategory": "throwables",
@@ -3378,7 +3378,7 @@
         "dps": null
       },
       "traits": [],
-      "unlock": "Redacted Regiment P3",
+      "unlock": "绝密军团 第三章节",
       "description": "1.005.002 2026-01-22",
       "lore": "",
       "variants": [],
@@ -3388,11 +3388,11 @@
     },
     {
       "id": "vg_70_variable",
-      "name": "VG-70 Variable",
+      "name": "VG-70 变数",
       "name_en": "VG-70 Variable",
       "category": "primary",
       "subcategory": "special",
-      "subcategory_name": "Special",
+      "subcategory_name": "特殊武器",
       "stats_short": {
         "damage": 85.0,
         "capacity": 49,
@@ -3407,19 +3407,19 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Total",
-          "Volley",
-          "Auto"
+          "全射",
+          "齐射",
+          "全自动"
         ],
         "ergonomics": 25,
         "reload_time": "3.58s",
         "dps": 425
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Control Group P1",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "unlock": "变量控制 第一章节",
+      "description": "你说得对，但是你说的也不对。VG-70 变数是一种特殊的武器，它可以在不同的射击模式之间切换，以适应不同的战斗情况。这把枪在会玩的人手里将会相当强力",
       "lore": "",
       "variants": [],
       "tips": [],
