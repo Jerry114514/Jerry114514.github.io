@@ -63,6 +63,25 @@
     .img-wrap img { max-width: 100%; border-radius: 8px; }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+    /* ===== detailed_stats ===== */
+    .ds-block { }
+    .ds-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .ds-tag { background: rgba(255,255,255,0.06); color: var(--text-dim); font-size: 12px; padding: 3px 10px; border-radius: 10px; }
+    .ds-attack { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .ds-attack:last-child { margin-bottom: 0; }
+    .ds-attack-head { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+    .ds-type { font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-left: 6px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
+    .ds-type-proj { background: rgba(59,130,246,0.2); color: var(--blue); }
+    .ds-type-exp { background: rgba(239,68,68,0.2); color: var(--red); }
+    .ds-group { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .ds-group:last-child { border-bottom: none; }
+    .ds-group-label { font-size: 12px; color: var(--text-mute); flex-shrink: 0; min-width: 52px; }
+    .ds-items { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+    .ds-item { font-size: 13px; color: var(--text-dim); }
+    .ds-k { color: var(--text-mute); margin-right: 3px; }
+    .ds-v { color: var(--text); }
+
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
 
     @media (max-width: 900px) { .detail-layout { grid-template-columns: 1fr; } .info-side { order: 2; } }
@@ -145,6 +164,7 @@
           '<div class="card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
             (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(s.unlock) + '<br>' : '来源：' + esc(s.source || "初始解锁")) +
           '</p></div>' +
+          renderDetailedStats(s) +
         '</div>' +
         '<div class="info-side">' +
           '<div class="side-card">' +
@@ -155,6 +175,80 @@
             field("使用次数", s.uses || "无限") +
             field("解锁条件", s.unlock || "初始解锁") +
           '</div>' +
+        '</div>';
+    }
+
+    // ============ detailed_stats 渲染 ============
+    var DS_LABELS = {
+      mass: "质量", initial_velocity: "初速", drag_factor: "阻力", gravity_factor: "重力",
+      penetration_slowdown: "穿透减速", explosion_on_impact: "命中引爆", explode_after: "延时引爆",
+      inner_radius: "内圈", outer_radius: "外圈", shockwave_radius: "冲击波",
+      standard: "标准", durable: "耐久", element: "属性",
+      direct: "直射", slight_angle: "小角度", large_angle: "大角度", extreme_angle: "极端", aoe_effect: "范围穿透",
+      pen_direct: "直射", pen_slight_angle: "小角度", pen_large_angle: "大角度", pen_extreme_angle: "极端", pen_aoe: "范围穿透",
+      demolition_force: "拆毁值", stagger_force: "踉跄力", push_force: "推力",
+      damage_standard: "标准", damage_durable: "耐久", damage_element: "属性"
+    };
+    function dsVal(v) {
+      if (v == null) return "";
+      if (typeof v === "object") {
+        if (v.min != null && v.max != null) return v.min + "-" + v.max;
+        return JSON.stringify(v);
+      }
+      var s = String(v);
+      if (s === "") return "";
+      if (s === "None") return "无";
+      if (s === "∞") return "∞";
+      return s;
+    }
+    function dsGroup(label, obj) {
+      if (!obj) return "";
+      var keys = Object.keys(obj);
+      if (!keys.length) return "";
+      var items = keys.map(function(k) {
+        var v = dsVal(obj[k]);
+        if (v === "") return "";
+        var lbl = DS_LABELS[k] || k;
+        return '<span class="ds-item"><span class="ds-k">' + esc(lbl) + '</span><span class="ds-v">' + esc(v) + '</span></span>';
+      }).filter(Boolean);
+      if (!items.length) return "";
+      return '<div class="ds-group"><span class="ds-group-label">' + esc(label) + '</span><span class="ds-items">' + items.join("") + '</span></div>';
+    }
+    function renderDetailedStats(s) {
+      var ds = s.detailed_stats;
+      if (!ds) return "";
+      // 顶层基础信息
+      var topFields = [
+        ["冷却", ds.cooldown], ["使用", ds.uses], ["炸弹", ds.bombs], ["齐射", ds.salvos],
+        ["范围", ds.bombardment_area], ["生命", ds.main_health], ["护甲", ds.main_armor]
+      ].filter(function(x) { return x[1] != null && x[1] !== ""; });
+      var topHtml = topFields.length ? topFields.map(function(x) {
+        return '<span class="ds-tag">' + esc(x[0]) + ': ' + esc(dsVal(x[1])) + '</span>';
+      }).join("") : "";
+      // 攻击条目
+      var attacksHtml = "";
+      var attacks = ds.attacks || [];
+      if (attacks.length) {
+        attacksHtml = attacks.map(function(a, i) {
+          var typeTag = a.type === "projectile" ? '<span class="ds-type ds-type-proj">弹丸</span>' :
+                         a.type === "explosion" ? '<span class="ds-type ds-type-exp">爆炸</span>' :
+                         '<span class="ds-type">' + esc(a.type) + '</span>';
+          return '<div class="ds-attack">' +
+            '<div class="ds-attack-head">攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
+            dsGroup("弹丸参数", a.projectile) +
+            dsGroup("范围参数", a.area_of_effect) +
+            dsGroup("伤害参数", a.damage) +
+            dsGroup("穿透参数", a.penetration) +
+            dsGroup("特殊效果", a.special_effects) +
+            '</div>';
+        }).join("");
+      } else {
+        attacksHtml = '<p style="font-size:0.8rem;color:var(--text-dim)">暂无详细攻击数据</p>';
+      }
+      return '<div class="card ds-block">' +
+        '<h2>⚙️ 详细数据</h2>' +
+        (topHtml ? '<div class="ds-tags">' + topHtml + '</div>' : "") +
+        attacksHtml +
         '</div>';
     }
 
