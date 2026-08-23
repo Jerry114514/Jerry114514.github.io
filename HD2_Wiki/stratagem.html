@@ -37,6 +37,7 @@
 
     .code-display { display: flex; gap: 6px; align-items: center; margin: 8px 0; }
     .code-display .arrow svg { display: block; }
+    .arrow-icon { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
 
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .stat-item { display: flex; justify-content: space-between; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; }
@@ -79,10 +80,10 @@
   <script>
     "use strict";
     var ARROW = {
-      "U": '<svg viewBox="0 0 24 24" width="22" height="22"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "D": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(180)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "L": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(-90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "R": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>'
+      "U": '<img src="assets/arrows/up.svg" alt="↑" class="arrow-icon">',
+      "D": '<img src="assets/arrows/down.svg" alt="↓" class="arrow-icon">',
+      "L": '<img src="assets/arrows/left.svg" alt="←" class="arrow-icon">',
+      "R": '<img src="assets/arrows/right.svg" alt="→" class="arrow-icon">'
     };
 
     function renderCode(arrows) {

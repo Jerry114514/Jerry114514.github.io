@@ -53,6 +53,7 @@
 
     .arrow { display: inline-block; vertical-align: middle; margin-right: 2px; }
     .arrow svg { display: block; }
+    .arrow-icon { width: 16px; height: 16px; display: inline-block; vertical-align: middle; }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
 
@@ -86,10 +87,10 @@
     var curCat = "all";
 
     var ARROW = {
-      "U": '<svg viewBox="0 0 24 24" width="16" height="16"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "D": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(180)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "L": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(-90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
-      "R": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>'
+      "U": '<img src="assets/arrows/up.svg" alt="↑" class="arrow-icon">',
+      "D": '<img src="assets/arrows/down.svg" alt="↓" class="arrow-icon">',
+      "L": '<img src="assets/arrows/left.svg" alt="←" class="arrow-icon">',
+      "R": '<img src="assets/arrows/right.svg" alt="→" class="arrow-icon">'
     };
 
     function renderCode(arrows) {
