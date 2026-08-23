@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战略配备图鉴 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 战略配备图鉴 - 轨道、飞鹰、支援武器、背包、可部署物、载具" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --red: #ef4444; --green: #22c55e; --amber: #f59e0b;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+    .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
+    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .wiki-search { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+    .wiki-search input { width: 100%; padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
+    .wiki-search input:focus { border-color: var(--blue); }
+    .wiki-search input::placeholder { color: var(--text-mute); }
+
+    .strat-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+
+    .strat-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px 12px 20px; cursor: pointer; text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .strat-card:hover { transform: translateY(-4px); }
+    .strat-card .color-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; }
+    .strat-card .row1 { display: flex; align-items: center; gap: 6px; font-size: 16px; color: var(--text); }
+    .strat-card .row1 .icon { font-size: 24px; }
+    .strat-card .row2 { font-size: 12px; color: var(--text-mute); margin: 2px 0; }
+    .strat-card .row3 { display: flex; gap: 8px; flex-wrap: wrap; font-size: 12px; color: var(--text-dim); margin: 4px 0; }
+    .strat-card .row4 { display: flex; gap: 12px; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+    .tag { padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+    .tag-orbital, .tag-eagle { background: rgba(239,68,68,0.2); color: var(--red); }
+    .tag-support, .tag-backpack { background: rgba(59,130,246,0.2); color: var(--blue); }
+    .tag-deployable { background: rgba(34,197,94,0.2); color: var(--green); }
+    .tag-vehicle, .tag-ship { background: rgba(245,158,11,0.2); color: var(--amber); }
+
+    .arrow { display: inline-block; vertical-align: middle; margin-right: 2px; }
+    .arrow svg { display: block; }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 1023px) { .strat-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) { .strat-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>📦 战略配备图鉴</h1>
+    <p>共 <span id="total-count">0</span> 种战略配备 · 呼叫代码 · 冷却时间</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <div class="wiki-controls">
+    <div class="filter-bar" id="filter-bar"></div>
+  </div>
+  <div class="wiki-search">
+    <input type="text" id="search-input" placeholder="🔍 搜索战略配备名称…" oninput="filterStrat()">
+  </div>
+
+  <div class="strat-grid" id="strat-grid"><div class="loading">正在加载战略配备数据…</div></div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var stratagems = [];
+    var curCat = "all";
+
+    var ARROW = {
+      "U": '<svg viewBox="0 0 24 24" width="16" height="16"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "D": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(180)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "L": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(-90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "R": '<svg viewBox="0 0 24 24" width="16" height="16" transform="rotate(90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>'
+    };
+
+    function renderCode(arrows) {
+      if (!arrows) return "";
+      return arrows.split("").map(function(a) { return '<span class="arrow">' + (ARROW[a] || "") + '</span>'; }).join("");
+    }
+
+    function colorOf(cat) {
+      var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6","舰船":"#f59e0b","任务":"#f59e0b" };
+      return m[cat] || "#64748b";
+    }
+    function tagOf(cat) {
+      var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support" };
+      return "tag-" + (m[cat] || "support");
+    }
+    function iconOf(cat) {
+      var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫" };
+      return m[cat] || "📦";
+    }
+
+    async function loadStrat() {
+      try {
+        var r = await fetch("./data/wiki/zh/stratagems_full.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        stratagems = d.stratagems || [];
+        document.getElementById("total-count").textContent = stratagems.length;
+        renderFilters();
+        renderGrid();
+      } catch(e) {
+        console.error("[Strat] 加载失败:", e);
+        document.getElementById("strat-grid").innerHTML = '<div class="empty">⚠️ 战略配备数据加载失败</div>';
+      }
+    }
+
+    function renderFilters() {
+      var bar = document.getElementById("filter-bar");
+      var cats = [
+        { id: "all", label: "全部 " + stratagems.length },
+        { id: "轨道", label: "轨道 " + stratagems.filter(function(s){return s.type==="轨道";}).length },
+        { id: "飞鹰", label: "飞鹰 " + stratagems.filter(function(s){return s.type==="飞鹰";}).length },
+        { id: "支援武器", label: "支援武器 " + stratagems.filter(function(s){return s.type.includes("支援");}).length },
+        { id: "背包", label: "背包 " + stratagems.filter(function(s){return s.type==="背包";}).length },
+        { id: "可部署物", label: "可部署物 " + stratagems.filter(function(s){return s.type==="可部署物";}).length },
+        { id: "载具", label: "载具 " + stratagems.filter(function(s){return s.type==="载具";}).length },
+      ];
+      bar.innerHTML = cats.map(function(c) {
+        return '<button class="' + (c.id === curCat ? "active" : "") + '" onclick="setCat(\'' + c.id + '\')">' + c.label + '</button>';
+      }).join("");
+    }
+
+    function setCat(cat) { curCat = cat; renderFilters(); filterStrat(); }
+
+    function filterStrat() {
+      var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
+      var filtered = stratagems;
+      if (curCat !== "all") filtered = filtered.filter(function(s) { return s.type === curCat || (curCat === "支援武器" && s.type.includes("支援")); });
+      if (q) filtered = filtered.filter(function(s) { return s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q); });
+      renderGrid(filtered);
+    }
+
+    function renderGrid(list) {
+      list = list || stratagems;
+      var grid = document.getElementById("strat-grid");
+      if (list.length === 0) { grid.innerHTML = '<div class="empty">没有匹配的战略配备</div>'; return; }
+      grid.innerHTML = list.map(function(s) {
+        var cat = s.type;
+        var code = (s.code && s.code.arrows) || (s.code && s.code.display) || "";
+        var traits = (s.traits || []).slice(0, 2).join(" · ");
+        return '<a class="strat-card" href="stratagem.html?id=' + encodeURIComponent(s.id) + '">' +
+          '<div class="color-bar" style="background:' + colorOf(cat) + '"></div>' +
+          '<div class="row1"><span class="icon">' + iconOf(cat) + '</span>' + esc(s.name) + '</div>' +
+          '<div class="row2">' + esc(s.name_en || s.id) + '</div>' +
+          '<div class="row3"><span class="tag ' + tagOf(cat) + '">' + esc(cat) + '</span>' +
+          (code ? '<span>呼叫：' + renderCode(code) + '</span>' : '') + '</div>' +
+          (traits ? '<div class="row4">' + esc(traits) + '</div>' : '') +
+          (s.cooldown ? '<div class="row4">⏳ ' + esc(s.cooldown) + '</div>' : '') +
+          '</a>';
+      }).join("");
+    }
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadStrat);
+  </script>
+</body>
+</html>

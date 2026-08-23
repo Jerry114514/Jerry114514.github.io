@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战略配备详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 战略配备详情页" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --red: #ef4444; --green: #22c55e; --amber: #f59e0b;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--yellow); }
+
+    .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 70% 30%; gap: 20px; width: 100%; }
+
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+    .title-block { position: relative; overflow: hidden; }
+    .title-block .color-bar { position: absolute; left: 0; top: 0; width: 6px; height: 100%; }
+    .title-block .name { font-size: 1.8rem; color: var(--text); }
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .title-block .meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px; }
+    .title-block .desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
+    .code-display { display: flex; gap: 6px; align-items: center; margin: 8px 0; }
+    .code-display .arrow svg { display: block; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stat-item { display: flex; justify-content: space-between; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; }
+    .stat-item .k { color: var(--text-mute); }
+    .stat-item .v { color: var(--text); }
+
+    .tag { padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+    .tag-orbital, .tag-eagle { background: rgba(239,68,68,0.2); color: var(--red); }
+    .tag-support, .tag-backpack { background: rgba(59,130,246,0.2); color: var(--blue); }
+    .tag-deployable { background: rgba(34,197,94,0.2); color: var(--green); }
+    .tag-vehicle, .tag-ship { background: rgba(245,158,11,0.2); color: var(--amber); }
+
+    .info-side { display: flex; flex-direction: column; gap: 16px; }
+    .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+    .side-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .side-card .field:last-child { border-bottom: none; }
+    .side-card .field .k { color: var(--text-mute); }
+    .side-card .field .v { color: var(--text); }
+    .traits { display: flex; flex-wrap: wrap; gap: 6px; }
+    .trait { padding: 3px 10px; border-radius: 12px; background: rgba(59,130,246,0.12); color: var(--blue); font-size: 0.75rem; }
+    .img-wrap { margin-top: 8px; }
+    .img-wrap img { max-width: 100%; border-radius: 8px; }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 900px) { .detail-layout { grid-template-columns: 1fr; } .info-side { order: 2; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="stratagems.html">战略配备列表</a></div>
+  </header>
+
+  <div class="detail-layout" id="detail-layout"><div class="loading">正在加载战略配备数据…</div></div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var ARROW = {
+      "U": '<svg viewBox="0 0 24 24" width="22" height="22"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "D": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(180)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "L": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(-90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>',
+      "R": '<svg viewBox="0 0 24 24" width="22" height="22" transform="rotate(90)"><polygon points="12,2 22,12 12,22 2,12" fill="#e2e8f0"/></svg>'
+    };
+
+    function renderCode(arrows) {
+      if (!arrows) return '<span style="color:var(--text-mute)">无呼叫代码</span>';
+      return '<span class="code-display">' + arrows.split("").map(function(a) { return '<span class="arrow">' + (ARROW[a] || "") + '</span>'; }).join("") + '</span>';
+    }
+    function colorOf(cat) { var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6" }; return m[cat] || "#64748b"; }
+    function tagOf(cat) { var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support" }; return "tag-" + (m[cat] || "support"); }
+    function iconOf(cat) { var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫" }; return m[cat] || "📦"; }
+
+    async function loadDetail() {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/stratagems_full.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        var s = (d.stratagems || []).find(function(x) { return x.id === id; });
+        if (!s) { layout.innerHTML = '<div class="empty">未找到该战略配备</div>'; return; }
+        renderDetail(s);
+      } catch(e) {
+        console.error("[Strat] 加载失败:", e);
+        layout.innerHTML = '<div class="empty">⚠️ 战略配备数据加载失败</div>';
+      }
+    }
+
+    function renderDetail(s) {
+      var layout = document.getElementById("detail-layout");
+      var cat = s.type;
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="stratagems.html">战略配备列表</a> › ' + esc(cat) + ' › ' + esc(s.name);
+
+      var code = (s.code && s.code.arrows) || (s.code && s.code.display) || "";
+      var sf = s.stats || [];
+      var statItems = [
+        ["伤害", sf[0], "⚔️"], ["射速", sf[1], "🎯"], ["实用性", sf[2], "🛠️"], ["机动性", sf[3], "🏃"]
+      ];
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="color-bar" style="background:' + colorOf(cat) + '"></div>' +
+            '<div class="name">' + esc(s.name) + '</div>' +
+            '<div class="name-en">' + esc(s.name_en || s.id) + '</div>' +
+            '<div class="meta"><span class="tag ' + tagOf(cat) + '">' + esc(cat) + '</span>' +
+              (s.permit_type ? '<span>' + esc(s.permit_type) + '</span>' : '') +
+              (s.source ? '<span>📦 ' + esc(s.source) + '</span>' : '') + '</div>' +
+            '<div class="meta">呼叫代码：' + renderCode(code) + '</div>' +
+            (s.description ? '<div class="desc">' + esc(s.description) + '</div>' : '') +
+          '</div>' +
+          '<div class="card">' +
+            '<h2>📊 详细属性</h2>' +
+            '<div class="stat-grid">' + statItems.map(function(x) {
+              return '<div class="stat-item"><span class="k">' + x[2] + ' ' + esc(x[0]) + '</span><span class="v">' + (x[1] == null ? "—" : x[1]) + '</span></div>';
+            }).join("") + '</div>' +
+          '</div>' +
+          (s.traits && s.traits.length ? '<div class="card"><h2>🏷️ 特性</h2><div class="traits">' + s.traits.map(function(t){return '<span class="trait">' + esc(t) + '</span>';}).join("") + '</div></div>' : '') +
+          '<div class="card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
+            (s.unlock_level ? '解锁等级：' + esc(s.unlock_level) + '<br>' : '') +
+            (s.unlock_cost ? '解锁花费：' + esc(s.unlock_cost) : (s.source ? '来源：' + esc(s.source) : '暂无数据')) +
+          '</p></div>' +
+        '</div>' +
+        '<div class="info-side">' +
+          '<div class="side-card">' +
+            '<h3>📦 战略配备信息</h3>' +
+            field("分类", cat) +
+            field("呼叫时间", s.call_in_time || "—") +
+            field("冷却时间", s.cooldown || "—") +
+            field("使用次数", s.uses || "无限") +
+            field("解锁条件", s.unlock_cost || "初始解锁") +
+          '</div>' +
+          (s.image ? '<div class="side-card"><h3>🎨 图标</h3><div class="img-wrap"><img src="' + esc(s.image) + '" alt="' + esc(s.name) + '" loading="lazy"></div>' +
+            '<p style="font-size:0.7rem;color:var(--text-mute);margin-top:6px">来源：' + esc(s.source_page) + '</p></div>' : '') +
+        '</div>';
+    }
+
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null || v === "" ? "—" : v) + '</span></div>'; }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>
