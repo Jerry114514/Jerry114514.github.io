@@ -16,7 +16,68 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_120mm_HE_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_120mm_HE_Barrage"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_120mm_HE_Barrage",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "bombs": "3",
+        "salvos": "5",
+        "bombardment_area": "27 m",
+        "attacks": [
+          {
+            "name": "120mm HE CANNON ROUND P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "120mm HE CANNON ROUND_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "3500 Ballistic",
+              "damage_durable": "3500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "20",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "120mm HE CANNON ROUND P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1200 Explosion",
+              "inner_durable": "1200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "3.29999995 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "11 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_380mm_he_barrage",
@@ -31,7 +92,68 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_380mm_HE_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_380mm_HE_Barrage"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_380mm_HE_Barrage",
+      "detailed_stats": {
+        "cooldown": "240 s",
+        "uses": "∞",
+        "bombs": "3",
+        "salvos": "5",
+        "bombardment_area": "36 m",
+        "attacks": [
+          {
+            "name": "380mm HE CANNON ROUND P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "30 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "380mm HE CANNON ROUND_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "4000 Ballistic",
+              "damage_durable": "4000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank IV",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "380mm HE CANNON ROUND P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "18 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_napalm_barrage",
@@ -46,7 +168,8 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Napalm_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
+      "detailed_stats": null
     },
     {
       "id": "orbital_gatling_barrage",
@@ -61,7 +184,94 @@
       "unlock": "1500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Gatling_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Gatling_Barrage"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Gatling_Barrage",
+      "detailed_stats": {
+        "cooldown": "70 s",
+        "uses": "∞",
+        "bombs": "60",
+        "salvos": "4",
+        "bombardment_area": "7 m",
+        "attacks": [
+          {
+            "name": "23mm HE CANNON P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "400 g",
+              "initial_velocity": "1050 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "23mm HE CANNON_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "350 Ballistic",
+              "damage_durable": "200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "3"
+            }
+          },
+          {
+            "name": "23mm HE CANNON P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "400 g",
+              "initial_velocity": "1050 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "350 Ballistic",
+              "damage_durable": "200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "3"
+            }
+          },
+          {
+            "name": "23mm HE CANNON P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "4.5 m",
+              "radius_shockwave": "6.5 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_gas_strike",
@@ -76,7 +286,61 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Gas_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Gas_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Gas_Strike",
+      "detailed_stats": {
+        "cooldown": "75 s",
+        "uses": "∞",
+        "bombs": "1",
+        "salvos": "1",
+        "bombardment_area": "1 m",
+        "attacks": [
+          {
+            "name": "110mm GAS CANNON ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "110mm GAS CANNON ROUND_P_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Ballistic",
+              "damage_durable": "300 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "60",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "110mm GAS CANNON ROUND P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Gas",
+              "inner_radius": "0 Gas",
+              "inner_durable": "0 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "15 m",
+              "radius_shockwave": "20 m",
+              "aoe_duration": "15 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_walking_barrage",
@@ -91,7 +355,68 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Walking_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Walking_Barrage"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Walking_Barrage",
+      "detailed_stats": {
+        "cooldown": "240 s",
+        "uses": "∞",
+        "bombs": "3",
+        "salvos": "5",
+        "bombardment_area": "25 m",
+        "attacks": [
+          {
+            "name": "380mm HE CANNON ROUND P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "30 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "380mm HE CANNON ROUND_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "4000 Ballistic",
+              "damage_durable": "4000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank IV",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "380mm HE CANNON ROUND P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "18 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_laser",
@@ -106,7 +431,11 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Laser_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Laser"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Laser",
+      "detailed_stats": {
+        "cooldown": "300 s",
+        "uses": "3"
+      }
     },
     {
       "id": "orbital_railcannon_strike",
@@ -121,7 +450,65 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Railcannon_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Railcannon_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Railcannon_Strike",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "attacks": [
+          {
+            "name": "RAIL CANNON ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "14000 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "0%",
+              "explode_after": "RAIL CANNON ROUND_P_E"
+            },
+            "damage": {
+              "damage_standard": "10000 Ballistic",
+              "damage_durable": "10000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "60",
+              "push_force": "35"
+            }
+          },
+          {
+            "name": "RAIL CANNON ROUND P E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1000 Explosion",
+              "inner_durable": "1000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "2.5 m",
+              "radius_shockwave": "10 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_smoke_strike",
@@ -136,7 +523,53 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Smoke_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Smoke_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Smoke_Strike",
+      "detailed_stats": {
+        "cooldown": "75 s",
+        "uses": "∞",
+        "bombs": "1",
+        "salvos": "6",
+        "bombardment_area": "15 m",
+        "attacks": [
+          {
+            "name": "S P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "S_P_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Damage",
+              "damage_durable": "300 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "60",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "S P IE",
+            "type": "explosion",
+            "area_of_effect": {
+              "radius_inner": "12 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "0 m",
+              "aoe_duration": "30 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_ems_strike",
@@ -151,7 +584,14 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_EMS_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_EMS_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_EMS_Strike",
+      "detailed_stats": {
+        "cooldown": "75 s",
+        "uses": "∞",
+        "bombs": "1",
+        "salvos": "1",
+        "bombardment_area": "1 m"
+      }
     },
     {
       "id": "orbital_airburst_strike",
@@ -166,7 +606,124 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Orbital_Airburst_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Airburst_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Airburst_Strike",
+      "detailed_stats": {
+        "cooldown": "100 s",
+        "uses": "∞",
+        "bombs": "1",
+        "salvos": "4",
+        "bombardment_area": "2 m",
+        "attacks": [
+          {
+            "name": "110mm AIRBURST CANNON ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "lifetime": "0.949999988 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "110mm AIRBURST CANNON ROUND_P_IE",
+              "explode_after": "110mm AIRBURST CANNON ROUND_P_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Ballistic",
+              "damage_durable": "300 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "60",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "110mm AIRBURST CANNON ROUND P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.200000003 m",
+              "radius_outer": "0.5 m",
+              "radius_shockwave": "4 m",
+              "shrapnel_count": "12",
+              "shrapnel": "SHRAPNEL_P1"
+            }
+          },
+          {
+            "name": "SHRAPNEL P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "2 g",
+              "initial_velocity": "300 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "SHRAPNEL_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Damage",
+              "damage_durable": "150 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "SHRAPNEL P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "orbital_precision_strike",
@@ -181,7 +738,68 @@
       "unlock": "Free",
       "image": "https://helldivers.wiki.gg/images/Orbital_Precision_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Precision_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Precision_Strike",
+      "detailed_stats": {
+        "cooldown": "90 s",
+        "uses": "∞",
+        "bombs": "1",
+        "salvos": "1",
+        "bombardment_area": "1 m",
+        "attacks": [
+          {
+            "name": "380mm HE CANNON ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "30 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "380mm HE CANNON ROUND_P_IE"
+            },
+            "damage": {
+              "damage_standard": "4000 Ballistic",
+              "damage_durable": "4000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank IV",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "380mm HE CANNON ROUND P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "18 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "eagle_110mm_rocket_pods",
@@ -196,7 +814,67 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_110mm_Rocket_Pods_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_110mm_Rocket_Pods"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_110mm_Rocket_Pods",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "3",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "110mm STANDARD ROCKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "3.3 kg",
+              "initial_velocity": "700 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "210%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "110mm STANDARD ROCKET_P_IE"
+            },
+            "damage": {
+              "damage_standard": "600 Damage",
+              "damage_durable": "600 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "40",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "110mm STANDARD ROCKET P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.60000002 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "eagle_500kg_bomb",
@@ -211,7 +889,93 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_500kg_Bomb_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_500kg_Bomb"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_500kg_Bomb",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "1",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "500kg BOMB P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "500 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "500kg BOMB_P_IE",
+              "explode_after": "500kg BOMB_P_E"
+            },
+            "damage": {
+              "damage_standard": "2000 Ballistic",
+              "damage_durable": "2000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "500kg BOMB P E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "10 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "35 m"
+            }
+          },
+          {
+            "name": "500kg BOMB P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "100 Explosion",
+              "inner_durable": "100 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 99.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 99.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "eagle_napalm_airstrike",
@@ -226,7 +990,67 @@
       "unlock": "5000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_Napalm_Airstrike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Napalm_Airstrike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Napalm_Airstrike",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "2",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "NAPALM BOMB P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "NAPALM BOMB_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1500 Ballistic",
+              "damage_durable": "1500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "NAPALM BOMB P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "250 Explosion",
+              "inner_durable": "250 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 249.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 249.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "15 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "eagle_strafing_run",
@@ -241,7 +1065,13 @@
       "unlock": "1500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_Strafing_Run_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Strafing_Run"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Strafing_Run",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "4",
+        "main_health": "100",
+        "main_armor": "Unarmored"
+      }
     },
     {
       "id": "eagle_smoke_strike",
@@ -256,7 +1086,52 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_Smoke_Strike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Smoke_Strike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Smoke_Strike",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "2",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "100KG BOMB P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "100KG BOMB_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "1500 Ballistic",
+              "damage_durable": "1500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "100KG BOMB P1 IE",
+            "type": "explosion",
+            "area_of_effect": {
+              "radius_inner": "12 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "0 m",
+              "aoe_duration": "30 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "eagle_airstrike",
@@ -271,7 +1146,12 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_Airstrike_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Airstrike"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Airstrike",
+      "detailed_stats": {
+        "cooldown": "15 sec",
+        "main_health": "100",
+        "main_armor": "Unarmored"
+      }
     },
     {
       "id": "eagle_cluster_bomb",
@@ -286,7 +1166,122 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Eagle_Cluster_Bomb_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Cluster_Bomb"
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Cluster_Bomb",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "4",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "100KG CLUSTER BOMB P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "300 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "lifetime": "0.349999994 sec",
+              "penetration_slowdown": "25%",
+              "explode_after": "100KG CLUSTER BOMB_P_E"
+            },
+            "damage": {
+              "damage_standard": "1500 Damage",
+              "damage_durable": "1500 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "100KG CLUSTER BOMB P E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "10 m",
+              "shrapnel_count": "8",
+              "shrapnel": "CLUSTER BOMB_P4"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P4",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "30 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CLUSTER BOMB_P4_IE"
+            },
+            "damage": {
+              "damage_standard": "20 Damage",
+              "damage_durable": "2 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P4 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_40_k_thermal_gun",
@@ -301,7 +1296,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Disambig.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/40-K_Meltagun"
+      "source_page": "https://helldivers.wiki.gg/wiki/40-K_Meltagun",
+      "detailed_stats": null
     },
     {
       "id": "support_apw_1_anti_materiel_rifle",
@@ -316,7 +1312,8 @@
       "unlock": "5000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Anti-Materiel_Rifle_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/APW-1_Anti-Materiel_Rifle"
+      "source_page": "https://helldivers.wiki.gg/wiki/APW-1_Anti-Materiel_Rifle",
+      "detailed_stats": null
     },
     {
       "id": "support_arc_3_arc_thrower",
@@ -331,7 +1328,8 @@
       "unlock": "7000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Arc_Thrower_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/ARC-3_Arc_Thrower"
+      "source_page": "https://helldivers.wiki.gg/wiki/ARC-3_Arc_Thrower",
+      "detailed_stats": null
     },
     {
       "id": "support_cqc_1_outcast",
@@ -346,7 +1344,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/One_True_Flag_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag"
+      "source_page": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag",
+      "detailed_stats": null
     },
     {
       "id": "support_eat_17_expendable_anti_tank",
@@ -361,7 +1360,63 @@
       "unlock": "3000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Expendable_Anti-Tank_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EAT-17_Expendable_Anti-Tank"
+      "source_page": "https://helldivers.wiki.gg/wiki/EAT-17_Expendable_Anti-Tank",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "75mm HEAT GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "2.5 kg",
+              "initial_velocity": "200 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "85%",
+              "explosion_on_impact": "75mm HEAT GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "2000 Ballistic",
+              "damage_durable": "2000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Medium"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "75mm HEAT GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_eat_411_leveller",
@@ -376,7 +1431,66 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Leveller_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EAT-411_Leveller"
+      "source_page": "https://helldivers.wiki.gg/wiki/EAT-411_Leveller",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "EAT-411 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "500 g",
+              "initial_velocity": "50 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "EAT-411_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1000 Ballistic",
+              "damage_durable": "1000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "EAT-411 P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2500 Explosion",
+              "inner_durable": "2500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 2499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 2499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "10 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "35 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_eat_700_incendiary",
@@ -391,7 +1505,8 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Expendable_Napalm_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm"
+      "source_page": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm",
+      "detailed_stats": null
     },
     {
       "id": "support_flam_40_flamethrower",
@@ -406,7 +1521,8 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Flamethrower_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower"
+      "source_page": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower",
+      "detailed_stats": null
     },
     {
       "id": "support_gl_21_grenade_launcher",
@@ -421,7 +1537,64 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Grenade_Launcher_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/GL-21_Grenade_Launcher"
+      "source_page": "https://helldivers.wiki.gg/wiki/GL-21_Grenade_Launcher",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "40mm HE GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm HE GRENADE_P_IE",
+              "explode_after": "40mm HE GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "0 Ballistic",
+              "damage_durable": "0 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm HE GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3.5 m",
+              "radius_outer": "7.5 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_gl_52_conciliator",
@@ -436,7 +1609,56 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/De-Escalator_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/GL-52_De-Escalator"
+      "source_page": "https://helldivers.wiki.gg/wiki/GL-52_De-Escalator",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "GL-52 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "GL-52_P_IE"
+            },
+            "damage": {
+              "damage_standard": "20 Ballistic",
+              "damage_durable": "2 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "GL-52 P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Arc",
+              "inner_radius": "0 Arc",
+              "inner_durable": "0 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "4 m",
+              "arc": "GL-52_P_IE_A"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_las_98_laser_cannon",
@@ -451,7 +1673,8 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Laser_Cannon_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/LAS-98_Laser_Cannon"
+      "source_page": "https://helldivers.wiki.gg/wiki/LAS-98_Laser_Cannon",
+      "detailed_stats": null
     },
     {
       "id": "support_las_99_quasar_cannon",
@@ -466,7 +1689,64 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Quasar_Cannon_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/LAS-99_Quasar_Cannon"
+      "source_page": "https://helldivers.wiki.gg/wiki/LAS-99_Quasar_Cannon",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "LASER P5",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "LASER_P5_IE"
+            },
+            "damage": {
+              "damage_standard": "2000 Ballistic",
+              "damage_durable": "2000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Medium"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "LASER P5 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_m_105_stalwart",
@@ -481,7 +1761,8 @@
       "unlock": "3500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Stalwart_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/M-105_Stalwart"
+      "source_page": "https://helldivers.wiki.gg/wiki/M-105_Stalwart",
+      "detailed_stats": null
     },
     {
       "id": "support_mg_206_heavy_machine_gun",
@@ -496,7 +1777,8 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Heavy_Machine_Gun_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MG-206_Heavy_Machine_Gun"
+      "source_page": "https://helldivers.wiki.gg/wiki/MG-206_Heavy_Machine_Gun",
+      "detailed_stats": null
     },
     {
       "id": "support_mg_43_machine_gun",
@@ -511,7 +1793,37 @@
       "unlock": "Free",
       "image": "https://helldivers.wiki.gg/images/Machine_Gun_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MG-43_Machine_Gun"
+      "source_page": "https://helldivers.wiki.gg/wiki/MG-43_Machine_Gun",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "8x60mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Very Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "12"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_mgx_42_bullet_storm",
@@ -526,7 +1838,37 @@
       "unlock": "75 Medals",
       "image": "https://helldivers.wiki.gg/images/Bullet_Storm_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MGX-42_Bullet_Storm"
+      "source_page": "https://helldivers.wiki.gg/wiki/MGX-42_Bullet_Storm",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "MGX-42 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "450 m/s",
+              "drag_factor": "60%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "100 Damage",
+              "damage_durable": "25 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_mls_4x_commando",
@@ -541,7 +1883,64 @@
       "unlock": "8000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Commando_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MLS-4X_Commando"
+      "source_page": "https://helldivers.wiki.gg/wiki/MLS-4X_Commando",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "66mm MISSILE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "350 g",
+              "initial_velocity": "70 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "15 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "66mm MISSILE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1100 Ballistic",
+              "damage_durable": "1100 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Medium"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "66mm MISSILE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "4 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_ms_11_missile_silo",
@@ -556,7 +1955,13 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Solo_Silo_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo"
+      "source_page": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "main_health": "1500",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "support_plas_45_epoch",
@@ -571,7 +1976,150 @@
       "unlock": "75 Medals",
       "image": "https://helldivers.wiki.gg/images/Epoch_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/PLAS-45_Epoch"
+      "source_page": "https://helldivers.wiki.gg/wiki/PLAS-45_Epoch",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "LARGE PLASMA BOLT P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "10%",
+              "gravity_factor": "200%",
+              "lifetime": "0.600000024 sec",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "LARGE PLASMA BOLT_P1_IE",
+              "explode_after": "LARGE PLASMA BOLT_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "400 Ballistic",
+              "damage_durable": "200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "LARGE PLASMA BOLT P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "10%",
+              "gravity_factor": "200%",
+              "lifetime": "0.600000024 sec",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "LARGE PLASMA BOLT_P2_IE",
+              "explode_after": "LARGE PLASMA BOLT_P2_IE"
+            },
+            "damage": {
+              "damage_standard": "800 Ballistic",
+              "damage_durable": "400 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Anti-Tank I"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "PLAS-45 EPOCH Overcharge E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "800 Explosion",
+              "inner_durable": "800 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 799.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 799.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "5 m"
+            }
+          },
+          {
+            "name": "LARGE PLASMA BOLT P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "500 Explosion",
+              "inner_durable": "500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.29999995 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "4 m"
+            }
+          },
+          {
+            "name": "LARGE PLASMA BOLT P2 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "800 Explosion",
+              "inner_durable": "800 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 799.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 799.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "5 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_rs_422_railgun",
@@ -586,7 +2134,63 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Railgun_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/RS-422_Railgun"
+      "source_page": "https://helldivers.wiki.gg/wiki/RS-422_Railgun",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "RAILGUN ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "2000 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "lifetime": "5 sec",
+              "penetration_slowdown": "0%"
+            },
+            "damage": {
+              "damage_standard": "600 Ballistic",
+              "damage_durable": "225 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Anti-Tank I"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "RS-422 RAILGUN Overcharge E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.400000006 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "3 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_spear",
@@ -601,7 +2205,68 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Disambig.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/S-11_Speargun"
+      "source_page": "https://helldivers.wiki.gg/wiki/S-11_Speargun",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "S-11 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "300 m/s",
+              "drag_factor": "400%",
+              "gravity_factor": "100%",
+              "lifetime": "1.70000005 sec",
+              "penetration_slowdown": "0%",
+              "explode_after": "S-11_P_E"
+            },
+            "damage": {
+              "damage_standard": "650 Ballistic",
+              "damage_durable": "275 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Anti-Tank I"
+            },
+            "special_effects": {
+              "status": "Gas",
+              "status_strength": "50",
+              "second_status": "Gas_Confusion",
+              "demolition_force": "30",
+              "stagger_force": "80",
+              "push_force": "35"
+            }
+          },
+          {
+            "name": "S-11 P E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Gas",
+              "inner_radius": "3 Gas",
+              "inner_durable": "3 Gas",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 2.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 2.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m",
+              "aoe_duration": "10 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "support_tx_41_sterilizer",
@@ -616,7 +2281,8 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Sterilizer_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/TX-41_Sterilizer"
+      "source_page": "https://helldivers.wiki.gg/wiki/TX-41_Sterilizer",
+      "detailed_stats": null
     },
     {
       "id": "heavy_support_ac_8_autocannon",
@@ -631,7 +2297,144 @@
       "unlock": "7000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Autocannon_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon"
+      "source_page": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "20mm APHET ROUNDS P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "120 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "55%",
+              "explosion_on_impact": "20mm APHET ROUNDS_P_IE"
+            },
+            "damage": {
+              "damage_standard": "325 Ballistic",
+              "damage_durable": "260 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "30",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "20mm FLAK ROUNDS P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "130 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "lifetime": "0.899999976 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "20mm FLAK ROUNDS_P_IE"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "150 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "30",
+              "push_force": "30"
+            }
+          },
+          {
+            "name": "20mm APHET ROUNDS P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "5.5 m"
+            }
+          },
+          {
+            "name": "20mm FLAK ROUNDS P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "190 Explosion",
+              "inner_durable": "190 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 189.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 189.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "8 m",
+              "shrapnel_count": "30",
+              "shrapnel": "SHRAPNEL_P"
+            }
+          },
+          {
+            "name": "SHRAPNEL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "30 m/s",
+              "drag_factor": "40%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "110 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "20"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_b_flam_80_flamer",
@@ -646,7 +2449,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Cremator_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/B/FLAM-80_Cremator"
+      "source_page": "https://helldivers.wiki.gg/wiki/B/FLAM-80_Cremator",
+      "detailed_stats": null
     },
     {
       "id": "heavy_support_faf_14_spear",
@@ -661,7 +2465,64 @@
       "unlock": "9000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Disambig.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/FAF-14_Spear"
+      "source_page": "https://helldivers.wiki.gg/wiki/FAF-14_Spear",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "HOMING GROUND MISSILE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "350 g",
+              "initial_velocity": "70 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "15 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "HOMING GROUND MISSILE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "4000 Ballistic",
+              "damage_durable": "4000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "50",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "HOMING GROUND MISSILE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "200 Explosion",
+              "inner_durable": "200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_gl_28_belt_fed_grenade_launcher",
@@ -676,7 +2537,63 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Belt-Fed_Grenade_Launcher_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/GL-28_Belt-Fed_Grenade_Launcher"
+      "source_page": "https://helldivers.wiki.gg/wiki/GL-28_Belt-Fed_Grenade_Launcher",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "GL-28 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "GL-28_P_IE"
+            },
+            "damage": {
+              "damage_standard": "0 Ballistic",
+              "damage_durable": "0 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "GL-28 P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "5.5 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_gr_8_recoilless_rifle",
@@ -691,7 +2608,115 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Recoilless_Rifle_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/GR-8_Recoilless_Rifle"
+      "source_page": "https://helldivers.wiki.gg/wiki/GR-8_Recoilless_Rifle",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "85mm HEAT GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "3.3 kg",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "85mm HEAT GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "3200 Ballistic",
+              "damage_durable": "3200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Medium"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "85mm HIGH-EXPLOSIVE GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "3.3 kg",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "85%",
+              "explosion_on_impact": "85mm HIGH-EXPLOSIVE GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "750 Ballistic",
+              "damage_durable": "750 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "85mm HEAT GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "6 m"
+            }
+          },
+          {
+            "name": "85mm HIGH-EXPLOSIVE GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "800 Explosion",
+              "inner_durable": "800 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 799.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 799.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "7.5 m",
+              "radius_shockwave": "12 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_m_1000_hmg",
@@ -706,7 +2731,37 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Maxigun_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/M-1000_Maxigun"
+      "source_page": "https://helldivers.wiki.gg/wiki/M-1000_Maxigun",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "8x60mm HIGH VELOCITY P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "920 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "80 Ballistic",
+              "damage_durable": "18 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "12"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_sta_x3_wasp_launcher",
@@ -721,7 +2776,117 @@
       "unlock": "12000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/W.A.S.P._Launcher_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/StA-X3_W.A.S.P._Launcher"
+      "source_page": "https://helldivers.wiki.gg/wiki/StA-X3_W.A.S.P._Launcher",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "Artillery P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "Artillery_P_IE"
+            },
+            "damage": {
+              "damage_standard": "20 Ballistic",
+              "damage_durable": "2 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "Burst P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "Burst_P_IE"
+            },
+            "damage": {
+              "damage_standard": "200 Ballistic",
+              "damage_durable": "200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "Artillery P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "600 Explosion",
+              "inner_durable": "600 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 599.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 599.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m",
+              "shrapnel_count": "7",
+              "shrapnel": "Burst_P"
+            }
+          },
+          {
+            "name": "Burst P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "600 Explosion",
+              "inner_durable": "600 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 599.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 599.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "heavy_support_rl_77_airburst_rocket_launcher",
@@ -736,7 +2901,209 @@
       "unlock": "8000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Airburst_Rocket_Launcher_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/RL-77_Airburst_Rocket_Launcher"
+      "source_page": "https://helldivers.wiki.gg/wiki/RL-77_Airburst_Rocket_Launcher",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "20mm FLAK ROUNDS P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "3.3 kg",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "lifetime": "1.5 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "20mm FLAK ROUNDS_P2_IE",
+              "explode_after": "20mm FLAK ROUNDS_P2_IE"
+            },
+            "damage": {
+              "damage_standard": "350 Ballistic",
+              "damage_durable": "350 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "3.3 kg",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "lifetime": "0.25 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CLUSTER BOMB_P2_IE",
+              "explode_after": "CLUSTER BOMB_P2_IE"
+            },
+            "damage": {
+              "damage_standard": "350 Ballistic",
+              "damage_durable": "350 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "20mm FLAK ROUNDS P2 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m",
+              "shrapnel_count": "25",
+              "shrapnel": "CLUSTER BOMB_P1"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P2 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m",
+              "shrapnel_count": "25",
+              "shrapnel": "CLUSTER BOMB_P3"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "25 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "400%",
+              "lifetime": "0.800000012 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CLUSTER BOMB_P1_IE",
+              "explode_after": "CLUSTER BOMB_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "150 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "25",
+              "stagger_force": "25",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P3",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "25 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "400%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CLUSTER BOMB_P1_IE",
+              "explode_after": "CLUSTER BOMB_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "150 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "25",
+              "stagger_force": "25",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "500 Explosion",
+              "inner_durable": "500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "vehicle_exo_45_patriot_exosuit",
@@ -751,7 +3118,13 @@
       "unlock": "20000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Patriot_Exosuit_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EXO-45_Patriot_Exosuit"
+      "source_page": "https://helldivers.wiki.gg/wiki/EXO-45_Patriot_Exosuit",
+      "detailed_stats": {
+        "cooldown": "420 s",
+        "uses": "3",
+        "main_health": "800",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_exo_49_emancipator_exosuit",
@@ -766,7 +3139,13 @@
       "unlock": "20000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Emancipator_Exosuit_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EXO-49_Emancipator_Exosuit"
+      "source_page": "https://helldivers.wiki.gg/wiki/EXO-49_Emancipator_Exosuit",
+      "detailed_stats": {
+        "cooldown": "420 s",
+        "uses": "3",
+        "main_health": "800",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_exo_51_lumberjack_exosuit",
@@ -781,7 +3160,13 @@
       "unlock": "50 Medal",
       "image": "https://helldivers.wiki.gg/images/Lumberer_Exosuit_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EXO-51_Lumberer_Exosuit"
+      "source_page": "https://helldivers.wiki.gg/wiki/EXO-51_Lumberer_Exosuit",
+      "detailed_stats": {
+        "cooldown": "420 s",
+        "uses": "3",
+        "main_health": "800",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_exo_55_breakthrough_exosuit",
@@ -796,7 +3181,13 @@
       "unlock": "50 Medal",
       "image": "https://helldivers.wiki.gg/images/Breakthrough_Exosuit_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/EXO-55_Breakthrough_Exosuit"
+      "source_page": "https://helldivers.wiki.gg/wiki/EXO-55_Breakthrough_Exosuit",
+      "detailed_stats": {
+        "cooldown": "420 s",
+        "uses": "3",
+        "main_health": "800",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_m_102_gunner_fast_recon_vehicle",
@@ -811,7 +3202,13 @@
       "unlock": "25000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Fast_Recon_Vehicle_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/M-102_Gunner_FRV"
+      "source_page": "https://helldivers.wiki.gg/wiki/M-102_Gunner_FRV",
+      "detailed_stats": {
+        "cooldown": "480 s",
+        "uses": "∞",
+        "main_health": "2400",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_m_103_supply_fast_recon_vehicle",
@@ -826,7 +3223,13 @@
       "unlock": "Hangar",
       "image": "https://helldivers.wiki.gg/images/Supply_FRV_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/M-103_Supply_FRV"
+      "source_page": "https://helldivers.wiki.gg/wiki/M-103_Supply_FRV",
+      "detailed_stats": {
+        "cooldown": "480 s",
+        "uses": "∞",
+        "main_health": "2400",
+        "main_armor": "Medium"
+      }
     },
     {
       "id": "vehicle_td_220_bastion_mk_xvi",
@@ -841,7 +3244,13 @@
       "unlock": "35000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Bastion_MK_XVI_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/TD-220_Bastion_MK_XVI"
+      "source_page": "https://helldivers.wiki.gg/wiki/TD-220_Bastion_MK_XVI",
+      "detailed_stats": {
+        "cooldown": "780 s",
+        "uses": "∞",
+        "main_health": "100000",
+        "main_armor": "Heavy"
+      }
     },
     {
       "id": "deployable_gatling_sentry",
@@ -856,7 +3265,13 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Gatling_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/G-16_Gatling_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/G-16_Gatling_Sentry",
+      "detailed_stats": {
+        "cooldown": "150 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_anti_tank_mines",
@@ -871,7 +3286,13 @@
       "unlock": "7000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Anti-Tank_Mines_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MD-17_Anti-Tank_Mines"
+      "source_page": "https://helldivers.wiki.gg/wiki/MD-17_Anti-Tank_Mines",
+      "detailed_stats": {
+        "cooldown": "120 sec",
+        "main_health": "250",
+        "main_armor": "Very Light",
+        "salvos": "6"
+      }
     },
     {
       "id": "deployable_at_emplacement",
@@ -886,7 +3307,12 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Anti-Tank_Emplacement_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/E/AT-12_Anti-Tank_Emplacement"
+      "source_page": "https://helldivers.wiki.gg/wiki/E/AT-12_Anti-Tank_Emplacement",
+      "detailed_stats": {
+        "cooldown": "180 sec",
+        "main_health": "300",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_anti_personnel_mines",
@@ -901,7 +3327,13 @@
       "unlock": "1500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Anti-Personnel_Minefield_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MD-6_Anti-Personnel_Minefield"
+      "source_page": "https://helldivers.wiki.gg/wiki/MD-6_Anti-Personnel_Minefield",
+      "detailed_stats": {
+        "cooldown": "120 sec",
+        "main_health": "250",
+        "main_armor": "Very Light",
+        "salvos": "6"
+      }
     },
     {
       "id": "deployable_machine_gun_sentry",
@@ -916,7 +3348,13 @@
       "unlock": "1500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Machine_Gun_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/MG-43_Machine_Gun_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/MG-43_Machine_Gun_Sentry",
+      "detailed_stats": {
+        "cooldown": "90 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_grenadier_defense_wall",
@@ -931,7 +3369,13 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Grenadier_Battlement_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/E/GL-21_Grenadier_Battlement"
+      "source_page": "https://helldivers.wiki.gg/wiki/E/GL-21_Grenadier_Battlement",
+      "detailed_stats": {
+        "cooldown": "120 s",
+        "uses": "∞",
+        "main_health": "3000",
+        "main_armor": "Heavy"
+      }
     },
     {
       "id": "deployable_gas_mines",
@@ -946,7 +3390,13 @@
       "unlock": "12000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Gas_Mines_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MD-8_Gas_Mines"
+      "source_page": "https://helldivers.wiki.gg/wiki/MD-8_Gas_Mines",
+      "detailed_stats": {
+        "cooldown": "120 sec",
+        "main_health": "250",
+        "main_armor": "Very Light",
+        "salvos": "6"
+      }
     },
     {
       "id": "deployable_laser_sentry",
@@ -961,7 +3411,13 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Laser_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "detailed_stats": {
+        "cooldown": "150 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_flame_sentry",
@@ -976,7 +3432,13 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Flame_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "detailed_stats": {
+        "cooldown": "100 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_rocket_sentry",
@@ -991,7 +3453,13 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Rocket_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/MLS-4X_Rocket_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/MLS-4X_Rocket_Sentry",
+      "detailed_stats": {
+        "cooldown": "150 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_incendiary_mines",
@@ -1006,7 +3474,13 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Incendiary_Mines_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/MD-I4_Incendiary_Mines"
+      "source_page": "https://helldivers.wiki.gg/wiki/MD-I4_Incendiary_Mines",
+      "detailed_stats": {
+        "cooldown": "120 sec",
+        "main_health": "250",
+        "main_armor": "Very Light",
+        "salvos": "6"
+      }
     },
     {
       "id": "deployable_tesla_tower",
@@ -1021,7 +3495,12 @@
       "unlock": "8000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Tesla_Tower_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+      "detailed_stats": {
+        "cooldown": "120 sec",
+        "main_health": "600",
+        "main_armor": "Very Light"
+      }
     },
     {
       "id": "deployable_gas_mortar_sentry",
@@ -1036,7 +3515,13 @@
       "unlock": "85 Medals",
       "image": "https://helldivers.wiki.gg/images/Gas_Mortar_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/GM-17_Gas_Mortar_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/GM-17_Gas_Mortar_Sentry",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_ems_mortar_sentry",
@@ -1051,7 +3536,13 @@
       "unlock": "8000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/EMS_Mortar_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/M-23_EMS_Mortar_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/M-23_EMS_Mortar_Sentry",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_autocannon_sentry",
@@ -1066,7 +3557,13 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Autocannon_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/AC-8_Autocannon_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/AC-8_Autocannon_Sentry",
+      "detailed_stats": {
+        "cooldown": "150 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_mortar_sentry",
@@ -1081,7 +3578,13 @@
       "unlock": "7000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Mortar_Sentry_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/A/M-12_Mortar_Sentry"
+      "source_page": "https://helldivers.wiki.gg/wiki/A/M-12_Mortar_Sentry",
+      "detailed_stats": {
+        "cooldown": "180 s",
+        "uses": "∞",
+        "main_health": "400",
+        "main_armor": "Light"
+      }
     },
     {
       "id": "deployable_hmg_emplacement",
@@ -1096,7 +3599,8 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/HMG_Emplacement_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/E/MG-101_HMG_Emplacement"
+      "source_page": "https://helldivers.wiki.gg/wiki/E/MG-101_HMG_Emplacement",
+      "detailed_stats": null
     },
     {
       "id": "deployable_shield_generator_relay",
@@ -1111,7 +3615,8 @@
       "unlock": "9000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Shield_Generator_Relay_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/FX-12_Shield_Generator_Relay"
+      "source_page": "https://helldivers.wiki.gg/wiki/FX-12_Shield_Generator_Relay",
+      "detailed_stats": null
     },
     {
       "id": "backpack_ax_ar_23_guard_dog",
@@ -1126,7 +3631,11 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Guard_Dog_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog"
+      "source_page": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "detailed_stats": {
+        "main_health": "100",
+        "main_armor": "Very Light"
+      }
     },
     {
       "id": "backpack_ax_arc_3_k_9",
@@ -1141,7 +3650,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/K-9_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9"
+      "source_page": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "detailed_stats": null
     },
     {
       "id": "backpack_ax_flam_75_hot_dog",
@@ -1156,7 +3666,8 @@
       "unlock": "75 Medals",
       "image": "https://helldivers.wiki.gg/images/Hot_Dog_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog"
+      "source_page": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog",
+      "detailed_stats": null
     },
     {
       "id": "backpack_ax_las_5_guard_dog_rover",
@@ -1171,7 +3682,8 @@
       "unlock": "7500 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Rover_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover"
+      "source_page": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "detailed_stats": null
     },
     {
       "id": "backpack_ax_tx_13_purifier",
@@ -1186,7 +3698,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Dog_Breath_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath"
+      "source_page": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath",
+      "detailed_stats": null
     },
     {
       "id": "backpack_b_1_supply_pack",
@@ -1201,7 +3714,8 @@
       "unlock": "4000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Supply_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/B-1_Supply_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/B-1_Supply_Pack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_b_100_portable_hellbomb",
@@ -1216,7 +3730,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Portable_Hellbomb_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/B-100_Portable_Hellbomb"
+      "source_page": "https://helldivers.wiki.gg/wiki/B-100_Portable_Hellbomb",
+      "detailed_stats": null
     },
     {
       "id": "backpack_b_md_c4_pack",
@@ -1231,7 +3746,11 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/C4_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+      "detailed_stats": {
+        "main_health": "10",
+        "main_armor": "Unarmored"
+      }
     },
     {
       "id": "backpack_lift_182_teleport_pack",
@@ -1246,7 +3765,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Warp_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-182_Warp_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-182_Warp_Pack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_lift_850_jump_pack",
@@ -1261,7 +3781,8 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Jump_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-850_Jump_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-850_Jump_Pack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_lift_860_hover_pack",
@@ -1276,7 +3797,8 @@
       "unlock": "110 Medals",
       "image": "https://helldivers.wiki.gg/images/Hover_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-860_Hover_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/LIFT-860_Hover_Pack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_sh_20_ballistic_shield_backpack",
@@ -1291,7 +3813,8 @@
       "unlock": "6000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Disambig.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/SH-20_Ballistic_Shield_Backpack"
+      "source_page": "https://helldivers.wiki.gg/wiki/SH-20_Ballistic_Shield_Backpack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_sh_32_shield_generator_pack",
@@ -1306,7 +3829,8 @@
       "unlock": "10000 Requisition Slips",
       "image": "https://helldivers.wiki.gg/images/Shield_Generator_Pack_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/SH-32_Shield_Generator_Pack"
+      "source_page": "https://helldivers.wiki.gg/wiki/SH-32_Shield_Generator_Pack",
+      "detailed_stats": null
     },
     {
       "id": "backpack_sh_51_directional_shield",
@@ -1321,7 +3845,8 @@
       "unlock": "75 Medals",
       "image": "https://helldivers.wiki.gg/images/Directional_Shield_Stratagem_Icon_Background.svg",
       "description": "",
-      "source_page": "https://helldivers.wiki.gg/wiki/SH-51_Directional_Shield"
+      "source_page": "https://helldivers.wiki.gg/wiki/SH-51_Directional_Shield",
+      "detailed_stats": null
     }
   ]
 }
