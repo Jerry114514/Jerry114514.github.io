@@ -150,7 +150,7 @@
             '<div class="name">' + esc(s.name) + '</div>' +
             '<div class="name-en">' + esc(s.name_en || s.id) + '</div>' +
             '<div class="meta"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
-              (s.source ? '<span>📦 ' + esc(s.source) + '</span>' : '') + '</div>' +
+              (s.source ? '<span>📦 ' + esc(dsTranslate(s.source)) + '</span>' : '') + '</div>' +
             '<div class="meta">呼叫代码：' + renderCode(code) + '</div>' +
             (s.description ? '<div class="desc">' + esc(s.description) + '</div>' : '') +
           '</div>' +
@@ -162,7 +162,7 @@
               }).join("") : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') + '</div>' +
           '</div>' +
           '<div class="card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
-            (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(s.unlock) + '<br>' : '来源：' + esc(s.source || "初始解锁")) +
+            (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(dsTranslate(s.unlock)) + '<br>' : '来源：' + esc(dsTranslate(s.source || "初始解锁"))) +
           '</p></div>' +
           renderDetailedStats(s) +
         '</div>' +
@@ -184,11 +184,28 @@
       penetration_slowdown: "穿透减速", explosion_on_impact: "命中引爆", explode_after: "延时引爆",
       inner_radius: "内圈", outer_radius: "外圈", shockwave_radius: "冲击波",
       standard: "标准", durable: "耐久", element: "属性",
+      radius_inner: "内圈半径", radius_outer: "外圈半径", radius_shockwave: "冲击波半径",
+      inner_durable: "内圈耐久伤害", outer_durable: "外圈耐久伤害",
       direct: "直射", slight_angle: "小角度", large_angle: "大角度", extreme_angle: "极端", aoe_effect: "范围穿透",
       pen_direct: "直射", pen_slight_angle: "小角度", pen_large_angle: "大角度", pen_extreme_angle: "极端", pen_aoe: "范围穿透",
       demolition_force: "拆毁值", stagger_force: "踉跄力", push_force: "推力",
       damage_standard: "标准", damage_durable: "耐久", damage_element: "属性"
     };
+    // 值翻译（长词优先）
+    var DS_VALUE_MAP = [
+      ["Requisition Slips", "申购点"], ["Anti-Tank", "反坦克"],
+      ["Ballistic", "实弹伤害"], ["Explosion", "爆炸伤害"], ["Arc", "电弧伤害"], ["Gas", "毒气伤害"],
+      ["Medals", "勋章"], ["Unarmored", "无护甲"],
+      ["Light", "轻甲"], ["Medium", "中甲"], ["Heavy", "重甲"],
+      ["None", "无"]
+    ];
+    function dsTranslate(s) {
+      var out = String(s);
+      DS_VALUE_MAP.forEach(function(pair) {
+        out = out.split(pair[0]).join(pair[1]);
+      });
+      return out;
+    }
     function dsVal(v) {
       if (v == null) return "";
       if (typeof v === "object") {
@@ -197,9 +214,8 @@
       }
       var s = String(v);
       if (s === "") return "";
-      if (s === "None") return "无";
       if (s === "∞") return "∞";
-      return s;
+      return dsTranslate(s);
     }
     function dsGroup(label, obj) {
       if (!obj) return "";
@@ -252,7 +268,7 @@
         '</div>';
     }
 
-    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null || v === "" ? "—" : v) + '</span></div>'; }
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null || v === "" ? "—" : esc(dsTranslate(v))) + '</span></div>'; }
     function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
 
     document.addEventListener("DOMContentLoaded", loadDetail);
