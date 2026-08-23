@@ -112,11 +112,12 @@
 
     function renderDetail(s) {
       var layout = document.getElementById("detail-layout");
-      var cat = s.type;
+      var cat = s.category;
+      var catLabel = s.category_label || cat;
       document.getElementById("breadcrumb").innerHTML =
-        '← <a href="stratagems.html">战略配备列表</a> › ' + esc(cat) + ' › ' + esc(s.name);
+        '← <a href="stratagems.html">战略配备列表</a> › ' + esc(catLabel) + ' › ' + esc(s.name);
 
-      var code = (s.code && s.code.arrows) || (s.code && s.code.display) || "";
+      var code = typeof s.code === "string" ? s.code : "";
       var sf = s.stats || [];
       var statItems = [
         ["伤害", sf[0], "⚔️"], ["射速", sf[1], "🎯"], ["实用性", sf[2], "🛠️"], ["机动性", sf[3], "🏃"]
@@ -125,38 +126,34 @@
       layout.innerHTML =
         '<div class="main-content">' +
           '<div class="card title-block">' +
-            '<div class="color-bar" style="background:' + colorOf(cat) + '"></div>' +
+            '<div class="color-bar" style="background:' + colorOf(catLabel) + '"></div>' +
             '<div class="name">' + esc(s.name) + '</div>' +
             '<div class="name-en">' + esc(s.name_en || s.id) + '</div>' +
-            '<div class="meta"><span class="tag ' + tagOf(cat) + '">' + esc(cat) + '</span>' +
-              (s.permit_type ? '<span>' + esc(s.permit_type) + '</span>' : '') +
+            '<div class="meta"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
               (s.source ? '<span>📦 ' + esc(s.source) + '</span>' : '') + '</div>' +
             '<div class="meta">呼叫代码：' + renderCode(code) + '</div>' +
             (s.description ? '<div class="desc">' + esc(s.description) + '</div>' : '') +
           '</div>' +
           '<div class="card">' +
             '<h2>📊 详细属性</h2>' +
-            '<div class="stat-grid">' + statItems.map(function(x) {
-              return '<div class="stat-item"><span class="k">' + x[2] + ' ' + esc(x[0]) + '</span><span class="v">' + (x[1] == null ? "—" : x[1]) + '</span></div>';
-            }).join("") + '</div>' +
+            '<div class="stat-grid">' + (statItems.length && statItems[0][1] != null ?
+              statItems.map(function(x) {
+                return '<div class="stat-item"><span class="k">' + x[2] + ' ' + esc(x[0]) + '</span><span class="v">' + (x[1] == null ? "—" : x[1]) + '</span></div>';
+              }).join("") : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') + '</div>' +
           '</div>' +
-          (s.traits && s.traits.length ? '<div class="card"><h2>🏷️ 特性</h2><div class="traits">' + s.traits.map(function(t){return '<span class="trait">' + esc(t) + '</span>';}).join("") + '</div></div>' : '') +
           '<div class="card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
-            (s.unlock_level ? '解锁等级：' + esc(s.unlock_level) + '<br>' : '') +
-            (s.unlock_cost ? '解锁花费：' + esc(s.unlock_cost) : (s.source ? '来源：' + esc(s.source) : '暂无数据')) +
+            (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(s.unlock) + '<br>' : '来源：' + esc(s.source || "初始解锁")) +
           '</p></div>' +
         '</div>' +
         '<div class="info-side">' +
           '<div class="side-card">' +
             '<h3>📦 战略配备信息</h3>' +
-            field("分类", cat) +
+            field("分类", catLabel) +
             field("呼叫时间", s.call_in_time || "—") +
             field("冷却时间", s.cooldown || "—") +
             field("使用次数", s.uses || "无限") +
-            field("解锁条件", s.unlock_cost || "初始解锁") +
+            field("解锁条件", s.unlock || "初始解锁") +
           '</div>' +
-          (s.image ? '<div class="side-card"><h3>🎨 图标</h3><div class="img-wrap"><img src="' + esc(s.image) + '" alt="' + esc(s.name) + '" loading="lazy"></div>' +
-            '<p style="font-size:0.7rem;color:var(--text-mute);margin-top:6px">来源：' + esc(s.source_page) + '</p></div>' : '') +
         '</div>';
     }
 

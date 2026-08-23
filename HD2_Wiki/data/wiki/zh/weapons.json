@@ -27,7 +27,7 @@
   "weapons": [
     {
       "id": "ar_2_coyote",
-      "name": "AR-2 Coyote",
+      "name": "AR-2 野狼",
       "name_en": "AR-2 Coyote",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -46,16 +46,16 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 50,
         "reload_time": "3s",
         "dps": 750
       },
       "traits": [
-        "Incendiary",
-        "Medium Armor Penetrating"
+        "燃烧弹",
+        "中甲穿透"
       ],
       "unlock": "Dust Devils P1",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
@@ -67,7 +67,7 @@
     },
     {
       "id": "ar_23_liberator",
-      "name": "AR-23 Liberator",
+      "name": "AR-23 解放者",
       "name_en": "AR-23 Liberator",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -86,19 +86,19 @@
         "penetration": "light",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Auto",
-          "Semi",
-          "Burst"
+          "全自动",
+          "半自动",
+          "三连发"
         ],
         "ergonomics": 65,
         "reload_time": "3s",
         "dps": 960
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Starter Equipment",
-      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "unlock": "新兵配发",
+      "description": "你的第一款突击步枪。",
       "lore": "",
       "variants": [],
       "tips": [],
@@ -107,7 +107,7 @@
     },
     {
       "id": "ar_23a_liberator_carbine",
-      "name": "AR-23A Liberator Carbine",
+      "name": "AR-23A 解放者卡宾枪",
       "name_en": "AR-23A Liberator Carbine",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -135,9 +135,9 @@
         "dps": 1380
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Viper Commandos P1",
+      "unlock": "毒蛇突击兵 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -147,7 +147,7 @@
     },
     {
       "id": "ar_23c_liberator_concussive",
-      "name": "AR-23C Liberator Concussive",
+      "name": "AR-23C 震荡解放者",
       "name_en": "AR-23C Liberator Concussive",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -166,17 +166,17 @@
         "penetration": "light",
         "reserve_ammo": 6,
         "fire_modes": [
-          "Auto",
-          "Semi"
+          "全自动",
+          "半自动"
         ],
         "ergonomics": 65,
         "reload_time": "3.5s",
         "dps": 500
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Steeled Veterans P1",
+      "unlock": "铁血老兵 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -186,7 +186,7 @@
     },
     {
       "id": "ar_23p_liberator_penetrator",
-      "name": "AR-23P Liberator Penetrator",
+      "name": "AR-23P 穿甲解放者",
       "name_en": "AR-23P Liberator Penetrator",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -205,18 +205,18 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi",
-          "Burst",
-          "Full"
+          "半自动",
+          "三连发",
+          "全自动"
         ],
         "ergonomics": 59,
         "reload_time": "3s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Helldivers Mobilize P6",
+      "unlock": "绝地潜兵总动员 第六章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -245,19 +245,19 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Auto",
-          "Semi",
-          "Burst"
+          "半自动",
+          "三连发",
+          "全自动"
         ],
         "ergonomics": 60,
         "reload_time": "3s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Stun"
+        "中甲穿透",
+        "眩晕"
       ],
-      "unlock": "Force of Law P1",
+      "unlock": "法律铁腕 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -267,7 +267,7 @@
     },
     {
       "id": "ar_59_suppressor",
-      "name": "AR-59 Suppressor",
+      "name": "AR-59 消音器",
       "name_en": "AR-59 Suppressor",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -286,18 +286,18 @@
         "penetration": "light",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi",
-          "Auto"
+          "半自动",
+          "全自动"
         ],
         "ergonomics": 60,
         "reload_time": "3s",
         "dps": null
       },
       "traits": [
-        "Light Armor Penetrating",
-        "Suppressed"
+        "轻甲穿透",
+        "消音"
       ],
-      "unlock": "Redacted Regiment P2",
+      "unlock": "绝密军团 第二章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -307,7 +307,7 @@
     },
     {
       "id": "ar_61_tenderizer",
-      "name": "AR-61 Tenderizer",
+      "name": "AR-61 肉锤",
       "name_en": "AR-61 Tenderizer",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -326,18 +326,18 @@
         "penetration": "light",
         "reserve_ammo": 7,
         "fire_modes": [
-          "Semi",
-          "Burst",
-          "Auto"
+          "半自动",
+          "三连发",
+          "全自动"
         ],
         "ergonomics": 65,
         "reload_time": "3.33s",
         "dps": 1050
       },
       "traits": [
-        "Light Armor Penetrating"
+        "轻甲穿透"
       ],
-      "unlock": "Polar Patriots P1",
+      "unlock": "极地爱国者 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -347,7 +347,7 @@
     },
     {
       "id": "arc_12_blitzer",
-      "name": "ARC-12 Blitzer",
+      "name": "ARC-12 雷霆",
       "name_en": "ARC-12 Blitzer",
       "category": "primary",
       "subcategory": "energy_based",
@@ -373,10 +373,10 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "Arc"
+        "中甲穿透",
+        "电弧"
       ],
-      "unlock": "Cutting Edge P3",
+      "unlock": "遥遥领先 第三章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -386,7 +386,7 @@
     },
     {
       "id": "br_14_adjudicator",
-      "name": "BR-14 Adjudicator",
+      "name": "BR-14 审判者",
       "name_en": "BR-14 Adjudicator",
       "category": "primary",
       "subcategory": "assault_rifles",
@@ -405,17 +405,17 @@
         "penetration": "medium",
         "reserve_ammo": 8,
         "fire_modes": [
-          "Semi",
-          "Auto"
+          "半自动",
+          "全自动"
         ],
         "ergonomics": 40,
         "reload_time": "3s",
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating"
+        "中甲穿透"
       ],
-      "unlock": "Democratic Detonation P1",
+      "unlock": "民主爆破 第一章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -425,7 +425,7 @@
     },
     {
       "id": "cb_9_exploding_crossbow",
-      "name": "CB-9 Exploding Crossbow",
+      "name": "CB-9 爆燃弩",
       "name_en": "CB-9 Exploding Crossbow",
       "category": "primary",
       "subcategory": "explosives",
@@ -449,10 +449,10 @@
         "dps": 516
       },
       "traits": [
-        "Explosive",
-        "One Handed"
+        "爆炸",
+        "单手"
       ],
-      "unlock": "Democratic Detonation P3",
+      "unlock": "民主爆破 第三章节",
       "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
       "lore": "",
       "variants": [],
@@ -462,7 +462,7 @@
     },
     {
       "id": "cqc_2_saber",
-      "name": "CQC-2 Saber",
+      "name": "CQC-2 军刀",
       "name_en": "CQC-2 Saber",
       "category": "secondary",
       "subcategory": "melee",
@@ -486,11 +486,11 @@
         "dps": null
       },
       "traits": [
-        "Medium Armor Penetrating",
-        "One Handed",
-        "Melee"
+        "中甲穿透",
+        "单手",
+        "近战"
       ],
-      "unlock": "Masters of Ceremony P2",
+      "unlock": "典礼官 第二章节",
       "description": "1.006.202 2026-04-28",
       "lore": "",
       "variants": [],

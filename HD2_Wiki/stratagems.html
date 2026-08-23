@@ -129,12 +129,12 @@
       var bar = document.getElementById("filter-bar");
       var cats = [
         { id: "all", label: "全部 " + stratagems.length },
-        { id: "轨道", label: "轨道 " + stratagems.filter(function(s){return s.type==="轨道";}).length },
-        { id: "飞鹰", label: "飞鹰 " + stratagems.filter(function(s){return s.type==="飞鹰";}).length },
-        { id: "支援武器", label: "支援武器 " + stratagems.filter(function(s){return s.type.includes("支援");}).length },
-        { id: "背包", label: "背包 " + stratagems.filter(function(s){return s.type==="背包";}).length },
-        { id: "可部署物", label: "可部署物 " + stratagems.filter(function(s){return s.type==="可部署物";}).length },
-        { id: "载具", label: "载具 " + stratagems.filter(function(s){return s.type==="载具";}).length },
+        { id: "orbital", label: "轨道 " + stratagems.filter(function(s){return s.category==="orbital";}).length },
+        { id: "eagle", label: "飞鹰 " + stratagems.filter(function(s){return s.category==="eagle";}).length },
+        { id: "support", label: "支援武器 " + stratagems.filter(function(s){return s.category==="support";}).length },
+        { id: "backpack", label: "背包 " + stratagems.filter(function(s){return s.category==="backpack";}).length },
+        { id: "deployable", label: "可部署物 " + stratagems.filter(function(s){return s.category==="deployable";}).length },
+        { id: "vehicle", label: "载具 " + stratagems.filter(function(s){return s.category==="vehicle";}).length },
       ];
       bar.innerHTML = cats.map(function(c) {
         return '<button class="' + (c.id === curCat ? "active" : "") + '" onclick="setCat(\'' + c.id + '\')">' + c.label + '</button>';
@@ -146,8 +146,8 @@
     function filterStrat() {
       var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
       var filtered = stratagems;
-      if (curCat !== "all") filtered = filtered.filter(function(s) { return s.type === curCat || (curCat === "支援武器" && s.type.includes("支援")); });
-      if (q) filtered = filtered.filter(function(s) { return s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q); });
+      if (curCat !== "all") filtered = filtered.filter(function(s) { return s.category === curCat; });
+      if (q) filtered = filtered.filter(function(s) { return s.name.toLowerCase().includes(q) || s.name_en.toLowerCase().includes(q) || s.category_label.toLowerCase().includes(q); });
       renderGrid(filtered);
     }
 
@@ -156,17 +156,16 @@
       var grid = document.getElementById("strat-grid");
       if (list.length === 0) { grid.innerHTML = '<div class="empty">没有匹配的战略配备</div>'; return; }
       grid.innerHTML = list.map(function(s) {
-        var cat = s.type;
-        var code = (s.code && s.code.arrows) || (s.code && s.code.display) || "";
-        var traits = (s.traits || []).slice(0, 2).join(" · ");
+        var cat = s.category;
+        var catLabel = s.category_label || cat;
+        var code = typeof s.code === "string" ? s.code : "";
         return '<a class="strat-card" href="stratagem.html?id=' + encodeURIComponent(s.id) + '">' +
-          '<div class="color-bar" style="background:' + colorOf(cat) + '"></div>' +
-          '<div class="row1"><span class="icon">' + iconOf(cat) + '</span>' + esc(s.name) + '</div>' +
+          '<div class="color-bar" style="background:' + colorOf(catLabel) + '"></div>' +
+          '<div class="row1"><span class="icon">' + iconOf(catLabel) + '</span>' + esc(s.name) + '</div>' +
           '<div class="row2">' + esc(s.name_en || s.id) + '</div>' +
-          '<div class="row3"><span class="tag ' + tagOf(cat) + '">' + esc(cat) + '</span>' +
+          '<div class="row3"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
           (code ? '<span>呼叫：' + renderCode(code) + '</span>' : '') + '</div>' +
-          (traits ? '<div class="row4">' + esc(traits) + '</div>' : '') +
-          (s.cooldown ? '<div class="row4">⏳ ' + esc(s.cooldown) + '</div>' : '') +
+          (s.unlock && s.unlock !== "初始解锁" ? '<div class="row4">🔓 ' + esc(s.unlock) + '</div>' : '') +
           '</a>';
       }).join("");
     }
