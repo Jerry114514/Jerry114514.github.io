@@ -1,5 +1,5 @@
 {
- "fetchedAt": "2026-08-23T15:17:49+08:00",
+ "fetchedAt": "2026-08-23T15:19:02+08:00",
  "source": "official",
  "player_distribution": {
   "total": 100791,
@@ -16,8 +16,8 @@
    "failPerHour": 0.08,
    "enemiesPerHour": 302.7,
    "deathsPerHour": 8.3,
-   "successRate": 92.7658,
-   "failRate": 7.2342
+   "successRate": 92.7657,
+   "failRate": 7.2343
   },
   "278": {
    "healthImpact": null,
@@ -25,8 +25,8 @@
    "failPerHour": 0.12,
    "enemiesPerHour": 329.88,
    "deathsPerHour": 9.93,
-   "successRate": 87.6873,
-   "failRate": 12.3127
+   "successRate": 87.6871,
+   "failRate": 12.3129
   },
   "280": {
    "healthImpact": null,
@@ -34,8 +34,8 @@
    "failPerHour": 0.07,
    "enemiesPerHour": 497.12,
    "deathsPerHour": 6.68,
-   "successRate": 93.8624,
-   "failRate": 6.1376
+   "successRate": 93.8623,
+   "failRate": 6.1377
   },
   "279": {
    "healthImpact": null,
@@ -43,8 +43,8 @@
    "failPerHour": 0.18,
    "enemiesPerHour": 352.64,
    "deathsPerHour": 10.16,
-   "successRate": 85.7937,
-   "failRate": 14.2063
+   "successRate": 85.7933,
+   "failRate": 14.2067
   },
   "281": {
    "healthImpact": null,
@@ -52,8 +52,8 @@
    "failPerHour": 0.13,
    "enemiesPerHour": 356.92,
    "deathsPerHour": 9.59,
-   "successRate": 87.3508,
-   "failRate": 12.6492
+   "successRate": 87.3501,
+   "failRate": 12.6499
   },
   "277": {
    "healthImpact": null,
@@ -61,15 +61,15 @@
    "failPerHour": 0.12,
    "enemiesPerHour": 325.52,
    "deathsPerHour": 8.65,
-   "successRate": 90.0065,
-   "failRate": 9.9935
+   "successRate": 90.0058,
+   "failRate": 9.9942
   }
  },
  "impactMultiplier": 0.011493478,
  "war": {
-  "time": 79533580,
+  "time": 79533660,
   "statistics": {
-   "playerCount": 96410,
+   "playerCount": 96271,
    "missionsWon": 0,
    "missionsLost": 0
   },
@@ -84,7 +84,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 308,
+   "players": 311,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -168,7 +168,7 @@
    "currentOwner": "Illuminate",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 123,
+   "players": 124,
    "attacking": false,
    "resistance": 2.94,
    "activeEffects": []
@@ -228,7 +228,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -403,7 +403,7 @@
    "currentOwner": "Humans",
    "health": 999987,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 6,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -451,7 +451,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -501,7 +501,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 14,
+   "players": 13,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -589,7 +589,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -654,7 +654,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -717,7 +717,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 10,
+   "players": 14,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -791,7 +791,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 6,
+   "players": 7,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": []
@@ -803,7 +803,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": []
@@ -815,7 +815,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -949,7 +949,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 165,
+   "players": 161,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": []
@@ -973,7 +973,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.62,
    "activeEffects": [
@@ -1031,7 +1031,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 13,
+   "players": 12,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1045,7 +1045,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 11,
+   "players": 13,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -1057,7 +1057,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 20,
+   "players": 21,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1109,7 +1109,7 @@
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 3,
+   "players": 2,
    "attacking": false,
    "resistance": 0.94,
    "activeEffects": [
@@ -1147,7 +1147,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1209,7 +1209,7 @@
    "currentOwner": "Illuminate",
    "health": 1900000,
    "maxHealth": 1900000,
-   "players": 157,
+   "players": 153,
    "attacking": false,
    "resistance": 0.53,
    "activeEffects": []
@@ -1233,7 +1233,7 @@
    "currentOwner": "Illuminate",
    "health": 2100000,
    "maxHealth": 2100000,
-   "players": 455,
+   "players": 451,
    "attacking": false,
    "resistance": 0.48,
    "activeEffects": [
@@ -1263,7 +1263,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 933,
+   "players": 947,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": [
@@ -1279,7 +1279,7 @@
    "currentOwner": "Illuminate",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 4865,
+   "players": 4868,
    "attacking": false,
    "resistance": 0.62,
    "activeEffects": [
@@ -1295,7 +1295,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1334,7 +1334,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -1386,7 +1386,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1494,7 +1494,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 6,
+   "players": 7,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": []
@@ -1506,7 +1506,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 7,
    "attacking": false,
    "resistance": 3.0,
    "activeEffects": []
@@ -1518,7 +1518,7 @@
    "currentOwner": "Automaton",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 1465,
+   "players": 1458,
    "attacking": false,
    "resistance": 3.13,
    "activeEffects": [
@@ -1533,7 +1533,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 55,
+   "players": 54,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -1548,7 +1548,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 0.88,
    "activeEffects": []
@@ -1599,7 +1599,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1623,7 +1623,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [
@@ -1658,7 +1658,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1173,
+   "players": 1167,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1688,7 +1688,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 11,
+   "players": 10,
    "attacking": false,
    "resistance": 0.25,
    "activeEffects": [
@@ -1745,7 +1745,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 4,
+   "players": 6,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [
@@ -1760,7 +1760,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 21,
+   "players": 26,
    "attacking": false,
    "resistance": 0.25,
    "activeEffects": [
@@ -1774,7 +1774,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1798,7 +1798,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -1822,7 +1822,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 324,
+   "players": 304,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -1872,7 +1872,7 @@
    "currentOwner": "Illuminate",
    "health": 2300000,
    "maxHealth": 2300000,
-   "players": 589,
+   "players": 599,
    "attacking": false,
    "resistance": 0.22,
    "activeEffects": [
@@ -1932,7 +1932,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": [
@@ -2048,7 +2048,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2072,7 +2072,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -2096,7 +2096,7 @@
    "currentOwner": "Automaton",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 286,
+   "players": 292,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2120,7 +2120,7 @@
    "currentOwner": "Humans",
    "health": 3200000,
    "maxHealth": 3200000,
-   "players": 13,
+   "players": 11,
    "attacking": false,
    "resistance": 0.16,
    "activeEffects": []
@@ -2132,7 +2132,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1029,
+   "players": 1033,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": []
@@ -2158,7 +2158,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 0.23,
    "activeEffects": [
@@ -2172,7 +2172,7 @@
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 2.35,
    "activeEffects": [
@@ -2252,7 +2252,7 @@
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 19,
+   "players": 21,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -2266,7 +2266,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 6,
+   "players": 4,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2292,7 +2292,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 723,
+   "players": 725,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2304,7 +2304,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 463,
+   "players": 459,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2316,7 +2316,7 @@
    "currentOwner": "Terminids",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 4582,
+   "players": 4598,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": []
@@ -2340,7 +2340,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 18,
+   "players": 15,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -2378,7 +2378,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 74,
+   "players": 77,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2402,7 +2402,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 1142,
+   "players": 1121,
    "attacking": false,
    "resistance": 2.78,
    "activeEffects": [
@@ -2418,7 +2418,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 253,
+   "players": 249,
    "attacking": false,
    "resistance": 4.0,
    "activeEffects": []
@@ -2430,7 +2430,7 @@
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 6,
+   "players": 5,
    "attacking": false,
    "resistance": 1.39,
    "activeEffects": [
@@ -2449,7 +2449,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 8,
+   "players": 7,
    "attacking": false,
    "resistance": 0.68,
    "activeEffects": [
@@ -2464,7 +2464,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 1.07,
    "activeEffects": [
@@ -2482,7 +2482,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 3,
+   "players": 1,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": [
@@ -2503,7 +2503,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -2521,7 +2521,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2545,7 +2545,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2605,7 +2605,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 5,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2617,7 +2617,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -2629,7 +2629,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.07,
    "activeEffects": []
@@ -2653,7 +2653,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 21,
+   "players": 22,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [
@@ -2668,7 +2668,7 @@
    "currentOwner": "Automaton",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 1292,
+   "players": 1285,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -2680,7 +2680,7 @@
    "currentOwner": "Automaton",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 2427,
+   "players": 2414,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": []
@@ -2692,7 +2692,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 9,
+   "players": 7,
    "attacking": false,
    "resistance": 4.5,
    "activeEffects": [
@@ -2708,7 +2708,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 3,
    "attacking": false,
    "resistance": 7.0,
    "activeEffects": []
@@ -2720,7 +2720,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 7,
+   "players": 6,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2746,7 +2746,7 @@
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 534,
+   "players": 537,
    "attacking": false,
    "resistance": 7.0,
    "activeEffects": []
@@ -2770,7 +2770,7 @@
    "currentOwner": "Automaton",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 948,
+   "players": 928,
    "attacking": false,
    "resistance": 1.15,
    "activeEffects": [
@@ -2813,7 +2813,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 6.0,
    "activeEffects": [
@@ -2828,7 +2828,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1403,
+   "players": 1400,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -2876,7 +2876,7 @@
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1378,
+   "players": 1370,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -2900,7 +2900,7 @@
    "currentOwner": "Terminids",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.54,
    "activeEffects": []
@@ -2912,7 +2912,7 @@
    "currentOwner": "Terminids",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 11461,
+   "players": 11416,
    "attacking": false,
    "resistance": 1.14,
    "activeEffects": []
@@ -3000,7 +3000,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 319,
+   "players": 323,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3024,7 +3024,7 @@
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 62,
+   "players": 59,
    "attacking": false,
    "resistance": 1.14,
    "activeEffects": [
@@ -3100,7 +3100,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 273,
+   "players": 271,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3115,7 +3115,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3139,7 +3139,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": []
@@ -3259,7 +3259,7 @@
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 3,
+   "players": 4,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": []
@@ -3271,7 +3271,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 4,
+   "players": 3,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -3322,7 +3322,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": []
@@ -3334,7 +3334,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 5,
+   "players": 6,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": []
@@ -3346,7 +3346,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -3439,7 +3439,7 @@
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 5.0,
    "activeEffects": [
@@ -3457,7 +3457,7 @@
    "currentOwner": "Terminids",
    "health": 3000000,
    "maxHealth": 3000000,
-   "players": 2138,
+   "players": 2125,
    "attacking": false,
    "resistance": 3.33,
    "activeEffects": [
@@ -3479,7 +3479,7 @@
    "currentOwner": "Automaton",
    "health": 15000000,
    "maxHealth": 15000000,
-   "players": 54,
+   "players": 50,
    "attacking": false,
    "resistance": 6.67,
    "activeEffects": [
@@ -3564,7 +3564,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 4,
+   "players": 3,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": []
@@ -3576,7 +3576,7 @@
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": []
@@ -3588,7 +3588,7 @@
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 8,
+   "players": 7,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": []
@@ -3614,7 +3614,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -3628,7 +3628,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 13,
+   "players": 11,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -3658,7 +3658,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": []
@@ -3685,7 +3685,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 268,
+   "players": 276,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3703,9 +3703,9 @@
    "name": "VOID SOURCE PLANET",
    "sector": "Void",
    "currentOwner": "Illuminate",
-   "health": 435606,
+   "health": 434656,
    "maxHealth": 3000000,
-   "players": 49329,
+   "players": 49298,
    "attacking": false,
    "resistance": 0.33,
    "activeEffects": [
@@ -3730,7 +3730,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 126,
+   "players": 127,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3772,7 +3772,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 189,
+   "players": 191,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3792,7 +3792,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 885,
+   "players": 878,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3815,7 +3815,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 259,
+   "players": 268,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -3834,11 +3834,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 88.13,
-   "defendersProgress": 8.78,
+   "attackersProgress": 88.22,
+   "defendersProgress": 8.79,
    "attackersRate": 4.167,
    "startTime": 79457440,
-   "remainingTime": 10260,
+   "remainingTime": 10180,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -3868,11 +3868,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 88.04,
+   "attackersProgress": 88.13,
    "defendersProgress": 2.75,
    "attackersRate": 4.167,
    "startTime": 79457520,
-   "remainingTime": 10340,
+   "remainingTime": 10260,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -3902,11 +3902,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 60.83,
+   "attackersProgress": 60.92,
    "defendersProgress": 1.14,
    "attackersRate": 4.167,
    "startTime": 79481030,
-   "remainingTime": 33850,
+   "remainingTime": 33770,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4300,11 +4300,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 72.69,
+   "attackersProgress": 72.78,
    "defendersProgress": 1.64,
    "attackersRate": 4.167,
    "startTime": 79470780,
-   "remainingTime": 23600,
+   "remainingTime": 23520,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4321,11 +4321,11 @@
    "type": "defense",
    "eventType": 0,
    "campaignType": "defense",
-   "attackersProgress": 72.61,
+   "attackersProgress": 72.7,
    "defendersProgress": 0.85,
    "attackersRate": 4.167,
    "startTime": 79470850,
-   "remainingTime": 23670,
+   "remainingTime": 23590,
    "invasionLevel": 18,
    "count": 0,
    "planet": {
@@ -4360,187 +4360,187 @@
    0
   ],
   "expiration": "",
-  "deadline": "2026-08-24T12:03:02.0403876Z",
-  "serverTime": "2026-08-23T07:17:49Z"
+  "deadline": "2026-08-24T12:02:55.1893596Z",
+  "serverTime": "2026-08-23T07:19:01Z"
  },
  "dispatches": [
   {
    "id": 3892,
-   "published": "2026-08-22T16:53:35Z",
+   "published": "2026-08-22T16:53:38Z",
    "type": 0,
    "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized use of the <i=1>Orbital Laser</i>  at the <i=1>Void Source Planet</i> for the next 24 hours."
   },
   {
    "id": 3891,
-   "published": "2026-08-22T08:38:14Z",
+   "published": "2026-08-22T08:38:17Z",
    "type": 0,
    "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 3-person team has entered the core chasm. \n\nHigh Command notes that while some personnel have begun weeping tears of chromatic, iridescent fluid, this is a standard, completely non-hazardous biological response to advanced scientific discovery. The remaining team members continue sprinting forward into the glorious blinding light."
   },
   {
    "id": 3890,
-   "published": "2026-08-22T07:44:27Z",
+   "published": "2026-08-22T07:44:30Z",
    "type": 0,
    "message": "<i=3>STRATEGIC OPPORTUNITY SEIZED</i>\n\nThe Helldivers successfully achieved the required quotas to catalyze urgent research into <i=1>Void Blossoms</i>, delivering an absolute triumph for environmental enforcement.\n\nUsing data cross-referenced from other pacified worlds, the <i=1>Ministry of Science</i> has formulated a rudimentary chemical compound to impair these uncommonly hostile botanical assets. Utilizing tactical crop-dusting protocols, this will <i=1>weaken Illuminate defenses on Seasse</i>."
   },
   {
    "id": 3889,
-   "published": "2026-08-21T19:08:59Z",
+   "published": "2026-08-21T19:09:02Z",
    "type": 0,
    "message": "<i=3>VOID EXPANSION DETECTED</i>\n\nThe expanding perimeter of <i=1>the Void</i> has surpassed all projections. Massive swathes of galactic real estate have been consumed by the anomaly.\n\nAny colonial populations within the engulfed coordinates are advised to work from home, where viable, and to otherwise uphold their professional commitments until notified otherwise."
   },
   {
    "id": 3888,
-   "published": "2026-08-21T14:01:29Z",
+   "published": "2026-08-21T14:01:32Z",
    "type": 0,
    "message": "<i=3>NEW STRATEGIC OPPORTUNITY</i>\n\n<i=1>Void Blossoms</i> disperse toxic pollination, reshape worlds, and appear to invigorate <i=1>Illuminate</i> forces. Synthesizing chemical countermeasures to this invasive flora will reduce <i=1>Illuminate</i> planetary resistance on the source world of <i=1>Seasse</i>.\n\nHelldivers: extract <i=1>1,500,000 samples on UVP DELTA</i>, terminate <i=1>25,000,000 Vote Snatchers on HYDROBIUS</i>, and complete <i=1>50,000 operations on UVP BETA</i> to hasten urgent research."
   },
   {
    "id": 3887,
-   "published": "2026-08-20T22:01:54Z",
+   "published": "2026-08-20T22:01:57Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has docked at <i=1>Afoyay Bay</i>. A workforce of eager legally-mandated volunteers has been transported from the <i=1>CECOD (Center for the Confinement of Dissidence)</i> secure relocation site to carry out manual bio-remediation.\n\nThe <i=1>DURs (Dissidents-Undergoing-Reeducation)</i> have also been tasked with restoring the DSS to match original inventory manifests, and report exceptional morale at this generous opportunity to earn atonement."
   },
   {
    "id": 3886,
-   "published": "2026-08-20T21:24:38Z",
+   "published": "2026-08-20T21:24:41Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nTo fully resolve minor navigational discrepancies aboard the <i=1>DSS</i>, High Command has remotely initiated a station-wide environmental optimization cycle.\n\nThis deep sanitization has successfully returned the vessel to sterile parameters and hereby concludes the DSS examination to a satisfactory standard. Remote helm controls have locked a direct vector to <i=1>Afoyay Bay</i> for routine maintenance and post-cycle ventilation."
   },
   {
    "id": 3885,
-   "published": "2026-08-20T19:54:30Z",
+   "published": "2026-08-20T19:54:33Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has completed an unscheduled FTL jump toward <i=1>Calypso</i>, forgoing the standard administrative channels for requests of this nature.\n\nWhile the crew's sudden interest in this sector is under review, the on-board <i=1>Ministry of Truth</i> examiners are commended for their diligence, encouraged to complete their audit, and reminded that High Command has remotely disabled any and all manual controls aboard the station until further notice."
   },
   {
    "id": 3884,
-   "published": "2026-08-20T13:38:38Z",
+   "published": "2026-08-20T13:38:41Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has temporarily ceased any and all communication transmissions. Automated diagnostics confirm transceiver hardware is operating at 100% efficiency. \n\nHigh Command has officially attributed this ongoing silence to a mandatory, station-wide silent contemplation period. Normal communications, log updates, and official examiner reports will resume immediately upon its scheduled conclusion."
   },
   {
    "id": 3883,
-   "published": "2026-08-20T08:57:04Z",
+   "published": "2026-08-20T08:57:07Z",
    "type": 0,
    "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized fleetwide use of the <i=1>Orbital Railcannon Stratagem</i> with <i=1>reduced waiting period between calldowns</i> at the <i=1>Void Source Planet</i> for the next 48 hours."
   },
   {
    "id": 3882,
-   "published": "2026-08-20T08:39:48Z",
+   "published": "2026-08-20T08:39:51Z",
    "type": 0,
    "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nHigh Command commends the elite 11-person science team for securing the tertiary mantle. Ground logs note an exceptionally pleasant, rhythmic harmonic resonance echoing from the bedrock, which the team describes as \"the singing geometry.\" \n\nCore drilling continues to advance seamlessly toward the absolute center of the Void."
   },
   {
    "id": 3881,
-   "published": "2026-08-20T01:39:03Z",
+   "published": "2026-08-20T01:39:06Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nExaminers report the presence of chemical oxidation anomalies resembling alphanumeric patterns on several <i=1>DSS</i> bulkheads. Rumors that these crude markings may spell \"Calypso\" are unfounded, unscientific, and wholly un-Democratic.\n\nFollowing an exhaustive risk assessment, all writing implements on the DSS have been incinerated, and all nutritional paste has been fortified with experimental binding agents to eliminate all biological pigment sources."
   },
   {
    "id": 3880,
-   "published": "2026-08-19T18:22:53Z",
+   "published": "2026-08-19T18:22:56Z",
    "type": 0,
    "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ASPEROTH PRIME</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ASPEROTH PRIME</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
   },
   {
    "id": 3879,
-   "published": "2026-08-19T14:55:55Z",
+   "published": "2026-08-19T14:55:58Z",
    "type": 0,
    "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>KARLIA</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend KARLIA</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
   },
   {
    "id": 3878,
-   "published": "2026-08-19T13:37:50Z",
+   "published": "2026-08-19T13:37:53Z",
    "type": 0,
    "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALARAPH</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALARAPH</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
   },
   {
    "id": 3877,
-   "published": "2026-08-19T13:39:03Z",
+   "published": "2026-08-19T13:39:06Z",
    "type": 0,
    "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS (Democracy Space Station)</i> is undergoing examination after exiting the Void. Reports of rhythmic knocking across the hull have been independently confirmed, and though they have intensified, High Command maintains these vibrations are merely localized thermal contraction. \n\nThe examiners assigned by the <i=1>Ministry of Truth</i> have volunteered to remain aboard indefinitely to monitor the situation; as a precaution, all outbound shuttle access is suspended."
   },
   {
    "id": 3876,
-   "published": "2026-08-19T12:14:54Z",
+   "published": "2026-08-19T12:14:57Z",
    "type": 0,
    "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALAIRT III</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALAIRT III</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
   },
   {
    "id": 3875,
-   "published": "2026-08-19T08:39:48Z",
+   "published": "2026-08-19T08:39:51Z",
    "type": 0,
    "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 18-person research team has reached the secondary lithospheric layer of <i=1>Seasse</i>. Sub-surface telemetry remains highly encouraging.\n\nThe team has voluntarily deactivated their atmospheric filtration masks to better sample the localized, ecosystem through their own sense of Democracy. Progress remains entirely on schedule."
   },
   {
    "id": 3874,
-   "published": "2026-08-18T14:30:18Z",
+   "published": "2026-08-18T14:30:21Z",
    "type": 0,
    "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 20-person Ministry of Science team has successfully breached the crust of <i=1>Seasse</i>. Their objective: to map the subterranean geological geometry and initiate the completely understood dissolution of the Void from its physical core.\n\nHigh Command reports optimal morale as these brave Patriots begin their descent into the anomaly."
   },
   {
    "id": 3873,
-   "published": "2026-08-18T12:03:08Z",
+   "published": "2026-08-18T12:03:11Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i>\n\nThe Helldivers have reached the heart of the Void: <i=1>Seasse</i>, and must liberate the planet by any means necessary to stop the spread of this breeding ground for Tyranny.\n\nWhile forces clear the surface, an elite 20-person Ministry of Science team will descend into its depths to collapse <i=1>the Void</i> from within. High Command guarantees this process is entirely safe and completely understood."
   },
   {
    "id": 3872,
-   "published": "2026-08-18T11:01:03Z",
+   "published": "2026-08-18T11:01:06Z",
    "type": 0,
    "message": "<i=3>FINAL PREPARATIONS: SEASSE</i>\n\nThe Void Warp Relay calibration is complete. Helldivers are advised: <i=1>T-Minus 1 Hour to Landfall</i>.\n\nThe path to to <i=1>Seasse</i>, the Void source planet, is fully stabilized. All Helldivers are ordered to conclude preparatory operations. Ready for imminent deployment into the heart of the anomaly, and the lawful eradication of the Void.\n\nFor Super Earth."
   },
   {
    "id": 3871,
-   "published": "2026-08-18T09:04:21Z",
+   "published": "2026-08-18T09:04:24Z",
    "type": 0,
    "message": "<i=3>T-MINUS 3 HOURS: SEASSE</i>\n\nFinal systems checks are underway across the vanguard fleet. The Void Warp Relay is approaching the terminal energy density required for transit on schedule.\n\nHigh Command reminds all personnel to report to battle stations and immediately report any unapproved physical mutations. Continue to prepare for imminent, synchronized FTL transit."
   },
   {
    "id": 3870,
-   "published": "2026-08-18T06:02:51Z",
+   "published": "2026-08-18T06:02:54Z",
    "type": 0,
    "message": "<i=3>T-MINUS 6 HOURS: SEASSE</i>\n\nThe Void Warp Relay has entered its final power-up sequence. The jump corridor to the Void source planet will open in exactly six hours.\n\nLogistics teams will soon finalize the distribution of advanced arsenal augmentations across all participating destroyer hulls. Ensure all standard-issue compliance tools are fully serviced."
   },
   {
    "id": 3869,
-   "published": "2026-08-18T04:53:40Z",
+   "published": "2026-08-18T04:53:43Z",
    "type": 0,
    "message": "<i=3>T-MINUS 7 HOURS: SEASSE</i>\n\nThe Void Warp Relay is nearing optimal calibration. The jump to Seasse, the Void source planet will commence in 7 hours.\n\nTactical augmentations procured by the Helldivers during this preparatory phase are currently being processed by fleet logistics. The <i=1>Illuminate</i> will soon face the inescapable reality of Managed Democracy."
   },
   {
    "id": 3868,
-   "published": "2026-08-18T04:51:28Z",
+   "published": "2026-08-18T04:51:31Z",
    "type": 0,
    "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nUVP DELTA is now reachable, thanks to Helldiver efforts. All detected planet within the Void are now accessible, with the exception of one, which is believed to lie at the Void's astro-temporal center."
   },
   {
    "id": 3867,
-   "published": "2026-08-18T00:50:16Z",
+   "published": "2026-08-18T00:50:19Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER WON</i>\n\nThe Helldivers’ investigative charting of <i=1>the Void</i>'s initial layer was a masterclass in conquering the unknown. \n\nData extracted from the three initial worlds allowed SEAF navigation arrays to successfully calibrate despite the unlawful spacetime anomalies, narrowing search parameters for the hidden <i=1>Illuminate source planet</i>. As such, the offensive toward the enemy's central base of operations remains on schedule, and with immediate SEAF support available."
   },
   {
    "id": 3866,
-   "published": "2026-08-17T18:25:08Z",
+   "published": "2026-08-17T18:25:11Z",
    "type": 0,
    "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nTo aid their valiant efforts, all Helldiver deployments on <i=1>UVP ALPHA</i> will be augmented with the <i=1>Shield Generator Pack</i> Stratagem for the next <i=1>24 hours</i>."
   },
   {
    "id": 3865,
-   "published": "2026-08-17T18:13:35Z",
+   "published": "2026-08-17T18:13:38Z",
    "type": 0,
    "message": "<i=3>SEASSE LOCATED</i>\n\nThe body at the Void barycenter closely matches known properties of the planet Seasse, the first to fall into the Void. This confirms theories on approaching the Void's origin. \n\nNearly enough data has been gathered to allow travel to Seasse. The Helldivers are ordered to take all necessary measures to hasten the final stages of research.\n"
   },
   {
    "id": 3864,
-   "published": "2026-08-17T18:10:53Z",
+   "published": "2026-08-17T18:10:56Z",
    "type": 0,
    "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nCoordinates for <i=1>HYDROBIUS</i> have been determined within .01% error, following extensive Void material analysis. Operations on the planet may now commence.\n\nMatter from planets within the Void has been discovered to posses varying levels of a novel property similar in principle to radiation. Higher levels of radiation are believed to indicate longer exposure to the Void, and thus point towards the Void's origin."
   },
   {
    "id": 3863,
-   "published": "2026-08-15T22:00:53Z",
+   "published": "2026-08-15T22:00:56Z",
    "type": 0,
    "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nHelldiver actions within the Void have enabled the triangulation of <i=1>UVP BETA</i>, which may now be accessed. The Helldivers are ordered to support further data gathering efforts in order to support continued progress toward's the Void's center.\n"
   }
