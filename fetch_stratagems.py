@@ -137,10 +137,17 @@ def parse_stratagem(html):
         key = label.lower().replace(" ", "_")
         result[key] = val
     # 单独解析战略配备代码（箭头由 <img alt> 编码）
-    code_html = re.search(r'druid-data-stratagem[^>]*>(.*?)</div>\s*</div>', html, re.S)
+    # 优先匹配 druid-row-stratagem（武器型页面），否则匹配 druid-data-stratagem
+    code_html = None
+    row_m = re.search(r'druid-row-stratagem[^>]*>(.*?)(?=<div class="druid-row|</div>\s*</div>\s*</div>)', html, re.S)
+    if row_m:
+        code_html = row_m.group(1)
+    else:
+        code_html = re.search(r'druid-data-stratagem[^>]*>(.*?)</div>\s*</div>', html, re.S)
+        code_html = code_html.group(1) if code_html else None
     arrows = ""
     if code_html:
-        for im in re.finditer(r'<img alt="([^"]+)"', code_html.group(1)):
+        for im in re.finditer(r'<img alt="([^"]+)"', code_html):
             d = ARROW_DIR.get(im.group(1))
             if d: arrows += d
     result["_code_arrows"] = arrows
