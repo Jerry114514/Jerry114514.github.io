@@ -1,2117 +1,2612 @@
 {
-  "history": [
-    {
-      "timestamp": "2026-08-20T18:30:29.6401091Z",
-      "totalPlayers": 118624,
-      "factions": {
-        "Humans": 1416,
-        "Terminids": 23663,
-        "Automatons": 10468,
-        "Illuminate": 83077
-      },
-      "impactMultiplier": 0.012049436
-    },
-    {
-      "timestamp": "2026-08-20T18:45:31.3583143Z",
-      "totalPlayers": 121429,
-      "factions": {
-        "Humans": 1413,
-        "Terminids": 23876,
-        "Automatons": 10847,
-        "Illuminate": 85293
-      },
-      "impactMultiplier": 0.012029522
-    },
-    {
-      "timestamp": "2026-08-20T19:00:33.0227322Z",
-      "totalPlayers": 123205,
-      "factions": {
-        "Humans": 1473,
-        "Terminids": 23955,
-        "Automatons": 11025,
-        "Illuminate": 86752
-      },
-      "impactMultiplier": 0.01176263
-    },
-    {
-      "timestamp": "2026-08-20T19:15:34.7460576Z",
-      "totalPlayers": 125275,
-      "factions": {
-        "Humans": 1432,
-        "Terminids": 24301,
-        "Automatons": 11218,
-        "Illuminate": 88324
-      },
-      "impactMultiplier": 0.011470079
-    },
-    {
-      "timestamp": "2026-08-20T19:30:36.3364226Z",
-      "totalPlayers": 126564,
-      "factions": {
-        "Humans": 1429,
-        "Terminids": 24524,
-        "Automatons": 11333,
-        "Illuminate": 89278
-      },
-      "impactMultiplier": 0.011375095
-    },
-    {
-      "timestamp": "2026-08-20T19:45:38.067485Z",
-      "totalPlayers": 128293,
-      "factions": {
-        "Humans": 1520,
-        "Terminids": 24880,
-        "Automatons": 11749,
-        "Illuminate": 90144
-      },
-      "impactMultiplier": 0.011283373
-    },
-    {
-      "timestamp": "2026-08-20T20:00:39.7317163Z",
-      "totalPlayers": 128395,
-      "factions": {
-        "Humans": 1443,
-        "Terminids": 25028,
-        "Automatons": 11719,
-        "Illuminate": 90205
-      },
-      "impactMultiplier": 0.0110946745
-    },
-    {
-      "timestamp": "2026-08-20T20:15:41.2150888Z",
-      "totalPlayers": 128284,
-      "factions": {
-        "Humans": 2933,
-        "Terminids": 24759,
-        "Automatons": 11504,
-        "Illuminate": 89088
-      },
-      "impactMultiplier": 0.011104271
-    },
-    {
-      "timestamp": "2026-08-20T20:30:42.9222479Z",
-      "totalPlayers": 128645,
-      "factions": {
-        "Humans": 3230,
-        "Terminids": 24562,
-        "Automatons": 11765,
-        "Illuminate": 89088
-      },
-      "impactMultiplier": 0.011196779
-    },
-    {
-      "timestamp": "2026-08-20T20:45:44.644189Z",
-      "totalPlayers": 128719,
-      "factions": {
-        "Humans": 3205,
-        "Terminids": 24581,
-        "Automatons": 11761,
-        "Illuminate": 89172
-      },
-      "impactMultiplier": 0.011173654
-    },
-    {
-      "timestamp": "2026-08-20T21:00:46.4537467Z",
-      "totalPlayers": 127508,
-      "factions": {
-        "Humans": 2944,
-        "Terminids": 24272,
-        "Automatons": 11659,
-        "Illuminate": 88633
-      },
-      "impactMultiplier": 0.011081204
-    },
-    {
-      "timestamp": "2026-08-20T21:15:48.1139696Z",
-      "totalPlayers": 126015,
-      "factions": {
-        "Humans": 2941,
-        "Terminids": 23800,
-        "Automatons": 11493,
-        "Illuminate": 87781
-      },
-      "impactMultiplier": 0.011115273
-    },
-    {
-      "timestamp": "2026-08-20T21:30:49.821884Z",
-      "totalPlayers": 125728,
-      "factions": {
-        "Humans": 2525,
-        "Terminids": 23614,
-        "Automatons": 11509,
-        "Illuminate": 88080
-      },
-      "impactMultiplier": 0.0112730265
-    },
-    {
-      "timestamp": "2026-08-20T21:45:51.4942085Z",
-      "totalPlayers": 125149,
-      "factions": {
-        "Humans": 2117,
-        "Terminids": 23609,
-        "Automatons": 11380,
-        "Illuminate": 88043
-      },
-      "impactMultiplier": 0.011557306
-    },
-    {
-      "timestamp": "2026-08-20T22:00:53.0970097Z",
-      "totalPlayers": 124029,
-      "factions": {
-        "Humans": 1999,
-        "Terminids": 23095,
-        "Automatons": 11190,
-        "Illuminate": 87745
-      },
-      "impactMultiplier": 0.011701553
-    },
-    {
-      "timestamp": "2026-08-20T22:15:54.8581967Z",
-      "totalPlayers": 123544,
-      "factions": {
-        "Humans": 3511,
-        "Terminids": 22704,
-        "Automatons": 11044,
-        "Illuminate": 86285
-      },
-      "impactMultiplier": 0.011662077
-    },
-    {
-      "timestamp": "2026-08-20T22:30:56.372021Z",
-      "totalPlayers": 123132,
-      "factions": {
-        "Humans": 3367,
-        "Terminids": 22273,
-        "Automatons": 10902,
-        "Illuminate": 86590
-      },
-      "impactMultiplier": 0.011844507
-    },
-    {
-      "timestamp": "2026-08-20T22:45:58.0257006Z",
-      "totalPlayers": 123041,
-      "factions": {
-        "Humans": 3197,
-        "Terminids": 22195,
-        "Automatons": 10957,
-        "Illuminate": 86692
-      },
-      "impactMultiplier": 0.011952485
-    },
-    {
-      "timestamp": "2026-08-20T23:00:59.7160822Z",
-      "totalPlayers": 123356,
-      "factions": {
-        "Humans": 2999,
-        "Terminids": 22077,
-        "Automatons": 11051,
-        "Illuminate": 87229
-      },
-      "impactMultiplier": 0.011949736
-    },
-    {
-      "timestamp": "2026-08-20T23:16:01.458817Z",
-      "totalPlayers": 123558,
-      "factions": {
-        "Humans": 2911,
-        "Terminids": 21755,
-        "Automatons": 10943,
-        "Illuminate": 87949
-      },
-      "impactMultiplier": 0.011982232
-    },
-    {
-      "timestamp": "2026-08-20T23:31:03.0654201Z",
-      "totalPlayers": 124657,
-      "factions": {
-        "Humans": 2903,
-        "Terminids": 21461,
-        "Automatons": 10998,
-        "Illuminate": 89295
-      },
-      "impactMultiplier": 0.011987614
-    },
-    {
-      "timestamp": "2026-08-20T23:46:04.3990382Z",
-      "totalPlayers": 126669,
-      "factions": {
-        "Humans": 2864,
-        "Terminids": 21536,
-        "Automatons": 11102,
-        "Illuminate": 91167
-      },
-      "impactMultiplier": 0.011922419
-    },
-    {
-      "timestamp": "2026-08-21T00:00:24.4052795Z",
-      "totalPlayers": 128258,
-      "factions": {
-        "Humans": 2792,
-        "Terminids": 21486,
-        "Automatons": 11318,
-        "Illuminate": 92662
-      },
-      "impactMultiplier": 0.011895062
-    },
-    {
-      "timestamp": "2026-08-21T00:15:26.9859136Z",
-      "totalPlayers": 130489,
-      "factions": {
-        "Humans": 2880,
-        "Terminids": 21726,
-        "Automatons": 11245,
-        "Illuminate": 94638
-      },
-      "impactMultiplier": 0.011844912
-    },
-    {
-      "timestamp": "2026-08-21T00:30:28.8340346Z",
-      "totalPlayers": 133382,
-      "factions": {
-        "Humans": 2904,
-        "Terminids": 21916,
-        "Automatons": 11500,
-        "Illuminate": 97062
-      },
-      "impactMultiplier": 0.011656422
-    },
-    {
-      "timestamp": "2026-08-21T00:45:30.4762048Z",
-      "totalPlayers": 136288,
-      "factions": {
-        "Humans": 2907,
-        "Terminids": 22227,
-        "Automatons": 11829,
-        "Illuminate": 99325
-      },
-      "impactMultiplier": 0.0114463
-    },
-    {
-      "timestamp": "2026-08-21T01:00:32.2191084Z",
-      "totalPlayers": 138681,
-      "factions": {
-        "Humans": 2759,
-        "Terminids": 22595,
-        "Automatons": 12156,
-        "Illuminate": 101171
-      },
-      "impactMultiplier": 0.011149597
-    },
-    {
-      "timestamp": "2026-08-21T01:15:33.8522877Z",
-      "totalPlayers": 140844,
-      "factions": {
-        "Humans": 2818,
-        "Terminids": 22676,
-        "Automatons": 12157,
-        "Illuminate": 103193
-      },
-      "impactMultiplier": 0.0109691825
-    },
-    {
-      "timestamp": "2026-08-21T01:30:35.4849561Z",
-      "totalPlayers": 142830,
-      "factions": {
-        "Humans": 2806,
-        "Terminids": 22930,
-        "Automatons": 12323,
-        "Illuminate": 104771
-      },
-      "impactMultiplier": 0.010818499
-    },
-    {
-      "timestamp": "2026-08-21T01:45:37.2790761Z",
-      "totalPlayers": 144033,
-      "factions": {
-        "Humans": 2699,
-        "Terminids": 23191,
-        "Automatons": 12381,
-        "Illuminate": 105762
-      },
-      "impactMultiplier": 0.010575156
-    },
-    {
-      "timestamp": "2026-08-21T02:00:39.0131292Z",
-      "totalPlayers": 143780,
-      "factions": {
-        "Humans": 2691,
-        "Terminids": 23236,
-        "Automatons": 12216,
-        "Illuminate": 105637
-      },
-      "impactMultiplier": 0.010432588
-    },
-    {
-      "timestamp": "2026-08-21T02:15:40.7761217Z",
-      "totalPlayers": 142609,
-      "factions": {
-        "Humans": 2606,
-        "Terminids": 23391,
-        "Automatons": 11994,
-        "Illuminate": 104618
-      },
-      "impactMultiplier": 0.010359277
-    },
-    {
-      "timestamp": "2026-08-21T02:30:42.3894119Z",
-      "totalPlayers": 141113,
-      "factions": {
-        "Humans": 2361,
-        "Terminids": 23275,
-        "Automatons": 11836,
-        "Illuminate": 103641
-      },
-      "impactMultiplier": 0.010336018
-    },
-    {
-      "timestamp": "2026-08-21T02:45:43.7121206Z",
-      "totalPlayers": 139556,
-      "factions": {
-        "Humans": 2471,
-        "Terminids": 22933,
-        "Automatons": 11813,
-        "Illuminate": 102339
-      },
-      "impactMultiplier": 0.01040626
-    },
-    {
-      "timestamp": "2026-08-21T03:00:45.0923676Z",
-      "totalPlayers": 136423,
-      "factions": {
-        "Humans": 2446,
-        "Terminids": 22600,
-        "Automatons": 11653,
-        "Illuminate": 99724
-      },
-      "impactMultiplier": 0.010513735
-    },
-    {
-      "timestamp": "2026-08-21T03:15:46.8597514Z",
-      "totalPlayers": 132715,
-      "factions": {
-        "Humans": 2379,
-        "Terminids": 22088,
-        "Automatons": 11623,
-        "Illuminate": 96625
-      },
-      "impactMultiplier": 0.010591544
-    },
-    {
-      "timestamp": "2026-08-21T03:30:48.8056193Z",
-      "totalPlayers": 128219,
-      "factions": {
-        "Humans": 2161,
-        "Terminids": 21791,
-        "Automatons": 11286,
-        "Illuminate": 92981
-      },
-      "impactMultiplier": 0.01081467
-    },
-    {
-      "timestamp": "2026-08-21T03:45:50.4806387Z",
-      "totalPlayers": 123830,
-      "factions": {
-        "Humans": 2063,
-        "Terminids": 21112,
-        "Automatons": 10896,
-        "Illuminate": 89759
-      },
-      "impactMultiplier": 0.011083395
-    },
-    {
-      "timestamp": "2026-08-21T04:00:52.1590766Z",
-      "totalPlayers": 119259,
-      "factions": {
-        "Humans": 2006,
-        "Terminids": 20567,
-        "Automatons": 10568,
-        "Illuminate": 86118
-      },
-      "impactMultiplier": 0.011328752
-    },
-    {
-      "timestamp": "2026-08-21T04:15:53.8841231Z",
-      "totalPlayers": 114431,
-      "factions": {
-        "Humans": 2004,
-        "Terminids": 19814,
-        "Automatons": 10103,
-        "Illuminate": 82510
-      },
-      "impactMultiplier": 0.01169918
-    },
-    {
-      "timestamp": "2026-08-21T04:30:55.6376543Z",
-      "totalPlayers": 109106,
-      "factions": {
-        "Humans": 1945,
-        "Terminids": 18935,
-        "Automatons": 9522,
-        "Illuminate": 78704
-      },
-      "impactMultiplier": 0.012256053
-    },
-    {
-      "timestamp": "2026-08-21T04:45:57.3104645Z",
-      "totalPlayers": 104709,
-      "factions": {
-        "Humans": 1799,
-        "Terminids": 18444,
-        "Automatons": 9274,
-        "Illuminate": 75192
-      },
-      "impactMultiplier": 0.012781781
-    },
-    {
-      "timestamp": "2026-08-21T05:00:58.9928622Z",
-      "totalPlayers": 99221,
-      "factions": {
-        "Humans": 1707,
-        "Terminids": 17933,
-        "Automatons": 8724,
-        "Illuminate": 70857
-      },
-      "impactMultiplier": 0.01315842
-    },
-    {
-      "timestamp": "2026-08-21T05:16:00.4648695Z",
-      "totalPlayers": 93767,
-      "factions": {
-        "Humans": 1626,
-        "Terminids": 17218,
-        "Automatons": 8318,
-        "Illuminate": 66605
-      },
-      "impactMultiplier": 0.013733012
-    },
-    {
-      "timestamp": "2026-08-21T05:31:02.1108496Z",
-      "totalPlayers": 89226,
-      "factions": {
-        "Humans": 1649,
-        "Terminids": 16672,
-        "Automatons": 7867,
-        "Illuminate": 63038
-      },
-      "impactMultiplier": 0.01432449
-    },
-    {
-      "timestamp": "2026-08-21T05:46:03.6562224Z",
-      "totalPlayers": 85360,
-      "factions": {
-        "Humans": 1532,
-        "Terminids": 16450,
-        "Automatons": 7685,
-        "Illuminate": 59693
-      },
-      "impactMultiplier": 0.014931373
-    },
-    {
-      "timestamp": "2026-08-21T06:00:25.4090763Z",
-      "totalPlayers": 81507,
-      "factions": {
-        "Humans": 1404,
-        "Terminids": 16065,
-        "Automatons": 7351,
-        "Illuminate": 56687
-      },
-      "impactMultiplier": 0.015602512
-    },
-    {
-      "timestamp": "2026-08-21T06:15:27.6793365Z",
-      "totalPlayers": 77626,
-      "factions": {
-        "Humans": 1412,
-        "Terminids": 15650,
-        "Automatons": 6781,
-        "Illuminate": 53783
-      },
-      "impactMultiplier": 0.016150951
-    },
-    {
-      "timestamp": "2026-08-21T06:30:29.6366563Z",
-      "totalPlayers": 74238,
-      "factions": {
-        "Humans": 1355,
-        "Terminids": 15266,
-        "Automatons": 6531,
-        "Illuminate": 51086
-      },
-      "impactMultiplier": 0.016534409
-    },
-    {
-      "timestamp": "2026-08-21T06:45:31.3107874Z",
-      "totalPlayers": 71557,
-      "factions": {
-        "Humans": 1287,
-        "Terminids": 15138,
-        "Automatons": 6446,
-        "Illuminate": 48686
-      },
-      "impactMultiplier": 0.017257387
-    },
-    {
-      "timestamp": "2026-08-21T07:00:32.9166363Z",
-      "totalPlayers": 69229,
-      "factions": {
-        "Humans": 1307,
-        "Terminids": 14859,
-        "Automatons": 6199,
-        "Illuminate": 46864
-      },
-      "impactMultiplier": 0.018008856
-    },
-    {
-      "timestamp": "2026-08-21T07:15:34.586236Z",
-      "totalPlayers": 66490,
-      "factions": {
-        "Humans": 1252,
-        "Terminids": 14566,
-        "Automatons": 5981,
-        "Illuminate": 44691
-      },
-      "impactMultiplier": 0.018367775
-    },
-    {
-      "timestamp": "2026-08-21T07:30:36.3539091Z",
-      "totalPlayers": 64655,
-      "factions": {
-        "Humans": 1214,
-        "Terminids": 14342,
-        "Automatons": 5798,
-        "Illuminate": 43301
-      },
-      "impactMultiplier": 0.019268684
-    },
-    {
-      "timestamp": "2026-08-21T07:45:38.0530637Z",
-      "totalPlayers": 63607,
-      "factions": {
-        "Humans": 1291,
-        "Terminids": 14206,
-        "Automatons": 5724,
-        "Illuminate": 42386
-      },
-      "impactMultiplier": 0.019621825
-    },
-    {
-      "timestamp": "2026-08-21T08:00:39.7819605Z",
-      "totalPlayers": 62171,
-      "factions": {
-        "Humans": 1271,
-        "Terminids": 14109,
-        "Automatons": 5533,
-        "Illuminate": 41258
-      },
-      "impactMultiplier": 0.01985953
-    },
-    {
-      "timestamp": "2026-08-21T08:15:41.3262481Z",
-      "totalPlayers": 61194,
-      "factions": {
-        "Humans": 1306,
-        "Terminids": 14155,
-        "Automatons": 5324,
-        "Illuminate": 40409
-      },
-      "impactMultiplier": 0.020415723
-    },
-    {
-      "timestamp": "2026-08-21T08:30:42.9497427Z",
-      "totalPlayers": 60282,
-      "factions": {
-        "Humans": 1238,
-        "Terminids": 14169,
-        "Automatons": 5202,
-        "Illuminate": 39673
-      },
-      "impactMultiplier": 0.020394903
-    },
-    {
-      "timestamp": "2026-08-21T08:45:44.6337824Z",
-      "totalPlayers": 59848,
-      "factions": {
-        "Humans": 1258,
-        "Terminids": 14076,
-        "Automatons": 5129,
-        "Illuminate": 39385
-      },
-      "impactMultiplier": 0.020542275
-    },
-    {
-      "timestamp": "2026-08-21T09:00:46.2452Z",
-      "totalPlayers": 59296,
-      "factions": {
-        "Humans": 1334,
-        "Terminids": 14015,
-        "Automatons": 5174,
-        "Illuminate": 38773
-      },
-      "impactMultiplier": 0.020792909
-    },
-    {
-      "timestamp": "2026-08-21T09:15:48.0682889Z",
-      "totalPlayers": 58902,
-      "factions": {
-        "Humans": 1245,
-        "Terminids": 14105,
-        "Automatons": 5090,
-        "Illuminate": 38462
-      },
-      "impactMultiplier": 0.021128401
-    },
-    {
-      "timestamp": "2026-08-21T09:30:49.7420933Z",
-      "totalPlayers": 59204,
-      "factions": {
-        "Humans": 1281,
-        "Terminids": 14061,
-        "Automatons": 4947,
-        "Illuminate": 38915
-      },
-      "impactMultiplier": 0.021428695
-    },
-    {
-      "timestamp": "2026-08-21T09:45:51.3485061Z",
-      "totalPlayers": 59730,
-      "factions": {
-        "Humans": 1303,
-        "Terminids": 13858,
-        "Automatons": 4918,
-        "Illuminate": 39651
-      },
-      "impactMultiplier": 0.021151936
-    },
-    {
-      "timestamp": "2026-08-21T10:00:52.9364331Z",
-      "totalPlayers": 60589,
-      "factions": {
-        "Humans": 1281,
-        "Terminids": 13655,
-        "Automatons": 4803,
-        "Illuminate": 40850
-      },
-      "impactMultiplier": 0.020818457
-    },
-    {
-      "timestamp": "2026-08-21T10:15:54.6292123Z",
-      "totalPlayers": 61524,
-      "factions": {
-        "Humans": 1275,
-        "Terminids": 13640,
-        "Automatons": 4835,
-        "Illuminate": 41774
-      },
-      "impactMultiplier": 0.020556575
-    },
-    {
-      "timestamp": "2026-08-21T10:30:56.22243Z",
-      "totalPlayers": 62773,
-      "factions": {
-        "Humans": 1290,
-        "Terminids": 13700,
-        "Automatons": 4900,
-        "Illuminate": 42883
-      },
-      "impactMultiplier": 0.020051911
-    },
-    {
-      "timestamp": "2026-08-21T10:45:57.7867178Z",
-      "totalPlayers": 64542,
-      "factions": {
-        "Humans": 1410,
-        "Terminids": 13970,
-        "Automatons": 5063,
-        "Illuminate": 44099
-      },
-      "impactMultiplier": 0.019846784
-    },
-    {
-      "timestamp": "2026-08-21T11:00:59.5093877Z",
-      "totalPlayers": 66524,
-      "factions": {
-        "Humans": 1441,
-        "Terminids": 14451,
-        "Automatons": 5162,
-        "Illuminate": 45470
-      },
-      "impactMultiplier": 0.019493315
-    },
-    {
-      "timestamp": "2026-08-21T11:16:01.2564157Z",
-      "totalPlayers": 68889,
-      "factions": {
-        "Humans": 1497,
-        "Terminids": 14762,
-        "Automatons": 5402,
-        "Illuminate": 47228
-      },
-      "impactMultiplier": 0.018763198
-    },
-    {
-      "timestamp": "2026-08-21T11:31:03.0152034Z",
-      "totalPlayers": 71866,
-      "factions": {
-        "Humans": 1498,
-        "Terminids": 15421,
-        "Automatons": 5592,
-        "Illuminate": 49355
-      },
-      "impactMultiplier": 0.018178625
-    },
-    {
-      "timestamp": "2026-08-21T11:46:04.778547Z",
-      "totalPlayers": 75854,
-      "factions": {
-        "Humans": 1653,
-        "Terminids": 16374,
-        "Automatons": 5845,
-        "Illuminate": 51982
-      },
-      "impactMultiplier": 0.017709315
-    },
-    {
-      "timestamp": "2026-08-21T12:00:24.6060828Z",
-      "totalPlayers": 79555,
-      "factions": {
-        "Humans": 1742,
-        "Terminids": 17435,
-        "Automatons": 5955,
-        "Illuminate": 54423
-      },
-      "impactMultiplier": 0.01704981
-    },
-    {
-      "timestamp": "2026-08-21T12:15:27.0852075Z",
-      "totalPlayers": 84683,
-      "factions": {
-        "Humans": 1690,
-        "Terminids": 18781,
-        "Automatons": 6294,
-        "Illuminate": 57918
-      },
-      "impactMultiplier": 0.016118072
-    },
-    {
-      "timestamp": "2026-08-21T12:30:28.9106199Z",
-      "totalPlayers": 89118,
-      "factions": {
-        "Humans": 1792,
-        "Terminids": 19993,
-        "Automatons": 6636,
-        "Illuminate": 60697
-      },
-      "impactMultiplier": 0.015401061
-    },
-    {
-      "timestamp": "2026-08-21T12:45:30.9321706Z",
-      "totalPlayers": 94346,
-      "factions": {
-        "Humans": 2048,
-        "Terminids": 21336,
-        "Automatons": 7135,
-        "Illuminate": 63827
-      },
-      "impactMultiplier": 0.014682447
-    },
-    {
-      "timestamp": "2026-08-21T13:00:32.6173177Z",
-      "totalPlayers": 98691,
-      "factions": {
-        "Humans": 1989,
-        "Terminids": 22533,
-        "Automatons": 7419,
-        "Illuminate": 66750
-      },
-      "impactMultiplier": 0.013866649
-    },
-    {
-      "timestamp": "2026-08-21T13:15:34.2330316Z",
-      "totalPlayers": 103319,
-      "factions": {
-        "Humans": 2038,
-        "Terminids": 23533,
-        "Automatons": 7832,
-        "Illuminate": 69916
-      },
-      "impactMultiplier": 0.013211524
-    },
-    {
-      "timestamp": "2026-08-21T13:30:36.0479234Z",
-      "totalPlayers": 107527,
-      "factions": {
-        "Humans": 2009,
-        "Terminids": 24461,
-        "Automatons": 8253,
-        "Illuminate": 72804
-      },
-      "impactMultiplier": 0.012440108
-    },
-    {
-      "timestamp": "2026-08-21T13:45:37.5714069Z",
-      "totalPlayers": 111144,
-      "factions": {
-        "Humans": 2052,
-        "Terminids": 25264,
-        "Automatons": 8582,
-        "Illuminate": 75246
-      },
-      "impactMultiplier": 0.011758404
-    },
-    {
-      "timestamp": "2026-08-21T14:00:39.3784403Z",
-      "totalPlayers": 114476,
-      "factions": {
-        "Humans": 2216,
-        "Terminids": 26158,
-        "Automatons": 8877,
-        "Illuminate": 77225
-      },
-      "impactMultiplier": 0.011410863
-    },
-    {
-      "timestamp": "2026-08-21T14:15:41.0586252Z",
-      "totalPlayers": 117525,
-      "factions": {
-        "Humans": 2240,
-        "Terminids": 26709,
-        "Automatons": 9277,
-        "Illuminate": 79299
-      },
-      "impactMultiplier": 0.011170229
-    },
-    {
-      "timestamp": "2026-08-21T14:30:42.7872676Z",
-      "totalPlayers": 119441,
-      "factions": {
-        "Humans": 2227,
-        "Terminids": 26947,
-        "Automatons": 9207,
-        "Illuminate": 81060
-      },
-      "impactMultiplier": 0.011170105
-    },
-    {
-      "timestamp": "2026-08-21T14:45:44.6216056Z",
-      "totalPlayers": 120920,
-      "factions": {
-        "Humans": 2212,
-        "Terminids": 27161,
-        "Automatons": 9236,
-        "Illuminate": 82311
-      },
-      "impactMultiplier": 0.011362682
-    },
-    {
-      "timestamp": "2026-08-21T15:00:46.3913887Z",
-      "totalPlayers": 122066,
-      "factions": {
-        "Humans": 2122,
-        "Terminids": 27486,
-        "Automatons": 9404,
-        "Illuminate": 83054
-      },
-      "impactMultiplier": 0.011565858
-    },
-    {
-      "timestamp": "2026-08-21T15:15:48.1462172Z",
-      "totalPlayers": 121740,
-      "factions": {
-        "Humans": 2117,
-        "Terminids": 27437,
-        "Automatons": 9490,
-        "Illuminate": 82696
-      },
-      "impactMultiplier": 0.011616781
-    },
-    {
-      "timestamp": "2026-08-21T15:30:50.0552324Z",
-      "totalPlayers": 121382,
-      "factions": {
-        "Humans": 2767,
-        "Terminids": 27053,
-        "Automatons": 9605,
-        "Illuminate": 81957
-      },
-      "impactMultiplier": 0.011647031
-    },
-    {
-      "timestamp": "2026-08-21T15:45:51.6867774Z",
-      "totalPlayers": 120833,
-      "factions": {
-        "Humans": 2645,
-        "Terminids": 26434,
-        "Automatons": 9629,
-        "Illuminate": 82125
-      },
-      "impactMultiplier": 0.011938964
-    },
-    {
-      "timestamp": "2026-08-21T16:00:53.4673668Z",
-      "totalPlayers": 119552,
-      "factions": {
-        "Humans": 2385,
-        "Terminids": 26090,
-        "Automatons": 9783,
-        "Illuminate": 81294
-      },
-      "impactMultiplier": 0.0121791465
-    },
-    {
-      "timestamp": "2026-08-21T16:15:55.2210151Z",
-      "totalPlayers": 118585,
-      "factions": {
-        "Humans": 2471,
-        "Terminids": 25518,
-        "Automatons": 9663,
-        "Illuminate": 80933
-      },
-      "impactMultiplier": 0.012410439
-    },
-    {
-      "timestamp": "2026-08-21T16:30:56.8220381Z",
-      "totalPlayers": 117902,
-      "factions": {
-        "Humans": 2281,
-        "Terminids": 24938,
-        "Automatons": 9777,
-        "Illuminate": 80906
-      },
-      "impactMultiplier": 0.012752623
-    },
-    {
-      "timestamp": "2026-08-21T16:45:58.4943533Z",
-      "totalPlayers": 117492,
-      "factions": {
-        "Humans": 2391,
-        "Terminids": 24526,
-        "Automatons": 9636,
-        "Illuminate": 80939
-      },
-      "impactMultiplier": 0.012918939
-    },
-    {
-      "timestamp": "2026-08-21T17:01:00.215341Z",
-      "totalPlayers": 116435,
-      "factions": {
-        "Humans": 2214,
-        "Terminids": 24237,
-        "Automatons": 9622,
-        "Illuminate": 80362
-      },
-      "impactMultiplier": 0.012996713
-    },
-    {
-      "timestamp": "2026-08-21T17:16:01.9740319Z",
-      "totalPlayers": 116383,
-      "factions": {
-        "Humans": 2366,
-        "Terminids": 23958,
-        "Automatons": 9609,
-        "Illuminate": 80450
-      },
-      "impactMultiplier": 0.013293867
-    },
-    {
-      "timestamp": "2026-08-21T17:31:04.5856159Z",
-      "totalPlayers": 117069,
-      "factions": {
-        "Humans": 2344,
-        "Terminids": 23926,
-        "Automatons": 9747,
-        "Illuminate": 81052
-      },
-      "impactMultiplier": 0.013556383
-    },
-    {
-      "timestamp": "2026-08-21T17:46:06.3584135Z",
-      "totalPlayers": 118066,
-      "factions": {
-        "Humans": 2374,
-        "Terminids": 23823,
-        "Automatons": 9928,
-        "Illuminate": 81941
-      },
-      "impactMultiplier": 0.013558484
-    },
-    {
-      "timestamp": "2026-08-21T18:00:25.4738626Z",
-      "totalPlayers": 119155,
-      "factions": {
-        "Humans": 2370,
-        "Terminids": 23895,
-        "Automatons": 10116,
-        "Illuminate": 82774
-      },
-      "impactMultiplier": 0.013592849
-    },
-    {
-      "timestamp": "2026-08-21T18:15:27.6960821Z",
-      "totalPlayers": 120748,
-      "factions": {
-        "Humans": 2436,
-        "Terminids": 23722,
-        "Automatons": 10372,
-        "Illuminate": 84218
-      },
-      "impactMultiplier": 0.0136796925
-    },
-    {
-      "timestamp": "2026-08-21T18:30:29.6632459Z",
-      "totalPlayers": 122711,
-      "factions": {
-        "Humans": 3810,
-        "Terminids": 24143,
-        "Automatons": 10628,
-        "Illuminate": 84130
-      },
-      "impactMultiplier": 0.01362151
-    },
-    {
-      "timestamp": "2026-08-21T18:45:31.3294761Z",
-      "totalPlayers": 124850,
-      "factions": {
-        "Humans": 3420,
-        "Terminids": 24689,
-        "Automatons": 10782,
-        "Illuminate": 85959
-      },
-      "impactMultiplier": 0.013550196
-    },
-    {
-      "timestamp": "2026-08-21T19:00:32.9882775Z",
-      "totalPlayers": 126869,
-      "factions": {
-        "Humans": 2973,
-        "Terminids": 24749,
-        "Automatons": 11172,
-        "Illuminate": 87975
-      },
-      "impactMultiplier": 0.01348166
-    },
-    {
-      "timestamp": "2026-08-21T19:15:34.6591499Z",
-      "totalPlayers": 129386,
-      "factions": {
-        "Humans": 2865,
-        "Terminids": 25012,
-        "Automatons": 11290,
-        "Illuminate": 90219
-      },
-      "impactMultiplier": 0.013453113
-    },
-    {
-      "timestamp": "2026-08-21T19:30:36.3439458Z",
-      "totalPlayers": 132418,
-      "factions": {
-        "Humans": 2815,
-        "Terminids": 25364,
-        "Automatons": 11455,
-        "Illuminate": 92784
-      },
-      "impactMultiplier": 0.01338439
-    },
-    {
-      "timestamp": "2026-08-21T19:45:37.9830835Z",
-      "totalPlayers": 134872,
-      "factions": {
-        "Humans": 2764,
-        "Terminids": 25412,
-        "Automatons": 11649,
-        "Illuminate": 95047
-      },
-      "impactMultiplier": 0.0130689945
-    },
-    {
-      "timestamp": "2026-08-21T20:00:39.7533158Z",
-      "totalPlayers": 136431,
-      "factions": {
-        "Humans": 2697,
-        "Terminids": 25708,
-        "Automatons": 11942,
-        "Illuminate": 96084
-      },
-      "impactMultiplier": 0.01284611
-    },
-    {
-      "timestamp": "2026-08-21T20:15:41.4525433Z",
-      "totalPlayers": 138248,
-      "factions": {
-        "Humans": 2691,
-        "Terminids": 26075,
-        "Automatons": 12103,
-        "Illuminate": 97379
-      },
-      "impactMultiplier": 0.012679688
-    },
-    {
-      "timestamp": "2026-08-21T20:30:43.2296845Z",
-      "totalPlayers": 139200,
-      "factions": {
-        "Humans": 2656,
-        "Terminids": 26273,
-        "Automatons": 12115,
-        "Illuminate": 98156
-      },
-      "impactMultiplier": 0.012541651
-    },
-    {
-      "timestamp": "2026-08-21T20:45:45.0549711Z",
-      "totalPlayers": 140120,
-      "factions": {
-        "Humans": 2794,
-        "Terminids": 26450,
-        "Automatons": 12376,
-        "Illuminate": 98500
-      },
-      "impactMultiplier": 0.01243513
-    },
-    {
-      "timestamp": "2026-08-21T21:00:46.6585626Z",
-      "totalPlayers": 139850,
-      "factions": {
-        "Humans": 2659,
-        "Terminids": 26510,
-        "Automatons": 12428,
-        "Illuminate": 98253
-      },
-      "impactMultiplier": 0.012428094
-    },
-    {
-      "timestamp": "2026-08-21T21:15:48.5126133Z",
-      "totalPlayers": 140099,
-      "factions": {
-        "Humans": 2761,
-        "Terminids": 26392,
-        "Automatons": 12473,
-        "Illuminate": 98473
-      },
-      "impactMultiplier": 0.012469568
-    },
-    {
-      "timestamp": "2026-08-21T21:30:50.3041524Z",
-      "totalPlayers": 138990,
-      "factions": {
-        "Humans": 2608,
-        "Terminids": 26219,
-        "Automatons": 12656,
-        "Illuminate": 97507
-      },
-      "impactMultiplier": 0.012435485
-    },
-    {
-      "timestamp": "2026-08-21T21:45:52.0320364Z",
-      "totalPlayers": 137765,
-      "factions": {
-        "Humans": 2583,
-        "Terminids": 25908,
-        "Automatons": 12532,
-        "Illuminate": 96742
-      },
-      "impactMultiplier": 0.012474852
-    },
-    {
-      "timestamp": "2026-08-21T22:00:53.8171621Z",
-      "totalPlayers": 135810,
-      "factions": {
-        "Humans": 2412,
-        "Terminids": 25494,
-        "Automatons": 12396,
-        "Illuminate": 95508
-      },
-      "impactMultiplier": 0.012614343
-    },
-    {
-      "timestamp": "2026-08-21T22:15:55.6473173Z",
-      "totalPlayers": 133579,
-      "factions": {
-        "Humans": 2575,
-        "Terminids": 24933,
-        "Automatons": 12024,
-        "Illuminate": 94047
-      },
-      "impactMultiplier": 0.012925624
-    },
-    {
-      "timestamp": "2026-08-21T22:30:57.3399145Z",
-      "totalPlayers": 132588,
-      "factions": {
-        "Humans": 2557,
-        "Terminids": 24413,
-        "Automatons": 11907,
-        "Illuminate": 93711
-      },
-      "impactMultiplier": 0.013108308
-    },
-    {
-      "timestamp": "2026-08-21T22:45:58.9785726Z",
-      "totalPlayers": 131161,
-      "factions": {
-        "Humans": 2530,
-        "Terminids": 23797,
-        "Automatons": 11897,
-        "Illuminate": 92937
-      },
-      "impactMultiplier": 0.013257101
-    },
-    {
-      "timestamp": "2026-08-21T23:01:00.7963673Z",
-      "totalPlayers": 129986,
-      "factions": {
-        "Humans": 2570,
-        "Terminids": 23411,
-        "Automatons": 11764,
-        "Illuminate": 92241
-      },
-      "impactMultiplier": 0.013450452
-    },
-    {
-      "timestamp": "2026-08-21T23:16:02.443961Z",
-      "totalPlayers": 129246,
-      "factions": {
-        "Humans": 2585,
-        "Terminids": 23314,
-        "Automatons": 11589,
-        "Illuminate": 91758
-      },
-      "impactMultiplier": 0.013608294
-    },
-    {
-      "timestamp": "2026-08-21T23:31:04.1845371Z",
-      "totalPlayers": 129211,
-      "factions": {
-        "Humans": 2664,
-        "Terminids": 22987,
-        "Automatons": 11550,
-        "Illuminate": 92010
-      },
-      "impactMultiplier": 0.013877672
-    },
-    {
-      "timestamp": "2026-08-21T23:46:05.8245349Z",
-      "totalPlayers": 130066,
-      "factions": {
-        "Humans": 2644,
-        "Terminids": 22976,
-        "Automatons": 11483,
-        "Illuminate": 92963
-      },
-      "impactMultiplier": 0.01398801
-    },
-    {
-      "timestamp": "2026-08-22T00:00:25.9150955Z",
-      "totalPlayers": 130894,
-      "factions": {
-        "Humans": 2581,
-        "Terminids": 23035,
-        "Automatons": 11420,
-        "Illuminate": 93858
-      },
-      "impactMultiplier": 0.013892964
-    },
-    {
-      "timestamp": "2026-08-22T00:15:28.4393327Z",
-      "totalPlayers": 132611,
-      "factions": {
-        "Humans": 2724,
-        "Terminids": 23131,
-        "Automatons": 11331,
-        "Illuminate": 95425
-      },
-      "impactMultiplier": 0.013833371
-    },
-    {
-      "timestamp": "2026-08-22T00:30:30.4037519Z",
-      "totalPlayers": 134680,
-      "factions": {
-        "Humans": 2746,
-        "Terminids": 23249,
-        "Automatons": 11479,
-        "Illuminate": 97206
-      },
-      "impactMultiplier": 0.013784487
-    },
-    {
-      "timestamp": "2026-08-22T00:45:32.1088984Z",
-      "totalPlayers": 137305,
-      "factions": {
-        "Humans": 2785,
-        "Terminids": 23453,
-        "Automatons": 11639,
-        "Illuminate": 99428
-      },
-      "impactMultiplier": 0.013687092
-    },
-    {
-      "timestamp": "2026-08-22T01:00:33.5785851Z",
-      "totalPlayers": 140308,
-      "factions": {
-        "Humans": 2885,
-        "Terminids": 23783,
-        "Automatons": 11930,
-        "Illuminate": 101710
-      },
-      "impactMultiplier": 0.013568393
-    },
-    {
-      "timestamp": "2026-08-22T01:15:35.3349532Z",
-      "totalPlayers": 143781,
-      "factions": {
-        "Humans": 2877,
-        "Terminids": 24377,
-        "Automatons": 11876,
-        "Illuminate": 104651
-      },
-      "impactMultiplier": 0.013301081
-    },
-    {
-      "timestamp": "2026-08-22T01:30:37.0566819Z",
-      "totalPlayers": 147154,
-      "factions": {
-        "Humans": 2793,
-        "Terminids": 24879,
-        "Automatons": 12259,
-        "Illuminate": 107223
-      },
-      "impactMultiplier": 0.012870596
-    },
-    {
-      "timestamp": "2026-08-22T01:45:38.7535573Z",
-      "totalPlayers": 150278,
-      "factions": {
-        "Humans": 2872,
-        "Terminids": 25198,
-        "Automatons": 12817,
-        "Illuminate": 109391
-      },
-      "impactMultiplier": 0.012614954
-    },
-    {
-      "timestamp": "2026-08-22T02:00:40.4691358Z",
-      "totalPlayers": 153209,
-      "factions": {
-        "Humans": 2920,
-        "Terminids": 25732,
-        "Automatons": 12968,
-        "Illuminate": 111589
-      },
-      "impactMultiplier": 0.0124237565
-    },
-    {
-      "timestamp": "2026-08-22T02:15:42.1918218Z",
-      "totalPlayers": 155485,
-      "factions": {
-        "Humans": 2897,
-        "Terminids": 26231,
-        "Automatons": 13226,
-        "Illuminate": 113131
-      },
-      "impactMultiplier": 0.01208752
-    },
-    {
-      "timestamp": "2026-08-22T02:30:43.9290756Z",
-      "totalPlayers": 157103,
-      "factions": {
-        "Humans": 2779,
-        "Terminids": 26295,
-        "Automatons": 13300,
-        "Illuminate": 114729
-      },
-      "impactMultiplier": 0.011833113
-    },
-    {
-      "timestamp": "2026-08-22T02:45:45.730871Z",
-      "totalPlayers": 159209,
-      "factions": {
-        "Humans": 2838,
-        "Terminids": 26655,
-        "Automatons": 13580,
-        "Illuminate": 116136
-      },
-      "impactMultiplier": 0.0116382325
-    },
-    {
-      "timestamp": "2026-08-22T03:00:47.311234Z",
-      "totalPlayers": 159127,
-      "factions": {
-        "Humans": 2724,
-        "Terminids": 26671,
-        "Automatons": 13684,
-        "Illuminate": 116048
-      },
-      "impactMultiplier": 0.011353432
-    },
-    {
-      "timestamp": "2026-08-22T03:15:48.78306Z",
-      "totalPlayers": 157920,
-      "factions": {
-        "Humans": 2815,
-        "Terminids": 26585,
-        "Automatons": 13516,
-        "Illuminate": 115004
-      },
-      "impactMultiplier": 0.011167321
-    },
-    {
-      "timestamp": "2026-08-22T03:30:50.5648202Z",
-      "totalPlayers": 156491,
-      "factions": {
-        "Humans": 2769,
-        "Terminids": 26526,
-        "Automatons": 13296,
-        "Illuminate": 113900
-      },
-      "impactMultiplier": 0.011165228
-    },
-    {
-      "timestamp": "2026-08-22T03:45:52.2959497Z",
-      "totalPlayers": 154112,
-      "factions": {
-        "Humans": 2728,
-        "Terminids": 26335,
-        "Automatons": 13307,
-        "Illuminate": 111742
-      },
-      "impactMultiplier": 0.011048059
-    },
-    {
-      "timestamp": "2026-08-22T04:00:54.0988803Z",
-      "totalPlayers": 150003,
-      "factions": {
-        "Humans": 2538,
-        "Terminids": 26155,
-        "Automatons": 13247,
-        "Illuminate": 108063
-      },
-      "impactMultiplier": 0.010834917
-    },
-    {
-      "timestamp": "2026-08-22T04:15:55.7811524Z",
-      "totalPlayers": 145908,
-      "factions": {
-        "Humans": 2396,
-        "Terminids": 25784,
-        "Automatons": 12964,
-        "Illuminate": 104764
-      },
-      "impactMultiplier": 0.010750971
-    },
-    {
-      "timestamp": "2026-08-22T04:30:57.5117047Z",
-      "totalPlayers": 141338,
-      "factions": {
-        "Humans": 2341,
-        "Terminids": 25238,
-        "Automatons": 12823,
-        "Illuminate": 100936
-      },
-      "impactMultiplier": 0.0106857205
-    },
-    {
-      "timestamp": "2026-08-22T04:45:59.115438Z",
-      "totalPlayers": 136478,
-      "factions": {
-        "Humans": 2249,
-        "Terminids": 24748,
-        "Automatons": 12521,
-        "Illuminate": 96960
-      },
-      "impactMultiplier": 0.010591474
-    },
-    {
-      "timestamp": "2026-08-22T05:01:00.76799Z",
-      "totalPlayers": 131492,
-      "factions": {
-        "Humans": 2272,
-        "Terminids": 23948,
-        "Automatons": 12103,
-        "Illuminate": 93169
-      },
-      "impactMultiplier": 0.010569249
-    },
-    {
-      "timestamp": "2026-08-22T05:16:02.4262059Z",
-      "totalPlayers": 125934,
-      "factions": {
-        "Humans": 2133,
-        "Terminids": 23526,
-        "Automatons": 11333,
-        "Illuminate": 88942
-      },
-      "impactMultiplier": 0.010692755
-    },
-    {
-      "timestamp": "2026-08-22T05:31:04.1958281Z",
-      "totalPlayers": 121091,
-      "factions": {
-        "Humans": 1944,
-        "Terminids": 22857,
-        "Automatons": 10904,
-        "Illuminate": 85386
-      },
-      "impactMultiplier": 0.010887949
-    },
-    {
-      "timestamp": "2026-08-22T05:46:05.7217257Z",
-      "totalPlayers": 116399,
-      "factions": {
-        "Humans": 1869,
-        "Terminids": 22692,
-        "Automatons": 10512,
-        "Illuminate": 81326
-      },
-      "impactMultiplier": 0.011116749
-    },
-    {
-      "timestamp": "2026-08-22T06:00:25.6205282Z",
-      "totalPlayers": 111158,
-      "factions": {
-        "Humans": 1826,
-        "Terminids": 22199,
-        "Automatons": 10067,
-        "Illuminate": 77066
-      },
-      "impactMultiplier": 0.011415338
-    },
-    {
-      "timestamp": "2026-08-22T06:15:28.220717Z",
-      "totalPlayers": 106171,
-      "factions": {
-        "Humans": 1738,
-        "Terminids": 21794,
-        "Automatons": 9585,
-        "Illuminate": 73054
-      },
-      "impactMultiplier": 0.011948656
-    },
-    {
-      "timestamp": "2026-08-22T06:30:30.1092723Z",
-      "totalPlayers": 101779,
-      "factions": {
-        "Humans": 1687,
-        "Terminids": 21466,
-        "Automatons": 8976,
-        "Illuminate": 69650
-      },
-      "impactMultiplier": 0.012525185
-    },
-    {
-      "timestamp": "2026-08-22T06:45:31.9764483Z",
-      "totalPlayers": 97564,
-      "factions": {
-        "Humans": 1600,
-        "Terminids": 20913,
-        "Automatons": 8521,
-        "Illuminate": 66530
-      },
-      "impactMultiplier": 0.012765832
-    },
-    {
-      "timestamp": "2026-08-22T07:00:33.4758307Z",
-      "totalPlayers": 93109,
-      "factions": {
-        "Humans": 1537,
-        "Terminids": 20531,
-        "Automatons": 8194,
-        "Illuminate": 62847
-      },
-      "impactMultiplier": 0.012953751
-    },
-    {
-      "timestamp": "2026-08-22T07:15:34.9808238Z",
-      "totalPlayers": 89391,
-      "factions": {
-        "Humans": 1429,
-        "Terminids": 20076,
-        "Automatons": 7871,
-        "Illuminate": 60015
-      },
-      "impactMultiplier": 0.013439565
-    },
-    {
-      "timestamp": "2026-08-22T07:30:36.5615873Z",
-      "totalPlayers": 86191,
-      "factions": {
-        "Humans": 1469,
-        "Terminids": 19739,
-        "Automatons": 7482,
-        "Illuminate": 57501
-      },
-      "impactMultiplier": 0.014020074
-    },
-    {
-      "timestamp": "2026-08-22T07:45:38.2317059Z",
-      "totalPlayers": 84048,
-      "factions": {
-        "Humans": 1432,
-        "Terminids": 19660,
-        "Automatons": 7263,
-        "Illuminate": 55693
-      },
-      "impactMultiplier": 0.014491846
-    },
-    {
-      "timestamp": "2026-08-22T08:00:40.0290563Z",
-      "totalPlayers": 81945,
-      "factions": {
-        "Humans": 1419,
-        "Terminids": 19328,
-        "Automatons": 7138,
-        "Illuminate": 54060
-      },
-      "impactMultiplier": 0.014908888
-    },
-    {
-      "timestamp": "2026-08-22T08:15:41.6023919Z",
-      "totalPlayers": 80329,
-      "factions": {
-        "Humans": 1331,
-        "Terminids": 19213,
-        "Automatons": 6982,
-        "Illuminate": 52803
-      },
-      "impactMultiplier": 0.015242913
-    },
-    {
-      "timestamp": "2026-08-22T08:30:43.2951216Z",
-      "totalPlayers": 79101,
-      "factions": {
-        "Humans": 1408,
-        "Terminids": 19095,
-        "Automatons": 6817,
-        "Illuminate": 51781
-      },
-      "impactMultiplier": 0.015231588
-    },
-    {
-      "timestamp": "2026-08-22T08:45:45.2541448Z",
-      "totalPlayers": 77921,
-      "factions": {
-        "Humans": 1378,
-        "Terminids": 19071,
-        "Automatons": 6642,
-        "Illuminate": 50830
-      },
-      "impactMultiplier": 0.015118479
-    },
-    {
-      "timestamp": "2026-08-22T09:00:46.9431761Z",
-      "totalPlayers": 76705,
-      "factions": {
-        "Humans": 1408,
-        "Terminids": 18914,
-        "Automatons": 6500,
-        "Illuminate": 49883
-      },
-      "impactMultiplier": 0.015242305
-    },
-    {
-      "timestamp": "2026-08-22T09:15:48.5078891Z",
-      "totalPlayers": 75954,
-      "factions": {
-        "Humans": 1383,
-        "Terminids": 18936,
-        "Automatons": 6533,
-        "Illuminate": 49102
-      },
-      "impactMultiplier": 0.015857225
-    },
-    {
-      "timestamp": "2026-08-22T09:30:50.0255858Z",
-      "totalPlayers": 75289,
-      "factions": {
-        "Humans": 1426,
-        "Terminids": 18954,
-        "Automatons": 6643,
-        "Illuminate": 48266
-      },
-      "impactMultiplier": 0.01631628
-    },
-    {
-      "timestamp": "2026-08-22T09:45:51.7021442Z",
-      "totalPlayers": 75172,
-      "factions": {
-        "Humans": 1443,
-        "Terminids": 19267,
-        "Automatons": 6738,
-        "Illuminate": 47724
-      },
-      "impactMultiplier": 0.016501248
-    },
-    {
-      "timestamp": "2026-08-22T10:00:53.3332177Z",
-      "totalPlayers": 74713,
-      "factions": {
-        "Humans": 1406,
-        "Terminids": 19216,
-        "Automatons": 6814,
-        "Illuminate": 47277
-      },
-      "impactMultiplier": 0.016910952
-    },
-    {
-      "timestamp": "2026-08-22T10:15:55.2108274Z",
-      "totalPlayers": 75277,
-      "factions": {
-        "Humans": 2331,
-        "Terminids": 19302,
-        "Automatons": 6839,
-        "Illuminate": 46805
-      },
-      "impactMultiplier": 0.017177254
-    },
-    {
-      "timestamp": "2026-08-22T10:30:57.0436831Z",
-      "totalPlayers": 76260,
-      "factions": {
-        "Humans": 3752,
-        "Terminids": 19488,
-        "Automatons": 6796,
-        "Illuminate": 46224
-      },
-      "impactMultiplier": 0.017219018
-    },
-    {
-      "timestamp": "2026-08-22T10:45:58.5984503Z",
-      "totalPlayers": 77743,
-      "factions": {
-        "Humans": 4656,
-        "Terminids": 19727,
-        "Automatons": 7044,
-        "Illuminate": 46316
-      },
-      "impactMultiplier": 0.017025514
-    },
-    {
-      "timestamp": "2026-08-22T11:01:00.2690524Z",
-      "totalPlayers": 79203,
-      "factions": {
-        "Humans": 5273,
-        "Terminids": 20347,
-        "Automatons": 7161,
-        "Illuminate": 46422
-      },
-      "impactMultiplier": 0.016642928
-    },
-    {
-      "timestamp": "2026-08-22T11:16:01.9743425Z",
-      "totalPlayers": 81752,
-      "factions": {
-        "Humans": 6048,
-        "Terminids": 20864,
-        "Automatons": 7418,
-        "Illuminate": 47422
-      },
-      "impactMultiplier": 0.01610554
-    },
-    {
-      "timestamp": "2026-08-22T11:31:03.7494792Z",
-      "totalPlayers": 84562,
-      "factions": {
-        "Humans": 6466,
-        "Terminids": 21664,
-        "Automatons": 7591,
-        "Illuminate": 48841
-      },
-      "impactMultiplier": 0.015764466
-    },
-    {
-      "timestamp": "2026-08-22T11:46:05.3598591Z",
-      "totalPlayers": 88296,
-      "factions": {
-        "Humans": 6935,
-        "Terminids": 22587,
-        "Automatons": 7982,
-        "Illuminate": 50792
-      },
-      "impactMultiplier": 0.015284276
-    },
-    {
-      "timestamp": "2026-08-22T12:00:25.3806765Z",
-      "totalPlayers": 91802,
-      "factions": {
-        "Humans": 7248,
-        "Terminids": 23608,
-        "Automatons": 8360,
-        "Illuminate": 52586
-      },
-      "impactMultiplier": 0.014922528
-    },
-    {
-      "timestamp": "2026-08-22T12:15:27.9373285Z",
-      "totalPlayers": 96430,
-      "factions": {
-        "Humans": 7791,
-        "Terminids": 25061,
-        "Automatons": 8586,
-        "Illuminate": 54992
-      },
-      "impactMultiplier": 0.014410822
-    },
-    {
-      "timestamp": "2026-08-22T12:30:29.8588638Z",
-      "totalPlayers": 101556,
-      "factions": {
-        "Humans": 8258,
-        "Terminids": 26424,
-        "Automatons": 9275,
-        "Illuminate": 57599
-      },
-      "impactMultiplier": 0.0136517845
-    },
-    {
-      "timestamp": "2026-08-22T12:45:31.5372242Z",
-      "totalPlayers": 106694,
-      "factions": {
-        "Humans": 8655,
-        "Terminids": 27760,
-        "Automatons": 9817,
-        "Illuminate": 60462
-      },
-      "impactMultiplier": 0.012978266
-    },
-    {
-      "timestamp": "2026-08-22T13:00:33.1182307Z",
-      "totalPlayers": 111860,
-      "factions": {
-        "Humans": 8967,
-        "Terminids": 29143,
-        "Automatons": 10342,
-        "Illuminate": 63408
-      },
-      "impactMultiplier": 0.012411789
-    },
-    {
-      "timestamp": "2026-08-22T13:15:34.7439775Z",
-      "totalPlayers": 117042,
-      "factions": {
-        "Humans": 9553,
-        "Terminids": 30364,
-        "Automatons": 10761,
-        "Illuminate": 66364
-      },
-      "impactMultiplier": 0.011952227
-    },
-    {
-      "timestamp": "2026-08-22T13:30:36.2859995Z",
-      "totalPlayers": 122267,
-      "factions": {
-        "Humans": 9918,
-        "Terminids": 31632,
-        "Automatons": 11267,
-        "Illuminate": 69450
-      },
-      "impactMultiplier": 0.011351006
-    },
-    {
-      "timestamp": "2026-08-22T13:45:38.0100783Z",
-      "totalPlayers": 127058,
-      "factions": {
-        "Humans": 10207,
-        "Terminids": 32903,
-        "Automatons": 11655,
-        "Illuminate": 72293
-      },
-      "impactMultiplier": 0.0107505545
-    },
-    {
-      "timestamp": "2026-08-22T14:00:39.742199Z",
-      "totalPlayers": 130570,
-      "factions": {
-        "Humans": 11089,
-        "Terminids": 33409,
-        "Automatons": 11956,
-        "Illuminate": 74116
-      },
-      "impactMultiplier": 0.010344007
-    },
-    {
-      "timestamp": "2026-08-22T14:15:41.5531857Z",
-      "totalPlayers": 133747,
-      "factions": {
-        "Humans": 12148,
-        "Terminids": 33535,
-        "Automatons": 11974,
-        "Illuminate": 76090
-      },
-      "impactMultiplier": 0.010038328
-    },
-    {
-      "timestamp": "2026-08-22T14:30:43.1204431Z",
-      "totalPlayers": 136576,
-      "factions": {
-        "Humans": 12915,
-        "Terminids": 33828,
-        "Automatons": 12330,
-        "Illuminate": 77503
-      },
-      "impactMultiplier": 0.009821815
-    },
-    {
-      "timestamp": "2026-08-22T14:45:44.829193Z",
-      "totalPlayers": 138803,
-      "factions": {
-        "Humans": 13314,
-        "Terminids": 34078,
-        "Automatons": 12568,
-        "Illuminate": 78843
-      },
-      "impactMultiplier": 0.009596036
-    },
-    {
-      "timestamp": "2026-08-22T15:00:46.5197888Z",
-      "totalPlayers": 139514,
-      "factions": {
-        "Humans": 13433,
-        "Terminids": 34236,
-        "Automatons": 12741,
-        "Illuminate": 79104
-      },
-      "impactMultiplier": 0.0093190465
-    },
-    {
-      "timestamp": "2026-08-22T15:15:48.2050592Z",
-      "totalPlayers": 140390,
-      "factions": {
-        "Humans": 13261,
-        "Terminids": 34398,
-        "Automatons": 12940,
-        "Illuminate": 79791
-      },
-      "impactMultiplier": 0.009231549
-    },
-    {
-      "timestamp": "2026-08-22T15:30:49.7771877Z",
-      "totalPlayers": 141110,
-      "factions": {
-        "Humans": 13196,
-        "Terminids": 34133,
-        "Automatons": 13139,
-        "Illuminate": 80642
-      },
-      "impactMultiplier": 0.0092600705
-    },
-    {
-      "timestamp": "2026-08-22T15:45:51.4607277Z",
-      "totalPlayers": 141245,
-      "factions": {
-        "Humans": 13176,
-        "Terminids": 33942,
-        "Automatons": 13198,
-        "Illuminate": 80929
-      },
-      "impactMultiplier": 0.009190214
-    },
-    {
-      "timestamp": "2026-08-22T16:00:53.0420138Z",
-      "totalPlayers": 140930,
-      "factions": {
-        "Humans": 12919,
-        "Terminids": 33422,
-        "Automatons": 13387,
-        "Illuminate": 81202
-      },
-      "impactMultiplier": 0.009184099
-    },
-    {
-      "timestamp": "2026-08-22T16:15:55.044969Z",
-      "totalPlayers": 140824,
-      "factions": {
-        "Humans": 13005,
-        "Terminids": 33193,
-        "Automatons": 13333,
-        "Illuminate": 81293
-      },
-      "impactMultiplier": 0.009220922
-    },
-    {
-      "timestamp": "2026-08-22T16:30:56.7700374Z",
-      "totalPlayers": 140966,
-      "factions": {
-        "Humans": 13120,
-        "Terminids": 32845,
-        "Automatons": 13150,
-        "Illuminate": 81851
-      },
-      "impactMultiplier": 0.009252182
-    },
-    {
-      "timestamp": "2026-08-22T16:45:58.5613105Z",
-      "totalPlayers": 141284,
-      "factions": {
-        "Humans": 13507,
-        "Terminids": 32604,
-        "Automatons": 13088,
-        "Illuminate": 82085
-      },
-      "impactMultiplier": 0.009288526
-    },
-    {
-      "timestamp": "2026-08-22T17:01:00.3362434Z",
-      "totalPlayers": 142273,
-      "factions": {
-        "Humans": 14214,
-        "Terminids": 31867,
-        "Automatons": 13002,
-        "Illuminate": 83190
-      },
-      "impactMultiplier": 0.009298173
-    },
-    {
-      "timestamp": "2026-08-22T17:16:02.0816446Z",
-      "totalPlayers": 143211,
-      "factions": {
-        "Humans": 14414,
-        "Terminids": 31376,
-        "Automatons": 12938,
-        "Illuminate": 84483
-      },
-      "impactMultiplier": 0.009320388
-    },
-    {
-      "timestamp": "2026-08-22T17:31:03.7350316Z",
-      "totalPlayers": 144749,
-      "factions": {
-        "Humans": 14501,
-        "Terminids": 30892,
-        "Automatons": 13050,
-        "Illuminate": 86306
-      },
-      "impactMultiplier": 0.009281661
-    },
-    {
-      "timestamp": "2026-08-22T17:46:05.4009463Z",
-      "totalPlayers": 146110,
-      "factions": {
-        "Humans": 14368,
-        "Terminids": 30821,
-        "Automatons": 13241,
-        "Illuminate": 87680
-      },
-      "impactMultiplier": 0.009195887
-    },
-    {
-      "timestamp": "2026-08-22T18:00:25.3618508Z",
-      "totalPlayers": 147296,
-      "factions": {
-        "Humans": 14423,
-        "Terminids": 30779,
-        "Automatons": 13403,
-        "Illuminate": 88691
-      },
-      "impactMultiplier": 0.009045355
-    },
-    {
-      "timestamp": "2026-08-22T18:15:27.3804272Z",
-      "totalPlayers": 149066,
-      "factions": {
-        "Humans": 14416,
-        "Terminids": 30757,
-        "Automatons": 13757,
-        "Illuminate": 90136
-      },
-      "impactMultiplier": 0.008907365
-    }
-  ],
-  "maxRecords": 288
+ "history": [
+  {
+   "timestamp": "2026-08-20T18:30:29.6401091Z",
+   "totalPlayers": 118624,
+   "factions": {
+    "Humans": 1416,
+    "Terminids": 23663,
+    "Automatons": 10468,
+    "Illuminate": 83077
+   },
+   "impactMultiplier": 0.012049436
+  },
+  {
+   "timestamp": "2026-08-20T18:45:31.3583143Z",
+   "totalPlayers": 121429,
+   "factions": {
+    "Humans": 1413,
+    "Terminids": 23876,
+    "Automatons": 10847,
+    "Illuminate": 85293
+   },
+   "impactMultiplier": 0.012029522
+  },
+  {
+   "timestamp": "2026-08-20T19:00:33.0227322Z",
+   "totalPlayers": 123205,
+   "factions": {
+    "Humans": 1473,
+    "Terminids": 23955,
+    "Automatons": 11025,
+    "Illuminate": 86752
+   },
+   "impactMultiplier": 0.01176263
+  },
+  {
+   "timestamp": "2026-08-20T19:15:34.7460576Z",
+   "totalPlayers": 125275,
+   "factions": {
+    "Humans": 1432,
+    "Terminids": 24301,
+    "Automatons": 11218,
+    "Illuminate": 88324
+   },
+   "impactMultiplier": 0.011470079
+  },
+  {
+   "timestamp": "2026-08-20T19:30:36.3364226Z",
+   "totalPlayers": 126564,
+   "factions": {
+    "Humans": 1429,
+    "Terminids": 24524,
+    "Automatons": 11333,
+    "Illuminate": 89278
+   },
+   "impactMultiplier": 0.011375095
+  },
+  {
+   "timestamp": "2026-08-20T19:45:38.067485Z",
+   "totalPlayers": 128293,
+   "factions": {
+    "Humans": 1520,
+    "Terminids": 24880,
+    "Automatons": 11749,
+    "Illuminate": 90144
+   },
+   "impactMultiplier": 0.011283373
+  },
+  {
+   "timestamp": "2026-08-20T20:00:39.7317163Z",
+   "totalPlayers": 128395,
+   "factions": {
+    "Humans": 1443,
+    "Terminids": 25028,
+    "Automatons": 11719,
+    "Illuminate": 90205
+   },
+   "impactMultiplier": 0.0110946745
+  },
+  {
+   "timestamp": "2026-08-20T20:15:41.2150888Z",
+   "totalPlayers": 128284,
+   "factions": {
+    "Humans": 2933,
+    "Terminids": 24759,
+    "Automatons": 11504,
+    "Illuminate": 89088
+   },
+   "impactMultiplier": 0.011104271
+  },
+  {
+   "timestamp": "2026-08-20T20:30:42.9222479Z",
+   "totalPlayers": 128645,
+   "factions": {
+    "Humans": 3230,
+    "Terminids": 24562,
+    "Automatons": 11765,
+    "Illuminate": 89088
+   },
+   "impactMultiplier": 0.011196779
+  },
+  {
+   "timestamp": "2026-08-20T20:45:44.644189Z",
+   "totalPlayers": 128719,
+   "factions": {
+    "Humans": 3205,
+    "Terminids": 24581,
+    "Automatons": 11761,
+    "Illuminate": 89172
+   },
+   "impactMultiplier": 0.011173654
+  },
+  {
+   "timestamp": "2026-08-20T21:00:46.4537467Z",
+   "totalPlayers": 127508,
+   "factions": {
+    "Humans": 2944,
+    "Terminids": 24272,
+    "Automatons": 11659,
+    "Illuminate": 88633
+   },
+   "impactMultiplier": 0.011081204
+  },
+  {
+   "timestamp": "2026-08-20T21:15:48.1139696Z",
+   "totalPlayers": 126015,
+   "factions": {
+    "Humans": 2941,
+    "Terminids": 23800,
+    "Automatons": 11493,
+    "Illuminate": 87781
+   },
+   "impactMultiplier": 0.011115273
+  },
+  {
+   "timestamp": "2026-08-20T21:30:49.821884Z",
+   "totalPlayers": 125728,
+   "factions": {
+    "Humans": 2525,
+    "Terminids": 23614,
+    "Automatons": 11509,
+    "Illuminate": 88080
+   },
+   "impactMultiplier": 0.0112730265
+  },
+  {
+   "timestamp": "2026-08-20T21:45:51.4942085Z",
+   "totalPlayers": 125149,
+   "factions": {
+    "Humans": 2117,
+    "Terminids": 23609,
+    "Automatons": 11380,
+    "Illuminate": 88043
+   },
+   "impactMultiplier": 0.011557306
+  },
+  {
+   "timestamp": "2026-08-20T22:00:53.0970097Z",
+   "totalPlayers": 124029,
+   "factions": {
+    "Humans": 1999,
+    "Terminids": 23095,
+    "Automatons": 11190,
+    "Illuminate": 87745
+   },
+   "impactMultiplier": 0.011701553
+  },
+  {
+   "timestamp": "2026-08-20T22:15:54.8581967Z",
+   "totalPlayers": 123544,
+   "factions": {
+    "Humans": 3511,
+    "Terminids": 22704,
+    "Automatons": 11044,
+    "Illuminate": 86285
+   },
+   "impactMultiplier": 0.011662077
+  },
+  {
+   "timestamp": "2026-08-20T22:30:56.372021Z",
+   "totalPlayers": 123132,
+   "factions": {
+    "Humans": 3367,
+    "Terminids": 22273,
+    "Automatons": 10902,
+    "Illuminate": 86590
+   },
+   "impactMultiplier": 0.011844507
+  },
+  {
+   "timestamp": "2026-08-20T22:45:58.0257006Z",
+   "totalPlayers": 123041,
+   "factions": {
+    "Humans": 3197,
+    "Terminids": 22195,
+    "Automatons": 10957,
+    "Illuminate": 86692
+   },
+   "impactMultiplier": 0.011952485
+  },
+  {
+   "timestamp": "2026-08-20T23:00:59.7160822Z",
+   "totalPlayers": 123356,
+   "factions": {
+    "Humans": 2999,
+    "Terminids": 22077,
+    "Automatons": 11051,
+    "Illuminate": 87229
+   },
+   "impactMultiplier": 0.011949736
+  },
+  {
+   "timestamp": "2026-08-20T23:16:01.458817Z",
+   "totalPlayers": 123558,
+   "factions": {
+    "Humans": 2911,
+    "Terminids": 21755,
+    "Automatons": 10943,
+    "Illuminate": 87949
+   },
+   "impactMultiplier": 0.011982232
+  },
+  {
+   "timestamp": "2026-08-20T23:31:03.0654201Z",
+   "totalPlayers": 124657,
+   "factions": {
+    "Humans": 2903,
+    "Terminids": 21461,
+    "Automatons": 10998,
+    "Illuminate": 89295
+   },
+   "impactMultiplier": 0.011987614
+  },
+  {
+   "timestamp": "2026-08-20T23:46:04.3990382Z",
+   "totalPlayers": 126669,
+   "factions": {
+    "Humans": 2864,
+    "Terminids": 21536,
+    "Automatons": 11102,
+    "Illuminate": 91167
+   },
+   "impactMultiplier": 0.011922419
+  },
+  {
+   "timestamp": "2026-08-21T00:00:24.4052795Z",
+   "totalPlayers": 128258,
+   "factions": {
+    "Humans": 2792,
+    "Terminids": 21486,
+    "Automatons": 11318,
+    "Illuminate": 92662
+   },
+   "impactMultiplier": 0.011895062
+  },
+  {
+   "timestamp": "2026-08-21T00:15:26.9859136Z",
+   "totalPlayers": 130489,
+   "factions": {
+    "Humans": 2880,
+    "Terminids": 21726,
+    "Automatons": 11245,
+    "Illuminate": 94638
+   },
+   "impactMultiplier": 0.011844912
+  },
+  {
+   "timestamp": "2026-08-21T00:30:28.8340346Z",
+   "totalPlayers": 133382,
+   "factions": {
+    "Humans": 2904,
+    "Terminids": 21916,
+    "Automatons": 11500,
+    "Illuminate": 97062
+   },
+   "impactMultiplier": 0.011656422
+  },
+  {
+   "timestamp": "2026-08-21T00:45:30.4762048Z",
+   "totalPlayers": 136288,
+   "factions": {
+    "Humans": 2907,
+    "Terminids": 22227,
+    "Automatons": 11829,
+    "Illuminate": 99325
+   },
+   "impactMultiplier": 0.0114463
+  },
+  {
+   "timestamp": "2026-08-21T01:00:32.2191084Z",
+   "totalPlayers": 138681,
+   "factions": {
+    "Humans": 2759,
+    "Terminids": 22595,
+    "Automatons": 12156,
+    "Illuminate": 101171
+   },
+   "impactMultiplier": 0.011149597
+  },
+  {
+   "timestamp": "2026-08-21T01:15:33.8522877Z",
+   "totalPlayers": 140844,
+   "factions": {
+    "Humans": 2818,
+    "Terminids": 22676,
+    "Automatons": 12157,
+    "Illuminate": 103193
+   },
+   "impactMultiplier": 0.0109691825
+  },
+  {
+   "timestamp": "2026-08-21T01:30:35.4849561Z",
+   "totalPlayers": 142830,
+   "factions": {
+    "Humans": 2806,
+    "Terminids": 22930,
+    "Automatons": 12323,
+    "Illuminate": 104771
+   },
+   "impactMultiplier": 0.010818499
+  },
+  {
+   "timestamp": "2026-08-21T01:45:37.2790761Z",
+   "totalPlayers": 144033,
+   "factions": {
+    "Humans": 2699,
+    "Terminids": 23191,
+    "Automatons": 12381,
+    "Illuminate": 105762
+   },
+   "impactMultiplier": 0.010575156
+  },
+  {
+   "timestamp": "2026-08-21T02:00:39.0131292Z",
+   "totalPlayers": 143780,
+   "factions": {
+    "Humans": 2691,
+    "Terminids": 23236,
+    "Automatons": 12216,
+    "Illuminate": 105637
+   },
+   "impactMultiplier": 0.010432588
+  },
+  {
+   "timestamp": "2026-08-21T02:15:40.7761217Z",
+   "totalPlayers": 142609,
+   "factions": {
+    "Humans": 2606,
+    "Terminids": 23391,
+    "Automatons": 11994,
+    "Illuminate": 104618
+   },
+   "impactMultiplier": 0.010359277
+  },
+  {
+   "timestamp": "2026-08-21T02:30:42.3894119Z",
+   "totalPlayers": 141113,
+   "factions": {
+    "Humans": 2361,
+    "Terminids": 23275,
+    "Automatons": 11836,
+    "Illuminate": 103641
+   },
+   "impactMultiplier": 0.010336018
+  },
+  {
+   "timestamp": "2026-08-21T02:45:43.7121206Z",
+   "totalPlayers": 139556,
+   "factions": {
+    "Humans": 2471,
+    "Terminids": 22933,
+    "Automatons": 11813,
+    "Illuminate": 102339
+   },
+   "impactMultiplier": 0.01040626
+  },
+  {
+   "timestamp": "2026-08-21T03:00:45.0923676Z",
+   "totalPlayers": 136423,
+   "factions": {
+    "Humans": 2446,
+    "Terminids": 22600,
+    "Automatons": 11653,
+    "Illuminate": 99724
+   },
+   "impactMultiplier": 0.010513735
+  },
+  {
+   "timestamp": "2026-08-21T03:15:46.8597514Z",
+   "totalPlayers": 132715,
+   "factions": {
+    "Humans": 2379,
+    "Terminids": 22088,
+    "Automatons": 11623,
+    "Illuminate": 96625
+   },
+   "impactMultiplier": 0.010591544
+  },
+  {
+   "timestamp": "2026-08-21T03:30:48.8056193Z",
+   "totalPlayers": 128219,
+   "factions": {
+    "Humans": 2161,
+    "Terminids": 21791,
+    "Automatons": 11286,
+    "Illuminate": 92981
+   },
+   "impactMultiplier": 0.01081467
+  },
+  {
+   "timestamp": "2026-08-21T03:45:50.4806387Z",
+   "totalPlayers": 123830,
+   "factions": {
+    "Humans": 2063,
+    "Terminids": 21112,
+    "Automatons": 10896,
+    "Illuminate": 89759
+   },
+   "impactMultiplier": 0.011083395
+  },
+  {
+   "timestamp": "2026-08-21T04:00:52.1590766Z",
+   "totalPlayers": 119259,
+   "factions": {
+    "Humans": 2006,
+    "Terminids": 20567,
+    "Automatons": 10568,
+    "Illuminate": 86118
+   },
+   "impactMultiplier": 0.011328752
+  },
+  {
+   "timestamp": "2026-08-21T04:15:53.8841231Z",
+   "totalPlayers": 114431,
+   "factions": {
+    "Humans": 2004,
+    "Terminids": 19814,
+    "Automatons": 10103,
+    "Illuminate": 82510
+   },
+   "impactMultiplier": 0.01169918
+  },
+  {
+   "timestamp": "2026-08-21T04:30:55.6376543Z",
+   "totalPlayers": 109106,
+   "factions": {
+    "Humans": 1945,
+    "Terminids": 18935,
+    "Automatons": 9522,
+    "Illuminate": 78704
+   },
+   "impactMultiplier": 0.012256053
+  },
+  {
+   "timestamp": "2026-08-21T04:45:57.3104645Z",
+   "totalPlayers": 104709,
+   "factions": {
+    "Humans": 1799,
+    "Terminids": 18444,
+    "Automatons": 9274,
+    "Illuminate": 75192
+   },
+   "impactMultiplier": 0.012781781
+  },
+  {
+   "timestamp": "2026-08-21T05:00:58.9928622Z",
+   "totalPlayers": 99221,
+   "factions": {
+    "Humans": 1707,
+    "Terminids": 17933,
+    "Automatons": 8724,
+    "Illuminate": 70857
+   },
+   "impactMultiplier": 0.01315842
+  },
+  {
+   "timestamp": "2026-08-21T05:16:00.4648695Z",
+   "totalPlayers": 93767,
+   "factions": {
+    "Humans": 1626,
+    "Terminids": 17218,
+    "Automatons": 8318,
+    "Illuminate": 66605
+   },
+   "impactMultiplier": 0.013733012
+  },
+  {
+   "timestamp": "2026-08-21T05:31:02.1108496Z",
+   "totalPlayers": 89226,
+   "factions": {
+    "Humans": 1649,
+    "Terminids": 16672,
+    "Automatons": 7867,
+    "Illuminate": 63038
+   },
+   "impactMultiplier": 0.01432449
+  },
+  {
+   "timestamp": "2026-08-21T05:46:03.6562224Z",
+   "totalPlayers": 85360,
+   "factions": {
+    "Humans": 1532,
+    "Terminids": 16450,
+    "Automatons": 7685,
+    "Illuminate": 59693
+   },
+   "impactMultiplier": 0.014931373
+  },
+  {
+   "timestamp": "2026-08-21T06:00:25.4090763Z",
+   "totalPlayers": 81507,
+   "factions": {
+    "Humans": 1404,
+    "Terminids": 16065,
+    "Automatons": 7351,
+    "Illuminate": 56687
+   },
+   "impactMultiplier": 0.015602512
+  },
+  {
+   "timestamp": "2026-08-21T06:15:27.6793365Z",
+   "totalPlayers": 77626,
+   "factions": {
+    "Humans": 1412,
+    "Terminids": 15650,
+    "Automatons": 6781,
+    "Illuminate": 53783
+   },
+   "impactMultiplier": 0.016150951
+  },
+  {
+   "timestamp": "2026-08-21T06:30:29.6366563Z",
+   "totalPlayers": 74238,
+   "factions": {
+    "Humans": 1355,
+    "Terminids": 15266,
+    "Automatons": 6531,
+    "Illuminate": 51086
+   },
+   "impactMultiplier": 0.016534409
+  },
+  {
+   "timestamp": "2026-08-21T06:45:31.3107874Z",
+   "totalPlayers": 71557,
+   "factions": {
+    "Humans": 1287,
+    "Terminids": 15138,
+    "Automatons": 6446,
+    "Illuminate": 48686
+   },
+   "impactMultiplier": 0.017257387
+  },
+  {
+   "timestamp": "2026-08-21T07:00:32.9166363Z",
+   "totalPlayers": 69229,
+   "factions": {
+    "Humans": 1307,
+    "Terminids": 14859,
+    "Automatons": 6199,
+    "Illuminate": 46864
+   },
+   "impactMultiplier": 0.018008856
+  },
+  {
+   "timestamp": "2026-08-21T07:15:34.586236Z",
+   "totalPlayers": 66490,
+   "factions": {
+    "Humans": 1252,
+    "Terminids": 14566,
+    "Automatons": 5981,
+    "Illuminate": 44691
+   },
+   "impactMultiplier": 0.018367775
+  },
+  {
+   "timestamp": "2026-08-21T07:30:36.3539091Z",
+   "totalPlayers": 64655,
+   "factions": {
+    "Humans": 1214,
+    "Terminids": 14342,
+    "Automatons": 5798,
+    "Illuminate": 43301
+   },
+   "impactMultiplier": 0.019268684
+  },
+  {
+   "timestamp": "2026-08-21T07:45:38.0530637Z",
+   "totalPlayers": 63607,
+   "factions": {
+    "Humans": 1291,
+    "Terminids": 14206,
+    "Automatons": 5724,
+    "Illuminate": 42386
+   },
+   "impactMultiplier": 0.019621825
+  },
+  {
+   "timestamp": "2026-08-21T08:00:39.7819605Z",
+   "totalPlayers": 62171,
+   "factions": {
+    "Humans": 1271,
+    "Terminids": 14109,
+    "Automatons": 5533,
+    "Illuminate": 41258
+   },
+   "impactMultiplier": 0.01985953
+  },
+  {
+   "timestamp": "2026-08-21T08:15:41.3262481Z",
+   "totalPlayers": 61194,
+   "factions": {
+    "Humans": 1306,
+    "Terminids": 14155,
+    "Automatons": 5324,
+    "Illuminate": 40409
+   },
+   "impactMultiplier": 0.020415723
+  },
+  {
+   "timestamp": "2026-08-21T08:30:42.9497427Z",
+   "totalPlayers": 60282,
+   "factions": {
+    "Humans": 1238,
+    "Terminids": 14169,
+    "Automatons": 5202,
+    "Illuminate": 39673
+   },
+   "impactMultiplier": 0.020394903
+  },
+  {
+   "timestamp": "2026-08-21T08:45:44.6337824Z",
+   "totalPlayers": 59848,
+   "factions": {
+    "Humans": 1258,
+    "Terminids": 14076,
+    "Automatons": 5129,
+    "Illuminate": 39385
+   },
+   "impactMultiplier": 0.020542275
+  },
+  {
+   "timestamp": "2026-08-21T09:00:46.2452Z",
+   "totalPlayers": 59296,
+   "factions": {
+    "Humans": 1334,
+    "Terminids": 14015,
+    "Automatons": 5174,
+    "Illuminate": 38773
+   },
+   "impactMultiplier": 0.020792909
+  },
+  {
+   "timestamp": "2026-08-21T09:15:48.0682889Z",
+   "totalPlayers": 58902,
+   "factions": {
+    "Humans": 1245,
+    "Terminids": 14105,
+    "Automatons": 5090,
+    "Illuminate": 38462
+   },
+   "impactMultiplier": 0.021128401
+  },
+  {
+   "timestamp": "2026-08-21T09:30:49.7420933Z",
+   "totalPlayers": 59204,
+   "factions": {
+    "Humans": 1281,
+    "Terminids": 14061,
+    "Automatons": 4947,
+    "Illuminate": 38915
+   },
+   "impactMultiplier": 0.021428695
+  },
+  {
+   "timestamp": "2026-08-21T09:45:51.3485061Z",
+   "totalPlayers": 59730,
+   "factions": {
+    "Humans": 1303,
+    "Terminids": 13858,
+    "Automatons": 4918,
+    "Illuminate": 39651
+   },
+   "impactMultiplier": 0.021151936
+  },
+  {
+   "timestamp": "2026-08-21T10:00:52.9364331Z",
+   "totalPlayers": 60589,
+   "factions": {
+    "Humans": 1281,
+    "Terminids": 13655,
+    "Automatons": 4803,
+    "Illuminate": 40850
+   },
+   "impactMultiplier": 0.020818457
+  },
+  {
+   "timestamp": "2026-08-21T10:15:54.6292123Z",
+   "totalPlayers": 61524,
+   "factions": {
+    "Humans": 1275,
+    "Terminids": 13640,
+    "Automatons": 4835,
+    "Illuminate": 41774
+   },
+   "impactMultiplier": 0.020556575
+  },
+  {
+   "timestamp": "2026-08-21T10:30:56.22243Z",
+   "totalPlayers": 62773,
+   "factions": {
+    "Humans": 1290,
+    "Terminids": 13700,
+    "Automatons": 4900,
+    "Illuminate": 42883
+   },
+   "impactMultiplier": 0.020051911
+  },
+  {
+   "timestamp": "2026-08-21T10:45:57.7867178Z",
+   "totalPlayers": 64542,
+   "factions": {
+    "Humans": 1410,
+    "Terminids": 13970,
+    "Automatons": 5063,
+    "Illuminate": 44099
+   },
+   "impactMultiplier": 0.019846784
+  },
+  {
+   "timestamp": "2026-08-21T11:00:59.5093877Z",
+   "totalPlayers": 66524,
+   "factions": {
+    "Humans": 1441,
+    "Terminids": 14451,
+    "Automatons": 5162,
+    "Illuminate": 45470
+   },
+   "impactMultiplier": 0.019493315
+  },
+  {
+   "timestamp": "2026-08-21T11:16:01.2564157Z",
+   "totalPlayers": 68889,
+   "factions": {
+    "Humans": 1497,
+    "Terminids": 14762,
+    "Automatons": 5402,
+    "Illuminate": 47228
+   },
+   "impactMultiplier": 0.018763198
+  },
+  {
+   "timestamp": "2026-08-21T11:31:03.0152034Z",
+   "totalPlayers": 71866,
+   "factions": {
+    "Humans": 1498,
+    "Terminids": 15421,
+    "Automatons": 5592,
+    "Illuminate": 49355
+   },
+   "impactMultiplier": 0.018178625
+  },
+  {
+   "timestamp": "2026-08-21T11:46:04.778547Z",
+   "totalPlayers": 75854,
+   "factions": {
+    "Humans": 1653,
+    "Terminids": 16374,
+    "Automatons": 5845,
+    "Illuminate": 51982
+   },
+   "impactMultiplier": 0.017709315
+  },
+  {
+   "timestamp": "2026-08-21T12:00:24.6060828Z",
+   "totalPlayers": 79555,
+   "factions": {
+    "Humans": 1742,
+    "Terminids": 17435,
+    "Automatons": 5955,
+    "Illuminate": 54423
+   },
+   "impactMultiplier": 0.01704981
+  },
+  {
+   "timestamp": "2026-08-21T12:15:27.0852075Z",
+   "totalPlayers": 84683,
+   "factions": {
+    "Humans": 1690,
+    "Terminids": 18781,
+    "Automatons": 6294,
+    "Illuminate": 57918
+   },
+   "impactMultiplier": 0.016118072
+  },
+  {
+   "timestamp": "2026-08-21T12:30:28.9106199Z",
+   "totalPlayers": 89118,
+   "factions": {
+    "Humans": 1792,
+    "Terminids": 19993,
+    "Automatons": 6636,
+    "Illuminate": 60697
+   },
+   "impactMultiplier": 0.015401061
+  },
+  {
+   "timestamp": "2026-08-21T12:45:30.9321706Z",
+   "totalPlayers": 94346,
+   "factions": {
+    "Humans": 2048,
+    "Terminids": 21336,
+    "Automatons": 7135,
+    "Illuminate": 63827
+   },
+   "impactMultiplier": 0.014682447
+  },
+  {
+   "timestamp": "2026-08-21T13:00:32.6173177Z",
+   "totalPlayers": 98691,
+   "factions": {
+    "Humans": 1989,
+    "Terminids": 22533,
+    "Automatons": 7419,
+    "Illuminate": 66750
+   },
+   "impactMultiplier": 0.013866649
+  },
+  {
+   "timestamp": "2026-08-21T13:15:34.2330316Z",
+   "totalPlayers": 103319,
+   "factions": {
+    "Humans": 2038,
+    "Terminids": 23533,
+    "Automatons": 7832,
+    "Illuminate": 69916
+   },
+   "impactMultiplier": 0.013211524
+  },
+  {
+   "timestamp": "2026-08-21T13:30:36.0479234Z",
+   "totalPlayers": 107527,
+   "factions": {
+    "Humans": 2009,
+    "Terminids": 24461,
+    "Automatons": 8253,
+    "Illuminate": 72804
+   },
+   "impactMultiplier": 0.012440108
+  },
+  {
+   "timestamp": "2026-08-21T13:45:37.5714069Z",
+   "totalPlayers": 111144,
+   "factions": {
+    "Humans": 2052,
+    "Terminids": 25264,
+    "Automatons": 8582,
+    "Illuminate": 75246
+   },
+   "impactMultiplier": 0.011758404
+  },
+  {
+   "timestamp": "2026-08-21T14:00:39.3784403Z",
+   "totalPlayers": 114476,
+   "factions": {
+    "Humans": 2216,
+    "Terminids": 26158,
+    "Automatons": 8877,
+    "Illuminate": 77225
+   },
+   "impactMultiplier": 0.011410863
+  },
+  {
+   "timestamp": "2026-08-21T14:15:41.0586252Z",
+   "totalPlayers": 117525,
+   "factions": {
+    "Humans": 2240,
+    "Terminids": 26709,
+    "Automatons": 9277,
+    "Illuminate": 79299
+   },
+   "impactMultiplier": 0.011170229
+  },
+  {
+   "timestamp": "2026-08-21T14:30:42.7872676Z",
+   "totalPlayers": 119441,
+   "factions": {
+    "Humans": 2227,
+    "Terminids": 26947,
+    "Automatons": 9207,
+    "Illuminate": 81060
+   },
+   "impactMultiplier": 0.011170105
+  },
+  {
+   "timestamp": "2026-08-21T14:45:44.6216056Z",
+   "totalPlayers": 120920,
+   "factions": {
+    "Humans": 2212,
+    "Terminids": 27161,
+    "Automatons": 9236,
+    "Illuminate": 82311
+   },
+   "impactMultiplier": 0.011362682
+  },
+  {
+   "timestamp": "2026-08-21T15:00:46.3913887Z",
+   "totalPlayers": 122066,
+   "factions": {
+    "Humans": 2122,
+    "Terminids": 27486,
+    "Automatons": 9404,
+    "Illuminate": 83054
+   },
+   "impactMultiplier": 0.011565858
+  },
+  {
+   "timestamp": "2026-08-21T15:15:48.1462172Z",
+   "totalPlayers": 121740,
+   "factions": {
+    "Humans": 2117,
+    "Terminids": 27437,
+    "Automatons": 9490,
+    "Illuminate": 82696
+   },
+   "impactMultiplier": 0.011616781
+  },
+  {
+   "timestamp": "2026-08-21T15:30:50.0552324Z",
+   "totalPlayers": 121382,
+   "factions": {
+    "Humans": 2767,
+    "Terminids": 27053,
+    "Automatons": 9605,
+    "Illuminate": 81957
+   },
+   "impactMultiplier": 0.011647031
+  },
+  {
+   "timestamp": "2026-08-21T15:45:51.6867774Z",
+   "totalPlayers": 120833,
+   "factions": {
+    "Humans": 2645,
+    "Terminids": 26434,
+    "Automatons": 9629,
+    "Illuminate": 82125
+   },
+   "impactMultiplier": 0.011938964
+  },
+  {
+   "timestamp": "2026-08-21T16:00:53.4673668Z",
+   "totalPlayers": 119552,
+   "factions": {
+    "Humans": 2385,
+    "Terminids": 26090,
+    "Automatons": 9783,
+    "Illuminate": 81294
+   },
+   "impactMultiplier": 0.0121791465
+  },
+  {
+   "timestamp": "2026-08-21T16:15:55.2210151Z",
+   "totalPlayers": 118585,
+   "factions": {
+    "Humans": 2471,
+    "Terminids": 25518,
+    "Automatons": 9663,
+    "Illuminate": 80933
+   },
+   "impactMultiplier": 0.012410439
+  },
+  {
+   "timestamp": "2026-08-21T16:30:56.8220381Z",
+   "totalPlayers": 117902,
+   "factions": {
+    "Humans": 2281,
+    "Terminids": 24938,
+    "Automatons": 9777,
+    "Illuminate": 80906
+   },
+   "impactMultiplier": 0.012752623
+  },
+  {
+   "timestamp": "2026-08-21T16:45:58.4943533Z",
+   "totalPlayers": 117492,
+   "factions": {
+    "Humans": 2391,
+    "Terminids": 24526,
+    "Automatons": 9636,
+    "Illuminate": 80939
+   },
+   "impactMultiplier": 0.012918939
+  },
+  {
+   "timestamp": "2026-08-21T17:01:00.215341Z",
+   "totalPlayers": 116435,
+   "factions": {
+    "Humans": 2214,
+    "Terminids": 24237,
+    "Automatons": 9622,
+    "Illuminate": 80362
+   },
+   "impactMultiplier": 0.012996713
+  },
+  {
+   "timestamp": "2026-08-21T17:16:01.9740319Z",
+   "totalPlayers": 116383,
+   "factions": {
+    "Humans": 2366,
+    "Terminids": 23958,
+    "Automatons": 9609,
+    "Illuminate": 80450
+   },
+   "impactMultiplier": 0.013293867
+  },
+  {
+   "timestamp": "2026-08-21T17:31:04.5856159Z",
+   "totalPlayers": 117069,
+   "factions": {
+    "Humans": 2344,
+    "Terminids": 23926,
+    "Automatons": 9747,
+    "Illuminate": 81052
+   },
+   "impactMultiplier": 0.013556383
+  },
+  {
+   "timestamp": "2026-08-21T17:46:06.3584135Z",
+   "totalPlayers": 118066,
+   "factions": {
+    "Humans": 2374,
+    "Terminids": 23823,
+    "Automatons": 9928,
+    "Illuminate": 81941
+   },
+   "impactMultiplier": 0.013558484
+  },
+  {
+   "timestamp": "2026-08-21T18:00:25.4738626Z",
+   "totalPlayers": 119155,
+   "factions": {
+    "Humans": 2370,
+    "Terminids": 23895,
+    "Automatons": 10116,
+    "Illuminate": 82774
+   },
+   "impactMultiplier": 0.013592849
+  },
+  {
+   "timestamp": "2026-08-21T18:15:27.6960821Z",
+   "totalPlayers": 120748,
+   "factions": {
+    "Humans": 2436,
+    "Terminids": 23722,
+    "Automatons": 10372,
+    "Illuminate": 84218
+   },
+   "impactMultiplier": 0.0136796925
+  },
+  {
+   "timestamp": "2026-08-21T18:30:29.6632459Z",
+   "totalPlayers": 122711,
+   "factions": {
+    "Humans": 3810,
+    "Terminids": 24143,
+    "Automatons": 10628,
+    "Illuminate": 84130
+   },
+   "impactMultiplier": 0.01362151
+  },
+  {
+   "timestamp": "2026-08-21T18:45:31.3294761Z",
+   "totalPlayers": 124850,
+   "factions": {
+    "Humans": 3420,
+    "Terminids": 24689,
+    "Automatons": 10782,
+    "Illuminate": 85959
+   },
+   "impactMultiplier": 0.013550196
+  },
+  {
+   "timestamp": "2026-08-21T19:00:32.9882775Z",
+   "totalPlayers": 126869,
+   "factions": {
+    "Humans": 2973,
+    "Terminids": 24749,
+    "Automatons": 11172,
+    "Illuminate": 87975
+   },
+   "impactMultiplier": 0.01348166
+  },
+  {
+   "timestamp": "2026-08-21T19:15:34.6591499Z",
+   "totalPlayers": 129386,
+   "factions": {
+    "Humans": 2865,
+    "Terminids": 25012,
+    "Automatons": 11290,
+    "Illuminate": 90219
+   },
+   "impactMultiplier": 0.013453113
+  },
+  {
+   "timestamp": "2026-08-21T19:30:36.3439458Z",
+   "totalPlayers": 132418,
+   "factions": {
+    "Humans": 2815,
+    "Terminids": 25364,
+    "Automatons": 11455,
+    "Illuminate": 92784
+   },
+   "impactMultiplier": 0.01338439
+  },
+  {
+   "timestamp": "2026-08-21T19:45:37.9830835Z",
+   "totalPlayers": 134872,
+   "factions": {
+    "Humans": 2764,
+    "Terminids": 25412,
+    "Automatons": 11649,
+    "Illuminate": 95047
+   },
+   "impactMultiplier": 0.0130689945
+  },
+  {
+   "timestamp": "2026-08-21T20:00:39.7533158Z",
+   "totalPlayers": 136431,
+   "factions": {
+    "Humans": 2697,
+    "Terminids": 25708,
+    "Automatons": 11942,
+    "Illuminate": 96084
+   },
+   "impactMultiplier": 0.01284611
+  },
+  {
+   "timestamp": "2026-08-21T20:15:41.4525433Z",
+   "totalPlayers": 138248,
+   "factions": {
+    "Humans": 2691,
+    "Terminids": 26075,
+    "Automatons": 12103,
+    "Illuminate": 97379
+   },
+   "impactMultiplier": 0.012679688
+  },
+  {
+   "timestamp": "2026-08-21T20:30:43.2296845Z",
+   "totalPlayers": 139200,
+   "factions": {
+    "Humans": 2656,
+    "Terminids": 26273,
+    "Automatons": 12115,
+    "Illuminate": 98156
+   },
+   "impactMultiplier": 0.012541651
+  },
+  {
+   "timestamp": "2026-08-21T20:45:45.0549711Z",
+   "totalPlayers": 140120,
+   "factions": {
+    "Humans": 2794,
+    "Terminids": 26450,
+    "Automatons": 12376,
+    "Illuminate": 98500
+   },
+   "impactMultiplier": 0.01243513
+  },
+  {
+   "timestamp": "2026-08-21T21:00:46.6585626Z",
+   "totalPlayers": 139850,
+   "factions": {
+    "Humans": 2659,
+    "Terminids": 26510,
+    "Automatons": 12428,
+    "Illuminate": 98253
+   },
+   "impactMultiplier": 0.012428094
+  },
+  {
+   "timestamp": "2026-08-21T21:15:48.5126133Z",
+   "totalPlayers": 140099,
+   "factions": {
+    "Humans": 2761,
+    "Terminids": 26392,
+    "Automatons": 12473,
+    "Illuminate": 98473
+   },
+   "impactMultiplier": 0.012469568
+  },
+  {
+   "timestamp": "2026-08-21T21:30:50.3041524Z",
+   "totalPlayers": 138990,
+   "factions": {
+    "Humans": 2608,
+    "Terminids": 26219,
+    "Automatons": 12656,
+    "Illuminate": 97507
+   },
+   "impactMultiplier": 0.012435485
+  },
+  {
+   "timestamp": "2026-08-21T21:45:52.0320364Z",
+   "totalPlayers": 137765,
+   "factions": {
+    "Humans": 2583,
+    "Terminids": 25908,
+    "Automatons": 12532,
+    "Illuminate": 96742
+   },
+   "impactMultiplier": 0.012474852
+  },
+  {
+   "timestamp": "2026-08-21T22:00:53.8171621Z",
+   "totalPlayers": 135810,
+   "factions": {
+    "Humans": 2412,
+    "Terminids": 25494,
+    "Automatons": 12396,
+    "Illuminate": 95508
+   },
+   "impactMultiplier": 0.012614343
+  },
+  {
+   "timestamp": "2026-08-21T22:15:55.6473173Z",
+   "totalPlayers": 133579,
+   "factions": {
+    "Humans": 2575,
+    "Terminids": 24933,
+    "Automatons": 12024,
+    "Illuminate": 94047
+   },
+   "impactMultiplier": 0.012925624
+  },
+  {
+   "timestamp": "2026-08-21T22:30:57.3399145Z",
+   "totalPlayers": 132588,
+   "factions": {
+    "Humans": 2557,
+    "Terminids": 24413,
+    "Automatons": 11907,
+    "Illuminate": 93711
+   },
+   "impactMultiplier": 0.013108308
+  },
+  {
+   "timestamp": "2026-08-21T22:45:58.9785726Z",
+   "totalPlayers": 131161,
+   "factions": {
+    "Humans": 2530,
+    "Terminids": 23797,
+    "Automatons": 11897,
+    "Illuminate": 92937
+   },
+   "impactMultiplier": 0.013257101
+  },
+  {
+   "timestamp": "2026-08-21T23:01:00.7963673Z",
+   "totalPlayers": 129986,
+   "factions": {
+    "Humans": 2570,
+    "Terminids": 23411,
+    "Automatons": 11764,
+    "Illuminate": 92241
+   },
+   "impactMultiplier": 0.013450452
+  },
+  {
+   "timestamp": "2026-08-21T23:16:02.443961Z",
+   "totalPlayers": 129246,
+   "factions": {
+    "Humans": 2585,
+    "Terminids": 23314,
+    "Automatons": 11589,
+    "Illuminate": 91758
+   },
+   "impactMultiplier": 0.013608294
+  },
+  {
+   "timestamp": "2026-08-21T23:31:04.1845371Z",
+   "totalPlayers": 129211,
+   "factions": {
+    "Humans": 2664,
+    "Terminids": 22987,
+    "Automatons": 11550,
+    "Illuminate": 92010
+   },
+   "impactMultiplier": 0.013877672
+  },
+  {
+   "timestamp": "2026-08-21T23:46:05.8245349Z",
+   "totalPlayers": 130066,
+   "factions": {
+    "Humans": 2644,
+    "Terminids": 22976,
+    "Automatons": 11483,
+    "Illuminate": 92963
+   },
+   "impactMultiplier": 0.01398801
+  },
+  {
+   "timestamp": "2026-08-22T00:00:25.9150955Z",
+   "totalPlayers": 130894,
+   "factions": {
+    "Humans": 2581,
+    "Terminids": 23035,
+    "Automatons": 11420,
+    "Illuminate": 93858
+   },
+   "impactMultiplier": 0.013892964
+  },
+  {
+   "timestamp": "2026-08-22T00:15:28.4393327Z",
+   "totalPlayers": 132611,
+   "factions": {
+    "Humans": 2724,
+    "Terminids": 23131,
+    "Automatons": 11331,
+    "Illuminate": 95425
+   },
+   "impactMultiplier": 0.013833371
+  },
+  {
+   "timestamp": "2026-08-22T00:30:30.4037519Z",
+   "totalPlayers": 134680,
+   "factions": {
+    "Humans": 2746,
+    "Terminids": 23249,
+    "Automatons": 11479,
+    "Illuminate": 97206
+   },
+   "impactMultiplier": 0.013784487
+  },
+  {
+   "timestamp": "2026-08-22T00:45:32.1088984Z",
+   "totalPlayers": 137305,
+   "factions": {
+    "Humans": 2785,
+    "Terminids": 23453,
+    "Automatons": 11639,
+    "Illuminate": 99428
+   },
+   "impactMultiplier": 0.013687092
+  },
+  {
+   "timestamp": "2026-08-22T01:00:33.5785851Z",
+   "totalPlayers": 140308,
+   "factions": {
+    "Humans": 2885,
+    "Terminids": 23783,
+    "Automatons": 11930,
+    "Illuminate": 101710
+   },
+   "impactMultiplier": 0.013568393
+  },
+  {
+   "timestamp": "2026-08-22T01:15:35.3349532Z",
+   "totalPlayers": 143781,
+   "factions": {
+    "Humans": 2877,
+    "Terminids": 24377,
+    "Automatons": 11876,
+    "Illuminate": 104651
+   },
+   "impactMultiplier": 0.013301081
+  },
+  {
+   "timestamp": "2026-08-22T01:30:37.0566819Z",
+   "totalPlayers": 147154,
+   "factions": {
+    "Humans": 2793,
+    "Terminids": 24879,
+    "Automatons": 12259,
+    "Illuminate": 107223
+   },
+   "impactMultiplier": 0.012870596
+  },
+  {
+   "timestamp": "2026-08-22T01:45:38.7535573Z",
+   "totalPlayers": 150278,
+   "factions": {
+    "Humans": 2872,
+    "Terminids": 25198,
+    "Automatons": 12817,
+    "Illuminate": 109391
+   },
+   "impactMultiplier": 0.012614954
+  },
+  {
+   "timestamp": "2026-08-22T02:00:40.4691358Z",
+   "totalPlayers": 153209,
+   "factions": {
+    "Humans": 2920,
+    "Terminids": 25732,
+    "Automatons": 12968,
+    "Illuminate": 111589
+   },
+   "impactMultiplier": 0.0124237565
+  },
+  {
+   "timestamp": "2026-08-22T02:15:42.1918218Z",
+   "totalPlayers": 155485,
+   "factions": {
+    "Humans": 2897,
+    "Terminids": 26231,
+    "Automatons": 13226,
+    "Illuminate": 113131
+   },
+   "impactMultiplier": 0.01208752
+  },
+  {
+   "timestamp": "2026-08-22T02:30:43.9290756Z",
+   "totalPlayers": 157103,
+   "factions": {
+    "Humans": 2779,
+    "Terminids": 26295,
+    "Automatons": 13300,
+    "Illuminate": 114729
+   },
+   "impactMultiplier": 0.011833113
+  },
+  {
+   "timestamp": "2026-08-22T02:45:45.730871Z",
+   "totalPlayers": 159209,
+   "factions": {
+    "Humans": 2838,
+    "Terminids": 26655,
+    "Automatons": 13580,
+    "Illuminate": 116136
+   },
+   "impactMultiplier": 0.0116382325
+  },
+  {
+   "timestamp": "2026-08-22T03:00:47.311234Z",
+   "totalPlayers": 159127,
+   "factions": {
+    "Humans": 2724,
+    "Terminids": 26671,
+    "Automatons": 13684,
+    "Illuminate": 116048
+   },
+   "impactMultiplier": 0.011353432
+  },
+  {
+   "timestamp": "2026-08-22T03:15:48.78306Z",
+   "totalPlayers": 157920,
+   "factions": {
+    "Humans": 2815,
+    "Terminids": 26585,
+    "Automatons": 13516,
+    "Illuminate": 115004
+   },
+   "impactMultiplier": 0.011167321
+  },
+  {
+   "timestamp": "2026-08-22T03:30:50.5648202Z",
+   "totalPlayers": 156491,
+   "factions": {
+    "Humans": 2769,
+    "Terminids": 26526,
+    "Automatons": 13296,
+    "Illuminate": 113900
+   },
+   "impactMultiplier": 0.011165228
+  },
+  {
+   "timestamp": "2026-08-22T03:45:52.2959497Z",
+   "totalPlayers": 154112,
+   "factions": {
+    "Humans": 2728,
+    "Terminids": 26335,
+    "Automatons": 13307,
+    "Illuminate": 111742
+   },
+   "impactMultiplier": 0.011048059
+  },
+  {
+   "timestamp": "2026-08-22T04:00:54.0988803Z",
+   "totalPlayers": 150003,
+   "factions": {
+    "Humans": 2538,
+    "Terminids": 26155,
+    "Automatons": 13247,
+    "Illuminate": 108063
+   },
+   "impactMultiplier": 0.010834917
+  },
+  {
+   "timestamp": "2026-08-22T04:15:55.7811524Z",
+   "totalPlayers": 145908,
+   "factions": {
+    "Humans": 2396,
+    "Terminids": 25784,
+    "Automatons": 12964,
+    "Illuminate": 104764
+   },
+   "impactMultiplier": 0.010750971
+  },
+  {
+   "timestamp": "2026-08-22T04:30:57.5117047Z",
+   "totalPlayers": 141338,
+   "factions": {
+    "Humans": 2341,
+    "Terminids": 25238,
+    "Automatons": 12823,
+    "Illuminate": 100936
+   },
+   "impactMultiplier": 0.0106857205
+  },
+  {
+   "timestamp": "2026-08-22T04:45:59.115438Z",
+   "totalPlayers": 136478,
+   "factions": {
+    "Humans": 2249,
+    "Terminids": 24748,
+    "Automatons": 12521,
+    "Illuminate": 96960
+   },
+   "impactMultiplier": 0.010591474
+  },
+  {
+   "timestamp": "2026-08-22T05:01:00.76799Z",
+   "totalPlayers": 131492,
+   "factions": {
+    "Humans": 2272,
+    "Terminids": 23948,
+    "Automatons": 12103,
+    "Illuminate": 93169
+   },
+   "impactMultiplier": 0.010569249
+  },
+  {
+   "timestamp": "2026-08-22T05:16:02.4262059Z",
+   "totalPlayers": 125934,
+   "factions": {
+    "Humans": 2133,
+    "Terminids": 23526,
+    "Automatons": 11333,
+    "Illuminate": 88942
+   },
+   "impactMultiplier": 0.010692755
+  },
+  {
+   "timestamp": "2026-08-22T05:31:04.1958281Z",
+   "totalPlayers": 121091,
+   "factions": {
+    "Humans": 1944,
+    "Terminids": 22857,
+    "Automatons": 10904,
+    "Illuminate": 85386
+   },
+   "impactMultiplier": 0.010887949
+  },
+  {
+   "timestamp": "2026-08-22T05:46:05.7217257Z",
+   "totalPlayers": 116399,
+   "factions": {
+    "Humans": 1869,
+    "Terminids": 22692,
+    "Automatons": 10512,
+    "Illuminate": 81326
+   },
+   "impactMultiplier": 0.011116749
+  },
+  {
+   "timestamp": "2026-08-22T06:00:25.6205282Z",
+   "totalPlayers": 111158,
+   "factions": {
+    "Humans": 1826,
+    "Terminids": 22199,
+    "Automatons": 10067,
+    "Illuminate": 77066
+   },
+   "impactMultiplier": 0.011415338
+  },
+  {
+   "timestamp": "2026-08-22T06:15:28.220717Z",
+   "totalPlayers": 106171,
+   "factions": {
+    "Humans": 1738,
+    "Terminids": 21794,
+    "Automatons": 9585,
+    "Illuminate": 73054
+   },
+   "impactMultiplier": 0.011948656
+  },
+  {
+   "timestamp": "2026-08-22T06:30:30.1092723Z",
+   "totalPlayers": 101779,
+   "factions": {
+    "Humans": 1687,
+    "Terminids": 21466,
+    "Automatons": 8976,
+    "Illuminate": 69650
+   },
+   "impactMultiplier": 0.012525185
+  },
+  {
+   "timestamp": "2026-08-22T06:45:31.9764483Z",
+   "totalPlayers": 97564,
+   "factions": {
+    "Humans": 1600,
+    "Terminids": 20913,
+    "Automatons": 8521,
+    "Illuminate": 66530
+   },
+   "impactMultiplier": 0.012765832
+  },
+  {
+   "timestamp": "2026-08-22T07:00:33.4758307Z",
+   "totalPlayers": 93109,
+   "factions": {
+    "Humans": 1537,
+    "Terminids": 20531,
+    "Automatons": 8194,
+    "Illuminate": 62847
+   },
+   "impactMultiplier": 0.012953751
+  },
+  {
+   "timestamp": "2026-08-22T07:15:34.9808238Z",
+   "totalPlayers": 89391,
+   "factions": {
+    "Humans": 1429,
+    "Terminids": 20076,
+    "Automatons": 7871,
+    "Illuminate": 60015
+   },
+   "impactMultiplier": 0.013439565
+  },
+  {
+   "timestamp": "2026-08-22T07:30:36.5615873Z",
+   "totalPlayers": 86191,
+   "factions": {
+    "Humans": 1469,
+    "Terminids": 19739,
+    "Automatons": 7482,
+    "Illuminate": 57501
+   },
+   "impactMultiplier": 0.014020074
+  },
+  {
+   "timestamp": "2026-08-22T07:45:38.2317059Z",
+   "totalPlayers": 84048,
+   "factions": {
+    "Humans": 1432,
+    "Terminids": 19660,
+    "Automatons": 7263,
+    "Illuminate": 55693
+   },
+   "impactMultiplier": 0.014491846
+  },
+  {
+   "timestamp": "2026-08-22T08:00:40.0290563Z",
+   "totalPlayers": 81945,
+   "factions": {
+    "Humans": 1419,
+    "Terminids": 19328,
+    "Automatons": 7138,
+    "Illuminate": 54060
+   },
+   "impactMultiplier": 0.014908888
+  },
+  {
+   "timestamp": "2026-08-22T08:15:41.6023919Z",
+   "totalPlayers": 80329,
+   "factions": {
+    "Humans": 1331,
+    "Terminids": 19213,
+    "Automatons": 6982,
+    "Illuminate": 52803
+   },
+   "impactMultiplier": 0.015242913
+  },
+  {
+   "timestamp": "2026-08-22T08:30:43.2951216Z",
+   "totalPlayers": 79101,
+   "factions": {
+    "Humans": 1408,
+    "Terminids": 19095,
+    "Automatons": 6817,
+    "Illuminate": 51781
+   },
+   "impactMultiplier": 0.015231588
+  },
+  {
+   "timestamp": "2026-08-22T08:45:45.2541448Z",
+   "totalPlayers": 77921,
+   "factions": {
+    "Humans": 1378,
+    "Terminids": 19071,
+    "Automatons": 6642,
+    "Illuminate": 50830
+   },
+   "impactMultiplier": 0.015118479
+  },
+  {
+   "timestamp": "2026-08-22T09:00:46.9431761Z",
+   "totalPlayers": 76705,
+   "factions": {
+    "Humans": 1408,
+    "Terminids": 18914,
+    "Automatons": 6500,
+    "Illuminate": 49883
+   },
+   "impactMultiplier": 0.015242305
+  },
+  {
+   "timestamp": "2026-08-22T09:15:48.5078891Z",
+   "totalPlayers": 75954,
+   "factions": {
+    "Humans": 1383,
+    "Terminids": 18936,
+    "Automatons": 6533,
+    "Illuminate": 49102
+   },
+   "impactMultiplier": 0.015857225
+  },
+  {
+   "timestamp": "2026-08-22T09:30:50.0255858Z",
+   "totalPlayers": 75289,
+   "factions": {
+    "Humans": 1426,
+    "Terminids": 18954,
+    "Automatons": 6643,
+    "Illuminate": 48266
+   },
+   "impactMultiplier": 0.01631628
+  },
+  {
+   "timestamp": "2026-08-22T09:45:51.7021442Z",
+   "totalPlayers": 75172,
+   "factions": {
+    "Humans": 1443,
+    "Terminids": 19267,
+    "Automatons": 6738,
+    "Illuminate": 47724
+   },
+   "impactMultiplier": 0.016501248
+  },
+  {
+   "timestamp": "2026-08-22T10:00:53.3332177Z",
+   "totalPlayers": 74713,
+   "factions": {
+    "Humans": 1406,
+    "Terminids": 19216,
+    "Automatons": 6814,
+    "Illuminate": 47277
+   },
+   "impactMultiplier": 0.016910952
+  },
+  {
+   "timestamp": "2026-08-22T10:15:55.2108274Z",
+   "totalPlayers": 75277,
+   "factions": {
+    "Humans": 2331,
+    "Terminids": 19302,
+    "Automatons": 6839,
+    "Illuminate": 46805
+   },
+   "impactMultiplier": 0.017177254
+  },
+  {
+   "timestamp": "2026-08-22T10:30:57.0436831Z",
+   "totalPlayers": 76260,
+   "factions": {
+    "Humans": 3752,
+    "Terminids": 19488,
+    "Automatons": 6796,
+    "Illuminate": 46224
+   },
+   "impactMultiplier": 0.017219018
+  },
+  {
+   "timestamp": "2026-08-22T10:45:58.5984503Z",
+   "totalPlayers": 77743,
+   "factions": {
+    "Humans": 4656,
+    "Terminids": 19727,
+    "Automatons": 7044,
+    "Illuminate": 46316
+   },
+   "impactMultiplier": 0.017025514
+  },
+  {
+   "timestamp": "2026-08-22T11:01:00.2690524Z",
+   "totalPlayers": 79203,
+   "factions": {
+    "Humans": 5273,
+    "Terminids": 20347,
+    "Automatons": 7161,
+    "Illuminate": 46422
+   },
+   "impactMultiplier": 0.016642928
+  },
+  {
+   "timestamp": "2026-08-22T11:16:01.9743425Z",
+   "totalPlayers": 81752,
+   "factions": {
+    "Humans": 6048,
+    "Terminids": 20864,
+    "Automatons": 7418,
+    "Illuminate": 47422
+   },
+   "impactMultiplier": 0.01610554
+  },
+  {
+   "timestamp": "2026-08-22T11:31:03.7494792Z",
+   "totalPlayers": 84562,
+   "factions": {
+    "Humans": 6466,
+    "Terminids": 21664,
+    "Automatons": 7591,
+    "Illuminate": 48841
+   },
+   "impactMultiplier": 0.015764466
+  },
+  {
+   "timestamp": "2026-08-22T11:46:05.3598591Z",
+   "totalPlayers": 88296,
+   "factions": {
+    "Humans": 6935,
+    "Terminids": 22587,
+    "Automatons": 7982,
+    "Illuminate": 50792
+   },
+   "impactMultiplier": 0.015284276
+  },
+  {
+   "timestamp": "2026-08-22T12:00:25.3806765Z",
+   "totalPlayers": 91802,
+   "factions": {
+    "Humans": 7248,
+    "Terminids": 23608,
+    "Automatons": 8360,
+    "Illuminate": 52586
+   },
+   "impactMultiplier": 0.014922528
+  },
+  {
+   "timestamp": "2026-08-22T12:15:27.9373285Z",
+   "totalPlayers": 96430,
+   "factions": {
+    "Humans": 7791,
+    "Terminids": 25061,
+    "Automatons": 8586,
+    "Illuminate": 54992
+   },
+   "impactMultiplier": 0.014410822
+  },
+  {
+   "timestamp": "2026-08-22T12:30:29.8588638Z",
+   "totalPlayers": 101556,
+   "factions": {
+    "Humans": 8258,
+    "Terminids": 26424,
+    "Automatons": 9275,
+    "Illuminate": 57599
+   },
+   "impactMultiplier": 0.0136517845
+  },
+  {
+   "timestamp": "2026-08-22T12:45:31.5372242Z",
+   "totalPlayers": 106694,
+   "factions": {
+    "Humans": 8655,
+    "Terminids": 27760,
+    "Automatons": 9817,
+    "Illuminate": 60462
+   },
+   "impactMultiplier": 0.012978266
+  },
+  {
+   "timestamp": "2026-08-22T13:00:33.1182307Z",
+   "totalPlayers": 111860,
+   "factions": {
+    "Humans": 8967,
+    "Terminids": 29143,
+    "Automatons": 10342,
+    "Illuminate": 63408
+   },
+   "impactMultiplier": 0.012411789
+  },
+  {
+   "timestamp": "2026-08-22T13:15:34.7439775Z",
+   "totalPlayers": 117042,
+   "factions": {
+    "Humans": 9553,
+    "Terminids": 30364,
+    "Automatons": 10761,
+    "Illuminate": 66364
+   },
+   "impactMultiplier": 0.011952227
+  },
+  {
+   "timestamp": "2026-08-22T13:30:36.2859995Z",
+   "totalPlayers": 122267,
+   "factions": {
+    "Humans": 9918,
+    "Terminids": 31632,
+    "Automatons": 11267,
+    "Illuminate": 69450
+   },
+   "impactMultiplier": 0.011351006
+  },
+  {
+   "timestamp": "2026-08-22T13:45:38.0100783Z",
+   "totalPlayers": 127058,
+   "factions": {
+    "Humans": 10207,
+    "Terminids": 32903,
+    "Automatons": 11655,
+    "Illuminate": 72293
+   },
+   "impactMultiplier": 0.0107505545
+  },
+  {
+   "timestamp": "2026-08-22T14:00:39.742199Z",
+   "totalPlayers": 130570,
+   "factions": {
+    "Humans": 11089,
+    "Terminids": 33409,
+    "Automatons": 11956,
+    "Illuminate": 74116
+   },
+   "impactMultiplier": 0.010344007
+  },
+  {
+   "timestamp": "2026-08-22T14:15:41.5531857Z",
+   "totalPlayers": 133747,
+   "factions": {
+    "Humans": 12148,
+    "Terminids": 33535,
+    "Automatons": 11974,
+    "Illuminate": 76090
+   },
+   "impactMultiplier": 0.010038328
+  },
+  {
+   "timestamp": "2026-08-22T14:30:43.1204431Z",
+   "totalPlayers": 136576,
+   "factions": {
+    "Humans": 12915,
+    "Terminids": 33828,
+    "Automatons": 12330,
+    "Illuminate": 77503
+   },
+   "impactMultiplier": 0.009821815
+  },
+  {
+   "timestamp": "2026-08-22T14:45:44.829193Z",
+   "totalPlayers": 138803,
+   "factions": {
+    "Humans": 13314,
+    "Terminids": 34078,
+    "Automatons": 12568,
+    "Illuminate": 78843
+   },
+   "impactMultiplier": 0.009596036
+  },
+  {
+   "timestamp": "2026-08-22T15:00:46.5197888Z",
+   "totalPlayers": 139514,
+   "factions": {
+    "Humans": 13433,
+    "Terminids": 34236,
+    "Automatons": 12741,
+    "Illuminate": 79104
+   },
+   "impactMultiplier": 0.0093190465
+  },
+  {
+   "timestamp": "2026-08-22T15:15:48.2050592Z",
+   "totalPlayers": 140390,
+   "factions": {
+    "Humans": 13261,
+    "Terminids": 34398,
+    "Automatons": 12940,
+    "Illuminate": 79791
+   },
+   "impactMultiplier": 0.009231549
+  },
+  {
+   "timestamp": "2026-08-22T15:30:49.7771877Z",
+   "totalPlayers": 141110,
+   "factions": {
+    "Humans": 13196,
+    "Terminids": 34133,
+    "Automatons": 13139,
+    "Illuminate": 80642
+   },
+   "impactMultiplier": 0.0092600705
+  },
+  {
+   "timestamp": "2026-08-22T15:45:51.4607277Z",
+   "totalPlayers": 141245,
+   "factions": {
+    "Humans": 13176,
+    "Terminids": 33942,
+    "Automatons": 13198,
+    "Illuminate": 80929
+   },
+   "impactMultiplier": 0.009190214
+  },
+  {
+   "timestamp": "2026-08-22T16:00:53.0420138Z",
+   "totalPlayers": 140930,
+   "factions": {
+    "Humans": 12919,
+    "Terminids": 33422,
+    "Automatons": 13387,
+    "Illuminate": 81202
+   },
+   "impactMultiplier": 0.009184099
+  },
+  {
+   "timestamp": "2026-08-22T16:15:55.044969Z",
+   "totalPlayers": 140824,
+   "factions": {
+    "Humans": 13005,
+    "Terminids": 33193,
+    "Automatons": 13333,
+    "Illuminate": 81293
+   },
+   "impactMultiplier": 0.009220922
+  },
+  {
+   "timestamp": "2026-08-22T16:30:56.7700374Z",
+   "totalPlayers": 140966,
+   "factions": {
+    "Humans": 13120,
+    "Terminids": 32845,
+    "Automatons": 13150,
+    "Illuminate": 81851
+   },
+   "impactMultiplier": 0.009252182
+  },
+  {
+   "timestamp": "2026-08-22T16:45:58.5613105Z",
+   "totalPlayers": 141284,
+   "factions": {
+    "Humans": 13507,
+    "Terminids": 32604,
+    "Automatons": 13088,
+    "Illuminate": 82085
+   },
+   "impactMultiplier": 0.009288526
+  },
+  {
+   "timestamp": "2026-08-22T17:01:00.3362434Z",
+   "totalPlayers": 142273,
+   "factions": {
+    "Humans": 14214,
+    "Terminids": 31867,
+    "Automatons": 13002,
+    "Illuminate": 83190
+   },
+   "impactMultiplier": 0.009298173
+  },
+  {
+   "timestamp": "2026-08-22T17:16:02.0816446Z",
+   "totalPlayers": 143211,
+   "factions": {
+    "Humans": 14414,
+    "Terminids": 31376,
+    "Automatons": 12938,
+    "Illuminate": 84483
+   },
+   "impactMultiplier": 0.009320388
+  },
+  {
+   "timestamp": "2026-08-22T17:31:03.7350316Z",
+   "totalPlayers": 144749,
+   "factions": {
+    "Humans": 14501,
+    "Terminids": 30892,
+    "Automatons": 13050,
+    "Illuminate": 86306
+   },
+   "impactMultiplier": 0.009281661
+  },
+  {
+   "timestamp": "2026-08-22T17:46:05.4009463Z",
+   "totalPlayers": 146110,
+   "factions": {
+    "Humans": 14368,
+    "Terminids": 30821,
+    "Automatons": 13241,
+    "Illuminate": 87680
+   },
+   "impactMultiplier": 0.009195887
+  },
+  {
+   "timestamp": "2026-08-22T18:00:25.3618508Z",
+   "totalPlayers": 147296,
+   "factions": {
+    "Humans": 14423,
+    "Terminids": 30779,
+    "Automatons": 13403,
+    "Illuminate": 88691
+   },
+   "impactMultiplier": 0.009045355
+  },
+  {
+   "timestamp": "2026-08-22T18:15:27.3804272Z",
+   "totalPlayers": 149066,
+   "factions": {
+    "Humans": 14416,
+    "Terminids": 30757,
+    "Automatons": 13757,
+    "Illuminate": 90136
+   },
+   "impactMultiplier": 0.008907365
+  },
+  {
+   "timestamp": "2026-08-22T19:30:35.8785845Z",
+   "totalPlayers": 160240,
+   "factions": {
+    "Humans": 15420,
+    "Terminids": 32079,
+    "Automatons": 15187,
+    "Illuminate": 97554
+   },
+   "impactMultiplier": 0.008439183
+  },
+  {
+   "timestamp": "2026-08-22T19:45:37.4773031Z",
+   "totalPlayers": 162297,
+   "factions": {
+    "Humans": 15427,
+    "Terminids": 32318,
+    "Automatons": 15377,
+    "Illuminate": 99175
+   },
+   "impactMultiplier": 0.008279658
+  },
+  {
+   "timestamp": "2026-08-22T20:15:41.1080004Z",
+   "totalPlayers": 164173,
+   "factions": {
+    "Humans": 15858,
+    "Terminids": 32782,
+    "Automatons": 15501,
+    "Illuminate": 100032
+   },
+   "impactMultiplier": 0.008169712
+  },
+  {
+   "timestamp": "2026-08-22T20:30:42.7581385Z",
+   "totalPlayers": 164662,
+   "factions": {
+    "Humans": 15872,
+    "Terminids": 32674,
+    "Automatons": 15696,
+    "Illuminate": 100420
+   },
+   "impactMultiplier": 0.008039145
+  },
+  {
+   "timestamp": "2026-08-22T20:45:44.1779814Z",
+   "totalPlayers": 164549,
+   "factions": {
+    "Humans": 15901,
+    "Terminids": 32597,
+    "Automatons": 15599,
+    "Illuminate": 100452
+   },
+   "impactMultiplier": 0.0080624055
+  },
+  {
+   "timestamp": "2026-08-22T21:00:45.8001764Z",
+   "totalPlayers": 163807,
+   "factions": {
+    "Humans": 16049,
+    "Terminids": 32279,
+    "Automatons": 15844,
+    "Illuminate": 99635
+   },
+   "impactMultiplier": 0.008061177
+  },
+  {
+   "timestamp": "2026-08-22T21:15:47.6054403Z",
+   "totalPlayers": 162043,
+   "factions": {
+    "Humans": 15907,
+    "Terminids": 32212,
+    "Automatons": 15515,
+    "Illuminate": 98409
+   },
+   "impactMultiplier": 0.008031158
+  },
+  {
+   "timestamp": "2026-08-22T21:30:49.2766254Z",
+   "totalPlayers": 159762,
+   "factions": {
+    "Humans": 15848,
+    "Terminids": 31827,
+    "Automatons": 15303,
+    "Illuminate": 96784
+   },
+   "impactMultiplier": 0.008140209
+  },
+  {
+   "timestamp": "2026-08-22T21:45:50.8857394Z",
+   "totalPlayers": 156858,
+   "factions": {
+    "Humans": 15433,
+    "Terminids": 31246,
+    "Automatons": 15115,
+    "Illuminate": 95064
+   },
+   "impactMultiplier": 0.008214956
+  },
+  {
+   "timestamp": "2026-08-22T22:00:52.5733077Z",
+   "totalPlayers": 153925,
+   "factions": {
+    "Humans": 15348,
+    "Terminids": 30740,
+    "Automatons": 14726,
+    "Illuminate": 93111
+   },
+   "impactMultiplier": 0.008291887
+  },
+  {
+   "timestamp": "2026-08-22T22:15:54.268014Z",
+   "totalPlayers": 151143,
+   "factions": {
+    "Humans": 15022,
+    "Terminids": 29979,
+    "Automatons": 14351,
+    "Illuminate": 91791
+   },
+   "impactMultiplier": 0.0085372925
+  },
+  {
+   "timestamp": "2026-08-22T22:30:56.0290538Z",
+   "totalPlayers": 148382,
+   "factions": {
+    "Humans": 14563,
+    "Terminids": 29504,
+    "Automatons": 14146,
+    "Illuminate": 90169
+   },
+   "impactMultiplier": 0.008750664
+  },
+  {
+   "timestamp": "2026-08-22T22:45:57.7990535Z",
+   "totalPlayers": 145553,
+   "factions": {
+    "Humans": 14014,
+    "Terminids": 28816,
+    "Automatons": 13919,
+    "Illuminate": 88804
+   },
+   "impactMultiplier": 0.008875529
+  },
+  {
+   "timestamp": "2026-08-22T23:00:59.436701Z",
+   "totalPlayers": 143236,
+   "factions": {
+    "Humans": 13831,
+    "Terminids": 28205,
+    "Automatons": 13778,
+    "Illuminate": 87422
+   },
+   "impactMultiplier": 0.009083248
+  },
+  {
+   "timestamp": "2026-08-22T23:16:01.007488Z",
+   "totalPlayers": 140621,
+   "factions": {
+    "Humans": 13499,
+    "Terminids": 27485,
+    "Automatons": 13608,
+    "Illuminate": 86029
+   },
+   "impactMultiplier": 0.009256114
+  },
+  {
+   "timestamp": "2026-08-22T23:31:02.6339561Z",
+   "totalPlayers": 138747,
+   "factions": {
+    "Humans": 13190,
+    "Terminids": 26936,
+    "Automatons": 13405,
+    "Illuminate": 85216
+   },
+   "impactMultiplier": 0.009381245
+  },
+  {
+   "timestamp": "2026-08-22T23:46:04.2212841Z",
+   "totalPlayers": 137893,
+   "factions": {
+    "Humans": 13177,
+    "Terminids": 26799,
+    "Automatons": 13148,
+    "Illuminate": 84769
+   },
+   "impactMultiplier": 0.009647075
+  },
+  {
+   "timestamp": "2026-08-23T00:15:27.9121158Z",
+   "totalPlayers": 137030,
+   "factions": {
+    "Humans": 13307,
+    "Terminids": 26359,
+    "Automatons": 13288,
+    "Illuminate": 84076
+   },
+   "impactMultiplier": 0.009794055
+  },
+  {
+   "timestamp": "2026-08-23T01:15:34.5879195Z",
+   "totalPlayers": 142968,
+   "factions": {
+    "Humans": 13630,
+    "Terminids": 27025,
+    "Automatons": 13576,
+    "Illuminate": 88737
+   },
+   "impactMultiplier": 0.009693321
+  },
+  {
+   "timestamp": "2026-08-23T01:45:38.0892809Z",
+   "totalPlayers": 148499,
+   "factions": {
+    "Humans": 14020,
+    "Terminids": 27797,
+    "Automatons": 13831,
+    "Illuminate": 92851
+   },
+   "impactMultiplier": 0.009495417
+  },
+  {
+   "timestamp": "2026-08-23T02:00:39.6892444Z",
+   "totalPlayers": 151339,
+   "factions": {
+    "Humans": 14239,
+    "Terminids": 28417,
+    "Automatons": 14129,
+    "Illuminate": 94554
+   },
+   "impactMultiplier": 0.009292936
+  },
+  {
+   "timestamp": "2026-08-23T02:45:44.5382072Z",
+   "totalPlayers": 158129,
+   "factions": {
+    "Humans": 14699,
+    "Terminids": 30125,
+    "Automatons": 14775,
+    "Illuminate": 98530
+   },
+   "impactMultiplier": 0.008590688
+  },
+  {
+   "timestamp": "2026-08-23T03:00:46.2471032Z",
+   "totalPlayers": 158444,
+   "factions": {
+    "Humans": 14783,
+    "Terminids": 30348,
+    "Automatons": 14845,
+    "Illuminate": 98468
+   },
+   "impactMultiplier": 0.008510421
+  },
+  {
+   "timestamp": "2026-08-23T03:30:49.5753014Z",
+   "totalPlayers": 156944,
+   "factions": {
+    "Humans": 14890,
+    "Terminids": 30077,
+    "Automatons": 14579,
+    "Illuminate": 97398
+   },
+   "impactMultiplier": 0.0084920935
+  },
+  {
+   "timestamp": "2026-08-23T03:45:51.2311803Z",
+   "totalPlayers": 154894,
+   "factions": {
+    "Humans": 14755,
+    "Terminids": 29787,
+    "Automatons": 14576,
+    "Illuminate": 95776
+   },
+   "impactMultiplier": 0.008463478
+  },
+  {
+   "timestamp": "2026-08-23T04:00:52.8261778Z",
+   "totalPlayers": 151863,
+   "factions": {
+    "Humans": 14463,
+    "Terminids": 29609,
+    "Automatons": 14289,
+    "Illuminate": 93502
+   },
+   "impactMultiplier": 0.00852866
+  },
+  {
+   "timestamp": "2026-08-23T04:30:56.0532052Z",
+   "totalPlayers": 144449,
+   "factions": {
+    "Humans": 14058,
+    "Terminids": 28307,
+    "Automatons": 13532,
+    "Illuminate": 88552
+   },
+   "impactMultiplier": 0.0087952325
+  },
+  {
+   "timestamp": "2026-08-23T04:45:57.698773Z",
+   "totalPlayers": 140525,
+   "factions": {
+    "Humans": 13528,
+    "Terminids": 27715,
+    "Automatons": 13267,
+    "Illuminate": 86015
+   },
+   "impactMultiplier": 0.008953193
+  },
+  {
+   "timestamp": "2026-08-23T05:00:59.2733302Z",
+   "totalPlayers": 136018,
+   "factions": {
+    "Humans": 13129,
+    "Terminids": 27191,
+    "Automatons": 12888,
+    "Illuminate": 82810
+   },
+   "impactMultiplier": 0.009102642
+  },
+  {
+   "timestamp": "2026-08-23T05:31:02.6257293Z",
+   "totalPlayers": 126844,
+   "factions": {
+    "Humans": 12195,
+    "Terminids": 26190,
+    "Automatons": 11831,
+    "Illuminate": 76628
+   },
+   "impactMultiplier": 0.009656886
+  },
+  {
+   "timestamp": "2026-08-23T06:00:25.8293227Z",
+   "totalPlayers": 117603,
+   "factions": {
+    "Humans": 11271,
+    "Terminids": 25393,
+    "Automatons": 10924,
+    "Illuminate": 70015
+   },
+   "impactMultiplier": 0.010046528
+  },
+  {
+   "timestamp": "2026-08-23T06:15:27.7615543Z",
+   "totalPlayers": 113031,
+   "factions": {
+    "Humans": 10984,
+    "Terminids": 25068,
+    "Automatons": 10386,
+    "Illuminate": 66593
+   },
+   "impactMultiplier": 0.010389723
+  },
+  {
+   "timestamp": "2026-08-23T06:45:31.4800713Z",
+   "totalPlayers": 104908,
+   "factions": {
+    "Humans": 10446,
+    "Terminids": 24069,
+    "Automatons": 9542,
+    "Illuminate": 60851
+   },
+   "impactMultiplier": 0.011063068
+  },
+  {
+   "timestamp": "2026-08-23T07:00:33.123897Z",
+   "totalPlayers": 100791,
+   "factions": {
+    "Humans": 10170,
+    "Terminids": 23751,
+    "Automatons": 9246,
+    "Illuminate": 57624
+   },
+   "impactMultiplier": 0.011493478
+  },
+  {
+   "timestamp": "2026-08-23T07:30:36.3935537Z",
+   "totalPlayers": 93779,
+   "factions": {
+    "Humans": 9457,
+    "Terminids": 22993,
+    "Automatons": 8587,
+    "Illuminate": 52742
+   },
+   "impactMultiplier": 0.012151023
+  },
+  {
+   "timestamp": "2026-08-23T07:45:37.9936136Z",
+   "totalPlayers": 90918,
+   "factions": {
+    "Humans": 9111,
+    "Terminids": 22681,
+    "Automatons": 8280,
+    "Illuminate": 50846
+   },
+   "impactMultiplier": 0.012562941
+  },
+  {
+   "timestamp": "2026-08-23T08:00:39.6246781Z",
+   "totalPlayers": 88824,
+   "factions": {
+    "Humans": 9013,
+    "Terminids": 22426,
+    "Automatons": 7979,
+    "Illuminate": 49406
+   },
+   "impactMultiplier": 0.012931706
+  },
+  {
+   "timestamp": "2026-08-23T08:15:41.2786717Z",
+   "totalPlayers": 86612,
+   "factions": {
+    "Humans": 8660,
+    "Terminids": 22175,
+    "Automatons": 7665,
+    "Illuminate": 48112
+   },
+   "impactMultiplier": 0.013137395
+  },
+  {
+   "timestamp": "2026-08-23T08:30:42.8870344Z",
+   "totalPlayers": 85312,
+   "factions": {
+    "Humans": 8606,
+    "Terminids": 21929,
+    "Automatons": 7506,
+    "Illuminate": 47271
+   },
+   "impactMultiplier": 0.013366283
+  },
+  {
+   "timestamp": "2026-08-23T08:45:44.5155468Z",
+   "totalPlayers": 84027,
+   "factions": {
+    "Humans": 8644,
+    "Terminids": 21559,
+    "Automatons": 7512,
+    "Illuminate": 46312
+   },
+   "impactMultiplier": 0.013561444
+  },
+  {
+   "timestamp": "2026-08-23T09:00:45.8904931Z",
+   "totalPlayers": 82733,
+   "factions": {
+    "Humans": 8510,
+    "Terminids": 21394,
+    "Automatons": 7286,
+    "Illuminate": 45543
+   },
+   "impactMultiplier": 0.013929633
+  },
+  {
+   "timestamp": "2026-08-23T09:15:47.6156842Z",
+   "totalPlayers": 81656,
+   "factions": {
+    "Humans": 8605,
+    "Terminids": 21038,
+    "Automatons": 7101,
+    "Illuminate": 44912
+   },
+   "impactMultiplier": 0.014111754
+  },
+  {
+   "timestamp": "2026-08-23T09:30:49.271736Z",
+   "totalPlayers": 81593,
+   "factions": {
+    "Humans": 8490,
+    "Terminids": 21025,
+    "Automatons": 7100,
+    "Illuminate": 44978
+   },
+   "impactMultiplier": 0.014364258
+  },
+  {
+   "timestamp": "2026-08-23T09:45:50.9687368Z",
+   "totalPlayers": 81830,
+   "factions": {
+    "Humans": 8547,
+    "Terminids": 21053,
+    "Automatons": 7123,
+    "Illuminate": 45107
+   },
+   "impactMultiplier": 0.014187714
+  },
+  {
+   "timestamp": "2026-08-23T10:00:52.5259067Z",
+   "totalPlayers": 81743,
+   "factions": {
+    "Humans": 8496,
+    "Terminids": 21129,
+    "Automatons": 7024,
+    "Illuminate": 45094
+   },
+   "impactMultiplier": 0.013802759
+  }
+ ],
+ "maxRecords": 288
 }
