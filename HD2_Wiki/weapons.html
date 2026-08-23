@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>武器图鉴 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 武器图鉴 - 主武器、副武器、投掷物数据" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
+    .wiki-controls .meta { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 12px; }
+    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .sub-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; min-height: 0; transition: all 0.2s; }
+    .sub-filter button { padding: 4px 12px; border: 1px solid var(--border); border-radius: 14px; background: transparent; color: var(--text-mute); font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .sub-filter button:hover { color: var(--text-dim); }
+    .sub-filter button.active { background: rgba(59,130,246,0.15); color: var(--blue); border-color: var(--blue); }
+
+    .wiki-search { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+    .wiki-search input { width: 100%; padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
+    .wiki-search input:focus { border-color: var(--blue); }
+    .wiki-search input::placeholder { color: var(--text-mute); }
+
+    .weapon-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+    .weapon-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; cursor: pointer; text-decoration: none; color: inherit; display: block; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; overflow: hidden; }
+    .weapon-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+    .weapon-card .cat-bar { position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+    .weapon-card .name { font-size: 1rem; color: var(--text); margin-bottom: 2px; }
+    .weapon-card .name-en { font-size: 0.75rem; color: var(--text-mute); margin-bottom: 6px; }
+    .weapon-card .subcat { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; }
+    .weapon-card .stats { display: flex; gap: 12px; font-size: 0.78rem; color: var(--text-dim); }
+    .weapon-card .stats span { display: flex; align-items: center; gap: 3px; }
+    .pen-light { color: #22c55e; } .pen-medium { color: #f59e0b; } .pen-heavy { color: #ef4444; }
+
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+    .empty { text-align: center; padding: 60px 20px; color: var(--text-mute); font-size: 0.85rem; grid-column: 1 / -1; }
+
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+    .wiki-footer a { color: var(--blue); text-decoration: none; }
+
+    @media (max-width: 1023px) { .weapon-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) { .weapon-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🔫 武器图鉴</h1>
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-top:4px">共 <span id="total-count">0</span> 种武器</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <div class="wiki-controls">
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="sub-filter" id="sub-filter"></div>
+  </div>
+  <div class="wiki-search">
+    <input type="text" id="search-input" placeholder="🔍 搜索武器名称…（支持中文/英文）" oninput="filterWeapons()">
+  </div>
+
+  <div class="weapon-grid" id="weapon-grid"><div class="loading">正在加载武器数据…</div></div>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p>
+  </footer>
+
+  <script>
+    "use strict";
+    var weapons = [];
+    var currentCat = "all";
+    var currentSub = "all";
+
+    async function loadWeapons() {
+      try {
+        var r = await fetch("./data/wiki/zh/weapons.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        weapons = d.weapons || [];
+        document.getElementById("total-count").textContent = weapons.length;
+        renderFilters();
+        renderGrid();
+      } catch(e) {
+        console.error("[Weapons] 加载失败:", e);
+        document.getElementById("weapon-grid").innerHTML = '<div class="empty">⚠️ 武器数据加载失败</div>';
+      }
+    }
+
+    function renderFilters() {
+      var bar = document.getElementById("filter-bar");
+      var cats = [
+        { id: "all", label: "全部 " + weapons.length },
+        { id: "primary", label: "主武器 " + weapons.filter(function(w) { return w.category === "primary"; }).length },
+        { id: "secondary", label: "副武器 " + weapons.filter(function(w) { return w.category === "secondary"; }).length },
+        { id: "throwables", label: "投掷物 " + weapons.filter(function(w) { return w.category === "throwables"; }).length },
+      ];
+      bar.innerHTML = cats.map(function(c) {
+        return '<button class="' + (c.id === currentCat ? "active" : "") + '" onclick="setCategory(\'' + c.id + '\')">' + c.label + '</button>';
+      }).join("");
+      renderSubFilters();
+    }
+
+    function renderSubFilters() {
+      var sub = document.getElementById("sub-filter");
+      var filtered = currentCat === "all" ? weapons : weapons.filter(function(w) { return w.category === currentCat; });
+      var subs = {};
+      filtered.forEach(function(w) {
+        var key = w.subcategory;
+        if (!subs[key]) subs[key] = { id: key, label: w.subcategory_name, count: 0 };
+        subs[key].count++;
+      });
+      var list = Object.values(subs);
+      if (list.length <= 1) { sub.innerHTML = ""; return; }
+      sub.innerHTML = '<button class="' + (currentSub === "all" ? "active" : "") + '" onclick="setSubCategory(\'all\')">全部 ' + filtered.length + '</button>' +
+        list.map(function(s) {
+          return '<button class="' + (currentSub === s.id ? "active" : "") + '" onclick="setSubCategory(\'' + s.id + '\')">' + s.label + " " + s.count + '</button>';
+        }).join("");
+    }
+
+    function setCategory(cat) { currentCat = cat; currentSub = "all"; renderFilters(); filterWeapons(); }
+    function setSubCategory(sub) { currentSub = sub; filterWeapons(); }
+
+    function filterWeapons() {
+      var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
+      var filtered = weapons;
+      if (currentCat !== "all") filtered = filtered.filter(function(w) { return w.category === currentCat; });
+      if (currentSub !== "all") filtered = filtered.filter(function(w) { return w.subcategory === currentSub; });
+      if (q) filtered = filtered.filter(function(w) { return w.name.toLowerCase().includes(q) || w.name_en.toLowerCase().includes(q); });
+      renderGrid(filtered);
+    }
+
+    function renderGrid(list) {
+      list = list || weapons;
+      var grid = document.getElementById("weapon-grid");
+      if (list.length === 0) { grid.innerHTML = '<div class="empty">没有匹配的武器</div>'; return; }
+      var colors = { primary: "#3b82f6", secondary: "#f59e0b", throwables: "#ef4444" };
+      var penLabels = { light: "轻甲", medium: "中甲", heavy: "重甲" };
+      var penClasses = { light: "pen-light", medium: "pen-medium", heavy: "pen-heavy" };
+      grid.innerHTML = list.map(function(w) {
+        var s = w.stats_short || {};
+        return '<a class="weapon-card" href="weapon.html?id=' + encodeURIComponent(w.id) + '">' +
+          '<div class="cat-bar" style="background:' + (colors[w.category] || "#64748b") + '"></div>' +
+          '<div class="name">' + esc(w.name) + '</div>' +
+          '<div class="name-en">' + esc(w.name_en) + '</div>' +
+          '<div class="subcat">' + esc(w.subcategory_name) + '</div>' +
+          '<div class="stats">' +
+            (s.damage ? '<span>⚔️ ' + s.damage + '</span>' : '') +
+            (s.capacity ? '<span>📀 ' + s.capacity + '</span>' : '') +
+            (s.penetration ? '<span class="' + penClasses[s.penetration] + '">🛡️ ' + penLabels[s.penetration] + '</span>' : '') +
+          '</div></a>';
+      }).join("");
+    }
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadWeapons);
+  </script>
+</body>
+</html>

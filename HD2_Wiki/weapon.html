@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>武器详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 武器详情页" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--yellow); }
+
+    .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 70% 30%; gap: 20px; width: 100%; }
+
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+    .info-card { display: flex; flex-direction: column; gap: 16px; }
+    .info-card .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .info-card .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+    .title-block .name { font-size: 1.8rem; color: var(--text); }
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
+    .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+    .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
+
+    .stats-table { width: 100%; border-collapse: collapse; }
+    .stats-table tr { border-bottom: 1px solid var(--border); }
+    .stats-table td { padding: 8px 10px; font-size: 0.85rem; }
+    .stats-table td:first-child { color: var(--text-mute); width: 40%; }
+    .stats-table td:last-child { color: var(--text); }
+
+    .variant-card { display: block; padding: 12px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 8px; }
+    .variant-card:hover { border-color: var(--blue); background: rgba(59,130,246,0.08); }
+    .variant-card .v-name { font-size: 0.88rem; color: var(--text); font-weight: 600; }
+    .variant-card .v-desc { font-size: 0.78rem; color: var(--text-dim); margin: 4px 0; }
+    .variant-card .v-unlock { font-size: 0.75rem; color: var(--yellow); }
+
+    .tips-list { padding-left: 18px; }
+    .tips-list li { font-size: 0.85rem; color: var(--text-dim); line-height: 1.8; }
+
+    .info-side { display: flex; flex-direction: column; gap: 16px; }
+    .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+    .side-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .side-card .field:last-child { border-bottom: none; }
+    .side-card .field .k { color: var(--text-mute); }
+    .side-card .field .v { color: var(--text); }
+    .traits { display: flex; flex-wrap: wrap; gap: 6px; }
+    .trait { padding: 3px 10px; border-radius: 12px; background: rgba(59,130,246,0.12); color: var(--blue); font-size: 0.75rem; }
+    .mode-tag { padding: 3px 10px; border-radius: 12px; background: rgba(245,158,11,0.12); color: var(--yellow); font-size: 0.75rem; display: inline-block; margin: 2px; }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 900px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .info-side { order: 2; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="weapons.html">武器列表</a></div>
+  </header>
+
+  <div class="detail-layout" id="detail-layout">
+    <div class="loading">正在加载武器数据…</div>
+  </div>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p>
+  </footer>
+
+  <script>
+    "use strict";
+    async function loadDetail() {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/weapons.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        var w = (d.weapons || []).find(function(x) { return x.id === id; });
+        if (!w) { layout.innerHTML = '<div class="empty">未找到该武器</div>'; return; }
+        renderDetail(w);
+      } catch(e) {
+        console.error("[Weapon] 加载失败:", e);
+        layout.innerHTML = '<div class="empty">⚠️ 武器数据加载失败</div>';
+      }
+    }
+
+    function renderDetail(w) {
+      var layout = document.getElementById("detail-layout");
+      var catNames = { primary: "主武器", secondary: "副武器", throwables: "投掷物" };
+      var penNames = { light: "轻甲穿透", medium: "中甲穿透", heavy: "重甲穿透" };
+
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="weapons.html">武器列表</a> › ' + esc(catNames[w.category] || w.category) + ' › ' + esc(w.subcategory_name || "") + ' › ' + esc(w.name);
+
+      var sf = w.stats_full || {};
+      var fireModes = (sf.fire_modes || []).map(function(m) { return '<span class="mode-tag">' + esc(m) + '</span>'; }).join("") || "—";
+      var traits = (w.traits || []).map(function(t) { return '<span class="trait">' + esc(t) + '</span>'; }).join("") || "—";
+      var variants = (w.variants || []).map(function(v) {
+        return '<a class="variant-card" href="weapon.html?id=' + encodeURIComponent(v.id) + '">' +
+          '<div class="v-name">' + esc(v.name) + (v.id === w.id ? '' : ' →') + '</div>' +
+          '<div class="v-desc">' + esc(v.description || "") + '</div>' +
+          '<div class="v-unlock">🔓 ' + esc(v.unlock || "") + '</div></a>';
+      }).join("") || '<div class="empty" style="padding:12px;">暂无变体</div>';
+      var tips = (w.tips || []).map(function(t, i) { return '<li>' + esc(t) + '</li>'; }).join("") || '<li>暂无使用策略</li>';
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="name">' + esc(w.name) + '</div>' +
+            '<div class="name-en">' + esc(w.name_en) + '</div>' +
+            '<div class="unlock">⭐ ' + esc(w.unlock || "") + '</div>' +
+            '<div class="desc">' + esc(w.description || "") + '</div>' +
+            (w.lore ? '<div class="lore">' + esc(w.lore) + '</div>' : '') +
+          '</div>' +
+          '<div class="card">' +
+            '<h2>📊 详细属性</h2>' +
+            '<table class="stats-table">' +
+              statRow("伤害", sf.damage) +
+              statRow("弹匣", sf.capacity) +
+              statRow("射速", sf.fire_rate ? sf.fire_rate + " RPM" : null) +
+              statRow("后坐力", sf.recoil) +
+              statRow("穿透", penNames[sf.penetration]) +
+              statRow("备弹", sf.reserve_ammo) +
+              statRow("开火模式", fireModes) +
+              statRow("瞄准镜", sf.scope) +
+              statRow("爆炸半径", sf.blast_radius ? sf.blast_radius + "m" : null) +
+              statRow("引信时间", sf.fuse_time != null ? sf.fuse_time + "s" : null) +
+              statRow("冷却", sf.cooldown ? sf.cooldown + "s" : null) +
+            '</table>' +
+          '</div>' +
+          '<div class="card">' +
+            '<h2>🔄 变体版本</h2>' + variants +
+          '</div>' +
+          '<div class="card">' +
+            '<h2>💡 使用策略</h2>' +
+            '<ol class="tips-list">' + tips + '</ol>' +
+          '</div>' +
+        '</div>' +
+        '<div class="info-side">' +
+          '<div class="side-card">' +
+            '<h3>📦 武器信息</h3>' +
+            field("类型", catNames[w.category] || w.category) +
+            field("分类", w.subcategory_name) +
+            field("伤害", sf.damage) +
+            field("弹匣", sf.capacity) +
+            field("射速", sf.fire_rate ? sf.fire_rate + " RPM" : "—") +
+            field("后坐力", sf.recoil) +
+            field("穿透", penNames[sf.penetration]) +
+            field("变体", (w.variants || []).length + " 种") +
+          '</div>' +
+          '<div class="side-card">' +
+            '<h3>🏷️ 特性</h3><div class="traits">' + traits + '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null ? "—" : v) + '</span></div>'; }
+    function statRow(k, v) { return v == null ? "" : '<tr><td>' + esc(k) + '</td><td>' + (typeof v === "string" ? v : esc(v)) + '</td></tr>'; }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>
