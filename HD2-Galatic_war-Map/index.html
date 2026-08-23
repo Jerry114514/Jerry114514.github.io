@@ -1050,7 +1050,32 @@
     }
 
 </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <!-- 多源兜底加载 Chart.js -->
+  <script>
+  (function() {
+    var CDN_SOURCES = [
+      'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js',
+      'https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
+      'https://cdn.jsdmirror.com/npm/chart.js@4.4.7/dist/chart.umd.min.js',
+      '/js/libs/chart.umd.min.js'
+    ];
+    var idx = 0;
+    function load() {
+      if (idx >= CDN_SOURCES.length) {
+        console.error('[Chart.js] 所有源加载失败');
+        document.dispatchEvent(new Event('chartjs-load-failed'));
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = CDN_SOURCES[idx];
+      s.async = true;
+      s.onload = function() { console.log('[Chart.js] OK:', CDN_SOURCES[idx]); document.dispatchEvent(new Event('chartjs-loaded')); };
+      s.onerror = function() { console.warn('[Chart.js] FAIL:', CDN_SOURCES[idx]); idx++; load(); };
+      document.head.appendChild(s);
+    }
+    load();
+  })();
+  </script>
 </head>
 <body>
 
@@ -2838,7 +2863,21 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
             '<div class="trend-chart-container"><canvas id="impact-chart"></canvas></div>' +
           '</div>';
         meta.textContent = "更新于 " + new Date(latest.timestamp).toLocaleTimeString();
-        renderImpactChart(hist);
+        // 等待 Chart.js 加载完成后再渲染图表
+        function tryRenderChart() {
+          if (typeof Chart !== "undefined") {
+            renderImpactChart(hist);
+          } else {
+            document.addEventListener("chartjs-loaded", function() { renderImpactChart(hist); }, { once: true });
+            document.addEventListener("chartjs-load-failed", function() { }, { once: true });
+          }
+        }
+        tryRenderChart();
+        // 监听加载失败，显示降级提示
+        document.addEventListener("chartjs-load-failed", function() {
+          var container = document.querySelector(".trend-chart-container");
+          if (container) container.innerHTML = '<div class="chart-fallback" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:0.85rem;gap:8px"><span>📊</span><p>图表加载失败</p><button onclick="location.reload()" style="padding:6px 16px;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--text);cursor:pointer;font-size:0.78rem">刷新重试</button></div>';
+        }, { once: true });
       })
       .catch(function(e) {
         console.warn("renderImpact error:", e);
