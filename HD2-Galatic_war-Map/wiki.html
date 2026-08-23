@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 中文维基 - 社区驱动的 Helldivers 2 资料站" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    html, body { height: 100%; font-family: "Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    /* Header */
+    .wiki-header {
+      text-align: center; padding: 48px 20px 32px;
+      background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .wiki-header h1 { font-size: 2rem; font-weight: 700; color: var(--yellow); margin-bottom: 8px; }
+    .wiki-header p { font-size: 1rem; color: var(--text-dim); }
+    .wiki-header .nav-links { margin-top: 16px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .wiki-header .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .nav-links a:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    /* Search */
+    .wiki-search { text-align: center; padding: 16px 20px; }
+    .wiki-search input {
+      width: 100%; max-width: 480px; padding: 10px 16px; border: 1px solid var(--border);
+      border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text);
+      font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+    }
+    .wiki-search input:focus { border-color: var(--blue); }
+    .wiki-search input::placeholder { color: var(--text-mute); }
+
+    /* Grid */
+    .wiki-grid {
+      flex: 1; max-width: 1200px; margin: 0 auto; padding: 0 20px 40px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .wiki-card {
+      background: var(--bg-card); backdrop-filter: blur(10px);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px; transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .wiki-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+    .wiki-card.full-width { grid-column: 1 / -1; }
+    .wiki-card h2 { font-size: 1.1rem; color: var(--text); margin-bottom: 12px; }
+    .wiki-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+    .wiki-card .btn {
+      display: inline-block; margin-top: 12px; padding: 8px 20px;
+      border: 1px solid var(--blue); border-radius: 8px; color: var(--blue);
+      text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .wiki-card .btn:hover { background: var(--blue); color: #fff; }
+    .wiki-card .btn + .btn { margin-left: 8px; }
+
+    /* Navigation categories */
+    .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: 8px; text-decoration: none;
+      color: var(--text); transition: all 0.2s; font-size: 0.85rem;
+    }
+    .nav-item:hover { border-color: var(--blue); background: rgba(59,130,246,0.08); }
+    .nav-item .icon { font-size: 1.2rem; }
+    .nav-item .desc { font-size: 0.75rem; color: var(--text-mute); }
+    .nav-item .count { font-size: 0.7rem; color: var(--text-mute); margin-left: auto; }
+
+    /* Factions */
+    .faction-card {
+      padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px;
+    }
+    .faction-card:last-child { margin-bottom: 0; }
+    .faction-card .faction-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+    .faction-card p { font-size: 0.78rem; }
+
+    /* News */
+    .news-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .news-item:last-child { border-bottom: none; }
+    .news-item .news-date { font-size: 0.7rem; color: var(--text-mute); }
+    .news-item .news-title { font-size: 0.85rem; color: var(--text); margin: 2px 0; }
+    .news-item .news-summary { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* Beginners */
+    .beginners-section { margin-bottom: 12px; }
+    .beginners-section h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 6px; }
+    .beginners-section ul { padding-left: 18px; }
+    .beginners-section li { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* Features list */
+    .features-list { padding-left: 18px; }
+    .features-list li { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* Footer */
+    .wiki-footer {
+      text-align: center; padding: 24px 20px; border-top: 1px solid var(--border);
+      color: var(--text-mute); font-size: 0.78rem;
+    }
+    .wiki-footer a { color: var(--blue); text-decoration: none; }
+    .wiki-footer a:hover { color: var(--yellow); }
+
+    /* Loading */
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+
+    /* Responsive */
+    @media (max-width: 1023px) { .wiki-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) {
+      .wiki-grid { grid-template-columns: 1fr; }
+      .wiki-header h1 { font-size: 1.5rem; }
+      .nav-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🚀 绝地潜兵2 中文维基</h1>
+    <p>自由 · 民主 · 超级地球</p>
+    <div class="nav-links">
+      <a href="./index.html">◀ 返回战况面板</a>
+      <a href="#">全部页面</a>
+      <a href="https://github.com/Jerry114514/Jerry114514.github.io">GitHub</a>
+    </div>
+  </header>
+
+  <div class="wiki-search">
+    <input type="text" id="wiki-search-input" placeholder="🔍 搜索维基内容…（武器、战备、敌人、星球）" oninput="filterWiki(event)">
+  </div>
+
+  <div class="wiki-grid" id="wiki-grid">
+    <div class="loading">正在加载维基数据…</div>
+  </div>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 非官方数据源</p>
+    <p style="margin-top:4px">
+      <a href="https://helldivers.wiki.gg">Helldivers Wiki.gg</a> · 
+      <a href="https://discord.gg/helldivers">Discord</a> · 
+      <a href="https://store.steampowered.com/app/553850">Steam</a>
+    </p>
+  </footer>
+
+  <script>
+    "use strict";
+    const WIKI_BASE = "./data/wiki/zh";
+
+    async function loadWiki() {
+      const grid = document.getElementById("wiki-grid");
+      try {
+        const configResp = await fetch(WIKI_BASE + "/index.json?t=" + Date.now(), { cache: "no-store" });
+        if (!configResp.ok) throw new Error("HTTP " + configResp.status);
+        const config = await configResp.json();
+        const blocks = config.blocks || [];
+        const html = [];
+        for (const block of blocks) {
+          try {
+            const resp = await fetch(WIKI_BASE + "/blocks/" + block.id + ".json?t=" + Date.now(), { cache: "no-store" });
+            if (!resp.ok) continue;
+            const data = await resp.json();
+            html.push(renderBlock(data, block.type));
+          } catch (e) {
+            console.warn("[Wiki] 加载板块失败:", block.id, e);
+          }
+        }
+        grid.innerHTML = html.join("");
+      } catch (e) {
+        console.error("[Wiki] 加载失败:", e);
+        grid.innerHTML = '<div class="loading">⚠️ 维基数据加载失败，请刷新重试</div>';
+      }
+    }
+
+    function renderBlock(data, type) {
+      var cls = "wiki-card";
+      if (type === "full-width") cls += " full-width";
+      switch (data.id) {
+        case "welcome":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            '<p style="font-size:0.9rem;color:var(--yellow);margin-bottom:8px">' + esc(data.subtitle) + '</p>' +
+            '<p>' + esc(data.content) + '</p>' +
+            (data.buttons ? data.buttons.map(function(b) { return '<a class="btn" href="' + esc(b.link) + '">' + esc(b.text) + '</a>'; }).join("") : "") +
+            '</div>';
+        case "about":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            '<p>' + esc(data.content) + '</p>' +
+            '<ul class="features-list">' + (data.features || []).map(function(f) { return '<li>' + esc(f) + '</li>'; }).join("") + '</ul>' +
+            '</div>';
+        case "navigation":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            '<div class="nav-grid">' + (data.categories || []).map(function(c) {
+              return '<a class="nav-item" href="' + esc(c.link) + '">' +
+                '<span class="icon">' + c.icon + '</span>' +
+                '<div><div>' + esc(c.name) + '</div><div class="desc">' + esc(c.description) + '</div></div>' +
+                '<span class="count">' + c.count + '</span>' +
+                '</a>';
+            }).join("") + '</div></div>';
+        case "news":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            (data.items || []).map(function(n) {
+              return '<div class="news-item"><div class="news-date">' + esc(n.date) + '</div><div class="news-title">' + esc(n.title) + '</div><div class="news-summary">' + esc(n.summary) + '</div></div>';
+            }).join("") +
+            (data.link ? '<a class="btn" href="' + esc(data.link) + '">查看更多</a>' : "") +
+            '</div>';
+        case "factions":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            (data.factions || []).map(function(f) {
+              return '<div class="faction-card" style="border-left:3px solid ' + f.color + '">' +
+                '<div class="faction-name" style="color:' + f.color + '">' + f.icon + ' ' + esc(f.name) + '</div>' +
+                '<p>' + esc(f.description) + '</p></div>';
+            }).join("") + '</div>';
+        case "beginners":
+          return '<div class="' + cls + '">' +
+            '<h2>' + esc(data.title) + '</h2>' +
+            (data.sections || []).map(function(s) {
+              return '<div class="beginners-section"><h3>' + esc(s.title) + '</h3><ul>' +
+                (s.items || []).map(function(i) { return '<li>' + esc(i) + '</li>'; }).join("") + '</ul></div>';
+            }).join("") + '</div>';
+        default:
+          return '<div class="' + cls + '"><h2>' + esc(data.title || data.id) + '</h2><p>' + esc(data.content || "") + '</p></div>';
+      }
+    }
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    }); }
+
+    function filterWiki(e) {
+      var q = (e.target.value || "").trim().toLowerCase();
+      var cards = document.querySelectorAll(".wiki-card");
+      cards.forEach(function(c) {
+        if (!q) { c.style.display = ""; return; }
+        c.style.display = c.textContent.toLowerCase().includes(q) ? "" : "none";
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadWiki);
+  </script>
+</body>
+</html>

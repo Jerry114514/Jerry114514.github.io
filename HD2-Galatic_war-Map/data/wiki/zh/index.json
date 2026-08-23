@@ -1,0 +1,19 @@
+{
+  "id": "index",
+  "title": "绝地潜兵2 中文维基",
+  "subtitle": "自由 · 民主 · 超级地球",
+  "layout": {
+    "desktop": 3,
+    "tablet": 2,
+    "mobile": 1
+  },
+  "blocks": [
+    { "id": "welcome", "type": "full-width", "priority": 0 },
+    { "id": "about", "type": "third", "priority": 1 },
+    { "id": "news", "type": "third", "priority": 2 },
+    { "id": "navigation", "type": "third", "priority": 3 },
+    { "id": "factions", "type": "third", "priority": 4 },
+    { "id": "beginners", "type": "third", "priority": 5 }
+  ],
+  "updated_at": "2026-08-23T10:00:00Z"
+}
