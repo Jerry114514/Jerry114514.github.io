@@ -1,247 +1,3430 @@
 {
-  "updated_at": "2026-08-23T12:00:00Z",
-  "total": 16,
+  "updated_at": "2026-08-23T13:24:11Z",
+  "source": "Helldivers Wiki.gg",
+  "total": 89,
+  "categories": {
+    "primary": {
+      "name": "主武器",
+      "name_en": "Primary Weapons",
+      "count": 49
+    },
+    "secondary": {
+      "name": "副武器",
+      "name_en": "Secondary Weapons",
+      "count": 21
+    },
+    "throwables": {
+      "name": "投掷物",
+      "name_en": "Throwables",
+      "count": 19
+    },
+    "support": {
+      "name": "支援武器",
+      "name_en": "Support Weapons",
+      "count": 0
+    }
+  },
   "weapons": [
     {
+      "id": "ar_2_coyote",
+      "name": "AR-2 Coyote",
+      "name_en": "AR-2 Coyote",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 75.0,
+        "capacity": 45,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 75.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 600,
+        "recoil": 17.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 50,
+        "reload_time": "3s",
+        "dps": 750
+      },
+      "traits": [
+        "Incendiary",
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Dust Devils P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-2_Coyote"
+    },
+    {
       "id": "ar_23_liberator",
-      "name": "AR-23 解放者",
+      "name": "AR-23 Liberator",
       "name_en": "AR-23 Liberator",
       "category": "primary",
-      "subcategory": "assault_rifle",
+      "subcategory": "assault_rifles",
       "subcategory_name": "突击步枪",
-      "stats_short": { "damage": 55, "capacity": 45, "penetration": "light" },
-      "stats_full": { "damage": 55, "capacity": 45, "fire_rate": 640, "recoil": 15, "penetration": "light", "reserve_ammo": 360, "fire_modes": ["半自动", "全自动", "三连发"], "scope": "红点瞄准镜" },
-      "traits": ["轻甲穿透"],
-      "unlock": "默认解锁 · 初始装备",
-      "description": "SEAF标准突击步枪，平衡了威力、射速和重量，是应对小型目标的理想武器。",
-      "lore": "作为超级地球标准列装武器，AR-23 解放者经历了无数次实战检验，证明了其可靠性和通用性。",
-      "variants": [{ "id": "ar_23p_penetrator", "name": "AR-23P 穿透者", "description": "配备瞄准镜的改装版，使用中甲穿透弹药。", "unlock": "标准战争债券 第6页 · 40奖章" }],
-      "tips": ["适合清理轻型和中型敌人", "建议搭配穿甲类战略配备应对重甲单位", "三连发模式在中远距离有更好精度控制"]
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 640,
+        "recoil": 14.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Auto",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3s",
+        "dps": 960
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Starter Equipment",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23_Liberator"
     },
     {
-      "id": "ar_23p_penetrator",
-      "name": "AR-23P 穿透者",
-      "name_en": "AR-23P Penetrator",
+      "id": "ar_23a_liberator_carbine",
+      "name": "AR-23A Liberator Carbine",
+      "name_en": "AR-23A Liberator Carbine",
       "category": "primary",
-      "subcategory": "assault_rifle",
+      "subcategory": "assault_rifles",
       "subcategory_name": "突击步枪",
-      "stats_short": { "damage": 60, "capacity": 35, "penetration": "medium" },
-      "stats_full": { "damage": 60, "capacity": 35, "fire_rate": 640, "recoil": 20, "penetration": "medium", "reserve_ammo": 280, "fire_modes": ["半自动", "全自动", "三连发"], "scope": "瞄准镜" },
-      "traits": ["中甲穿透"],
-      "unlock": "标准战争债券 第6页 · 40奖章",
-      "description": "AR-23 解放者的改装版，配备了瞄准镜和穿甲弹药，可有效应对中型装甲敌人。",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 920,
+        "recoil": 26.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Auto",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 70,
+        "reload_time": "2.5s",
+        "dps": 1380
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Viper Commandos P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["中甲穿透可有效对付中型敌人", "弹匣容量较小，注意弹药管理"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23A_Liberator_Carbine"
     },
     {
-      "id": "sg_8_punisher",
-      "name": "SG-8 惩罚者",
-      "name_en": "SG-8 Punisher",
+      "id": "ar_23c_liberator_concussive",
+      "name": "AR-23C Liberator Concussive",
+      "name_en": "AR-23C Liberator Concussive",
       "category": "primary",
-      "subcategory": "shotgun",
-      "subcategory_name": "霰弹枪",
-      "stats_short": { "damage": 150, "capacity": 8, "penetration": "light" },
-      "stats_full": { "damage": 150, "capacity": 8, "fire_rate": 120, "recoil": 30, "penetration": "light", "reserve_ammo": 64, "fire_modes": ["半自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透", "大范围攻击"],
-      "unlock": "默认解锁",
-      "description": "大威力泵动式霰弹枪，近距离威力巨大，可有效清理虫群和机器人步兵。",
-      "variants": [{ "id": "sg_8s_slugger", "name": "SG-8S 重击者", "description": "发射独头弹的改装版，精度更高，射程更远。", "unlock": "标准战争债券 第10页 · 60奖章" }],
-      "tips": ["近距离威力最大，适合冲锋型打法", "装填速度较慢，需要找好掩体"]
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 75.0,
+        "capacity": 60,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 75.0,
+        "damage_type": "Ballistic",
+        "capacity": 60,
+        "fire_rate": 400,
+        "recoil": 28.0,
+        "penetration": "light",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3.5s",
+        "dps": 500
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Steeled Veterans P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23C_Liberator_Concussive"
     },
     {
-      "id": "r_63_diligence",
-      "name": "R-63 勤勉",
-      "name_en": "R-63 Diligence",
+      "id": "ar_23p_liberator_penetrator",
+      "name": "AR-23P Liberator Penetrator",
+      "name_en": "AR-23P Liberator Penetrator",
       "category": "primary",
-      "subcategory": "marksman_rifle",
-      "subcategory_name": "精确射手步枪",
-      "stats_short": { "damage": 125, "capacity": 20, "penetration": "light" },
-      "stats_full": { "damage": 125, "capacity": 20, "fire_rate": 350, "recoil": 25, "penetration": "light", "reserve_ammo": 160, "fire_modes": ["半自动"], "scope": "4倍瞄准镜" },
-      "traits": ["轻甲穿透", "高精度"],
-      "unlock": "默认解锁",
-      "description": "半自动精确射手步枪，适合中远距离精确打击。",
-      "variants": [{ "id": "r_63cs_counter_sniper", "name": "R-63CS 反狙击手", "description": "使用中甲穿透弹药的改装版，伤害更高。", "unlock": "标准战争债券 第8页 · 50奖章" }],
-      "tips": ["保持距离，利用高精度优势", "4倍镜适合中远距离交火"]
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 65.0,
+        "capacity": 45,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 65.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 640,
+        "recoil": 12.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi",
+          "Burst",
+          "Full"
+        ],
+        "ergonomics": 59,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Helldivers Mobilize P6",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23P_Liberator_Penetrator"
     },
     {
-      "id": "smg_37_defender",
-      "name": "SMG-37 防卫者",
-      "name_en": "SMG-37 Defender",
+      "id": "ar_32_pacifier",
+      "name": "AR-32 Pacifier",
+      "name_en": "AR-32 Pacifier",
       "category": "primary",
-      "subcategory": "smg",
-      "subcategory_name": "冲锋枪",
-      "stats_short": { "damage": 45, "capacity": 35, "penetration": "light" },
-      "stats_full": { "damage": 45, "capacity": 35, "fire_rate": 800, "recoil": 10, "penetration": "light", "reserve_ammo": 280, "fire_modes": ["全自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透", "可单手使用"],
-      "unlock": "默认解锁",
-      "description": "紧凑型冲锋枪，可单手使用，适合携带物品时作战。",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 55.0,
+        "capacity": 40,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 55.0,
+        "damage_type": "Ballistic",
+        "capacity": 40,
+        "fire_rate": 700,
+        "recoil": 18.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Auto",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 60,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Stun"
+      ],
+      "unlock": "Force of Law P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["可单手使用，携带SSD等物品时仍能开火", "近距离高射速压制"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-32_Pacifier"
     },
     {
-      "id": "p_2_pacifier",
-      "name": "P-2 和平缔造者",
-      "name_en": "P-2 Pacifier",
-      "category": "secondary",
-      "subcategory": "pistol",
-      "subcategory_name": "手枪",
-      "stats_short": { "damage": 75, "capacity": 15, "penetration": "light" },
-      "stats_full": { "damage": 75, "capacity": 15, "fire_rate": 300, "recoil": 10, "penetration": "light", "reserve_ammo": 120, "fire_modes": ["半自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透"],
-      "unlock": "默认解锁",
-      "description": "标准制式手枪，作为副武器提供基本的自卫能力。",
-      "variants": [],
-      "tips": ["主武器弹药耗尽时的紧急备用", "精度尚可，适合近距离应急"]
-    },
-    {
-      "id": "p_19_ Redeemer",
-      "name": "P-19 救世主",
-      "name_en": "P-19 Redeemer",
-      "category": "secondary",
-      "subcategory": "pistol",
-      "subcategory_name": "手枪",
-      "stats_short": { "damage": 40, "capacity": 31, "penetration": "light" },
-      "stats_full": { "damage": 40, "capacity": 31, "fire_rate": 900, "recoil": 15, "penetration": "light", "reserve_ammo": 248, "fire_modes": ["全自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透", "全自动"],
-      "unlock": "标准战争债券 第3页 · 20奖章",
-      "description": "全自动手枪，高射速适合近距离紧急压制。",
-      "variants": [],
-      "tips": ["全自动模式提供近距离爆发火力", "弹药消耗快，注意节约"]
-    },
-    {
-      "id": "g_12_high_explosive",
-      "name": "G-12 高爆手雷",
-      "name_en": "G-12 High Explosive",
-      "category": "throwables",
-      "subcategory": "grenade",
-      "subcategory_name": "手雷",
-      "stats_short": { "damage": 350, "capacity": 2, "penetration": "medium" },
-      "stats_full": { "damage": 350, "capacity": 2, "penetration": "medium", "blast_radius": 8, "throw_type": "抛物线", "fuse_time": 3.5 },
-      "traits": ["中甲穿透", "范围伤害"],
-      "unlock": "默认解锁",
-      "description": "标准高爆手雷，可用于清理掩体后的敌人和轻型载具。",
-      "variants": [{ "id": "g_16_impact", "name": "G-16 冲击手雷", "description": "撞击即爆炸的冲击手雷，适合对付移动目标。", "unlock": "标准战争债券 第2页 · 15奖章" }],
-      "tips": ["抛物线投掷，注意提前量", "可烹饪后投掷控制爆炸时机"]
-    },
-    {
-      "id": "g_16_impact",
-      "name": "G-16 冲击手雷",
-      "name_en": "G-16 Impact",
-      "category": "throwables",
-      "subcategory": "grenade",
-      "subcategory_name": "手雷",
-      "stats_short": { "damage": 300, "capacity": 2, "penetration": "medium" },
-      "stats_full": { "damage": 300, "capacity": 2, "penetration": "medium", "blast_radius": 6, "throw_type": "抛物线", "fuse_time": 0 },
-      "traits": ["中甲穿透", "撞击爆炸"],
-      "unlock": "标准战争债券 第2页 · 15奖章",
-      "description": "撞击即爆炸的冲击手雷，适合对付移动目标。",
-      "variants": [],
-      "tips": ["无需烹饪，撞击即爆", "适合对付快速移动的敌人"]
-    },
-    {
-      "id": "sg_225ie_breaker_incendiary",
-      "name": "SG-225IE 燃烧破坏者",
-      "name_en": "SG-225IE Breaker Incendiary",
+      "id": "ar_59_suppressor",
+      "name": "AR-59 Suppressor",
+      "name_en": "AR-59 Suppressor",
       "category": "primary",
-      "subcategory": "shotgun",
-      "subcategory_name": "霰弹枪",
-      "stats_short": { "damage": 120, "capacity": 12, "penetration": "light" },
-      "stats_full": { "damage": 120, "capacity": 12, "fire_rate": 180, "recoil": 25, "penetration": "light", "reserve_ammo": 72, "fire_modes": ["半自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透", "燃烧弹"],
-      "unlock": "标准战争债券 第5页 · 30奖章",
-      "description": "发射燃烧弹的半自动霰弹枪，能在目标区域造成持续灼烧伤害。",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 80.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 80.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 850,
+        "recoil": 13.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi",
+          "Auto"
+        ],
+        "ergonomics": 60,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Suppressed"
+      ],
+      "unlock": "Redacted Regiment P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["燃烧效果可阻止敌人推进", "对虫群有奇效"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-59_Suppressor"
     },
     {
-      "id": "plas_1_scorcher",
-      "name": "PLAS-1 灼烧者",
-      "name_en": "PLAS-1 Scorcher",
+      "id": "ar_61_tenderizer",
+      "name": "AR-61 Tenderizer",
+      "name_en": "AR-61 Tenderizer",
       "category": "primary",
-      "subcategory": "energy_weapon",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 105.0,
+        "capacity": 35,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 105.0,
+        "damage_type": "Ballistic",
+        "capacity": 35,
+        "fire_rate": 600,
+        "recoil": 10.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Semi",
+          "Burst",
+          "Auto"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3.33s",
+        "dps": 1050
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Polar Patriots P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-61_Tenderizer"
+    },
+    {
+      "id": "arc_12_blitzer",
+      "name": "ARC-12 Blitzer",
+      "name_en": "ARC-12 Blitzer",
+      "category": "primary",
+      "subcategory": "energy_based",
       "subcategory_name": "能量武器",
-      "stats_short": { "damage": 70, "capacity": 20, "penetration": "medium" },
-      "stats_full": { "damage": 70, "capacity": 20, "fire_rate": 400, "recoil": 10, "penetration": "medium", "reserve_ammo": 120, "fire_modes": ["半自动"], "scope": "红点瞄准镜" },
-      "traits": ["中甲穿透", "能量武器"],
-      "unlock": "标准战争债券 第10页 · 60奖章",
-      "description": "光能族能量武器逆向工程产物，发射等离子弹，可穿透中型装甲。",
+      "stats_short": {
+        "damage": 250.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 250.0,
+        "damage_type": "Arc",
+        "capacity": null,
+        "fire_rate": 45,
+        "recoil": 60.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "None"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Arc"
+      ],
+      "unlock": "Cutting Edge P3",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["中甲穿透，对中型敌人高效", "弹药有限，注意节约"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/ARC-12_Blitzer"
     },
     {
-      "id": "arc_3_arc_thrower",
-      "name": "ARC-3 电弧发射器",
-      "name_en": "ARC-3 Arc Thrower",
+      "id": "br_14_adjudicator",
+      "name": "BR-14 Adjudicator",
+      "name_en": "BR-14 Adjudicator",
       "category": "primary",
-      "subcategory": "energy_weapon",
-      "subcategory_name": "能量武器",
-      "stats_short": { "damage": 80, "capacity": 1, "penetration": "medium" },
-      "stats_full": { "damage": 80, "capacity": 1, "fire_rate": 60, "recoil": 5, "penetration": "medium", "reserve_ammo": 1, "fire_modes": ["充能射击"], "scope": "无" },
-      "traits": ["中甲穿透", "连锁闪电"],
-      "unlock": "标准战争债券 第7页 · 45奖章",
-      "description": "发射高压电弧，可在多个敌人之间连锁跳跃，适合对付密集群体。",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 95.0,
+        "capacity": 30,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 95.0,
+        "damage_type": "Ballistic",
+        "capacity": 30,
+        "fire_rate": 550,
+        "recoil": 24.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi",
+          "Auto"
+        ],
+        "ergonomics": 40,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Democratic Detonation P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["连锁闪电可同时攻击多个目标", "充能时间较长，需要预判"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/BR-14_Adjudicator"
     },
     {
-      "id": "mg_206_heavy_machine_gun",
-      "name": "MG-206 重型机枪",
-      "name_en": "MG-206 Heavy Machine Gun",
-      "category": "secondary",
-      "subcategory": "machine_gun",
-      "subcategory_name": "机枪",
-      "stats_short": { "damage": 35, "capacity": 150, "penetration": "light" },
-      "stats_full": { "damage": 35, "capacity": 150, "fire_rate": 900, "recoil": 35, "penetration": "light", "reserve_ammo": 600, "fire_modes": ["全自动"], "scope": "机械瞄具" },
-      "traits": ["轻甲穿透", "高射速"],
-      "unlock": "默认解锁",
-      "description": "大容量弹链供弹的机枪，持续火力压制能力极强。",
+      "id": "cb_9_exploding_crossbow",
+      "name": "CB-9 Exploding Crossbow",
+      "name_en": "CB-9 Exploding Crossbow",
+      "category": "primary",
+      "subcategory": "explosives",
+      "subcategory_name": "爆炸武器",
+      "stats_short": {
+        "damage": 270.0,
+        "capacity": 5,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 270.0,
+        "damage_type": "Explosion",
+        "capacity": 5,
+        "fire_rate": 50,
+        "recoil": 35.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [],
+        "ergonomics": 45,
+        "reload_time": "3.3s",
+        "dps": 516
+      },
+      "traits": [
+        "Explosive",
+        "One Handed"
+      ],
+      "unlock": "Democratic Detonation P3",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
       "variants": [],
-      "tips": ["适合压制和清理密集敌人", "后坐力大，建议卧倒射击"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CB-9_Exploding_Crossbow"
     },
     {
-      "id": "jump_jet",
-      "name": "跳跃背包",
-      "name_en": "Jump Jet",
+      "id": "cqc_2_saber",
+      "name": "CQC-2 Saber",
+      "name_en": "CQC-2 Saber",
       "category": "secondary",
-      "subcategory": "backpack",
-      "subcategory_name": "背包",
-      "stats_short": { "damage": 0, "capacity": 0, "penetration": "none" },
-      "stats_full": { "damage": 0, "capacity": 0, "cooldown": 15, "fuel": 3, "fire_modes": ["充能跳跃"], "scope": "无" },
-      "traits": ["机动性"],
-      "unlock": "默认解锁",
-      "description": "喷气背包，可进行短距离跳跃，快速跨越地形障碍。",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 188.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 188.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": 150,
+        "recoil": 6.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Melee"
+      ],
+      "unlock": "Masters of Ceremony P2",
+      "description": "1.006.202 2026-04-28",
+      "lore": "",
       "variants": [],
-      "tips": ["可用于快速接近或撤离", "注意燃料管理"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber"
+    },
+    {
+      "id": "cqc_5_combat_hatchet",
+      "name": "CQC-5 Combat Hatchet",
+      "name_en": "CQC-5 Combat Hatchet",
+      "category": "secondary",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 240.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 240.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": 100,
+        "recoil": 8.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Melee"
+      ],
+      "unlock": "Superstore",
+      "description": "1.006.202 2026-04-28",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet"
+    },
+    {
+      "id": "cqc_19_stun_lance",
+      "name": "CQC-19 Stun Lance",
+      "name_en": "CQC-19 Stun Lance",
+      "category": "secondary",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 165.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 165.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": 117,
+        "recoil": 8.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Stun",
+        "Melee"
+      ],
+      "unlock": "Urban Legends P1",
+      "description": "1.006.202 2026-04-28",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance"
+    },
+    {
+      "id": "cqc_30_stun_baton",
+      "name": "CQC-30 Stun Baton",
+      "name_en": "CQC-30 Stun Baton",
+      "category": "secondary",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 120.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 120.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": null,
+        "recoil": 8.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Stun",
+        "Melee"
+      ],
+      "unlock": "Superstore",
+      "description": "1.006.202 2026-04-28",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton"
+    },
+    {
+      "id": "cqc_42_machete",
+      "name": "CQC-42 Machete",
+      "name_en": "CQC-42 Machete",
+      "category": "secondary",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 300.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 300.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": 72,
+        "recoil": 0.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Melee"
+      ],
+      "unlock": "Superstore",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete"
+    },
+    {
+      "id": "dbs_2_double_freedom",
+      "name": "DBS-2 Double Freedom",
+      "name_en": "DBS-2 Double Freedom",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 840.0,
+        "capacity": 2,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 840.0,
+        "damage_type": "Ballistic",
+        "capacity": 2,
+        "fire_rate": 650,
+        "recoil": 163.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 1680
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Superstore",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/DBS-2_Double_Freedom"
+    },
+    {
+      "id": "flam_66_torcher",
+      "name": "FLAM-66 Torcher",
+      "name_en": "FLAM-66 Torcher",
+      "category": "primary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 150.0,
+        "capacity": 100,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 150.0,
+        "damage_type": "Fire",
+        "capacity": 100,
+        "fire_rate": null,
+        "recoil": 2.0,
+        "penetration": "heavy",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "None"
+        ],
+        "ergonomics": 45,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Incendiary"
+      ],
+      "unlock": "Freedom's Flame P2",
+      "description": "1.006.100 2026-03-17",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher"
+    },
+    {
+      "id": "g_3_smoke",
+      "name": "G-3 Smoke",
+      "name_en": "G-3 Smoke",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 5,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": null,
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Helldivers Mobilize! P8",
+      "description": "",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-3_Smoke"
+    },
+    {
+      "id": "g_4_gas",
+      "name": "G-4 Gas",
+      "name_en": "G-4 Gas",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 3.0,
+        "capacity": 4,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 3.0,
+        "damage_type": "Gas",
+        "capacity": 4,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Chemical Agents P1",
+      "description": "1.006.202 2026-04-28",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-4_Gas"
     },
     {
       "id": "g_6_frag",
-      "name": "G-6 破片手雷",
+      "name": "G-6 Frag",
       "name_en": "G-6 Frag",
       "category": "throwables",
-      "subcategory": "grenade",
-      "subcategory_name": "手雷",
-      "stats_short": { "damage": 200, "capacity": 2, "penetration": "light" },
-      "stats_full": { "damage": 200, "capacity": 2, "penetration": "light", "blast_radius": 10, "throw_type": "抛物线", "fuse_time": 4 },
-      "traits": ["轻甲穿透", "大范围"],
-      "unlock": "默认解锁",
-      "description": "破片手雷，爆炸范围大，适合清理开阔区域的敌人。",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 500.0,
+        "capacity": 6,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 500.0,
+        "damage_type": null,
+        "capacity": 6,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Helldivers Mobilize! P1",
+      "description": "1.004.100 2025-10-23",
+      "lore": "",
       "variants": [],
-      "tips": ["大范围杀伤，适合开阔地", "注意不要炸到自己"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-6_Frag"
+    },
+    {
+      "id": "g_7_pineapple",
+      "name": "G-7 Pineapple",
+      "name_en": "G-7 Pineapple",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 300.0,
+        "capacity": 5,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 300.0,
+        "damage_type": null,
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Dust Devils P3",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-7_Pineapple"
     },
     {
       "id": "g_10_incendiary",
-      "name": "G-10 燃烧弹",
+      "name": "G-10 Incendiary",
       "name_en": "G-10 Incendiary",
       "category": "throwables",
-      "subcategory": "grenade",
-      "subcategory_name": "手雷",
-      "stats_short": { "damage": 150, "capacity": 2, "penetration": "light" },
-      "stats_full": { "damage": 150, "capacity": 2, "penetration": "light", "blast_radius": 6, "burn_duration": 8, "throw_type": "抛物线", "fuse_time": 3 },
-      "traits": ["轻甲穿透", "持续灼烧"],
-      "unlock": "标准战争债券 第4页 · 25奖章",
-      "description": "燃烧弹，在目标区域制造持续灼烧区域，可封锁敌人路线。",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 300.0,
+        "capacity": 5,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 300.0,
+        "damage_type": "DPS",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Steeled Veterans P2",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
       "variants": [],
-      "tips": ["可封锁狭窄通道", "对虫群和轻甲单位效果显著"]
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-10_Incendiary"
+    },
+    {
+      "id": "g_12_high_explosive",
+      "name": "G-12 High Explosive",
+      "name_en": "G-12 High Explosive",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 800.0,
+        "capacity": 5,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 800.0,
+        "damage_type": "Explosion",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Starter Equipment",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-12_High_Explosive"
+    },
+    {
+      "id": "g_13_incendiary_impact",
+      "name": "G-13 Incendiary Impact",
+      "name_en": "G-13 Incendiary Impact",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 150.0,
+        "capacity": 5,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 150.0,
+        "damage_type": "DPS",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Polar Patriots P2",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-13_Incendiary_Impact"
+    },
+    {
+      "id": "g_16_impact",
+      "name": "G-16 Impact",
+      "name_en": "G-16 Impact",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 400.0,
+        "capacity": 5,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 400.0,
+        "damage_type": "Explosion",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Helldivers Mobilize! P5",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-16_Impact"
+    },
+    {
+      "id": "g_23_stun",
+      "name": "G-23 Stun",
+      "name_en": "G-23 Stun",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 5,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": null,
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Cutting Edge P2",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-23_Stun"
+    },
+    {
+      "id": "g_31_arc",
+      "name": "G-31 Arc",
+      "name_en": "G-31 Arc",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 100.0,
+        "capacity": 5,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 100.0,
+        "damage_type": "Arc",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Control Group P3",
+      "description": "1.006.100 2026-03-17",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-31_Arc"
+    },
+    {
+      "id": "g_48_giga_grenade",
+      "name": "G-48 Giga Grenade",
+      "name_en": "G-48 Giga Grenade",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 2000.0,
+        "capacity": 2,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 2000.0,
+        "damage_type": "Explosion",
+        "capacity": 2,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Entrenched Division P2",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-48_Giga_Grenade"
+    },
+    {
+      "id": "g_50_seeker",
+      "name": "G-50 Seeker",
+      "name_en": "G-50 Seeker",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 500.0,
+        "capacity": 5,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 500.0,
+        "damage_type": "Explosion",
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Servants of Freedom P3",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker"
+    },
+    {
+      "id": "g_89_smokescreen",
+      "name": "G-89 Smokescreen",
+      "name_en": "G-89 Smokescreen",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 5,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": null,
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Superstore",
+      "description": "1.005.002 2026-01-22",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-89_Smokescreen"
+    },
+    {
+      "id": "g_109_urchin",
+      "name": "G-109 Urchin",
+      "name_en": "G-109 Urchin",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 5,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": null,
+        "capacity": 5,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Force of Law P3",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-109_Urchin"
+    },
+    {
+      "id": "g_123_thermite",
+      "name": "G-123 Thermite",
+      "name_en": "G-123 Thermite",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 150.0,
+        "capacity": 3,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 150.0,
+        "damage_type": "Explosion",
+        "capacity": 3,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Democratic Detonation P1",
+      "description": "1.003.000 2025-05-13",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-123_Thermite"
+    },
+    {
+      "id": "g_142_pyrotech",
+      "name": "G-142 Pyrotech",
+      "name_en": "G-142 Pyrotech",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 20.0,
+        "capacity": 6,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 20.0,
+        "damage_type": "Explosion",
+        "capacity": 6,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Masters of Ceremony P3",
+      "description": "1.003.000 2025-05-13",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-142_Pyrotech"
+    },
+    {
+      "id": "gp_20_ultimatum",
+      "name": "GP-20 Ultimatum",
+      "name_en": "GP-20 Ultimatum",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 1000.0,
+        "capacity": 1,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 1000.0,
+        "damage_type": "Explosion",
+        "capacity": 1,
+        "fire_rate": 900,
+        "recoil": 43.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 35,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "One Handed",
+        "Explosive"
+      ],
+      "unlock": "Servants of Freedom P2",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/GP-20_Ultimatum"
+    },
+    {
+      "id": "gp_31_grenade_pistol",
+      "name": "GP-31 Grenade Pistol",
+      "name_en": "GP-31 Grenade Pistol",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 250.0,
+        "capacity": 1,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 250.0,
+        "damage_type": "Explosion",
+        "capacity": 1,
+        "fire_rate": 900,
+        "recoil": 43.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": 95,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "One Handed",
+        "Explosive"
+      ],
+      "unlock": "Democratic Detonation P3",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/GP-31_Grenade_Pistol"
+    },
+    {
+      "id": "jar_5_dominator",
+      "name": "JAR-5 Dominator",
+      "name_en": "JAR-5 Dominator",
+      "category": "primary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 275.0,
+        "capacity": 15,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 275.0,
+        "damage_type": "Ballistic",
+        "capacity": 15,
+        "fire_rate": 250,
+        "recoil": 75.0,
+        "penetration": "medium",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 30,
+        "reload_time": "3.8s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Steeled Veterans P3",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/JAR-5_Dominator"
+    },
+    {
+      "id": "k_2_throwing_knife",
+      "name": "K-2 Throwing Knife",
+      "name_en": "K-2 Throwing Knife",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 300.0,
+        "capacity": 20,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 300.0,
+        "damage_type": "Ballistic",
+        "capacity": 20,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Viper Commandos P3",
+      "description": "1.004.100 2025-10-23",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/K-2_Throwing_Knife"
+    },
+    {
+      "id": "las_5_scythe",
+      "name": "LAS-5 Scythe",
+      "name_en": "LAS-5 Scythe",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 350.0,
+        "capacity": 8,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 350.0,
+        "damage_type": "Fire",
+        "capacity": 8,
+        "fire_rate": null,
+        "recoil": 0.0,
+        "penetration": "light",
+        "reserve_ammo": 4,
+        "fire_modes": [],
+        "ergonomics": 65,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Beam",
+        "Heat"
+      ],
+      "unlock": "Helldivers Mobilize! P5",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-5_Scythe"
+    },
+    {
+      "id": "las_7_dagger",
+      "name": "LAS-7 Dagger",
+      "name_en": "LAS-7 Dagger",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 250.0,
+        "capacity": 6,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 250.0,
+        "damage_type": "Fire",
+        "capacity": 6,
+        "fire_rate": null,
+        "recoil": 0.0,
+        "penetration": "light",
+        "reserve_ammo": 3,
+        "fire_modes": [],
+        "ergonomics": 95,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed",
+        "Beam",
+        "Heat"
+      ],
+      "unlock": "Cutting Edge P3",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-7_Dagger"
+    },
+    {
+      "id": "las_13_trident",
+      "name": "LAS-13 Trident",
+      "name_en": "LAS-13 Trident",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 360.0,
+        "capacity": 2,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 360.0,
+        "damage_type": "Laser",
+        "capacity": 2,
+        "fire_rate": 300,
+        "recoil": 4.0,
+        "penetration": "light",
+        "reserve_ammo": 3,
+        "fire_modes": [
+          "Auto"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3.67s",
+        "dps": 1800
+      },
+      "traits": [
+        "Heat",
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Siege Breakers P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-13_Trident"
+    },
+    {
+      "id": "las_16_sickle",
+      "name": "LAS-16 Sickle",
+      "name_en": "LAS-16 Sickle",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 60.0,
+        "capacity": 7,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 60.0,
+        "damage_type": "Ballistic",
+        "capacity": 7,
+        "fire_rate": 750,
+        "recoil": 2.0,
+        "penetration": "light",
+        "reserve_ammo": 3,
+        "fire_modes": [
+          "Automatic"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.83s",
+        "dps": 750
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Heat"
+      ],
+      "unlock": "Cutting Edge P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-16_Sickle"
+    },
+    {
+      "id": "las_17_double_edge_sickle",
+      "name": "LAS-17 Double-Edge Sickle",
+      "name_en": "LAS-17 Double-Edge Sickle",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 55.0,
+        "capacity": 15,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 55.0,
+        "damage_type": "Projectile",
+        "capacity": 15,
+        "fire_rate": 700,
+        "recoil": 2.0,
+        "penetration": "heavy",
+        "reserve_ammo": 3,
+        "fire_modes": [
+          "Automatic"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.83s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Medium Armor Penetrating",
+        "Heavy Armor Penetrating",
+        "Heat"
+      ],
+      "unlock": "Servants of Freedom P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-17_Double-Edge_Sickle"
+    },
+    {
+      "id": "las_58_talon",
+      "name": "LAS-58 Talon",
+      "name_en": "LAS-58 Talon",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 200.0,
+        "capacity": 7,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 200.0,
+        "damage_type": "Ballistic",
+        "capacity": 7,
+        "fire_rate": 750,
+        "recoil": 2.0,
+        "penetration": "medium",
+        "reserve_ammo": 3,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 95,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "One Handed",
+        "Heat",
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Borderline Justice P2",
+      "description": "1.007.000 2026-08-12",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-58_Talon"
+    },
+    {
+      "id": "m7s_smg",
+      "name": "M7S SMG",
+      "name_en": "M7S SMG",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 48,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 48,
+        "fire_rate": 872,
+        "recoil": 8.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Full",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 90,
+        "reload_time": "",
+        "dps": 1308
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed",
+        "Suppressed"
+      ],
+      "unlock": "Halo: ODST P2",
+      "description": "This weapon doesn't support attachments",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/M7S_SMG"
+    },
+    {
+      "id": "m90a_shotgun",
+      "name": "M90A Shotgun",
+      "name_en": "M90A Shotgun",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 605.0,
+        "capacity": 6,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 605.0,
+        "damage_type": "Ballistic",
+        "capacity": 6,
+        "fire_rate": 80,
+        "recoil": 83.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Halo: ODST P3",
+      "description": "This weapon doesn't support attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/M90A_Shotgun"
+    },
+    {
+      "id": "ma5c_assault_rifle",
+      "name": "MA5C Assault Rifle",
+      "name_en": "MA5C Assault Rifle",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 32,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 32,
+        "fire_rate": 640,
+        "recoil": 19.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi",
+          "Burst",
+          "Full"
+        ],
+        "ergonomics": 60,
+        "reload_time": "",
+        "dps": 960
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Halo: ODST P1",
+      "description": "This weapon doesn't support attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/MA5C_Assault_Rifle"
+    },
+    {
+      "id": "mp_98_knight",
+      "name": "MP-98 Knight",
+      "name_en": "MP-98 Knight",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 50,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 50,
+        "fire_rate": 1380,
+        "recoil": 15.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Auto",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 90,
+        "reload_time": "2.5s",
+        "dps": 2070
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Super Citizen Edition",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/MP-98_Knight"
+    },
+    {
+      "id": "p_2_peacemaker",
+      "name": "P-2 Peacemaker",
+      "name_en": "P-2 Peacemaker",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 100.0,
+        "capacity": 15,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 100.0,
+        "damage_type": "Ballistic",
+        "capacity": 15,
+        "fire_rate": 900,
+        "recoil": 23.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 100,
+        "reload_time": "1.8s",
+        "dps": 1500
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Starter Equipment",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-2_Peacemaker"
+    },
+    {
+      "id": "p_4_senator",
+      "name": "P-4 Senator",
+      "name_en": "P-4 Senator",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 225.0,
+        "capacity": 6,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 225.0,
+        "damage_type": "Ballistic",
+        "capacity": 6,
+        "fire_rate": 200,
+        "recoil": 43.0,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 75,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Heavy Armor Penetrating",
+        "One Handed",
+        "Rounds Reload"
+      ],
+      "unlock": "Steeled Veterans P1",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-4_Senator"
+    },
+    {
+      "id": "p_11_stim_pistol",
+      "name": "P-11 Stim Pistol",
+      "name_en": "P-11 Stim Pistol",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 6,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": "Ballistic",
+        "capacity": 6,
+        "fire_rate": 70,
+        "recoil": 6.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 100,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "One Handed",
+        "Rounds Reload",
+        "Stimulative"
+      ],
+      "unlock": "Chemical Agents P3",
+      "description": "The Stim Pistol is a revolver with a cylinder holding 6 Stim darts. Upon hitting a teammate, it gradually restores roughly 90% of their HP over approximately four seconds. The darts' effects otherwise function identically to Stims, healing injured body parts, restoring stamina, and benefiting from the Experimental Infusion booster and both the Med-Kit Passive and the Adreno-Defibrillator Passive if the weapon wielder is wearing the appropriate armor.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-11_Stim_Pistol"
+    },
+    {
+      "id": "p_19_redeemer",
+      "name": "P-19 Redeemer",
+      "name_en": "P-19 Redeemer",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 70.0,
+        "capacity": 31,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 70.0,
+        "damage_type": "Ballistic",
+        "capacity": 31,
+        "fire_rate": 1100,
+        "recoil": 15.0,
+        "penetration": "light",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 95,
+        "reload_time": "2.1s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Helldivers Mobilize! P2",
+      "description": "1.007.000 2026-08-12",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-19_Redeemer"
+    },
+    {
+      "id": "p_33_missile_pistol",
+      "name": "P-33 Missile Pistol",
+      "name_en": "P-33 Missile Pistol",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 1000.0,
+        "capacity": 1,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 1000.0,
+        "damage_type": "Explosion",
+        "capacity": 1,
+        "fire_rate": 60,
+        "recoil": 313.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Guided",
+          "Non-Guided"
+        ],
+        "ergonomics": 45,
+        "reload_time": "",
+        "dps": 1300
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Anti-Tank",
+        "One Handed",
+        "Guided",
+        "Explosive"
+      ],
+      "unlock": "Exo Experts P2",
+      "description": "The Missile Pistol has two firing modes: Guided and Non-Guided .",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-33_Missile_Pistol"
+    },
+    {
+      "id": "p_35_re_educator",
+      "name": "P-35 Re-Educator",
+      "name_en": "P-35 Re-Educator",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 60.0,
+        "capacity": 6,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 60.0,
+        "damage_type": "Gas",
+        "capacity": 6,
+        "fire_rate": 110,
+        "recoil": 10.0,
+        "penetration": "heavy",
+        "reserve_ammo": 2,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 100,
+        "reload_time": "",
+        "dps": 110
+      },
+      "traits": [
+        "One Handed",
+        "Caustic",
+        "Heavy Armor Penetrating"
+      ],
+      "unlock": "Redacted Regiment P1",
+      "description": "1.005.002 2026-01-22",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-35_Re-Educator"
+    },
+    {
+      "id": "p_69_veto",
+      "name": "P-69 Veto",
+      "name_en": "P-69 Veto",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 105.0,
+        "capacity": 12,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 105.0,
+        "damage_type": "Ballistic",
+        "capacity": 12,
+        "fire_rate": 750,
+        "recoil": 30.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 100,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Rounds Reload"
+      ],
+      "unlock": "Entrenched Division P3",
+      "description": "1.007.000 2026-08-12",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-69_Veto"
+    },
+    {
+      "id": "p_72_crisper",
+      "name": "P-72 Crisper",
+      "name_en": "P-72 Crisper",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 150.0,
+        "capacity": 50,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 150.0,
+        "damage_type": "Fire",
+        "capacity": 50,
+        "fire_rate": null,
+        "recoil": 3.0,
+        "penetration": "heavy",
+        "reserve_ammo": 4,
+        "fire_modes": [],
+        "ergonomics": 95,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Incendiary",
+        "One Handed"
+      ],
+      "unlock": "Freedom's Flame P3",
+      "description": "1.006.100 2026-03-17",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-72_Crisper"
+    },
+    {
+      "id": "p_92_warrant",
+      "name": "P-92 Warrant",
+      "name_en": "P-92 Warrant",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 80.0,
+        "capacity": 13,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 80.0,
+        "damage_type": "Ballistic",
+        "capacity": 13,
+        "fire_rate": 450,
+        "recoil": 31.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Guided",
+          "Non-Guided"
+        ],
+        "ergonomics": 100,
+        "reload_time": "",
+        "dps": 600
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Guided"
+      ],
+      "unlock": "Superstore",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-92_Warrant"
+    },
+    {
+      "id": "p_113_verdict",
+      "name": "P-113 Verdict",
+      "name_en": "P-113 Verdict",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 140.0,
+        "capacity": 10,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 140.0,
+        "damage_type": "Ballistic",
+        "capacity": 10,
+        "fire_rate": 450,
+        "recoil": 31.0,
+        "penetration": "medium",
+        "reserve_ammo": 10,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 100,
+        "reload_time": "",
+        "dps": 1050
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Polar Patriots P3",
+      "description": "1.007.000 2026-08-12",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-113_Verdict"
+    },
+    {
+      "id": "plas_1_scorcher",
+      "name": "PLAS-1 Scorcher",
+      "name_en": "PLAS-1 Scorcher",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 100.0,
+        "capacity": 20,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 100.0,
+        "damage_type": "Explosion",
+        "capacity": 20,
+        "fire_rate": 350,
+        "recoil": 20.0,
+        "penetration": "light",
+        "reserve_ammo": 5,
+        "fire_modes": [
+          "Semi",
+          "Auto"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.5s",
+        "dps": 1166
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Explosive"
+      ],
+      "unlock": "Helldivers Mobilize! P10",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-1_Scorcher"
+    },
+    {
+      "id": "plas_15_loyalist",
+      "name": "PLAS-15 Loyalist",
+      "name_en": "PLAS-15 Loyalist",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 75.0,
+        "capacity": 8,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 75.0,
+        "damage_type": "Explosion",
+        "capacity": 8,
+        "fire_rate": 1000,
+        "recoil": 8.0,
+        "penetration": "medium",
+        "reserve_ammo": 5,
+        "fire_modes": [],
+        "ergonomics": 95,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed",
+        "Explosive",
+        "Chargeup"
+      ],
+      "unlock": "Truth Enforcers P3",
+      "description": "1.006.100 2026-03-17",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-15_Loyalist"
+    },
+    {
+      "id": "plas_39_accelerator_rifle",
+      "name": "PLAS-39 Accelerator Rifle",
+      "name_en": "PLAS-39 Accelerator Rifle",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 250.0,
+        "capacity": 9,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 250.0,
+        "damage_type": "Explosion",
+        "capacity": 9,
+        "fire_rate": 550,
+        "recoil": 3.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Burst Fire"
+        ],
+        "ergonomics": 60,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Explosive",
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Righteous Revenants P2",
+      "description": "This weapon doesn't support attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-39_Accelerator_Rifle"
+    },
+    {
+      "id": "plas_101_purifier",
+      "name": "PLAS-101 Purifier",
+      "name_en": "PLAS-101 Purifier",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 100.0,
+        "capacity": 15,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 100.0,
+        "damage_type": "Explosion",
+        "capacity": 15,
+        "fire_rate": 1000,
+        "recoil": 20.0,
+        "penetration": "medium",
+        "reserve_ammo": 6,
+        "fire_modes": [],
+        "ergonomics": 65,
+        "reload_time": "2.5s",
+        "dps": 2916
+      },
+      "traits": [
+        "Chargeup",
+        "Explosive",
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Polar Patriots P3",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-101_Purifier"
+    },
+    {
+      "id": "r_2_amendment",
+      "name": "R-2 Amendment",
+      "name_en": "R-2 Amendment",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 200.0,
+        "capacity": 20,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 200.0,
+        "damage_type": "Ballistic",
+        "capacity": 20,
+        "fire_rate": 480,
+        "recoil": 20.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 50,
+        "reload_time": "3.5s",
+        "dps": 1600
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Masters of Ceremony P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-2_Amendment"
+    },
+    {
+      "id": "r_4_hyena",
+      "name": "R-4 Hyena",
+      "name_en": "R-4 Hyena",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 220.0,
+        "capacity": 15,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 220.0,
+        "damage_type": "Fire",
+        "capacity": 15,
+        "fire_rate": 190,
+        "recoil": 54.0,
+        "penetration": "medium",
+        "reserve_ammo": 5,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 30,
+        "reload_time": "2.5s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Incendiary"
+      ],
+      "unlock": "Celestial Fence",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-4_Hyena"
+    },
+    {
+      "id": "r_6_deadeye",
+      "name": "R-6 Deadeye",
+      "name_en": "R-6 Deadeye",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 300.0,
+        "capacity": 8,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 300.0,
+        "damage_type": "Ballistic",
+        "capacity": 8,
+        "fire_rate": 100,
+        "recoil": 120.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Lever-Action"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 500
+      },
+      "traits": [
+        "Rounds Reload",
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Borderline Justice P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-6_Deadeye"
+    },
+    {
+      "id": "r_36_eruptor",
+      "name": "R-36 Eruptor",
+      "name_en": "R-36 Eruptor",
+      "category": "primary",
+      "subcategory": "explosives",
+      "subcategory_name": "爆炸武器",
+      "stats_short": {
+        "damage": 230.0,
+        "capacity": 5,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 230.0,
+        "damage_type": "Explosion",
+        "capacity": 5,
+        "fire_rate": 32,
+        "recoil": 75.0,
+        "penetration": "light",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Bolt-Action"
+        ],
+        "ergonomics": 25,
+        "reload_time": "4.67s",
+        "dps": null
+      },
+      "traits": [
+        "Explosive",
+        "Heavy Armor Penetrating"
+      ],
+      "unlock": "Democratic Detonation P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-36_Eruptor"
+    },
+    {
+      "id": "r_63_diligence",
+      "name": "R-63 Diligence",
+      "name_en": "R-63 Diligence",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 165.0,
+        "capacity": 25,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 165.0,
+        "damage_type": "Ballistic",
+        "capacity": 25,
+        "fire_rate": 350,
+        "recoil": 35.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.83s",
+        "dps": 962
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Helldivers Mobilize! P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-63_Diligence"
+    },
+    {
+      "id": "r_63cs_diligence_counter_sniper",
+      "name": "R-63CS Diligence Counter Sniper",
+      "name_en": "R-63CS Diligence Counter Sniper",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 200.0,
+        "capacity": 15,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 200.0,
+        "damage_type": "Ballistic",
+        "capacity": 15,
+        "fire_rate": 350,
+        "recoil": 53.0,
+        "penetration": "medium",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 35,
+        "reload_time": "3s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Helldivers Mobilize! P7",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-63CS_Diligence_Counter_Sniper"
+    },
+    {
+      "id": "r_72_censor",
+      "name": "R-72 Censor",
+      "name_en": "R-72 Censor",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 165.0,
+        "capacity": 20,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 165.0,
+        "damage_type": "Ballistic",
+        "capacity": 20,
+        "fire_rate": 400,
+        "recoil": 13.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 60,
+        "reload_time": "2.5s",
+        "dps": 1100
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Suppressed"
+      ],
+      "unlock": "Redacted Regiment P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-72_Censor"
+    },
+    {
+      "id": "r_2124_constitution",
+      "name": "R-2124 Constitution",
+      "name_en": "R-2124 Constitution",
+      "category": "primary",
+      "subcategory": "marksman_rifles",
+      "subcategory_name": "精确射手步枪",
+      "stats_short": {
+        "damage": 180.0,
+        "capacity": 5,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 180.0,
+        "damage_type": "Ballistic",
+        "capacity": 5,
+        "fire_rate": 60,
+        "recoil": 15.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Bolt-Action"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 180
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Liberty Day",
+      "description": "The Constitution does not have any attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R-2124_Constitution"
+    },
+    {
+      "id": "sg_8_punisher",
+      "name": "SG-8 Punisher",
+      "name_en": "SG-8 Punisher",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 405.0,
+        "capacity": 16,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 405.0,
+        "damage_type": "Ballistic",
+        "capacity": 16,
+        "fire_rate": 80,
+        "recoil": 120.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Helldivers Mobilize! P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8_Punisher"
+    },
+    {
+      "id": "sg_8p_punisher_plasma",
+      "name": "SG-8P Punisher Plasma",
+      "name_en": "SG-8P Punisher Plasma",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 225.0,
+        "capacity": 10,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 225.0,
+        "damage_type": "Explosion",
+        "capacity": 10,
+        "fire_rate": 80,
+        "recoil": 110.0,
+        "penetration": "medium",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Semi-automatic"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.5s",
+        "dps": null
+      },
+      "traits": [
+        "Explosive"
+      ],
+      "unlock": "Cutting Edge P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8P_Punisher_Plasma"
+    },
+    {
+      "id": "sg_8s_slugger",
+      "name": "SG-8S Slugger",
+      "name_en": "SG-8S Slugger",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 330.0,
+        "capacity": 16,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 330.0,
+        "damage_type": "Ballistic",
+        "capacity": 16,
+        "fire_rate": 80,
+        "recoil": 120.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 440
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Helldivers Mobilize! P8",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8S_Slugger"
+    },
+    {
+      "id": "sg_20_halt",
+      "name": "SG-20 Halt",
+      "name_en": "SG-20 Halt",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 385.0,
+        "capacity": 8,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 385.0,
+        "damage_type": null,
+        "capacity": 8,
+        "fire_rate": 80,
+        "recoil": 120.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Medium Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Truth Enforcers P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-20_Halt"
+    },
+    {
+      "id": "sg_22_bushwhacker",
+      "name": "SG-22 Bushwhacker",
+      "name_en": "SG-22 Bushwhacker",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 405.0,
+        "capacity": 3,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 405.0,
+        "damage_type": "Ballistic",
+        "capacity": 3,
+        "fire_rate": 650,
+        "recoil": 170.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi",
+          "All Barrel"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 1215
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed",
+        "Rounds Reload"
+      ],
+      "unlock": "Viper Commandos P2",
+      "description": "1.006.001 2026-02-03",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-22_Bushwhacker"
+    },
+    {
+      "id": "sg_97_sweeper",
+      "name": "SG-97 Sweeper",
+      "name_en": "SG-97 Sweeper",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 504.0,
+        "capacity": 7,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 504.0,
+        "damage_type": "Ballistic",
+        "capacity": 7,
+        "fire_rate": 150,
+        "recoil": 76.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Auto"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": 1260
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "Rounds Reload"
+      ],
+      "unlock": "Superstore",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-97_Sweeper"
+    },
+    {
+      "id": "sg_225_breaker",
+      "name": "SG-225 Breaker",
+      "name_en": "SG-225 Breaker",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 330.0,
+        "capacity": 16,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 330.0,
+        "damage_type": "Ballistic",
+        "capacity": 16,
+        "fire_rate": 300,
+        "recoil": 55.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.5s",
+        "dps": 1650
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Helldivers Mobilize! P4",
+      "description": "A fully-automatic shotgun with a high rate of fire, excellent for controlling crowds. Requires frequent reloading.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225_Breaker"
+    },
+    {
+      "id": "sg_225ie_breaker_incendiary",
+      "name": "SG-225IE Breaker Incendiary",
+      "name_en": "SG-225IE Breaker Incendiary",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 240.0,
+        "capacity": 26,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 240.0,
+        "damage_type": "Fire",
+        "capacity": 26,
+        "fire_rate": 300,
+        "recoil": 41.0,
+        "penetration": "light",
+        "reserve_ammo": 4,
+        "fire_modes": [
+          "Burst",
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3s",
+        "dps": 1200
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Incendiary"
+      ],
+      "unlock": "Steeled Veterans P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225IE_Breaker_Incendiary"
+    },
+    {
+      "id": "sg_225sp_breaker_spray_pray",
+      "name": "SG-225SP Breaker Spray&Pray",
+      "name_en": "SG-225SP Breaker Spray&Pray",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 240.0,
+        "capacity": 26,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 240.0,
+        "damage_type": "Ballistic",
+        "capacity": 26,
+        "fire_rate": 330,
+        "recoil": 45.0,
+        "penetration": "light",
+        "reserve_ammo": 8,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "3s",
+        "dps": 1320
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Helldivers Mobilize! P9",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225SP_Breaker_Spray%26Pray"
+    },
+    {
+      "id": "sg_451_cookout",
+      "name": "SG-451 Cookout",
+      "name_en": "SG-451 Cookout",
+      "category": "primary",
+      "subcategory": "shotguns",
+      "subcategory_name": "霰弹枪",
+      "stats_short": {
+        "damage": 320.0,
+        "capacity": 16,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 320.0,
+        "damage_type": "Ballistic",
+        "capacity": 16,
+        "fire_rate": 80,
+        "recoil": 100.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "Semi"
+        ],
+        "ergonomics": 65,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "Rounds Reload",
+        "Incendiary"
+      ],
+      "unlock": "Freedom's Flame P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-451_Cookout"
+    },
+    {
+      "id": "smg_32_reprimand",
+      "name": "SMG-32 Reprimand",
+      "name_en": "SMG-32 Reprimand",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 140.0,
+        "capacity": 25,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 140.0,
+        "damage_type": "Ballistic",
+        "capacity": 25,
+        "fire_rate": 490,
+        "recoil": 32.0,
+        "penetration": "medium",
+        "reserve_ammo": 9,
+        "fire_modes": [
+          "Auto",
+          "Burst",
+          "Semi"
+        ],
+        "ergonomics": 55,
+        "reload_time": "3.5s",
+        "dps": null
+      },
+      "traits": [
+        "Medium Armor Penetrating"
+      ],
+      "unlock": "Truth Enforcers P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-32_Reprimand"
+    },
+    {
+      "id": "smg_37_defender",
+      "name": "SMG-37 Defender",
+      "name_en": "SMG-37 Defender",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 110.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 110.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 520,
+        "recoil": 10.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Full",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 90,
+        "reload_time": "2.8s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Helldivers Mobilize! P3",
+      "description": "A high-caliber submachine gun which can be fired with one hand. Has a relatively low rate of fire.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-37_Defender"
+    },
+    {
+      "id": "smg_72_pummeler",
+      "name": "SMG-72 Pummeler",
+      "name_en": "SMG-72 Pummeler",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 85.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 85.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 475,
+        "recoil": 10.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Auto",
+          "Burst",
+          "Semi"
+        ],
+        "ergonomics": 90,
+        "reload_time": "2.8s",
+        "dps": null
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Polar Patriots P2",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-72_Pummeler"
+    },
+    {
+      "id": "smg_203_gallant",
+      "name": "SMG-203 Gallant",
+      "name_en": "SMG-203 Gallant",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 65.0,
+        "capacity": 50,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 65.0,
+        "damage_type": "Ballistic",
+        "capacity": 50,
+        "fire_rate": 1380,
+        "recoil": 15.0,
+        "penetration": "medium",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Auto",
+          "Semi",
+          "Burst"
+        ],
+        "ergonomics": 75,
+        "reload_time": "2.5s",
+        "dps": 1495
+      },
+      "traits": [
+        "Medium Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Exo Experts P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-203_Gallant"
+    },
+    {
+      "id": "sta_11_smg",
+      "name": "StA-11 SMG",
+      "name_en": "StA-11 SMG",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "Submachine Guns",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 48,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 48,
+        "fire_rate": 1050,
+        "recoil": 13.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Auto"
+        ],
+        "ergonomics": 80,
+        "reload_time": "",
+        "dps": 1575
+      },
+      "traits": [
+        "Light Armor Penetrating",
+        "One Handed"
+      ],
+      "unlock": "Righteous Revenants P3",
+      "description": "This weapon doesn't support attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/StA-11_SMG"
+    },
+    {
+      "id": "sta_52_assault_rifle",
+      "name": "StA-52 Assault Rifle",
+      "name_en": "StA-52 Assault Rifle",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 90.0,
+        "capacity": 56,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 90.0,
+        "damage_type": "Ballistic",
+        "capacity": 56,
+        "fire_rate": 790,
+        "recoil": 14.0,
+        "penetration": "light",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "Auto",
+          "Semi"
+        ],
+        "ergonomics": 55,
+        "reload_time": "",
+        "dps": 1185
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Righteous Revenants P1",
+      "description": "This weapon doesn't support attachments.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/StA-52_Assault_Rifle"
+    },
+    {
+      "id": "ted_63_dynamite",
+      "name": "TED-63 Dynamite",
+      "name_en": "TED-63 Dynamite",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 1000.0,
+        "capacity": 4,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 1000.0,
+        "damage_type": "Explosion",
+        "capacity": 4,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "heavy",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Borderline Justice P3",
+      "description": "1.006.300 2026-06-16",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/TED-63_Dynamite"
+    },
+    {
+      "id": "tm_1_lure_mine",
+      "name": "TM-1 Lure Mine",
+      "name_en": "TM-1 Lure Mine",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 1000.0,
+        "capacity": 4,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 1000.0,
+        "damage_type": "Explosion",
+        "capacity": 4,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [],
+      "unlock": "Redacted Regiment P3",
+      "description": "1.005.002 2026-01-22",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/TM-1_Lure_Mine"
+    },
+    {
+      "id": "vg_70_variable",
+      "name": "VG-70 Variable",
+      "name_en": "VG-70 Variable",
+      "category": "primary",
+      "subcategory": "special",
+      "subcategory_name": "Special",
+      "stats_short": {
+        "damage": 85.0,
+        "capacity": 49,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 85.0,
+        "damage_type": "Ballistic",
+        "capacity": 49,
+        "fire_rate": 300,
+        "recoil": 7.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "Total",
+          "Volley",
+          "Auto"
+        ],
+        "ergonomics": 25,
+        "reload_time": "3.58s",
+        "dps": 425
+      },
+      "traits": [
+        "Light Armor Penetrating"
+      ],
+      "unlock": "Control Group P1",
+      "description": "Any math should be done on values listed in the Detailed Weapon Statistics section.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/VG-70_Variable"
     }
   ]
 }
