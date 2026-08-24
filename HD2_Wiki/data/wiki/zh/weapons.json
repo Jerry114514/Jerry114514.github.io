@@ -63,7 +63,51 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-2_Coyote"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-2_Coyote",
+      "detailed_stats": {
+        "fire_rate": "600 rpm",
+        "recoil": "19.75",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "28",
+        "spread": "↔[4.00] ↕[4.00]",
+        "sway": "1",
+        "ergonomics": "50",
+        "capacity": "45",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "AR-2 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "8 g",
+              "initial_velocity": "650 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "75 Ballistic",
+              "damage_durable": "10 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Fire",
+              "status_strength": "2",
+              "demolition_force": "10",
+              "stagger_force": "12",
+              "push_force": "12"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_23_liberator",
@@ -103,7 +147,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-23_Liberator"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23_Liberator",
+      "detailed_stats": {
+        "fire_rate": "640 rpm",
+        "recoil": "10.5",
+        "recoil_horizontal": "6",
+        "recoil_vertical": "15",
+        "spread": "↔[2.00] ↕[2.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "45",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "5.5x50mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "900 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "22 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_23a_liberator_carbine",
@@ -143,7 +229,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-23A_Liberator_Carbine"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23A_Liberator_Carbine",
+      "detailed_stats": {
+        "fire_rate": "920 rpm",
+        "recoil": "18",
+        "recoil_horizontal": "10",
+        "recoil_vertical": "26",
+        "spread": "↔[3.00] ↕[3.00]",
+        "sway": "1",
+        "ergonomics": "70",
+        "capacity": "45",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "5.5x50mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "900 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "22 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_23c_liberator_concussive",
@@ -182,7 +310,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-23C_Liberator_Concussive"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23C_Liberator_Concussive",
+      "detailed_stats": {
+        "fire_rate": "400 rpm",
+        "recoil": "22.25",
+        "recoil_horizontal": "17",
+        "recoil_vertical": "27.5",
+        "spread": "↔[4.00] ↕[4.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "60",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "5.5x50mm EXPLOSIVE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "800 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "75 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "60"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_23p_liberator_penetrator",
@@ -222,7 +392,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-23P_Liberator_Penetrator"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23P_Liberator_Penetrator",
+      "detailed_stats": {
+        "fire_rate": "640 rpm",
+        "recoil": "14.125",
+        "recoil_horizontal": "9.5",
+        "recoil_vertical": "18.75",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "59",
+        "capacity": "45",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "5.5x50mm PENETRATOR P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "1000 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "65 Ballistic",
+              "damage_durable": "15 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_32_pacifier",
@@ -263,7 +475,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-32_Pacifier"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-32_Pacifier",
+      "detailed_stats": null
     },
     {
       "id": "ar_59_suppressor",
@@ -303,7 +516,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-59_Suppressor"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-59_Suppressor",
+      "detailed_stats": {
+        "fire_rate": "850 rpm",
+        "recoil": "13.25",
+        "recoil_horizontal": "6.5",
+        "recoil_vertical": "20",
+        "spread": "↔[2.00] ↕[2.00]",
+        "sway": "1",
+        "ergonomics": "60",
+        "capacity": "45",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "5.5x50mm SUBSONIC P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "330 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "120%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "80 Ballistic",
+              "damage_durable": "20 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ar_61_tenderizer",
@@ -343,7 +598,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/AR-61_Tenderizer"
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-61_Tenderizer",
+      "detailed_stats": {
+        "fire_rate": "600 rpm",
+        "recoil": "8",
+        "recoil_horizontal": "6",
+        "recoil_vertical": "10",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "35",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "AR-61 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "105 Ballistic",
+              "damage_durable": "30 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "arc_12_blitzer",
@@ -382,7 +679,15 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/ARC-12_Blitzer"
+      "source_url": "https://helldivers.wiki.gg/wiki/ARC-12_Blitzer",
+      "detailed_stats": {
+        "recoil": "45",
+        "recoil_horizontal": "30",
+        "recoil_vertical": "60",
+        "spread": "↔[1350.00] ↕[350.00]",
+        "sway": "1",
+        "ergonomics": "65"
+      }
     },
     {
       "id": "br_14_adjudicator",
@@ -421,7 +726,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/BR-14_Adjudicator"
+      "source_url": "https://helldivers.wiki.gg/wiki/BR-14_Adjudicator",
+      "detailed_stats": {
+        "fire_rate": "550 rpm",
+        "recoil": "27",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "42.5",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "40",
+        "capacity": "30",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "8x60mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "95 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Very Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "12"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "cb_9_exploding_crossbow",
@@ -458,7 +805,77 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CB-9_Exploding_Crossbow"
+      "source_url": "https://helldivers.wiki.gg/wiki/CB-9_Exploding_Crossbow",
+      "detailed_stats": {
+        "fire_rate": "50 rpm",
+        "recoil": "26.25",
+        "recoil_horizontal": "17.5",
+        "recoil_vertical": "35",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "45",
+        "capacity": "5",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "CB-9 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "100%",
+              "gravity_factor": "50%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CB-9_P_IE"
+            },
+            "damage": {
+              "damage_standard": "270 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "CB-9 P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "7 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "cqc_2_saber",
@@ -496,7 +913,12 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber"
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber",
+      "detailed_stats": {
+        "fire_rate": "150 rpm",
+        "recoil": "6",
+        "ergonomics": "0"
+      }
     },
     {
       "id": "cqc_5_combat_hatchet",
@@ -534,7 +956,12 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet"
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet",
+      "detailed_stats": {
+        "fire_rate": "100 rpm",
+        "recoil": "0",
+        "ergonomics": "0"
+      }
     },
     {
       "id": "cqc_19_stun_lance",
@@ -573,7 +1000,12 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance"
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "detailed_stats": {
+        "fire_rate": "117 rpm",
+        "recoil": "0",
+        "ergonomics": "0"
+      }
     },
     {
       "id": "cqc_30_stun_baton",
@@ -612,7 +1044,12 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton"
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "detailed_stats": {
+        "fire_rate": "150 rpm",
+        "recoil": "0",
+        "ergonomics": "0"
+      }
     },
     {
       "id": "cqc_42_machete",
@@ -650,7 +1087,12 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete"
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete",
+      "detailed_stats": {
+        "fire_rate": "72 rpm",
+        "recoil": "0",
+        "ergonomics": "0"
+      }
     },
     {
       "id": "dbs_2_double_freedom",
@@ -689,7 +1131,46 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/DBS-2_Double_Freedom"
+      "source_url": "https://helldivers.wiki.gg/wiki/DBS-2_Double_Freedom",
+      "detailed_stats": {
+        "fire_rate": "650 rpm",
+        "recoil": "162.5",
+        "recoil_horizontal": "65",
+        "recoil_vertical": "260",
+        "spread": "↔[150.00] ↕[120.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "2",
+        "attacks": [
+          {
+            "name": "DBS-2 P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 12",
+              "mass": "6 g",
+              "initial_velocity": "385 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "70 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "30"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "flam_66_torcher",
@@ -727,7 +1208,20 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher"
+      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher",
+      "detailed_stats": {
+        "recoil": "0.75",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "1.5",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "45",
+        "capacity": "100",
+        "spare_magazines": "6",
+        "starting_magazines": "3",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3"
+      }
     },
     {
       "id": "g_3_smoke",
@@ -761,7 +1255,21 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-3_Smoke"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-3_Smoke",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-3 SMOKE E",
+            "type": "explosion",
+            "area_of_effect": {
+              "radius_inner": "8 m",
+              "radius_outer": "8 m",
+              "radius_shockwave": "0 m",
+              "aoe_duration": "30 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_4_gas",
@@ -795,7 +1303,37 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-4_Gas"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-4_Gas",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-4 GAS E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Gas",
+              "inner_radius": "3 Gas",
+              "inner_durable": "3 Gas",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 2.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 2.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "7 m",
+              "aoe_duration": "15 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_6_frag",
@@ -829,7 +1367,64 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-6_Frag"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-6_Frag",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-6 FRAG E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "500 Explosion",
+              "inner_durable": "500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "14 m",
+              "shrapnel_count": "35",
+              "shrapnel": "SHRAPNEL_P"
+            }
+          },
+          {
+            "name": "SHRAPNEL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "30 m/s",
+              "drag_factor": "40%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "110 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "20"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_7_pineapple",
@@ -863,7 +1458,91 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-7_Pineapple"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-7_Pineapple",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-7 PINEAPPLE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "14 m",
+              "shrapnel_count": "18",
+              "shrapnel": "CLUSTER BOMB_P"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "150 g",
+              "initial_velocity": "25 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "400%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "CLUSTER BOMB_P_IE",
+              "explode_after": "CLUSTER BOMB_P_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Ballistic",
+              "damage_durable": "300 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "25",
+              "push_force": "40"
+            }
+          },
+          {
+            "name": "CLUSTER BOMB P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "100 Explosion",
+              "inner_durable": "100 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 99.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 99.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "14 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_10_incendiary",
@@ -897,7 +1576,36 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-10_Incendiary"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-10_Incendiary",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-10 INCENDIARY E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "9 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_12_high_explosive",
@@ -931,7 +1639,36 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-12_High_Explosive"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-12_High_Explosive",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-12 HIGH EXPLOSIVE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "800 Explosion",
+              "inner_durable": "800 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 799.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 799.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "9 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_13_incendiary_impact",
@@ -965,7 +1702,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-13_Incendiary_Impact"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-13_Incendiary_Impact",
+      "detailed_stats": null
     },
     {
       "id": "g_16_impact",
@@ -999,7 +1737,36 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-16_Impact"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-16_Impact",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-16 IMPACT E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_23_stun",
@@ -1033,7 +1800,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-23_Stun"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-23_Stun",
+      "detailed_stats": null
     },
     {
       "id": "g_31_arc",
@@ -1067,7 +1835,29 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-31_Arc"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-31_Arc",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-31 ARC E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Arc",
+              "inner_radius": "0 Arc",
+              "inner_durable": "0 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "15 m",
+              "arc": "G-31 ARC_E_A"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_48_giga_grenade",
@@ -1101,7 +1891,39 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-48_Giga_Grenade"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-48_Giga_Grenade",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-48 GIGA GRENADE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2000 Explosion",
+              "inner_durable": "2000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "16 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_50_seeker",
@@ -1135,7 +1957,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "detailed_stats": null
     },
     {
       "id": "g_89_smokescreen",
@@ -1169,7 +1992,21 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-89_Smokescreen"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-89_Smokescreen",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-89 SMOKESCREEN E",
+            "type": "explosion",
+            "area_of_effect": {
+              "radius_inner": "5 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "0 m",
+              "aoe_duration": "30 s"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_109_urchin",
@@ -1203,7 +2040,28 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-109_Urchin"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-109_Urchin",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-109 URCHIN E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "0 Explosion",
+              "inner_durable": "0 Explosion"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "1 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_123_thermite",
@@ -1237,7 +2095,36 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-123_Thermite"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-123_Thermite",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "G-123 THERMITE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2000 Explosion",
+              "inner_durable": "2000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "2.5 m",
+              "radius_shockwave": "4 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "g_142_pyrotech",
@@ -1271,7 +2158,45 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/G-142_Pyrotech"
+      "source_url": "https://helldivers.wiki.gg/wiki/G-142_Pyrotech",
+      "detailed_stats": {
+        "recoil": "6.25",
+        "recoil_horizontal": "2.5",
+        "recoil_vertical": "10",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "2000",
+        "spare_magazines": "4",
+        "starting_magazines": "4",
+        "attacks": [
+          {
+            "name": "G-142 PYROTECH E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Fire",
+              "inner_radius": "50 Fire",
+              "inner_durable": "50 Fire",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 49.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 49.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "gp_20_ultimatum",
@@ -1308,7 +2233,75 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/GP-20_Ultimatum"
+      "source_url": "https://helldivers.wiki.gg/wiki/GP-20_Ultimatum",
+      "detailed_stats": {
+        "fire_rate": "900 rpm",
+        "recoil": "30.75",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "50",
+        "spread": "↔[50.00] ↕[50.00]",
+        "sway": "1",
+        "ergonomics": "35",
+        "capacity": "1",
+        "spare_magazines": "1",
+        "starting_magazines": "0",
+        "mags_from_supply": "1",
+        "mags_from_ammo_box": "1",
+        "attacks": [
+          {
+            "name": "GP-20 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "500 g",
+              "initial_velocity": "20 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "GP-20_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1000 Ballistic",
+              "damage_durable": "1000 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "GP-20 P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2000 Explosion",
+              "inner_durable": "2000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "25 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "gp_31_grenade_pistol",
@@ -1345,7 +2338,72 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/GP-31_Grenade_Pistol"
+      "source_url": "https://helldivers.wiki.gg/wiki/GP-31_Grenade_Pistol",
+      "detailed_stats": {
+        "fire_rate": "900 rpm",
+        "recoil": "30.75",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "50",
+        "spread": "↔[30.00] ↕[30.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "capacity": "1",
+        "attacks": [
+          {
+            "name": "40mm HEAT GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm HEAT GRENADE_P_IE",
+              "explode_after": "40mm HEAT GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "250 Ballistic",
+              "damage_durable": "250 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm HEAT GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.25 m",
+              "radius_outer": "6.5 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "jar_5_dominator",
@@ -1384,7 +2442,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/JAR-5_Dominator"
+      "source_url": "https://helldivers.wiki.gg/wiki/JAR-5_Dominator",
+      "detailed_stats": {
+        "fire_rate": "250 rpm",
+        "recoil": "57.5",
+        "recoil_horizontal": "40",
+        "recoil_vertical": "75",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "0.8",
+        "ergonomics": "30",
+        "capacity": "15",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "15x100mm STANDARD ROCKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "180 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "30%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "275 Ballistic",
+              "damage_durable": "90 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "15"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "k_2_throwing_knife",
@@ -1418,7 +2518,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/K-2_Throwing_Knife"
+      "source_url": "https://helldivers.wiki.gg/wiki/K-2_Throwing_Knife",
+      "detailed_stats": null
     },
     {
       "id": "las_5_scythe",
@@ -1456,7 +2557,19 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-5_Scythe"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-5_Scythe",
+      "detailed_stats": {
+        "recoil": "0",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "0",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "spare_magazines": "4",
+        "starting_magazines": "3",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3"
+      }
     },
     {
       "id": "las_7_dagger",
@@ -1495,7 +2608,19 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-7_Dagger"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-7_Dagger",
+      "detailed_stats": {
+        "recoil": "0",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "0",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "spare_magazines": "3",
+        "starting_magazines": "3",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3"
+      }
     },
     {
       "id": "las_13_trident",
@@ -1534,7 +2659,19 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-13_Trident"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-13_Trident",
+      "detailed_stats": {
+        "recoil": "4.25",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "7",
+        "spread": "↔[200.00] ↕[50.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "spare_magazines": "3",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3"
+      }
     },
     {
       "id": "las_16_sickle",
@@ -1573,7 +2710,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-16_Sickle"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-16_Sickle",
+      "detailed_stats": {
+        "fire_rate": "750 rpm",
+        "recoil": "1.75",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "2",
+        "spread": "↔[20.00] ↕[20.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "spare_magazines": "3",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "LASER P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "60 Ballistic",
+              "damage_durable": "6 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "las_17_double_edge_sickle",
@@ -1614,7 +2793,130 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-17_Double-Edge_Sickle"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-17_Double-Edge_Sickle",
+      "detailed_stats": {
+        "fire_rate": "700 rpm",
+        "recoil": "1.75",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "2",
+        "spread": "↔[20.00] ↕[20.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "spare_magazines": "3",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "LASER P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "60 Ballistic",
+              "damage_durable": "6 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "LASER P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "55 Ballistic",
+              "damage_durable": "5 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "LASER P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "70 Ballistic",
+              "damage_durable": "7 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "LASER P3",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "70 Ballistic",
+              "damage_durable": "7 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "las_58_talon",
@@ -1654,7 +2956,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/LAS-58_Talon"
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-58_Talon",
+      "detailed_stats": {
+        "fire_rate": "750 rpm",
+        "recoil": "1.75",
+        "recoil_horizontal": "2",
+        "recoil_vertical": "1.5",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "spare_magazines": "3",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "LASER P4",
+            "type": "projectile",
+            "projectile": {
+              "mass": "12 g",
+              "initial_velocity": "1300 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "6 sec",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "200 Ballistic",
+              "damage_durable": "20 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "m7s_smg",
@@ -1696,7 +3040,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/M7S_SMG"
+      "source_url": "https://helldivers.wiki.gg/wiki/M7S_SMG",
+      "detailed_stats": {
+        "fire_rate": "872 rpm",
+        "recoil": "8.375",
+        "recoil_horizontal": "4.75",
+        "recoil_vertical": "12",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "90",
+        "capacity": "48",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "M7S P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "320 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "18 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "5"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "m90a_shotgun",
@@ -1735,7 +3121,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/M90A_Shotgun"
+      "source_url": "https://helldivers.wiki.gg/wiki/M90A_Shotgun",
+      "detailed_stats": null
     },
     {
       "id": "ma5c_assault_rifle",
@@ -1775,7 +3162,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/MA5C_Assault_Rifle"
+      "source_url": "https://helldivers.wiki.gg/wiki/MA5C_Assault_Rifle",
+      "detailed_stats": {
+        "fire_rate": "640 rpm",
+        "recoil": "18.5",
+        "recoil_horizontal": "12",
+        "recoil_vertical": "25",
+        "spread": "↔[2.00] ↕[2.00]",
+        "sway": "1",
+        "ergonomics": "60",
+        "capacity": "32",
+        "spare_magazines": "8",
+        "starting_magazines": "5",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "MA5C P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "16 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "mp_98_knight",
@@ -1816,7 +3245,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/MP-98_Knight"
+      "source_url": "https://helldivers.wiki.gg/wiki/MP-98_Knight",
+      "detailed_stats": {
+        "fire_rate": "1380 rpm",
+        "recoil": "11.875",
+        "recoil_horizontal": "6.25",
+        "recoil_vertical": "17.5",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "90",
+        "capacity": "50",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "9x20mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "375 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "18 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "5"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_2_peacemaker",
@@ -1855,7 +3326,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-2_Peacemaker"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-2_Peacemaker",
+      "detailed_stats": {
+        "fire_rate": "900 rpm",
+        "recoil": "19.5",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "27.5",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "15",
+        "spare_magazines": "8",
+        "starting_magazines": "5",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "9x20mm HOLLOW POINT P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "320 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "100 Ballistic",
+              "damage_durable": "32 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "4"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_4_senator",
@@ -1895,7 +3408,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-4_Senator"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-4_Senator",
+      "detailed_stats": null
     },
     {
       "id": "p_11_stim_pistol",
@@ -1935,7 +3449,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-11_Stim_Pistol"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-11_Stim_Pistol",
+      "detailed_stats": null
     },
     {
       "id": "p_19_redeemer",
@@ -1975,7 +3490,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-19_Redeemer"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-19_Redeemer",
+      "detailed_stats": {
+        "fire_rate": "1100 rpm",
+        "recoil": "13.75",
+        "recoil_horizontal": "12.5",
+        "recoil_vertical": "15",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "capacity": "31",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "9x20mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "375 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "70 Ballistic",
+              "damage_durable": "12 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "4"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_33_missile_pistol",
@@ -2018,7 +3575,106 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-33_Missile_Pistol"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-33_Missile_Pistol",
+      "detailed_stats": {
+        "fire_rate": "60 rpm",
+        "recoil": "312.5",
+        "recoil_horizontal": "150",
+        "recoil_vertical": "475",
+        "spread": "↔[8.00] ↕[8.00]",
+        "sway": "1",
+        "ergonomics": "45",
+        "capacity": "1",
+        "spare_magazines": "3",
+        "starting_magazines": "1",
+        "mags_from_supply": "2",
+        "mags_from_ammo_box": "1",
+        "attacks": [
+          {
+            "name": "Guided P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "1 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "3 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "Guided_P_IE",
+              "explode_after": "Guided_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1000 Damage",
+              "damage_durable": "1000 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "Non-Guided P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "1 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "3 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "Guided_P_IE",
+              "explode_after": "Guided_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1000 Damage",
+              "damage_durable": "1000 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "Guided P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "12 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_35_re_educator",
@@ -2058,7 +3714,54 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-35_Re-Educator"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-35_Re-Educator",
+      "detailed_stats": {
+        "fire_rate": "110 rpm",
+        "recoil": "10",
+        "recoil_horizontal": "5",
+        "recoil_vertical": "15",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "6",
+        "spare_magazines": "2",
+        "starting_magazines": "2",
+        "mags_from_supply": "2",
+        "mags_from_ammo_box": "1",
+        "attacks": [
+          {
+            "name": "P-35 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "10 g",
+              "initial_velocity": "150 m/s",
+              "drag_factor": "200%",
+              "gravity_factor": "100%",
+              "lifetime": "1.70000005 sec",
+              "penetration_slowdown": "0%"
+            },
+            "damage": {
+              "element": "Gas",
+              "damage_standard": "60 Gas",
+              "damage_durable": "10 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Gas",
+              "status_strength": "100",
+              "second_status": "Gas_Confusion",
+              "demolition_force": "1",
+              "stagger_force": "1",
+              "push_force": "1"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_69_veto",
@@ -2098,7 +3801,45 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-69_Veto"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-69_Veto",
+      "detailed_stats": {
+        "fire_rate": "750 rpm",
+        "recoil": "30",
+        "recoil_horizontal": "12.5",
+        "recoil_vertical": "47.5",
+        "spread": "↔[8.00] ↕[8.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "12",
+        "attacks": [
+          {
+            "name": "15x100mm STANDARD ROCKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "375 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "30%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "105 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "15"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_72_crisper",
@@ -2135,7 +3876,20 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-72_Crisper"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-72_Crisper",
+      "detailed_stats": {
+        "recoil": "1.5",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "1.5",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "capacity": "50",
+        "spare_magazines": "4",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3"
+      }
     },
     {
       "id": "p_92_warrant",
@@ -2176,7 +3930,75 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-92_Warrant"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-92_Warrant",
+      "detailed_stats": {
+        "fire_rate": "450 rpm",
+        "recoil": "31.25",
+        "recoil_horizontal": "15",
+        "recoil_vertical": "47.5",
+        "spread": "↔[8.00] ↕[8.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "13",
+        "spare_magazines": "7",
+        "starting_magazines": "4",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "Guided P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "80 Ballistic",
+              "damage_durable": "20 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "Non-Guided P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "80 Ballistic",
+              "damage_durable": "20 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "p_113_verdict",
@@ -2215,7 +4037,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/P-113_Verdict"
+      "source_url": "https://helldivers.wiki.gg/wiki/P-113_Verdict",
+      "detailed_stats": {
+        "fire_rate": "450 rpm",
+        "recoil": "31.25",
+        "recoil_horizontal": "15",
+        "recoil_vertical": "47.5",
+        "spread": "↔[8.00] ↕[8.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "10",
+        "spare_magazines": "10",
+        "starting_magazines": "6",
+        "mags_from_supply": "10",
+        "mags_from_ammo_box": "5",
+        "attacks": [
+          {
+            "name": "12x25mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "140 Ballistic",
+              "damage_durable": "32 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "plas_1_scorcher",
@@ -2255,7 +4119,75 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-1_Scorcher"
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-1_Scorcher",
+      "detailed_stats": {
+        "fire_rate": "350 rpm",
+        "recoil": "15.5",
+        "recoil_horizontal": "11",
+        "recoil_vertical": "20",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "20",
+        "spare_magazines": "5",
+        "starting_magazines": "3",
+        "mags_from_supply": "5",
+        "mags_from_ammo_box": "2",
+        "attacks": [
+          {
+            "name": "MEDIUM PLASMA BOLT P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "550 m/s",
+              "drag_factor": "150%",
+              "gravity_factor": "50%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "MEDIUM PLASMA BOLT_P_IE"
+            },
+            "damage": {
+              "damage_standard": "100 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "MEDIUM PLASMA BOLT P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "100 Explosion",
+              "inner_durable": "100 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 99.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 99.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "2 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "plas_15_loyalist",
@@ -2294,7 +4226,181 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-15_Loyalist"
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-15_Loyalist",
+      "detailed_stats": {
+        "fire_rate": "1000 rpm",
+        "recoil": "6.25",
+        "recoil_horizontal": "2.5",
+        "recoil_vertical": "10",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "95",
+        "capacity": "8",
+        "spare_magazines": "5",
+        "starting_magazines": "3",
+        "mags_from_supply": "5",
+        "mags_from_ammo_box": "2",
+        "attacks": [
+          {
+            "name": "SMALL PLASMA BOLT P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "10 g",
+              "initial_velocity": "550 m/s",
+              "drag_factor": "100%",
+              "gravity_factor": "50%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "SMALL PLASMA BOLT_P_IE"
+            },
+            "damage": {
+              "damage_standard": "100 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "SMALL PLASMA BOLT P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "550 m/s",
+              "drag_factor": "150%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "SMALL PLASMA BOLT_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "75 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "SMALL PLASMA BOLT P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "350 m/s",
+              "drag_factor": "150%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "SMALL PLASMA BOLT_P2_IE"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "75 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "SMALL PLASMA BOLT P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "75 Explosion",
+              "inner_durable": "75 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 74.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 74.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "2 m"
+            }
+          },
+          {
+            "name": "SMALL PLASMA BOLT P2 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "225 Explosion",
+              "inner_durable": "225 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 224.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 224.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.9000001 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "4 m"
+            }
+          },
+          {
+            "name": "SMALL PLASMA BOLT P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "25 Explosion",
+              "inner_durable": "25 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 24.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 24.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.75 m",
+              "radius_outer": "1.5 m",
+              "radius_shockwave": "2 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "plas_39_accelerator_rifle",
@@ -2333,7 +4439,75 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-39_Accelerator_Rifle"
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-39_Accelerator_Rifle",
+      "detailed_stats": {
+        "fire_rate": "550 rpm",
+        "recoil": "3",
+        "recoil_horizontal": "3",
+        "recoil_vertical": "3",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "60",
+        "capacity": "9",
+        "spare_magazines": "12",
+        "starting_magazines": "8",
+        "mags_from_supply": "12",
+        "mags_from_ammo_box": "6",
+        "attacks": [
+          {
+            "name": "MEDIUM PLASMA BOLT P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "1000 m/s",
+              "drag_factor": "10%",
+              "gravity_factor": "50%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "MEDIUM PLASMA BOLT_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "250 Ballistic",
+              "damage_durable": "125 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "MEDIUM PLASMA BOLT P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "100 Explosion",
+              "inner_durable": "100 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 99.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 99.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "2 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "plas_101_purifier",
@@ -2371,7 +4545,129 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-101_Purifier"
+      "source_url": "https://helldivers.wiki.gg/wiki/PLAS-101_Purifier",
+      "detailed_stats": {
+        "fire_rate": "1000 rpm",
+        "recoil": "15.5",
+        "recoil_horizontal": "11",
+        "recoil_vertical": "20",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "15",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "LARGE PLASMA BOLT P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "350 m/s",
+              "drag_factor": "150%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "LARGE PLASMA BOLT_P_IE"
+            },
+            "damage": {
+              "damage_standard": "100 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "VOLATILE PLASMA BOLT P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "25 g",
+              "initial_velocity": "550 m/s",
+              "drag_factor": "150%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "VOLATILE PLASMA BOLT_P_IE"
+            },
+            "damage": {
+              "damage_standard": "200 Ballistic",
+              "damage_durable": "100 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "LARGE PLASMA BOLT P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "300 Explosion",
+              "inner_durable": "300 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 299.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 299.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.9000001 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "4 m"
+            }
+          },
+          {
+            "name": "VOLATILE PLASMA BOLT P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "75 Explosion",
+              "inner_durable": "75 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 74.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 74.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "2 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_2_amendment",
@@ -2410,7 +4706,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-2_Amendment"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-2_Amendment",
+      "detailed_stats": {
+        "fire_rate": "480 rpm",
+        "recoil": "28.75",
+        "recoil_horizontal": "17.5",
+        "recoil_vertical": "40",
+        "spread": "↔[0.10] ↕[0.10]",
+        "sway": "1",
+        "ergonomics": "50",
+        "capacity": "20",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "R-2 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "850 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "200 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_4_hyena",
@@ -2449,7 +4787,51 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-4_Hyena"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-4_Hyena",
+      "detailed_stats": {
+        "fire_rate": "190 rpm",
+        "recoil": "65",
+        "recoil_horizontal": "40",
+        "recoil_vertical": "90",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "30",
+        "capacity": "15",
+        "spare_magazines": "5",
+        "starting_magazines": "4",
+        "mags_from_supply": "5",
+        "mags_from_ammo_box": "2",
+        "attacks": [
+          {
+            "name": "9x70mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "950 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "220 Ballistic",
+              "damage_durable": "45 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Fire",
+              "status_strength": "3",
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_6_deadeye",
@@ -2488,7 +4870,45 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-6_Deadeye"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-6_Deadeye",
+      "detailed_stats": {
+        "fire_rate": "100 rpm",
+        "recoil": "82.5",
+        "recoil_horizontal": "45",
+        "recoil_vertical": "120",
+        "spread": "↔[0.10] ↕[0.10]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "8",
+        "attacks": [
+          {
+            "name": "R-6 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "850 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "300 Ballistic",
+              "damage_durable": "100 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "35"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_36_eruptor",
@@ -2527,7 +4947,105 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-36_Eruptor"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-36_Eruptor",
+      "detailed_stats": {
+        "fire_rate": "32 rpm",
+        "recoil": "57.5",
+        "recoil_horizontal": "40",
+        "recoil_vertical": "75",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "0.8",
+        "ergonomics": "25",
+        "capacity": "5",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "15x100mm HIGH EXPLOSIVE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "180 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "30%",
+              "lifetime": "1 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "15x100mm HIGH EXPLOSIVE_P_IE",
+              "explode_after": "15x100mm HIGH EXPLOSIVE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "230 Ballistic",
+              "damage_durable": "115 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "15x100mm HIGH EXPLOSIVE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "225 Explosion",
+              "inner_durable": "225 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 224.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 224.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "4 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "8 m",
+              "shrapnel_count": "30",
+              "shrapnel": "SHRAPNEL_P"
+            }
+          },
+          {
+            "name": "SHRAPNEL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "30 m/s",
+              "drag_factor": "40%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "110 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "20"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_63_diligence",
@@ -2565,7 +5083,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-63_Diligence"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-63_Diligence",
+      "detailed_stats": {
+        "fire_rate": "350 rpm",
+        "recoil": "26.25",
+        "recoil_horizontal": "17.5",
+        "recoil_vertical": "35",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "25",
+        "spare_magazines": "8",
+        "starting_magazines": "5",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "9x70mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "850 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "165 Ballistic",
+              "damage_durable": "45 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_63cs_diligence_counter_sniper",
@@ -2603,7 +5163,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-63CS_Diligence_Counter_Sniper"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-63CS_Diligence_Counter_Sniper",
+      "detailed_stats": {
+        "fire_rate": "350 rpm",
+        "recoil": "40",
+        "recoil_horizontal": "27.5",
+        "recoil_vertical": "52.5",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "0.8",
+        "ergonomics": "35",
+        "capacity": "15",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "9x70mm HIGH VELOCITY P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "940 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "200 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_72_censor",
@@ -2642,7 +5244,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-72_Censor"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-72_Censor",
+      "detailed_stats": {
+        "fire_rate": "400 rpm",
+        "recoil": "12.5",
+        "recoil_horizontal": "10",
+        "recoil_vertical": "15",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "60",
+        "capacity": "20",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "8x60mm SUBSONIC P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "330 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "165 Ballistic",
+              "damage_durable": "45 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "r_2124_constitution",
@@ -2681,7 +5325,45 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/R-2124_Constitution"
+      "source_url": "https://helldivers.wiki.gg/wiki/R-2124_Constitution",
+      "detailed_stats": {
+        "fire_rate": "60 rpm",
+        "recoil": "30",
+        "recoil_horizontal": "17.5",
+        "recoil_vertical": "42.5",
+        "spread": "↔[0.10] ↕[0.10]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "5",
+        "attacks": [
+          {
+            "name": "R-2124 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "20 g",
+              "initial_velocity": "850 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "180 Ballistic",
+              "damage_durable": "50 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_8_punisher",
@@ -2720,7 +5402,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-8_Punisher"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8_Punisher",
+      "detailed_stats": null
     },
     {
       "id": "sg_8p_punisher_plasma",
@@ -2758,7 +5441,77 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-8P_Punisher_Plasma"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8P_Punisher_Plasma",
+      "detailed_stats": {
+        "fire_rate": "80 rpm",
+        "recoil": "77.5",
+        "recoil_horizontal": "45",
+        "recoil_vertical": "110",
+        "spread": "↔[8.00] ↕[8.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "10",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "LARGE PLASMA BOLT P3",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "90 m/s",
+              "drag_factor": "400%",
+              "gravity_factor": "300%",
+              "penetration_slowdown": "35%",
+              "explosion_on_impact": "LARGE PLASMA BOLT_P3_IE"
+            },
+            "damage": {
+              "damage_standard": "0 Ballistic",
+              "damage_durable": "0 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "LARGE PLASMA BOLT P3 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "225 Explosion",
+              "inner_durable": "225 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 224.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 224.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.29999995 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "4 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_8s_slugger",
@@ -2797,7 +5550,45 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-8S_Slugger"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-8S_Slugger",
+      "detailed_stats": {
+        "fire_rate": "80 rpm",
+        "recoil": "82.5",
+        "recoil_horizontal": "45",
+        "recoil_vertical": "120",
+        "spread": "↔[6.00] ↕[6.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "16",
+        "attacks": [
+          {
+            "name": "10g RIFLED SLUGS P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "390 m/s",
+              "drag_factor": "200%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "330 Ballistic",
+              "damage_durable": "90 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "35"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_20_halt",
@@ -2837,7 +5628,75 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-20_Halt"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-20_Halt",
+      "detailed_stats": {
+        "fire_rate": "80 rpm",
+        "recoil": "82.5",
+        "recoil_horizontal": "45",
+        "recoil_vertical": "120",
+        "spread": "↔[300.00] ↕[200.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "16",
+        "attacks": [
+          {
+            "name": "10g FLECHETTES P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 11",
+              "mass": "6 g",
+              "initial_velocity": "385 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "35 Ballistic",
+              "damage_durable": "10 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "10g STUN ROUNDS P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 20",
+              "mass": "4.5 g",
+              "initial_velocity": "800 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "6 Ballistic",
+              "damage_durable": "2 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Stun Large",
+              "status_strength": "1",
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_22_bushwhacker",
@@ -2878,7 +5737,46 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-22_Bushwhacker"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-22_Bushwhacker",
+      "detailed_stats": {
+        "fire_rate": "650 rpm",
+        "recoil": "107.5",
+        "recoil_horizontal": "45",
+        "recoil_vertical": "170",
+        "spread": "↔[200.00] ↕[150.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "3",
+        "attacks": [
+          {
+            "name": "BUCKSHOT P1",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 9",
+              "mass": "6 g",
+              "initial_velocity": "385 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "45 Ballistic",
+              "damage_durable": "12 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "30"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_97_sweeper",
@@ -2917,7 +5815,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-97_Sweeper"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-97_Sweeper",
+      "detailed_stats": null
     },
     {
       "id": "sg_225_breaker",
@@ -2956,7 +5855,50 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-225_Breaker"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225_Breaker",
+      "detailed_stats": {
+        "fire_rate": "300 rpm",
+        "recoil": "43.25",
+        "recoil_horizontal": "29",
+        "recoil_vertical": "57.5",
+        "spread": "↔[100.00] ↕[100.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "16",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "12g BUCKSHOT P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 11",
+              "mass": "4 g",
+              "initial_velocity": "360 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "80%"
+            },
+            "damage": {
+              "damage_standard": "30 Ballistic",
+              "damage_durable": "6 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_225ie_breaker_incendiary",
@@ -2996,7 +5938,52 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-225IE_Breaker_Incendiary"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225IE_Breaker_Incendiary",
+      "detailed_stats": {
+        "fire_rate": "300 rpm",
+        "recoil": "32.5",
+        "recoil_horizontal": "22.5",
+        "recoil_vertical": "42.5",
+        "spread": "↔[300.00] ↕[300.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "26",
+        "spare_magazines": "4",
+        "starting_magazines": "3",
+        "mags_from_supply": "4",
+        "mags_from_ammo_box": "2",
+        "attacks": [
+          {
+            "name": "12g LIBERTY FIRE P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 12",
+              "mass": "2 g",
+              "initial_velocity": "120 m/s",
+              "drag_factor": "80%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "100%"
+            },
+            "damage": {
+              "damage_standard": "20 Ballistic",
+              "damage_durable": "10 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Fire",
+              "status_strength": "0.600000024",
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_225sp_breaker_spray_pray",
@@ -3035,7 +6022,50 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-225SP_Breaker_Spray%26Pray"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-225SP_Breaker_Spray%26Pray",
+      "detailed_stats": {
+        "fire_rate": "330 rpm",
+        "recoil": "40",
+        "recoil_horizontal": "35",
+        "recoil_vertical": "45",
+        "spread": "↔[200.00] ↕[200.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "26",
+        "spare_magazines": "8",
+        "starting_magazines": "6",
+        "mags_from_supply": "8",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "12g BIRDSHOT P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 16",
+              "mass": "1 g",
+              "initial_velocity": "250 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "80%"
+            },
+            "damage": {
+              "damage_standard": "15 Ballistic",
+              "damage_durable": "4 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "3",
+              "push_force": "1"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sg_451_cookout",
@@ -3075,7 +6105,48 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SG-451_Cookout"
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-451_Cookout",
+      "detailed_stats": {
+        "fire_rate": "80 rpm",
+        "recoil": "71.25",
+        "recoil_horizontal": "42.5",
+        "recoil_vertical": "100",
+        "spread": "↔[180.00] ↕[140.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "16",
+        "attacks": [
+          {
+            "name": "SG-451 P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 20",
+              "mass": "2 g",
+              "initial_velocity": "120 m/s",
+              "drag_factor": "80%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "100%"
+            },
+            "damage": {
+              "damage_standard": "16 Ballistic",
+              "damage_durable": "3 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Fire",
+              "status_strength": "0.600000024",
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "20"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "smg_32_reprimand",
@@ -3115,7 +6186,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SMG-32_Reprimand"
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-32_Reprimand",
+      "detailed_stats": {
+        "fire_rate": "490 rpm",
+        "recoil": "31.5",
+        "recoil_horizontal": "15.5",
+        "recoil_vertical": "47.5",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "55",
+        "capacity": "25",
+        "spare_magazines": "9",
+        "starting_magazines": "5",
+        "mags_from_supply": "9",
+        "mags_from_ammo_box": "4",
+        "attacks": [
+          {
+            "name": "12x25mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "140 Ballistic",
+              "damage_durable": "32 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "smg_37_defender",
@@ -3156,7 +6269,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SMG-37_Defender"
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-37_Defender",
+      "detailed_stats": {
+        "fire_rate": "520 rpm",
+        "recoil": "8.75",
+        "recoil_horizontal": "7.5",
+        "recoil_vertical": "10",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "90",
+        "capacity": "45",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "12x25mm FULL METAL JACKET P2",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "110 Ballistic",
+              "damage_durable": "22 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "5"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "smg_72_pummeler",
@@ -3197,7 +6352,51 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SMG-72_Pummeler"
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-72_Pummeler",
+      "detailed_stats": {
+        "fire_rate": "475 rpm",
+        "recoil": "8.75",
+        "recoil_horizontal": "7.5",
+        "recoil_vertical": "10",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "90",
+        "capacity": "45",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "SMG-72 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "210 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "85 Ballistic",
+              "damage_durable": "17 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "status": "Stun Medium",
+              "status_strength": "2",
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "5"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "smg_203_gallant",
@@ -3238,7 +6437,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/SMG-203_Gallant"
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG-203_Gallant",
+      "detailed_stats": {
+        "fire_rate": "1380 rpm",
+        "recoil": "14.875",
+        "recoil_horizontal": "8.75",
+        "recoil_vertical": "21",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "80",
+        "capacity": "50",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "9x20mm HIGH VELOCITY P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "450 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "65 Ballistic",
+              "damage_durable": "13 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "4"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sta_11_smg",
@@ -3277,7 +6518,8 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/StA-11_SMG"
+      "source_url": "https://helldivers.wiki.gg/wiki/StA-11_SMG",
+      "detailed_stats": null
     },
     {
       "id": "sta_52_assault_rifle",
@@ -3316,7 +6558,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/StA-52_Assault_Rifle"
+      "source_url": "https://helldivers.wiki.gg/wiki/StA-52_Assault_Rifle",
+      "detailed_stats": {
+        "fire_rate": "790 rpm",
+        "recoil": "14",
+        "recoil_horizontal": "8",
+        "recoil_vertical": "20",
+        "spread": "↔[2.00] ↕[2.00]",
+        "sway": "1",
+        "ergonomics": "55",
+        "capacity": "56",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "5.5x50mm FULL METAL JACKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "900 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "22 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "ted_63_dynamite",
@@ -3350,7 +6634,36 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/TED-63_Dynamite"
+      "source_url": "https://helldivers.wiki.gg/wiki/TED-63_Dynamite",
+      "detailed_stats": {
+        "attacks": [
+          {
+            "name": "TED-63 DYNAMITE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1000 Explosion",
+              "inner_durable": "1000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "6 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "16 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "tm_1_lure_mine",
@@ -3384,7 +6697,66 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/TM-1_Lure_Mine"
+      "source_url": "https://helldivers.wiki.gg/wiki/TM-1_Lure_Mine",
+      "detailed_stats": {
+        "main_health": "300",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "TM-1 LURE MINE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1000 Explosion",
+              "inner_durable": "1000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "8 m",
+              "radius_shockwave": "12 m",
+              "shrapnel_count": "35",
+              "shrapnel": "SHRAPNEL_P"
+            }
+          },
+          {
+            "name": "SHRAPNEL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "30 m/s",
+              "drag_factor": "40%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "110 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "20"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "vg_70_variable",
@@ -3424,7 +6796,49 @@
       "variants": [],
       "tips": [],
       "related": {},
-      "source_url": "https://helldivers.wiki.gg/wiki/VG-70_Variable"
+      "source_url": "https://helldivers.wiki.gg/wiki/VG-70_Variable",
+      "detailed_stats": {
+        "fire_rate": "550 rpm",
+        "recoil": "6.75",
+        "recoil_horizontal": "4.5",
+        "recoil_vertical": "9",
+        "spread": "↔[5.00] ↕[5.00]",
+        "sway": "1",
+        "ergonomics": "25",
+        "capacity": "49",
+        "spare_magazines": "7",
+        "starting_magazines": "6",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "VG-70 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "7 g",
+              "initial_velocity": "320 m/s",
+              "drag_factor": "60%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "85 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "4"
+            }
+          }
+        ]
+      }
     }
   ]
 }

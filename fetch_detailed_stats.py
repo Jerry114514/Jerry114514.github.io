@@ -30,6 +30,13 @@ GENERAL_MAP = {
     "Cooldown": "cooldown", "Uses": "uses", "Main Health": "main_health",
     "Main Armor": "main_armor", "Bombs": "bombs", "Salvos": "salvos",
     "Bombardment Area Size": "bombardment_area",
+    # 武器基础参数
+    "Fire Rate": "fire_rate", "Recoil": "recoil", "Horizontal Recoil": "recoil_horizontal",
+    "Vertical Recoil": "recoil_vertical", "Spread": "spread", "Sway": "sway",
+    "Ergonomics": "ergonomics", "Capacity": "capacity", "Spare Magazines": "spare_magazines",
+    "Starting Magazines": "starting_magazines", "Mags from Supply": "mags_from_supply",
+    "Mags from Ammo Box": "mags_from_ammo_box", "Stamina Drain": "stamina_drain",
+    "Aim FOV": "aim_fov", "Scope Zoom": "scope_zoom", "Reload Time": "reload_time",
 }
 # 分组 -> 标签映射
 SECTION_LABELS = {
@@ -63,7 +70,7 @@ def parse_tables(section_html):
         table_id = None
         mid = re.search(r'id="([^"]+)"', attrs)
         if mid:
-            table_id = html_mod.unescape(mid.group(1)).replace(" ", "").replace("_", "").upper()
+            table_id = re.sub(r'[^A-Z0-9]', '', html_mod.unescape(mid.group(1)).upper())
         # 解析行
         rows = re.findall(r'<tr>(.*?)</tr>', tbl, re.S)
         header = None  # 当前分组标题 (th colspan=2)
@@ -97,10 +104,10 @@ def parse_tables(section_html):
                     result["general"][GENERAL_MAP[label]] = val
         if is_attack_table and current_attack:
             attack_by_id[table_id] = current_attack
-    # 将攻击表数据关联到 attacks
+    # 将攻击表数据关联到 attacks（宽松匹配：去除非字母数字）
     for a in result["attacks"]:
         clean = a["name"].lstrip("*").strip()
-        key = clean.replace(" ", "").replace("_", "").upper()
+        key = re.sub(r'[^A-Z0-9]', '', clean.upper())
         if key in attack_by_id:
             src = attack_by_id[key]
             a["data"] = src.get("sections", {})
@@ -130,15 +137,8 @@ def get_detailed_stats(page):
         parsed = parse_tables(section)
         if not parsed["general"] and not parsed["attacks"]:
             return None
-        # 构建 detailed_stats
-        detailed = {"cooldown": parsed["general"].get("cooldown"),
-                    "uses": parsed["general"].get("uses"),
-                    "main_health": parsed["general"].get("main_health"),
-                    "main_armor": parsed["general"].get("main_armor"),
-                    "bombs": parsed["general"].get("bombs"),
-                    "salvos": parsed["general"].get("salvos"),
-                    "bombardment_area": parsed["general"].get("bombardment_area")}
-        detailed = {k: v for k, v in detailed.items() if v is not None}
+        # 构建 detailed_stats：包含所有 general 字段（战略配备 + 武器基础参数）
+        detailed = {k: v for k, v in parsed["general"].items() if v is not None}
         attacks = []
         for a in parsed["attacks"]:
             atk = {"name": a["name"].lstrip("*").strip(), "type": a["type"].lower()}
