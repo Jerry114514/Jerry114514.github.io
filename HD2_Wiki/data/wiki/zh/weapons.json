@@ -99,14 +99,24 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Fire",
-              "status_strength": "2",
               "demolition_force": "10",
               "stagger_force": "12",
               "push_force": "12"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "2",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -686,7 +696,8 @@
         "recoil_vertical": "60",
         "spread": "↔[1350.00] ↕[350.00]",
         "sway": "1",
-        "ergonomics": "65"
+        "ergonomics": "65",
+        "attacks": []
       }
     },
     {
@@ -917,7 +928,8 @@
       "detailed_stats": {
         "fire_rate": "150 rpm",
         "recoil": "6",
-        "ergonomics": "0"
+        "ergonomics": "0",
+        "attacks": []
       }
     },
     {
@@ -960,7 +972,8 @@
       "detailed_stats": {
         "fire_rate": "100 rpm",
         "recoil": "0",
-        "ergonomics": "0"
+        "ergonomics": "0",
+        "attacks": []
       }
     },
     {
@@ -1004,7 +1017,8 @@
       "detailed_stats": {
         "fire_rate": "117 rpm",
         "recoil": "0",
-        "ergonomics": "0"
+        "ergonomics": "0",
+        "attacks": []
       }
     },
     {
@@ -1048,7 +1062,8 @@
       "detailed_stats": {
         "fire_rate": "150 rpm",
         "recoil": "0",
-        "ergonomics": "0"
+        "ergonomics": "0",
+        "attacks": []
       }
     },
     {
@@ -1091,7 +1106,8 @@
       "detailed_stats": {
         "fire_rate": "72 rpm",
         "recoil": "0",
-        "ergonomics": "0"
+        "ergonomics": "0",
+        "attacks": []
       }
     },
     {
@@ -1220,7 +1236,23 @@
         "spare_magazines": "6",
         "starting_magazines": "3",
         "mags_from_supply": "6",
-        "mags_from_ammo_box": "3"
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "Fire Panic",
+            "type": "status"
+          }
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -1331,8 +1363,22 @@
               "radius_shockwave": "7 m",
               "aoe_duration": "15 s"
             }
+          },
+          {
+            "name": "Gas Confusion",
+            "type": "status"
           }
-        ]
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -1604,7 +1650,17 @@
               "radius_shockwave": "9 m"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -2122,8 +2178,37 @@
               "radius_outer": "2.5 m",
               "radius_shockwave": "4 m"
             }
+          },
+          {
+            "name": "Fire",
+            "type": "status",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "100 Fire",
+              "damage_durable": "100 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "0",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
           }
-        ]
+        ],
+        "status_effects": {
+          "damage": {
+            "damage_standard": "150 Damage",
+            "damage_durable": "150 Damage"
+          },
+          "demolition_force": "10",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -2195,7 +2280,17 @@
               "radius_shockwave": "7 m"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -2558,18 +2653,7 @@
       "tips": [],
       "related": {},
       "source_url": "https://helldivers.wiki.gg/wiki/LAS-5_Scythe",
-      "detailed_stats": {
-        "recoil": "0",
-        "recoil_horizontal": "0",
-        "recoil_vertical": "0",
-        "spread": "↔[10.00] ↕[10.00]",
-        "sway": "1",
-        "ergonomics": "65",
-        "spare_magazines": "4",
-        "starting_magazines": "3",
-        "mags_from_supply": "6",
-        "mags_from_ammo_box": "3"
-      }
+      "detailed_stats": null
     },
     {
       "id": "las_7_dagger",
@@ -2619,7 +2703,18 @@
         "spare_magazines": "3",
         "starting_magazines": "3",
         "mags_from_supply": "6",
-        "mags_from_ammo_box": "3"
+        "mags_from_ammo_box": "3",
+        "attacks": [],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -2670,7 +2765,8 @@
         "spare_magazines": "3",
         "starting_magazines": "2",
         "mags_from_supply": "6",
-        "mags_from_ammo_box": "3"
+        "mags_from_ammo_box": "3",
+        "attacks": []
       }
     },
     {
@@ -3752,15 +3848,29 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Gas",
-              "status_strength": "100",
               "second_status": "Gas_Confusion",
               "demolition_force": "1",
               "stagger_force": "1",
               "push_force": "1"
             }
+          },
+          {
+            "name": "Gas Confusion",
+            "type": "status"
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Gas",
+          "status_strength": "100",
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -3888,7 +3998,23 @@
         "spare_magazines": "4",
         "starting_magazines": "2",
         "mags_from_supply": "6",
-        "mags_from_ammo_box": "3"
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "Fire Panic",
+            "type": "status"
+          }
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -4823,14 +4949,24 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Fire",
-              "status_strength": "3",
               "demolition_force": "10",
               "stagger_force": "20",
               "push_force": "14"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "3",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -5688,14 +5824,16 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Stun Large",
-              "status_strength": "1",
               "demolition_force": "10",
               "stagger_force": "15",
               "push_force": "10"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Stun Large",
+          "status_strength": "1"
+        }
       }
     },
     {
@@ -5975,14 +6113,24 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Fire",
-              "status_strength": "0.600000024",
               "demolition_force": "10",
               "stagger_force": "10",
               "push_force": "10"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "0.600000024",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -6138,14 +6286,24 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Fire",
-              "status_strength": "0.600000024",
               "demolition_force": "10",
               "stagger_force": "35",
               "push_force": "20"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "0.600000024",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       }
     },
     {
@@ -6388,14 +6546,16 @@
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "status": "Stun Medium",
-              "status_strength": "2",
               "demolition_force": "10",
               "stagger_force": "15",
               "push_force": "5"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Stun Medium",
+          "status_strength": "2"
+        }
       }
     },
     {

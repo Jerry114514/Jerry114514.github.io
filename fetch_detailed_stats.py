@@ -75,7 +75,7 @@ def parse_tables(section_html):
         rows = re.findall(r'<tr>(.*?)</tr>', tbl, re.S)
         header = None  # 当前分组标题 (th colspan=2)
         current_attack = None
-        is_attack_table = table_type in ("projectile", "explosion", "melee", "grenade")
+        is_attack_table = table_type in ("projectile", "explosion", "melee", "grenade", "status")
         if is_attack_table:
             current_attack = {"name": None, "type": table_type, "sections": {}}
         for row in rows:
@@ -159,14 +159,37 @@ def get_detailed_stats(page):
                 atk["penetration"] = data["Penetration"]
             # special effects
             if "Special Effects" in data:
-                atk["special_effects"] = data["Special Effects"]
+                atk["special_effects"] = dict(data["Special Effects"])
             # area of effect
             if "Area of Effect" in data:
                 atk["area_of_effect"] = data["Area of Effect"]
             attacks.append(atk)
+        # 独立状态区块：将攻击条目中的状态字段分离到顶层 status_effects
+        status_effects = {}
+        for a in attacks:
+            se = a.get("special_effects") or {}
+            # 状态类字段
+            for k in list(se.keys()):
+                if k in ("status", "status_strength", "status_duration", "effect_type", "fire", "gas", "ems", "smoke"):
+                    status_effects[k] = se.pop(k)
+            # 若攻击条目本身的 type 为 status 或名称为 Fire，其数据作为状态效果
+            if a["type"] == "status" or (a.get("name", "").lower() in ("fire", "status", "gas", "ems", "smoke")):
+                if a.get("damage"):
+                    status_effects.setdefault("damage", a["damage"])
+                if a.get("special_effects"):
+                    status_effects.update(a["special_effects"])
+                # 移除该攻击条目（状态效果不作为攻击展示）
+                attacks.remove(a)
+        # 清理空 special_effects
+        for a in attacks:
+            if a.get("special_effects") and not a["special_effects"]:
+                del a["special_effects"]
         if not attacks:
-            return detailed or None
-        detailed["attacks"] = attacks
+            if status_effects and not detailed:
+                detailed = {}
+        detailed["attacks"] = attacks if attacks else []
+        if status_effects:
+            detailed["status_effects"] = status_effects
         return detailed
     except Exception as e:
         print(f"  [ERR] {page}: {e}", flush=True)

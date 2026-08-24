@@ -10,7 +10,7 @@
     :root {
       --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px; --amber: #f59e0b; --red: #ef4444;
     }
     @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
     html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
@@ -63,21 +63,20 @@
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
     /* ===== detailed_stats ===== */
-    .ds-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-    .ds-tag { background: rgba(255,255,255,0.06); color: var(--text-dim); font-size: 12px; padding: 3px 10px; border-radius: 10px; }
+    .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }
+    .ds-cell { display: flex; flex-direction: column; padding: 6px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
+    .ds-k { font-size: 12px; color: var(--text-mute); margin-bottom: 2px; }
+    .ds-v { font-size: 13px; color: var(--text); font-family: 'Consolas','Menlo',monospace; }
     .ds-attack { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
     .ds-attack:last-child { margin-bottom: 0; }
-    .ds-attack-head { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+    .ds-attack-head { font-size: 14px; color: var(--text); font-weight: 600; margin-bottom: 8px; }
+    .ds-status { border-left: 3px solid var(--amber); }
     .ds-type { font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-left: 6px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
     .ds-type-proj { background: rgba(59,130,246,0.2); color: var(--blue); }
     .ds-type-exp { background: rgba(239,68,68,0.2); color: var(--red); }
-    .ds-group { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .ds-group:last-child { border-bottom: none; }
-    .ds-group-label { font-size: 12px; color: var(--text-mute); flex-shrink: 0; min-width: 52px; }
-    .ds-items { display: flex; flex-wrap: wrap; gap: 6px 14px; }
-    .ds-item { font-size: 13px; color: var(--text-dim); }
-    .ds-k { color: var(--text-mute); margin-right: 3px; }
-    .ds-v { color: var(--text); }
+    .ds-type-fire { background: rgba(245,158,11,0.2); color: var(--amber); }
+    @media (max-width: 1023px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 767px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
 
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
 
@@ -174,7 +173,7 @@
         '</div>';
     }
 
-    // ============ detailed_stats 渲染 ============
+    // ============ detailed_stats 渲染（分组表格/卡片） ============
     var DS_LABELS = {
       mass: "弹体质量", initial_velocity: "初速度", drag_factor: "阻力系数", gravity_factor: "重力系数",
       penetration_slowdown: "穿透减速", explosion_on_impact: "命中引爆", explode_after: "延时引爆",
@@ -186,14 +185,16 @@
       fire_rate: "射速", recoil: "后坐力", recoil_horizontal: "水平后坐力", recoil_vertical: "垂直后坐力",
       spread: "散布", sway: "晃动", ergonomics: "人体工学", capacity: "弹匣容量",
       spare_magazines: "备用弹匣", starting_magazines: "初始弹匣", mags_from_supply: "补给弹匣", mags_from_ammo_box: "弹药箱弹匣",
+      cooldown: "冷却时间", uses: "使用次数", bombs: "炸弹数量", salvos: "齐射次数", bombardment_area: "炮击区域范围",
+      status_strength: "状态强度", status_duration: "状态持续时间", status: "状态效果", effect_type: "状态类型",
     };
     // 值翻译（长词优先）
     var DS_VALUE_MAP = [
       ["Requisition Slips", "申购点"], ["Anti-Tank", "反坦克"],
-      ["Ballistic", "实弹伤害"], ["Explosion", "爆炸伤害"], ["Arc", "电弧伤害"], ["Gas", "毒气伤害"],
+      ["Ballistic", "实弹伤害"], ["Explosion", "爆炸伤害"], ["Arc", "电弧伤害"], ["Gas", "毒气伤害"], ["Acid", "酸液伤害"],
       ["Medals", "勋章"], ["Unarmored", "无护甲"],
       ["Light", "轻甲"], ["Medium", "中甲"], ["Heavy", "重甲"],
-      ["None", "无"]
+      ["EMS", "电磁伤害"], ["None", "无"], ["Fire", "火焰伤害"]
     ];
     function dsTranslate(s) {
       var out = String(s);
@@ -211,30 +212,28 @@
       if (s === "∞") return "∞";
       return dsTranslate(s);
     }
-    function dsGroup(label, obj) {
+    // 分组网格（属性名+属性值成对，4列）
+    function dsGrid(obj, label) {
       if (!obj) return "";
       var keys = Object.keys(obj);
       if (!keys.length) return "";
-      var items = keys.map(function(k) {
+      var cells = keys.map(function(k) {
         var v = dsVal(obj[k]);
         if (v === "") return "";
         var lbl = DS_LABELS[k] || k;
-        return '<span class="ds-item"><span class="ds-k">' + esc(lbl) + '</span><span class="ds-v">' + esc(v) + '</span></span>';
+        return '<div class="ds-cell"><span class="ds-k">' + esc(lbl) + '</span><span class="ds-v">' + esc(v) + '</span></div>';
       }).filter(Boolean);
-      if (!items.length) return "";
-      return '<div class="ds-group"><span class="ds-group-label">' + esc(label) + '</span><span class="ds-items">' + items.join("") + '</span></div>';
+      if (!cells.length) return "";
+      return '<div class="ds-grid">' + cells.join("") + '</div>';
     }
     function renderDetailedStats(w) {
       var ds = w.detailed_stats;
       if (!ds) return "";
-      // 顶层基础参数（非 attacks 部分）
-      var topKeys = Object.keys(ds).filter(function(k) { return k !== "attacks"; });
-      var tagsHtml = topKeys.map(function(k) {
-        var v = dsVal(ds[k]);
-        if (v === "") return "";
-        var lbl = DS_LABELS[k] || k;
-        return '<span class="ds-tag">' + esc(lbl) + ': ' + esc(v) + '</span>';
-      }).join("");
+      // 顶层基础参数（非 attacks/status_effects 部分）
+      var topKeys = Object.keys(ds).filter(function(k) { return k !== "attacks" && k !== "status_effects"; });
+      var topObj = {};
+      topKeys.forEach(function(k) { topObj[k] = ds[k]; });
+      var topHtml = dsGrid(topObj);
       // 攻击条目
       var attacksHtml = "";
       var attacks = ds.attacks || [];
@@ -242,23 +241,52 @@
         attacksHtml = attacks.map(function(a, i) {
           var typeTag = a.type === "projectile" ? '<span class="ds-type ds-type-proj">弹丸</span>' :
                          a.type === "explosion" ? '<span class="ds-type ds-type-exp">爆炸</span>' :
+                         a.type === "fire" ? '<span class="ds-type ds-type-fire">火焰</span>' :
                          '<span class="ds-type">' + esc(a.type) + '</span>';
           return '<div class="ds-attack">' +
-            '<div class="ds-attack-head">攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
-            dsGroup("弹丸参数", a.projectile) +
-            dsGroup("范围参数", a.area_of_effect) +
-            dsGroup("伤害参数", a.damage) +
-            dsGroup("穿透参数", a.penetration) +
-            dsGroup("特殊效果", a.special_effects) +
+            '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
+            dsGrid(a.projectile) +
+            dsGrid(a.area_of_effect) +
+            dsGrid(a.damage) +
+            dsGrid(a.penetration) +
+            dsGrid(a.special_effects) +
             '</div>';
         }).join("");
-      } else {
-        attacksHtml = '<p style="font-size:0.8rem;color:var(--text-dim)">暂无详细攻击数据</p>';
+      }
+      // 独立状态效果区块
+      var statusHtml = "";
+      var se = ds.status_effects;
+      if (se && Object.keys(se).length) {
+        var stRaw = se.effect_type || se.status || "状态";
+        var stName = stRaw.toLowerCase() === "fire" ? "火焰" :
+                     stRaw.toLowerCase() === "gas" ? "毒气" :
+                     stRaw.toLowerCase() === "ems" ? "电磁" :
+                     stRaw.toLowerCase() === "smoke" ? "烟雾" :
+                     stRaw.toLowerCase() === "acid" ? "酸液" : String(stRaw);
+        var stIcon = stRaw.toLowerCase() === "fire" ? "🔥" :
+                     stRaw.toLowerCase() === "gas" ? "☠️" :
+                     stRaw.toLowerCase() === "ems" ? "⚡" :
+                     stRaw.toLowerCase() === "smoke" ? "💨" :
+                     stRaw.toLowerCase() === "acid" ? "🧪" : "🔥";
+        var seHtml = "";
+        // 顶层标量字段
+        var seTop = {};
+        Object.keys(se).forEach(function(k) {
+          if (k === "effect_type" || k === "status") return;
+          if (typeof se[k] === "object") { seHtml += dsGrid(se[k]); return; }
+          seTop[k] = se[k];
+        });
+        seHtml = dsGrid(seTop) + seHtml;
+        statusHtml = '<div class="ds-attack ds-status">' +
+          '<div class="ds-attack-head">' + stIcon + ' 状态效果 (Status: ' + esc(stName) + ')</div>' +
+          seHtml +
+          '</div>';
       }
       return '<div class="card">' +
         '<h2>⚙️ 详细数据</h2>' +
-        (tagsHtml ? '<div class="ds-tags">' + tagsHtml + '</div>' : "") +
+        (topHtml ? topHtml : "") +
         attacksHtml +
+        statusHtml +
         '</div>';
     }
 
