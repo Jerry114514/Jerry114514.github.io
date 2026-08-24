@@ -8,12 +8,26 @@
     "mobile": 1
   },
   "blocks": [
-    { "id": "welcome", "type": "full-width", "priority": 0 },
-    { "id": "about", "type": "third", "priority": 1 },
-    { "id": "news", "type": "third", "priority": 2 },
-    { "id": "navigation", "type": "third", "priority": 3 },
-    { "id": "factions", "type": "third", "priority": 4 },
-    { "id": "beginners", "type": "third", "priority": 5 }
+    {
+      "id": "welcome",
+      "type": "full-width",
+      "priority": 0
+    },
+    {
+      "id": "about",
+      "type": "third",
+      "priority": 1
+    },
+    {
+      "id": "navigation",
+      "type": "third",
+      "priority": 3
+    },
+    {
+      "id": "beginners",
+      "type": "third",
+      "priority": 5
+    }
   ],
   "updated_at": "2026-08-23T10:00:00Z"
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>敌人图鉴 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 敌人图鉴 - 终结族、机器人、光能族" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --terminid: #FF4444; --automaton: #4488FF; --illuminate: #AA44FF;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+    .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .filter-bar { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .enemy-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+    .enemy-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
+    .enemy-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+    .enemy-card .color-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; }
+    .enemy-card-image { height: 160px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; }
+    .enemy-card-image img { max-height: 140px; max-width: 90%; object-fit: contain; }
+    .enemy-card-image .placeholder { color: var(--text-mute); font-size: 2rem; }
+    .enemy-card-body { padding: 12px 14px; }
+    .enemy-faction-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; color: #fff; }
+    .enemy-name { font-size: 1rem; color: var(--text); margin: 6px 0 2px; }
+    .enemy-name-en { font-size: 0.75rem; color: var(--text-mute); }
+    .enemy-category { display: inline-block; margin-top: 6px; font-size: 0.75rem; color: var(--text-dim); background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 8px; }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 1023px) { .enemy-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) { .enemy-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🐛 敌人图鉴</h1>
+    <p>共 <span id="total-count">0</span> 种敌人 · 终结族 / 机器人 / 光能族</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="enemy-grid" id="enemy-grid"><div class="loading">正在加载敌人数据…</div></div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var enemies = [];
+    var curFaction = "all";
+    var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
+    var FACTION_COLOR = { terminids: "#FF4444", automatons: "#4488FF", illuminate: "#AA44FF" };
+
+    async function loadEnemies() {
+      try {
+        var r = await fetch("./data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        enemies = d.enemies || [];
+        document.getElementById("total-count").textContent = enemies.length;
+        renderFilters();
+        renderGrid();
+      } catch(e) {
+        console.error("[Enemies] 加载失败:", e);
+        document.getElementById("enemy-grid").innerHTML = '<div class="empty">⚠️ 敌人数据加载失败</div>';
+      }
+    }
+
+    function renderFilters() {
+      var bar = document.getElementById("filter-bar");
+      var counts = {};
+      enemies.forEach(function(e) { counts[e.faction] = (counts[e.faction] || 0) + 1; });
+      var cats = [
+        { id: "all", label: "全部 " + enemies.length },
+        { id: "terminids", label: "终结族 " + (counts.terminids||0) },
+        { id: "automatons", label: "机器人 " + (counts.automatons||0) },
+        { id: "illuminate", label: "光能族 " + (counts.illuminate||0) },
+      ];
+      bar.innerHTML = cats.map(function(c) {
+        return '<button class="' + (c.id === curFaction ? "active" : "") + '" onclick="setFaction(\'' + c.id + '\')">' + c.label + '</button>';
+      }).join("");
+    }
+
+    function setFaction(f) { curFaction = f; renderFilters(); renderGrid(); }
+
+    function renderGrid() {
+      var grid = document.getElementById("enemy-grid");
+      var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
+      if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
+      grid.innerHTML = list.map(function(e) {
+        var color = FACTION_COLOR[e.faction] || "#64748b";
+        var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
+        return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
+          '<div class="color-bar" style="background:' + color + '"></div>' +
+          '<div class="enemy-card-image">' + (e.image ?
+            '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
+            '<div class="placeholder">🐛</div>') + '</div>' +
+          '<div class="enemy-card-body">' +
+            '<span class="enemy-faction-tag" style="background:' + color + '">' + esc(fcn) + '</span>' +
+            '<h3 class="enemy-name">' + esc(e.name_zh || e.name) + '</h3>' +
+            '<div class="enemy-name-en">' + esc(e.name) + '</div>' +
+            (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '') +
+          '</div></a>';
+      }).join("");
+    }
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadEnemies);
+  </script>
+</body>
+</html>

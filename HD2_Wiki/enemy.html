@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>敌人详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 敌人详情页" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --terminid: #FF4444; --automaton: #4488FF; --illuminate: #AA44FF;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--yellow); }
+
+    .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 60% 40%; gap: 20px; width: 100%; }
+
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+    .title-block .name { font-size: 1.8rem; color: var(--text); }
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .title-block .tags { display: flex; gap: 8px; margin-bottom: 10px; }
+    .faction-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; color: #fff; }
+    .cat-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
+    .title-block .desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
+    .img-big { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border-radius: 8px; min-height: 220px; }
+    .img-big img { max-height: 300px; max-width: 100%; object-fit: contain; }
+    .img-big .placeholder { font-size: 4rem; color: var(--text-mute); }
+
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border); }
+    .info-table td { padding: 8px 10px; font-size: 0.85rem; }
+    .info-table td:first-child { color: var(--text-mute); width: 35%; }
+    .info-table td:last-child { color: var(--text); }
+
+    .part-table { width: 100%; border-collapse: collapse; }
+    .part-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 8px; border-bottom: 1px solid var(--border); }
+    .part-table td { padding: 6px 8px; font-size: 0.82rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); }
+    .part-table td:first-child { color: var(--text); }
+    .part-img { width: 60px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .part-img img { max-width: 60px; max-height: 40px; object-fit: contain; }
+    .part-img .ph { font-size: 1.2rem; color: var(--text-mute); }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 900px) { .detail-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="enemies.html">敌人列表</a></div>
+  </header>
+  <div class="detail-layout" id="detail-layout"><div class="loading">正在加载敌人数据…</div></div>
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
+    var FACTION_COLOR = { terminids: "#FF4444", automatons: "#4488FF", illuminate: "#AA44FF" };
+
+    async function loadDetail() {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        var e = (d.enemies || []).find(function(x) { return x.id === id; });
+        if (!e) { layout.innerHTML = '<div class="empty">未找到该敌人</div>'; return; }
+        renderDetail(e);
+      } catch(err) {
+        console.error("[Enemy] 加载失败:", err);
+        layout.innerHTML = '<div class="empty">⚠️ 敌人数据加载失败</div>';
+      }
+    }
+
+    function renderDetail(e) {
+      var layout = document.getElementById("detail-layout");
+      var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
+      var fcolor = FACTION_COLOR[e.faction] || "#64748b";
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="enemies.html">敌人列表</a> › ' + esc(fcn) + ' › ' + esc(e.name_zh || e.name);
+
+      // 部位表格
+      var parts = e.body_parts || [];
+      var partsHtml = parts.length ? '<div class="card"><h2>🦴 部位数据</h2><table class="part-table">' +
+        '<tr><th>部位</th><th>图片</th><th>生命值</th><th>装甲</th><th>耐久%</th></tr>' +
+        parts.map(function(p) {
+          return '<tr><td>' + esc(p.name) + '</td>' +
+            '<td><div class="part-img">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" onerror="this.outerHTML=\'<span class=ph>🔍</span>\'">' : '<span class="ph">🔍</span>') + '</div></td>' +
+            '<td>' + esc(p.health) + '</td>' +
+            '<td>' + esc(p.armor) + '</td>' +
+            '<td>' + esc(p.durable) + '</td></tr>';
+        }).join("") + '</table></div>' : '';
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="name">' + esc(e.name_zh || e.name) + '</div>' +
+            '<div class="name-en">' + esc(e.name) + '</div>' +
+            '<div class="tags">' +
+              '<span class="faction-tag" style="background:' + fcolor + '">' + esc(fcn) + '</span>' +
+              (e.category ? '<span class="cat-tag">' + esc(e.category) + '</span>' : '') +
+            '</div>' +
+            (e.description ? '<div class="desc">' + esc(e.description) + '</div>' : '') +
+          '</div>' +
+          '<div class="card"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
+            '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
+            '<div class="placeholder">🐛</div>') + '</div></div>' +
+          '<div class="card"><h2>📊 基础信息</h2><table class="info-table">' +
+            row("阵营", fcn) + row("分类", e.category) +
+            row("总生命值", e.health_total) + row("伤害", e.damage) +
+            row("伤害类型", e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier) +
+            row("踉跄阈值", e.stagger_threshold) + row("最低难度", e.minimum_difficulty) +
+          '</table></div>' +
+          partsHtml +
+        '</div>' +
+        '<div class="main-content" style="grid-column:1">' +
+          '<div class="card"><h2>📄 来源</h2><p style="font-size:0.75rem;color:var(--text-mute)">数据来源：' + esc(e.source_page) + '</p></div>' +
+        '</div>';
+    }
+
+    function row(k, v) { return v == null || v === "" ? "" : '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>'; }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>

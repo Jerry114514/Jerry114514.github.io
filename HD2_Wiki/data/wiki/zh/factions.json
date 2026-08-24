@@ -1,0 +1,131 @@
+{
+  "factions": [
+    {
+      "id": "terminids",
+      "name": "Terminids",
+      "name_zh": "终结族",
+      "color": "#FF4444",
+      "strains": [
+        {
+          "name": "Predator Strain",
+          "name_zh": "掠食者变种"
+        },
+        {
+          "name": "Spore Burst Strain",
+          "name_zh": "孢子爆发变种"
+        },
+        {
+          "name": "Rupture Strain",
+          "name_zh": "爆裂变种"
+        }
+      ],
+      "enemies": [
+        "alpha_commander",
+        "alpha_warrior",
+        "bile_spewer",
+        "bile_spitter",
+        "bile_titan",
+        "bile_warrior",
+        "brood_commander",
+        "charger",
+        "charger_behemoth",
+        "hive_guard",
+        "hive_lord",
+        "hunter",
+        "impaler",
+        "nursing_spewer",
+        "scavenger",
+        "shrieker",
+        "spore_charger",
+        "stalker",
+        "warrior"
+      ]
+    },
+    {
+      "id": "automatons",
+      "name": "Automatons",
+      "name_zh": "机器人",
+      "color": "#4488FF",
+      "strains": [
+        {
+          "name": "Jet Brigade",
+          "name_zh": "喷气旅"
+        },
+        {
+          "name": "Incineration Corps",
+          "name_zh": "焚化军团"
+        },
+        {
+          "name": "Cyborg Legion",
+          "name_zh": "生化人军团"
+        }
+      ],
+      "enemies": [
+        "annihilator_tank",
+        "assault_raider",
+        "barrager_tank",
+        "berserker",
+        "commissar",
+        "conflagration_devastator",
+        "devastator",
+        "factory_strider",
+        "heavy_devastator",
+        "hulk_bruiser",
+        "hulk_firebomber",
+        "hulk_obliterator",
+        "hulk_scorcher",
+        "incendiary_mg_devastator",
+        "incendiary_rocket_raider",
+        "jet_brigade_commissar",
+        "jet_brigade_devastator",
+        "jet_brigade_hulk_bruiser",
+        "jet_brigade_hulk_scorcher",
+        "jet_brigade_mg_raider",
+        "jet_brigade_trooper",
+        "mg_raider",
+        "pyro_trooper",
+        "reinforced_scout_strider",
+        "rocket_devastator",
+        "rocket_raider",
+        "scout_strider",
+        "shredder_tank",
+        "trooper",
+        "war_strider"
+      ]
+    },
+    {
+      "id": "illuminate",
+      "name": "Illuminate",
+      "name_zh": "光能族",
+      "color": "#AA44FF",
+      "strains": [
+        {
+          "name": "Appropriators",
+          "name_zh": "掠夺者"
+        },
+        {
+          "name": "VoteSnatchers",
+          "name_zh": "偷票者"
+        },
+        {
+          "name": "Mindless Masses",
+          "name_zh": "无脑群氓"
+        },
+        {
+          "name": "Invasion Fleet",
+          "name_zh": "入侵舰队"
+        }
+      ],
+      "enemies": [
+        "crescent_overseer",
+        "elevated_overseer",
+        "harvester",
+        "illuminate_overship",
+        "overseer",
+        "voteless",
+        "watcher"
+      ]
+    }
+  ],
+  "updated_at": "2026-08-24T12:10:30Z"
+}
