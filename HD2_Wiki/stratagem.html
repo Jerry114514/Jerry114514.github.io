@@ -48,7 +48,7 @@
     .tag-orbital, .tag-eagle { background: rgba(239,68,68,0.2); color: var(--red); }
     .tag-support, .tag-backpack { background: rgba(59,130,246,0.2); color: var(--blue); }
     .tag-deployable { background: rgba(34,197,94,0.2); color: var(--green); }
-    .tag-vehicle, .tag-ship { background: rgba(245,158,11,0.2); color: var(--amber); }
+    .tag-vehicle, .tag-ship, .tag-mission { background: rgba(245,158,11,0.2); color: var(--amber); }
 
     .info-side { display: flex; flex-direction: column; gap: 16px; }
     .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
@@ -108,8 +108,8 @@
       if (!arrows) return '<span style="color:var(--text-mute)">无呼叫代码</span>';
       return '<span class="code-display">' + arrows.split("").map(function(a) { return '<span class="arrow">' + (ARROW[a] || "") + '</span>'; }).join("") + '</span>';
     }
-    function colorOf(cat) { var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6" }; return m[cat] || "#64748b"; }
-    function tagOf(cat) { var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support" }; return "tag-" + (m[cat] || "support"); }
+    function colorOf(cat) { var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6","任务":"#f59e0b","舰船":"#f59e0b" }; return m[cat] || "#64748b"; }
+    function tagOf(cat) { var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support","任务":"mission","舰船":"ship" }; return "tag-" + (m[cat] || "support"); }
     function iconOf(cat) { var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫" }; return m[cat] || "📦"; }
 
     async function loadDetail() {
@@ -233,59 +233,68 @@
     }
     function renderDetailedStats(s) {
       var ds = s.detailed_stats;
-      if (!ds) return "";
-      // 顶层基础参数（非 attacks/status_effects）
-      var topKeys = Object.keys(ds).filter(function(k) { return k !== "attacks" && k !== "status_effects"; });
-      var topObj = {};
-      topKeys.forEach(function(k) { topObj[k] = ds[k]; });
-      var topHtml = dsGrid(topObj);
-      // 攻击条目
+      var topHtml = "";
       var attacksHtml = "";
-      var attacks = ds.attacks || [];
-      if (attacks.length) {
-        attacksHtml = attacks.map(function(a, i) {
-          var typeTag = a.type === "projectile" ? '<span class="ds-type ds-type-proj">弹丸</span>' :
-                         a.type === "explosion" ? '<span class="ds-type ds-type-exp">爆炸</span>' :
-                         a.type === "fire" ? '<span class="ds-type ds-type-fire">火焰</span>' :
-                         '<span class="ds-type">' + esc(a.type) + '</span>';
-          return '<div class="ds-attack">' +
-            '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
-            dsGrid(a.projectile) +
-            dsGrid(a.area_of_effect) +
-            dsGrid(a.damage) +
-            dsGrid(a.penetration) +
-            dsGrid(a.special_effects) +
+      var statusHtml = "";
+      if (ds) {
+        var topKeys = Object.keys(ds).filter(function(k) { return k !== "attacks" && k !== "status_effects"; });
+        var topObj = {};
+        topKeys.forEach(function(k) { topObj[k] = ds[k]; });
+        topHtml = dsGrid(topObj);
+        var attacks = ds.attacks || [];
+        if (attacks.length) {
+          attacksHtml = attacks.map(function(a, i) {
+            var typeTag = a.type === "projectile" ? '<span class="ds-type ds-type-proj">弹丸</span>' :
+                           a.type === "explosion" ? '<span class="ds-type ds-type-exp">爆炸</span>' :
+                           a.type === "fire" ? '<span class="ds-type ds-type-fire">火焰</span>' :
+                           '<span class="ds-type">' + esc(a.type) + '</span>';
+            return '<div class="ds-attack">' +
+              '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
+              dsGrid(a.projectile) +
+              dsGrid(a.area_of_effect) +
+              dsGrid(a.damage) +
+              dsGrid(a.penetration) +
+              dsGrid(a.special_effects) +
+              '</div>';
+          }).join("");
+        }
+      }
+      // 独立状态效果区块：优先 ds.status_effects，其次战略配备顶层 s.status_effects（数组格式）
+      var se = (ds && ds.status_effects) || s.status_effects;
+      var seList = Array.isArray(se) ? se : (se && typeof se === "object" && Object.keys(se).length ? [se] : []);
+      if (seList.length) {
+        statusHtml = seList.map(function(item) {
+          var stRaw = item.effect_type || item.status || item.name || "状态";
+          var stLower = String(stRaw).toLowerCase();
+          var stName = stLower === "fire" ? "火焰" :
+                       stLower === "gas" ? "毒气" :
+                       stLower === "ems" ? "电磁" :
+                       stLower === "smoke" ? "烟雾" :
+                       stLower === "acid" ? "酸液" :
+                       stLower === "stun" || stLower.indexOf("stun") === 0 ? "眩晕" : String(stRaw);
+          var stIcon = stLower === "fire" ? "🔥" :
+                       stLower === "gas" || stLower.indexOf("gas") === 0 ? "☠️" :
+                       stLower === "ems" ? "⚡" :
+                       stLower === "smoke" ? "💨" :
+                       stLower === "acid" ? "🧪" :
+                       stLower.indexOf("stun") === 0 ? "⚡" : "🔥";
+          var flat = {};
+          if (item.stats) Object.keys(item.stats).forEach(function(k) { flat[k] = item.stats[k]; });
+          ["damage", "penetration", "special_effects", "area_of_effect"].forEach(function(sec) {
+            if (item[sec]) {
+              Object.keys(item[sec]).forEach(function(k) {
+                var key = sec === "damage" ? "damage_" + k.replace(/^vs\._durable$/, "durable") : k;
+                flat[key] = item[sec][k];
+              });
+            }
+          });
+          return '<div class="ds-attack ds-status">' +
+            '<div class="ds-attack-head">' + stIcon + ' 状态效果 (Status: ' + esc(stName) + ')</div>' +
+            dsGrid(flat) +
             '</div>';
         }).join("");
       }
-      // 独立状态效果区块
-      var statusHtml = "";
-      var se = ds.status_effects;
-      if (se && Object.keys(se).length) {
-        var stRaw = se.effect_type || se.status || "状态";
-        var stName = stRaw.toLowerCase() === "fire" ? "火焰" :
-                     stRaw.toLowerCase() === "gas" ? "毒气" :
-                     stRaw.toLowerCase() === "ems" ? "电磁" :
-                     stRaw.toLowerCase() === "smoke" ? "烟雾" :
-                     stRaw.toLowerCase() === "acid" ? "酸液" : String(stRaw);
-        var stIcon = stRaw.toLowerCase() === "fire" ? "🔥" :
-                     stRaw.toLowerCase() === "gas" ? "☠️" :
-                     stRaw.toLowerCase() === "ems" ? "⚡" :
-                     stRaw.toLowerCase() === "smoke" ? "💨" :
-                     stRaw.toLowerCase() === "acid" ? "🧪" : "🔥";
-        var seHtml = "";
-        var seTop = {};
-        Object.keys(se).forEach(function(k) {
-          if (k === "effect_type" || k === "status") return;
-          if (typeof se[k] === "object") { seHtml += dsGrid(se[k]); return; }
-          seTop[k] = se[k];
-        });
-        seHtml = dsGrid(seTop) + seHtml;
-        statusHtml = '<div class="ds-attack ds-status">' +
-          '<div class="ds-attack-head">' + stIcon + ' 状态效果 (Status: ' + esc(stName) + ')</div>' +
-          seHtml +
-          '</div>';
-      }
+      if (!topHtml && !attacksHtml && !statusHtml) return "";
       return '<div class="card">' +
         '<h2>⚙️ 详细数据</h2>' +
         topHtml +

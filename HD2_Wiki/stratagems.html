@@ -49,7 +49,7 @@
     .tag-orbital, .tag-eagle { background: rgba(239,68,68,0.2); color: var(--red); }
     .tag-support, .tag-backpack { background: rgba(59,130,246,0.2); color: var(--blue); }
     .tag-deployable { background: rgba(34,197,94,0.2); color: var(--green); }
-    .tag-vehicle, .tag-ship { background: rgba(245,158,11,0.2); color: var(--amber); }
+    .tag-vehicle, .tag-ship, .tag-mission { background: rgba(245,158,11,0.2); color: var(--amber); }
 
     .arrow { display: inline-block; vertical-align: middle; margin-right: 2px; }
     .arrow svg { display: block; }
@@ -99,15 +99,15 @@
     }
 
     function colorOf(cat) {
-      var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6","舰船":"#f59e0b","任务":"#f59e0b" };
+      var m = { "轨道":"#ef4444","飞鹰":"#ef4444","支援武器":"#3b82f6","背包":"#3b82f6","可部署物":"#22c55e","载具":"#f59e0b","重型支援武器":"#3b82f6","任务":"#f59e0b","舰船":"#f59e0b" };
       return m[cat] || "#64748b";
     }
     function tagOf(cat) {
-      var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support" };
+      var m = { "轨道":"orbital","飞鹰":"eagle","支援武器":"support","背包":"backpack","可部署物":"deployable","载具":"vehicle","重型支援武器":"support","任务":"mission","舰船":"ship" };
       return "tag-" + (m[cat] || "support");
     }
     function iconOf(cat) {
-      var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫" };
+      var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫","任务":"📋","舰船":"🛰️" };
       return m[cat] || "📦";
     }
 
@@ -136,6 +136,7 @@
         { id: "backpack", label: "背包 " + stratagems.filter(function(s){return s.category==="backpack";}).length },
         { id: "deployable", label: "可部署物 " + stratagems.filter(function(s){return s.category==="deployable";}).length },
         { id: "vehicle", label: "载具 " + stratagems.filter(function(s){return s.category==="vehicle";}).length },
+        { id: "mission", label: "任务 " + stratagems.filter(function(s){return s.category==="mission";}).length },
       ];
       bar.innerHTML = cats.map(function(c) {
         return '<button class="' + (c.id === curCat ? "active" : "") + '" onclick="setCat(\'' + c.id + '\')">' + c.label + '</button>';

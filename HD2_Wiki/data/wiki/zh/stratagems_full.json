@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-08-23T14:33:45Z",
   "source": "Helldivers Wiki.gg + community translations",
-  "total": 88,
+  "total": 108,
   "stratagems": [
     {
       "id": "orbital_120mm_he_barrage",
@@ -169,7 +169,53 @@
       "image": "https://helldivers.wiki.gg/images/Orbital_Napalm_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "BurningHeavy",
+          "stats": {
+            "status_duration": "1 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "200 Fire",
+            "vs._durable": "200 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "orbital_gatling_barrage",
@@ -354,7 +400,37 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Gas",
+          "stats": {
+            "status_duration": "6 sec"
+          },
+          "damage": {
+            "element": "Gas",
+            "standard": "25 Gas",
+            "vs._durable": "25 Gas"
+          },
+          "penetration": {
+            "direct": "Anti-Tank II",
+            "slight_angle": "Anti-Tank II",
+            "large_angle": "Anti-Tank II",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Gas_Confusion",
+          "stats": {
+            "status_duration": "5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "orbital_walking_barrage",
@@ -460,7 +536,31 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "orbital_railcannon_strike",
@@ -663,7 +763,15 @@
             }
           }
         ]
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Stun_Medium",
+          "stats": {
+            "status_duration": "3 sec"
+          }
+        }
+      ]
     },
     {
       "id": "orbital_airburst_strike",
@@ -1152,7 +1260,53 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "BurningHeavy",
+          "stats": {
+            "status_duration": "1 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "200 Fire",
+            "vs._durable": "200 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "eagle_strafing_run",
@@ -1429,7 +1583,21 @@
             "type": "status"
           }
         ]
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "support_apw_1_anti_materiel_rifle",
@@ -1510,7 +1678,15 @@
         "sway": "1",
         "ergonomics": "50",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Stun_Small",
+          "stats": {
+            "status_duration": "1.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "support_cqc_1_outcast",
@@ -1845,7 +2021,53 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "BurningHeavy",
+          "stats": {
+            "status_duration": "1 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "200 Fire",
+            "vs._durable": "200 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "support_flam_40_flamethrower",
@@ -1889,7 +2111,43 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "support_gl_21_grenade_launcher",
@@ -2045,7 +2303,15 @@
             }
           }
         ]
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Stun_Small",
+          "stats": {
+            "status_duration": "1.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "support_las_98_laser_cannon",
@@ -2061,7 +2327,31 @@
       "image": "https://helldivers.wiki.gg/images/Laser_Cannon_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/LAS-98_Laser_Cannon",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "support_las_99_quasar_cannon",
@@ -2813,7 +3103,37 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Gas",
+          "stats": {
+            "status_duration": "6 sec"
+          },
+          "damage": {
+            "element": "Gas",
+            "standard": "25 Gas",
+            "vs._durable": "25 Gas"
+          },
+          "penetration": {
+            "direct": "Anti-Tank II",
+            "slight_angle": "Anti-Tank II",
+            "large_angle": "Anti-Tank II",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Gas_Confusion",
+          "stats": {
+            "status_duration": "5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "support_tx_41_sterilizer",
@@ -2863,7 +3183,37 @@
             }
           }
         ]
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Gas_Confusion_Var2",
+          "stats": {
+            "status_duration": "9 sec"
+          }
+        },
+        {
+          "name": "Gas_Var2",
+          "stats": {
+            "status_duration": "10 sec"
+          },
+          "damage": {
+            "element": "Gas",
+            "standard": "25 Gas",
+            "vs._durable": "25 Gas"
+          },
+          "penetration": {
+            "direct": "Anti-Tank II",
+            "slight_angle": "Anti-Tank II",
+            "large_angle": "Anti-Tank II",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "heavy_support_ac_8_autocannon",
@@ -3069,7 +3419,43 @@
           "stagger_force": "0",
           "push_force": "0"
         }
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "heavy_support_faf_14_spear",
@@ -3864,7 +4250,43 @@
         "capacity": "25",
         "fire_rate": "30 rpm",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "vehicle_exo_55_breakthrough_exosuit",
@@ -4194,7 +4616,31 @@
         "sway": "1",
         "ergonomics": "65",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "deployable_flame_sentry",
@@ -4223,7 +4669,43 @@
         "ergonomics": "65",
         "capacity": "600",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "deployable_rocket_sentry",
@@ -4328,7 +4810,37 @@
         "ergonomics": "65",
         "capacity": "16",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Gas",
+          "stats": {
+            "status_duration": "6 sec"
+          },
+          "damage": {
+            "element": "Gas",
+            "standard": "25 Gas",
+            "vs._durable": "25 Gas"
+          },
+          "penetration": {
+            "direct": "Anti-Tank II",
+            "slight_angle": "Anti-Tank II",
+            "large_angle": "Anti-Tank II",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Gas_Confusion",
+          "stats": {
+            "status_duration": "5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "deployable_ems_mortar_sentry",
@@ -4358,7 +4870,15 @@
         "ergonomics": "65",
         "capacity": "16",
         "attacks": []
-      }
+      },
+      "status_effects": [
+        {
+          "name": "Stun_Medium",
+          "stats": {
+            "status_duration": "3 sec"
+          }
+        }
+      ]
     },
     {
       "id": "deployable_autocannon_sentry",
@@ -4496,7 +5016,15 @@
       "image": "https://helldivers.wiki.gg/images/K-9_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "Stun_Small",
+          "stats": {
+            "status_duration": "1.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "backpack_ax_flam_75_hot_dog",
@@ -4512,7 +5040,43 @@
       "image": "https://helldivers.wiki.gg/images/Hot_Dog_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        },
+        {
+          "name": "Fire_Panic",
+          "stats": {
+            "status_duration": "1 sec"
+          }
+        },
+        {
+          "name": "FlamerSlowed",
+          "stats": {
+            "status_duration": "0.5 sec"
+          }
+        }
+      ]
     },
     {
       "id": "backpack_ax_las_5_guard_dog_rover",
@@ -4528,7 +5092,31 @@
       "image": "https://helldivers.wiki.gg/images/Rover_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "Fire",
+          "stats": {
+            "status_duration": "3 sec"
+          },
+          "damage": {
+            "element": "Fire",
+            "standard": "100 Fire",
+            "vs._durable": "100 Fire"
+          },
+          "penetration": {
+            "direct": "Heavy",
+            "slight_angle": "Heavy",
+            "large_angle": "Heavy",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "backpack_ax_tx_13_purifier",
@@ -4544,7 +5132,37 @@
       "image": "https://helldivers.wiki.gg/images/Dog_Breath_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath",
-      "detailed_stats": null
+      "detailed_stats": null,
+      "status_effects": [
+        {
+          "name": "Gas_Confusion_Var2",
+          "stats": {
+            "status_duration": "9 sec"
+          }
+        },
+        {
+          "name": "Gas_Var2",
+          "stats": {
+            "status_duration": "10 sec"
+          },
+          "damage": {
+            "element": "Gas",
+            "standard": "25 Gas",
+            "vs._durable": "25 Gas"
+          },
+          "penetration": {
+            "direct": "Anti-Tank II",
+            "slight_angle": "Anti-Tank II",
+            "large_angle": "Anti-Tank II",
+            "extreme_angle": "Unarmored"
+          },
+          "special_effects": {
+            "demolition_force": "0",
+            "stagger_force": "0",
+            "push_force": "0"
+          }
+        }
+      ]
     },
     {
       "id": "backpack_b_1_supply_pack",
@@ -4723,6 +5341,326 @@
       "image": "https://helldivers.wiki.gg/images/Directional_Shield_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SH-51_Directional_Shield",
+      "detailed_stats": null
+    },
+    {
+      "id": "reinforce",
+      "name": "增援",
+      "name_en": "Reinforce",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UDRLU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Reinforce_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Reinforce",
+      "detailed_stats": null
+    },
+    {
+      "id": "sos_beacon",
+      "name": "SOS信标",
+      "name_en": "SoS Beacon",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UDRU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/SOS_Beacon_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/SoS_Beacon",
+      "detailed_stats": null
+    },
+    {
+      "id": "resupply",
+      "name": "补给",
+      "name_en": "Resupply",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "DDUR",
+      "call_in_time": null,
+      "cooldown": "180s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Resupply_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Resupply",
+      "detailed_stats": null
+    },
+    {
+      "id": "eagle_rearm",
+      "name": "飞鹰重新装填",
+      "name_en": "Eagle Rearm",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UULUR",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Eagle_Rearm_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Rearm",
+      "detailed_stats": null
+    },
+    {
+      "id": "nux_223_hellbomb",
+      "name": "NUX-223 地狱火炸弹",
+      "name_en": "NUX-223 Hellbomb",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "DULDURDU",
+      "call_in_time": null,
+      "cooldown": "30s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Hellbomb_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/NUX-223_Hellbomb",
+      "detailed_stats": null
+    },
+    {
+      "id": "sssd_delivery",
+      "name": "SSSD运送",
+      "name_en": "SSSD Delivery",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "DDDDDUU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Upload_Data_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/SSSD_Delivery",
+      "detailed_stats": null
+    },
+    {
+      "id": "upload_data",
+      "name": "上传数据",
+      "name_en": "Upload Data",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "LRUUU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Upload_Data_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Upload_Data",
+      "detailed_stats": null
+    },
+    {
+      "id": "seismic_probe",
+      "name": "地震探测仪",
+      "name_en": "Seismic Probe",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UULRDD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Seismic_Probe_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Seismic_Probe",
+      "detailed_stats": null
+    },
+    {
+      "id": "orbital_illumination_flare",
+      "name": "轨道照明弹",
+      "name_en": "Orbital Illumination Flare",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "RRLL",
+      "call_in_time": null,
+      "cooldown": "N/A",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Orbital_Illumination_Flare_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Illumination_Flare",
+      "detailed_stats": null
+    },
+    {
+      "id": "call_in_super_destroyer",
+      "name": "呼叫超级驱逐舰",
+      "name_en": "Call In Super Destroyer",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UUDDLRLR",
+      "call_in_time": null,
+      "cooldown": "N/A",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Call_In_Super_Destroyer_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Call_In_Super_Destroyer",
+      "detailed_stats": null
+    },
+    {
+      "id": "cargo_container",
+      "name": "货物集装箱",
+      "name_en": "Cargo Container",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UUDDRD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Cargo_Container_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Cargo_Container",
+      "detailed_stats": null
+    },
+    {
+      "id": "prospecting_drill",
+      "name": "勘探钻机",
+      "name_en": "Prospecting Drill",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "DDLRDD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Prospecting_Drill",
+      "detailed_stats": null
+    },
+    {
+      "id": "seaf_artillery",
+      "name": "SEAF炮兵",
+      "name_en": "SEAF Artillery",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "RUUD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/SEAF_Artillery_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/SEAF_Artillery",
+      "detailed_stats": null
+    },
+    {
+      "id": "super_earth_flag",
+      "name": "超级地球旗帜",
+      "name_en": "Super Earth Flag",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "DUDU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Super_Earth_Flag_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Super_Earth_Flag",
+      "detailed_stats": null
+    },
+    {
+      "id": "tectonic_drill",
+      "name": "构造钻机",
+      "name_en": "Tectonic Drill",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "UDUDUD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Tectonic_Drill",
+      "detailed_stats": null
+    },
+    {
+      "id": "reinforcement_pods",
+      "name": "增援舱",
+      "name_en": "Reinforcement Pods",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "LRUUU",
+      "call_in_time": null,
+      "cooldown": "N/A",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Upload_Data_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Reinforcement_Pods",
+      "detailed_stats": null
+    },
+    {
+      "id": "hive_breaker_drill",
+      "name": "巢穴破坏钻机",
+      "name_en": "Hive Breaker Drill",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "LUDRDD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Hive_Breaker_Drill",
+      "detailed_stats": null
+    },
+    {
+      "id": "dark_fluid_vessel",
+      "name": "暗流容器",
+      "name_en": "Dark Fluid Vessel",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "ULRDUU",
+      "call_in_time": null,
+      "cooldown": "30s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Dark_Fluid_Vessel_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Dark_Fluid_Vessel",
+      "detailed_stats": null
+    },
+    {
+      "id": "tactical_video_camera",
+      "name": "战术摄像机",
+      "name_en": "Tactical Video Camera",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "RDDULLU",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Meltagun_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Tactical_Video_Camera",
+      "detailed_stats": null
+    },
+    {
+      "id": "aquifer_drill",
+      "name": "含水层钻机",
+      "name_en": "Aquifer Drill",
+      "category": "mission",
+      "category_label": "任务",
+      "code": "LLLUDRDD",
+      "call_in_time": null,
+      "cooldown": "0s",
+      "uses": "无限",
+      "unlock": "任务战略配备",
+      "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/Aquifer_Drill",
       "detailed_stats": null
     }
   ]
