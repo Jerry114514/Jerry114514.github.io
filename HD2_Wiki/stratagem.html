@@ -77,6 +77,11 @@
     .ds-type-proj { background: rgba(59,130,246,0.2); color: var(--blue); }
     .ds-type-exp { background: rgba(239,68,68,0.2); color: var(--red); }
     .ds-type-fire { background: rgba(245,158,11,0.2); color: var(--amber); }
+    .ds-type-spray { background: rgba(16,185,129,0.2); color: #10b981; }
+    .ds-type-beam { background: rgba(139,92,246,0.2); color: #8b5cf6; }
+    .ds-type-arc { background: rgba(139,92,246,0.2); color: #a78bfa; }
+    .ds-type-dmg { background: rgba(239,68,68,0.2); color: var(--red); }
+    .ds-type-melee { background: rgba(239,68,68,0.2); color: var(--red); }
     @media (max-width: 1023px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 767px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
     
@@ -247,6 +252,11 @@
             var typeTag = a.type === "projectile" ? '<span class="ds-type ds-type-proj">弹丸</span>' :
                            a.type === "explosion" ? '<span class="ds-type ds-type-exp">爆炸</span>' :
                            a.type === "fire" ? '<span class="ds-type ds-type-fire">火焰</span>' :
+                         a.type === "spray" ? '<span class="ds-type ds-type-spray">喷射</span>' :
+                         a.type === "beam" ? '<span class="ds-type ds-type-beam">光束</span>' :
+                         a.type === "arc" ? '<span class="ds-type ds-type-arc">电弧</span>' :
+                         a.type === "damage" ? '<span class="ds-type ds-type-dmg">伤害</span>' :
+                         a.type === "melee" ? '<span class="ds-type ds-type-melee">近战</span>' :
                            '<span class="ds-type">' + esc(a.type) + '</span>';
             return '<div class="ds-attack">' +
               '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +

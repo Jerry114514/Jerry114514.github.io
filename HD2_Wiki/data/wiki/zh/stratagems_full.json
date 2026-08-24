@@ -169,7 +169,77 @@
       "image": "https://helldivers.wiki.gg/images/Orbital_Napalm_Barrage_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "∞",
+        "cooldown": "240 s",
+        "bombs": "5",
+        "salvos": "5",
+        "bombardment_area": "25 m",
+        "attacks": [
+          {
+            "name": "120mm HE CANNON ROUND P3",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "120mm HE CANNON ROUND_P3_IE"
+            },
+            "damage": {
+              "damage_standard": "500 Ballistic",
+              "damage_durable": "500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "120mm HE CANNON ROUND P3 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3.29999995 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "11 m"
+            }
+          }
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "200 Fire",
+            "damage_durable": "200 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
       "status_effects": [
         {
           "name": "BurningHeavy",
@@ -384,10 +454,6 @@
               "radius_shockwave": "20 m",
               "aoe_duration": "15 s"
             }
-          },
-          {
-            "name": "Gas Confusion",
-            "type": "status"
           }
         ],
         "status_effects": {
@@ -525,8 +591,30 @@
       "detailed_stats": {
         "cooldown": "300 s",
         "uses": "3",
-        "attacks": [],
+        "attacks": [
+          {
+            "name": "ORBITAL LASER_DPS",
+            "type": "spray",
+            "damage": {
+              "damage_standard": "600 Ballistic",
+              "damage_durable": "600 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "50",
+              "stagger_force": "30",
+              "push_force": "30"
+            }
+          }
+        ],
         "status_effects": {
+          "status": "Fire",
+          "status_strength": "2",
           "damage": {
             "element": "Fire",
             "damage_standard": "100 Fire",
@@ -1228,26 +1316,6 @@
               "radius_outer": "10 m",
               "radius_shockwave": "15 m"
             }
-          },
-          {
-            "name": "Fire",
-            "type": "status",
-            "damage": {
-              "element": "Fire",
-              "damage_standard": "100 Fire",
-              "damage_durable": "100 Fire"
-            },
-            "penetration": {
-              "pen_direct": "Heavy",
-              "pen_slight_angle": "Heavy",
-              "pen_large_angle": "Heavy",
-              "pen_extreme_angle": "Unarmored"
-            },
-            "special_effects": {
-              "demolition_force": "0",
-              "stagger_force": "0",
-              "push_force": "0"
-            }
           }
         ],
         "status_effects": {
@@ -1335,7 +1403,60 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "2000",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "23mm HE CANNON P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "400 g",
+              "initial_velocity": "1050 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "23mm HE CANNON_P_IE"
+            },
+            "damage": {
+              "damage_standard": "350 Ballistic",
+              "damage_durable": "200 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "3"
+            }
+          },
+          {
+            "name": "23mm HE CANNON P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "350 Explosion",
+              "inner_durable": "350 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 349.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 349.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "6.5 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -1418,7 +1539,32 @@
         "ergonomics": "65",
         "cooldown": "15 sec",
         "capacity": "6",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "Eagle Bomb 100kg",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "800 Explosion",
+              "inner_durable": "800 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 799.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 799.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "5 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "14 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -1579,10 +1725,30 @@
         "mags_from_ammo_box": "1",
         "attacks": [
           {
-            "name": "FlamerSlowed",
-            "type": "status"
+            "name": "40-K MELTAGUN B",
+            "type": "beam",
+            "damage": {
+              "damage_standard": "2600 Laser",
+              "damage_durable": "2600 Laser"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "second_status": "Fire_Panic",
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "40"
+            }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "FlamerSlowed",
+          "status_strength": "4"
+        }
       },
       "status_effects": [
         {
@@ -1677,7 +1843,32 @@
         "spread": "↔[10.00] ↕[10.00]",
         "sway": "1",
         "ergonomics": "50",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "ARC-3 ARC THROWER A",
+            "type": "arc",
+            "damage": {
+              "element": "Arc",
+              "damage_standard": "250 Arc",
+              "damage_durable": "100 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "35",
+              "push_force": "10"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Stun Small",
+          "status_strength": "8"
+        }
       },
       "status_effects": [
         {
@@ -1706,7 +1897,32 @@
         "fire_rate": "117 rpm",
         "recoil": "8",
         "ergonomics": "0",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "One True Flag",
+            "type": "damage",
+            "damage": {
+              "element": "Melee",
+              "damage_standard": "200 Melee",
+              "damage_durable": "100 Melee"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "30"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Stun Large",
+          "status_strength": "5"
+        }
       }
     },
     {
@@ -2097,11 +2313,31 @@
         "mags_from_ammo_box": "3",
         "attacks": [
           {
-            "name": "Fire Panic",
-            "type": "status"
+            "name": "FLAM-40 FLAMETHROWER S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "2 Fire",
+              "damage_durable": "2 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
           }
         ],
         "status_effects": {
+          "status": "Fire",
+          "status_strength": "3",
           "damage": {
             "element": "Fire",
             "damage_standard": "100 Fire",
@@ -2301,8 +2537,32 @@
               "radius_shockwave": "4 m",
               "arc": "GL-52_P_IE_A"
             }
+          },
+          {
+            "name": "GL-52 P IE A",
+            "type": "arc",
+            "damage": {
+              "element": "Arc",
+              "damage_standard": "100 Arc",
+              "damage_durable": "70 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "35",
+              "push_force": "10"
+            }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Stun Small",
+          "status_strength": "1.75"
+        }
       },
       "status_effects": [
         {
@@ -2327,7 +2587,53 @@
       "image": "https://helldivers.wiki.gg/images/Laser_Cannon_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/LAS-98_Laser_Cannon",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "recoil": "0",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "0",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "45",
+        "spare_magazines": "2",
+        "starting_magazines": "2",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "LAS-98 LASER CANNON B",
+            "type": "beam",
+            "damage": {
+              "damage_standard": "350 Laser",
+              "damage_durable": "200 Laser"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "1.5",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
       "status_effects": [
         {
           "name": "Fire",
@@ -2755,7 +3061,64 @@
         "uses": "∞",
         "main_health": "1500",
         "main_armor": "Light",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "SWP SOLO SILO E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2500 Explosion",
+              "inner_durable": "2500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 2499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 2499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "area_of_effect": {
+              "radius_inner": "10 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "35 m"
+            }
+          },
+          {
+            "name": "SWP SOLO SILO EImpact",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank V",
+              "pen_slight_angle": "Anti-Tank V",
+              "pen_large_angle": "Anti-Tank V",
+              "pen_extreme_angle": "Anti-Tank V"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -3003,6 +3366,25 @@
               "radius_outer": "2 m",
               "radius_shockwave": "3 m"
             }
+          },
+          {
+            "name": "Railgun Max Charge",
+            "type": "damage",
+            "damage": {
+              "damage_standard": "1500 Ballistic",
+              "damage_durable": "562 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Anti-Tank I"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "35",
+              "push_force": "15"
+            }
           }
         ]
       }
@@ -3059,10 +3441,6 @@
               "stagger_force": "80",
               "push_force": "35"
             }
-          },
-          {
-            "name": "Gas Confusion",
-            "type": "status"
           },
           {
             "name": "S-11 P E",
@@ -3163,26 +3541,39 @@
         "mags_from_ammo_box": "3",
         "attacks": [
           {
-            "name": "Gas Var2",
-            "type": "status",
+            "name": "TX-41 STERILIZER S",
+            "type": "spray",
             "damage": {
               "element": "Gas",
-              "damage_standard": "25 Gas",
-              "damage_durable": "25 Gas"
+              "damage_standard": "1 Gas",
+              "damage_durable": "1 Gas"
             },
             "penetration": {
-              "pen_direct": "Anti-Tank II",
-              "pen_slight_angle": "Anti-Tank II",
-              "pen_large_angle": "Anti-Tank II",
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
               "pen_extreme_angle": "Unarmored"
             },
             "special_effects": {
-              "demolition_force": "0",
-              "stagger_force": "0",
-              "push_force": "0"
+              "second_status": "Gas_Confusion_Var2",
+              "demolition_force": "5",
+              "stagger_force": "10",
+              "push_force": "5"
             }
           }
-        ]
+        ],
+        "status_effects": {
+          "status": "Gas_Var2",
+          "status_strength": "0.5",
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       },
       "status_effects": [
         {
@@ -3405,11 +3796,31 @@
         "mags_from_ammo_box": "125",
         "attacks": [
           {
-            "name": "Fire Panic",
-            "type": "status"
+            "name": "B/FLAM-80 CREMATOR_S_dm",
+            "type": "damage",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "3 Fire",
+              "damage_durable": "3 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
           }
         ],
         "status_effects": {
+          "status": "Fire",
+          "status_strength": "4",
           "damage": {
             "element": "Fire",
             "damage_standard": "100 Fire",
@@ -4189,7 +4600,111 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "14",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "8x60mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Very Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "12"
+            }
+          },
+          {
+            "name": "70mm MISSILE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "2.5 kg",
+              "initial_velocity": "200 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "15 sec",
+              "penetration_slowdown": "85%",
+              "explosion_on_impact": "70mm MISSILE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "1250 Ballistic",
+              "damage_durable": "1250 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "70mm MISSILE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "4 m"
+            }
+          },
+          {
+            "name": "Exosuit Destruction",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "200 Explosion",
+              "inner_durable": "200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.6 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "10 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4219,7 +4734,84 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "100",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "30mm APHE CANNON P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "900 g",
+              "initial_velocity": "1021 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "30mm APHE CANNON_P_IE"
+            },
+            "damage": {
+              "damage_standard": "300 Damage",
+              "damage_durable": "150 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "30mm APHE CANNON P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.5 m",
+              "radius_outer": "4.5 m",
+              "radius_shockwave": "6 m"
+            }
+          },
+          {
+            "name": "Exosuit Destruction",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "200 Explosion",
+              "inner_durable": "200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.6 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "10 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4249,7 +4841,118 @@
         "ergonomics": "65",
         "capacity": "25",
         "fire_rate": "30 rpm",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "LUMBERER FLAMETHROWER S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "3 Fire",
+              "damage_durable": "3 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
+          },
+          {
+            "name": "75mm HEAT GRENADE P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "6.5 kg",
+              "initial_velocity": "625 m/s",
+              "drag_factor": "75%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "85%",
+              "explosion_on_impact": "75mm HEAT GRENADE_P1_IE"
+            },
+            "damage": {
+              "damage_standard": "1300 Ballistic",
+              "damage_durable": "1300 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Medium"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "50",
+              "push_force": "25"
+            }
+          },
+          {
+            "name": "75mm HEAT GRENADE P1 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "7 m"
+            }
+          },
+          {
+            "name": "Exosuit Destruction",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "200 Explosion",
+              "inner_durable": "200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.6 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "10 m"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "4",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       },
       "status_effects": [
         {
@@ -4315,7 +5018,59 @@
         "sway": "0",
         "ergonomics": "65",
         "capacity": "6",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 40",
+              "mass": "6 g",
+              "initial_velocity": "385 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Damage",
+              "damage_durable": "30 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "40",
+              "push_force": "30"
+            }
+          },
+          {
+            "name": "Exosuit Destruction",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "200 Explosion",
+              "inner_durable": "200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.6 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "10 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4346,7 +5101,34 @@
         "ergonomics": "30",
         "capacity": "100",
         "spare_magazines": "4",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "12.5mm BCHP RIFLE ROUNDS P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "52 g",
+              "initial_velocity": "980 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "15",
+              "stagger_force": "25",
+              "push_force": "20"
+            }
+          }
+        ]
       }
     },
     {
@@ -4376,7 +5158,34 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "120",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "5.5x50mm PENETRATOR P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "1000 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "65 Ballistic",
+              "damage_durable": "15 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
       }
     },
     {
@@ -4406,7 +5215,86 @@
         "sway": "0",
         "ergonomics": "65",
         "capacity": "2000",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "120mm HE CANNON ROUND P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "5 kg",
+              "initial_velocity": "400 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "120mm HE CANNON ROUND_P_IE"
+            },
+            "damage": {
+              "damage_standard": "3500 Ballistic",
+              "damage_durable": "3500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank IV",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Anti-Tank II"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "50",
+              "push_force": "20"
+            }
+          },
+          {
+            "name": "120mm HE CANNON ROUND P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "750 Explosion",
+              "inner_durable": "750 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 749.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 749.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "3.29999995 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "11 m"
+            }
+          },
+          {
+            "name": "12.5mm BCHP RIFLE ROUNDS P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "52 g",
+              "initial_velocity": "980 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "150 Ballistic",
+              "damage_durable": "35 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "15",
+              "stagger_force": "25",
+              "push_force": "20"
+            }
+          }
+        ]
       }
     },
     {
@@ -4436,7 +5324,34 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "500",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "8x60mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Very Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "12"
+            }
+          }
+        ]
       }
     },
     {
@@ -4459,7 +5374,32 @@
         "cooldown": "120 sec",
         "salvos": "6",
         "capacity": "3",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "Anti Tank Mine",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "2000 Explosion",
+              "inner_durable": "2000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "14 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4481,7 +5421,32 @@
         "main_armor": "Light",
         "ergonomics": "65",
         "cooldown": "180 sec",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "ET APHE 75mm",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "7 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4504,7 +5469,32 @@
         "cooldown": "120 sec",
         "salvos": "6",
         "capacity": "8",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "Contact Mine",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "700 Explosion",
+              "inner_durable": "700 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 699.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 699.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.2 m",
+              "radius_outer": "5 m",
+              "radius_shockwave": "7 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4534,7 +5524,34 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "175",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "8x60mm FULL METAL JACKET P1",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "820 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "90 Ballistic",
+              "damage_durable": "23 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Very Light"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "12"
+            }
+          }
+        ]
       }
     },
     {
@@ -4564,7 +5581,61 @@
         "sway": "1",
         "ergonomics": "25",
         "capacity": "60",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "40mm HE GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm HE GRENADE_P_IE",
+              "explode_after": "40mm HE GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "0 Ballistic",
+              "damage_durable": "0 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm HE GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3.5 m",
+              "radius_outer": "7.5 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4587,7 +5658,28 @@
         "cooldown": "120 sec",
         "salvos": "6",
         "capacity": "8",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "DPS Gas",
+            "type": "damage",
+            "damage": {
+              "element": "Gas",
+              "damage_standard": "25 Gas",
+              "damage_durable": "25 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "0",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
+          }
+        ]
       }
     },
     {
@@ -4615,7 +5707,39 @@
         "spread": "↔[5.00] ↕[5.00]",
         "sway": "1",
         "ergonomics": "65",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "SWP LASER SENTRY B",
+            "type": "beam",
+            "damage": {
+              "damage_standard": "350 Damage",
+              "damage_durable": "200 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "1.5",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       },
       "status_effects": [
         {
@@ -4668,7 +5792,62 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "600",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "SWP FLAME SENTRY S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "3 Fire",
+              "damage_durable": "3 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
+          },
+          {
+            "name": "Flame Sentry Death Explosion",
+            "type": "damage",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "400 Fire",
+              "damage_durable": "400 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "20",
+              "push_force": "40"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "20",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       },
       "status_effects": [
         {
@@ -4734,7 +5913,60 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "16",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "70mm STANDARD ROCKET P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "6 kg",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "10%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "70mm STANDARD ROCKET_P_IE"
+            },
+            "damage": {
+              "damage_standard": "525 Damage",
+              "damage_durable": "525 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "35",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "70mm STANDARD ROCKET P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "4 m",
+              "radius_shockwave": "6 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4757,7 +5989,28 @@
         "cooldown": "120 sec",
         "salvos": "6",
         "capacity": "8",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "DPS Fire",
+            "type": "damage",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "100 Fire",
+              "damage_durable": "100 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "0",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
+          }
+        ]
       }
     },
     {
@@ -4779,7 +6032,32 @@
         "main_armor": "Very Light",
         "ergonomics": "65",
         "cooldown": "120 sec",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "Tesla Turret Arc",
+            "type": "arc",
+            "damage": {
+              "element": "Arc",
+              "damage_standard": "600 Arc",
+              "damage_durable": "600 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "20",
+              "push_force": "10"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Stun Small",
+          "status_strength": "8"
+        }
       }
     },
     {
@@ -4809,7 +6087,63 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "16",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "GAS MORTAR SHELL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "70 kg",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "25%",
+              "gravity_factor": "600%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "GAS MORTAR SHELL_P_IE"
+            },
+            "damage": {
+              "damage_standard": "20 Damage",
+              "damage_durable": "2 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "GAS MORTAR SHELL P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Gas",
+              "inner_radius": "0 Gas",
+              "inner_durable": "0 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "7 m",
+              "radius_shockwave": "7 m",
+              "aoe_duration": "15 s"
+            }
+          }
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
       },
       "status_effects": [
         {
@@ -4869,7 +6203,79 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "16",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "EMS MORTAR SHELL P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "70 kg",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "25%",
+              "gravity_factor": "600%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "EMS MORTAR SHELL_P_IE",
+              "explode_after": "EMS MORTAR SHELL_P_E"
+            },
+            "damage": {
+              "damage_standard": "20 Damage",
+              "damage_durable": "2 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "EMS MORTAR SHELL P E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "0 Explosion",
+              "inner_durable": "0 Explosion"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "10 m",
+              "radius_shockwave": "12 m",
+              "aoe_duration": "7 s"
+            }
+          },
+          {
+            "name": "EMS MORTAR SHELL P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "2 m",
+              "radius_shockwave": "3 m"
+            }
+          }
+        ]
       },
       "status_effects": [
         {
@@ -4907,7 +6313,60 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "24",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "40mm APHE CANNON P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "900 g",
+              "initial_velocity": "1021 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm APHE CANNON_P_IE"
+            },
+            "damage": {
+              "damage_standard": "450 Damage",
+              "damage_durable": "450 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm APHE CANNON P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "150 Explosion",
+              "inner_durable": "150 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 149.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 149.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4937,7 +6396,60 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "36",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "40mm HE MORTAR P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "70 kg",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "25%",
+              "gravity_factor": "600%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm HE MORTAR_P_IE"
+            },
+            "damage": {
+              "damage_standard": "20 Damage",
+              "damage_durable": "2 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Unarmored",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm HE MORTAR P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "3 m",
+              "radius_outer": "9 m",
+              "radius_shockwave": "13 m"
+            }
+          }
+        ]
       }
     },
     {
@@ -4954,7 +6466,39 @@
       "image": "https://helldivers.wiki.gg/images/HMG_Emplacement_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/E/MG-101_HMG_Emplacement",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "180 sec",
+        "ergonomics": "65",
+        "attacks": [
+          {
+            "name": "Rifle 12.5x100mm Full Metal Jacket",
+            "type": "projectile",
+            "projectile": {
+              "mass": "52 g",
+              "initial_velocity": "880 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "200 Damage",
+              "damage_durable": "40 Damage"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "25",
+              "push_force": "15"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "deployable_shield_generator_relay",
@@ -4970,7 +6514,13 @@
       "image": "https://helldivers.wiki.gg/images/Shield_Generator_Relay_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/FX-12_Shield_Generator_Relay",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "∞",
+        "cooldown": "90 s",
+        "main_health": "450",
+        "main_armor": "Light",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_ax_ar_23_guard_dog",
@@ -4999,7 +6549,34 @@
         "sway": "1",
         "ergonomics": "65",
         "capacity": "45",
-        "attacks": []
+        "attacks": [
+          {
+            "name": "5.5x50mm PENETRATOR P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "4.5 g",
+              "initial_velocity": "1000 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "65 Ballistic",
+              "damage_durable": "15 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "10"
+            }
+          }
+        ]
       }
     },
     {
@@ -5016,7 +6593,45 @@
       "image": "https://helldivers.wiki.gg/images/K-9_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "main_health": "100",
+        "main_armor": "Very Light",
+        "recoil": "45",
+        "recoil_horizontal": "30",
+        "recoil_vertical": "60",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "100",
+        "attacks": [
+          {
+            "name": "AX/ARC-3 K-9 A",
+            "type": "arc",
+            "damage": {
+              "element": "Arc",
+              "damage_standard": "250 Arc",
+              "damage_durable": "45 Arc"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "30",
+              "push_force": "25"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Stun Small",
+          "status_strength": "8"
+        }
+      },
       "status_effects": [
         {
           "name": "Stun_Small",
@@ -5040,7 +6655,57 @@
       "image": "https://helldivers.wiki.gg/images/Hot_Dog_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "main_health": "100",
+        "main_armor": "Very Light",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "recoil": "0",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "0",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "80",
+        "attacks": [
+          {
+            "name": "AX/FLAM-75 HOT DOG S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "2 Fire",
+              "damage_durable": "2 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "second_status": "Fire_Panic",
+              "third_status": "FlamerSlowed",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "1",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
       "status_effects": [
         {
           "name": "Fire",
@@ -5092,7 +6757,51 @@
       "image": "https://helldivers.wiki.gg/images/Rover_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "main_health": "100",
+        "main_armor": "Very Light",
+        "recoil": "1",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "0.5",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "attacks": [
+          {
+            "name": "AX/LAS-5 ROVER B",
+            "type": "beam",
+            "damage": {
+              "damage_standard": "200 Laser",
+              "damage_durable": "40 Laser"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "0",
+              "push_force": "0"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "1",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
       "status_effects": [
         {
           "name": "Fire",
@@ -5132,7 +6841,56 @@
       "image": "https://helldivers.wiki.gg/images/Dog_Breath_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath",
-      "detailed_stats": null,
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "main_health": "100",
+        "main_armor": "Very Light",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "recoil": "0",
+        "recoil_horizontal": "0",
+        "recoil_vertical": "0",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "100",
+        "attacks": [
+          {
+            "name": "AX/TX-13 DOG BREATH S",
+            "type": "spray",
+            "damage": {
+              "element": "Gas",
+              "damage_standard": "1 Gas",
+              "damage_durable": "1 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank I",
+              "pen_slight_angle": "Anti-Tank I",
+              "pen_large_angle": "Anti-Tank I",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "second_status": "Gas_Confusion_Var2",
+              "demolition_force": "5",
+              "stagger_force": "10",
+              "push_force": "5"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Gas_Var2",
+          "status_strength": "0.5",
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
       "status_effects": [
         {
           "name": "Gas_Confusion_Var2",
@@ -5178,7 +6936,14 @@
       "image": "https://helldivers.wiki.gg/images/Supply_Pack_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/B-1_Supply_Pack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "480 sec",
+        "main_health": "200",
+        "main_armor": "Light",
+        "capacity": "4",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_b_100_portable_hellbomb",
@@ -5194,7 +6959,36 @@
       "image": "https://helldivers.wiki.gg/images/Portable_Hellbomb_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/B-100_Portable_Hellbomb",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": [
+          {
+            "name": "Hellbomb",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "10000 Explosion",
+              "inner_durable": "10000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 9999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 9999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank VI"
+            },
+            "area_of_effect": {
+              "radius_inner": "17 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "45 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "backpack_b_md_c4_pack",
@@ -5261,7 +7055,40 @@
       "image": "https://helldivers.wiki.gg/images/Warp_Pack_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/LIFT-182_Warp_Pack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "480 sec",
+        "main_health": "200",
+        "main_armor": "Light",
+        "attacks": [
+          {
+            "name": "Explosion Warp",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "1000 Explosion",
+              "inner_durable": "1000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.4 m",
+              "radius_outer": "1.5 m",
+              "radius_shockwave": "2 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "backpack_lift_850_jump_pack",
@@ -5277,7 +7104,11 @@
       "image": "https://helldivers.wiki.gg/images/Jump_Pack_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/LIFT-850_Jump_Pack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_lift_860_hover_pack",
@@ -5293,7 +7124,11 @@
       "image": "https://helldivers.wiki.gg/images/Hover_Pack_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/LIFT-860_Hover_Pack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_sh_20_ballistic_shield_backpack",
@@ -5309,7 +7144,11 @@
       "image": "https://helldivers.wiki.gg/images/Disambig.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SH-20_Ballistic_Shield_Backpack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_sh_32_shield_generator_pack",
@@ -5325,7 +7164,13 @@
       "image": "https://helldivers.wiki.gg/images/Shield_Generator_Pack_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SH-32_Shield_Generator_Pack",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "∞",
+        "cooldown": "480 s",
+        "main_health": "200",
+        "main_armor": "Unarmored",
+        "attacks": []
+      }
     },
     {
       "id": "backpack_sh_51_directional_shield",
@@ -5341,7 +7186,13 @@
       "image": "https://helldivers.wiki.gg/images/Directional_Shield_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SH-51_Directional_Shield",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "main_health": "400",
+        "main_armor": "Heavy",
+        "attacks": []
+      }
     },
     {
       "id": "reinforce",
@@ -5357,7 +7208,11 @@
       "image": "https://helldivers.wiki.gg/images/Reinforce_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Reinforce",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "INF",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "sos_beacon",
@@ -5373,7 +7228,11 @@
       "image": "https://helldivers.wiki.gg/images/SOS_Beacon_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SoS_Beacon",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "resupply",
@@ -5389,7 +7248,11 @@
       "image": "https://helldivers.wiki.gg/images/Resupply_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Resupply",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "eagle_rearm",
@@ -5405,7 +7268,11 @@
       "image": "https://helldivers.wiki.gg/images/Eagle_Rearm_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Rearm",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "INF",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "nux_223_hellbomb",
@@ -5421,7 +7288,38 @@
       "image": "https://helldivers.wiki.gg/images/Hellbomb_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/NUX-223_Hellbomb",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "30 sec",
+        "main_health": "350",
+        "main_armor": "Light",
+        "attacks": [
+          {
+            "name": "Hellbomb",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "10000 Explosion",
+              "inner_durable": "10000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 9999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 9999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank VI"
+            },
+            "area_of_effect": {
+              "radius_inner": "17 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "45 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "sssd_delivery",
@@ -5437,7 +7335,11 @@
       "image": "https://helldivers.wiki.gg/images/Upload_Data_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SSSD_Delivery",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "upload_data",
@@ -5453,7 +7355,11 @@
       "image": "https://helldivers.wiki.gg/images/Upload_Data_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Upload_Data",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "seismic_probe",
@@ -5469,7 +7375,11 @@
       "image": "https://helldivers.wiki.gg/images/Seismic_Probe_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Seismic_Probe",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "orbital_illumination_flare",
@@ -5517,7 +7427,11 @@
       "image": "https://helldivers.wiki.gg/images/Cargo_Container_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Cargo_Container",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "prospecting_drill",
@@ -5533,7 +7447,11 @@
       "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Prospecting_Drill",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "seaf_artillery",
@@ -5549,7 +7467,37 @@
       "image": "https://helldivers.wiki.gg/images/SEAF_Artillery_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/SEAF_Artillery",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "5",
+        "cooldown": "Standard",
+        "attacks": [
+          {
+            "name": "SEAF Gun Napalm",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Fire",
+              "inner_radius": "250 Fire",
+              "inner_durable": "250 Fire",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 249.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 249.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1.6 m",
+              "radius_outer": "13 m",
+              "radius_shockwave": "20 m"
+            }
+          }
+        ]
+      }
     },
     {
       "id": "super_earth_flag",
@@ -5565,7 +7513,11 @@
       "image": "https://helldivers.wiki.gg/images/Super_Earth_Flag_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Super_Earth_Flag",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "tectonic_drill",
@@ -5581,7 +7533,11 @@
       "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Tectonic_Drill",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "reinforcement_pods",
@@ -5613,7 +7569,11 @@
       "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Hive_Breaker_Drill",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "dark_fluid_vessel",
@@ -5629,7 +7589,11 @@
       "image": "https://helldivers.wiki.gg/images/Dark_Fluid_Vessel_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Dark_Fluid_Vessel",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "12",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     },
     {
       "id": "tactical_video_camera",
@@ -5661,7 +7625,11 @@
       "image": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg",
       "description": "",
       "source_page": "https://helldivers.wiki.gg/wiki/Aquifer_Drill",
-      "detailed_stats": null
+      "detailed_stats": {
+        "uses": "1",
+        "cooldown": "Standard",
+        "attacks": []
+      }
     }
   ]
 }

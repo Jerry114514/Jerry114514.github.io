@@ -75,7 +75,7 @@ def parse_tables(section_html):
         rows = re.findall(r'<tr>(.*?)</tr>', tbl, re.S)
         header = None  # 当前分组标题 (th colspan=2)
         current_attack = None
-        is_attack_table = table_type in ("projectile", "explosion", "melee", "grenade", "status")
+        is_attack_table = table_type in ("projectile", "explosion", "melee", "grenade", "status", "spray", "beam", "arc", "damage")
         if is_attack_table:
             current_attack = {"name": None, "type": table_type, "sections": {}}
         for row in rows:
@@ -105,6 +105,7 @@ def parse_tables(section_html):
         if is_attack_table and current_attack:
             attack_by_id[table_id] = current_attack
     # 将攻击表数据关联到 attacks（宽松匹配：去除非字母数字）
+    matched_keys = set()
     for a in result["attacks"]:
         clean = a["name"].lstrip("*").strip()
         key = re.sub(r'[^A-Z0-9]', '', clean.upper())
@@ -113,87 +114,87 @@ def parse_tables(section_html):
             a["data"] = src.get("sections", {})
             if src.get("top"):
                 a["top"] = src["top"]
+            matched_keys.add(key)
+    # 补充：未被攻击列表关联的攻击表也作为独立攻击条目
+    for key, src in attack_by_id.items():
+        if key in matched_keys:
+            continue
+        name = src.get("name") or key
+        result["attacks"].append({"name": name, "type": src["type"], "data": src.get("sections", {}), "top": src.get("top")})
     # 清理无数据的
     result["attacks"] = [a for a in result["attacks"] if "data" in a or "top" in a]
     return result
 
 def get_detailed_stats(page):
-    """获取页面的 detailed_stats"""
+    """获取页面的 detailed_stats（支持 Detailed 区域或全页扫描）"""
     try:
         d = fetch_api({"action": "parse", "page": page, "prop": "text", "format": "json"})
         if "parse" not in d: return None
         html = d["parse"]["text"]["*"]
-        # 定位 Detailed Weapon Statistics 区域
+        # 定位 Detailed Weapon Statistics 区域（若存在）
         start = html.find('id="Detailed_Weapon_Statistics"')
-        if start < 0: return None
-        h2end = html.find("</h2>", start)
-        if h2end < 0: return None
-        # 找下一个标题
-        nxt = html.find('<h2', h2end + 5)
-        if nxt > 0:
-            section = html[h2end + 5:nxt]
-        else:
-            section = html[h2end + 5:]
-        parsed = parse_tables(section)
+        if start >= 0:
+            h2end = html.find("</h2>", start)
+            if h2end >= 0:
+                nxt = html.find('<h2', h2end + 5)
+                section = html[h2end + 5:nxt] if nxt > 0 else html[h2end + 5:]
+                parsed = parse_tables(section)
+                if parsed["general"] or parsed["attacks"]:
+                    return build_detailed(parsed, page)
+        # 全页扫描模式：扫描整个页面所有 attack-data-table-* 表
+        parsed = parse_tables(html)
         if not parsed["general"] and not parsed["attacks"]:
             return None
-        # 构建 detailed_stats：包含所有 general 字段（战略配备 + 武器基础参数）
-        detailed = {k: v for k, v in parsed["general"].items() if v is not None}
-        attacks = []
-        for a in parsed["attacks"]:
-            atk = {"name": a["name"].lstrip("*").strip(), "type": a["type"].lower()}
-            data = a.get("data", {})
-            # projectile
-            if "Projectile" in data:
-                atk["projectile"] = data["Projectile"]
-            # damage
-            if "Damage" in data:
-                dmg = dict(data["Damage"])
-                # 解析范围
-                for k in ("outer_radius", "outer_durable", "inner_radius"):
-                    if k in dmg and isinstance(dmg[k], str) and "-" in dmg[k]:
-                        dmg[k] = parse_range(dmg[k])
-                atk["damage"] = dmg
-            # penetration
-            if "Penetration" in data:
-                atk["penetration"] = data["Penetration"]
-            # special effects
-            if "Special Effects" in data:
-                atk["special_effects"] = dict(data["Special Effects"])
-            # area of effect
-            if "Area of Effect" in data:
-                atk["area_of_effect"] = data["Area of Effect"]
-            attacks.append(atk)
-        # 独立状态区块：将攻击条目中的状态字段分离到顶层 status_effects
-        status_effects = {}
-        for a in attacks:
-            se = a.get("special_effects") or {}
-            # 状态类字段
-            for k in list(se.keys()):
-                if k in ("status", "status_strength", "status_duration", "effect_type", "fire", "gas", "ems", "smoke"):
-                    status_effects[k] = se.pop(k)
-            # 若攻击条目本身的 type 为 status 或名称为 Fire，其数据作为状态效果
-            if a["type"] == "status" or (a.get("name", "").lower() in ("fire", "status", "gas", "ems", "smoke")):
-                if a.get("damage"):
-                    status_effects.setdefault("damage", a["damage"])
-                if a.get("special_effects"):
-                    status_effects.update(a["special_effects"])
-                # 移除该攻击条目（状态效果不作为攻击展示）
-                attacks.remove(a)
-        # 清理空 special_effects
-        for a in attacks:
-            if a.get("special_effects") and not a["special_effects"]:
-                del a["special_effects"]
-        if not attacks:
-            if status_effects and not detailed:
-                detailed = {}
-        detailed["attacks"] = attacks if attacks else []
-        if status_effects:
-            detailed["status_effects"] = status_effects
-        return detailed
+        return build_detailed(parsed, page)
     except Exception as e:
         print(f"  [ERR] {page}: {e}", flush=True)
         return None
+
+def build_detailed(parsed, page):
+    """从 parse_tables 结果构建 detailed_stats"""
+    detailed = {k: v for k, v in parsed["general"].items() if v is not None}
+    attacks = []
+    for a in parsed["attacks"]:
+        atk = {"name": a["name"].lstrip("*").strip(), "type": a["type"].lower()}
+        data = a.get("data", {})
+        if "Projectile" in data:
+            atk["projectile"] = data["Projectile"]
+        if "Damage" in data:
+            dmg = dict(data["Damage"])
+            for k in ("outer_radius", "outer_durable", "inner_radius"):
+                if k in dmg and isinstance(dmg[k], str) and "-" in dmg[k]:
+                    dmg[k] = parse_range(dmg[k])
+            atk["damage"] = dmg
+        if "Penetration" in data:
+            atk["penetration"] = data["Penetration"]
+        if "Special Effects" in data:
+            atk["special_effects"] = dict(data["Special Effects"])
+        if "Area of Effect" in data:
+            atk["area_of_effect"] = data["Area of Effect"]
+        # spray/beam/arc 等类型的 top 字段（如 Damage/Standard 直接出现在表顶）
+        if a.get("top") and not atk.get("damage") and "damage" in {k.lower() for k in a["top"]}:
+            pass
+        attacks.append(atk)
+    # 独立状态区块：将攻击条目中的状态字段分离到顶层 status_effects
+    status_effects = {}
+    for a in list(attacks):
+        se = a.get("special_effects") or {}
+        for k in list(se.keys()):
+            if k in ("status", "status_strength", "status_duration", "effect_type", "fire", "gas", "ems", "smoke"):
+                status_effects[k] = se.pop(k)
+        if a["type"] == "status" or (a.get("name", "").lower() in ("fire", "status", "gas", "ems", "smoke")):
+            if a.get("damage"):
+                status_effects.setdefault("damage", a["damage"])
+            if a.get("special_effects"):
+                status_effects.update(a["special_effects"])
+            attacks.remove(a)
+    for a in attacks:
+        if a.get("special_effects") and not a["special_effects"]:
+            del a["special_effects"]
+    detailed["attacks"] = attacks if attacks else []
+    if status_effects:
+        detailed["status_effects"] = status_effects
+    return detailed
 
 if __name__ == "__main__":
     for page in ["Eagle 500kg Bomb", "Orbital 120mm HE Barrage"]:
