@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""抓取 Helldivers Wiki 敌人数据：阵营 + 敌人 + 部位 + 图片"""
+"""抓取 Helldivers Wiki 敌人数据（自动判定模式）：阵营 + 敌人 + 部位 + 图片"""
 import json, urllib.request, urllib.parse, io, sys, re, time, html as html_mod, os
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -8,21 +8,17 @@ except Exception:
 API = "https://helldivers.wiki.gg/api.php"
 HEADERS = {"User-Agent": "Mozilla/5.0 HD2-Wiki/1.0"}
 
-# 过滤规则：排除的条目
+# 只排除明确非敌人的前缀（Category/翻译页/旧作/彩蛋/用户页/模板）
 EXCLUDE_PREFIX = ("Helldivers 1:", "April Fools/", "User:", "Category:", "Template:")
+# 明确非敌人的精确标题（分类页/任务页/索引页）
 EXCLUDE_EXACT = {
     "Automatons", "Enemy Classes", "Factions", "Federation of Super Earth", "Illuminate", "Terminids",
     "Cognitive Disruptor", "Destroy Rogue Research Station", "Terminate Illegal Broadcast",
     "Commando: Acquire Evidence", "Commando: Extract Intel", "Commando: Secure Black Box",
-    "Ground All-Terrain Extraction Rig (GATER)", "Heavy SEAF Presence", "SEAF SAM Site", "SEAF Soldier",
-    "Helldiver", "Civilian", "Ground All-Terrain Extraction Rig (GATER)",
-    "Predator Strain", "Spore Burst Strain", "Rupture Strain", "Jet Brigade", "Incineration Corps",
-    "Cyborg Legion", "Appropriators", "Vote Snatchers", "Mindless Masses", "Invasion Fleet",
-    "The Great Host", "Gazer", "Gazer Spire", "Lightning Spire", "Monolith", "Bunker Turret",
+    "Ground All-Terrain Extraction Rig (GATER)", "Heavy SEAF Presence",
+    "SEAF SAM Site", "Gazer", "Gazer Spire", "Lightning Spire", "Monolith", "Bunker Turret",
     "Automaton MG Emplacement", "Grounded Warp Ship", "Warp Ship", "Vox Engine",
-    "Dragonroach", "Fleshmob", "Wretch", "Stingray", "Radical", "Obtruder", "Veracitor", "Gatekeeper",
-    "Crusher", "Agitator", "Marauder", "Pouncer", "Brawler", "Leviathan", "Strider",
-    "Dropship", "Gunship",
+    "The Great Host", "Strider",
 }
 
 def api(params):
@@ -52,7 +48,6 @@ def get_category_members(cat):
     return titles
 
 def parse_enemy_infobox(html):
-    """提取 enemy infobox 基础字段"""
     result = {}
     pattern = re.compile(r'druid-label-(?:[^"\s]+)"[^>]*>([^<]*)</div>\s*<div class="druid-data[^"]*"[^>]*>(.*?)</div>\s*</div>', re.S)
     for m in pattern.finditer(html):
@@ -63,7 +58,6 @@ def parse_enemy_infobox(html):
     return result
 
 def parse_body_parts(html):
-    """提取部位表格（Part Name/Health/AV/Location图片等）"""
     parts = []
     idx = html.find(">Part Name</th>")
     if idx < 0: return parts
@@ -77,9 +71,7 @@ def parse_body_parts(html):
         name = strip_html(cells[0])
         if not name or name in ("Part Name",): continue
         health = strip_html(cells[1])
-        # AV（装甲）从 cells[2] 提取
         av = strip_html(cells[2])
-        # 部位图片（Location 列）
         img = None
         if len(cells) > 3:
             m = re.search(r'src="(/images/thumb/[^"]+)"', cells[3])
@@ -91,21 +83,21 @@ def parse_body_parts(html):
                     img = "https://helldivers.wiki.gg" + m2.group(1)
         durable = strip_html(cells[4]) if len(cells) > 4 else ""
         pct = strip_html(cells[5]) if len(cells) > 5 else ""
-        parts.append({
-            "name": name,
-            "health": health,
-            "armor": av,
-            "image": img,
-            "durable": durable,
-            "pct_to_main": pct,
-        })
+        parts.append({"name": name, "health": health, "armor": av, "image": img, "durable": durable, "pct_to_main": pct})
     return parts
 
 def get_enemy_image(html):
-    """提取敌人图标"""
     m = re.search(r'(/images/[A-Za-z0-9_\-%.]+_Enemy_Icon\.(?:png|jpg|webp))\??', html)
     if m: return "https://helldivers.wiki.gg" + m.group(1)
     return None
+
+def is_enemy_page(html):
+    """自动判定是否为敌人页面：有 druid-container-enemy 且有 Faction 字段"""
+    if 'druid-container-enemy' not in html:
+        return False
+    if 'druid-label-faction' not in html and 'druid-label-Faction' not in html:
+        return False
+    return True
 
 def parse_enemy(title):
     try:
@@ -113,11 +105,10 @@ def parse_enemy(title):
         if "parse" not in d:
             return None
         html = d["parse"]["text"]["*"]
-        if 'druid-container-enemy' not in html:
-            # 非敌人页面
+        if not is_enemy_page(html):
             return None
         info = parse_enemy_infobox(html)
-        if not info.get("Faction"):
+        if not info.get("Faction") and not info.get("faction"):
             return None
         parts = parse_body_parts(html)
         img = get_enemy_image(html)
@@ -125,10 +116,10 @@ def parse_enemy(title):
             "id": slugify(title),
             "name": title,
             "name_zh": "",
-            "faction": normalize_faction(info.get("Faction", "")),
-            "faction_label": info.get("Faction", ""),
+            "faction": normalize_faction(info.get("Faction", info.get("faction", ""))),
+            "faction_label": info.get("Faction", info.get("faction", "")),
             "image": img,
-            "description": info.get("Description", ""),
+            "description": info.get("Description", info.get("description", "")),
             "category": info.get("Size Class", ""),
             "health_total": info.get("Health", ""),
             "damage": info.get("Damage", ""),
@@ -162,28 +153,29 @@ def normalize_faction(f):
 
 def main():
     base = r"E:\GitLoadWareHouse\Jerry114514.github.io\HD2_Wiki\data\wiki\zh"
-    # 1. 获取敌人列表
     all_titles = get_category_members("Category:Enemies")
-    enemies_list = []
+    # 只过滤明确非敌人前缀，其余全部尝试（自动判定）
+    candidates = []
     for t in all_titles:
         if t.startswith(EXCLUDE_PREFIX): continue
-        if t in EXCLUDE_EXACT: continue
         if t.endswith("/zh"): continue
-        enemies_list.append(t)
-    print(f"过滤后敌人列表: {len(enemies_list)}", flush=True)
-    # 2. 逐页抓取
+        if t in EXCLUDE_EXACT: continue
+        candidates.append(t)
+    print(f"候选页面: {len(candidates)}", flush=True)
     enemies = []
     errors = []
-    for i, t in enumerate(enemies_list):
+    skipped = []
+    for i, t in enumerate(candidates):
         e = parse_enemy(t)
         if e:
             enemies.append(e)
         else:
-            errors.append(t)
+            # 区分：无 enemy container（跳过） vs 错误
+            skipped.append(t)
         if i % 10 == 0:
-            print(f"  {i}/{len(enemies_list)}", flush=True)
+            print(f"  {i}/{len(candidates)}", flush=True)
         time.sleep(0.3)
-    # 3. 输出
+    # 输出
     factions_data = {
         "factions": [
             {"id":"terminids","name":"Terminids","name_zh":"终结族","color":"#FF4444","strains":[{"name":"Predator Strain","name_zh":"掠食者变种"},{"name":"Spore Burst Strain","name_zh":"孢子爆发变种"},{"name":"Rupture Strain","name_zh":"爆裂变种"}],"enemies":[e["id"] for e in enemies if e["faction"]=="terminids"]},
@@ -205,7 +197,6 @@ def main():
     with open(os.path.join(base, "enemies.json"), "w", encoding="utf-8") as f:
         json.dump(enemies_data, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    # 报告
     report = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "source": "https://helldivers.wiki.gg",
@@ -213,6 +204,7 @@ def main():
         "total_enemies": len(enemies),
         "enemies_with_images": sum(1 for e in enemies if e["image"]),
         "enemies_with_parts": sum(1 for e in enemies if e["body_parts"]),
+        "skipped_not_enemy": skipped,
         "errors": errors,
         "warnings": [],
     }
@@ -221,7 +213,7 @@ def main():
         json.dump(report, f, ensure_ascii=False, indent=2)
         f.write("\n")
     print(f"\n完成: 敌人 {len(enemies)}，图片 {report['enemies_with_images']}，部位 {report['enemies_with_parts']}", flush=True)
-    print(f"错误 {len(errors)}: {errors[:10]}", flush=True)
+    print(f"跳过(非敌人) {len(skipped)}，错误 {len(errors)}", flush=True)
     from collections import Counter
     print("阵营分布:", dict(Counter(e["faction"] for e in enemies)), flush=True)
 

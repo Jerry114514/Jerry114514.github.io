@@ -1,8 +1,115 @@
 {
-  "updated_at": "2026-08-24T12:10:30Z",
+  "updated_at": "2026-08-24T18:58:46Z",
   "source": "https://helldivers.wiki.gg",
-  "total": 65,
+  "total": 94,
   "enemies": [
+    {
+      "id": "agitator",
+      "name": "Agitator",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Cyborg Legion Automatons",
+      "image": "https://helldivers.wiki.gg/images/Agitator_Enemy_Icon.png",
+      "description": "Cyborg field commanders, able to take direct command of their Automaton underlings.",
+      "category": "Medium ?",
+      "health_total": "750",
+      "damage": "45 Plasma Charger 65 Plasma Charger Overcharge Impact 30 Plasma Charger Overcharge Explosion 200 Grenade 60 Augmented Punch 50 Techno-Martial Arts",
+      "damage_type": "Ballistic Melee Explosion",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "20 Stagger Force",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "750",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Main_Health_Front.png/200px-Agitator_Main_Health_Front.png?fb2d9b",
+          "durable": "20%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Helmet",
+          "health": "200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Helmet_Front.png/200px-Agitator_Helmet_Front.png?4fe237",
+          "durable": "0%",
+          "pct_to_main": "30%"
+        },
+        {
+          "name": "Head",
+          "health": "150",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Head_Front.png/200px-Agitator_Head_Front.png?755aa5",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso Armor",
+          "health": "300",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Torso_Armor_Front.png/200px-Agitator_Torso_Armor_Front.png?70f759",
+          "durable": "0%",
+          "pct_to_main": "30%"
+        },
+        {
+          "name": "Torso",
+          "health": "1,200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Torso_Circuits_Front.png/200px-Agitator_Torso_Circuits_Front.png?820e27",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Pauldrons (2)",
+          "health": "200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Pauldrons_Front.png/200px-Agitator_Pauldrons_Front.png?db4b22",
+          "durable": "0%",
+          "pct_to_main": "30%"
+        },
+        {
+          "name": "Upper Arms (2)",
+          "health": "300",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Upper_Arms_Front.png/200px-Agitator_Upper_Arms_Front.png?75ba8a",
+          "durable": "0%",
+          "pct_to_main": "80%"
+        },
+        {
+          "name": "Forearms (2)",
+          "health": "300",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Forearms_Front.png/200px-Agitator_Forearms_Front.png?76acd5",
+          "durable": "0%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Pelvis and Left Leg",
+          "health": "1,400",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Pelvis_and_Left_Leg.png/200px-Agitator_Pelvis_and_Left_Leg.png?4d01f4",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Right Leg",
+          "health": "1,400",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Agitator_Right_Leg_Front.png/200px-Agitator_Right_Leg_Front.png?698f1b",
+          "durable": "0%",
+          "pct_to_main": "75%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Agitator"
+    },
     {
       "id": "alpha_commander",
       "name": "Alpha Commander",
@@ -211,6 +318,32 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Annihilator_Tank"
+    },
+    {
+      "id": "appropriators",
+      "name": "Appropriators",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Appropriators"
     },
     {
       "id": "assault_raider",
@@ -778,6 +911,81 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Bile_Warrior"
     },
     {
+      "id": "brawler",
+      "name": "Brawler",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": "https://helldivers.wiki.gg/images/Brawler_Enemy_Icon.png",
+      "description": "Light Automaton unit armed with twin heated blades that specializes in close quarters combat.",
+      "category": "Small ?",
+      "health_total": "125",
+      "damage": "60 Heat Blade Slash 200 Grenade",
+      "damage_type": "Melee Explosion",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "10 Stagger Force",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "125",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Trooper_Main_Health.png/200px-Trooper_Main_Health.png?f5dadd",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "Main",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Trooper_Head_Front.png/200px-Trooper_Head_Front.png?e16ef8",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "100",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Trooper_Torso_Front.png/200px-Trooper_Torso_Front.png?e18c80",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Left Arm",
+          "health": "85",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Brawler_Left_Arm_Front.png/200px-Brawler_Left_Arm_Front.png?f9f863",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Right Arm",
+          "health": "65",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Brawler_Right_Arm_Front.png/200px-Brawler_Right_Arm_Front.png?791d10",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Leg (2)",
+          "health": "90",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Trooper_Legs_Front.png/200px-Trooper_Legs_Front.png?715a03",
+          "durable": "0%",
+          "pct_to_main": "65%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Brawler"
+    },
+    {
       "id": "brood_commander",
       "name": "Brood Commander",
       "name_zh": "",
@@ -1067,6 +1275,73 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Charger_Behemoth"
     },
     {
+      "id": "civilian",
+      "name": "Civilian",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Super Earth Federation",
+      "image": "https://helldivers.wiki.gg/images/Civilian_Enemy_Icon.png",
+      "description": "Unarmed Super Earth citizens, mostly found running away from danger.",
+      "category": "Small ?",
+      "health_total": "70",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "70",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Male_Civilian_Main.png/200px-Male_Civilian_Main.png?272a0f",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "40",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Male_Civilian_Head_Front.png/200px-Male_Civilian_Head_Front.png?6d31f5",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "70",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Male_Civilian_Torso_Front.png/200px-Male_Civilian_Torso_Front.png?6beb39",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "70",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Male_Civilian_Arms_Front.png/200px-Male_Civilian_Arms_Front.png?d19560",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "100",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Male_Civilian_Legs_Front.png/200px-Male_Civilian_Legs_Front.png?6bddb6",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Civilian"
+    },
+    {
       "id": "commissar",
       "name": "Commissar",
       "name_zh": "",
@@ -1332,6 +1607,115 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Crescent_Overseer"
     },
     {
+      "id": "crusher",
+      "name": "Crusher",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Vote Snatchers",
+      "image": "https://helldivers.wiki.gg/images/Crusher_Enemy_Icon.png",
+      "description": "Ungainly flesh amalgamations that wield massive metallic clubs and are capable of regenerating tissue damage",
+      "category": "Large ?",
+      "health_total": "6,000",
+      "damage": "200 Melee",
+      "damage_type": "",
+      "fire_damage_multiplier": "1.5x Fire",
+      "stagger_threshold": "40 Stagger Force",
+      "minimum_difficulty": "Challenging",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "6,000",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "70%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Helmet",
+          "health": "300",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Head",
+          "health": "300",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "6,000",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "70%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "2,000",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "70%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Pelvis",
+          "health": "4,000",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "4,000",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Challenging"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Crusher"
+    },
+    {
+      "id": "cyborg_legion",
+      "name": "Cyborg Legion",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Cyborg_Legion"
+    },
+    {
       "id": "devastator",
       "name": "Devastator",
       "name_zh": "",
@@ -1421,6 +1805,172 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Devastator"
+    },
+    {
+      "id": "dragonroach",
+      "name": "Dragonroach",
+      "name_zh": "",
+      "faction": "terminids",
+      "faction_label": "Terminid Horde",
+      "image": "https://helldivers.wiki.gg/images/Dragonroach_Enemy_Icon.png",
+      "description": "Massive flying Terminid with a potent fire breath attack and heavy armor.",
+      "category": "Massive ?",
+      "health_total": "6,500",
+      "damage": "Fire Breath + 100 Burn DPS; X Area of Effect Burn X/s Area of Effect Fire",
+      "damage_type": "Fire",
+      "fire_damage_multiplier": "1.7x Fire",
+      "stagger_threshold": "38 Stagger Force",
+      "minimum_difficulty": "Hard",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "6,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Main_Front.png/200px-Dragonroach_Main_Front.png?d4d451",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "1,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Head_Front.png/200px-Dragonroach_Head_Front.png?893218",
+          "durable": "95%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Carapace (2)",
+          "health": "1,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Carapace_Front.png/200px-Dragonroach_Carapace_Front.png?9ff27b",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Claws (2)",
+          "health": "1,000",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Claws_Front.png/200px-Dragonroach_Claws_Front.png?af568e",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Wings (4)",
+          "health": "1,500",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Wings_Front.png/200px-Dragonroach_Wings_Front.png?923645",
+          "durable": "100%",
+          "pct_to_main": "30%"
+        },
+        {
+          "name": "Thorax Sac",
+          "health": "750",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Thorax_Sac_Front.png/200px-Dragonroach_Thorax_Sac_Front.png?c15e9f",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Abdomen Sac",
+          "health": "750",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Abdominal_Sac_Front.png/200px-Dragonroach_Abdominal_Sac_Front.png?8037e3",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Thorax Innards",
+          "health": "3,000",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Thorax_Innards_Front.png/200px-Dragonroach_Thorax_Innards_Front.png?a40133",
+          "durable": "80%",
+          "pct_to_main": "60%"
+        },
+        {
+          "name": "Abdomen Innards",
+          "health": "Main",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Abdominal_Innards_Front.png/200px-Dragonroach_Abdominal_Innards_Front.png?c49381",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Abdomen Armor",
+          "health": "3,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Abdomen_Front.png/200px-Dragonroach_Abdomen_Front.png?fab89c",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Leg Armor (12)",
+          "health": "1,000",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dragonroach_Leg_Armor_Front.png/200px-Dragonroach_Leg_Armor_Front.png?55bb08",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Hard"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Dragonroach"
+    },
+    {
+      "id": "dropship",
+      "name": "Dropship",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": "https://helldivers.wiki.gg/images/Dropship_Enemy_Icon.png",
+      "description": "Unarmed Automaton ship that drops in fellow Automaton units in response to a Bot Drop flare.",
+      "category": "Massive ?",
+      "health_total": "3,500",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "3,500",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dropship_Main.png/200px-Dropship_Main.png?884345",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Fuselage",
+          "health": "Main",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dropship_Fuselage_Front.png/200px-Dropship_Fuselage_Front.png?341bc7",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Thruster (4)",
+          "health": "1,500",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Dropship_Thrusters_Front.png/200px-Dropship_Thrusters_Front.png?79faf0",
+          "durable": "100%",
+          "pct_to_main": "0%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Dropship"
     },
     {
       "id": "elevated_overseer",
@@ -1709,6 +2259,295 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Factory_Strider"
     },
     {
+      "id": "fleshmob",
+      "name": "Fleshmob",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": "https://helldivers.wiki.gg/images/Fleshmob_Enemy_Icon.png",
+      "description": "An amalgamation of Voteless corpses, this large Illuminate unit specializes in close quarters combat and charges at Helldivers to attack.",
+      "category": "Large ?",
+      "health_total": "5,000",
+      "damage": "50 Flail 30 Initial Charge Impact",
+      "damage_type": "Melee",
+      "fire_damage_multiplier": "1.8x Fire",
+      "stagger_threshold": "45 Stagger Force",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "5,000",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Fleshmob_Main_Front.png/200px-Fleshmob_Main_Front.png?4129b8",
+          "durable": "40%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head Chunks (6)",
+          "health": "400",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Fleshmob_Head_Chunks_Front.png/200px-Fleshmob_Head_Chunks_Front.png?ddb4da",
+          "durable": "25%",
+          "pct_to_main": "150%"
+        },
+        {
+          "name": "Stomach Chunks (2)",
+          "health": "400",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Fleshmob_Stomach_Chunk_Front.png/200px-Fleshmob_Stomach_Chunk_Front.png?1676a7",
+          "durable": "40%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (4)",
+          "health": "200",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Fleshmob_Arms_Front.png/200px-Fleshmob_Arms_Front.png?cc0312",
+          "durable": "40%",
+          "pct_to_main": "25%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "400",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Fleshmob_Legs_Front.png/200px-Fleshmob_Legs_Front.png?2c2ab1",
+          "durable": "40%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Fleshmob"
+    },
+    {
+      "id": "gatekeeper",
+      "name": "Gatekeeper",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Appropriators",
+      "image": "https://helldivers.wiki.gg/images/Gatekeeper_Enemy_Icon.png",
+      "description": "A piloted Illuminate war machine, with plasma guns and increased armor.",
+      "category": "",
+      "health_total": "2,500",
+      "damage": "110 Plasma Starcannon Charged Shot 60 Plasma Starcannon Charged Blast 30 Plasma Starcannon Volley Shot 20 Plasma Starcannon Volley Blast 35 Plasma Starcannon Bludgeon",
+      "damage_type": "Ballistic Explosion Melee",
+      "fire_damage_multiplier": "1x Fire",
+      "stagger_threshold": "40 Stagger Force",
+      "minimum_difficulty": "Challenging",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "2,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Main.png/200px-Gatekeeper_Main.png?7b5b62",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Shield Generator",
+          "health": "50",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Shield_Generator_Front.png/200px-Gatekeeper_Shield_Generator_Front.png?b6c6e4",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Chassis",
+          "health": "1,600",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Chassis_Front.png/200px-Gatekeeper_Chassis_Front.png?17e573",
+          "durable": "80%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Carapace (2)",
+          "health": "400",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Carapace_Front.png/200px-Gatekeeper_Carapace_Front.png?fa323d",
+          "durable": "0%",
+          "pct_to_main": "20%"
+        },
+        {
+          "name": "Rear Weakspot",
+          "health": "800",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Rear_Weakspot_Rear.png/200px-Gatekeeper_Rear_Weakspot_Rear.png?d428a6",
+          "durable": "80%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Shield",
+          "health": "1,300",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Shield_Front.png/200px-Gatekeeper_Shield_Front.png?62313f",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Pilot",
+          "health": "700",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Pilot.png/200px-Gatekeeper_Pilot.png?7bb339",
+          "durable": "50%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Cockpit",
+          "health": "1,200",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Cockpit_Front.png/200px-Gatekeeper_Cockpit_Front.png?4f9706",
+          "durable": "80%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Cockpit Weakspot",
+          "health": "800",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Cockpit_Weakspot.png/200px-Gatekeeper_Cockpit_Weakspot.png?f4da77",
+          "durable": "80%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Shoulder Armor (2)",
+          "health": "200",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Shoulders_Armor_Front.png/200px-Gatekeeper_Shoulders_Armor_Front.png?a312e6",
+          "durable": "0%",
+          "pct_to_main": "20%"
+        },
+        {
+          "name": "Arm Armor (2)",
+          "health": "200",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Arms_Armor_Front.png/200px-Gatekeeper_Arms_Armor_Front.png?82f97e",
+          "durable": "0%",
+          "pct_to_main": "20%"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Arms_Front.png/200px-Gatekeeper_Arms_Front.png?48c6ef",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Guns (2)",
+          "health": "800",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Guns_Front.png/200px-Gatekeeper_Guns_Front.png?1b2a80",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Gun Weakspots (2)",
+          "health": "800",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Gun_Weakspots_Front.png/200px-Gatekeeper_Gun_Weakspots_Front.png?6e46ec",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Leg Armor (6)",
+          "health": "200",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Leg_Armor_Front.png/200px-Gatekeeper_Leg_Armor_Front.png?9026d6",
+          "durable": "0%",
+          "pct_to_main": "20%"
+        },
+        {
+          "name": "Hips (3)",
+          "health": "800",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Hips_Front.png/200px-Gatekeeper_Hips_Front.png?a0c392",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Legs (3)",
+          "health": "800",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gatekeeper_Legs_Front.png/200px-Gatekeeper_Legs_Front.png?26a1d9",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Challenging"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Gatekeeper"
+    },
+    {
+      "id": "gunship",
+      "name": "Gunship",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": "https://helldivers.wiki.gg/images/Gunship_Enemy_Icon.png",
+      "description": "Medium-armored flying Automaton unit armed with fusion machine guns and rockets.",
+      "category": "Large ?",
+      "health_total": "950",
+      "damage": "65 Heavy Fusion Cycler 70 Rocket Blast 30 Rocket Impact 100 Death Explosion",
+      "damage_type": "Ballistic Explosion",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Hard",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "950",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gunship_Main_Health.png/200px-Gunship_Main_Health.png?c1f192",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Fuselage",
+          "health": "Main",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gunship_Fuselage_Front.png/200px-Gunship_Fuselage_Front.png?7d8ab4",
+          "durable": "100%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Front Thrusters (2)",
+          "health": "400",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gunship_Front_Engines_1.png/200px-Gunship_Front_Engines_1.png?4ebd7d",
+          "durable": "85%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Rear Thrusters (2)",
+          "health": "400",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Gunship_Rear_Engines_1.png/200px-Gunship_Rear_Engines_1.png?84f04b",
+          "durable": "80%",
+          "pct_to_main": "0%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Hard"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Gunship"
+    },
+    {
       "id": "harvester",
       "name": "Harvester",
       "name_zh": "",
@@ -1969,6 +2808,73 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Heavy_Devastator"
+    },
+    {
+      "id": "helldiver",
+      "name": "Helldiver",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Super Earth Federation",
+      "image": "https://helldivers.wiki.gg/images/Helldiver_Enemy_Icon.png",
+      "description": "Super Earth's elite fighting force, these units can be equipped with a variety of weapons, stratagems, and employ a variety of tactics.",
+      "category": "Small ?",
+      "health_total": "125",
+      "damage": "",
+      "damage_type": "Everything",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "125",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Helldiver_Main.png/200px-Helldiver_Main.png?96668f",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "85",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Helldiver_Head_Front.png/200px-Helldiver_Head_Front.png?50ba9a",
+          "durable": "0%",
+          "pct_to_main": "Armor Dependent"
+        },
+        {
+          "name": "Torso",
+          "health": "60",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Helldiver_Torso_Front.png/200px-Helldiver_Torso_Front.png?f27c10",
+          "durable": "0%",
+          "pct_to_main": "Armor Dependent"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "35 (52 w/ Servo-Assisted )",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Helldiver_Arms_Front.png/200px-Helldiver_Arms_Front.png?8011b8",
+          "durable": "0%",
+          "pct_to_main": "Armor Dependent"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "45 (67 w/ Servo-Assisted )",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Helldiver_Legs_Front.png/200px-Helldiver_Legs_Front.png?ee056e",
+          "durable": "0%",
+          "pct_to_main": "Armor Dependent"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Helldiver"
     },
     {
       "id": "hive_guard",
@@ -2828,6 +3734,84 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Incendiary_Rocket_Raider"
     },
     {
+      "id": "incineration_corps",
+      "name": "Incineration Corps",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Incineration_Corps"
+    },
+    {
+      "id": "invasion_fleet",
+      "name": "Invasion Fleet",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": "https://helldivers.wiki.gg/images/Invasion_Fleet_Enemy_Icon.png",
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Invasion_Fleet"
+    },
+    {
+      "id": "jet_brigade",
+      "name": "Jet Brigade",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade"
+    },
+    {
       "id": "jet_brigade_commissar",
       "name": "Jet Brigade Commissar",
       "name_zh": "",
@@ -3286,6 +4270,196 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Trooper"
     },
     {
+      "id": "leviathan",
+      "name": "Leviathan",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": "https://helldivers.wiki.gg/images/Leviathan_Enemy_Icon.png",
+      "description": "Tank-armored flying Illuminate unit, armed with large beams cannons and bomb bays.",
+      "category": "Massive ?",
+      "health_total": "15,000",
+      "damage": "400 DPS Disintegration Culverin + 100 DPS(3s) Beam Burn 250 Plasma Bomb",
+      "damage_type": "Laser Explosion",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Impossible",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "15,000",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Main.png/200px-Leviathan_Main.png?2773d3",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Turrets (4)",
+          "health": "1,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Turrets_Bottom_View.png/200px-Leviathan_Turrets_Bottom_View.png?43954f",
+          "durable": "85%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Front Vertebra",
+          "health": "7,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Front_Vertebrae_Top_View.png/200px-Leviathan_Front_Vertebrae_Top_View.png?39ba83",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Front Fins (2)",
+          "health": "5,500",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Front_Fins_Bottom_View.png/200px-Leviathan_Front_Fins_Bottom_View.png?a1b940",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Warp Disc",
+          "health": "3,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Warp_Disc_Bottom_View.png/200px-Leviathan_Warp_Disc_Bottom_View.png?b446de",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Forward-Middle Vertebra",
+          "health": "5,500",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Forward-Middle_Vertebrae_Bottom_View.png/200px-Leviathan_Forward-Middle_Vertebrae_Bottom_View.png?4b326c",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Forward-Middle Fins (2)",
+          "health": "5,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Forward-Middle_Fins_Bottom_View.png/200px-Leviathan_Forward-Middle_Fins_Bottom_View.png?3b76ed",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Rearward-Middle Vertebra",
+          "health": "5,500",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Rearward-Middle_Vertebrae_Bottom_View.png/200px-Leviathan_Rearward-Middle_Vertebrae_Bottom_View.png?9ac893",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Rearward-Middle Fins (2)",
+          "health": "3,900",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Rearward-Middle_Fins_Bottom_View.png/200px-Leviathan_Rearward-Middle_Fins_Bottom_View.png?13b3c9",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Rear Vertebra",
+          "health": "5,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Rear_Vertebrae_Bottom_View.png/200px-Leviathan_Rear_Vertebrae_Bottom_View.png?20c254",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Rear Fins (2)",
+          "health": "3,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Rear_Fins_Bottom_View.png/200px-Leviathan_Rear_Fins_Bottom_View.png?a830c8",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Tail",
+          "health": "3,900",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Leviathan_Tail_Bottom_View.png/200px-Leviathan_Tail_Bottom_View.png?bf1612",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Impossible"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Leviathan"
+    },
+    {
+      "id": "marauder",
+      "name": "Marauder",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automaton Legion",
+      "image": "https://helldivers.wiki.gg/images/Marauder_Enemy_Icon.png",
+      "description": "Reinforced Automaton unit armed with a fusion rifle and explosive grenades.",
+      "category": "Small ?",
+      "health_total": "125",
+      "damage": "35 Fusion SMG 200 Grenade 35 Steel Fist Punch",
+      "damage_type": "Ballistic Explosion Melee",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "10 Stagger Force",
+      "minimum_difficulty": "Hard",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "125",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Marauder_Main.png/200px-Marauder_Main.png?d6a8c6",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "40",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Marauder_Head_Front.png/200px-Marauder_Head_Front.png?8336a3",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "100",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Marauder_Torso_Front.png/200px-Marauder_Torso_Front.png?72edd4",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "65",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Marauder_Arms_Front.png/200px-Marauder_Arms_Front.png?7a2329",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "90",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Marauder_Legs_Front.png/200px-Marauder_Legs_Front.png?18d938",
+          "durable": "0%",
+          "pct_to_main": "65%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Hard"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Marauder"
+    },
+    {
       "id": "mg_raider",
       "name": "MG Raider",
       "name_zh": "",
@@ -3369,6 +4543,32 @@
       "source_page": "https://helldivers.wiki.gg/wiki/MG_Raider"
     },
     {
+      "id": "mindless_masses",
+      "name": "Mindless Masses",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Mindless_Masses"
+    },
+    {
       "id": "nursing_spewer",
       "name": "Nursing Spewer",
       "name_zh": "",
@@ -3450,6 +4650,73 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Nursing_Spewer"
+    },
+    {
+      "id": "obtruder",
+      "name": "Obtruder",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Appropriators",
+      "image": null,
+      "description": "Swarming drones that fire plasma projectiles and travel in groups. A variation of the watcher.",
+      "category": "",
+      "health_total": "400",
+      "damage": "35 Plasma Torch 300 Crashing Impact 80 Death Explosion",
+      "damage_type": "Ballistic Explosion",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "400",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Obtruder_Main_Front.png/200px-Obtruder_Main_Front.png?f19ca2",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Body",
+          "health": "400",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Obtruder_Body_Front.png/200px-Obtruder_Body_Front.png?92d7cc",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Eye",
+          "health": "300",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Obtruder_Eye_Front.png/200px-Obtruder_Eye_Front.png?1b51be",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Vertical Fins (2)",
+          "health": "100",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Obtruder_Vertical_Fins_Front.png/200px-Obtruder_Vertical_Fins_Front.png?e59d2f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Lateral Fins (2)",
+          "health": "100",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Obtruder_Lateral_Fins_Front.png/200px-Obtruder_Lateral_Fins_Front.png?3735d1",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Obtruder"
     },
     {
       "id": "overseer",
@@ -3557,6 +4824,57 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Overseer"
+    },
+    {
+      "id": "pouncer",
+      "name": "Pouncer",
+      "name_zh": "",
+      "faction": "terminids",
+      "faction_label": "Terminid Horde",
+      "image": "https://helldivers.wiki.gg/images/Pouncer_Enemy_Icon.png",
+      "description": "Agile Terminids that are able to leap great distances to attack Helldivers.",
+      "category": "Small ?",
+      "health_total": "60",
+      "damage": "40 Slash",
+      "damage_type": "Melee",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "1 Stagger Force",
+      "minimum_difficulty": "Easy",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "60",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Pouncer_Main_Front.png/200px-Pouncer_Main_Front.png?404e6a",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "20",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Pouncer_Head_Front.png/200px-Pouncer_Head_Front.png?503765",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Limbs (6)",
+          "health": "30",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Pouncer_Limbs_Front.png/200px-Pouncer_Limbs_Front.png?ddfbaa",
+          "durable": "0%",
+          "pct_to_main": "30%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Easy"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Pouncer"
     },
     {
       "id": "predator_hunter",
@@ -3717,6 +5035,32 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Predator_Stalker"
     },
     {
+      "id": "predator_strain",
+      "name": "Predator Strain",
+      "name_zh": "",
+      "faction": "terminids",
+      "faction_label": "Terminid Horde",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Predator_Strain"
+    },
+    {
       "id": "pyro_trooper",
       "name": "Pyro Trooper",
       "name_zh": "",
@@ -3798,6 +5142,97 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Pyro_Trooper"
+    },
+    {
+      "id": "radical",
+      "name": "Radical",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Cyborg Legion Automatons",
+      "image": "https://helldivers.wiki.gg/images/Radical_Enemy_Icon.png",
+      "description": "Cybernetically enhanced human soldiers equipped with a heavy shotgun and \"techno-martial arts.\"",
+      "category": "Medium ?",
+      "health_total": "750",
+      "damage": "100 (10 x 10 pellets) Plasma Scattergun 60 Augmented Punch 50 Techno-Martial Arts",
+      "damage_type": "Ballistic Melee",
+      "fire_damage_multiplier": "0.5x Fire",
+      "stagger_threshold": "20 Stagger Force",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "750",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Main_Health_Front.png/200px-Radical_Main_Health_Front.png?ca298b",
+          "durable": "20%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "150",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Head_Front.png/200px-Radical_Head_Front.png?3d1633",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso Circuits",
+          "health": "1,200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Torso_Circuits_Front.png/200px-Radical_Torso_Circuits_Front.png?6b7499",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Pauldron",
+          "health": "200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Pauldron_Front.png/200px-Radical_Pauldron_Front.png?f43795",
+          "durable": "0%",
+          "pct_to_main": "30%"
+        },
+        {
+          "name": "Upper Arms (2)",
+          "health": "300",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Upper_Arms_Front.png/200px-Radical_Upper_Arms_Front.png?5c2474",
+          "durable": "0%",
+          "pct_to_main": "80%"
+        },
+        {
+          "name": "Forearms (2)",
+          "health": "300",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Forearms_Front.png/200px-Radical_Forearms_Front.png?e22f24",
+          "durable": "0%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Pelvis and Left Leg",
+          "health": "1,400",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Pelvis_and_Left_Leg.png/200px-Radical_Pelvis_and_Left_Leg.png?4d01f4",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Right Leg",
+          "health": "1,400",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Radical_Radical_Right_Leg_Front.png/200px-Radical_Radical_Right_Leg_Front.png?dbb77b",
+          "durable": "0%",
+          "pct_to_main": "75%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Radical"
     },
     {
       "id": "reinforced_scout_strider",
@@ -4271,6 +5706,32 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Spewer"
     },
     {
+      "id": "rupture_strain",
+      "name": "Rupture Strain",
+      "name_zh": "",
+      "faction": "terminids",
+      "faction_label": "Terminid Horde",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Strain"
+    },
+    {
       "id": "rupture_warrior",
       "name": "Rupture Warrior",
       "name_zh": "",
@@ -4462,6 +5923,73 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Scout_Strider"
+    },
+    {
+      "id": "seaf_soldier",
+      "name": "SEAF Soldier",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Super Earth Federation",
+      "image": null,
+      "description": "Lightly-armored Super Earth ground troops, variously armed with assault rifles, SMGs, machine guns, expendable anti-tank launchers, and explosive grenades.",
+      "category": "Small ?",
+      "health_total": "150",
+      "damage": "",
+      "damage_type": "Ballistic Explosion",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "150",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/SEAF_Soldier_Main_Front.png/200px-SEAF_Soldier_Main_Front.png?ee44c3",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "75",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/SEAF_Soldier_Head_Front.png/200px-SEAF_Soldier_Head_Front.png?febe20",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "200",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/SEAF_Soldier_Torso_Front.png/200px-SEAF_Soldier_Torso_Front.png?1def1a",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (2)",
+          "health": "200",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/SEAF_Soldier_Arms_Front.png/200px-SEAF_Soldier_Arms_Front.png?e323f1",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "300",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/SEAF_Soldier_Legs_Front.png/200px-SEAF_Soldier_Legs_Front.png?fcfd96",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/SEAF_Soldier"
     },
     {
       "id": "shredder_tank",
@@ -4855,6 +6383,32 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Scavenger"
     },
     {
+      "id": "spore_burst_strain",
+      "name": "Spore Burst Strain",
+      "name_zh": "",
+      "faction": "terminids",
+      "faction_label": "Terminid Horde",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Strain"
+    },
+    {
       "id": "spore_burst_warrior",
       "name": "Spore Burst Warrior",
       "name_zh": "",
@@ -5120,6 +6674,49 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Stalker"
     },
     {
+      "id": "stingray",
+      "name": "Stingray",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": "https://helldivers.wiki.gg/images/Stingray_Enemy_Icon.png",
+      "description": "Flying Illuminate unit that deploys strafing runs against Helldivers, dealing massive damage over a large area.",
+      "category": "Large ?",
+      "health_total": "800",
+      "damage": "50 Plasma Destructor Impact 125 Plasma Destructor Blast 100 Crash and Burn 300 Death Explosion",
+      "damage_type": "Ballistic Explosion",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "800",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Stringray_Fuselage_Front.png/200px-Stringray_Fuselage_Front.png?ffe973",
+          "durable": "70%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Gun Ports",
+          "health": "Main",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Stringray_Gunports_Front.png/200px-Stringray_Gunports_Front.png?f72c41",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Stingray"
+    },
+    {
       "id": "trooper",
       "name": "Trooper",
       "name_zh": "",
@@ -5185,6 +6782,203 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Trooper"
+    },
+    {
+      "id": "veracitor",
+      "name": "Veracitor",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Appropriators",
+      "image": "https://helldivers.wiki.gg/images/Veracitor_Enemy_Icon.png",
+      "description": "A piloted Illuminate war machine, with arm-like appendages.",
+      "category": "",
+      "health_total": "3,000",
+      "damage": "75 Clawed Swipe 300 Sundering Slam 70 Shouldered Ram",
+      "damage_type": "Melee",
+      "fire_damage_multiplier": "1x Fire",
+      "stagger_threshold": "40 Stagger Force",
+      "minimum_difficulty": "Challenging",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "3,000",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Main.png/200px-Veracitor_Main.png?e6c036",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "300",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Head_Front.png/200px-Veracitor_Head_Front.png?1a3b1c",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Chassis",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Chassis_Front.png/200px-Veracitor_Chassis_Front.png?615a9d",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Carapace (2)",
+          "health": "400",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Carapace_Front.png/200px-Veracitor_Carapace_Front.png?cc27e3",
+          "durable": "50%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Internals (2)",
+          "health": "600",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Internals.png/200px-Veracitor_Internals.png?11f74d",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Shield",
+          "health": "1,300",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Shield_Front.png/200px-Veracitor_Shield_Front.png?c0f0dd",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Pilot",
+          "health": "700",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Pilot_Front.png/200px-Veracitor_Pilot_Front.png?2d10d7",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Cockpit",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Cockpit_Front.png/200px-Veracitor_Cockpit_Front.png?e21649",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Cockpit Weakspot",
+          "health": "800",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Cockpit_Weakspot.png/200px-Veracitor_Cockpit_Weakspot.png?d7345d",
+          "durable": "50%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Shoulders (2)",
+          "health": "800",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Shoulders_Front.png/200px-Veracitor_Shoulders_Front.png?437ea8",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Upper Arms (2)",
+          "health": "800",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Upper_Arms_Front.png/200px-Veracitor_Upper_Arms_Front.png?ef45be",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Lower Arms (2)",
+          "health": "800",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Lower_Arms_Front.png/200px-Veracitor_Lower_Arms_Front.png?6bd2f5",
+          "durable": "50%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Arm Weakspots (2)",
+          "health": "800",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Arm_Weakspots.png/200px-Veracitor_Arm_Weakspots.png?66fcd7",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Hips (2)",
+          "health": "1,600",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Hips_Front.png/200px-Veracitor_Hips_Front.png?7df6b6",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Rear Hip",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Hips_Side.png/200px-Veracitor_Hips_Side.png?2c2490",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Upper Legs (2)",
+          "health": "1,600",
+          "armor": "Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Upper_Legs_Front.png/200px-Veracitor_Upper_Legs_Front.png?8e9feb",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Lower Legs (2)",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Lower_Legs_Front.png/200px-Veracitor_Lower_Legs_Front.png?a7a3b9",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        },
+        {
+          "name": "Rear Leg",
+          "health": "1,600",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Veracitor_Rear_Leg_Front.png/200px-Veracitor_Rear_Leg_Front.png?bf7fad",
+          "durable": "50%",
+          "pct_to_main": "75%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Challenging"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Veracitor"
+    },
+    {
+      "id": "vote_snatchers",
+      "name": "Vote Snatchers",
+      "name_zh": "",
+      "faction": "illuminate",
+      "faction_label": "The Illuminate",
+      "image": null,
+      "description": "",
+      "category": "",
+      "health_total": "",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "",
+      "stagger_threshold": "",
+      "minimum_difficulty": "",
+      "body_parts": [],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": ""
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Vote_Snatchers"
     },
     {
       "id": "voteless",
@@ -5493,6 +7287,73 @@
       },
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Watcher"
+    },
+    {
+      "id": "wretch",
+      "name": "Wretch",
+      "name_zh": "",
+      "faction": "unknown",
+      "faction_label": "Vote Snatchers",
+      "image": "https://helldivers.wiki.gg/images/Wretch_Enemy_Icon.png",
+      "description": "Former Super Earth citizens twisted beyond recognition into ravenous predators as violent as they are nimble",
+      "category": "Medium ?",
+      "health_total": "450",
+      "damage": "",
+      "damage_type": "",
+      "fire_damage_multiplier": "1.5x Fire",
+      "stagger_threshold": "20 Stagger Force",
+      "minimum_difficulty": "Trivial",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "450",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Head",
+          "health": "100",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Arms (4)",
+          "health": "50",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Claws (2)",
+          "health": "200",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Legs (2)",
+          "health": "450",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Anatomy_Placeholder.png/200px-Anatomy_Placeholder.png?ad617f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Trivial"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Wretch"
     }
   ]
 }
