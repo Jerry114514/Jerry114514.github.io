@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-08-24T18:58:46Z",
   "source": "https://helldivers.wiki.gg",
-  "total": 94,
+  "total": 95,
   "enemies": [
     {
       "id": "agitator",
@@ -5378,7 +5378,7 @@
       "name": "Radical",
       "name_zh": "",
       "faction": "automatons",
-      "faction_label": "Cyborg Legion Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Radical_Enemy_Icon.png",
       "description": "Cybernetically enhanced human soldiers equipped with a heavy shotgun and \"techno-martial arts.\"",
       "category": "Medium ?",
@@ -5465,7 +5465,7 @@
       "source_page": "https://helldivers.wiki.gg/wiki/Radical",
       "base_unit": "Radical",
       "variants": [],
-      "strain": null
+      "strain": "Cyborg Legion"
     },
     {
       "id": "reinforced_scout_strider",
@@ -7690,6 +7690,146 @@
       "base_unit": "Wretch",
       "variants": [],
       "strain": "Vote Snatchers"
+    },
+    {
+      "id": "vox_engine",
+      "name": "Vox Engine",
+      "name_zh": "",
+      "faction": "automatons",
+      "faction_label": "Automatons",
+      "image": "https://helldivers.wiki.gg/images/Vox_Engine_Enemy_Icon.png",
+      "description": "Massive Cyborg Mech equipped with heavy fusion cannons, a missile array and gatling guns.",
+      "category": "Massive ?",
+      "health_total": "9,000",
+      "damage": "20 Plasma Duster Miniguns 80 Plasma Macro-Culverin Impact 50 Plasma Macro-Culverin Blast 30 Icarus Missile Launcher Impact 250 Icarus Missile Launcher Explosion",
+      "damage_type": "Ballistic Explosion",
+      "fire_damage_multiplier": "1.5x Fire",
+      "stagger_threshold": "",
+      "minimum_difficulty": "Suicide Mission",
+      "body_parts": [
+        {
+          "name": "Main",
+          "health": "9,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Main_Health_Front.png/200px-Vox_Engine_Main_Health_Front.png?a22dc1",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Sarcophagus",
+          "health": "7,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Sarcophagus_Front.png/200px-Vox_Engine_Sarcophagus_Front.png?7a6e1c",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso",
+          "health": "9,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Torso_Front.png/200px-Vox_Engine_Torso_Front.png?9c161f",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Cannons (2)",
+          "health": "3,500",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Cannons_Front.png/200px-Vox_Engine_Cannons_Front.png?741d20",
+          "durable": "70%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Missile Launchers (2)",
+          "health": "1,200",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Missile_Launchers_Rear.png/200px-Vox_Engine_Missile_Launchers_Rear.png?41f0ac",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Miniguns (2)",
+          "health": "300",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Gatling_Guns_Front.png/200px-Vox_Engine_Gatling_Guns_Front.png?d23bb3",
+          "durable": "100%",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Speakers (2)",
+          "health": "800",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Speakers_Front.png/200px-Vox_Engine_Speakers_Front.png?d93742",
+          "durable": "0%",
+          "pct_to_main": "0%"
+        },
+        {
+          "name": "Fog Lights (2)",
+          "health": "50",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Fog_Lights.png/200px-Vox_Engine_Fog_Lights.png?761203",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Torso Flaps (2)",
+          "health": "500",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Torso_Flaps_Front.png/200px-Vox_Engine_Torso_Flaps_Front.png?98de10",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Vents (6)",
+          "health": "300",
+          "armor": "Very Light",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Vents_Rear.png/200px-Vox_Engine_Vents_Rear.png?6b144a",
+          "durable": "60%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Hatches (2)",
+          "health": "-",
+          "armor": "Unarmored",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Hatches.png/200px-Vox_Engine_Hatches.png?47ee54",
+          "durable": "-",
+          "pct_to_main": "-"
+        },
+        {
+          "name": "Undercarriage",
+          "health": "9,000",
+          "armor": "Tank I",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Undercarriage_Front.png/200px-Vox_Engine_Undercarriage_Front.png?f45446",
+          "durable": "0%",
+          "pct_to_main": "100%"
+        },
+        {
+          "name": "Trackpod Latches (4)",
+          "health": "2,000",
+          "armor": "Medium",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Trackpod_Latches_Front.png/200px-Vox_Engine_Trackpod_Latches_Front.png?2d2361",
+          "durable": "0%",
+          "pct_to_main": "50%"
+        },
+        {
+          "name": "Tracks (4)",
+          "health": "3,000",
+          "armor": "Heavy",
+          "image": "https://helldivers.wiki.gg/images/thumb/Vox_Engine_Tracks_Front.png/200px-Vox_Engine_Tracks_Front.png?161179",
+          "durable": "0%",
+          "pct_to_main": "60%"
+        }
+      ],
+      "weak_points": [],
+      "attacks": [],
+      "behavior": "",
+      "spawn": {
+        "locations": [],
+        "difficulty": "Suicide Mission"
+      },
+      "drops": [],
+      "source_page": "https://helldivers.wiki.gg/wiki/Vox_Engine",
+      "strain": "Cyborg Legion"
     }
   ]
 }

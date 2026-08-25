@@ -4,7 +4,7 @@
       "id": "terminids",
       "name": "Terminids",
       "name_zh": "终结族",
-      "color": "#ffc400",
+      "color": "#f59e0b",
       "strains": [
         {
           "name": "Predator Strain",
@@ -62,7 +62,7 @@
       "id": "automatons",
       "name": "Automatons",
       "name_zh": "机器人",
-      "color": "#ff0000",
+      "color": "#ef4444",
       "strains": [
         {
           "name": "Jet Brigade",
@@ -90,7 +90,9 @@
           "name": "Cyborg Legion",
           "name_zh": "生化人",
           "enemies": [
-            "Agitator"
+            "Agitator",
+            "Radical",
+            "Vox Engine"
           ]
         }
       ],
@@ -178,7 +180,8 @@
       "civilian",
       "helldiver",
       "seaf_soldier"
-    ]
+    ],
+    "color": "#3b82f6"
   },
   "updated_at": "2026-08-25"
 }
