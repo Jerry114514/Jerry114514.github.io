@@ -64,6 +64,7 @@
   </header>
 
   <div class="filter-bar" id="filter-bar"></div>
+  <div class="filter-bar" id="strain-filter" style="margin-top:8px"></div>
   <div class="enemy-grid" id="enemy-grid"><div class="loading">正在加载敌人数据…</div></div>
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
@@ -72,6 +73,7 @@
     "use strict";
     var enemies = [];
     var curFaction = "all";
+    var curStrain = "all";  // 变种筛选
     var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
     var FACTION_COLOR = { terminids: "#FF4444", automatons: "#4488FF", illuminate: "#AA44FF" };
 
@@ -83,6 +85,7 @@
         enemies = d.enemies || [];
         document.getElementById("total-count").textContent = enemies.length;
         renderFilters();
+        renderStrainFilters();
         renderGrid();
       } catch(e) {
         console.error("[Enemies] 加载失败:", e);
@@ -105,41 +108,34 @@
       }).join("");
     }
 
-    function setFaction(f) { curFaction = f; renderFilters(); renderGrid(); }
+    function setFaction(f) { curFaction = f; curStrain = "all"; renderFilters(); renderStrainFilters(); renderGrid(); }
+
+    function renderStrainFilters() {
+      var bar = document.getElementById("strain-filter");
+      if (!bar) return;
+      // 当前阵营下的变种（含基础单位=all）
+      var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
+      var strains = {};
+      list.forEach(function(e) { if (e.strain) strains[e.strain] = true; });
+      var keys = Object.keys(strains).sort();
+      var html = '<button class="' + (curStrain === "all" ? "active" : "") + '" onclick="setStrain(\'all\')">全部</button>';
+      keys.forEach(function(s) {
+        var cn = STRAIN_CN[s] || s;
+        html += '<button class="' + (curStrain === s ? "active" : "") + '" onclick="setStrain(\'' + s + '\')">' + cn + '</button>';
+      });
+      bar.innerHTML = html;
+    }
+
+    function setStrain(s) { curStrain = s; renderStrainFilters(); renderGrid(); }
 
     function renderGrid() {
       var grid = document.getElementById("enemy-grid");
       var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
+      if (curStrain !== "all") list = list.filter(function(e) { return e.strain === curStrain; });
+      // 排除变种分类页（仅作筛选标签，不作为卡片）
+      list = list.filter(function(e) { return !e.is_strain_page; });
       if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
-      // 按阵营->变种分组：基础单位 + 变种分组
-      var html = "";
-      // 1. 基础单位（无 strain 的真实敌人）
-      var baseUnits = list.filter(function(e) { return !e.strain && !e.is_strain_page; });
-      if (baseUnits.length) {
-        html += '<div class="enemy-group"><div class="group-title">基础单位</div><div class="group-grid">' +
-          baseUnits.map(cardHtml).join("") + '</div></div>';
-      }
-      // 2. 变种分组
-      var strains = {};
-      list.forEach(function(e) {
-        if (e.strain && !e.is_strain_page) {
-          if (!strains[e.strain]) strains[e.strain] = [];
-          strains[e.strain].push(e);
-        }
-      });
-      Object.keys(strains).sort().forEach(function(strain) {
-        var members = strains[strain];
-        var strainEn = members[0].strain;
-        var strainCn = STRAIN_CN[strainEn] || strainEn;
-        html += '<div class="enemy-group"><div class="group-title">' + esc(strainCn) + ' (' + esc(strainEn) + ')</div><div class="group-grid">' +
-          members.map(cardHtml).join("") + '</div></div>';
-      });
-      // 3. 变种页本身（is_strain_page）作为独立卡片（带标记）
-      var strainPages = list.filter(function(e) { return e.is_strain_page; });
-      if (strainPages.length) {
-        html += '<div class="enemy-group"><div class="group-title">变种分类</div><div class="group-grid">' +
-          strainPages.map(cardHtml).join("") + '</div></div>';
-      }
+      var html = '<div class="enemy-group"><div class="group-grid">' + list.map(cardHtml).join("") + '</div></div>';
       grid.innerHTML = html;
     }
 
