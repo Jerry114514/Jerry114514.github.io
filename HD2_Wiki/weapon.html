@@ -30,6 +30,9 @@
 
     .title-block .name { font-size: 1.8rem; color: var(--text); }
     .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .detail-icon { display: flex; align-items: center; justify-content: center; height: 100px; margin: 0 auto 12px; }
+    .detail-icon img { max-height: 100px; max-width: 180px; object-fit: contain; }
+    .detail-icon .ph { font-size: 3rem; color: var(--text-mute); }
     .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
     .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
     .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
@@ -145,7 +148,8 @@
       layout.innerHTML =
         '<div class="main-content">' +
           '<div class="card title-block">' +
-            '<div class="name">' + esc(w.name) + '</div>' +
+            '<div class="detail-icon">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
+            '<div class="name">' + esc(w.name) + '</div>' + +
             '<div class="name-en">' + esc(w.name_en) + '</div>' +
             '<div class="unlock">⭐ ' + esc(w.unlock || "") + '</div>' +
             '<div class="desc">' + esc(w.description || "") + '</div>' +

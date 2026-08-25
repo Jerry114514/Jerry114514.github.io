@@ -41,6 +41,7 @@
     .strat-card .color-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; }
     .strat-card .row1 { display: flex; align-items: center; gap: 6px; font-size: 16px; color: var(--text); }
     .strat-card .row1 .icon { font-size: 24px; }
+    .strat-card .strat-ic { width: 26px; height: 26px; object-fit: contain; flex: none; }
     .strat-card .row2 { font-size: 12px; color: var(--text-mute); margin: 2px 0; }
     .strat-card .row3 { display: flex; gap: 8px; flex-wrap: wrap; font-size: 12px; color: var(--text-dim); margin: 4px 0; }
     .strat-card .row4 { display: flex; gap: 12px; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
@@ -163,7 +164,7 @@
         var code = typeof s.code === "string" ? s.code : "";
         return '<a class="strat-card" href="stratagem.html?id=' + encodeURIComponent(s.id) + '">' +
           '<div class="color-bar" style="background:' + colorOf(catLabel) + '"></div>' +
-          '<div class="row1"><span class="icon">' + iconOf(catLabel) + '</span>' + esc(s.name) + '</div>' +
+          '<div class="row1">' + (s.icon || s.image ? '<img class="strat-ic" src="' + esc(s.icon || s.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=icon>' + iconOf(catLabel) + '</span>\'">' : '<span class="icon">' + iconOf(catLabel) + '</span>') + esc(s.name) + '</div>' +
           '<div class="row2">' + esc(s.name_en || s.id) + '</div>' +
           '<div class="row3"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
           (code ? '<span>呼叫：' + renderCode(code) + '</span>' : '') + '</div>' +

@@ -149,8 +149,8 @@
       var tag = e.is_strain_page ? '<span class="enemy-category">变种分类</span>' : (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '');
       return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
         '<div class="color-bar" style="background:' + color + '"></div>' +
-        '<div class="enemy-card-image">' + (e.image ?
-          '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
+        '<div class="enemy-card-image">' + (e.image_thumb || e.image ?
+          '<img src="' + esc(e.image_thumb || e.image) + '" alt="' + esc(e.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
           '<div class="placeholder">🐛</div>') + '</div>' +
         '<div class="enemy-card-body">' +
           '<span class="enemy-faction-tag" style="background:' + color + '">' + esc(fcn) + '</span>' +

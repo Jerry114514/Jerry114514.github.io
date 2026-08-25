@@ -44,6 +44,9 @@
     .weapon-card .name { font-size: 1rem; color: var(--text); margin-bottom: 2px; }
     .weapon-card .name-en { font-size: 0.75rem; color: var(--text-mute); margin-bottom: 6px; }
     .weapon-card .subcat { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; }
+    .weapon-icon { height: 76px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+    .weapon-icon img { max-width: 68px; max-height: 68px; object-fit: contain; }
+    .weapon-icon .ph { font-size: 2.2rem; color: var(--text-mute); }
     .weapon-card .stats { display: flex; gap: 12px; font-size: 0.78rem; color: var(--text-dim); }
     .weapon-card .stats span { display: flex; align-items: center; gap: 3px; }
     .pen-light { color: #22c55e; } .pen-medium { color: #f59e0b; } .pen-heavy { color: #ef4444; }
@@ -154,6 +157,7 @@
         var s = w.stats_short || {};
         return '<a class="weapon-card" href="weapon.html?id=' + encodeURIComponent(w.id) + '">' +
           '<div class="cat-bar" style="background:' + (colors[w.category] || "#64748b") + '"></div>' +
+          '<div class="weapon-icon">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
           '<div class="name">' + esc(w.name) + '</div>' +
           '<div class="name-en">' + esc(w.name_en) + '</div>' +
           '<div class="subcat">' + esc(w.subcategory_name) + '</div>' +

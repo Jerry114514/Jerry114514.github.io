@@ -52,6 +52,9 @@
     .part-img { width: 60px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .part-img img { max-width: 60px; max-height: 40px; object-fit: contain; }
     .part-img .ph { font-size: 1.2rem; color: var(--text-mute); }
+    .part-count { font-size: 0.7rem; color: var(--text-mute); }
+    .fatal-tag { color: #ef4444; }
+    .wp-tag { color: var(--yellow); }
     .enemy-variants { display: flex; flex-wrap: wrap; gap: 6px; }
     .enemy-variant { font-size: 0.78rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
@@ -103,13 +106,20 @@
       // 部位表格
       var parts = e.body_parts || [];
       var partsHtml = parts.length ? '<div class="card"><h2>🦴 部位数据</h2><table class="part-table">' +
-        '<tr><th>部位</th><th>图片</th><th>生命值</th><th>装甲</th><th>耐久%</th></tr>' +
+        '<tr><th>部位</th><th>图片</th><th>生命值</th><th>装甲</th><th>位置</th><th>耐久%</th><th>对主体%</th><th>致命</th><th>弱点</th></tr>' +
         parts.map(function(p) {
-          return '<tr><td>' + esc(p.name) + '</td>' +
-            '<td><div class="part-img">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" onerror="this.outerHTML=\'<span class=ph>🔍</span>\'">' : '<span class="ph">🔍</span>') + '</div></td>' +
-            '<td>' + esc(p.health) + '</td>' +
-            '<td>' + esc(p.armor) + '</td>' +
-            '<td>' + esc(p.durable) + '</td></tr>';
+          var fatal = p.fatal === true ? '💀' : (p.fatal === false ? '' : (String(p.fatal || '').toLowerCase() === 'yes' ? '💀' : ''));
+          var wp = p.is_weak_point === true || String(p.is_weak_point || '').toLowerCase() === 'true';
+          return '<tr>' +
+            '<td>' + esc(p.name || p.name_en) + (p.count ? ' <span class="part-count">×' + p.count + '</span>' : '') + '</td>' +
+            '<td><div class="part-img">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🔍</span>\'">' : '<span class="ph">🔍</span>') + '</div></td>' +
+            '<td>' + esc(p.health != null ? p.health : '—') + '</td>' +
+            '<td>' + esc(p.armor_level || p.armor || '—') + '</td>' +
+            '<td>' + esc(p.location || '—') + '</td>' +
+            '<td>' + esc(p.durable || '—') + '</td>' +
+            '<td>' + esc(p.percent_to_main || p.pct_to_main || '—') + '</td>' +
+            '<td>' + (fatal ? '<span class="fatal-tag">💀</span>' : '') + '</td>' +
+            '<td>' + (wp ? '<span class="wp-tag">⭐</span>' : '') + '</td></tr>';
         }).join("") + '</table></div>' : '';
 
       // 变种导航
@@ -146,7 +156,7 @@
           '</div>' +
           variantNav +
           '<div class="card"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
-            '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
+            '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
             '<div class="placeholder">🐛</div>') + '</div></div>' +
           '<div class="card"><h2>📊 基础信息</h2><table class="info-table">' +
             row("阵营", fcn) + row("分类", e.category) +
