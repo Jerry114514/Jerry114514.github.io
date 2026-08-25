@@ -43,6 +43,11 @@
     .enemy-variants { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
     .enemy-variant { font-size: 0.7rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
+    .enemy-group { grid-column: 1 / -1; margin-bottom: 8px; }
+    .group-title { font-size: 0.95rem; color: var(--yellow); font-weight: 600; margin: 14px 0 8px; padding-left: 4px; border-left: 3px solid var(--yellow); padding-left: 10px; }
+    .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 1023px) { .group-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) { .group-grid { grid-template-columns: 1fr; } }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
@@ -106,33 +111,58 @@
       var grid = document.getElementById("enemy-grid");
       var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
       if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
-      // 只显示基础单位（变种挂载到基础单位卡片内）
-      var baseList = list.filter(function(e) { return !e.base_unit || e.base_unit === e.name; });
-      if (!baseList.length) baseList = list;
-      grid.innerHTML = baseList.map(function(e) {
-        var color = FACTION_COLOR[e.faction] || "#64748b";
-        var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
-        var variants = e.variants || [];
-        var variantsHtml = variants.length ? '<div class="enemy-variants">' +
-          variants.map(function(v) {
-            var venemy = enemies.find(function(x) { return x.name === v; });
-            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(venemy ? venemy.id : v.toLowerCase().replace(/ /g,"_")) + '">' + esc(v) + '</a>';
-          }).join("") + '</div>' : '';
-        return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
-          '<div class="color-bar" style="background:' + color + '"></div>' +
-          '<div class="enemy-card-image">' + (e.image ?
-            '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
-            '<div class="placeholder">🐛</div>') + '</div>' +
-          '<div class="enemy-card-body">' +
-            '<span class="enemy-faction-tag" style="background:' + color + '">' + esc(fcn) + '</span>' +
-            '<h3 class="enemy-name">' + esc(e.name_zh || e.name) + '</h3>' +
-            '<div class="enemy-name-en">' + esc(e.name) + '</div>' +
-            (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '') +
-            variantsHtml +
-          '</div></a>';
-      }).join("");
+      // 按阵营->变种分组：基础单位 + 变种分组
+      var html = "";
+      // 1. 基础单位（无 strain 的真实敌人）
+      var baseUnits = list.filter(function(e) { return !e.strain && !e.is_strain_page; });
+      if (baseUnits.length) {
+        html += '<div class="enemy-group"><div class="group-title">基础单位</div><div class="group-grid">' +
+          baseUnits.map(cardHtml).join("") + '</div></div>';
+      }
+      // 2. 变种分组
+      var strains = {};
+      list.forEach(function(e) {
+        if (e.strain && !e.is_strain_page) {
+          if (!strains[e.strain]) strains[e.strain] = [];
+          strains[e.strain].push(e);
+        }
+      });
+      Object.keys(strains).sort().forEach(function(strain) {
+        var members = strains[strain];
+        var strainEn = members[0].strain;
+        var strainCn = STRAIN_CN[strainEn] || strainEn;
+        html += '<div class="enemy-group"><div class="group-title">' + esc(strainCn) + ' (' + esc(strainEn) + ')</div><div class="group-grid">' +
+          members.map(cardHtml).join("") + '</div></div>';
+      });
+      // 3. 变种页本身（is_strain_page）作为独立卡片（带标记）
+      var strainPages = list.filter(function(e) { return e.is_strain_page; });
+      if (strainPages.length) {
+        html += '<div class="enemy-group"><div class="group-title">变种分类</div><div class="group-grid">' +
+          strainPages.map(cardHtml).join("") + '</div></div>';
+      }
+      grid.innerHTML = html;
     }
 
+    var STRAIN_CN = { "Predator Strain": "掠食变种", "Spore Burst Strain": "孢裂变种", "Rupture Strain": "爆裂变种",
+      "Jet Brigade": "喷气旅", "Incineration Corps": "炽灼部队", "Cyborg Legion": "生化人",
+      "Appropriators": "占领者", "Vote Snatchers": "窃票者", "Mindless Masses": "无脑群氓", "Invasion Fleet": "入侵舰队" };
+
+    function cardHtml(e) {
+      var color = FACTION_COLOR[e.faction] || "#64748b";
+      var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
+      var tag = e.is_strain_page ? '<span class="enemy-category">变种分类</span>' : (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '');
+      return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
+        '<div class="color-bar" style="background:' + color + '"></div>' +
+        '<div class="enemy-card-image">' + (e.image ?
+          '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
+          '<div class="placeholder">🐛</div>') + '</div>' +
+        '<div class="enemy-card-body">' +
+          '<span class="enemy-faction-tag" style="background:' + color + '">' + esc(fcn) + '</span>' +
+          '<h3 class="enemy-name">' + esc(e.name_zh || e.name) + '</h3>' +
+          '<div class="enemy-name-en">' + esc(e.name) + '</div>' +
+          tag +
+        '</div></a>';
+    }
     function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
 
     document.addEventListener("DOMContentLoaded", loadEnemies);

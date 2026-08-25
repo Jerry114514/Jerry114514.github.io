@@ -1,14 +1,14 @@
 {
   "updated_at": "2026-08-24T18:58:46Z",
   "source": "https://helldivers.wiki.gg",
-  "total": 97,
+  "total": 94,
   "enemies": [
     {
       "id": "agitator",
       "name": "Agitator",
       "name_zh": "",
       "faction": "automatons",
-      "faction_label": "Cyborg Legion Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Agitator_Enemy_Icon.png",
       "description": "Cyborg field commanders, able to take direct command of their Automaton underlings.",
       "category": "Medium ?",
@@ -110,7 +110,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Agitator",
       "base_unit": "Agitator",
-      "variants": []
+      "variants": [],
+      "strain": "Cyborg Legion"
     },
     {
       "id": "alpha_commander",
@@ -171,7 +172,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Alpha_Commander",
       "base_unit": "Brood Commander",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "alpha_warrior",
@@ -232,7 +234,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Alpha_Warrior",
       "base_unit": "Warrior",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "annihilator_tank",
@@ -325,14 +328,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Annihilator_Tank",
       "base_unit": "Tank",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "appropriators",
       "name": "Appropriators",
       "name_zh": "占领者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": null,
       "description": "",
       "category": "",
@@ -353,7 +357,9 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Appropriators",
       "base_unit": "Appropriators",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "assault_raider",
@@ -430,7 +436,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Assault_Raider",
       "base_unit": "Assault Raider",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "barrager_tank",
@@ -515,7 +522,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Barrager_Tank",
       "base_unit": "Tank",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "berserker",
@@ -608,7 +616,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Berserker",
       "base_unit": "Berserker",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "bile_spewer",
@@ -693,7 +702,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Bile_Spewer",
       "base_unit": "Bile Spewer",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "bile_spitter",
@@ -746,7 +756,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Bile_Spitter",
       "base_unit": "Bile Spitter",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "bile_titan",
@@ -873,7 +884,8 @@
       "base_unit": "Bile Titan",
       "variants": [
         "Spore Burst Bile Titan"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "bile_warrior",
@@ -934,7 +946,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Bile_Warrior",
       "base_unit": "Warrior",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "brawler",
@@ -1011,7 +1024,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Brawler",
       "base_unit": "Brawler",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "brood_commander",
@@ -1074,7 +1088,8 @@
       "base_unit": "Brood Commander",
       "variants": [
         "Alpha Commander"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "charger",
@@ -1195,7 +1210,8 @@
         "Charger Behemoth",
         "Rupture Charger",
         "Spore Charger"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "charger_behemoth",
@@ -1312,14 +1328,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Charger_Behemoth",
       "base_unit": "Charger",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "civilian",
       "name": "Civilian",
       "name_zh": "平民",
-      "faction": "unknown",
-      "faction_label": "Super Earth Federation",
+      "faction": "super_earth",
+      "faction_label": "Super Earth",
       "image": "https://helldivers.wiki.gg/images/Civilian_Enemy_Icon.png",
       "description": "Unarmed Super Earth citizens, mostly found running away from danger.",
       "category": "Small ?",
@@ -1381,7 +1398,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Civilian",
       "base_unit": "Civilian",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "commissar",
@@ -1452,14 +1470,15 @@
       "base_unit": "Commissar",
       "variants": [
         "Jet Brigade Commissar"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "conflagration_devastator",
       "name": "Conflagration Devastator",
       "name_zh": "烈焰蹂躏者",
       "faction": "automatons",
-      "faction_label": "Incineration Corps Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Conflagration_Devastator_Enemy_Icon.png",
       "description": "Devastator variant armed with an incendiary fusion shotgun and a large shield, capable of suppressing Helldivers and blocking incoming fire.",
       "category": "Medium ?",
@@ -1553,14 +1572,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Conflagration_Devastator",
       "base_unit": "Devastator",
-      "variants": []
+      "variants": [],
+      "strain": "Incineration Corps"
     },
     {
       "id": "crescent_overseer",
       "name": "Crescent Overseer",
       "name_zh": "新月监察者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Crescent_Overseer_Enemy_Icon.png",
       "description": "Elite unit equipped with a large plasma cannon, capable of direct & mortar fire, usually accompanies hordes of Voteless.",
       "category": "Medium ?",
@@ -1654,14 +1674,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Crescent_Overseer",
       "base_unit": "Overseer",
-      "variants": []
+      "variants": [],
+      "strain": "Invasion Fleet"
     },
     {
       "id": "crusher",
       "name": "Crusher",
       "name_zh": "粉碎者",
-      "faction": "unknown",
-      "faction_label": "Vote Snatchers",
+      "faction": "illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Crusher_Enemy_Icon.png",
       "description": "Ungainly flesh amalgamations that wield massive metallic clubs and are capable of regenerating tissue damage",
       "category": "Large ?",
@@ -1739,14 +1760,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Crusher",
       "base_unit": "Crusher",
-      "variants": []
+      "variants": [],
+      "strain": "Vote Snatchers"
     },
     {
       "id": "cyborg_legion",
       "name": "Cyborg Legion",
       "name_zh": "生化人",
       "faction": "automatons",
-      "faction_label": "Automaton Legion",
+      "faction_label": "Automatons",
       "image": null,
       "description": "",
       "category": "",
@@ -1767,7 +1789,9 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Cyborg_Legion",
       "base_unit": "Cyborg Legion",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "devastator",
@@ -1866,7 +1890,8 @@
         "Incendiary MG Devastator",
         "Jet Brigade Devastator",
         "Rocket Devastator"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "dragonroach",
@@ -1983,7 +2008,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Dragonroach",
       "base_unit": "Dragonroach",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "dropship",
@@ -2036,14 +2062,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Dropship",
       "base_unit": "Dropship",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "elevated_overseer",
       "name": "Elevated Overseer",
       "name_zh": "悬浮监察者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Elevated_Overseer_Enemy_Icon.png",
       "description": "Elite unit equipped with automatic plasma rifles and jet-packs, usually accompanies hordes of Voteless.",
       "category": "Medium ?",
@@ -2145,7 +2172,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Elevated_Overseer",
       "base_unit": "Overseer",
-      "variants": []
+      "variants": [],
+      "strain": "Invasion Fleet"
     },
     {
       "id": "factory_strider",
@@ -2326,14 +2354,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Factory_Strider",
       "base_unit": "Factory Strider",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "fleshmob",
       "name": "Fleshmob",
       "name_zh": "肉瘤体",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Fleshmob_Enemy_Icon.png",
       "description": "An amalgamation of Voteless corpses, this large Illuminate unit specializes in close quarters combat and charges at Helldivers to attack.",
       "category": "Large ?",
@@ -2395,14 +2424,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Fleshmob",
       "base_unit": "Fleshmob",
-      "variants": []
+      "variants": [],
+      "strain": "Invasion Fleet"
     },
     {
       "id": "gatekeeper",
       "name": "Gatekeeper",
       "name_zh": "",
-      "faction": "unknown",
-      "faction_label": "Appropriators",
+      "faction": "illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Gatekeeper_Enemy_Icon.png",
       "description": "A piloted Illuminate war machine, with plasma guns and increased armor.",
       "category": "",
@@ -2560,7 +2590,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Gatekeeper",
       "base_unit": "Gatekeeper",
-      "variants": []
+      "variants": [],
+      "strain": "Appropriators"
     },
     {
       "id": "gunship",
@@ -2621,14 +2652,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Gunship",
       "base_unit": "Gunship",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "harvester",
       "name": "Harvester",
       "name_zh": "猎杀器",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Harvester_Enemy_Icon.png",
       "description": "Massive autonomous tripod with an energy shield and a large laser weapon. Can also use arc weaponry in close-quarters.",
       "category": "Large ?",
@@ -2778,7 +2810,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Harvester",
       "base_unit": "Harvester",
-      "variants": []
+      "variants": [],
+      "strain": "Vote Snatchers"
     },
     {
       "id": "heavy_devastator",
@@ -2887,14 +2920,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Heavy_Devastator",
       "base_unit": "Devastator",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "helldiver",
       "name": "Helldiver",
       "name_zh": "绝地潜兵",
-      "faction": "unknown",
-      "faction_label": "Super Earth Federation",
+      "faction": "super_earth",
+      "faction_label": "Super Earth",
       "image": "https://helldivers.wiki.gg/images/Helldiver_Enemy_Icon.png",
       "description": "Super Earth's elite fighting force, these units can be equipped with a variety of weapons, stratagems, and employ a variety of tactics.",
       "category": "Small ?",
@@ -2956,7 +2990,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Helldiver",
       "base_unit": "Helldiver",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "hive_guard",
@@ -3033,7 +3068,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Hive_Guard",
       "base_unit": "Hive Guard",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "hive_lord",
@@ -3142,7 +3178,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Hive_Lord",
       "base_unit": "Hive Lord",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "hulk_bruiser",
@@ -3213,14 +3250,15 @@
       "base_unit": "Hulk",
       "variants": [
         "Jet Brigade Hulk Bruiser"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "hulk_firebomber",
       "name": "Hulk Firebomber",
       "name_zh": "浩克·火轰炸机",
       "faction": "automatons",
-      "faction_label": "Incineration Corps Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Hulk_Firebomber_Enemy_Icon.png",
       "description": "Hulk variant equipped with a large flamethrower and incendiary grenade launcher.",
       "category": "Large ?",
@@ -3282,7 +3320,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Hulk_Firebomber",
       "base_unit": "Hulk",
-      "variants": []
+      "variants": [],
+      "strain": "Incineration Corps"
     },
     {
       "id": "hulk_obliterator",
@@ -3351,7 +3390,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Hulk_Obliterator",
       "base_unit": "Hulk",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "hulk_scorcher",
@@ -3422,7 +3462,8 @@
       "base_unit": "Hulk",
       "variants": [
         "Jet Brigade Hulk Scorcher"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "hunter",
@@ -3494,7 +3535,8 @@
       "variants": [
         "Predator Hunter",
         "Spore Burst Hunter"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "illuminate_overship",
@@ -3547,7 +3589,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Illuminate_Overship",
       "base_unit": "Illuminate Overship",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "impaler",
@@ -3672,14 +3715,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Impaler",
       "base_unit": "Impaler",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "incendiary_mg_devastator",
       "name": "Incendiary MG Devastator",
       "name_zh": "燃烧机枪蹂躏者",
       "faction": "automatons",
-      "faction_label": "Incineration Corps Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Incendiary_MG_Devastator_Enemy_Icon.png",
       "description": "Heavy Devastator variant with a slower firing incendiary fusion machine gun.",
       "category": "Medium ?",
@@ -3773,14 +3817,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Incendiary_MG_Devastator",
       "base_unit": "Devastator",
-      "variants": []
+      "variants": [],
+      "strain": "Incineration Corps"
     },
     {
       "id": "incendiary_rocket_raider",
       "name": "Incendiary Rocket Raider",
       "name_zh": "燃烧火箭掠夺者",
       "faction": "automatons",
-      "faction_label": "Incineration Corps Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Incendiary_Rocket_Raider_Enemy_Icon.png",
       "description": "Light Automaton unit armed with a specialized rocket launcher.",
       "category": "Small ?",
@@ -3842,14 +3887,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Incendiary_Rocket_Raider",
       "base_unit": "Rocket Raider",
-      "variants": []
+      "variants": [],
+      "strain": "Incineration Corps"
     },
     {
       "id": "incineration_corps",
       "name": "Incineration Corps",
       "name_zh": "炽灼部队",
       "faction": "automatons",
-      "faction_label": "Automaton Legion",
+      "faction_label": "Automatons",
       "image": null,
       "description": "",
       "category": "",
@@ -3870,14 +3916,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Incineration_Corps",
       "base_unit": "Incineration Corps",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "invasion_fleet",
       "name": "Invasion Fleet",
       "name_zh": "入侵舰队",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Invasion_Fleet_Enemy_Icon.png",
       "description": "",
       "category": "",
@@ -3898,14 +3946,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Invasion_Fleet",
       "base_unit": "Invasion Fleet",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "jet_brigade",
       "name": "Jet Brigade",
       "name_zh": "喷气旅",
       "faction": "automatons",
-      "faction_label": "Automaton Legion",
+      "faction_label": "Automatons",
       "image": null,
       "description": "",
       "category": "",
@@ -3926,14 +3976,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade",
       "base_unit": "Jet Brigade",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "jet_brigade_commissar",
       "name": "Jet Brigade Commissar",
       "name_zh": "喷气旅政委",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_Commissar_Enemy_Icon.png",
       "description": "Commissar variant equipped with a jetpack for leaping large distances.",
       "category": "Small ?",
@@ -4003,14 +4055,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Commissar",
       "base_unit": "Commissar",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "jet_brigade_devastator",
       "name": "Jet Brigade Devastator",
       "name_zh": "喷气旅蹂躏者",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_Devastator_Enemy_Icon.png",
       "description": "Devastator variant equipped with a jetpack for leaping large distances.",
       "category": "Medium ?",
@@ -4104,14 +4157,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Devastator",
       "base_unit": "Devastator",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "jet_brigade_hulk_bruiser",
       "name": "Jet Brigade Hulk Bruiser",
       "name_zh": "喷气旅浩克·殴打者",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_Hulk_Bruiser_Enemy_Icon.png",
       "description": "A variant of the Hulk Bruiser equipped with a large jetpack, allowing them to leap great distances.",
       "category": "Large ?",
@@ -4173,14 +4227,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Hulk_Bruiser",
       "base_unit": "Hulk Bruiser",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "jet_brigade_hulk_scorcher",
       "name": "Jet Brigade Hulk Scorcher",
       "name_zh": "喷气旅浩克·灼烧者",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_Hulk_Scorcher_Enemy_Icon.png",
       "description": "A variant of the Hulk Scorcher equipped with a large jetpack, allowing them to leap great distances.",
       "category": "Large ?",
@@ -4242,14 +4297,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Hulk_Scorcher",
       "base_unit": "Hulk Scorcher",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "jet_brigade_mg_raider",
       "name": "Jet Brigade MG Raider",
       "name_zh": "喷气旅机枪掠夺者",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_MG_Raider_Enemy_Icon.png",
       "description": "MG Raider variant equipped with a jetpack for leaping large distances.",
       "category": "Small ?",
@@ -4319,14 +4375,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_MG_Raider",
       "base_unit": "MG Raider",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "jet_brigade_trooper",
       "name": "Jet Brigade Trooper",
       "name_zh": "喷气旅步兵",
       "faction": "automatons",
-      "faction_label": "Jet Brigade Automatons",
+      "faction_label": "Automatons",
       "image": "https://helldivers.wiki.gg/images/Jet_Brigade_Trooper_Enemy_Icon.png",
       "description": "Trooper variant equipped with a jetpack for leaping large distances.",
       "category": "Small ?",
@@ -4396,7 +4453,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Jet_Brigade_Trooper",
       "base_unit": "Trooper",
-      "variants": []
+      "variants": [],
+      "strain": "Jet Brigade"
     },
     {
       "id": "leviathan",
@@ -4521,7 +4579,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Leviathan",
       "base_unit": "Leviathan",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "marauder",
@@ -4590,7 +4649,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Marauder",
       "base_unit": "Marauder",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "mg_raider",
@@ -4677,14 +4737,15 @@
       "base_unit": "MG Raider",
       "variants": [
         "Jet Brigade MG Raider"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "mindless_masses",
       "name": "Mindless Masses",
       "name_zh": "无脑群氓",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": null,
       "description": "",
       "category": "",
@@ -4705,7 +4766,9 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Mindless_Masses",
       "base_unit": "Mindless Masses",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "nursing_spewer",
@@ -4790,14 +4853,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Nursing_Spewer",
       "base_unit": "Spewer",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "obtruder",
       "name": "Obtruder",
       "name_zh": "",
-      "faction": "unknown",
-      "faction_label": "Appropriators",
+      "faction": "illuminate",
+      "faction_label": "Illuminate",
       "image": null,
       "description": "Swarming drones that fire plasma projectiles and travel in groups. A variation of the watcher.",
       "category": "",
@@ -4859,14 +4923,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Obtruder",
       "base_unit": "Obtruder",
-      "variants": []
+      "variants": [],
+      "strain": "Appropriators"
     },
     {
       "id": "overseer",
       "name": "Overseer",
       "name_zh": "监察者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Overseer_Enemy_Icon.png",
       "description": "Elite unit equipped with an energy shield and a deadly lance capable of launching an explosive projectile, usually accompanies hordes of Voteless.",
       "category": "Medium ?",
@@ -4971,7 +5036,8 @@
       "variants": [
         "Crescent Overseer",
         "Elevated Overseer"
-      ]
+      ],
+      "strain": "Vote Snatchers"
     },
     {
       "id": "pouncer",
@@ -5024,14 +5090,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Pouncer",
       "base_unit": "Pouncer",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "predator_hunter",
       "name": "Predator Hunter",
       "name_zh": "掠食追猎虫",
-      "faction": "unknown",
-      "faction_label": "Predator Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Predator_Hunter_Enemy_Icon.png",
       "description": "A mutated variant of the Hunter that is significantly more aggressive, capable of cloaking, and can spew bile.",
       "category": "Small ?",
@@ -5093,14 +5160,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Predator_Hunter",
       "base_unit": "Hunter",
-      "variants": []
+      "variants": [],
+      "strain": "Predator Strain"
     },
     {
       "id": "predator_stalker",
       "name": "Predator Stalker",
       "name_zh": "掠食追踪虫",
-      "faction": "unknown",
-      "faction_label": "Predator Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Predator_Stalker_Enemy_Icon.png",
       "description": "A mutated, more aggressive variant of the Stalker that is unable to cloak but spawns as a regular part of patrols.",
       "category": "Large ?",
@@ -5186,14 +5254,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Predator_Stalker",
       "base_unit": "Stalker",
-      "variants": []
+      "variants": [],
+      "strain": "Predator Strain"
     },
     {
       "id": "predator_strain",
       "name": "Predator Strain",
       "name_zh": "掠食变种",
       "faction": "terminids",
-      "faction_label": "Terminid Horde",
+      "faction_label": "Terminids",
       "image": null,
       "description": "",
       "category": "",
@@ -5214,7 +5283,9 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Predator_Strain",
       "base_unit": "Predator Strain",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "pyro_trooper",
@@ -5299,7 +5370,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Pyro_Trooper",
       "base_unit": "Trooper",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "radical",
@@ -5392,7 +5464,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Radical",
       "base_unit": "Radical",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "reinforced_scout_strider",
@@ -5485,7 +5558,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Reinforced_Scout_Strider",
       "base_unit": "Scout Strider",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "rocket_devastator",
@@ -5594,7 +5668,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Rocket_Devastator",
       "base_unit": "Devastator",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "rocket_raider",
@@ -5665,14 +5740,15 @@
       "base_unit": "Rocket Raider",
       "variants": [
         "Incendiary Rocket Raider"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "rupture_charger",
       "name": "Rupture Charger",
       "name_zh": "爆裂强袭虫",
-      "faction": "unknown",
-      "faction_label": "Rupture Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Rupture_Charger_Enemy_Icon.png",
       "description": "A burrowing variant of the Charger.",
       "category": "Large ?",
@@ -5790,14 +5866,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Charger",
       "base_unit": "Charger",
-      "variants": []
+      "variants": [],
+      "strain": "Rupture Strain"
     },
     {
       "id": "rupture_spewer",
       "name": "Rupture Spewer",
       "name_zh": "爆裂胆汁喷涌虫",
-      "faction": "unknown",
-      "faction_label": "Rupture Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Rupture_Spewer_Enemy_Icon.png",
       "description": "A burrowing variant of the Bile Spewer.",
       "category": "Medium ?",
@@ -5875,14 +5952,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Spewer",
       "base_unit": "Spewer",
-      "variants": []
+      "variants": [],
+      "strain": "Rupture Strain"
     },
     {
       "id": "rupture_strain",
       "name": "Rupture Strain",
       "name_zh": "爆裂变种",
       "faction": "terminids",
-      "faction_label": "Terminid Horde",
+      "faction_label": "Terminids",
       "image": null,
       "description": "",
       "category": "",
@@ -5903,14 +5981,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Strain",
       "base_unit": "Rupture Strain",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "rupture_warrior",
       "name": "Rupture Warrior",
       "name_zh": "爆裂武斗虫",
-      "faction": "unknown",
-      "faction_label": "Rupture Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Rupture_Warrior_Enemy_Icon.png",
       "description": "A burrowing variant of the Warrior.",
       "category": "Medium ?",
@@ -5964,7 +6044,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Rupture_Warrior",
       "base_unit": "Warrior",
-      "variants": []
+      "variants": [],
+      "strain": "Rupture Strain"
     },
     {
       "id": "scavenger",
@@ -6019,7 +6100,8 @@
       "base_unit": "Scavenger",
       "variants": [
         "Spore Burst Scavenger"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "scout_strider",
@@ -6106,14 +6188,15 @@
       "base_unit": "Scout Strider",
       "variants": [
         "Reinforced Scout Strider"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "seaf_soldier",
       "name": "SEAF Soldier",
       "name_zh": "SEAF士兵",
-      "faction": "unknown",
-      "faction_label": "Super Earth Federation",
+      "faction": "super_earth",
+      "faction_label": "Super Earth",
       "image": null,
       "description": "Lightly-armored Super Earth ground troops, variously armed with assault rifles, SMGs, machine guns, expendable anti-tank launchers, and explosive grenades.",
       "category": "Small ?",
@@ -6175,7 +6258,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/SEAF_Soldier",
       "base_unit": "SEAF Soldier",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "shredder_tank",
@@ -6268,7 +6352,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Shredder_Tank",
       "base_unit": "Tank",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "shrieker",
@@ -6329,14 +6414,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Shrieker",
       "base_unit": "Shrieker",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "spore_burst_bile_titan",
       "name": "Spore Burst Bile Titan",
       "name_zh": "孢裂泰坦",
-      "faction": "unknown",
-      "faction_label": "Spore Burst Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Spore_Burst_Bile_Titan_Enemy_Icon.png",
       "description": "A mutated variant of the Bile Titan with a potent bile spew capable of buffing nearby enemies.",
       "category": "Massive ?",
@@ -6454,14 +6540,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Bile_Titan",
       "base_unit": "Bile Titan",
-      "variants": []
+      "variants": [],
+      "strain": "Spore Burst Strain"
     },
     {
       "id": "spore_burst_hunter",
       "name": "Spore Burst Hunter",
       "name_zh": "孢裂追猎虫",
-      "faction": "unknown",
-      "faction_label": "Spore Burst Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Spore_Burst_Hunter_Enemy_Icon.png",
       "description": "A mutated variant of the Hunter that explodes into a deadly spore cloud upon death.",
       "category": "Small ?",
@@ -6523,14 +6610,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Hunter",
       "base_unit": "Hunter",
-      "variants": []
+      "variants": [],
+      "strain": "Spore Burst Strain"
     },
     {
       "id": "spore_burst_scavenger",
       "name": "Spore Burst Scavenger",
       "name_zh": "孢裂食腐虫",
-      "faction": "unknown",
-      "faction_label": "Spore Burst Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Spore_Burst_Scavenger_Enemy_Icon.png",
       "description": "A mutated variant of the Scavenger that explodes into a deadly spore cloud upon death.",
       "category": "Small ?",
@@ -6576,14 +6664,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Scavenger",
       "base_unit": "Scavenger",
-      "variants": []
+      "variants": [],
+      "strain": "Spore Burst Strain"
     },
     {
       "id": "spore_burst_strain",
       "name": "Spore Burst Strain",
       "name_zh": "孢裂变种",
       "faction": "terminids",
-      "faction_label": "Terminid Horde",
+      "faction_label": "Terminids",
       "image": null,
       "description": "",
       "category": "",
@@ -6604,14 +6693,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Strain",
       "base_unit": "Spore Burst Strain",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "spore_burst_warrior",
       "name": "Spore Burst Warrior",
       "name_zh": "孢裂武斗虫",
-      "faction": "unknown",
-      "faction_label": "Spore Burst Strain",
+      "faction": "terminids",
+      "faction_label": "Terminids",
       "image": "https://helldivers.wiki.gg/images/Spore_Burst_Warrior_Enemy_Icon.png",
       "description": "A mutated variant of the Warrior that explodes into a deadly spore cloud upon death.",
       "category": "Medium ?",
@@ -6665,7 +6756,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Burst_Warrior",
       "base_unit": "Warrior",
-      "variants": []
+      "variants": [],
+      "strain": "Spore Burst Strain"
     },
     {
       "id": "spore_charger",
@@ -6790,7 +6882,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Spore_Charger",
       "base_unit": "Charger",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "stalker",
@@ -6877,14 +6970,15 @@
       "base_unit": "Stalker",
       "variants": [
         "Predator Stalker"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "stingray",
       "name": "Stingray",
       "name_zh": "刺魟",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Stingray_Enemy_Icon.png",
       "description": "Flying Illuminate unit that deploys strafing runs against Helldivers, dealing massive damage over a large area.",
       "category": "Large ?",
@@ -6922,7 +7016,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Stingray",
       "base_unit": "Stingray",
-      "variants": []
+      "variants": [],
+      "strain": "Vote Snatchers"
     },
     {
       "id": "trooper",
@@ -6994,14 +7089,15 @@
       "variants": [
         "Jet Brigade Trooper",
         "Pyro Trooper"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "veracitor",
       "name": "Veracitor",
       "name_zh": "",
-      "faction": "unknown",
-      "faction_label": "Appropriators",
+      "faction": "illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Veracitor_Enemy_Icon.png",
       "description": "A piloted Illuminate war machine, with arm-like appendages.",
       "category": "",
@@ -7167,14 +7263,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Veracitor",
       "base_unit": "Veracitor",
-      "variants": []
+      "variants": [],
+      "strain": "Appropriators"
     },
     {
       "id": "vote_snatchers",
       "name": "Vote Snatchers",
       "name_zh": "窃票者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": null,
       "description": "",
       "category": "",
@@ -7195,14 +7292,16 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Vote_Snatchers",
       "base_unit": "Vote Snatchers",
-      "variants": []
+      "variants": [],
+      "strain": null,
+      "is_strain_page": true
     },
     {
       "id": "voteless",
       "name": "Voteless",
       "name_zh": "无票者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Voteless_Enemy_Icon.png",
       "description": "An Agile skirmisher unit that attacks in hordes.",
       "category": "Small ?",
@@ -7264,7 +7363,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Voteless",
       "base_unit": "Voteless",
-      "variants": []
+      "variants": [],
+      "strain": "Mindless Masses"
     },
     {
       "id": "war_strider",
@@ -7373,7 +7473,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/War_Strider",
       "base_unit": "War Strider",
-      "variants": []
+      "variants": [],
+      "strain": null
     },
     {
       "id": "warrior",
@@ -7439,14 +7540,15 @@
         "Bile Warrior",
         "Rupture Warrior",
         "Spore Burst Warrior"
-      ]
+      ],
+      "strain": null
     },
     {
       "id": "watcher",
       "name": "Watcher",
       "name_zh": "守望者",
       "faction": "illuminate",
-      "faction_label": "The Illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Watcher_Enemy_Icon.png",
       "description": "Flying drone equipped with arc weaponry and the ability to call for reinforcements.",
       "category": "Medium ?",
@@ -7516,14 +7618,15 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Watcher",
       "base_unit": "Watcher",
-      "variants": []
+      "variants": [],
+      "strain": "Vote Snatchers"
     },
     {
       "id": "wretch",
       "name": "Wretch",
       "name_zh": "悲怜体",
-      "faction": "unknown",
-      "faction_label": "Vote Snatchers",
+      "faction": "illuminate",
+      "faction_label": "Illuminate",
       "image": "https://helldivers.wiki.gg/images/Wretch_Enemy_Icon.png",
       "description": "Former Super Earth citizens twisted beyond recognition into ravenous predators as violent as they are nimble",
       "category": "Medium ?",
@@ -7585,106 +7688,8 @@
       "drops": [],
       "source_page": "https://helldivers.wiki.gg/wiki/Wretch",
       "base_unit": "Wretch",
-      "variants": []
-    },
-    {
-      "id": "spewer",
-      "name": "Spewer",
-      "name_zh": "喷涌虫",
-      "faction": "terminids",
-      "faction_label": "Terminid Horde",
-      "image": null,
-      "description": "Spewer 家族（虚拟基础单位）",
-      "category": "Variant Group",
-      "health_total": "",
-      "damage": "",
-      "damage_type": "",
-      "fire_damage_multiplier": "",
-      "stagger_threshold": "",
-      "minimum_difficulty": "",
-      "body_parts": [],
-      "weak_points": [],
-      "attacks": [],
-      "behavior": "",
-      "spawn": {
-        "locations": [],
-        "difficulty": ""
-      },
-      "drops": [],
-      "source_page": "",
-      "base_unit": "Spewer",
-      "variants": [
-        "Nursing Spewer",
-        "Rupture Spewer"
-      ],
-      "is_virtual_base": true
-    },
-    {
-      "id": "hulk",
-      "name": "Hulk",
-      "name_zh": "浩克",
-      "faction": "automatons",
-      "faction_label": "Automaton Legion",
-      "image": null,
-      "description": "Hulk 家族（虚拟基础单位）",
-      "category": "Variant Group",
-      "health_total": "",
-      "damage": "",
-      "damage_type": "",
-      "fire_damage_multiplier": "",
-      "stagger_threshold": "",
-      "minimum_difficulty": "",
-      "body_parts": [],
-      "weak_points": [],
-      "attacks": [],
-      "behavior": "",
-      "spawn": {
-        "locations": [],
-        "difficulty": ""
-      },
-      "drops": [],
-      "source_page": "",
-      "base_unit": "Hulk",
-      "variants": [
-        "Hulk Bruiser",
-        "Hulk Firebomber",
-        "Hulk Obliterator",
-        "Hulk Scorcher"
-      ],
-      "is_virtual_base": true
-    },
-    {
-      "id": "tank",
-      "name": "Tank",
-      "name_zh": "坦克",
-      "faction": "automatons",
-      "faction_label": "Automaton Legion",
-      "image": null,
-      "description": "Tank 家族（虚拟基础单位）",
-      "category": "Variant Group",
-      "health_total": "",
-      "damage": "",
-      "damage_type": "",
-      "fire_damage_multiplier": "",
-      "stagger_threshold": "",
-      "minimum_difficulty": "",
-      "body_parts": [],
-      "weak_points": [],
-      "attacks": [],
-      "behavior": "",
-      "spawn": {
-        "locations": [],
-        "difficulty": ""
-      },
-      "drops": [],
-      "source_page": "",
-      "base_unit": "Tank",
-      "variants": [
-        "Annihilator Tank",
-        "Barrager Tank",
-        "Shredder Tank"
-      ],
-      "is_virtual_base": true
+      "variants": [],
+      "strain": "Vote Snatchers"
     }
   ]
 }

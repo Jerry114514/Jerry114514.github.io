@@ -8,15 +8,30 @@
       "strains": [
         {
           "name": "Predator Strain",
-          "name_zh": "掠食变种"
+          "name_zh": "掠食变种",
+          "enemies": [
+            "Predator Hunter",
+            "Predator Stalker"
+          ]
         },
         {
           "name": "Spore Burst Strain",
-          "name_zh": "孢裂变种"
+          "name_zh": "孢裂变种",
+          "enemies": [
+            "Spore Burst Bile Titan",
+            "Spore Burst Hunter",
+            "Spore Burst Scavenger",
+            "Spore Burst Warrior"
+          ]
         },
         {
           "name": "Rupture Strain",
-          "name_zh": "爆裂变种"
+          "name_zh": "爆裂变种",
+          "enemies": [
+            "Rupture Charger",
+            "Rupture Spewer",
+            "Rupture Warrior"
+          ]
         }
       ],
       "enemies": [
@@ -36,11 +51,8 @@
         "impaler",
         "nursing_spewer",
         "pouncer",
-        "predator_strain",
-        "rupture_strain",
         "scavenger",
         "shrieker",
-        "spore_burst_strain",
         "spore_charger",
         "stalker",
         "warrior"
@@ -54,46 +66,49 @@
       "strains": [
         {
           "name": "Jet Brigade",
-          "name_zh": "喷气旅"
+          "name_zh": "喷气旅",
+          "enemies": [
+            "Jet Brigade Commissar",
+            "Jet Brigade Devastator",
+            "Jet Brigade Hulk Bruiser",
+            "Jet Brigade Hulk Scorcher",
+            "Jet Brigade MG Raider",
+            "Jet Brigade Trooper"
+          ]
         },
         {
           "name": "Incineration Corps",
-          "name_zh": "炽灼部队"
+          "name_zh": "炽灼部队",
+          "enemies": [
+            "Conflagration Devastator",
+            "Hulk Firebomber",
+            "Incendiary MG Devastator",
+            "Incendiary Rocket Raider"
+          ]
         },
         {
           "name": "Cyborg Legion",
-          "name_zh": "生化人"
+          "name_zh": "生化人",
+          "enemies": [
+            "Agitator"
+          ]
         }
       ],
       "enemies": [
-        "agitator",
         "annihilator_tank",
         "assault_raider",
         "barrager_tank",
         "berserker",
         "brawler",
         "commissar",
-        "conflagration_devastator",
-        "cyborg_legion",
         "devastator",
         "dropship",
         "factory_strider",
         "gunship",
         "heavy_devastator",
         "hulk_bruiser",
-        "hulk_firebomber",
         "hulk_obliterator",
         "hulk_scorcher",
-        "incendiary_mg_devastator",
-        "incendiary_rocket_raider",
-        "incineration_corps",
-        "jet_brigade",
-        "jet_brigade_commissar",
-        "jet_brigade_devastator",
-        "jet_brigade_hulk_bruiser",
-        "jet_brigade_hulk_scorcher",
-        "jet_brigade_mg_raider",
-        "jet_brigade_trooper",
         "marauder",
         "mg_raider",
         "pyro_trooper",
@@ -115,38 +130,55 @@
       "strains": [
         {
           "name": "Appropriators",
-          "name_zh": "占领者"
+          "name_zh": "占领者",
+          "enemies": [
+            "Gatekeeper",
+            "Obtruder",
+            "Veracitor"
+          ]
         },
         {
-          "name": "VoteSnatchers",
-          "name_zh": "窃票者"
+          "name": "Vote Snatchers",
+          "name_zh": "窃票者",
+          "enemies": [
+            "Crusher",
+            "Harvester",
+            "Overseer",
+            "Stingray",
+            "Watcher",
+            "Wretch"
+          ]
         },
         {
           "name": "Mindless Masses",
-          "name_zh": "无脑群氓"
+          "name_zh": "无脑群氓",
+          "enemies": [
+            "Voteless"
+          ]
         },
         {
           "name": "Invasion Fleet",
-          "name_zh": "入侵舰队"
+          "name_zh": "入侵舰队",
+          "enemies": [
+            "Crescent Overseer",
+            "Elevated Overseer",
+            "Fleshmob"
+          ]
         }
       ],
       "enemies": [
-        "appropriators",
-        "crescent_overseer",
-        "elevated_overseer",
-        "fleshmob",
-        "harvester",
         "illuminate_overship",
-        "invasion_fleet",
-        "leviathan",
-        "mindless_masses",
-        "overseer",
-        "stingray",
-        "vote_snatchers",
-        "voteless",
-        "watcher"
+        "leviathan"
       ]
     }
   ],
-  "updated_at": "2026-08-24T18:58:46Z"
+  "super_earth": {
+    "name_zh": "超级地球",
+    "enemies": [
+      "civilian",
+      "helldiver",
+      "seaf_soldier"
+    ]
+  },
+  "updated_at": "2026-08-25"
 }
