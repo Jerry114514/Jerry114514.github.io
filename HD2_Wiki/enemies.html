@@ -40,6 +40,9 @@
     .enemy-name { font-size: 1rem; color: var(--text); margin: 6px 0 2px; }
     .enemy-name-en { font-size: 0.75rem; color: var(--text-mute); }
     .enemy-category { display: inline-block; margin-top: 6px; font-size: 0.75rem; color: var(--text-dim); background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 8px; }
+    .enemy-variants { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .enemy-variant { font-size: 0.7rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
+    .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
@@ -103,9 +106,18 @@
       var grid = document.getElementById("enemy-grid");
       var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
       if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
-      grid.innerHTML = list.map(function(e) {
+      // 只显示基础单位（变种挂载到基础单位卡片内）
+      var baseList = list.filter(function(e) { return !e.base_unit || e.base_unit === e.name; });
+      if (!baseList.length) baseList = list;
+      grid.innerHTML = baseList.map(function(e) {
         var color = FACTION_COLOR[e.faction] || "#64748b";
         var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
+        var variants = e.variants || [];
+        var variantsHtml = variants.length ? '<div class="enemy-variants">' +
+          variants.map(function(v) {
+            var venemy = enemies.find(function(x) { return x.name === v; });
+            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(venemy ? venemy.id : v.toLowerCase().replace(/ /g,"_")) + '">' + esc(v) + '</a>';
+          }).join("") + '</div>' : '';
         return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
           '<div class="color-bar" style="background:' + color + '"></div>' +
           '<div class="enemy-card-image">' + (e.image ?
@@ -116,6 +128,7 @@
             '<h3 class="enemy-name">' + esc(e.name_zh || e.name) + '</h3>' +
             '<div class="enemy-name-en">' + esc(e.name) + '</div>' +
             (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '') +
+            variantsHtml +
           '</div></a>';
       }).join("");
     }

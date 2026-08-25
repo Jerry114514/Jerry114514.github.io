@@ -52,6 +52,9 @@
     .part-img { width: 60px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .part-img img { max-width: 60px; max-height: 40px; object-fit: contain; }
     .part-img .ph { font-size: 1.2rem; color: var(--text-mute); }
+    .enemy-variants { display: flex; flex-wrap: wrap; gap: 6px; }
+    .enemy-variant { font-size: 0.78rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
+    .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
@@ -68,6 +71,7 @@
 
   <script>
     "use strict";
+    var allEnemies = [];
     var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
     var FACTION_COLOR = { terminids: "#FF4444", automatons: "#4488FF", illuminate: "#AA44FF" };
 
@@ -79,6 +83,7 @@
         var r = await fetch("./data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
+        allEnemies = d.enemies || [];
         var e = (d.enemies || []).find(function(x) { return x.id === id; });
         if (!e) { layout.innerHTML = '<div class="empty">未找到该敌人</div>'; return; }
         renderDetail(e);
@@ -107,9 +112,30 @@
             '<td>' + esc(p.durable) + '</td></tr>';
         }).join("") + '</table></div>' : '';
 
+      // 变种导航
+      var variantNav = "";
+      var baseUnit = e.base_unit || e.name;
+      var siblings = allEnemies.filter(function(x) {
+        return (x.base_unit || x.name) === baseUnit && x.name !== e.name;
+      });
+      var isBase = !e.base_unit || e.base_unit === e.name;
+      if (isBase && (e.variants || []).length) {
+        variantNav = '<div class="card"><h2>🔄 变种</h2><div class="enemy-variants">' +
+          e.variants.map(function(v) {
+            var ve = allEnemies.find(function(x) { return x.name === v; });
+            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(ve ? ve.id : v.toLowerCase().replace(/ /g,"_") ) + '">' + esc(v) + '</a>';
+          }).join("") + '</div></div>';
+      } else if (!isBase && siblings.length) {
+        variantNav = '<div class="card"><h2>🔗 所属：' + esc(baseUnit) + '</h2><div class="enemy-variants">' +
+          '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(baseUnit.toLowerCase().replace(/ /g,"_")) + '">' + esc(baseUnit) + ' (基础)</a>' +
+          siblings.map(function(s) {
+            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(s.id) + '">' + esc(s.name) + '</a>';
+          }).join("") + '</div></div>';
+      }
+
       layout.innerHTML =
         '<div class="main-content">' +
-          '<div class="card title-block">' +
+          '<div class="card title-block">' + +
             '<div class="name">' + esc(e.name_zh || e.name) + '</div>' +
             '<div class="name-en">' + esc(e.name) + '</div>' +
             '<div class="tags">' +
@@ -118,6 +144,7 @@
             '</div>' +
             (e.description ? '<div class="desc">' + esc(e.description) + '</div>' : '') +
           '</div>' +
+          variantNav +
           '<div class="card"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
             '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
             '<div class="placeholder">🐛</div>') + '</div></div>' +
