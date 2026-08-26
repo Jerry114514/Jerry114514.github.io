@@ -143,7 +143,7 @@
         return '<tr onclick="location.href=\'mission.html?id=' + encodeURIComponent(t.id) + '&category=' + currentCat + '\'">' +
           '<td><div class="m-icon">' + (t.icon ? '<img src="' + esc(t.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div></td>' +
           '<td><div class="m-name">' + esc(t.name_zh || t.name) + '</div><div class="m-name-en">' + esc(t.name) + '</div></td>' +
-          '<td class="m-diff">' + esc(t.difficulty || "—") + (t.time_limit ? '<div style="font-size:0.72rem;color:var(--text-mute);margin-top:2px">⏱ ' + esc(t.time_limit) + '</div>' : '') + '</td>' +
+          '<td class="m-diff">' + esc(t.difficulty_zh || t.difficulty || "—") + (t.time_limit ? '<div style="font-size:0.72rem;color:var(--text-mute);margin-top:2px">⏱ ' + esc(t.time_limit) + '</div>' : '') + '</td>' +
           '<td><span class="m-faction fa-' + esc(t.faction || "any") + '">' + esc(FACTION_CN[t.faction] || t.faction || "通用") + '</span></td>' +
           '</tr>';
       }).join("");
@@ -154,7 +154,7 @@
         return '<a class="m-card" href="mission.html?id=' + encodeURIComponent(t.id) + '&category=' + currentCat + '">' +
           '<div class="m-icon">' + (t.icon ? '<img src="' + esc(t.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
           '<div><div class="m-name">' + esc(t.name_zh || t.name) + '</div><div class="m-name-en">' + esc(t.name) + '</div>' +
-          '<div class="m-diff" style="margin-top:4px">' + esc(t.difficulty || "—") + '</div></div>' +
+          '<div class="m-diff" style="margin-top:4px">' + esc(t.difficulty_zh || t.difficulty || "—") + '</div></div>' +
           '</a>';
       }).join("");
     }
