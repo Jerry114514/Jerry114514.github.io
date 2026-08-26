@@ -66,14 +66,19 @@
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
-    /* ===== 获取方式 + 详细数据 并排布局 ===== */
+    /* ===== 获取方式 + 详细数据 等宽并排布局 ===== */
     .stratagem-detail-main { display: flex; flex-wrap: nowrap; gap: 20px; align-items: flex-start; }
-    .stratagem-detail-main .acq-card { flex: 0 0 30%; min-width: 0; word-break: break-word; }
-    .stratagem-detail-main .ds-card { flex: 1; min-width: 0; overflow-x: auto; }
+    .stratagem-detail-main .acq-card { flex: 1 1 0; min-width: 0; word-break: break-word; }
+    .stratagem-detail-main .ds-card { flex: 1 1 0; min-width: 0; overflow-x: auto; }
     .stratagem-detail-main .acq-card:only-child { flex: 1 1 100%; }
+    .acq-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .acq-card .field:last-child { border-bottom: none; }
+    .acq-card .field .k { color: var(--text-mute); }
+    .acq-card .field .v { color: var(--text); }
     @media (max-width: 767px) {
       .stratagem-detail-main { flex-direction: column; }
-      .stratagem-detail-main .acq-card { flex: 1 1 auto; width: 100%; }
+      .stratagem-detail-main .acq-card,
+      .stratagem-detail-main .ds-card { flex: 1 1 auto; width: 100%; }
     }
 
     /* ===== detailed_stats ===== */
@@ -179,9 +184,12 @@
               }).join("") : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') + '</div>' +
           '</div>' +
           '<div class="stratagem-detail-main">' +
-            '<div class="card acq-card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
-              (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(dsTranslate(s.unlock)) + '<br>' : '来源：' + esc(dsTranslate(s.source || "初始解锁"))) +
-            '</p></div>' +
+            '<div class="card acq-card"><h2>📖 获取方式</h2>' +
+              field("解锁条件", (s.unlock && s.unlock !== "初始解锁") ? dsTranslate(s.unlock) : dsTranslate(s.source || "初始解锁")) +
+              field("呼叫时间", s.call_in_time || "—") +
+              field("冷却时间", s.cooldown || "—") +
+              field("使用次数", s.uses || "无限") +
+            '</div>' +
             renderDetailedStats(s) +
           '</div>' +
         '</div>' +
@@ -321,7 +329,6 @@
       }
       if (!topHtml && !attacksHtml && !statusHtml) return "";
       return '<div class="card ds-card">' +
-        '<h2>⚙️ 详细数据</h2>' +
         topHtml +
         attacksHtml +
         statusHtml +
