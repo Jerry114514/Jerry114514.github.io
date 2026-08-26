@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏机制 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 游戏机制详解 - 伤害、难度、银河战争、状态效果" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    body { font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+    .wiki-header { text-align: center; padding: 32px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+    .grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; text-decoration: none; color: inherit; display: block; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.12); }
+    .card .icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .card .name { font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+    .card .name-en { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 6px; }
+    .card .desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+    .loading { text-align: center; padding: 60px; color: var(--text-dim); grid-column: 1 / -1; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+    @media (max-width: 767px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>📚 游戏机制</h1>
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-top:4px">Game Mechanics · 底层规则深度解析</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+  <div class="grid" id="grid"><div class="loading">正在加载…</div></div>
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+  <script>
+    "use strict";
+    async function load() {
+      try {
+        var r = await fetch("./data/wiki/zh/mechanics/index.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        document.getElementById("grid").innerHTML = (d.pages || []).map(function(p) {
+          return '<a class="card" href="mechanic.html?id=' + encodeURIComponent(p.id) + '">' +
+            '<div class="icon">' + esc(p.icon) + '</div>' +
+            '<div class="name">' + esc(p.title) + '</div>' +
+            '<div class="name-en">' + esc(p.title_en) + '</div>' +
+            '<div class="desc">' + esc(p.description) + '</div>' +
+            '</a>';
+        }).join("");
+      } catch(e) {
+        console.error("[Mechanics] 加载失败:", e);
+        document.getElementById("grid").innerHTML = '<div class="loading">⚠️ 数据加载失败</div>';
+      }
+    }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+    document.addEventListener("DOMContentLoaded", load);
+  </script>
+</body>
+</html>
