@@ -18,11 +18,12 @@
     body { display: flex; flex-direction: column; }
 
     .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
-    .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+    .breadcrumb { max-width: 1400px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
     .breadcrumb a { color: var(--blue); text-decoration: none; }
     .breadcrumb a:hover { color: var(--yellow); }
 
-    .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 60% 40%; gap: 20px; width: 100%; }
+    .detail-layout { flex: 1; max-width: 1400px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 60% 40%; gap: 20px; width: 100%; }
+    .detail-layout > * { min-width: 0; }
 
     .main-content { display: flex; flex-direction: column; gap: 20px; }
     .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
@@ -45,7 +46,7 @@
     .info-table td:first-child { color: var(--text-mute); width: 35%; }
     .info-table td:last-child { color: var(--text); }
 
-    .part-table { width: 100%; border-collapse: collapse; }
+        .part-table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
     .part-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 8px; border-bottom: 1px solid var(--border); }
     .part-table td { padding: 6px 8px; font-size: 0.82rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); }
     .part-table td:first-child { color: var(--text); }
