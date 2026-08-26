@@ -69,7 +69,7 @@
     /* ===== 获取方式 + 详细数据 等宽并排布局 ===== */
     .stratagem-detail-main { display: flex; flex-wrap: nowrap; gap: 20px; align-items: flex-start; }
     .stratagem-detail-main .acq-card { flex: 1 1 0; min-width: 0; word-break: break-word; }
-    .stratagem-detail-main .ds-card { flex: 1 1 0; min-width: 0; overflow-x: auto; }
+    .stratagem-detail-main .ds-card { flex: 1 1 0; min-width: 0; overflow-x: auto; container-type: inline-size; }
     .stratagem-detail-main .acq-card:only-child { flex: 1 1 100%; }
     .acq-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
     .acq-card .field:last-child { border-bottom: none; }
@@ -82,8 +82,7 @@
     }
 
     /* ===== detailed_stats ===== */
-    .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }
-    .ds-cell { display: flex; flex-direction: column; padding: 6px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
+    .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }    .ds-cell { display: flex; flex-direction: column; padding: 6px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
     .ds-k { font-size: 12px; color: var(--text-mute); margin-bottom: 2px; }
     .ds-v { font-size: 13px; color: var(--text); font-family: 'Consolas','Menlo',monospace; }
     .ds-attack { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
@@ -99,8 +98,10 @@
     .ds-type-arc { background: rgba(139,92,246,0.2); color: #a78bfa; }
     .ds-type-dmg { background: rgba(239,68,68,0.2); color: var(--red); }
     .ds-type-melee { background: rgba(239,68,68,0.2); color: var(--red); }
-    @media (max-width: 1023px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 767px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* 网格列数跟随详细数据卡片实际宽度（容器查询，而非视口） */
+    @container (max-width: 640px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
+    @container (max-width: 460px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
+    @container (max-width: 280px) { .ds-grid { grid-template-columns: 1fr; } }
     
 
     .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
