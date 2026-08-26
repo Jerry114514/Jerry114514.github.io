@@ -136,8 +136,8 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div class="card"><h2>📋 任务步骤</h2>' + renderSteps(t.steps) + '</div>' +
-          (t.tactical_info ? '<div class="card"><h2>💡 战术信息</h2><p class="tac-text">' + esc(t.tactical_info) + '</p></div>' : '') +
+          '<div class="card"><h2>📋 任务步骤</h2>' + renderSteps(t.steps_zh || t.steps) + '</div>' +
+          ((t.tactical_info_zh || t.tactical_info) ? '<div class="card"><h2>💡 战术信息</h2><p class="tac-text">' + esc(t.tactical_info_zh || t.tactical_info) + '</p></div>' : '') +
         '</div>' +
         '<div class="info-side">' +
           '<div class="side-card">' +
