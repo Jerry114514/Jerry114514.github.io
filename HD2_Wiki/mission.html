@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 任务详情页" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--yellow); }
+
+    .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 68% 32%; gap: 20px; width: 100%; }
+    .detail-layout > * { min-width: 0; }
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+    .title-block { display: flex; gap: 18px; align-items: center; }
+    .title-block .t-icon { width: 84px; height: 84px; flex: none; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden; }
+    .title-block .t-icon img { max-width: 72px; max-height: 72px; object-fit: contain; }
+    .title-block .t-icon .ph { font-size: 2.6rem; color: var(--text-mute); }
+    .title-block .name { font-size: 1.7rem; color: var(--text); }
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .title-block .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cat-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; background: rgba(245,197,24,0.15); color: var(--yellow); }
+    .faction-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; color: #fff; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .info-item { display: flex; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; }
+    .info-item .k { color: var(--text-mute); }
+    .info-item .v { color: var(--text); text-align: right; }
+
+    .steps-list { list-style: none; counter-reset: step; }
+    .steps-list li { counter-increment: step; padding: 10px 12px; border-left: 3px solid var(--border); margin-bottom: 8px; background: rgba(255,255,255,0.02); border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+    .steps-list li::before { content: counter(step); display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; background: rgba(245,197,24,0.2); color: var(--yellow); border-radius: 50%; font-size: 0.75rem; margin-right: 8px; }
+    .steps-list li .step-title { color: var(--text); font-weight: 600; }
+    .steps-list li .step-sub { display: block; margin: 4px 0 0 30px; color: var(--text-dim); }
+    .tac-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; white-space: pre-line; }
+
+    .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+    .side-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .side-card .field:last-child { border-bottom: none; }
+    .side-card .field .k { color: var(--text-mute); }
+    .side-card .field .v { color: var(--text); text-align: right; }
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 900px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .info-side { order: 2; }
+      .title-block { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="missions.html">任务列表</a></div>
+  </header>
+
+  <div class="detail-layout" id="detail-layout"><div class="loading">正在加载任务数据…</div></div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var CAT_ZH = { main: "主要目标", terminid: "终结族特殊任务", automaton: "机器人特殊任务", illuminate: "光能族特殊任务", tactical: "战术目标" };
+    var FACTION_CN = { any: "通用", terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
+    var FACTION_COLOR = { any: "#64748b", terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF", super_earth: "#3b82f6" };
+
+    async function loadDetail() {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      var cat = params.get("category") || "main";
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/missions.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        var task = null, taskCat = null;
+        (d.categories || []).forEach(function(c) {
+          (c.tasks || []).forEach(function(t) { if (t.id === id) { task = t; taskCat = c; } });
+        });
+        if (!task) { layout.innerHTML = '<div class="empty">未找到该任务</div>'; return; }
+        renderDetail(task, taskCat, cat);
+      } catch (e) {
+        console.error("[Mission] 加载失败:", e);
+        layout.innerHTML = '<div class="empty">⚠️ 任务数据加载失败</div>';
+      }
+    }
+
+    function renderSteps(steps) {
+      if (!steps || !steps.length) return '<p style="font-size:0.85rem;color:var(--text-mute)">—</p>';
+      return '<ol class="steps-list">' + steps.map(function(s) {
+        var lines = String(s).split("\n");
+        var title = esc(lines[0]);
+        var subs = lines.slice(1).filter(function(x) { return x.trim(); }).map(function(x) {
+          return '<span class="step-sub">' + esc(x.replace(/^•\s*/, "")) + '</span>';
+        }).join("");
+        return '<li><span class="step-title">' + title + '</span>' + subs + '</li>';
+      }).join("") + '</ol>';
+    }
+
+    function renderDetail(t, cat, backCat) {
+      var layout = document.getElementById("detail-layout");
+      var fcn = FACTION_CN[t.faction] || t.faction || "通用";
+      var fcolor = FACTION_COLOR[t.faction] || "#64748b";
+      var catZh = CAT_ZH[cat.id] || cat.name_zh || cat.name;
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="missions.html?category=' + encodeURIComponent(backCat) + '">任务列表</a> › ' + esc(catZh) + ' › ' + esc(t.name_zh || t.name);
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="t-icon">' + (t.icon ? '<img src="' + esc(t.icon) + '" alt="' + esc(t.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
+            '<div>' +
+              '<div class="name">' + esc(t.name_zh || t.name) + '</div>' +
+              '<div class="name-en">' + esc(t.name) + '</div>' +
+              '<div class="tags">' +
+                '<span class="cat-tag">' + esc(catZh) + '</span>' +
+                (t.faction ? '<span class="faction-tag" style="background:' + fcolor + '">' + esc(fcn) + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card"><h2>📋 任务步骤</h2>' + renderSteps(t.steps) + '</div>' +
+          (t.tactical_info ? '<div class="card"><h2>💡 战术信息</h2><p class="tac-text">' + esc(t.tactical_info) + '</p></div>' : '') +
+        '</div>' +
+        '<div class="info-side">' +
+          '<div class="side-card">' +
+            '<h3>📊 任务信息</h3>' +
+            field("分类", catZh) +
+            field("难度范围", t.difficulty || "—") +
+            field("时限", t.time_limit || "—") +
+            field("归属阵营", fcn) +
+          '</div>' +
+          '<div class="side-card"><h3>🔗 相关</h3>' +
+            '<a href="missions.html?category=' + encodeURIComponent(backCat) + '" style="color:var(--blue);font-size:0.82rem;text-decoration:none">← 返回' + esc(catZh) + '列表</a>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null || v === "" ? "—" : esc(v)) + '</span></div>'; }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>

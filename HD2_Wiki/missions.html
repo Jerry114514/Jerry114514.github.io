@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务总览 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 任务图鉴 - 主要目标、阵营特殊任务、战术目标" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+    }
+    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+    .wiki-header .sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
+    .wiki-controls .meta { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 12px; }
+    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .filter-bar button:hover { border-color: var(--yellow); color: var(--yellow); }
+    .filter-bar button.active { background: var(--yellow); color: #0a0e1a; border-color: var(--yellow); font-weight: 600; }
+
+    .mission-wrap { flex: 1; max-width: 1200px; margin: 0 auto; padding: 10px 20px 40px; width: 100%; }
+    .mission-table { width: 100%; border-collapse: collapse; }
+    .mission-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 10px; border-bottom: 1px solid var(--border); }
+    .mission-table td { padding: 8px 10px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); }
+    .mission-table tbody tr { cursor: pointer; transition: background 0.15s; }
+    .mission-table tbody tr:hover { background: rgba(245,197,24,0.06); }
+    .mission-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .mission-table tbody tr:nth-child(even):hover { background: rgba(245,197,24,0.06); }
+    .m-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
+    .m-icon img { max-width: 36px; max-height: 36px; object-fit: contain; }
+    .m-icon .ph { font-size: 1.3rem; color: var(--text-mute); }
+    .m-name { color: var(--text); font-size: 0.92rem; }
+    .m-name-en { color: var(--text-mute); font-size: 0.72rem; margin-top: 2px; }
+    .m-diff { font-size: 0.8rem; color: var(--text-dim); white-space: nowrap; }
+    .m-faction { font-size: 0.72rem; padding: 2px 10px; border-radius: 10px; color: #fff; white-space: nowrap; }
+    .fa-any { background: rgba(100,116,139,0.3); color: var(--text-dim); }
+    .fa-terminids { background: rgba(245,158,11,0.25); color: #f59e0b; }
+    .fa-automatons { background: rgba(239,68,68,0.25); color: #ef4444; }
+    .fa-illuminate { background: rgba(170,68,255,0.25); color: #c084fc; }
+    .fa-super_earth { background: rgba(59,130,246,0.25); color: #60a5fa; }
+
+    .mission-grid { display: none; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .m-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; text-decoration: none; color: inherit; display: flex; gap: 12px; align-items: center; transition: transform 0.2s, box-shadow 0.2s; }
+    .m-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(245,197,24,0.08); }
+
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+    .empty { text-align: center; padding: 60px 20px; color: var(--text-mute); font-size: 0.85rem; }
+    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
+    @media (max-width: 1023px) { .mission-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) {
+      .mission-table { display: none; }
+      .mission-grid { display: grid; grid-template-columns: 1fr; }
+      .mission-grid.single { display: grid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🎯 任务总览</h1>
+    <p class="sub">Mission Objectives · 主要目标 / 阵营特殊任务 / 战术目标</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <div class="wiki-controls">
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="meta" id="cat-meta"></div>
+  </div>
+
+  <div class="mission-wrap">
+    <table class="mission-table" id="mission-table">
+      <thead><tr><th>图标</th><th>任务名称</th><th>难度范围</th><th>归属</th></tr></thead>
+      <tbody id="mission-tbody"></tbody>
+    </table>
+    <div class="mission-grid" id="mission-grid"></div>
+  </div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var data = null;
+    var currentCat = "main";
+
+    var CATS = [
+      { id: "main", label: "主要目标" },
+      { id: "terminid", label: "终结族特殊" },
+      { id: "automaton", label: "机器人特殊" },
+      { id: "illuminate", label: "光能族特殊" },
+      { id: "tactical", label: "战术目标" }
+    ];
+    var FACTION_CN = { any: "通用", terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
+
+    async function load() {
+      try {
+        var r = await fetch("./data/wiki/zh/missions.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        data = await r.json();
+        var p = new URLSearchParams(window.location.search).get("category");
+        if (p && CATS.some(function(c) { return c.id === p; })) currentCat = p;
+        renderFilters();
+        renderList();
+      } catch (e) {
+        console.error("[Missions] 加载失败:", e);
+        document.getElementById("mission-tbody").innerHTML = '<tr><td colspan="4" class="empty">⚠️ 任务数据加载失败</td></tr>';
+      }
+    }
+
+    function renderFilters() {
+      document.getElementById("filter-bar").innerHTML = CATS.map(function(c) {
+        var n = data.categories.find(function(x) { return x.id === c.id; });
+        var cnt = n ? n.tasks.length : 0;
+        return '<button class="' + (c.id === currentCat ? "active" : "") + '" onclick="setCat(\'' + c.id + '\')">' + c.label + ' (' + cnt + ')</button>';
+      }).join("");
+    }
+
+    function setCat(id) {
+      currentCat = id;
+      renderFilters();
+      renderList();
+      history.replaceState(null, "", "?category=" + id);
+    }
+
+    function renderList() {
+      var cat = data.categories.find(function(x) { return x.id === currentCat; });
+      if (!cat) return;
+      var meta = document.getElementById("cat-meta");
+      meta.innerHTML = '<span style="color:var(--text-dim)">' + esc(cat.name) + '（' + esc(cat.name_zh) + '）· 共 ' + cat.tasks.length + ' 个任务</span>';
+
+      var tbody = document.getElementById("mission-tbody");
+      tbody.innerHTML = cat.tasks.map(function(t) {
+        return '<tr onclick="location.href=\'mission.html?id=' + encodeURIComponent(t.id) + '&category=' + currentCat + '\'">' +
+          '<td><div class="m-icon">' + (t.icon ? '<img src="' + esc(t.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div></td>' +
+          '<td><div class="m-name">' + esc(t.name_zh || t.name) + '</div><div class="m-name-en">' + esc(t.name) + '</div></td>' +
+          '<td class="m-diff">' + esc(t.difficulty || "—") + (t.time_limit ? '<div style="font-size:0.72rem;color:var(--text-mute);margin-top:2px">⏱ ' + esc(t.time_limit) + '</div>' : '') + '</td>' +
+          '<td><span class="m-faction fa-' + esc(t.faction || "any") + '">' + esc(FACTION_CN[t.faction] || t.faction || "通用") + '</span></td>' +
+          '</tr>';
+      }).join("");
+
+      var grid = document.getElementById("mission-grid");
+      grid.className = "mission-grid";
+      grid.innerHTML = cat.tasks.map(function(t) {
+        return '<a class="m-card" href="mission.html?id=' + encodeURIComponent(t.id) + '&category=' + currentCat + '">' +
+          '<div class="m-icon">' + (t.icon ? '<img src="' + esc(t.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
+          '<div><div class="m-name">' + esc(t.name_zh || t.name) + '</div><div class="m-name-en">' + esc(t.name) + '</div>' +
+          '<div class="m-diff" style="margin-top:4px">' + esc(t.difficulty || "—") + '</div></div>' +
+          '</a>';
+      }).join("");
+    }
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", load);
+  </script>
+</body>
+</html>
