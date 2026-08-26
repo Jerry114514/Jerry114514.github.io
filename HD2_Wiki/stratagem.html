@@ -42,8 +42,7 @@
     .code-display .arrow svg { display: block; }
     .arrow-icon { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
 
-    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .stat-item { display: flex; justify-content: space-between; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }    .stat-item { display: flex; justify-content: space-between; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; }
     .stat-item .k { color: var(--text-mute); }
     .stat-item .v { color: var(--text); }
 
@@ -66,6 +65,16 @@
     .img-wrap img { max-width: 100%; border-radius: 8px; }
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+    /* ===== 获取方式 + 详细数据 并排布局 ===== */
+    .stratagem-detail-main { display: flex; flex-wrap: nowrap; gap: 20px; align-items: flex-start; }
+    .stratagem-detail-main .acq-card { flex: 0 0 30%; min-width: 0; word-break: break-word; }
+    .stratagem-detail-main .ds-card { flex: 1; min-width: 0; overflow-x: auto; }
+    .stratagem-detail-main .acq-card:only-child { flex: 1 1 100%; }
+    @media (max-width: 767px) {
+      .stratagem-detail-main { flex-direction: column; }
+      .stratagem-detail-main .acq-card { flex: 1 1 auto; width: 100%; }
+    }
 
     /* ===== detailed_stats ===== */
     .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }
@@ -155,7 +164,7 @@
           '<div class="card title-block">' +
             '<div class="color-bar" style="background:' + colorOf(catLabel) + '"></div>' +
             '<div class="detail-icon">' + (s.icon || s.image ? '<img src="' + esc(s.icon || s.image) + '" alt="' + esc(s.name_en || s.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>📋</span>\'">' : '<span class="ph">📋</span>') + '</div>' +
-            '<div class="name">' + esc(s.name) + '</div>' + +
+            '<div class="name">' + esc(s.name) + '</div>' +
             '<div class="name-en">' + esc(s.name_en || s.id) + '</div>' +
             '<div class="meta"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
               (s.source ? '<span>📦 ' + esc(dsTranslate(s.source)) + '</span>' : '') + '</div>' +
@@ -169,10 +178,12 @@
                 return '<div class="stat-item"><span class="k">' + x[2] + ' ' + esc(x[0]) + '</span><span class="v">' + (x[1] == null ? "—" : x[1]) + '</span></div>';
               }).join("") : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') + '</div>' +
           '</div>' +
-          '<div class="card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
-            (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(dsTranslate(s.unlock)) + '<br>' : '来源：' + esc(dsTranslate(s.source || "初始解锁"))) +
-          '</p></div>' +
-          renderDetailedStats(s) +
+          '<div class="stratagem-detail-main">' +
+            '<div class="card acq-card"><h2>📖 获取方式</h2><p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
+              (s.unlock && s.unlock !== "初始解锁" ? '解锁条件：' + esc(dsTranslate(s.unlock)) + '<br>' : '来源：' + esc(dsTranslate(s.source || "初始解锁"))) +
+            '</p></div>' +
+            renderDetailedStats(s) +
+          '</div>' +
         '</div>' +
         '<div class="info-side">' +
           '<div class="side-card">' +
@@ -309,7 +320,7 @@
         }).join("");
       }
       if (!topHtml && !attacksHtml && !statusHtml) return "";
-      return '<div class="card">' +
+      return '<div class="card ds-card">' +
         '<h2>⚙️ 详细数据</h2>' +
         topHtml +
         attacksHtml +
