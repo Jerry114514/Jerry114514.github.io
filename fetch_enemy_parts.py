@@ -131,6 +131,43 @@ def to_int(v):
     return int(re.sub(r"[^\d]", "", v)) if re.search(r"\d", v) else None
 
 
+# 难度名 → 数字（Helldivers 2 官方难度）
+DIFF_MAP = {
+    "Trivial": 1, "Easy": 2, "Medium": 3, "Challenging": 4, "Hard": 5,
+    "Extreme": 6, "Suicide Mission": 7, "Impossible": 8, "Helldive": 9, "Super Helldive": 10,
+}
+
+
+def parse_health(raw_cell):
+    """解析生命值单元格。
+    普通值如 "2,400" → 2400（int）；
+    难度缩放如 "130 [Default] 160 at <img alt=Challenging...>" → "基础130，难度4以上为160"。
+    """
+    text = strip_html(raw_cell)
+    if not text or text.strip() in ("-", "—", "None", "N/A"):
+        return None
+    if not re.search(r"\d", text):
+        return None
+    m = re.match(r"\s*([\d,]+)", text)
+    if not m:
+        return text.strip()
+    base = int(m.group(1).replace(",", ""))
+    if "[default]" not in text.lower():
+        return base if re.match(r"^[\d,]+$", text.strip()) else text.strip()
+    steps = []
+    for sm in re.finditer(r"([\d,]+)\s*at\s*(?:<a[^>]*>\s*)?<img[^>]*alt=\"([^\"]+?)\.svg\"", raw_cell, re.I):
+        val = int(sm.group(1).replace(",", ""))
+        diff_name = sm.group(2).replace(" Difficulty Icon", "").strip()
+        diff_num = DIFF_MAP.get(diff_name, diff_name)
+        steps.append((diff_num, val))
+    if not steps:
+        return text.strip()
+    parts = ["基础%s" % base]
+    for diff_num, val in steps:
+        parts.append("难度%s以上为%s" % (diff_num, val))
+    return "，".join(parts)
+
+
 def parse_parts_table(html):
     """按表头动态映射列，返回部位列表；无表则返回 None"""
     idx = html.find("Part Name")
@@ -200,7 +237,7 @@ def parse_parts_table(html):
                 img = "https://helldivers.wiki.gg" + m.group(1)
                 break
 
-        health = to_int(cell("health"))
+        health = parse_health(cells[col["health"]])
         armor_level = cell("av")
         location = cell("location")
         durable = cell("durable") or ""
@@ -251,8 +288,27 @@ def parse_parts_table(html):
     return parts
 
 
+def load_existing_glossary():
+    """读取现有部位术语表中用户已填的中文译名（name_en → 中文），避免重跑覆盖"""
+    path = os.path.join(BASE, "术语对照表_部位.md")
+    if not os.path.exists(path):
+        return {}
+    mapping = {}
+    for line in open(path, encoding="utf-8"):
+        m = re.match(r"\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|", line)
+        if not m:
+            continue
+        en, zh = m.group(1).strip(), m.group(2).strip()
+        if en == "英文（name_en）" or en.startswith("---"):
+            continue
+        if zh and zh != en and "待填" not in zh:
+            mapping[en] = zh
+    return mapping
+
+
 def gen_glossary(all_parts):
-    """生成 术语对照表_部位.md，供用户校对/填汉化"""
+    """生成 术语对照表_部位.md，供用户校对/填汉化（保留用户已填译名）"""
+    user_map = load_existing_glossary()
     lines = [
         "# Helldivers 2 敌人部位术语对照表（送审版）",
         "> 版本：v1.0 送审 · " + time.strftime("%Y-%m-%d"),
@@ -271,8 +327,13 @@ def gen_glossary(all_parts):
             stats[key] = {"pid": pid, "cn": name, "enemies": 0, "auto": name != name_en}
         stats[key]["enemies"] += 1
     for name_en, s in sorted(stats.items(), key=lambda x: x[1]["enemies"], reverse=True):
-        note = "自动汉化" if s["auto"] else "待填"
-        lines.append("| %s | %s | %s | %d | %s |" % (name_en, s["cn"], s["pid"], s["enemies"], note))
+        if name_en in user_map:
+            cn = user_map[name_en]
+            note = "已填"
+        else:
+            cn = s["cn"]
+            note = "自动汉化" if s["auto"] else "待填"
+        lines.append("| %s | %s | %s | %d | %s |" % (name_en, cn, s["pid"], s["enemies"], note))
     lines.append("")
     with open(os.path.join(BASE, "术语对照表_部位.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
