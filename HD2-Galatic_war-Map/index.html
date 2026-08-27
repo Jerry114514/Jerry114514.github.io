@@ -2128,22 +2128,43 @@ function renderPlayers(data) {
       return { cur, target, pct };
     }
 
-    // buff 渲染：优先 companion tacticalActions，否则回落 voteEntries
+    // buff 渲染：合并 hd2_variables（全部5个行动）+ companion（捐献/激活数据）
+    // 激活判断：companion current >= target（捐献满才激活）；否则募捐中
     let buffHtml = "";
-    if (tacActions.length) {
-      buffHtml = tacActions.map(ta => {
-        const name = ta.name || "";
-        // 中文名映射
-        const cnMap = {"EAGLE STORM":"飞鹰风暴","ORBITAL BLOCKADE":"轨道封锁","HEAVY ORDNANCE DISTRIBUTION":"重型军械分发"};
-        const cnName = cnMap[name] || name;
-        const isActive = ta.status === 1;
-        const dInfo = donationInfo(ta);
-        // 效果描述
-        const strategicDesc = ta.strategicDescription ? stripTags(ta.strategicDescription) : "";
-        const barColor = isActive ? "#2ECC71" : "#3B82F6";
-        const statusText = isActive ? "✅ 已激活" : "⏸ 募捐中";
-        const descText = strategicDesc || (isActive ? "DSS 行动已激活，正对当前星球产生效果。" : "玩家向 DSS 捐赠资源以激活此行动。");
-        return `
+    const tacMap = {};
+    tacActions.forEach(ta => { tacMap[(ta.name || "").toUpperCase()] = ta; });
+    const cnMap = {"EAGLE STORM":"飞鹰风暴","ORBITAL BLOCKADE":"轨道封锁","HEAVY ORDNANCE DISTRIBUTION":"重型军械分发"};
+    // 遍历 hd2_variables 全部行动（含无 companion 数据的飞鹰封锁/星球轰炸）
+    const allEntries = voteEntries.concat([]);
+    buffHtml = allEntries.map(e => {
+      const ids = e.effect_ids || [];
+      const cnName = (e.cn || "").replace(/^[\u2600-\u27BF\u2B00-\u2BFF]+\s*/g, "");
+      // 找匹配的 companion 行动（effectIds 完全包含该条目的 ids 才算匹配，避免变种误匹配）
+      let ta = null;
+      tacActions.forEach(t => {
+        const te = (t.effectIds || []);
+        if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t;
+      });
+      // 激活判断：current >= target 即激活（捐献满）；否则募捐中
+      let isActive = false, dInfo = {cur:0, target:1, pct:0};
+      if (ta) {
+        const cost = (ta.cost || [])[0] || {};
+        const cur = cost.current || 0, target = cost.target || 1;
+        dInfo = {cur, target, pct: Math.min(100, Math.max(0, (cur/target)*100))};
+        isActive = cur >= target;
+      } else {
+        // 无 companion 数据：用 activeEffectIds 判断
+        isActive = dss ? ids.some(id => activeIds.has(id)) : false;
+      }
+      const barColor = isActive ? "#2ECC71" : "#3B82F6";
+      const statusText = isActive ? "✅ 已激活" : "⏸ 募捐中";
+      let descText = e.desc || "";
+      if (ta && ta.strategicDescription) descText = stripTags(ta.strategicDescription);
+      let barLabel = "";
+      if (isActive) barLabel = "⚡ 行动激活中（24h 周期）";
+      else if (ta) barLabel = `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`;
+      else barLabel = "等待募捐启动";
+      return `
         <div class="dss-buff ${isActive ? "dss-buff-on" : "dss-buff-off"}">
           <div class="dss-buff-head">
             <strong>${esc(cnName)}</strong>
@@ -2152,24 +2173,10 @@ function renderPlayers(data) {
           <div class="dss-effect-desc">${esc(descText)}</div>
           <div class="dss-progress" style="margin-top:8px">
             <div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${isActive ? 100 : dInfo.pct}%;background:${barColor}"></div></div>
-            <div class="dss-bar-label">${isActive ? "⚡ 行动激活中（24h 周期）" : `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`}</div>
+            <div class="dss-bar-label">${barLabel}</div>
           </div>
         </div>`;
-      }).join("");
-    } else {
-      buffHtml = voteEntries.map(e => {
-        const ids = e.effect_ids || [];
-        const active = dss ? ids.some(id => activeIds.has(id)) : false;
-        return `
-        <div class="dss-buff ${active ? "dss-buff-on" : "dss-buff-off"}">
-          <div class="dss-buff-head">
-            <strong>${esc(e.cn)}</strong>
-            <span class="dss-buff-status ${active ? "st-on" : "st-off"}">${active ? "⚡ 生效中" : "⏸ 募捐中"}</span>
-          </div>
-          <div class="dss-effect-desc">${esc(e.desc || "")}</div>
-        </div>`;
-      }).join("");
-    }
+    }).join("");
 
     // 被动渲染
     const passiveHtml = passiveEntry
@@ -2192,13 +2199,14 @@ function renderPlayers(data) {
         <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
       </div>
     `;
-    // 只统计实际显示的、处于激活状态的行动
-    const activeCount = tacActions.length
-      ? tacActions.filter(ta => ta.status === 1).length
-      : voteEntries.filter(e => {
-          const ids = e.effect_ids || [];
-          return dss ? ids.some(id => activeIds.has(id)) : false;
-        }).length;
+    // 只统计实际激活的行动（捐献满 current>=target，或无companion时effectIds命中activeEffectIds）
+    const activeCount = voteEntries.filter(e => {
+      const ids = e.effect_ids || [];
+      let ta = null;
+      tacActions.forEach(t => { const te = (t.effectIds || []); if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t; });
+      if (ta) { const c = (ta.cost || [])[0] || {}; return (c.current || 0) >= (c.target || 1); }
+      return dss ? ids.some(id => activeIds.has(id)) : false;
+    }).length;
     meta.textContent = dss
       ? (activeCount ? `${activeCount} 项生效` : "无投票生效")
       : "未停靠";
