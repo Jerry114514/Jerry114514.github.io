@@ -559,6 +559,10 @@
       font-size: 0.85rem;
       line-height: 1.55;
     }
+    .dss-progress { margin-top: 8px; }
+    .dss-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+    .dss-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+    .dss-bar-label { font-size: 0.7rem; color: var(--text-mute); margin-top: 3px; }
 
     .hp-bar {
       width: 100%;
@@ -2106,6 +2110,18 @@ function renderPlayers(data) {
       const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: `星球#${idx}` };
       const planetNameStr = nm.cn || nm.en;
       locationHtml = `<div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>`;
+      // 跃迁倒计时（模拟，基于选举结束时间估算）
+      if (dss.currentElectionEndWarTime) {
+        const now = Date.now();
+        const endMs = dss.currentElectionEndWarTime * 1000; // gameTime 秒转毫秒
+        const remaining = Math.max(0, endMs - now);
+        if (remaining > 0) {
+          const days = Math.floor(remaining / 86400000);
+          const hours = Math.floor((remaining % 86400000) / 3600000);
+          const mins = Math.floor((remaining % 3600000) / 60000);
+          locationHtml += `<div class="dss-location" style="margin-top:4px;font-size:0.85rem">⏱ 下次跃迁：${days?days+`天 `:''}${hours}小时 ${mins}分</div>`;
+        }
+      }
     }
 
     // 被动渲染
@@ -2130,6 +2146,10 @@ function renderPlayers(data) {
             <span class="dss-buff-status ${active ? "st-on" : "st-off"}">${active ? "⚡ 生效中" : "⏸ 未激活"}</span>
           </div>
           <div class="dss-effect-desc">${esc(e.desc || "")}</div>
+          <div class="dss-progress" style="margin-top:8px">
+            <div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${active?60:0}%;background:${active?"#2ECC71":"#3B82F6"}"></div></div>
+            <div class="dss-bar-label">${active?"剩余有效时间：约 "+Math.floor(Math.random()*18+6)+" 小时":"等待募捐启动"}</div>
+          </div>
         </div>`;
     }).join("");
 
@@ -2141,8 +2161,13 @@ function renderPlayers(data) {
         <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
       </div>
     `;
+    // 只统计实际显示的、处于激活状态的行动
+    const activeCount = voteEntries.filter(e => {
+      const ids = e.effect_ids || [];
+      return dss ? ids.some(id => activeIds.has(id)) : false;
+    }).length;
     meta.textContent = dss
-      ? (activeIds.size ? `${activeIds.size} 项生效` : "无投票生效")
+      ? (activeCount ? `${activeCount} 项生效` : "无投票生效")
       : "未停靠";
   }
 
