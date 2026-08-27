@@ -975,10 +975,27 @@
     }
     .strat-modal-item:hover { border-color: rgba(245,197,24,0.5); background: rgba(245,197,24,0.06); }
     .strat-modal-item-stats { color: var(--text-dim); font-size: 0.7rem; }
-    @media (max-width: 640px) {
+    @media (max-width: 767px) {
       .stratagem-layout { flex-direction: column; }
-      .stratagem-cards { grid-template-columns: 1fr; }
+      .stratagem-cards { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .strat-side { flex-basis: 100%; }
+      /* 手机端：压缩卡片，提高密度 */
+      .strat-card { padding: 10px 12px; gap: 6px; border-radius: 10px; margin-bottom: 8px; }
+      .strat-card-name { font-size: 0.95rem; }
+      .strat-card-type { font-size: 0.62rem; padding: 1px 8px; }
+      /* 评分项改两列网格，紧凑标签-数值 */
+      .strat-bar { gap: 4px; font-size: 0.78rem; }
+      .strat-bar-label { width: 34px; font-size: 0.72rem; }
+      .strat-bar-track { height: 6px; }
+      .strat-bar-val { width: 16px; font-size: 0.72rem; }
+      .strat-card-footer { flex-wrap: wrap; gap: 4px; }
+      .strat-card-bonus { font-size: 0.68rem; }
+      .strat-swap-btn { padding: 4px 12px; font-size: 0.75rem; height: auto; }
+    }
+    @media (max-width: 640px) {
+      /* 更窄屏：单列 + 评分项两列 */
+      .stratagem-cards { grid-template-columns: 1fr; }
+      .strat-bar { display: inline-flex; width: calc(50% - 3px); }
     }
     
 .prospect-desc {
