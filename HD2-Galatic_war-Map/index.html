@@ -2411,11 +2411,11 @@ function renderPlayers(data) {
     }
     atk = (atk == null) ? 0 : atk;
     def = (def == null) ? 0 : def;
-    // 防御战：进攻方是 planet.currentOwner（敌方），不是 camp.faction（固定 Humans）
+    // 防御战：进攻方是 camp.faction（敌方），防守方是 planet.currentOwner（应为 Humans）
     const isDef = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
-    const atkFaction = isDef ? (p.currentOwner || "Unknown") : (camp.faction || "Unknown");
+    const atkFaction = isDef ? (camp.faction || "Unknown") : (camp.faction || "Unknown");
     const atkColor = {
-      "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)",
+      "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)", "Automaton": "var(--c-automaton)",
       "Illuminate": "var(--c-illuminate)", "Humans": "var(--c-humans)",
     }[atkFaction] || "#E74C3C";
     const atkLabel = ownerCn(atkFaction) || atkFaction;
