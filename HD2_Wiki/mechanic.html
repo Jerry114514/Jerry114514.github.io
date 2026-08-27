@@ -12,9 +12,10 @@
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
       --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
     }
-    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
+    @font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
+@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
     html { scroll-behavior: smooth; }
-    body { font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+    body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
     .wiki-header { padding: 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
     .breadcrumb { max-width: 1400px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
     .breadcrumb a { color: var(--blue); text-decoration: none; }
@@ -77,7 +78,12 @@
       .toc-toggle { display: block; padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-dim); font-size: 0.85rem; cursor: pointer; margin-bottom: 12px; }
       .toc-sidebar.open { display: block; position: fixed; top: 60px; left: 10px; right: 10px; width: auto; z-index: 100; max-height: 80vh; }
     }
-  </style>
+  
+h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, button, .btn, .back, .nav-item, .filter-bar button, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value, #calcBtn {
+  font-family: "ChuangKeTi","SourceHanSans","Microsoft YaHei",sans-serif;
+}
+
+</style>
 </head>
 <body>
   <header class="wiki-header">

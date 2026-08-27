@@ -12,8 +12,9 @@
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
       --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
     }
-    @font-face { font-family: 'ZZZ-thick'; src: url('./ZZZ-thick.ttf') format('truetype'); }
-    html, body { height: 100%; font-family: "ZZZ-thick","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    @font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
+@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
+    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
     body { display: flex; flex-direction: column; }
 
     .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
@@ -65,7 +66,12 @@
       .title-block { flex-direction: column; text-align: center; }
     }
     @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
-  </style>
+  
+h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, button, .btn, .back, .nav-item, .filter-bar button, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value, #calcBtn {
+  font-family: "ChuangKeTi","SourceHanSans","Microsoft YaHei",sans-serif;
+}
+
+</style>
 </head>
 <body>
   <header class="wiki-header">
