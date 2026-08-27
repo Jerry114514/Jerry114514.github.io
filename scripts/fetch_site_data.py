@@ -637,14 +637,22 @@ def main():
         base["dispatches"] = companion["dispatches"]
 
     # DSS：companion（含 tacticalActions 捐献数据）优先 -> 官方 -> 快照兜底
+    # 若 companion 失败但快照已有 tacticalActions，则保留旧 tacticalActions，避免进度条丢失
+    snap = _load_snapshot()
+    prev_tac = (snap.get("dss") or {}).get("tacticalActions")
     if companion and companion.get("dss") and companion["dss"].get("tacticalActions"):
         base["dss"] = companion["dss"]
     elif official and official.get("dss"):
         base["dss"] = official["dss"]
+        if prev_tac and not base["dss"].get("tacticalActions"):
+            base["dss"]["tacticalActions"] = prev_tac
+            print("  [DSS] 保留上次 tacticalActions（companion 失败）")
     elif companion and companion.get("dss"):
         base["dss"] = companion["dss"]
+        if prev_tac and not base["dss"].get("tacticalActions"):
+            base["dss"]["tacticalActions"] = prev_tac
+            print("  [DSS] 保留上次 tacticalActions（companion 无数据）")
     else:
-        snap = _load_snapshot()
         if snap and snap.get("dss"):
             base["dss"] = snap["dss"]
             print("  [FALLBACK] DSS 使用上次成功快照")
