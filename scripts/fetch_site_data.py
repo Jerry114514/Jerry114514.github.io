@@ -422,15 +422,38 @@ def fetch_companion():
         dispatches.append({"id": n.get("id"), "published": norm_time(n.get("published")),
                            "type": n.get("type"), "message": n.get("message")})
 
-    # DSS 空间站（companion spaceStations）
+    # DSS 空间站（companion spaceStations，含 tacticalActions 捐献数据）
     dss = None
     ss_list = obj.get("spaceStations") or []
     if ss_list:
         s0 = ss_list[0]
+        # 转换 tacticalActions（含捐献进度/到期时间）
+        tac_actions = []
+        for ta in (s0.get("tacticalActions") or []):
+            costs = []
+            for c in (ta.get("cost") or []):
+                costs.append({
+                    "target": c.get("targetValue"),
+                    "current": round(c.get("currentValue") or 0, 1),
+                    "deltaPerSec": c.get("deltaPerSecond"),
+                    "maxDonation": c.get("maxDonationAmount"),
+                    "maxDonationPeriodSec": c.get("maxDonationPeriodSeconds"),
+                })
+            tac_actions.append({
+                "name": ta.get("name"),
+                "status": ta.get("status"),
+                "expireAtWarTime": ta.get("statusExpireAtWarTimeSeconds"),
+                "effectIds": ta.get("effectIds") or [],
+                "activeEffectIds": ta.get("activeEffectIds") or [],
+                "cost": costs,
+            })
         dss = {
             "planetIndex": s0.get("planetIndex"),
             "activeEffectIds": s0.get("activeEffectIds") or [],
             "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
+            "electionEndWarTime": s0.get("currentElectionEndWarTime"),
+            "tacticalActions": tac_actions,
+            "flags": s0.get("flags"),
         }
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
@@ -613,8 +636,10 @@ def main():
             dp["published"] = ""
         base["dispatches"] = companion["dispatches"]
 
-    # DSS：官方 -> companion（hd2dev 无 spaceStations）-> 快照兜底
-    if official and official.get("dss"):
+    # DSS：companion（含 tacticalActions 捐献数据）优先 -> 官方 -> 快照兜底
+    if companion and companion.get("dss") and companion["dss"].get("tacticalActions"):
+        base["dss"] = companion["dss"]
+    elif official and official.get("dss"):
         base["dss"] = official["dss"]
     elif companion and companion.get("dss"):
         base["dss"] = companion["dss"]
