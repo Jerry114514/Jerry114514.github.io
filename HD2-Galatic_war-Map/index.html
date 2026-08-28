@@ -1422,7 +1422,8 @@
     "L'estrade": "莱斯特拉德",
     "Andromeda": "仙女座",
     "Kongulii": "康古利伊",
-    "Cantorus": "坎托鲁斯"
+    "Cantorus": "坎托鲁斯",
+    "Tau Ceti": "天仓五"
   };
 
   // 任务类型枚举（来自社区经验）
@@ -1481,16 +1482,28 @@
   const planetName = (p, sm) => {
     if (!p) return { cn: null, en: "未知星球", sector: "" };
     let cn = null;
+    let en = p.name;
     // 1) 内置译名表（解耦：starmap.json 加载失败/损坏也能显示中文）
     if (BUILTIN_PLANET_CN[p.name]) {
       cn = BUILTIN_PLANET_CN[p.name];
     }
-    // 2) starmap.json（覆盖内置，含手工新增星球）
+    // 2) starmap.json（按英文名查找）
     if (!cn && sm && sm.planets && sm.planets[p.name]) {
       const entry = sm.planets[p.name];
       cn = typeof entry === "string" ? entry : (entry.cn || null);
     }
-    return { cn, en: p.name, sector: p.sector };
+    // 3) starmap.json（按星球 index 查找，应对 data.json 返回 PLANET_xx 格式）
+    if (sm && sm.planets && p.index != null) {
+      for (const key of Object.keys(sm.planets)) {
+        const entry = sm.planets[key];
+        if (entry.ID === p.index || entry.id === p.index) {
+          cn = cn || entry.cn || null;
+          en = key;
+          break;
+        }
+      }
+    }
+    return { cn, en, sector: p.sector };
   };
 
   /* ==============================================================
