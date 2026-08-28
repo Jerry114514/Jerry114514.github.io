@@ -454,6 +454,9 @@ def fetch_companion():
             "electionEndWarTime": s0.get("currentElectionEndWarTime"),
             "tacticalActions": tac_actions,
             "flags": s0.get("flags"),
+            # warTime 换算基准：抓取时刻的真实时间（毫秒）与当前游戏 warTime
+            "clientTimeMs": obj.get("clientTime") or (int(time.time()) * 1000),
+            "currentWarTime": (obj.get("warStatus") or {}).get("time") or 0,
         }
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
