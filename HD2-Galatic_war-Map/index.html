@@ -1485,6 +1485,7 @@
     if (!p) return { cn: null, en: "未知星球", sector: "" };
     let cn = null;
     let en = p.name;
+    let sector = p.sector || "";
     // 1) 内置译名表（解耦：starmap.json 加载失败/损坏也能显示中文）
     if (BUILTIN_PLANET_CN[p.name]) {
       cn = BUILTIN_PLANET_CN[p.name];
@@ -1501,11 +1502,12 @@
         if (entry.ID === p.index || entry.id === p.index) {
           cn = cn || entry.cn || null;
           en = key;
+          sector = sector || entry.sector_en || entry.system || "";
           break;
         }
       }
     }
-    return { cn, en, sector: p.sector };
+    return { cn, en, sector };
   };
 
   /* ==============================================================
