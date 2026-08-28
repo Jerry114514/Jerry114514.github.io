@@ -312,6 +312,12 @@ def fetch_official():
             "planetIndex": s0.get("planetIndex"),
             "activeEffectIds": s0.get("activeEffectIds") or [],
             "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
+            "electionEndWarTime": s0.get("currentElectionEndWarTime"),
+            # warTime 换算基准（与 companion 分支一致）：抓取时刻真实时间(ms) + 当前 warTime
+            "clientTimeMs": int(time.time() * 1000),
+            "currentWarTime": st.get("time") or 0,
+            "tacticalActions": [],
+            "flags": s0.get("flags"),
         }
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
