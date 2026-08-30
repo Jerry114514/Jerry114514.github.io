@@ -1,1 +1,4376 @@
-{"fetchedAt": "2026-08-30T15:32:21+08:00", "source": "official", "player_distribution": {"total": 87839, "humans": 1977, "terminids": 73796, "automatons": 8275, "illuminate": 3791, "updatedAt": "2026-08-30T07:15:34.8369327Z"}, "recon_stats": {}, "impactMultiplier": 0.012443333, "war": {"time": 80138870, "statistics": {"playerCount": 84971, "missionsWon": 0, "missionsLost": 0}, "started": null, "ended": null}, "planets": [{"index": 0, "name": "SUPER EARTH", "sector": "Sol", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 174, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 1, "name": "KLEN DAHTH II", "sector": "Altus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 2, "name": "PATHFINDER V", "sector": "Altus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 3, "name": "WIDOW'S HARBOR", "sector": "Altus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 4, "name": "NEW HAVEN", "sector": "Altus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 4, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 5, "name": "PILEN V", "sector": "Altus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 6, "name": "HYDROFALL PRIME", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 7, "name": "ZEA RUGOSIA", "sector": "Ferris", "currentOwner": "Illuminate", "health": 1700000, "maxHealth": 1700000, "players": 26, "attacking": false, "resistance": 2.94, "activeEffects": []}, {"index": 8, "name": "DARROWSPORT", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 9, "name": "FORNSKOGUR II", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 10, "name": "MIDASBURG", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 11, "name": "CERBERUS IIIc", "sector": "Cancri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 12, "name": "PROSPERITY FALLS", "sector": "Cancri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 13, "name": "OKUL VI", "sector": "Gothmar", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 14, "name": "MARTYR'S BAY", "sector": "Cantolus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 15, "name": "FREEDOM PEAK", "sector": "Cantolus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 16, "name": "FORT UNION", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": [1287]}, {"index": 17, "name": "KELVINOR", "sector": "Cantolus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 18, "name": "WRAITH", "sector": "Idun", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 19, "name": "IGLA", "sector": "Kelvin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 20, "name": "NEW KIRUNA", "sector": "Kelvin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 21, "name": "FORT JUSTICE", "sector": "Kelvin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 22, "name": "ZEGEMA PARADISE", "sector": "Kelvin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": [1282]}, {"index": 23, "name": "PROVIDENCE", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 24, "name": "PRIMORDIA", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 25, "name": "SULFURA", "sector": "Celeste", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 7, "attacking": false, "resistance": 0.5, "activeEffects": [1245, 1243]}, {"index": 26, "name": "NUBLARIA I", "sector": "Celeste", "currentOwner": "Humans", "health": 999987, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 27, "name": "KRAKATWO", "sector": "Celeste", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 0.5, "activeEffects": []}, {"index": 28, "name": "VOLTERRA", "sector": "Korpus", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 4, "attacking": false, "resistance": 0.75, "activeEffects": []}, {"index": 29, "name": "CRUCIBLE", "sector": "Korpus", "currentOwner": "Humans", "health": 2500000, "maxHealth": 2500000, "players": 1, "attacking": false, "resistance": 0.6, "activeEffects": []}, {"index": 30, "name": "VEIL", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 31, "name": "MARRE IV", "sector": "Barnard", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 32, "name": "FORT SANCTUARY", "sector": "Cancri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": [1292]}, {"index": 33, "name": "SEYSHEL BEACH", "sector": "Cancri", "currentOwner": "Humans", "health": 2300000, "maxHealth": 2300000, "players": 6, "attacking": false, "resistance": 0.11, "activeEffects": []}, {"index": 34, "name": "HELLMIRE", "sector": "Mirin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 8, "attacking": false, "resistance": 1.0, "activeEffects": [1304, 1386, 1244]}, {"index": 35, "name": "EFFLUVIA", "sector": "Cancri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 0.25, "activeEffects": []}, {"index": 36, "name": "SOLGHAST", "sector": "Gothmar", "currentOwner": "Humans", "health": 1700000, "maxHealth": 1700000, "players": 1, "attacking": false, "resistance": 0.88, "activeEffects": []}, {"index": 37, "name": "DILUVIA", "sector": "Gothmar", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 1, "attacking": false, "resistance": 0.75, "activeEffects": []}, {"index": 38, "name": "VIRIDIA PRIME", "sector": "Cantolus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 39, "name": "OBARI", "sector": "Cantolus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 40, "name": "MYRADESH", "sector": "Idun", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 41, "name": "ATRAMA", "sector": "Idun", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 42, "name": "EMERIA", "sector": "Kelvin", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 0, "attacking": false, "resistance": 0.94, "activeEffects": [1291]}, {"index": 43, "name": "BARABOS", "sector": "Marspira", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 44, "name": "FENMIRE", "sector": "Marspira", "currentOwner": "Humans", "health": 2400000, "maxHealth": 2400000, "players": 2, "attacking": false, "resistance": 0.1, "activeEffects": []}, {"index": 45, "name": "MASTIA", "sector": "Marspira", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": [1236, 1272]}, {"index": 46, "name": "SHALLUS", "sector": "Talus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 47, "name": "KRAKABOS", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 48, "name": "IRIDICA", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 49, "name": "AZTERRA", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 5, "attacking": false, "resistance": 0.5, "activeEffects": [1243, 1245]}, {"index": 50, "name": "AZUR SECUNDUS", "sector": "Sten", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 2.5, "activeEffects": []}, {"index": 51, "name": "IVIS", "sector": "Celeste", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 8, "attacking": false, "resistance": 1.5, "activeEffects": [1252]}, {"index": 52, "name": "SLIF", "sector": "Celeste", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 53, "name": "CARAMOOR", "sector": "Korpus", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 2, "attacking": false, "resistance": 0.68, "activeEffects": []}, {"index": 54, "name": "KHARST", "sector": "Gallux", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 55, "name": "EUKORIA", "sector": "Morgon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 56, "name": "MYRIUM", "sector": "Morgon", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 1, "attacking": false, "resistance": 0.12, "activeEffects": []}, {"index": 57, "name": "KERTH SECUNDUS", "sector": "Rictus", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 7, "attacking": false, "resistance": 0.12, "activeEffects": []}, {"index": 58, "name": "PARSH", "sector": "Rictus", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 5, "attacking": false, "resistance": 0.12, "activeEffects": []}, {"index": 59, "name": "REAF", "sector": "Saleria", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 6, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 60, "name": "IRULTA", "sector": "Saleria", "currentOwner": "Humans", "health": 1700000, "maxHealth": 1700000, "players": 3, "attacking": false, "resistance": 0.88, "activeEffects": []}, {"index": 61, "name": "EMORATH", "sector": "Meridian", "currentOwner": "Humans", "health": 1900000, "maxHealth": 1900000, "players": 2, "attacking": false, "resistance": 0.79, "activeEffects": []}, {"index": 62, "name": "ILDUNA PRIME", "sector": "Meridian", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 63, "name": "MAW", "sector": "Idun", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 64, "name": "MERIDIA", "sector": "Umlaut", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 51, "attacking": false, "resistance": 0.0, "activeEffects": [1229]}, {"index": 65, "name": "BOREA", "sector": "Sagan", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 66, "name": "CURIA", "sector": "Marspira", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 67, "name": "TARSH", "sector": "Marspira", "currentOwner": "Humans", "health": 1300000, "maxHealth": 1300000, "players": 5, "attacking": false, "resistance": 1.15, "activeEffects": []}, {"index": 68, "name": "SHELT", "sector": "Talus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 0.5, "activeEffects": []}, {"index": 69, "name": "IMBER", "sector": "Talus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 2.5, "activeEffects": []}, {"index": 70, "name": "BLISTICA", "sector": "Gellert", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 127, "attacking": false, "resistance": 3.5, "activeEffects": []}, {"index": 71, "name": "RATCH", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 72, "name": "JULHEIM", "sector": "Nanos", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 4, "attacking": false, "resistance": 0.62, "activeEffects": [1248, 1249]}, {"index": 73, "name": "VALGAARD", "sector": "Iptus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 74, "name": "ARKTURUS", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 75, "name": "ESKER", "sector": "Falstaff", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": [1244, 1188, 1193, 1315, 1316, 1317]}, {"index": 76, "name": "TERREK", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 5, "attacking": false, "resistance": 1.0, "activeEffects": [1395]}, {"index": 77, "name": "CIRRUS", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 78, "name": "CRIMSICA", "sector": "Draco", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 9, "attacking": false, "resistance": 1.0, "activeEffects": [1244, 1386, 1395]}, {"index": 79, "name": "HEETH", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 80, "name": "VELD", "sector": "Orion", "currentOwner": "Humans", "health": 1800000, "maxHealth": 1800000, "players": 46, "attacking": false, "resistance": 0.56, "activeEffects": []}, {"index": 81, "name": "ALTA V", "sector": "Korpus", "currentOwner": "Humans", "health": 1300000, "maxHealth": 1300000, "players": 1, "attacking": false, "resistance": 0.77, "activeEffects": []}, {"index": 82, "name": "URSICA XI", "sector": "Borgus", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 1, "attacking": false, "resistance": 0.94, "activeEffects": [1279]}, {"index": 83, "name": "INARI", "sector": "Korpus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 0.5, "activeEffects": []}, {"index": 84, "name": "SKAASH", "sector": "Ursa", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 85, "name": "MORADESH", "sector": "Celeste", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 5, "attacking": false, "resistance": 1.5, "activeEffects": [1252]}, {"index": 86, "name": "RASP", "sector": "Gallux", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 87, "name": "BASHYR", "sector": "Gallux", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 88, "name": "REGNUS", "sector": "Morgon", "currentOwner": "Humans", "health": 1800000, "maxHealth": 1800000, "players": 2, "attacking": false, "resistance": 0.83, "activeEffects": []}, {"index": 89, "name": "MOG", "sector": "Morgon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 90, "name": "VALMOX", "sector": "Rictus", "currentOwner": "Illuminate", "health": 1900000, "maxHealth": 1900000, "players": 116, "attacking": false, "resistance": 0.53, "activeEffects": []}, {"index": 91, "name": "IRO", "sector": "Rictus", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 92, "name": "GRAFMERE", "sector": "Rictus", "currentOwner": "Illuminate", "health": 2100000, "maxHealth": 2100000, "players": 350, "attacking": false, "resistance": 0.48, "activeEffects": [1327]}, {"index": 93, "name": "NEW STOCKHOLM", "sector": "Hanzo", "currentOwner": "Illuminate", "health": 976467, "maxHealth": 1000000, "players": 74, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 94, "name": "OASIS", "sector": "Rictus", "currentOwner": "Illuminate", "health": 1400000, "maxHealth": 1400000, "players": 4, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 95, "name": "GENESIS PRIME", "sector": "Rictus", "currentOwner": "Illuminate", "health": 1581659, "maxHealth": 1600000, "players": 169, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 96, "name": "OUTPOST 32", "sector": "Saleria", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 97, "name": "CALYPSO", "sector": "Saleria", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": [1418, 1190]}, {"index": 98, "name": "ELYSIAN MEADOWS", "sector": "Guang", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 99, "name": "SANGIS", "sector": "Guang", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 100, "name": "TRANDOR", "sector": "Sten", "currentOwner": "Terminids", "health": 1900000, "maxHealth": 1900000, "players": 218, "attacking": false, "resistance": 1.05, "activeEffects": []}, {"index": 101, "name": "EAST IRIDIUM TRADING BAY", "sector": "Tarragon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 102, "name": "LIBERTY RIDGE", "sector": "Meridian", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 103, "name": "BALDRICK PRIME", "sector": "Meridian", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 104, "name": "THE WEIR", "sector": "Theseus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 105, "name": "KUPER", "sector": "Theseus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 106, "name": "OSLO STATION", "sector": "Sagan", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 107, "name": "PÖPLI IX", "sector": "Xzar", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 0, "attacking": false, "resistance": 0.94, "activeEffects": []}, {"index": 108, "name": "GUNVALD", "sector": "Sagan", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 109, "name": "DOLPH", "sector": "Nanos", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 110, "name": "BEKVAM III", "sector": "Nanos", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 1, "attacking": false, "resistance": 0.31, "activeEffects": []}, {"index": 111, "name": "DUMA TYR", "sector": "Nanos", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 112, "name": "VERNEN WELLS", "sector": "Hydra", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 4, "attacking": false, "resistance": 0.67, "activeEffects": []}, {"index": 113, "name": "AESIR PASS", "sector": "Hydra", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 8, "attacking": false, "resistance": 3.0, "activeEffects": []}, {"index": 114, "name": "AURORA BAY", "sector": "Valdis", "currentOwner": "Automaton", "health": 1600000, "maxHealth": 1600000, "players": 1258, "attacking": false, "resistance": 3.13, "activeEffects": [1239, 1363]}, {"index": 115, "name": "PENTA", "sector": "Lacaille", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 33, "attacking": false, "resistance": 2.5, "activeEffects": [1246, 1352]}, {"index": 116, "name": "GAELLIVARE", "sector": "Talus", "currentOwner": "Humans", "health": 1700000, "maxHealth": 1700000, "players": 4, "attacking": false, "resistance": 0.88, "activeEffects": []}, {"index": 117, "name": "VOG-SOJOTH", "sector": "Tanis", "currentOwner": "Humans", "health": 1200000, "maxHealth": 1200000, "players": 2, "attacking": false, "resistance": 1.25, "activeEffects": [1203, 1202]}, {"index": 118, "name": "KIRRIK", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 119, "name": "MORTAX PRIME", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 120, "name": "WILFORD STATION", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 121, "name": "PIONEER II", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 122, "name": "ERSON SANDS", "sector": "Falstaff", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 2.0, "activeEffects": [1193, 1315, 1316, 1317]}, {"index": 123, "name": "SOCORRO III", "sector": "Falstaff", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.0, "activeEffects": [1193, 1188, 1315, 1316, 1317]}, {"index": 124, "name": "BORE ROCK", "sector": "Falstaff", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 207, "attacking": false, "resistance": 1.5, "activeEffects": [1187, 1313, 1314]}, {"index": 125, "name": "FENRIR III", "sector": "Umlaut", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 1, "attacking": false, "resistance": 0.5, "activeEffects": [1234]}, {"index": 126, "name": "TURING", "sector": "Umlaut", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 4, "attacking": false, "resistance": 0.25, "activeEffects": [1197, 1395, 1244, 1366]}, {"index": 127, "name": "ANGEL'S VENTURE", "sector": "Orion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 17, "attacking": false, "resistance": 2.5, "activeEffects": [1241]}, {"index": 128, "name": "DARIUS II", "sector": "Borgus", "currentOwner": "Humans", "health": 1400000, "maxHealth": 1400000, "players": 2, "attacking": false, "resistance": 0.36, "activeEffects": [1395]}, {"index": 129, "name": "ACAMAR IV", "sector": "Jin Xi", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 106, "attacking": false, "resistance": 0.67, "activeEffects": [1306, 1309]}, {"index": 130, "name": "ACHERNAR SECUNDUS", "sector": "Borgus", "currentOwner": "Terminids", "health": 1485136, "maxHealth": 2000000, "players": 3004, "attacking": false, "resistance": -0.5, "activeEffects": [1232, 1395, 1245, 1243, 1401, 1400, 1219]}, {"index": 131, "name": "ACHIRD III", "sector": "Borgus", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 10, "attacking": false, "resistance": 0.25, "activeEffects": [1395]}, {"index": 132, "name": "ACRAB XI", "sector": "Ursa", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 133, "name": "ACRUX IX", "sector": "Ursa", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 134, "name": "ACUBENS PRIME", "sector": "Gallux", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 135, "name": "ADHARA", "sector": "Gallux", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 1, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 136, "name": "AFOYAY BAY", "sector": "Gallux", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 9, "attacking": false, "resistance": 1.5, "activeEffects": [1344]}, {"index": 137, "name": "AIN-5", "sector": "Hanzo", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": [1379, 1380]}, {"index": 138, "name": "ALAIRT III", "sector": "Hanzo", "currentOwner": "Illuminate", "health": 2200000, "maxHealth": 2200000, "players": 4, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 139, "name": "ALAMAK VII", "sector": "Hanzo", "currentOwner": "Illuminate", "health": 2300000, "maxHealth": 2300000, "players": 7, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 140, "name": "ALARAPH", "sector": "Akira", "currentOwner": "Illuminate", "health": 1733897, "maxHealth": 1800000, "players": 604, "attacking": false, "resistance": 0.0, "activeEffects": [1403, 1402]}, {"index": 141, "name": "ALATHFAR XI", "sector": "Akira", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 0, "attacking": false, "resistance": 0.68, "activeEffects": []}, {"index": 142, "name": "ANDAR", "sector": "Akira", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 0, "attacking": false, "resistance": 0.94, "activeEffects": []}, {"index": 143, "name": "ASPEROTH PRIME", "sector": "Akira", "currentOwner": "Illuminate", "health": 1790444, "maxHealth": 1800000, "players": 103, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 144, "name": "BELLATRIX", "sector": "Guang", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 0.5, "activeEffects": []}, {"index": 145, "name": "BOTEIN", "sector": "Guang", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 146, "name": "OSUPSAM", "sector": "Tarragon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 147, "name": "BRINK-2", "sector": "Tarragon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 148, "name": "BUNDA SECUNDUS", "sector": "Tarragon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 149, "name": "CANOPUS", "sector": "Tarragon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 150, "name": "CAPH", "sector": "Theseus", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 1, "attacking": false, "resistance": 0.68, "activeEffects": []}, {"index": 151, "name": "CASTOR", "sector": "Theseus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 152, "name": "DURGEN", "sector": "Severin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 153, "name": "DRAUPNIR", "sector": "Xzar", "currentOwner": "Humans", "health": 1800000, "maxHealth": 1800000, "players": 3, "attacking": false, "resistance": 0.83, "activeEffects": []}, {"index": 154, "name": "MORT", "sector": "Xzar", "currentOwner": "Humans", "health": 1400000, "maxHealth": 1400000, "players": 0, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 155, "name": "INGMAR", "sector": "Xzar", "currentOwner": "Humans", "health": 1800000, "maxHealth": 1800000, "players": 1, "attacking": false, "resistance": 0.83, "activeEffects": []}, {"index": 156, "name": "CHARBAL-VII", "sector": "Andromeda", "currentOwner": "Automaton", "health": 2000000, "maxHealth": 2000000, "players": 208, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 157, "name": "CHARON PRIME", "sector": "Andromeda", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 476, "attacking": false, "resistance": 3.5, "activeEffects": []}, {"index": 158, "name": "CHOEPESSA IV", "sector": "Trigon", "currentOwner": "Humans", "health": 3200000, "maxHealth": 3200000, "players": 10, "attacking": false, "resistance": 0.16, "activeEffects": []}, {"index": 159, "name": "CHOOHE", "sector": "Lacaille", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 895, "attacking": false, "resistance": 2.5, "activeEffects": []}, {"index": 160, "name": "CHORT BAY", "sector": "Lacaille", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 4.5, "activeEffects": [1365]}, {"index": 161, "name": "CLAORELL", "sector": "Tanis", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 5, "attacking": false, "resistance": 0.23, "activeEffects": [1198]}, {"index": 162, "name": "CLASA", "sector": "Tanis", "currentOwner": "Humans", "health": 1700000, "maxHealth": 1700000, "players": 0, "attacking": false, "resistance": 2.35, "activeEffects": [1353]}, {"index": 163, "name": "DEMIURG", "sector": "Tanis", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 164, "name": "DENEB SECUNDUS", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 165, "name": "ELECTRA BAY", "sector": "Arturion", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 166, "name": "ENULIALE", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 6.0, "activeEffects": [1193, 1190]}, {"index": 167, "name": "EPSILON PHOENCIS VI", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 6.0, "activeEffects": [1188, 1190]}, {"index": 168, "name": "ERATA PRIME", "sector": "Umlaut", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 23, "attacking": false, "resistance": 1.0, "activeEffects": [1395]}, {"index": 169, "name": "ESTANU", "sector": "Draco", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 5, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 170, "name": "FORI PRIME", "sector": "Draco", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 12, "attacking": false, "resistance": 2.0, "activeEffects": [1395]}, {"index": 171, "name": "GACRUX", "sector": "Jin Xi", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 115, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 172, "name": "GAR HAREN", "sector": "Jin Xi", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 194, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 173, "name": "GATRIA", "sector": "Jin Xi", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 786, "attacking": false, "resistance": 0.67, "activeEffects": []}, {"index": 174, "name": "GEMMA", "sector": "Ursa", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 175, "name": "GRAND ERRANT", "sector": "Farsight", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 7, "attacking": false, "resistance": 1.5, "activeEffects": [1395]}, {"index": 176, "name": "HADAR", "sector": "Ferris", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 177, "name": "HAKA", "sector": "Leo", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 178, "name": "HALDUS", "sector": "Ferris", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 30, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 179, "name": "HALIES PORT", "sector": "Leo", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 180, "name": "HERTHON SECUNDUS", "sector": "Ferris", "currentOwner": "Illuminate", "health": 1795804, "maxHealth": 1800000, "players": 28, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 181, "name": "HESOE PRIME", "sector": "Rigel", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 69, "attacking": false, "resistance": 4.0, "activeEffects": []}, {"index": 182, "name": "HEZE BAY", "sector": "Hanzo", "currentOwner": "Illuminate", "health": 1790625, "maxHealth": 1800000, "players": 59, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 183, "name": "HORT", "sector": "Rigel", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 2, "attacking": false, "resistance": 0.68, "activeEffects": []}, {"index": 184, "name": "HYDROBIUS", "sector": "Omega", "currentOwner": "Illuminate", "health": 1400000, "maxHealth": 1400000, "players": 5, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 185, "name": "KARLIA", "sector": "Omega", "currentOwner": "Illuminate", "health": 1260836, "maxHealth": 1400000, "players": 1164, "attacking": false, "resistance": 0.0, "activeEffects": [1402, 1403]}, {"index": 186, "name": "KEID", "sector": "Akira", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 187, "name": "KHANDARK", "sector": "Guang", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 188, "name": "KLAKA 5", "sector": "Alstrad", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 189, "name": "KNETH PORT", "sector": "Alstrad", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 190, "name": "KRAZ", "sector": "Alstrad", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 191, "name": "KUMA", "sector": "Hawking", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 192, "name": "LASTOFE", "sector": "Theseus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 193, "name": "LENG SECUNDUS", "sector": "Quintus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 194, "name": "LESATH", "sector": "Lacaille", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 4, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 195, "name": "MAIA", "sector": "Severin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 196, "name": "MALEVELON CREEK", "sector": "Severin", "currentOwner": "Humans", "health": 1400000, "maxHealth": 1400000, "players": 0, "attacking": false, "resistance": 1.07, "activeEffects": []}, {"index": 197, "name": "MANTES", "sector": "Xzar", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 3, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 198, "name": "MARFARK", "sector": "Andromeda", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 12, "attacking": false, "resistance": 0.75, "activeEffects": [1360, 1361]}, {"index": 199, "name": "MARTALE", "sector": "Andromeda", "currentOwner": "Automaton", "health": 1500000, "maxHealth": 1500000, "players": 1027, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 200, "name": "MATAR BAY", "sector": "Andromeda", "currentOwner": "Automaton", "health": 1600000, "maxHealth": 1600000, "players": 2260, "attacking": false, "resistance": 1.25, "activeEffects": []}, {"index": 201, "name": "MEISSA", "sector": "Ymir", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 12, "attacking": false, "resistance": 4.5, "activeEffects": [1387, 1360, 1361]}, {"index": 202, "name": "MEKBUDA", "sector": "Valdis", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 7.0, "activeEffects": []}, {"index": 203, "name": "MENKENT", "sector": "Hydra", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 5, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 204, "name": "MERAK", "sector": "Valdis", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 3.5, "activeEffects": [1246]}, {"index": 205, "name": "MERGA IV", "sector": "Valdis", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 606, "attacking": false, "resistance": 7.0, "activeEffects": []}, {"index": 206, "name": "MINCHIR", "sector": "Gellert", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 207, "name": "MINTORIA", "sector": "Gellert", "currentOwner": "Automaton", "health": 1300000, "maxHealth": 1300000, "players": 1042, "attacking": false, "resistance": 1.15, "activeEffects": [1324, 1360, 1361]}, {"index": 208, "name": "MORDIA 9", "sector": "Hawking", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 209, "name": "NABATEA SECUNDUS", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 6.0, "activeEffects": [1188, 1190]}, {"index": 210, "name": "NAVI VII", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 6.0, "activeEffects": [1188, 1190]}, {"index": 211, "name": "NIVEL 43", "sector": "Mirin", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 209, "attacking": false, "resistance": 1.5, "activeEffects": [1187, 1313, 1314]}, {"index": 212, "name": "OSHAUNE", "sector": "Mirin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 8, "attacking": false, "resistance": 5.0, "activeEffects": [1333, 1310, 1309, 1308, 1303, 1306, 1307]}, {"index": 213, "name": "OVERGOE PRIME", "sector": "Sten", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 214, "name": "PANDION-XXIV", "sector": "Jin Xi", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 472, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 215, "name": "PARTION", "sector": "Sten", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 208, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 216, "name": "PEACOCK", "sector": "Sten", "currentOwner": "Terminids", "health": 1300000, "maxHealth": 1300000, "players": 1, "attacking": false, "resistance": 1.54, "activeEffects": []}, {"index": 217, "name": "PHACT BAY", "sector": "Jin Xi", "currentOwner": "Terminids", "health": 2200000, "maxHealth": 2200000, "players": 3184, "attacking": false, "resistance": 1.14, "activeEffects": []}, {"index": 218, "name": "PHERKAD SECUNDUS", "sector": "Farsight", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 6, "attacking": false, "resistance": 1.5, "activeEffects": [1395, 1386, 1244]}, {"index": 219, "name": "POLARIS PRIME", "sector": "Farsight", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 1, "attacking": false, "resistance": 0.75, "activeEffects": []}, {"index": 220, "name": "POLLUX 31", "sector": "Farsight", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 221, "name": "PRASA", "sector": "Farsight", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 222, "name": "PROPUS", "sector": "Leo", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 223, "name": "RAS ALGETHI", "sector": "Leo", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 224, "name": "RD-4", "sector": "Rigel", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 129, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 225, "name": "ROGUE 5", "sector": "Rigel", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 18, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 226, "name": "RIRGA BAY", "sector": "Rigel", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 27, "attacking": false, "resistance": 1.14, "activeEffects": []}, {"index": 227, "name": "SEASSE", "sector": "Omega", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 4, "attacking": false, "resistance": 8.0, "activeEffects": []}, {"index": 228, "name": "SENGE 23", "sector": "Omega", "currentOwner": "Illuminate", "health": 1300000, "maxHealth": 1300000, "players": 416, "attacking": false, "resistance": 0.77, "activeEffects": [1414, 1413, 1379, 1380]}, {"index": 229, "name": "SETIA", "sector": "Omega", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 230, "name": "SHETE", "sector": "Xi Tauri", "currentOwner": "Illuminate", "health": 1400000, "maxHealth": 1400000, "players": 2, "attacking": false, "resistance": 0.71, "activeEffects": []}, {"index": 231, "name": "SIEMNOT", "sector": "Xi Tauri", "currentOwner": "Illuminate", "health": 1000000, "maxHealth": 1000000, "players": 245, "attacking": false, "resistance": 1.0, "activeEffects": [1377, 1378]}, {"index": 232, "name": "SIRIUS", "sector": "Xi Tauri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 233, "name": "SKAT BAY", "sector": "Xi Tauri", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 234, "name": "SPHERION", "sector": "Quintus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 235, "name": "STOR THA PRIME", "sector": "Quintus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 236, "name": "STOUT", "sector": "Quintus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 237, "name": "TERMADON", "sector": "Quintus", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 238, "name": "TIBIT", "sector": "Severin", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 239, "name": "TIEN KWAN", "sector": "Theseus", "currentOwner": "Humans", "health": 2200000, "maxHealth": 2200000, "players": 0, "attacking": false, "resistance": 0.68, "activeEffects": []}, {"index": 240, "name": "TROOST", "sector": "Trigon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 241, "name": "UBANEA", "sector": "Severin", "currentOwner": "Humans", "health": 1600000, "maxHealth": 1600000, "players": 0, "attacking": false, "resistance": 0.94, "activeEffects": []}, {"index": 242, "name": "USTOTU", "sector": "Trigon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 243, "name": "VANDALON IV", "sector": "Trigon", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 244, "name": "VARYLIA 5", "sector": "Trigon", "currentOwner": "Humans", "health": 1400000, "maxHealth": 1400000, "players": 3, "attacking": false, "resistance": 0.71, "activeEffects": []}, {"index": 245, "name": "WASAT", "sector": "Ymir", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 4, "attacking": false, "resistance": 0.75, "activeEffects": []}, {"index": 246, "name": "VEGA BAY", "sector": "Ymir", "currentOwner": "Humans", "health": 1500000, "maxHealth": 1500000, "players": 4, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 247, "name": "WEZEN", "sector": "Ymir", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 248, "name": "VINDEMITARIX PRIME", "sector": "Valdis", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 7.0, "activeEffects": [1248, 1249]}, {"index": 249, "name": "X-45", "sector": "Ymir", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 4, "attacking": false, "resistance": 2.0, "activeEffects": []}, {"index": 250, "name": "YED PRIOR", "sector": "Tanis", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 2, "attacking": false, "resistance": 0.0, "activeEffects": []}, {"index": 251, "name": "ZEFIA", "sector": "Tanis", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": [1360, 1361]}, {"index": 252, "name": "ZOSMA", "sector": "Gellert", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 253, "name": "ZZANIAH PRIME", "sector": "Gellert", "currentOwner": "Automaton", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 254, "name": "SKITTER", "sector": "Hawking", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 255, "name": "EUPHORIA III", "sector": "Hawking", "currentOwner": "Humans", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 1.5, "activeEffects": []}, {"index": 256, "name": "DIASPORA X", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 1, "attacking": false, "resistance": 6.0, "activeEffects": [1190, 1193]}, {"index": 257, "name": "GEMSTONE BLUFFS", "sector": "L'estrade", "currentOwner": "Terminids", "health": 1000000, "maxHealth": 1000000, "players": 0, "attacking": false, "resistance": 6.0, "activeEffects": [1188, 1190]}, {"index": 258, "name": "ZAGON PRIME", "sector": "Mirin", "currentOwner": "Terminids", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 5.0, "activeEffects": [1188, 1311, 1318, 1319, 1320]}, {"index": 259, "name": "OMICRON", "sector": "L'estrade", "currentOwner": "Terminids", "health": 3000000, "maxHealth": 3000000, "players": 927, "attacking": false, "resistance": 3.33, "activeEffects": [1188, 1311, 1318, 1319, 1320, 1307, 1308, 1306, 1309]}, {"index": 260, "name": "CYBERSTAN", "sector": "Valdis", "currentOwner": "Automaton", "health": 15000000, "maxHealth": 15000000, "players": 29, "attacking": false, "resistance": 6.67, "activeEffects": [1360, 1361, 1246]}, {"index": 261, "name": "FURY", "sector": "Xzar", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 1.0, "activeEffects": [1248, 1249]}, {"index": 262, "name": "K", "sector": "Trigon", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 3, "attacking": false, "resistance": 0.75, "activeEffects": []}, {"index": 264, "name": "NEW INSIGHT", "sector": "TBD", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 0.75, "activeEffects": [1190]}, {"index": 265, "name": "WAYWARD", "sector": "TBD", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 0.75, "activeEffects": [1190]}, {"index": 266, "name": "MOX", "sector": "Trigon", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 6, "attacking": false, "resistance": 1.0, "activeEffects": []}, {"index": 267, "name": "BIG ROCK", "sector": "Sten", "currentOwner": "Terminids", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 1.25, "activeEffects": []}, {"index": 268, "name": "LUXURIANT", "sector": "Jin Xi", "currentOwner": "Terminids", "health": 1395785, "maxHealth": 2000000, "players": 55803, "attacking": false, "resistance": 1.25, "activeEffects": []}, {"index": 269, "name": "BRILLIANCE", "sector": "Orion", "currentOwner": "Terminids", "health": 2000000, "maxHealth": 2000000, "players": 7233, "attacking": false, "resistance": 1.25, "activeEffects": [1395, 1244, 1386, 1401, 1400]}, {"index": 270, "name": "FRONTERIA", "sector": "Umlaut", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 0, "attacking": false, "resistance": 1.25, "activeEffects": [1395]}, {"index": 271, "name": "ZYGOS", "sector": "Orion", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 2, "attacking": false, "resistance": 1.25, "activeEffects": [1243, 1245]}, {"index": 272, "name": "BASQUINE VIII", "sector": "Rigel", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 3, "attacking": false, "resistance": 1.0, "activeEffects": [1377, 1378]}, {"index": 273, "name": "ALDERIDGE COVE", "sector": "Omega", "currentOwner": "Humans", "health": 2000000, "maxHealth": 2000000, "players": 3, "attacking": false, "resistance": 0.75, "activeEffects": []}], "campaigns": [{"id": 51413, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 7, "name": "ZEA RUGOSIA", "sector": "Ferris", "currentOwner": "Illuminate"}}, {"id": 51428, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 259, "name": "OMICRON", "sector": "L'estrade", "currentOwner": "Terminids"}}, {"id": 51456, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 157, "name": "CHARON PRIME", "sector": "Andromeda", "currentOwner": "Automaton"}}, {"id": 51477, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 90, "name": "VALMOX", "sector": "Rictus", "currentOwner": "Illuminate"}}, {"id": 51481, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 178, "name": "HALDUS", "sector": "Ferris", "currentOwner": "Illuminate"}}, {"id": 51485, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 114, "name": "AURORA BAY", "sector": "Valdis", "currentOwner": "Automaton"}}, {"id": 51489, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 205, "name": "MERGA IV", "sector": "Valdis", "currentOwner": "Automaton"}}, {"id": 51514, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 181, "name": "HESOE PRIME", "sector": "Rigel", "currentOwner": "Illuminate"}}, {"id": 51539, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 231, "name": "SIEMNOT", "sector": "Xi Tauri", "currentOwner": "Illuminate"}}, {"id": 51579, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 92, "name": "GRAFMERE", "sector": "Rictus", "currentOwner": "Illuminate"}}, {"id": 51589, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 159, "name": "CHOOHE", "sector": "Lacaille", "currentOwner": "Automaton"}}, {"id": 51596, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 124, "name": "BORE ROCK", "sector": "Falstaff", "currentOwner": "Terminids"}}, {"id": 51606, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 224, "name": "RD-4", "sector": "Rigel", "currentOwner": "Illuminate"}}, {"id": 51627, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 70, "name": "BLISTICA", "sector": "Gellert", "currentOwner": "Automaton"}}, {"id": 51631, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 207, "name": "MINTORIA", "sector": "Gellert", "currentOwner": "Automaton"}}, {"id": 51633, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 199, "name": "MARTALE", "sector": "Andromeda", "currentOwner": "Automaton"}}, {"id": 51634, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 200, "name": "MATAR BAY", "sector": "Andromeda", "currentOwner": "Automaton"}}, {"id": 51638, "faction": "Automaton", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 156, "name": "CHARBAL-VII", "sector": "Andromeda", "currentOwner": "Automaton"}}, {"id": 51648, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 217, "name": "PHACT BAY", "sector": "Jin Xi", "currentOwner": "Terminids"}}, {"id": 51649, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 214, "name": "PANDION-XXIV", "sector": "Jin Xi", "currentOwner": "Terminids"}}, {"id": 51653, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 211, "name": "NIVEL 43", "sector": "Mirin", "currentOwner": "Terminids"}}, {"id": 51678, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 225, "name": "ROGUE 5", "sector": "Rigel", "currentOwner": "Illuminate"}}, {"id": 51679, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 228, "name": "SENGE 23", "sector": "Omega", "currentOwner": "Illuminate"}}, {"id": 51680, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 140, "name": "ALARAPH", "sector": "Akira", "currentOwner": "Illuminate"}}, {"id": 51681, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 95, "name": "GENESIS PRIME", "sector": "Rictus", "currentOwner": "Illuminate"}}, {"id": 51682, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 143, "name": "ASPEROTH PRIME", "sector": "Akira", "currentOwner": "Illuminate"}}, {"id": 51683, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 182, "name": "HEZE BAY", "sector": "Hanzo", "currentOwner": "Illuminate"}}, {"id": 51684, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 180, "name": "HERTHON SECUNDUS", "sector": "Ferris", "currentOwner": "Illuminate"}}, {"id": 51685, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 185, "name": "KARLIA", "sector": "Omega", "currentOwner": "Illuminate"}}, {"id": 51686, "faction": "Illuminate", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 93, "name": "NEW STOCKHOLM", "sector": "Hanzo", "currentOwner": "Illuminate"}}, {"id": 51688, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 269, "name": "BRILLIANCE", "sector": "Orion", "currentOwner": "Terminids"}}, {"id": 51690, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 215, "name": "PARTION", "sector": "Sten", "currentOwner": "Terminids"}}, {"id": 51691, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 130, "name": "ACHERNAR SECUNDUS", "sector": "Borgus", "currentOwner": "Terminids"}}, {"id": 51692, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 100, "name": "TRANDOR", "sector": "Sten", "currentOwner": "Terminids"}}, {"id": 51693, "faction": "Terminids", "type": 0, "campaignType": "liberation", "count": null, "planet": {"index": 268, "name": "LUXURIANT", "sector": "Jin Xi", "currentOwner": "Terminids"}}], "assignments": {"id": 3348823937, "briefing": "Liberate the designated enemy planets, which are highly likely to be harboring the dissidents responsible for sabotaging the TCS+.", "title": "MAJOR ORDER", "tasks": [{"type": 11, "values": [1, 1, 171], "valueTypes": [3, 11, 12]}, {"type": 11, "values": [1, 1, 172], "valueTypes": [3, 11, 12]}, {"type": 11, "values": [1, 1, 268], "valueTypes": [3, 11, 12]}], "progress": [1, 1, 0], "expiration": "", "deadline": "2026-08-31T12:04:34.3348137Z", "serverTime": "2026-08-30T07:32:21Z"}, "dispatches": [{"id": 3893, "published": "2026-08-23T10:20:25Z", "type": 0, "message": "<i=3>VOID EXPANSION DETECTED</i>\n\nThe expansion rate of <i=1>the Void</i> has accelerated, engulfing a substantial swath of outer galactic territory. \n\nAffected sectors have been further consumed by the spatial vacuum. Helldivers are advised to focus all attention on efforts to map the Void. Preventing its further expansion is of the utmost urgency."}, {"id": 3892, "published": "2026-08-22T16:59:58Z", "type": 0, "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized use of the <i=1>Orbital Laser</i>  at the <i=1>Void Source Planet</i> for the next 24 hours."}, {"id": 3891, "published": "2026-08-22T08:44:37Z", "type": 0, "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 3-person team has entered the core chasm. \n\nHigh Command notes that while some personnel have begun weeping tears of chromatic, iridescent fluid, this is a standard, completely non-hazardous biological response to advanced scientific discovery. The team members continue sprinting forward into the glorious blinding light."}, {"id": 3890, "published": "2026-08-22T07:50:50Z", "type": 0, "message": "<i=3>STRATEGIC OPPORTUNITY SEIZED</i>\n\nThe Helldivers successfully achieved the required quotas to catalyze urgent research into <i=1>Void Blossoms</i>, delivering an absolute triumph for environmental enforcement.\n\nUsing data cross-referenced from other pacified worlds, the <i=1>Ministry of Science</i> has formulated a rudimentary chemical compound to impair these uncommonly hostile botanical assets. Utilizing tactical crop-dusting protocols, this will <i=1>weaken Illuminate defenses on Seasse</i>."}, {"id": 3889, "published": "2026-08-21T19:15:22Z", "type": 0, "message": "<i=3>VOID EXPANSION DETECTED</i>\n\nThe expanding perimeter of <i=1>the Void</i> has surpassed all projections. Massive swathes of galactic real estate have been consumed by the anomaly.\n\nAny colonial populations within the engulfed coordinates are advised to work from home, where viable, and to otherwise uphold their professional commitments until notified otherwise."}, {"id": 3888, "published": "2026-08-21T14:07:52Z", "type": 0, "message": "<i=3>NEW STRATEGIC OPPORTUNITY</i>\n\n<i=1>Void Blossoms</i> disperse toxic pollination, reshape worlds, and appear to invigorate <i=1>Illuminate</i> forces. Synthesizing chemical countermeasures to this invasive flora will reduce <i=1>Illuminate</i> planetary resistance on the source world of <i=1>Seasse</i>.\n\nHelldivers: extract <i=1>1,500,000 samples on UVP DELTA</i>, terminate <i=1>25,000,000 Vote Snatchers on HYDROBIUS</i>, and complete <i=1>50,000 operations on UVP BETA</i> to hasten urgent research."}, {"id": 3887, "published": "2026-08-20T22:08:17Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has docked at <i=1>Afoyay Bay</i>. A workforce of eager legally-mandated volunteers has been transported from the <i=1>CECOD (Center for the Confinement of Dissidence)</i> secure relocation site to carry out manual bio-remediation.\n\nThe <i=1>DURs (Dissidents-Undergoing-Reeducation)</i> have also been tasked with restoring the DSS to match original inventory manifests, and report exceptional morale at this generous opportunity to earn atonement."}, {"id": 3886, "published": "2026-08-20T21:31:01Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nTo fully resolve minor navigational discrepancies aboard the <i=1>DSS</i>, High Command has remotely initiated a station-wide environmental optimization cycle.\n\nThis deep sanitization has successfully returned the vessel to sterile parameters and hereby concludes the DSS examination to a satisfactory standard. Remote helm controls have locked a direct vector to <i=1>Afoyay Bay</i> for routine maintenance and post-cycle ventilation."}, {"id": 3885, "published": "2026-08-20T20:00:53Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has completed an unscheduled FTL jump toward <i=1>Calypso</i>, forgoing the standard administrative channels for requests of this nature.\n\nWhile the crew's sudden interest in this sector is under review, the on-board <i=1>Ministry of Truth</i> examiners are commended for their diligence, encouraged to complete their audit, and reminded that High Command has remotely disabled any and all manual controls aboard the station until further notice."}, {"id": 3884, "published": "2026-08-20T13:45:01Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has temporarily ceased any and all communication transmissions. Automated diagnostics confirm transceiver hardware is operating at 100% efficiency. \n\nHigh Command has officially attributed this ongoing silence to a mandatory, station-wide silent contemplation period. Normal communications, log updates, and official examiner reports will resume immediately upon its scheduled conclusion."}, {"id": 3883, "published": "2026-08-20T09:03:27Z", "type": 0, "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized fleetwide use of the <i=1>Orbital Railcannon Stratagem</i> with <i=1>reduced waiting period between calldowns</i> at the <i=1>Void Source Planet</i> for the next 48 hours."}, {"id": 3882, "published": "2026-08-20T08:46:11Z", "type": 0, "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nHigh Command commends the elite 11-person science team for securing the tertiary mantle. Ground logs note an exceptionally pleasant, rhythmic harmonic resonance echoing from the bedrock, which the team describes as \"the singing geometry.\" \n\nCore drilling continues to advance seamlessly toward the absolute center of the Void."}, {"id": 3881, "published": "2026-08-20T01:45:26Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nExaminers report the presence of chemical oxidation anomalies resembling alphanumeric patterns on several <i=1>DSS</i> bulkheads. Rumors that these crude markings may spell \"Calypso\" are unfounded, unscientific, and wholly un-Democratic.\n\nFollowing an exhaustive risk assessment, all writing implements on the DSS have been incinerated, and all nutritional paste has been fortified with experimental binding agents to eliminate all biological pigment sources."}, {"id": 3880, "published": "2026-08-19T18:29:16Z", "type": 0, "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ASPEROTH PRIME</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ASPEROTH PRIME</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."}, {"id": 3879, "published": "2026-08-19T15:02:18Z", "type": 0, "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>KARLIA</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend KARLIA</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."}, {"id": 3878, "published": "2026-08-19T13:44:13Z", "type": 0, "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALARAPH</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALARAPH</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."}, {"id": 3877, "published": "2026-08-19T13:45:26Z", "type": 0, "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS (Democracy Space Station)</i> is undergoing examination after exiting the Void. Reports of rhythmic knocking across the hull have been independently confirmed, and though they have intensified, High Command maintains these vibrations are merely localized thermal contraction. \n\nThe examiners assigned by the <i=1>Ministry of Truth</i> have volunteered to remain aboard indefinitely to monitor the situation; as a precaution, all outbound shuttle access is suspended."}, {"id": 3876, "published": "2026-08-19T12:21:17Z", "type": 0, "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALAIRT III</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALAIRT III</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."}, {"id": 3875, "published": "2026-08-19T08:46:11Z", "type": 0, "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 18-person research team has reached the secondary lithospheric layer of <i=1>Seasse</i>. Sub-surface telemetry remains highly encouraging.\n\nThe team has voluntarily deactivated their atmospheric filtration masks to better sample the localized, ecosystem through their own sense of Democracy. Progress remains entirely on schedule."}, {"id": 3874, "published": "2026-08-18T14:36:41Z", "type": 0, "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 20-person Ministry of Science team has successfully breached the crust of <i=1>Seasse</i>. Their objective: to map the subterranean geological geometry and initiate the completely understood dissolution of the Void from its physical core.\n\nHigh Command reports optimal morale as these brave Patriots begin their descent into the anomaly."}, {"id": 3873, "published": "2026-08-18T12:09:31Z", "type": 0, "message": "<i=3>NEW MAJOR ORDER</i>\n\nThe Helldivers have reached the heart of the Void: <i=1>Seasse</i>, and must liberate the planet by any means necessary to stop the spread of this breeding ground for Tyranny.\n\nWhile forces clear the surface, an elite 20-person Ministry of Science team will descend into its depths to collapse <i=1>the Void</i> from within. High Command guarantees this process is entirely safe and completely understood."}, {"id": 3872, "published": "2026-08-18T11:07:26Z", "type": 0, "message": "<i=3>FINAL PREPARATIONS: SEASSE</i>\n\nThe Void Warp Relay calibration is complete. Helldivers are advised: <i=1>T-Minus 1 Hour to Landfall</i>.\n\nThe path to to <i=1>Seasse</i>, the Void source planet, is fully stabilized. All Helldivers are ordered to conclude preparatory operations. Ready for imminent deployment into the heart of the anomaly, and the lawful eradication of the Void.\n\nFor Super Earth."}, {"id": 3871, "published": "2026-08-18T09:10:44Z", "type": 0, "message": "<i=3>T-MINUS 3 HOURS: SEASSE</i>\n\nFinal systems checks are underway across the vanguard fleet. The Void Warp Relay is approaching the terminal energy density required for transit on schedule.\n\nHigh Command reminds all personnel to report to battle stations and immediately report any unapproved physical mutations. Continue to prepare for imminent, synchronized FTL transit."}, {"id": 3870, "published": "2026-08-18T06:09:14Z", "type": 0, "message": "<i=3>T-MINUS 6 HOURS: SEASSE</i>\n\nThe Void Warp Relay has entered its final power-up sequence. The jump corridor to the Void source planet will open in exactly six hours.\n\nLogistics teams will soon finalize the distribution of advanced arsenal augmentations across all participating destroyer hulls. Ensure all standard-issue compliance tools are fully serviced."}, {"id": 3869, "published": "2026-08-18T05:00:03Z", "type": 0, "message": "<i=3>T-MINUS 7 HOURS: SEASSE</i>\n\nThe Void Warp Relay is nearing optimal calibration. The jump to Seasse, the Void source planet will commence in 7 hours.\n\nTactical augmentations procured by the Helldivers during this preparatory phase are currently being processed by fleet logistics. The <i=1>Illuminate</i> will soon face the inescapable reality of Managed Democracy."}, {"id": 3868, "published": "2026-08-18T04:57:51Z", "type": 0, "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nUVP DELTA is now reachable, thanks to Helldiver efforts. All detected planet within the Void are now accessible, with the exception of one, which is believed to lie at the Void's astro-temporal center."}, {"id": 3867, "published": "2026-08-18T00:56:39Z", "type": 0, "message": "<i=3>MAJOR ORDER WON</i>\n\nThe Helldivers’ investigative charting of <i=1>the Void</i>'s initial layer was a masterclass in conquering the unknown. \n\nData extracted from the three initial worlds allowed SEAF navigation arrays to successfully calibrate despite the unlawful spacetime anomalies, narrowing search parameters for the hidden <i=1>Illuminate source planet</i>. As such, the offensive toward the enemy's central base of operations remains on schedule, and with immediate SEAF support available."}, {"id": 3866, "published": "2026-08-17T18:31:31Z", "type": 0, "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nTo aid their valiant efforts, all Helldiver deployments on <i=1>UVP ALPHA</i> will be augmented with the <i=1>Shield Generator Pack</i> Stratagem for the next <i=1>24 hours</i>."}, {"id": 3865, "published": "2026-08-17T18:19:58Z", "type": 0, "message": "<i=3>SEASSE LOCATED</i>\n\nThe body at the Void barycenter closely matches known properties of the planet Seasse, the first to fall into the Void. This confirms theories on approaching the Void's origin. \n\nNearly enough data has been gathered to allow travel to Seasse. The Helldivers are ordered to take all necessary measures to hasten the final stages of research.\n"}, {"id": 3864, "published": "2026-08-17T18:17:16Z", "type": 0, "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nCoordinates for <i=1>HYDROBIUS</i> have been determined within .01% error, following extensive Void material analysis. Operations on the planet may now commence.\n\nMatter from planets within the Void has been discovered to posses varying levels of a novel property similar in principle to radiation. Higher levels of radiation are believed to indicate longer exposure to the Void, and thus point towards the Void's origin."}], "dss": {"planetIndex": 268, "activeEffectIds": [], "electionEnd": "1972-07-16T14:28:00Z", "electionEndWarTime": 80144880, "tacticalActions": [{"name": "EAGLE STORM", "status": 1, "expireAtWarTime": 80245680, "effectIds": [1209, 1212, 1216], "activeEffectIds": [], "cost": [{"target": 86400, "current": 49399.8, "deltaPerSec": 0.10006601, "maxDonation": 75, "maxDonationPeriodSec": 86400}]}, {"name": "ORBITAL BLOCKADE", "status": 3, "expireAtWarTime": 80229190, "effectIds": [1210, 1213, 1215], "activeEffectIds": [], "cost": [{"target": 86400, "current": 0, "deltaPerSec": 0.39900205, "maxDonation": 50000, "maxDonationPeriodSec": 86400}]}, {"name": "HEAVY ORDNANCE DISTRIBUTION", "status": 1, "expireAtWarTime": 80332080, "effectIds": [1237, 1214], "activeEffectIds": [], "cost": [{"target": 86400, "current": 40210.5, "deltaPerSec": 0.07895705, "maxDonation": 50, "maxDonationPeriodSec": 86400}]}], "flags": 1, "clientTimeMs": 1788075132014, "currentWarTime": 80138870}, "news": [{"id": 3893, "original": "VOID EXPANSION DETECTED\n\nThe expansion rate of the Void has accelerated, engulfing a substantial swath of outer galactic territory. \n\nAffected sectors have been further consumed by the spatial vacuum. Helldivers are advised to focus all attention on efforts to map the Void. Preventing its further expansion is of the utmost urgency.", "translated": "探测到寂域膨胀\n\n寂域的膨胀速度加快，吞噬了银河系外的大片领土。\n\n受影响的行业已被空间真空进一步消耗。建议绝地潜兵将所有注意力集中在绘制寂域地图上。防止其进一步扩大是当务之急。", "published_at": "2026-08-23T10:14:00Z", "translated_at": "2026-08-23T10:24:17Z", "source": "dispatch"}, {"id": 3892, "original": "ARSENAL AUGMENTATION\n\nHigh Command has authorized use of the Orbital Laser  at the Void Source Planet for the next 24 hours.", "translated": "ARSENAL AUMENTATION\n\n最高司令部已授权在未来24小时内在寂域源行星使用轨道激光。", "published_at": "2026-08-22T16:53:15Z", "translated_at": "2026-08-22T17:08:42Z", "source": "dispatch"}, {"id": 3891, "original": "SEASSE SCIENCE EXPEDITION SITREP\n\nThe elite 3-person team has entered the core chasm. \n\nHigh Command notes that while some personnel have begun weeping tears of chromatic, iridescent fluid, this is a standard, completely non-hazardous biological response to advanced scientific discovery. The remaining team members continue sprinting forward into the glorious blinding light.", "translated": "西斯科学考察团\n\n精英三人团队已进入核心裂缝。\n\n最高指挥部指出，虽然一些人员已经开始流下彩色虹彩液体的眼泪，但这是对先进科学发现的标准、完全无害的生物反应。剩下的队员继续冲向耀眼的光芒。", "published_at": "2026-08-22T08:37:38Z", "translated_at": "2026-08-22T08:46:04Z", "source": "dispatch"}, {"id": 3890, "original": "STRATEGIC OPPORTUNITY SEIZED\n\nThe Helldivers successfully achieved the required quotas to catalyze urgent research into Void Blossoms, delivering an absolute triumph for environmental enforcement.\n\nUsing data cross-referenced from other pacified worlds, the Ministry of Science has formulated a rudimentary chemical compound to impair these uncommonly hostile botanical assets. Utilizing tactical crop-dusting protocols, this will weaken Illuminate defenses on Seasse.", "translated": "战略机遇被抓住\n\n绝地潜兵成功地实现了所需的配额，以促进对寂域花朵的紧急研究，为环境执法带来了绝对的胜利。\n\n科学部利用其他和平世界的交叉参考数据，研制出了一种基本的化合物，以削弱这些罕见的敌对植物资产。利用战术作物除尘协议，这将削弱光能者在西斯的防御。", "published_at": "2026-08-22T07:43:58Z", "translated_at": "2026-08-22T07:49:26Z", "source": "dispatch"}, {"id": 3889, "original": "VOID EXPANSION DETECTED\n\nThe expanding perimeter of the Void has surpassed all projections. Massive swathes of galactic real estate have been consumed by the anomaly.\n\nAny colonial populations within the engulfed coordinates are advised to work from home, where viable, and to otherwise uphold their professional commitments until notified otherwise.", "translated": "检测到寂域膨胀\n\n寂域的膨胀周长已超过所有投影。银河系的大片房地产已被异常现象吞噬。\n\n建议被吞没坐标内的任何殖民地居民在可行的情况下在家工作，并在另行通知之前履行其职业承诺。", "published_at": "2026-08-21T19:08:05Z", "translated_at": "2026-08-21T19:21:57Z", "source": "dispatch"}, {"id": 3888, "original": "NEW STRATEGIC OPPORTUNITY\n\nVoid Blossoms disperse toxic pollination, reshape worlds, and appear to invigorate Illuminate forces. Synthesizing chemical countermeasures to this invasive flora will reduce Illuminate planetary resistance on the source world of Seasse.\n\nHelldivers: extract 1,500,000 samples on UVP DELTA, terminate 25,000,000 Vote Snatchers on HYDROBIUS, and complete 50,000 operations on UVP BETA to hasten urgent research.", "translated": "新的战略机遇\n\n寂域之花驱散了有毒的授粉，重塑了世界，似乎给光能者力量注入了活力。对这种入侵植物群采取综合化学对策将降低光能者对西斯源世界的地球抵抗力。\n\n绝地潜兵：在UVP德尔塔提取1500000个样本，终止哈卓毕亚斯的25000000个抢票者，并在UVP贝塔完成50000次手术，以加快紧急研究。", "published_at": "2026-08-21T14:00:27Z", "translated_at": "2026-08-21T14:09:05Z", "source": "dispatch"}, {"id": 3887, "original": "DSS STATUS UPDATE\n\nThe DSS has docked at Afoyay Bay. A workforce of eager legally-mandated volunteers has been transported from the CECOD (Center for the Confinement of Dissidence) secure relocation site to carry out manual bio-remediation.\n\nThe DURs (Dissidents-Undergoing-Reeducation) have also been tasked with restoring the DSS to match original inventory manifests, and report exceptional morale at this generous opportunity to earn atonement.", "translated": "DSS状态更新\n\nDSS已停靠在艾福亚湾。一群渴望法律授权的志愿者已经从CECOD（异见限制中心）安全的搬迁地点运送过来，进行人工生物修复。\n\nDUR（接受再教育的持不同政见者）还负责恢复DSS，使其与原始库存清单相匹配，并在这个慷慨的赎罪机会中报告异常的士气。", "published_at": "2026-08-20T22:00:34Z", "translated_at": "2026-08-20T22:06:45Z", "source": "dispatch"}, {"id": 3886, "original": "DSS STATUS UPDATE\n\nTo fully resolve minor navigational discrepancies aboard the DSS, High Command has remotely initiated a station-wide environmental optimization cycle.\n\nThis deep sanitization has successfully returned the vessel to sterile parameters and hereby concludes the DSS examination to a satisfactory standard. Remote helm controls have locked a direct vector to Afoyay Bay for routine maintenance and post-cycle ventilation.", "translated": "DSS状态更新\n\n为了完全解决DSS上的轻微导航差异，最高指挥部已远程启动了全站环境优化周期。\n\n这种深度消毒成功地使容器恢复到无菌参数，从而使DSS检查达到令人满意的标准。遥控舵控制装置已将直接矢量锁定到艾福亚湾，用于日常维护和循环后通风。", "published_at": "2026-08-20T21:23:18Z", "translated_at": "2026-08-20T21:48:24Z", "source": "dispatch"}, {"id": 3885, "original": "DSS STATUS UPDATE\n\nThe DSS has completed an unscheduled FTL jump toward Calypso, forgoing the standard administrative channels for requests of this nature.\n\nWhile the crew's sudden interest in this sector is under review, the on-board Ministry of Truth examiners are commended for their diligence, encouraged to complete their audit, and reminded that High Command has remotely disabled any and all manual controls aboard the station until further notice.", "translated": "DSS状态更新\n\nDSS已完成向卡利普索的未计划超光速跃迁跳转，放弃了此类请求的标准管理通道。\n\n虽然机组人员对这一领域的突然兴趣正在接受审查，但船上真相部的审查人员因其勤奋而受到赞扬，鼓励他们完成审计，并提醒最高指挥部在进一步通知之前已远程禁用空间站上的任何和所有手动控制。", "published_at": "2026-08-20T19:53:08Z", "translated_at": "2026-08-20T20:28:09Z", "source": "dispatch"}, {"id": 3884, "original": "DSS STATUS UPDATE\n\nThe DSS has temporarily ceased any and all communication transmissions. Automated diagnostics confirm transceiver hardware is operating at 100% efficiency. \n\nHigh Command has officially attributed this ongoing silence to a mandatory, station-wide silent contemplation period. Normal communications, log updates, and official examiner reports will resume immediately upon its scheduled conclusion.", "translated": "DSS状态更新\n\nDSS已暂时停止任何和所有通信传输。自动诊断确认收发器硬件以100%的效率运行。\n\n最高指挥部已正式将这种持续的沉默归因于一个强制性的、全站范围内的沉默沉思期。正常通信、日志更新和官方审查员报告将在预定结束后立即恢复。", "published_at": "2026-08-20T13:37:12Z", "translated_at": "2026-08-20T14:09:15Z", "source": "dispatch"}], "major_order": {"title": "MAJOR ORDER", "brief": "Liberate the designated enemy planets, which are highly likely to be harboring the dissidents responsible for sabotaging the TCS+.", "translated_brief": "释放指定的敌方行星，这些行星很可能窝藏着破坏TCS+的持不同政见者。", "translated_at": "2026-08-30T11:29:28Z"}}
+{
+ "fetchedAt": "2026-08-30T19:47:07+08:00",
+ "source": "official",
+ "player_distribution": {
+  "total": 80946,
+  "humans": 1850,
+  "terminids": 70043,
+  "automatons": 6426,
+  "illuminate": 2627,
+  "updatedAt": "2026-08-30T11:31:05.2212019Z"
+ },
+ "recon_stats": {},
+ "impactMultiplier": 0.014311918,
+ "war": {
+  "time": 80154150,
+  "statistics": {
+   "playerCount": 84350,
+   "missionsWon": 0,
+   "missionsLost": 0
+  },
+  "started": null,
+  "ended": null
+ },
+ "planets": [
+  {
+   "index": 0,
+   "name": "SUPER EARTH",
+   "sector": "Sol",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 187,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 1,
+   "name": "KLEN DAHTH II",
+   "sector": "Altus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 2,
+   "name": "PATHFINDER V",
+   "sector": "Altus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 3,
+   "name": "WIDOW'S HARBOR",
+   "sector": "Altus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 4,
+   "name": "NEW HAVEN",
+   "sector": "Altus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 5,
+   "name": "PILEN V",
+   "sector": "Altus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 6,
+   "name": "HYDROFALL PRIME",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 7,
+   "name": "ZEA RUGOSIA",
+   "sector": "Ferris",
+   "currentOwner": "Illuminate",
+   "health": 1700000,
+   "maxHealth": 1700000,
+   "players": 45,
+   "attacking": false,
+   "resistance": 2.94,
+   "activeEffects": []
+  },
+  {
+   "index": 8,
+   "name": "DARROWSPORT",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 9,
+   "name": "FORNSKOGUR II",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 10,
+   "name": "MIDASBURG",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 11,
+   "name": "CERBERUS IIIc",
+   "sector": "Cancri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 12,
+   "name": "PROSPERITY FALLS",
+   "sector": "Cancri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 13,
+   "name": "OKUL VI",
+   "sector": "Gothmar",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 14,
+   "name": "MARTYR'S BAY",
+   "sector": "Cantolus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 15,
+   "name": "FREEDOM PEAK",
+   "sector": "Cantolus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 16,
+   "name": "FORT UNION",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1287
+   ]
+  },
+  {
+   "index": 17,
+   "name": "KELVINOR",
+   "sector": "Cantolus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 18,
+   "name": "WRAITH",
+   "sector": "Idun",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 19,
+   "name": "IGLA",
+   "sector": "Kelvin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 20,
+   "name": "NEW KIRUNA",
+   "sector": "Kelvin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 21,
+   "name": "FORT JUSTICE",
+   "sector": "Kelvin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 22,
+   "name": "ZEGEMA PARADISE",
+   "sector": "Kelvin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1282
+   ]
+  },
+  {
+   "index": 23,
+   "name": "PROVIDENCE",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 24,
+   "name": "PRIMORDIA",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 25,
+   "name": "SULFURA",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": [
+    1245,
+    1243
+   ]
+  },
+  {
+   "index": 26,
+   "name": "NUBLARIA I",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 999987,
+   "maxHealth": 1000000,
+   "players": 7,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 27,
+   "name": "KRAKATWO",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": []
+  },
+  {
+   "index": 28,
+   "name": "VOLTERRA",
+   "sector": "Korpus",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  },
+  {
+   "index": 29,
+   "name": "CRUCIBLE",
+   "sector": "Korpus",
+   "currentOwner": "Humans",
+   "health": 2500000,
+   "maxHealth": 2500000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.6,
+   "activeEffects": []
+  },
+  {
+   "index": 30,
+   "name": "VEIL",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 31,
+   "name": "MARRE IV",
+   "sector": "Barnard",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 32,
+   "name": "FORT SANCTUARY",
+   "sector": "Cancri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1292
+   ]
+  },
+  {
+   "index": 33,
+   "name": "SEYSHEL BEACH",
+   "sector": "Cancri",
+   "currentOwner": "Humans",
+   "health": 2300000,
+   "maxHealth": 2300000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.11,
+   "activeEffects": []
+  },
+  {
+   "index": 34,
+   "name": "HELLMIRE",
+   "sector": "Mirin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1304,
+    1386,
+    1244
+   ]
+  },
+  {
+   "index": 35,
+   "name": "EFFLUVIA",
+   "sector": "Cancri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.25,
+   "activeEffects": []
+  },
+  {
+   "index": 36,
+   "name": "SOLGHAST",
+   "sector": "Gothmar",
+   "currentOwner": "Humans",
+   "health": 1700000,
+   "maxHealth": 1700000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.88,
+   "activeEffects": []
+  },
+  {
+   "index": 37,
+   "name": "DILUVIA",
+   "sector": "Gothmar",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  },
+  {
+   "index": 38,
+   "name": "VIRIDIA PRIME",
+   "sector": "Cantolus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 39,
+   "name": "OBARI",
+   "sector": "Cantolus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 40,
+   "name": "MYRADESH",
+   "sector": "Idun",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 41,
+   "name": "ATRAMA",
+   "sector": "Idun",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 42,
+   "name": "EMERIA",
+   "sector": "Kelvin",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.94,
+   "activeEffects": [
+    1291
+   ]
+  },
+  {
+   "index": 43,
+   "name": "BARABOS",
+   "sector": "Marspira",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 44,
+   "name": "FENMIRE",
+   "sector": "Marspira",
+   "currentOwner": "Humans",
+   "health": 2400000,
+   "maxHealth": 2400000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.1,
+   "activeEffects": []
+  },
+  {
+   "index": 45,
+   "name": "MASTIA",
+   "sector": "Marspira",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1236,
+    1272
+   ]
+  },
+  {
+   "index": 46,
+   "name": "SHALLUS",
+   "sector": "Talus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 47,
+   "name": "KRAKABOS",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 48,
+   "name": "IRIDICA",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 49,
+   "name": "AZTERRA",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": [
+    1243,
+    1245
+   ]
+  },
+  {
+   "index": 50,
+   "name": "AZUR SECUNDUS",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 2.5,
+   "activeEffects": []
+  },
+  {
+   "index": 51,
+   "name": "IVIS",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1252
+   ]
+  },
+  {
+   "index": 52,
+   "name": "SLIF",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 53,
+   "name": "CARAMOOR",
+   "sector": "Korpus",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.68,
+   "activeEffects": []
+  },
+  {
+   "index": 54,
+   "name": "KHARST",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 55,
+   "name": "EUKORIA",
+   "sector": "Morgon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 56,
+   "name": "MYRIUM",
+   "sector": "Morgon",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.12,
+   "activeEffects": []
+  },
+  {
+   "index": 57,
+   "name": "KERTH SECUNDUS",
+   "sector": "Rictus",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.12,
+   "activeEffects": []
+  },
+  {
+   "index": 58,
+   "name": "PARSH",
+   "sector": "Rictus",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 0.12,
+   "activeEffects": []
+  },
+  {
+   "index": 59,
+   "name": "REAF",
+   "sector": "Saleria",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 60,
+   "name": "IRULTA",
+   "sector": "Saleria",
+   "currentOwner": "Humans",
+   "health": 1700000,
+   "maxHealth": 1700000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.88,
+   "activeEffects": []
+  },
+  {
+   "index": 61,
+   "name": "EMORATH",
+   "sector": "Meridian",
+   "currentOwner": "Humans",
+   "health": 1900000,
+   "maxHealth": 1900000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.79,
+   "activeEffects": []
+  },
+  {
+   "index": 62,
+   "name": "ILDUNA PRIME",
+   "sector": "Meridian",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 63,
+   "name": "MAW",
+   "sector": "Idun",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 64,
+   "name": "MERIDIA",
+   "sector": "Umlaut",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 35,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": [
+    1229
+   ]
+  },
+  {
+   "index": 65,
+   "name": "BOREA",
+   "sector": "Sagan",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 66,
+   "name": "CURIA",
+   "sector": "Marspira",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 67,
+   "name": "TARSH",
+   "sector": "Marspira",
+   "currentOwner": "Humans",
+   "health": 1300000,
+   "maxHealth": 1300000,
+   "players": 7,
+   "attacking": false,
+   "resistance": 1.15,
+   "activeEffects": []
+  },
+  {
+   "index": 68,
+   "name": "SHELT",
+   "sector": "Talus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": []
+  },
+  {
+   "index": 69,
+   "name": "IMBER",
+   "sector": "Talus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 2.5,
+   "activeEffects": []
+  },
+  {
+   "index": 70,
+   "name": "BLISTICA",
+   "sector": "Gellert",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 113,
+   "attacking": false,
+   "resistance": 3.5,
+   "activeEffects": []
+  },
+  {
+   "index": 71,
+   "name": "RATCH",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 72,
+   "name": "JULHEIM",
+   "sector": "Nanos",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.62,
+   "activeEffects": [
+    1248,
+    1249
+   ]
+  },
+  {
+   "index": 73,
+   "name": "VALGAARD",
+   "sector": "Iptus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 74,
+   "name": "ARKTURUS",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 75,
+   "name": "ESKER",
+   "sector": "Falstaff",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1244,
+    1188,
+    1193,
+    1315,
+    1316,
+    1317
+   ]
+  },
+  {
+   "index": 76,
+   "name": "TERREK",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 77,
+   "name": "CIRRUS",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 78,
+   "name": "CRIMSICA",
+   "sector": "Draco",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 10,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1244,
+    1386,
+    1395
+   ]
+  },
+  {
+   "index": 79,
+   "name": "HEETH",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 7,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 80,
+   "name": "VELD",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1800000,
+   "maxHealth": 1800000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 0.56,
+   "activeEffects": []
+  },
+  {
+   "index": 81,
+   "name": "ALTA V",
+   "sector": "Korpus",
+   "currentOwner": "Humans",
+   "health": 1300000,
+   "maxHealth": 1300000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.77,
+   "activeEffects": []
+  },
+  {
+   "index": 82,
+   "name": "URSICA XI",
+   "sector": "Borgus",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.94,
+   "activeEffects": [
+    1279
+   ]
+  },
+  {
+   "index": 83,
+   "name": "INARI",
+   "sector": "Korpus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": []
+  },
+  {
+   "index": 84,
+   "name": "SKAASH",
+   "sector": "Ursa",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 85,
+   "name": "MORADESH",
+   "sector": "Celeste",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1252
+   ]
+  },
+  {
+   "index": 86,
+   "name": "RASP",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 87,
+   "name": "BASHYR",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 88,
+   "name": "REGNUS",
+   "sector": "Morgon",
+   "currentOwner": "Humans",
+   "health": 1800000,
+   "maxHealth": 1800000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.83,
+   "activeEffects": []
+  },
+  {
+   "index": 89,
+   "name": "MOG",
+   "sector": "Morgon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 90,
+   "name": "VALMOX",
+   "sector": "Rictus",
+   "currentOwner": "Illuminate",
+   "health": 1900000,
+   "maxHealth": 1900000,
+   "players": 85,
+   "attacking": false,
+   "resistance": 0.53,
+   "activeEffects": []
+  },
+  {
+   "index": 91,
+   "name": "IRO",
+   "sector": "Rictus",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 92,
+   "name": "GRAFMERE",
+   "sector": "Rictus",
+   "currentOwner": "Illuminate",
+   "health": 2100000,
+   "maxHealth": 2100000,
+   "players": 300,
+   "attacking": false,
+   "resistance": 0.48,
+   "activeEffects": [
+    1327
+   ]
+  },
+  {
+   "index": 93,
+   "name": "NEW STOCKHOLM",
+   "sector": "Hanzo",
+   "currentOwner": "Illuminate",
+   "health": 976126,
+   "maxHealth": 1000000,
+   "players": 96,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 94,
+   "name": "OASIS",
+   "sector": "Rictus",
+   "currentOwner": "Illuminate",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 11,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 95,
+   "name": "GENESIS PRIME",
+   "sector": "Rictus",
+   "currentOwner": "Illuminate",
+   "health": 1581401,
+   "maxHealth": 1600000,
+   "players": 148,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 96,
+   "name": "OUTPOST 32",
+   "sector": "Saleria",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 97,
+   "name": "CALYPSO",
+   "sector": "Saleria",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1418,
+    1190
+   ]
+  },
+  {
+   "index": 98,
+   "name": "ELYSIAN MEADOWS",
+   "sector": "Guang",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 99,
+   "name": "SANGIS",
+   "sector": "Guang",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 100,
+   "name": "TRANDOR",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 1900000,
+   "maxHealth": 1900000,
+   "players": 152,
+   "attacking": false,
+   "resistance": 1.05,
+   "activeEffects": []
+  },
+  {
+   "index": 101,
+   "name": "EAST IRIDIUM TRADING BAY",
+   "sector": "Tarragon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 102,
+   "name": "LIBERTY RIDGE",
+   "sector": "Meridian",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 103,
+   "name": "BALDRICK PRIME",
+   "sector": "Meridian",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 104,
+   "name": "THE WEIR",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 105,
+   "name": "KUPER",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 106,
+   "name": "OSLO STATION",
+   "sector": "Sagan",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 107,
+   "name": "PÖPLI IX",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.94,
+   "activeEffects": []
+  },
+  {
+   "index": 108,
+   "name": "GUNVALD",
+   "sector": "Sagan",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 109,
+   "name": "DOLPH",
+   "sector": "Nanos",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 110,
+   "name": "BEKVAM III",
+   "sector": "Nanos",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.31,
+   "activeEffects": []
+  },
+  {
+   "index": 111,
+   "name": "DUMA TYR",
+   "sector": "Nanos",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 112,
+   "name": "VERNEN WELLS",
+   "sector": "Hydra",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 0.67,
+   "activeEffects": []
+  },
+  {
+   "index": 113,
+   "name": "AESIR PASS",
+   "sector": "Hydra",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 3.0,
+   "activeEffects": []
+  },
+  {
+   "index": 114,
+   "name": "AURORA BAY",
+   "sector": "Valdis",
+   "currentOwner": "Automaton",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 987,
+   "attacking": false,
+   "resistance": 3.13,
+   "activeEffects": [
+    1239,
+    1363
+   ]
+  },
+  {
+   "index": 115,
+   "name": "PENTA",
+   "sector": "Lacaille",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 40,
+   "attacking": false,
+   "resistance": 2.5,
+   "activeEffects": [
+    1246,
+    1352
+   ]
+  },
+  {
+   "index": 116,
+   "name": "GAELLIVARE",
+   "sector": "Talus",
+   "currentOwner": "Humans",
+   "health": 1700000,
+   "maxHealth": 1700000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.88,
+   "activeEffects": []
+  },
+  {
+   "index": 117,
+   "name": "VOG-SOJOTH",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 1200000,
+   "maxHealth": 1200000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": [
+    1203,
+    1202
+   ]
+  },
+  {
+   "index": 118,
+   "name": "KIRRIK",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 119,
+   "name": "MORTAX PRIME",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 120,
+   "name": "WILFORD STATION",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 121,
+   "name": "PIONEER II",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 122,
+   "name": "ERSON SANDS",
+   "sector": "Falstaff",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": [
+    1193,
+    1315,
+    1316,
+    1317
+   ]
+  },
+  {
+   "index": 123,
+   "name": "SOCORRO III",
+   "sector": "Falstaff",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1193,
+    1188,
+    1315,
+    1316,
+    1317
+   ]
+  },
+  {
+   "index": 124,
+   "name": "BORE ROCK",
+   "sector": "Falstaff",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 210,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1187,
+    1313,
+    1314
+   ]
+  },
+  {
+   "index": 125,
+   "name": "FENRIR III",
+   "sector": "Umlaut",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": [
+    1234
+   ]
+  },
+  {
+   "index": 126,
+   "name": "TURING",
+   "sector": "Umlaut",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 0.25,
+   "activeEffects": [
+    1197,
+    1395,
+    1244,
+    1366
+   ]
+  },
+  {
+   "index": 127,
+   "name": "ANGEL'S VENTURE",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 14,
+   "attacking": false,
+   "resistance": 2.5,
+   "activeEffects": [
+    1241
+   ]
+  },
+  {
+   "index": 128,
+   "name": "DARIUS II",
+   "sector": "Borgus",
+   "currentOwner": "Humans",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.36,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 129,
+   "name": "ACAMAR IV",
+   "sector": "Jin Xi",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 116,
+   "attacking": false,
+   "resistance": 0.67,
+   "activeEffects": [
+    1306,
+    1309
+   ]
+  },
+  {
+   "index": 130,
+   "name": "ACHERNAR SECUNDUS",
+   "sector": "Borgus",
+   "currentOwner": "Terminids",
+   "health": 1434556,
+   "maxHealth": 2000000,
+   "players": 2955,
+   "attacking": false,
+   "resistance": -0.5,
+   "activeEffects": [
+    1232,
+    1395,
+    1245,
+    1243,
+    1401,
+    1400,
+    1219
+   ]
+  },
+  {
+   "index": 131,
+   "name": "ACHIRD III",
+   "sector": "Borgus",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 12,
+   "attacking": false,
+   "resistance": 0.25,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 132,
+   "name": "ACRAB XI",
+   "sector": "Ursa",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 133,
+   "name": "ACRUX IX",
+   "sector": "Ursa",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 134,
+   "name": "ACUBENS PRIME",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 135,
+   "name": "ADHARA",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 136,
+   "name": "AFOYAY BAY",
+   "sector": "Gallux",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1344
+   ]
+  },
+  {
+   "index": 137,
+   "name": "AIN-5",
+   "sector": "Hanzo",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1379,
+    1380
+   ]
+  },
+  {
+   "index": 138,
+   "name": "ALAIRT III",
+   "sector": "Hanzo",
+   "currentOwner": "Illuminate",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 139,
+   "name": "ALAMAK VII",
+   "sector": "Hanzo",
+   "currentOwner": "Illuminate",
+   "health": 2300000,
+   "maxHealth": 2300000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 140,
+   "name": "ALARAPH",
+   "sector": "Akira",
+   "currentOwner": "Illuminate",
+   "health": 1733326,
+   "maxHealth": 1800000,
+   "players": 398,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": [
+    1403,
+    1402
+   ]
+  },
+  {
+   "index": 141,
+   "name": "ALATHFAR XI",
+   "sector": "Akira",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.68,
+   "activeEffects": []
+  },
+  {
+   "index": 142,
+   "name": "ANDAR",
+   "sector": "Akira",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.94,
+   "activeEffects": []
+  },
+  {
+   "index": 143,
+   "name": "ASPEROTH PRIME",
+   "sector": "Akira",
+   "currentOwner": "Illuminate",
+   "health": 1790221,
+   "maxHealth": 1800000,
+   "players": 75,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 144,
+   "name": "BELLATRIX",
+   "sector": "Guang",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.5,
+   "activeEffects": []
+  },
+  {
+   "index": 145,
+   "name": "BOTEIN",
+   "sector": "Guang",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 146,
+   "name": "OSUPSAM",
+   "sector": "Tarragon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 147,
+   "name": "BRINK-2",
+   "sector": "Tarragon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 148,
+   "name": "BUNDA SECUNDUS",
+   "sector": "Tarragon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 149,
+   "name": "CANOPUS",
+   "sector": "Tarragon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 150,
+   "name": "CAPH",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.68,
+   "activeEffects": []
+  },
+  {
+   "index": 151,
+   "name": "CASTOR",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 152,
+   "name": "DURGEN",
+   "sector": "Severin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 153,
+   "name": "DRAUPNIR",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 1800000,
+   "maxHealth": 1800000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.83,
+   "activeEffects": []
+  },
+  {
+   "index": 154,
+   "name": "MORT",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 155,
+   "name": "INGMAR",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 1800000,
+   "maxHealth": 1800000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.83,
+   "activeEffects": []
+  },
+  {
+   "index": 156,
+   "name": "CHARBAL-VII",
+   "sector": "Andromeda",
+   "currentOwner": "Automaton",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 174,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 157,
+   "name": "CHARON PRIME",
+   "sector": "Andromeda",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 535,
+   "attacking": false,
+   "resistance": 3.5,
+   "activeEffects": []
+  },
+  {
+   "index": 158,
+   "name": "CHOEPESSA IV",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 3200000,
+   "maxHealth": 3200000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 0.16,
+   "activeEffects": []
+  },
+  {
+   "index": 159,
+   "name": "CHOOHE",
+   "sector": "Lacaille",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 803,
+   "attacking": false,
+   "resistance": 2.5,
+   "activeEffects": []
+  },
+  {
+   "index": 160,
+   "name": "CHORT BAY",
+   "sector": "Lacaille",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 4.5,
+   "activeEffects": [
+    1365
+   ]
+  },
+  {
+   "index": 161,
+   "name": "CLAORELL",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.23,
+   "activeEffects": [
+    1198
+   ]
+  },
+  {
+   "index": 162,
+   "name": "CLASA",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 1700000,
+   "maxHealth": 1700000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 2.35,
+   "activeEffects": [
+    1353
+   ]
+  },
+  {
+   "index": 163,
+   "name": "DEMIURG",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 164,
+   "name": "DENEB SECUNDUS",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 165,
+   "name": "ELECTRA BAY",
+   "sector": "Arturion",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 166,
+   "name": "ENULIALE",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1193,
+    1190
+   ]
+  },
+  {
+   "index": 167,
+   "name": "EPSILON PHOENCIS VI",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1188,
+    1190
+   ]
+  },
+  {
+   "index": 168,
+   "name": "ERATA PRIME",
+   "sector": "Umlaut",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 25,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 169,
+   "name": "ESTANU",
+   "sector": "Draco",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 170,
+   "name": "FORI PRIME",
+   "sector": "Draco",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 10,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 171,
+   "name": "GACRUX",
+   "sector": "Jin Xi",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 114,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 172,
+   "name": "GAR HAREN",
+   "sector": "Jin Xi",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 259,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 173,
+   "name": "GATRIA",
+   "sector": "Jin Xi",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 754,
+   "attacking": false,
+   "resistance": 0.67,
+   "activeEffects": []
+  },
+  {
+   "index": 174,
+   "name": "GEMMA",
+   "sector": "Ursa",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 9,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 175,
+   "name": "GRAND ERRANT",
+   "sector": "Farsight",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 176,
+   "name": "HADAR",
+   "sector": "Ferris",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 177,
+   "name": "HAKA",
+   "sector": "Leo",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 178,
+   "name": "HALDUS",
+   "sector": "Ferris",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 32,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 179,
+   "name": "HALIES PORT",
+   "sector": "Leo",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 180,
+   "name": "HERTHON SECUNDUS",
+   "sector": "Ferris",
+   "currentOwner": "Illuminate",
+   "health": 1795753,
+   "maxHealth": 1800000,
+   "players": 27,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 181,
+   "name": "HESOE PRIME",
+   "sector": "Rigel",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 71,
+   "attacking": false,
+   "resistance": 4.0,
+   "activeEffects": []
+  },
+  {
+   "index": 182,
+   "name": "HEZE BAY",
+   "sector": "Hanzo",
+   "currentOwner": "Illuminate",
+   "health": 1790492,
+   "maxHealth": 1800000,
+   "players": 35,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 183,
+   "name": "HORT",
+   "sector": "Rigel",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.68,
+   "activeEffects": []
+  },
+  {
+   "index": 184,
+   "name": "HYDROBIUS",
+   "sector": "Omega",
+   "currentOwner": "Illuminate",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 185,
+   "name": "KARLIA",
+   "sector": "Omega",
+   "currentOwner": "Illuminate",
+   "health": 1259757,
+   "maxHealth": 1400000,
+   "players": 749,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": [
+    1402,
+    1403
+   ]
+  },
+  {
+   "index": 186,
+   "name": "KEID",
+   "sector": "Akira",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 187,
+   "name": "KHANDARK",
+   "sector": "Guang",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 188,
+   "name": "KLAKA 5",
+   "sector": "Alstrad",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 189,
+   "name": "KNETH PORT",
+   "sector": "Alstrad",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 190,
+   "name": "KRAZ",
+   "sector": "Alstrad",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 191,
+   "name": "KUMA",
+   "sector": "Hawking",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 192,
+   "name": "LASTOFE",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 193,
+   "name": "LENG SECUNDUS",
+   "sector": "Quintus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 194,
+   "name": "LESATH",
+   "sector": "Lacaille",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 195,
+   "name": "MAIA",
+   "sector": "Severin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 196,
+   "name": "MALEVELON CREEK",
+   "sector": "Severin",
+   "currentOwner": "Humans",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.07,
+   "activeEffects": []
+  },
+  {
+   "index": 197,
+   "name": "MANTES",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 198,
+   "name": "MARFARK",
+   "sector": "Andromeda",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 7,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": [
+    1360,
+    1361
+   ]
+  },
+  {
+   "index": 199,
+   "name": "MARTALE",
+   "sector": "Andromeda",
+   "currentOwner": "Automaton",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 808,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 200,
+   "name": "MATAR BAY",
+   "sector": "Andromeda",
+   "currentOwner": "Automaton",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 2069,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": []
+  },
+  {
+   "index": 201,
+   "name": "MEISSA",
+   "sector": "Ymir",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 12,
+   "attacking": false,
+   "resistance": 4.5,
+   "activeEffects": [
+    1387,
+    1360,
+    1361
+   ]
+  },
+  {
+   "index": 202,
+   "name": "MEKBUDA",
+   "sector": "Valdis",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 7.0,
+   "activeEffects": []
+  },
+  {
+   "index": 203,
+   "name": "MENKENT",
+   "sector": "Hydra",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 5,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 204,
+   "name": "MERAK",
+   "sector": "Valdis",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 3.5,
+   "activeEffects": [
+    1246
+   ]
+  },
+  {
+   "index": 205,
+   "name": "MERGA IV",
+   "sector": "Valdis",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 440,
+   "attacking": false,
+   "resistance": 7.0,
+   "activeEffects": []
+  },
+  {
+   "index": 206,
+   "name": "MINCHIR",
+   "sector": "Gellert",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 207,
+   "name": "MINTORIA",
+   "sector": "Gellert",
+   "currentOwner": "Automaton",
+   "health": 1300000,
+   "maxHealth": 1300000,
+   "players": 754,
+   "attacking": false,
+   "resistance": 1.15,
+   "activeEffects": [
+    1324,
+    1360,
+    1361
+   ]
+  },
+  {
+   "index": 208,
+   "name": "MORDIA 9",
+   "sector": "Hawking",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 209,
+   "name": "NABATEA SECUNDUS",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1188,
+    1190
+   ]
+  },
+  {
+   "index": 210,
+   "name": "NAVI VII",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1188,
+    1190
+   ]
+  },
+  {
+   "index": 211,
+   "name": "NIVEL 43",
+   "sector": "Mirin",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 222,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1187,
+    1313,
+    1314
+   ]
+  },
+  {
+   "index": 212,
+   "name": "OSHAUNE",
+   "sector": "Mirin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 5.0,
+   "activeEffects": [
+    1333,
+    1310,
+    1309,
+    1308,
+    1303,
+    1306,
+    1307
+   ]
+  },
+  {
+   "index": 213,
+   "name": "OVERGOE PRIME",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 214,
+   "name": "PANDION-XXIV",
+   "sector": "Jin Xi",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 444,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 215,
+   "name": "PARTION",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 199,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 216,
+   "name": "PEACOCK",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 1300000,
+   "maxHealth": 1300000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.54,
+   "activeEffects": []
+  },
+  {
+   "index": 217,
+   "name": "PHACT BAY",
+   "sector": "Jin Xi",
+   "currentOwner": "Terminids",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 3554,
+   "attacking": false,
+   "resistance": 1.14,
+   "activeEffects": []
+  },
+  {
+   "index": 218,
+   "name": "PHERKAD SECUNDUS",
+   "sector": "Farsight",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 8,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1395,
+    1386,
+    1244
+   ]
+  },
+  {
+   "index": 219,
+   "name": "POLARIS PRIME",
+   "sector": "Farsight",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  },
+  {
+   "index": 220,
+   "name": "POLLUX 31",
+   "sector": "Farsight",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 221,
+   "name": "PRASA",
+   "sector": "Farsight",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 222,
+   "name": "PROPUS",
+   "sector": "Leo",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 223,
+   "name": "RAS ALGETHI",
+   "sector": "Leo",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 224,
+   "name": "RD-4",
+   "sector": "Rigel",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 96,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 225,
+   "name": "ROGUE 5",
+   "sector": "Rigel",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 28,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 226,
+   "name": "RIRGA BAY",
+   "sector": "Rigel",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 31,
+   "attacking": false,
+   "resistance": 1.14,
+   "activeEffects": []
+  },
+  {
+   "index": 227,
+   "name": "SEASSE",
+   "sector": "Omega",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 8.0,
+   "activeEffects": []
+  },
+  {
+   "index": 228,
+   "name": "SENGE 23",
+   "sector": "Omega",
+   "currentOwner": "Illuminate",
+   "health": 1300000,
+   "maxHealth": 1300000,
+   "players": 286,
+   "attacking": false,
+   "resistance": 0.77,
+   "activeEffects": [
+    1414,
+    1413,
+    1379,
+    1380
+   ]
+  },
+  {
+   "index": 229,
+   "name": "SETIA",
+   "sector": "Omega",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 230,
+   "name": "SHETE",
+   "sector": "Xi Tauri",
+   "currentOwner": "Illuminate",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.71,
+   "activeEffects": []
+  },
+  {
+   "index": 231,
+   "name": "SIEMNOT",
+   "sector": "Xi Tauri",
+   "currentOwner": "Illuminate",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 220,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1377,
+    1378
+   ]
+  },
+  {
+   "index": 232,
+   "name": "SIRIUS",
+   "sector": "Xi Tauri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 233,
+   "name": "SKAT BAY",
+   "sector": "Xi Tauri",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 234,
+   "name": "SPHERION",
+   "sector": "Quintus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 235,
+   "name": "STOR THA PRIME",
+   "sector": "Quintus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 236,
+   "name": "STOUT",
+   "sector": "Quintus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 237,
+   "name": "TERMADON",
+   "sector": "Quintus",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 238,
+   "name": "TIBIT",
+   "sector": "Severin",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 239,
+   "name": "TIEN KWAN",
+   "sector": "Theseus",
+   "currentOwner": "Humans",
+   "health": 2200000,
+   "maxHealth": 2200000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.68,
+   "activeEffects": []
+  },
+  {
+   "index": 240,
+   "name": "TROOST",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 241,
+   "name": "UBANEA",
+   "sector": "Severin",
+   "currentOwner": "Humans",
+   "health": 1600000,
+   "maxHealth": 1600000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.94,
+   "activeEffects": []
+  },
+  {
+   "index": 242,
+   "name": "USTOTU",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 243,
+   "name": "VANDALON IV",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 244,
+   "name": "VARYLIA 5",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 1400000,
+   "maxHealth": 1400000,
+   "players": 6,
+   "attacking": false,
+   "resistance": 0.71,
+   "activeEffects": []
+  },
+  {
+   "index": 245,
+   "name": "WASAT",
+   "sector": "Ymir",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  },
+  {
+   "index": 246,
+   "name": "VEGA BAY",
+   "sector": "Ymir",
+   "currentOwner": "Humans",
+   "health": 1500000,
+   "maxHealth": 1500000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 247,
+   "name": "WEZEN",
+   "sector": "Ymir",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 248,
+   "name": "VINDEMITARIX PRIME",
+   "sector": "Valdis",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 3,
+   "attacking": false,
+   "resistance": 7.0,
+   "activeEffects": [
+    1248,
+    1249
+   ]
+  },
+  {
+   "index": 249,
+   "name": "X-45",
+   "sector": "Ymir",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 2.0,
+   "activeEffects": []
+  },
+  {
+   "index": 250,
+   "name": "YED PRIOR",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.0,
+   "activeEffects": []
+  },
+  {
+   "index": 251,
+   "name": "ZEFIA",
+   "sector": "Tanis",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 4,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": [
+    1360,
+    1361
+   ]
+  },
+  {
+   "index": 252,
+   "name": "ZOSMA",
+   "sector": "Gellert",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 253,
+   "name": "ZZANIAH PRIME",
+   "sector": "Gellert",
+   "currentOwner": "Automaton",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 254,
+   "name": "SKITTER",
+   "sector": "Hawking",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 255,
+   "name": "EUPHORIA III",
+   "sector": "Hawking",
+   "currentOwner": "Humans",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 1.5,
+   "activeEffects": []
+  },
+  {
+   "index": 256,
+   "name": "DIASPORA X",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1190,
+    1193
+   ]
+  },
+  {
+   "index": 257,
+   "name": "GEMSTONE BLUFFS",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 1000000,
+   "maxHealth": 1000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 6.0,
+   "activeEffects": [
+    1188,
+    1190
+   ]
+  },
+  {
+   "index": 258,
+   "name": "ZAGON PRIME",
+   "sector": "Mirin",
+   "currentOwner": "Terminids",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 5.0,
+   "activeEffects": [
+    1188,
+    1311,
+    1318,
+    1319,
+    1320
+   ]
+  },
+  {
+   "index": 259,
+   "name": "OMICRON",
+   "sector": "L'estrade",
+   "currentOwner": "Terminids",
+   "health": 3000000,
+   "maxHealth": 3000000,
+   "players": 848,
+   "attacking": false,
+   "resistance": 3.33,
+   "activeEffects": [
+    1188,
+    1311,
+    1318,
+    1319,
+    1320,
+    1307,
+    1308,
+    1306,
+    1309
+   ]
+  },
+  {
+   "index": 260,
+   "name": "CYBERSTAN",
+   "sector": "Valdis",
+   "currentOwner": "Automaton",
+   "health": 15000000,
+   "maxHealth": 15000000,
+   "players": 34,
+   "attacking": false,
+   "resistance": 6.67,
+   "activeEffects": [
+    1360,
+    1361,
+    1246
+   ]
+  },
+  {
+   "index": 261,
+   "name": "FURY",
+   "sector": "Xzar",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1248,
+    1249
+   ]
+  },
+  {
+   "index": 262,
+   "name": "K",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  },
+  {
+   "index": 264,
+   "name": "NEW INSIGHT",
+   "sector": "TBD",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 0,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": [
+    1190
+   ]
+  },
+  {
+   "index": 265,
+   "name": "WAYWARD",
+   "sector": "TBD",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": [
+    1190
+   ]
+  },
+  {
+   "index": 266,
+   "name": "MOX",
+   "sector": "Trigon",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 7,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": []
+  },
+  {
+   "index": 267,
+   "name": "BIG ROCK",
+   "sector": "Sten",
+   "currentOwner": "Terminids",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": []
+  },
+  {
+   "index": 268,
+   "name": "LUXURIANT",
+   "sector": "Jin Xi",
+   "currentOwner": "Terminids",
+   "health": 1216640,
+   "maxHealth": 2000000,
+   "players": 57422,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": []
+  },
+  {
+   "index": 269,
+   "name": "BRILLIANCE",
+   "sector": "Orion",
+   "currentOwner": "Terminids",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 6869,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": [
+    1395,
+    1244,
+    1386,
+    1401,
+    1400
+   ]
+  },
+  {
+   "index": 270,
+   "name": "FRONTERIA",
+   "sector": "Umlaut",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": [
+    1395
+   ]
+  },
+  {
+   "index": 271,
+   "name": "ZYGOS",
+   "sector": "Orion",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 1.25,
+   "activeEffects": [
+    1243,
+    1245
+   ]
+  },
+  {
+   "index": 272,
+   "name": "BASQUINE VIII",
+   "sector": "Rigel",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 1,
+   "attacking": false,
+   "resistance": 1.0,
+   "activeEffects": [
+    1377,
+    1378
+   ]
+  },
+  {
+   "index": 273,
+   "name": "ALDERIDGE COVE",
+   "sector": "Omega",
+   "currentOwner": "Humans",
+   "health": 2000000,
+   "maxHealth": 2000000,
+   "players": 2,
+   "attacking": false,
+   "resistance": 0.75,
+   "activeEffects": []
+  }
+ ],
+ "campaigns": [
+  {
+   "id": 51413,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 7,
+    "name": "ZEA RUGOSIA",
+    "sector": "Ferris",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51428,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 259,
+    "name": "OMICRON",
+    "sector": "L'estrade",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51456,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 157,
+    "name": "CHARON PRIME",
+    "sector": "Andromeda",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51477,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 90,
+    "name": "VALMOX",
+    "sector": "Rictus",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51481,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 178,
+    "name": "HALDUS",
+    "sector": "Ferris",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51485,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 114,
+    "name": "AURORA BAY",
+    "sector": "Valdis",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51489,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 205,
+    "name": "MERGA IV",
+    "sector": "Valdis",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51514,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 181,
+    "name": "HESOE PRIME",
+    "sector": "Rigel",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51539,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 231,
+    "name": "SIEMNOT",
+    "sector": "Xi Tauri",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51579,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 92,
+    "name": "GRAFMERE",
+    "sector": "Rictus",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51589,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 159,
+    "name": "CHOOHE",
+    "sector": "Lacaille",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51596,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 124,
+    "name": "BORE ROCK",
+    "sector": "Falstaff",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51606,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 224,
+    "name": "RD-4",
+    "sector": "Rigel",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51627,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 70,
+    "name": "BLISTICA",
+    "sector": "Gellert",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51631,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 207,
+    "name": "MINTORIA",
+    "sector": "Gellert",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51633,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 199,
+    "name": "MARTALE",
+    "sector": "Andromeda",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51634,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 200,
+    "name": "MATAR BAY",
+    "sector": "Andromeda",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51638,
+   "faction": "Automaton",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 156,
+    "name": "CHARBAL-VII",
+    "sector": "Andromeda",
+    "currentOwner": "Automaton"
+   }
+  },
+  {
+   "id": 51648,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 217,
+    "name": "PHACT BAY",
+    "sector": "Jin Xi",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51649,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 214,
+    "name": "PANDION-XXIV",
+    "sector": "Jin Xi",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51653,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 211,
+    "name": "NIVEL 43",
+    "sector": "Mirin",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51678,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 225,
+    "name": "ROGUE 5",
+    "sector": "Rigel",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51679,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 228,
+    "name": "SENGE 23",
+    "sector": "Omega",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51680,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 140,
+    "name": "ALARAPH",
+    "sector": "Akira",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51681,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 95,
+    "name": "GENESIS PRIME",
+    "sector": "Rictus",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51682,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 143,
+    "name": "ASPEROTH PRIME",
+    "sector": "Akira",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51683,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 182,
+    "name": "HEZE BAY",
+    "sector": "Hanzo",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51684,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 180,
+    "name": "HERTHON SECUNDUS",
+    "sector": "Ferris",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51685,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 185,
+    "name": "KARLIA",
+    "sector": "Omega",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51686,
+   "faction": "Illuminate",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 93,
+    "name": "NEW STOCKHOLM",
+    "sector": "Hanzo",
+    "currentOwner": "Illuminate"
+   }
+  },
+  {
+   "id": 51688,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 269,
+    "name": "BRILLIANCE",
+    "sector": "Orion",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51690,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 215,
+    "name": "PARTION",
+    "sector": "Sten",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51691,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 130,
+    "name": "ACHERNAR SECUNDUS",
+    "sector": "Borgus",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51692,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 100,
+    "name": "TRANDOR",
+    "sector": "Sten",
+    "currentOwner": "Terminids"
+   }
+  },
+  {
+   "id": 51693,
+   "faction": "Terminids",
+   "type": 0,
+   "campaignType": "liberation",
+   "count": null,
+   "planet": {
+    "index": 268,
+    "name": "LUXURIANT",
+    "sector": "Jin Xi",
+    "currentOwner": "Terminids"
+   }
+  }
+ ],
+ "assignments": {
+  "id": 3348823937,
+  "briefing": "Liberate the designated enemy planets, which are highly likely to be harboring the dissidents responsible for sabotaging the TCS+.",
+  "title": "MAJOR ORDER",
+  "tasks": [
+   {
+    "type": 11,
+    "values": [
+     1,
+     1,
+     171
+    ],
+    "valueTypes": [
+     3,
+     11,
+     12
+    ]
+   },
+   {
+    "type": 11,
+    "values": [
+     1,
+     1,
+     172
+    ],
+    "valueTypes": [
+     3,
+     11,
+     12
+    ]
+   },
+   {
+    "type": 11,
+    "values": [
+     1,
+     1,
+     268
+    ],
+    "valueTypes": [
+     3,
+     11,
+     12
+    ]
+   }
+  ],
+  "progress": [
+   1,
+   1,
+   0
+  ],
+  "expiration": "",
+  "deadline": "2026-08-31T12:04:47.4276902Z",
+  "serverTime": "2026-08-30T11:47:07Z"
+ },
+ "dispatches": [
+  {
+   "id": 3893,
+   "published": "2026-08-23T10:20:28Z",
+   "type": 0,
+   "message": "<i=3>VOID EXPANSION DETECTED</i>\n\nThe expansion rate of <i=1>the Void</i> has accelerated, engulfing a substantial swath of outer galactic territory. \n\nAffected sectors have been further consumed by the spatial vacuum. Helldivers are advised to focus all attention on efforts to map the Void. Preventing its further expansion is of the utmost urgency."
+  },
+  {
+   "id": 3892,
+   "published": "2026-08-22T17:00:01Z",
+   "type": 0,
+   "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized use of the <i=1>Orbital Laser</i>  at the <i=1>Void Source Planet</i> for the next 24 hours."
+  },
+  {
+   "id": 3891,
+   "published": "2026-08-22T08:44:40Z",
+   "type": 0,
+   "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 3-person team has entered the core chasm. \n\nHigh Command notes that while some personnel have begun weeping tears of chromatic, iridescent fluid, this is a standard, completely non-hazardous biological response to advanced scientific discovery. The team members continue sprinting forward into the glorious blinding light."
+  },
+  {
+   "id": 3890,
+   "published": "2026-08-22T07:50:53Z",
+   "type": 0,
+   "message": "<i=3>STRATEGIC OPPORTUNITY SEIZED</i>\n\nThe Helldivers successfully achieved the required quotas to catalyze urgent research into <i=1>Void Blossoms</i>, delivering an absolute triumph for environmental enforcement.\n\nUsing data cross-referenced from other pacified worlds, the <i=1>Ministry of Science</i> has formulated a rudimentary chemical compound to impair these uncommonly hostile botanical assets. Utilizing tactical crop-dusting protocols, this will <i=1>weaken Illuminate defenses on Seasse</i>."
+  },
+  {
+   "id": 3889,
+   "published": "2026-08-21T19:15:25Z",
+   "type": 0,
+   "message": "<i=3>VOID EXPANSION DETECTED</i>\n\nThe expanding perimeter of <i=1>the Void</i> has surpassed all projections. Massive swathes of galactic real estate have been consumed by the anomaly.\n\nAny colonial populations within the engulfed coordinates are advised to work from home, where viable, and to otherwise uphold their professional commitments until notified otherwise."
+  },
+  {
+   "id": 3888,
+   "published": "2026-08-21T14:07:55Z",
+   "type": 0,
+   "message": "<i=3>NEW STRATEGIC OPPORTUNITY</i>\n\n<i=1>Void Blossoms</i> disperse toxic pollination, reshape worlds, and appear to invigorate <i=1>Illuminate</i> forces. Synthesizing chemical countermeasures to this invasive flora will reduce <i=1>Illuminate</i> planetary resistance on the source world of <i=1>Seasse</i>.\n\nHelldivers: extract <i=1>1,500,000 samples on UVP DELTA</i>, terminate <i=1>25,000,000 Vote Snatchers on HYDROBIUS</i>, and complete <i=1>50,000 operations on UVP BETA</i> to hasten urgent research."
+  },
+  {
+   "id": 3887,
+   "published": "2026-08-20T22:08:20Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has docked at <i=1>Afoyay Bay</i>. A workforce of eager legally-mandated volunteers has been transported from the <i=1>CECOD (Center for the Confinement of Dissidence)</i> secure relocation site to carry out manual bio-remediation.\n\nThe <i=1>DURs (Dissidents-Undergoing-Reeducation)</i> have also been tasked with restoring the DSS to match original inventory manifests, and report exceptional morale at this generous opportunity to earn atonement."
+  },
+  {
+   "id": 3886,
+   "published": "2026-08-20T21:31:04Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nTo fully resolve minor navigational discrepancies aboard the <i=1>DSS</i>, High Command has remotely initiated a station-wide environmental optimization cycle.\n\nThis deep sanitization has successfully returned the vessel to sterile parameters and hereby concludes the DSS examination to a satisfactory standard. Remote helm controls have locked a direct vector to <i=1>Afoyay Bay</i> for routine maintenance and post-cycle ventilation."
+  },
+  {
+   "id": 3885,
+   "published": "2026-08-20T20:00:56Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has completed an unscheduled FTL jump toward <i=1>Calypso</i>, forgoing the standard administrative channels for requests of this nature.\n\nWhile the crew's sudden interest in this sector is under review, the on-board <i=1>Ministry of Truth</i> examiners are commended for their diligence, encouraged to complete their audit, and reminded that High Command has remotely disabled any and all manual controls aboard the station until further notice."
+  },
+  {
+   "id": 3884,
+   "published": "2026-08-20T13:45:04Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS</i> has temporarily ceased any and all communication transmissions. Automated diagnostics confirm transceiver hardware is operating at 100% efficiency. \n\nHigh Command has officially attributed this ongoing silence to a mandatory, station-wide silent contemplation period. Normal communications, log updates, and official examiner reports will resume immediately upon its scheduled conclusion."
+  },
+  {
+   "id": 3883,
+   "published": "2026-08-20T09:03:30Z",
+   "type": 0,
+   "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nHigh Command has authorized fleetwide use of the <i=1>Orbital Railcannon Stratagem</i> with <i=1>reduced waiting period between calldowns</i> at the <i=1>Void Source Planet</i> for the next 48 hours."
+  },
+  {
+   "id": 3882,
+   "published": "2026-08-20T08:46:14Z",
+   "type": 0,
+   "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nHigh Command commends the elite 11-person science team for securing the tertiary mantle. Ground logs note an exceptionally pleasant, rhythmic harmonic resonance echoing from the bedrock, which the team describes as \"the singing geometry.\" \n\nCore drilling continues to advance seamlessly toward the absolute center of the Void."
+  },
+  {
+   "id": 3881,
+   "published": "2026-08-20T01:45:29Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nExaminers report the presence of chemical oxidation anomalies resembling alphanumeric patterns on several <i=1>DSS</i> bulkheads. Rumors that these crude markings may spell \"Calypso\" are unfounded, unscientific, and wholly un-Democratic.\n\nFollowing an exhaustive risk assessment, all writing implements on the DSS have been incinerated, and all nutritional paste has been fortified with experimental binding agents to eliminate all biological pigment sources."
+  },
+  {
+   "id": 3880,
+   "published": "2026-08-19T18:29:19Z",
+   "type": 0,
+   "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ASPEROTH PRIME</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ASPEROTH PRIME</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
+  },
+  {
+   "id": 3879,
+   "published": "2026-08-19T15:02:21Z",
+   "type": 0,
+   "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>KARLIA</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend KARLIA</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
+  },
+  {
+   "id": 3878,
+   "published": "2026-08-19T13:44:16Z",
+   "type": 0,
+   "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALARAPH</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALARAPH</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
+  },
+  {
+   "id": 3877,
+   "published": "2026-08-19T13:45:29Z",
+   "type": 0,
+   "message": "<i=3>DSS STATUS UPDATE</i>\n\nThe <i=1>DSS (Democracy Space Station)</i> is undergoing examination after exiting the Void. Reports of rhythmic knocking across the hull have been independently confirmed, and though they have intensified, High Command maintains these vibrations are merely localized thermal contraction. \n\nThe examiners assigned by the <i=1>Ministry of Truth</i> have volunteered to remain aboard indefinitely to monitor the situation; as a precaution, all outbound shuttle access is suspended."
+  },
+  {
+   "id": 3876,
+   "published": "2026-08-19T12:21:20Z",
+   "type": 0,
+   "message": "<i=3>EXOSTORM ADVISORY</i>\n\nA Category 3 <i=1>Exostorm</i> has been detected on <i=1>ALAIRT III</i>, blanketing the planet in violent celestial super-storms.\n\nThese unnatural atmospheric anomalies threaten to disrupt our current operations. High Command demands absolute operational resilience in the face of these severe environmental hazards.\n\nHelldivers: <i=1>defend ALAIRT III</i> to nullify the Exostorm before it can worsen.\n\nDo not let these celestial tempests halt our advance."
+  },
+  {
+   "id": 3875,
+   "published": "2026-08-19T08:46:14Z",
+   "type": 0,
+   "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 18-person research team has reached the secondary lithospheric layer of <i=1>Seasse</i>. Sub-surface telemetry remains highly encouraging.\n\nThe team has voluntarily deactivated their atmospheric filtration masks to better sample the localized, ecosystem through their own sense of Democracy. Progress remains entirely on schedule."
+  },
+  {
+   "id": 3874,
+   "published": "2026-08-18T14:36:44Z",
+   "type": 0,
+   "message": "<i=3>SEASSE SCIENCE EXPEDITION SITREP</i>\n\nThe elite 20-person Ministry of Science team has successfully breached the crust of <i=1>Seasse</i>. Their objective: to map the subterranean geological geometry and initiate the completely understood dissolution of the Void from its physical core.\n\nHigh Command reports optimal morale as these brave Patriots begin their descent into the anomaly."
+  },
+  {
+   "id": 3873,
+   "published": "2026-08-18T12:09:34Z",
+   "type": 0,
+   "message": "<i=3>NEW MAJOR ORDER</i>\n\nThe Helldivers have reached the heart of the Void: <i=1>Seasse</i>, and must liberate the planet by any means necessary to stop the spread of this breeding ground for Tyranny.\n\nWhile forces clear the surface, an elite 20-person Ministry of Science team will descend into its depths to collapse <i=1>the Void</i> from within. High Command guarantees this process is entirely safe and completely understood."
+  },
+  {
+   "id": 3872,
+   "published": "2026-08-18T11:07:29Z",
+   "type": 0,
+   "message": "<i=3>FINAL PREPARATIONS: SEASSE</i>\n\nThe Void Warp Relay calibration is complete. Helldivers are advised: <i=1>T-Minus 1 Hour to Landfall</i>.\n\nThe path to to <i=1>Seasse</i>, the Void source planet, is fully stabilized. All Helldivers are ordered to conclude preparatory operations. Ready for imminent deployment into the heart of the anomaly, and the lawful eradication of the Void.\n\nFor Super Earth."
+  },
+  {
+   "id": 3871,
+   "published": "2026-08-18T09:10:47Z",
+   "type": 0,
+   "message": "<i=3>T-MINUS 3 HOURS: SEASSE</i>\n\nFinal systems checks are underway across the vanguard fleet. The Void Warp Relay is approaching the terminal energy density required for transit on schedule.\n\nHigh Command reminds all personnel to report to battle stations and immediately report any unapproved physical mutations. Continue to prepare for imminent, synchronized FTL transit."
+  },
+  {
+   "id": 3870,
+   "published": "2026-08-18T06:09:17Z",
+   "type": 0,
+   "message": "<i=3>T-MINUS 6 HOURS: SEASSE</i>\n\nThe Void Warp Relay has entered its final power-up sequence. The jump corridor to the Void source planet will open in exactly six hours.\n\nLogistics teams will soon finalize the distribution of advanced arsenal augmentations across all participating destroyer hulls. Ensure all standard-issue compliance tools are fully serviced."
+  },
+  {
+   "id": 3869,
+   "published": "2026-08-18T05:00:06Z",
+   "type": 0,
+   "message": "<i=3>T-MINUS 7 HOURS: SEASSE</i>\n\nThe Void Warp Relay is nearing optimal calibration. The jump to Seasse, the Void source planet will commence in 7 hours.\n\nTactical augmentations procured by the Helldivers during this preparatory phase are currently being processed by fleet logistics. The <i=1>Illuminate</i> will soon face the inescapable reality of Managed Democracy."
+  },
+  {
+   "id": 3868,
+   "published": "2026-08-18T04:57:54Z",
+   "type": 0,
+   "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nUVP DELTA is now reachable, thanks to Helldiver efforts. All detected planet within the Void are now accessible, with the exception of one, which is believed to lie at the Void's astro-temporal center."
+  },
+  {
+   "id": 3867,
+   "published": "2026-08-18T00:56:42Z",
+   "type": 0,
+   "message": "<i=3>MAJOR ORDER WON</i>\n\nThe Helldivers’ investigative charting of <i=1>the Void</i>'s initial layer was a masterclass in conquering the unknown. \n\nData extracted from the three initial worlds allowed SEAF navigation arrays to successfully calibrate despite the unlawful spacetime anomalies, narrowing search parameters for the hidden <i=1>Illuminate source planet</i>. As such, the offensive toward the enemy's central base of operations remains on schedule, and with immediate SEAF support available."
+  },
+  {
+   "id": 3866,
+   "published": "2026-08-17T18:31:34Z",
+   "type": 0,
+   "message": "<i=3>ARSENAL AUGMENTATION</i>\n\nTo aid their valiant efforts, all Helldiver deployments on <i=1>UVP ALPHA</i> will be augmented with the <i=1>Shield Generator Pack</i> Stratagem for the next <i=1>24 hours</i>."
+  },
+  {
+   "id": 3865,
+   "published": "2026-08-17T18:20:01Z",
+   "type": 0,
+   "message": "<i=3>SEASSE LOCATED</i>\n\nThe body at the Void barycenter closely matches known properties of the planet Seasse, the first to fall into the Void. This confirms theories on approaching the Void's origin. \n\nNearly enough data has been gathered to allow travel to Seasse. The Helldivers are ordered to take all necessary measures to hasten the final stages of research.\n"
+  },
+  {
+   "id": 3864,
+   "published": "2026-08-17T18:17:19Z",
+   "type": 0,
+   "message": "<i=3>VOID PLANET TRIANGULATED</i>\n\nCoordinates for <i=1>HYDROBIUS</i> have been determined within .01% error, following extensive Void material analysis. Operations on the planet may now commence.\n\nMatter from planets within the Void has been discovered to posses varying levels of a novel property similar in principle to radiation. Higher levels of radiation are believed to indicate longer exposure to the Void, and thus point towards the Void's origin."
+  }
+ ],
+ "dss": {
+  "planetIndex": 268,
+  "activeEffectIds": [],
+  "electionEnd": "1972-07-16T18:28:00Z",
+  "electionEndWarTime": 80159280,
+  "tacticalActions": [
+   {
+    "name": "EAGLE STORM",
+    "status": 1,
+    "expireAtWarTime": 80245680,
+    "effectIds": [
+     1209,
+     1212,
+     1216
+    ],
+    "activeEffectIds": [],
+    "cost": [
+     {
+      "target": 86400,
+      "current": 51754.3,
+      "deltaPerSec": 0.14272738,
+      "maxDonation": 75,
+      "maxDonationPeriodSec": 86400
+     }
+    ]
+   },
+   {
+    "name": "ORBITAL BLOCKADE",
+    "status": 3,
+    "expireAtWarTime": 80229190,
+    "effectIds": [
+     1210,
+     1213,
+     1215
+    ],
+    "activeEffectIds": [],
+    "cost": [
+     {
+      "target": 86400,
+      "current": 0,
+      "deltaPerSec": 0.39900205,
+      "maxDonation": 50000,
+      "maxDonationPeriodSec": 86400
+     }
+    ]
+   },
+   {
+    "name": "HEAVY ORDNANCE DISTRIBUTION",
+    "status": 1,
+    "expireAtWarTime": 80332080,
+    "effectIds": [
+     1237,
+     1214
+    ],
+    "activeEffectIds": [],
+    "cost": [
+     {
+      "target": 86400,
+      "current": 42015.0,
+      "deltaPerSec": 0.17089973,
+      "maxDonation": 50,
+      "maxDonationPeriodSec": 86400
+     }
+    ]
+   }
+  ],
+  "flags": 1,
+  "clientTimeMs": 1788090420740,
+  "currentWarTime": 80154150
+ },
+ "news": [
+  {
+   "id": 3893,
+   "original": "VOID EXPANSION DETECTED\n\nThe expansion rate of the Void has accelerated, engulfing a substantial swath of outer galactic territory. \n\nAffected sectors have been further consumed by the spatial vacuum. Helldivers are advised to focus all attention on efforts to map the Void. Preventing its further expansion is of the utmost urgency.",
+   "translated": "探测到寂域膨胀\n\n寂域的膨胀速度加快，吞噬了银河系外的大片领土。\n\n受影响的行业已被空间真空进一步消耗。建议绝地潜兵将所有注意力集中在绘制寂域地图上。防止其进一步扩大是当务之急。",
+   "published_at": "2026-08-23T10:14:00Z",
+   "translated_at": "2026-08-23T10:24:17Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3892,
+   "original": "ARSENAL AUGMENTATION\n\nHigh Command has authorized use of the Orbital Laser  at the Void Source Planet for the next 24 hours.",
+   "translated": "ARSENAL AUMENTATION\n\n最高司令部已授权在未来24小时内在寂域源行星使用轨道激光。",
+   "published_at": "2026-08-22T16:53:15Z",
+   "translated_at": "2026-08-22T17:08:42Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3891,
+   "original": "SEASSE SCIENCE EXPEDITION SITREP\n\nThe elite 3-person team has entered the core chasm. \n\nHigh Command notes that while some personnel have begun weeping tears of chromatic, iridescent fluid, this is a standard, completely non-hazardous biological response to advanced scientific discovery. The remaining team members continue sprinting forward into the glorious blinding light.",
+   "translated": "西斯科学考察团\n\n精英三人团队已进入核心裂缝。\n\n最高指挥部指出，虽然一些人员已经开始流下彩色虹彩液体的眼泪，但这是对先进科学发现的标准、完全无害的生物反应。剩下的队员继续冲向耀眼的光芒。",
+   "published_at": "2026-08-22T08:37:38Z",
+   "translated_at": "2026-08-22T08:46:04Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3890,
+   "original": "STRATEGIC OPPORTUNITY SEIZED\n\nThe Helldivers successfully achieved the required quotas to catalyze urgent research into Void Blossoms, delivering an absolute triumph for environmental enforcement.\n\nUsing data cross-referenced from other pacified worlds, the Ministry of Science has formulated a rudimentary chemical compound to impair these uncommonly hostile botanical assets. Utilizing tactical crop-dusting protocols, this will weaken Illuminate defenses on Seasse.",
+   "translated": "战略机遇被抓住\n\n绝地潜兵成功地实现了所需的配额，以促进对寂域花朵的紧急研究，为环境执法带来了绝对的胜利。\n\n科学部利用其他和平世界的交叉参考数据，研制出了一种基本的化合物，以削弱这些罕见的敌对植物资产。利用战术作物除尘协议，这将削弱光能者在西斯的防御。",
+   "published_at": "2026-08-22T07:43:58Z",
+   "translated_at": "2026-08-22T07:49:26Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3889,
+   "original": "VOID EXPANSION DETECTED\n\nThe expanding perimeter of the Void has surpassed all projections. Massive swathes of galactic real estate have been consumed by the anomaly.\n\nAny colonial populations within the engulfed coordinates are advised to work from home, where viable, and to otherwise uphold their professional commitments until notified otherwise.",
+   "translated": "检测到寂域膨胀\n\n寂域的膨胀周长已超过所有投影。银河系的大片房地产已被异常现象吞噬。\n\n建议被吞没坐标内的任何殖民地居民在可行的情况下在家工作，并在另行通知之前履行其职业承诺。",
+   "published_at": "2026-08-21T19:08:05Z",
+   "translated_at": "2026-08-21T19:21:57Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3888,
+   "original": "NEW STRATEGIC OPPORTUNITY\n\nVoid Blossoms disperse toxic pollination, reshape worlds, and appear to invigorate Illuminate forces. Synthesizing chemical countermeasures to this invasive flora will reduce Illuminate planetary resistance on the source world of Seasse.\n\nHelldivers: extract 1,500,000 samples on UVP DELTA, terminate 25,000,000 Vote Snatchers on HYDROBIUS, and complete 50,000 operations on UVP BETA to hasten urgent research.",
+   "translated": "新的战略机遇\n\n寂域之花驱散了有毒的授粉，重塑了世界，似乎给光能者力量注入了活力。对这种入侵植物群采取综合化学对策将降低光能者对西斯源世界的地球抵抗力。\n\n绝地潜兵：在UVP德尔塔提取1500000个样本，终止哈卓毕亚斯的25000000个抢票者，并在UVP贝塔完成50000次手术，以加快紧急研究。",
+   "published_at": "2026-08-21T14:00:27Z",
+   "translated_at": "2026-08-21T14:09:05Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3887,
+   "original": "DSS STATUS UPDATE\n\nThe DSS has docked at Afoyay Bay. A workforce of eager legally-mandated volunteers has been transported from the CECOD (Center for the Confinement of Dissidence) secure relocation site to carry out manual bio-remediation.\n\nThe DURs (Dissidents-Undergoing-Reeducation) have also been tasked with restoring the DSS to match original inventory manifests, and report exceptional morale at this generous opportunity to earn atonement.",
+   "translated": "DSS状态更新\n\nDSS已停靠在艾福亚湾。一群渴望法律授权的志愿者已经从CECOD（异见限制中心）安全的搬迁地点运送过来，进行人工生物修复。\n\nDUR（接受再教育的持不同政见者）还负责恢复DSS，使其与原始库存清单相匹配，并在这个慷慨的赎罪机会中报告异常的士气。",
+   "published_at": "2026-08-20T22:00:34Z",
+   "translated_at": "2026-08-20T22:06:45Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3886,
+   "original": "DSS STATUS UPDATE\n\nTo fully resolve minor navigational discrepancies aboard the DSS, High Command has remotely initiated a station-wide environmental optimization cycle.\n\nThis deep sanitization has successfully returned the vessel to sterile parameters and hereby concludes the DSS examination to a satisfactory standard. Remote helm controls have locked a direct vector to Afoyay Bay for routine maintenance and post-cycle ventilation.",
+   "translated": "DSS状态更新\n\n为了完全解决DSS上的轻微导航差异，最高指挥部已远程启动了全站环境优化周期。\n\n这种深度消毒成功地使容器恢复到无菌参数，从而使DSS检查达到令人满意的标准。遥控舵控制装置已将直接矢量锁定到艾福亚湾，用于日常维护和循环后通风。",
+   "published_at": "2026-08-20T21:23:18Z",
+   "translated_at": "2026-08-20T21:48:24Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3885,
+   "original": "DSS STATUS UPDATE\n\nThe DSS has completed an unscheduled FTL jump toward Calypso, forgoing the standard administrative channels for requests of this nature.\n\nWhile the crew's sudden interest in this sector is under review, the on-board Ministry of Truth examiners are commended for their diligence, encouraged to complete their audit, and reminded that High Command has remotely disabled any and all manual controls aboard the station until further notice.",
+   "translated": "DSS状态更新\n\nDSS已完成向卡利普索的未计划超光速跃迁跳转，放弃了此类请求的标准管理通道。\n\n虽然机组人员对这一领域的突然兴趣正在接受审查，但船上真相部的审查人员因其勤奋而受到赞扬，鼓励他们完成审计，并提醒最高指挥部在进一步通知之前已远程禁用空间站上的任何和所有手动控制。",
+   "published_at": "2026-08-20T19:53:08Z",
+   "translated_at": "2026-08-20T20:28:09Z",
+   "source": "dispatch"
+  },
+  {
+   "id": 3884,
+   "original": "DSS STATUS UPDATE\n\nThe DSS has temporarily ceased any and all communication transmissions. Automated diagnostics confirm transceiver hardware is operating at 100% efficiency. \n\nHigh Command has officially attributed this ongoing silence to a mandatory, station-wide silent contemplation period. Normal communications, log updates, and official examiner reports will resume immediately upon its scheduled conclusion.",
+   "translated": "DSS状态更新\n\nDSS已暂时停止任何和所有通信传输。自动诊断确认收发器硬件以100%的效率运行。\n\n最高指挥部已正式将这种持续的沉默归因于一个强制性的、全站范围内的沉默沉思期。正常通信、日志更新和官方审查员报告将在预定结束后立即恢复。",
+   "published_at": "2026-08-20T13:37:12Z",
+   "translated_at": "2026-08-20T14:09:15Z",
+   "source": "dispatch"
+  }
+ ],
+ "major_order": {
+  "title": "MAJOR ORDER",
+  "brief": "Liberate the designated enemy planets, which are highly likely to be harboring the dissidents responsible for sabotaging the TCS+.",
+  "translated_brief": "释放指定的敌方行星，这些行星很可能窝藏着破坏TCS+的持不同政见者。",
+  "translated_at": "2026-08-30T11:29:28Z"
+ }
+}
