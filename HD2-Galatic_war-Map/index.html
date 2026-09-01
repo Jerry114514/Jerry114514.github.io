@@ -2257,10 +2257,10 @@ function renderPlayers(data) {
     const allEntries = voteEntries.concat([]);
     buffHtml = allEntries.map(e => {
       const ids = e.effect_ids || [];
-      // 保留 emoji 作为图标加载失败时的备选（从 cn 提取前置 emoji）
-      const emojiMatch = (e.cn || "").match(/^([\u2600-\u27BF\u2B00-\u2BFF]+)\s*/);
+      // 保留 emoji 作为图标加载失败时的备选（从 cn 提取前置 emoji；用 Unicode 属性覆盖全部 emoji）
+      const emojiMatch = (e.cn || "").match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
       const emojiIcon = emojiMatch ? emojiMatch[1] : "🛰️";
-      const cnName = (e.cn || "").replace(/^[\u2600-\u27BF\u2B00-\u2BFF]+\s*/g, "");
+      const cnName = (e.cn || "").replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, "");
       const iconUrl = dssIconOf(e.key || e.name || "");
       const iconHtml = iconUrl
         ? `<img class="dss-action-icon" src="${esc(iconUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${emojiIcon}</span>'">`
@@ -2312,11 +2312,11 @@ function renderPlayers(data) {
 
     // 被动渲染
     const passiveEntryCn = passiveEntry ? String(passiveEntry.cn || "") : "";
-    const passiveEmoji = passiveEntryCn.match(/^([\u2600-\u27BF\u2B00-\u2BFF]+)\s*/);
+    const passiveEmoji = passiveEntryCn.match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
     const passiveIconHtml = `<img class="dss-action-icon" src="${esc(DSS_ICONS["Operational Support"])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${passiveEmoji ? passiveEmoji[1] : "✊"}</span>'">`;
     const passiveHtml = passiveEntry
       ? `<div class="dss-passive">
-          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>${esc(passiveEntryCn.replace(/^[\u2600-\u27BF\u2B00-\u2BFF]+\s*/g, ""))}</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>${esc(passiveEntryCn.replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, ""))}</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
           <div class="dss-effect-desc">${esc(passiveEntry.desc)}</div>
         </div>`
       : `<div class="dss-passive">
