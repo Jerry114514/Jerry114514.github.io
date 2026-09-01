@@ -1,12 +1,10 @@
 name: Fetch HD2 Data
 
 on:
-  # GitHub Actions schedule 有 15-30 分钟延迟（实测 */5 实际 18-31 分钟一次）
-  # 用 3 组错开的 cron 分散触发点，提高实际频率（期望 ~7 分钟一次）
+  # GitHub Actions schedule 有 15-30 分钟延迟且密集 cron 会被丢弃（实测 3 组 cron 大量跳过）
+  # 本地 cron 每 15 分钟 dispatch 为主力；这里保留 1 组 15 分钟 cron 作补充（双保险）
   schedule:
-    - cron: '0,20,40 * * * *'    # 每组内部错开，避免集中排队
-    - cron: '7,27,47 * * * *'
-    - cron: '14,34,54 * * * *'
+    - cron: '0,15,30,45 * * * *'
   workflow_dispatch:   # 支持手动触发
   repository_dispatch:
     types: [fetch-now]  # 支持外部调用触发（如翻译推送后）
