@@ -544,8 +544,14 @@
     .dss-buff-off { border-left: 3px solid var(--border); opacity: 0.75; }
     .dss-buff-head {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 4px; gap: 8px;
     }
+    .dss-buff-name { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .dss-action-icon {
+      width: 26px; height: 26px; object-fit: contain; flex-shrink: 0;
+      border-radius: 4px; background: rgba(255,255,255,0.06);
+    }
+    .dss-emoji-fallback { font-size: 1.15rem; line-height: 1; flex-shrink: 0; }
     .dss-buff-head strong { color: var(--text); font-size: 0.92rem; }
     .dss-buff-status { font-size: 0.78rem; padding: 2px 8px; border-radius: 10px; }
     .st-on { background: rgba(46, 204, 113, 0.18); color: #5DDB8E; }
@@ -1624,7 +1630,9 @@
 
     let goal    = get(3);          // 目标值
     let current = currentProgress != null ? currentProgress : null;  // progress[i]
-    const planet  = get(12);         // 星球索引
+    let planet  = get(12);         // 星球索引（valueType 12）
+    // 值 0 / 空 = 全局任务（如消灭敌人无特定目标星球），不算星球索引，避免误匹配 index=0 的超级地球
+    if (!planet || planet === 0) planet = null;
     const race    = get(6);          // 1=Human 2=Terminid 3=Automaton 4=Illuminate
 
     // type=11 解放星球：companion 的 values 非目标值，goal=100，current 由星球解放度算
@@ -2013,17 +2021,21 @@ function renderPlayers(data) {
       .filter(Boolean);
 
     const planetsHtml = targetPlanets.length === 0
-      ? `<div class="empty" style="padding: 12px 0;">未识别到目标星球（可能为任务无关）。</div>`
+      ? ""
       : `<div class="planet-grid">${targetPlanets.map(p => renderPlanetCard(p, data.starMap, "MO 目标", "status-mo")).join("")}</div>`;
+
+    const planetsBlock = targetPlanets.length === 0
+      ? ``  // 全局任务（如消灭敌人）无特定目标星球，不显示该区块
+      : `<div class="block-head" style="margin-top:8px;">
+        <span class="block-emoji">🎯</span>
+        <h2 class="block-title" style="font-size:1rem;">目标星球</h2>
+      </div>
+      <div class="mo-targets">${planetsHtml}</div>`;
 
     root.innerHTML = `
       <p class="mo-brief">${richText(brief)}</p>
       <div class="mo-tasks">${tasksHtml}</div>
-      <div class="block-head" style="margin-top:8px;">
-        <span class="block-emoji">🎯</span>
-        <h2 class="block-title" style="font-size:1rem;">目标星球</h2>
-      </div>
-      <div class="mo-targets">${planetsHtml}</div>
+      ${planetsBlock}
       ${renderStrategicOpportunities(data)}
       ${renderPersonalOrder(data)}
     `;
@@ -2176,6 +2188,21 @@ function renderPlayers(data) {
 
     // ============ 精确数据渲染（companion tacticalActions） ============
     const tacActions = (dss && dss.tacticalActions) || [];
+    // DSS 战术行动图标（wiki.gg Democracy Space Station 页；加载失败回退 emoji）
+    const DSS_ICONS = {
+      "Eagle Storm": "https://helldivers.wiki.gg/images/DSS_Eagle_Icon.svg",
+      "Orbital Block": "https://helldivers.wiki.gg/images/DSS_Orbital_Blockade_Icon.svg",
+      "Heavy Ordnance Distribution": "https://helldivers.wiki.gg/images/DSS_Heavy_Ordnance_Distribution_Icon.svg",
+      "Planetary Bombardment": "https://helldivers.wiki.gg/images/DSS_Planetary_Bombardment_Icon.svg",
+      "Eagle Block": "https://helldivers.wiki.gg/images/DSS_Eagle_Icon.svg",
+      "Operational Support": "https://helldivers.wiki.gg/images/DSS_Icon.svg",
+    };
+    const dssIconOf = (key) => {
+      for (const k of Object.keys(DSS_ICONS)) {
+        if (key && key.indexOf(k) >= 0) return DSS_ICONS[k];
+      }
+      return null;
+    };
     // 计算捐献进度
     function donationInfo(ta) {
       const cost = (ta.cost || [])[0] || {};
@@ -2195,7 +2222,14 @@ function renderPlayers(data) {
     const allEntries = voteEntries.concat([]);
     buffHtml = allEntries.map(e => {
       const ids = e.effect_ids || [];
+      // 保留 emoji 作为图标加载失败时的备选（从 cn 提取前置 emoji）
+      const emojiMatch = (e.cn || "").match(/^([\u2600-\u27BF\u2B00-\u2BFF]+)\s*/);
+      const emojiIcon = emojiMatch ? emojiMatch[1] : "🛰️";
       const cnName = (e.cn || "").replace(/^[\u2600-\u27BF\u2B00-\u2BFF]+\s*/g, "");
+      const iconUrl = dssIconOf(e.key || e.name || "");
+      const iconHtml = iconUrl
+        ? `<img class="dss-action-icon" src="${esc(iconUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${emojiIcon}</span>'">`
+        : `<span class="dss-emoji-fallback">${emojiIcon}</span>`;
       // 找匹配的 companion 行动（effectIds 完全包含该条目的 ids 才算匹配，避免变种误匹配）
       let ta = null;
       tacActions.forEach(t => {
@@ -2230,7 +2264,7 @@ function renderPlayers(data) {
       return `
         <div class="dss-buff ${isActive ? "dss-buff-on" : "dss-buff-off"}"${isActive && remainMs != null ? ` data-active-ms="${Math.round(remainMs)}"` : ""}>
           <div class="dss-buff-head">
-            <strong>${esc(cnName)}</strong>
+            <span class="dss-buff-name">${iconHtml}<strong>${esc(cnName)}</strong></span>
             <span class="dss-buff-status ${isActive ? "st-on" : "st-off"}">${statusText}</span>
           </div>
           <div class="dss-effect-desc">${esc(descText)}</div>
@@ -2242,13 +2276,16 @@ function renderPlayers(data) {
     }).join("");
 
     // 被动渲染
+    const passiveEntryCn = passiveEntry ? String(passiveEntry.cn || "") : "";
+    const passiveEmoji = passiveEntryCn.match(/^([\u2600-\u27BF\u2B00-\u2BFF]+)\s*/);
+    const passiveIconHtml = `<img class="dss-action-icon" src="${esc(DSS_ICONS["Operational Support"])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${passiveEmoji ? passiveEmoji[1] : "✊"}</span>'">`;
     const passiveHtml = passiveEntry
       ? `<div class="dss-passive">
-          <div class="dss-buff-head"><strong>${esc(passiveEntry.cn)}</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>${esc(passiveEntryCn.replace(/^[\u2600-\u27BF\u2B00-\u2BFF]+\s*/g, ""))}</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
           <div class="dss-effect-desc">${esc(passiveEntry.desc)}</div>
         </div>`
       : `<div class="dss-passive">
-          <div class="dss-buff-head"><strong>✊ 行动支持</strong><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
+          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>行动支持</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
           <div class="dss-effect-desc">DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。</div>
         </div>`;
 
