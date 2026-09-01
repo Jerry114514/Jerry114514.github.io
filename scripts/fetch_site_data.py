@@ -425,7 +425,8 @@ def fetch_companion():
 
     dispatches = []
     for n in sorted((obj.get("news") or []), key=lambda x: x.get("id", 0), reverse=True)[:30]:
-        dispatches.append({"id": n.get("id"), "published": norm_time(n.get("published")),
+        # 保留原始 warTime（秒），由 main() 用 clientTime/warStatus.time 换算真实时间
+        dispatches.append({"id": n.get("id"), "published": n.get("published"),
                            "type": n.get("type"), "message": n.get("message")})
 
     # DSS 空间站（companion spaceStations，含 tacticalActions 捐献数据）
@@ -466,7 +467,9 @@ def fetch_companion():
         }
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches, "dss": dss}
+            "assignments": assignment, "dispatches": dispatches, "dss": dss,
+            "_clientTimeMs": obj.get("clientTime") or (int(time.time()) * 1000),
+            "_currentWarTime": (obj.get("warStatus") or {}).get("time") or 0}
 
 
 # ---------------- helldivers2.dev 源 ----------------
@@ -636,14 +639,22 @@ def main():
 
     _save_snapshot(base)
 
-    # 资讯：hd2dev 优先（真实 ISO 时间）；companion 的 published 是游戏内时间戳不可用，仅兜底
-    if hd2dev and hd2dev.get("dispatches"):
-        base["dispatches"] = hd2dev["dispatches"]
-    elif companion and companion.get("dispatches"):
-        # companion 时间不可用，清空 published
+    # 资讯：companion 优先（数据最新，含 hd2dev 未同步的新条目）
+    # companion 的 published 是游戏内 warTime 秒，用 clientTimeMs + currentWarTime 基准换算真实时间
+    if companion and companion.get("dispatches"):
+        _client_ms = companion.get("_clientTimeMs") or (int(time.time()) * 1000)
+        _war_now = companion.get("_currentWarTime") or 0
         for dp in companion["dispatches"]:
-            dp["published"] = ""
+            _pub = dp.get("published")
+            if isinstance(_pub, (int, float)) and _war_now:
+                # warTime -> 真实毫秒 -> ISO
+                _real = int(_client_ms) + (int(_pub) - int(_war_now)) * 1000
+                dp["published"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(_real / 1000))
+            else:
+                dp["published"] = ""
         base["dispatches"] = companion["dispatches"]
+    elif hd2dev and hd2dev.get("dispatches"):
+        base["dispatches"] = hd2dev["dispatches"]
 
     # DSS：companion（含 tacticalActions 捐献数据）优先 -> 官方 -> 快照兜底
     # 若 companion 失败但快照已有 tacticalActions，则保留旧 tacticalActions，避免进度条丢失
