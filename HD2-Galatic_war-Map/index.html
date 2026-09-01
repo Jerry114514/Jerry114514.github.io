@@ -1628,12 +1628,20 @@
       return i >= 0 ? vs[i] : null;
     };
 
-    let goal    = get(3);          // 目标值
+    let goal    = get(3);          // 目标值（type=3 任务为消灭数量）
     let current = currentProgress != null ? currentProgress : null;  // progress[i]
     let planet  = get(12);         // 星球索引（valueType 12）
     // 值 0 / 空 = 全局任务（如消灭敌人无特定目标星球），不算星球索引，避免误匹配 index=0 的超级地球
     if (!planet || planet === 0) planet = null;
-    const race    = get(6);          // 1=Human 2=Terminid 3=Automaton 4=Illuminate
+    // 阵营：valueType 语义因任务类型而异。type=3 消灭敌人时 valueType 1=阵营(3=Automaton 4=Illuminate)；
+    // 其他类型回退 valueType 6（历史注释语义 1=Human 2=Terminid 3=Automaton 4=Illuminate）
+    let race = null;
+    if (t === 3) {
+      race = get(1);
+      if (race === 0) race = null;
+    }
+    if (race == null) race = get(6);
+    if (race === 0) race = null;
 
     // type=11 解放星球：companion 的 values 非目标值，goal=100，current 由星球解放度算
     if (t === 11) {
@@ -1900,6 +1908,20 @@ function renderPlayers(data) {
   function renderStrategicOpportunities(data) {
     const a = data.assignments;
     if (!a || !a.tasks || a.tasks.length < 2) return "";
+    // 从 dispatches/news 匹配最近的 STRATEGIC IMPERATIVE 完整描述（优先中文翻译，回退原文）
+    let siDesc = "";
+    const disp = (data.dispatches || []).slice().sort((x, y) => (y.id || 0) - (x.id || 0));
+    const newsMap = {};
+    (data.news || []).forEach(n => { if (n.id != null) newsMap[n.id] = n; });
+    for (const n of disp) {
+      const msg = n.message || "";
+      if (/STRATEGIC IMPERATIVE/i.test(msg) && !/FAILED/i.test(msg)) {
+        const newsItem = newsMap[n.id];
+        const zh = newsItem && (newsItem.translated || newsItem.message_zh || "");
+        siDesc = zh || stripTags(msg.replace(/^<i=\d+>[^<]*<\/i>\s*/i, "")).trim();
+        break;
+      }
+    }
     // 从 tasks 中提取副任务作为战略机遇
     const tasks = a.tasks.slice(1).map((tk, i) => {
       const d = decodeTask(tk, a.progress ? a.progress[i + 1] : null);
@@ -1909,7 +1931,13 @@ function renderPlayers(data) {
         goal = fmt(d.goal);
         pct = Math.min(100, Math.round((d.current || 0) / d.goal * 100));
       }
-      return { typeCn: d.typeCn || "未知任务", current, goal, pct };
+      // 副任务标题：带阵营
+      let title = d.typeCn || "未知任务";
+      const hasRace = (d.race === 2 || d.race === 3 || d.race === 4);
+      const raceName = d.raceName ? ownerCn(d.raceName) : "";
+      if (d.type === 3 && hasRace) title = `消灭${raceName}敌人`;
+      else if (hasRace) title = `${title} · 目标：${raceName}`;
+      return { title, current, goal, pct };
     });
     if (tasks.length === 0) return "";
     return `
@@ -1918,10 +1946,11 @@ function renderPlayers(data) {
         <h2 class="block-title" style="font-size:1rem;">战略机遇</h2>
       </div>
       <div class="card mo-sub">
+        ${siDesc ? `<p class="mo-brief" style="font-size:0.8rem;opacity:0.9;margin-bottom:8px;">${richText(siDesc)}</p>` : ""}
         ${tasks.map(t => `
           <div class="mo-task" style="opacity:0.85;">
             <div class="mo-task-head">
-              <span>${esc(t.typeCn)}</span>
+              <span>${esc(t.title)}</span>
               <span class="mo-task-progress">${t.current} / ${t.goal} (${t.pct}%)</span>
             </div>
             <div class="progress-bar"><div class="progress-bar-fill" style="width:${t.pct}%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
@@ -1990,14 +2019,20 @@ function renderPlayers(data) {
         pct = decoded.current > 0 ? 100 : 0;
         goalStr = "—";
       }
-      // race 仅敌对阵营(2/3/4)才显示；1(人类)/None 不显示（避免误显示"目标：超级地球"）
-      const raceTxt = (decoded.race === 2 || decoded.race === 3 || decoded.race === 4)
-        ? ` · 目标：${ownerCn(decoded.raceName)}` : "";
+      // 任务标题：type=3 消灭敌人带阵营 -> 「消灭X敌人」；否则「类型」+「目标：X」
+      const hasRace = (decoded.race === 2 || decoded.race === 3 || decoded.race === 4);
+      const raceName = decoded.raceName ? ownerCn(decoded.raceName) : "";
+      let taskTitle = esc(decoded.typeCn);
+      if (decoded.type === 3 && hasRace) {
+        taskTitle = `消灭${raceName}敌人`;
+      } else if (hasRace) {
+        taskTitle = `${esc(decoded.typeCn)} · 目标：${raceName}`;
+      }
 
       return `
         <div class="mo-task">
           <div class="mo-task-head">
-            <span>任务 ${i + 1}：${esc(decoded.typeCn)}${raceTxt}</span>
+            <span>任务 ${i + 1}：${taskTitle}</span>
             <span class="mo-task-progress">${currentStr} / ${goalStr} (${pct}%)</span>
           </div>
           <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
