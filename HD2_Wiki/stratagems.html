@@ -175,7 +175,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
           '<div class="row2">' + esc(s.name_en || s.id) + '</div>' +
           '<div class="row3"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
           (code ? '<span>呼叫：' + renderCode(code) + '</span>' : '') + '</div>' +
-          (s.unlock && s.unlock !== "初始解锁" ? '<div class="row4">🔓 ' + esc(s.unlock) + '</div>' : '') +
+          (s.unlock && s.unlock !== "初始解锁" ? '<div class="row4">🔓 ' + esc(s.unlock_zh || s.unlock) + '</div>' : '') +
           '</a>';
       }).join("");
     }

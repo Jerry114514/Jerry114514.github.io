@@ -124,6 +124,11 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
         var r = await fetch("./data/wiki/zh/weapons.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
+        // 加载 AI 翻译术语映射（detailed_stats 技术串）
+        try {
+          var tr = await fetch("./data/wiki/zh/ds_terms.json?t=" + Date.now(), { cache: "no-store" });
+          if (tr.ok) DS_TERMS = await tr.json();
+        } catch (_) { /* 忽略：术语表缺失时回退原值 */ }
         var w = (d.weapons || []).find(function(x) { return x.id === id; });
         if (!w) { layout.innerHTML = '<div class="empty">未找到该武器</div>'; return; }
         renderDetail(w);
@@ -158,8 +163,8 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
             '<div class="detail-icon">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🎯</span>\'">' : '<span class="ph">🎯</span>') + '</div>' +
             '<div class="name">' + esc(w.name) + '</div>' +
             '<div class="name-en">' + esc(w.name_en) + '</div>' +
-            '<div class="unlock">⭐ ' + esc(w.unlock || "") + '</div>' +
-            '<div class="desc">' + esc(w.description || "") + '</div>' +
+            '<div class="unlock">⭐ ' + esc(w.unlock_zh || w.unlock || "") + '</div>' +
+            '<div class="desc">' + esc(w.description_zh || w.description || "") + '</div>' +
             (w.lore ? '<div class="lore">' + esc(w.lore) + '</div>' : '') +
           '</div>' +
           renderDetailedStats(w) +
@@ -194,6 +199,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
       mass: "弹体质量", initial_velocity: "初速度", drag_factor: "阻力系数", gravity_factor: "重力系数",
       penetration_slowdown: "穿透减速", explosion_on_impact: "命中引爆", explode_after: "延时引爆",
       radius_inner: "内圈半径", radius_outer: "外圈半径", radius_shockwave: "冲击波半径",
+      inner_radius: "内圈半径", outer_radius: "外圈半径",
       inner_durable: "内圈耐久伤害", outer_durable: "外圈耐久伤害",
       damage_standard: "标准伤害", damage_durable: "耐久伤害", damage_element: "伤害类型",
       pen_direct: "直射穿透", pen_slight_angle: "小角度穿透", pen_large_angle: "大角度穿透", pen_extreme_angle: "极端穿透", pen_aoe: "范围穿透",
@@ -202,7 +208,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
       spread: "散布", sway: "晃动", ergonomics: "人体工学", capacity: "弹匣容量",
       spare_magazines: "备用弹匣", starting_magazines: "初始弹匣", mags_from_supply: "补给弹匣", mags_from_ammo_box: "弹药箱弹匣",
       cooldown: "冷却时间", uses: "使用次数", bombs: "炸弹数量", salvos: "齐射次数", bombardment_area: "炮击区域范围",
-      status_strength: "状态强度", status_duration: "状态持续时间", status: "状态效果", effect_type: "状态类型",
+      status_strength: "状态强度", status_duration: "状态持续时间", status: "状态效果", effect_type: "状态类型", element: "元素",
     };
     // 值翻译（长词优先）
     var DS_VALUE_MAP = [
@@ -212,8 +218,10 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
       ["Light", "轻甲"], ["Medium", "中甲"], ["Heavy", "重甲"],
       ["EMS", "电磁伤害"], ["None", "无"], ["Fire", "火焰伤害"]
     ];
+    var DS_TERMS = {};   // AI 翻译术语映射（ds_terms.json）
     function dsTranslate(s) {
       var out = String(s);
+      if (DS_TERMS[out]) return DS_TERMS[out];
       DS_VALUE_MAP.forEach(function(pair) { out = out.split(pair[0]).join(pair[1]); });
       return out;
     }
@@ -265,7 +273,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
                          a.type === "melee" ? '<span class="ds-type ds-type-melee">近战</span>' :
                          '<span class="ds-type">' + esc(a.type) + '</span>';
           return '<div class="ds-attack">' +
-            '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(a.name || "") + ' ' + typeTag + '</div>' +
+            '<div class="ds-attack-head">⚔️ 攻击 #' + (i+1) + ': ' + esc(DS_TERMS[a.name] || a.name || "") + ' ' + typeTag + '</div>' +
             dsGrid(a.projectile) +
             dsGrid(a.area_of_effect) +
             dsGrid(a.damage) +
@@ -299,7 +307,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
         });
         seHtml = dsGrid(seTop) + seHtml;
         statusHtml = '<div class="ds-attack ds-status">' +
-          '<div class="ds-attack-head">' + stIcon + ' 状态效果 (Status: ' + esc(stName) + ')</div>' +
+          '<div class="ds-attack-head">' + stIcon + ' 状态效果：' + esc(stName) + '</div>' +
           seHtml +
           '</div>';
       }

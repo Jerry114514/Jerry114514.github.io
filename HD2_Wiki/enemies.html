@@ -153,7 +153,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
     function cardHtml(e) {
       var color = FACTION_COLOR[e.faction] || "#64748b";
       var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
-      var tag = e.is_strain_page ? '<span class="enemy-category">变种分类</span>' : (e.category ? '<span class="enemy-category">' + esc(e.category) + '</span>' : '');
+      var tag = e.is_strain_page ? '<span class="enemy-category">变种分类</span>' : (e.category ? '<span class="enemy-category">' + esc(e.category_zh || e.category) + '</span>' : '');
       return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
         '<div class="color-bar" style="background:' + color + '"></div>' +
         '<div class="enemy-card-image">' + (e.image_thumb || e.image ?

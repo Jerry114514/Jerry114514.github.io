@@ -122,8 +122,8 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
             '<td>' + esc(p.name || p.name_en) + (p.count ? ' <span class="part-count">×' + p.count + '</span>' : '') + '</td>' +
             '<td><div class="part-img">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🔍</span>\'">' : '<span class="ph">🔍</span>') + '</div></td>' +
             '<td>' + esc(p.health != null ? p.health : '—') + '</td>' +
-            '<td>' + esc(p.armor_level || p.armor || '—') + '</td>' +
-            '<td>' + esc(p.location || '—') + '</td>' +
+            '<td>' + esc(p.armor_level_zh || p.armor_level || p.armor || '—') + '</td>' +
+            '<td>' + esc(p.location_zh || p.location || '—') + '</td>' +
             '<td>' + esc(p.durable || '—') + '</td>' +
             '<td>' + esc(p.percent_to_main || p.pct_to_main || '—') + '</td>' +
             '<td>' + (fatal ? '<span class="fatal-tag">💀</span>' : '') + '</td>' +
@@ -158,19 +158,19 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
             '<div class="name-en">' + esc(e.name) + '</div>' +
             '<div class="tags">' +
               '<span class="faction-tag" style="background:' + fcolor + '">' + esc(fcn) + '</span>' +
-              (e.category ? '<span class="cat-tag">' + esc(e.category) + '</span>' : '') +
+              (e.category ? '<span class="cat-tag">' + esc(e.category_zh || e.category) + '</span>' : '') +
             '</div>' +
-            (e.description ? '<div class="desc">' + esc(e.description) + '</div>' : '') +
+            (e.description ? '<div class="desc">' + esc(e.description_zh || e.description) + '</div>' : '') +
           '</div>' +
           variantNav +
           '<div class="card"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
             '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
             '<div class="placeholder">🐛</div>') + '</div></div>' +
           '<div class="card"><h2>📊 基础信息</h2><table class="info-table">' +
-            row("阵营", fcn) + row("分类", e.category) +
-            row("总生命值", e.health_total) + row("伤害", e.damage) +
-            row("伤害类型", e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier) +
-            row("踉跄阈值", e.stagger_threshold) + row("最低难度", e.minimum_difficulty) +
+            row("阵营", fcn) + row("分类", e.category_zh || e.category) +
+            row("总生命值", e.health_total) + row("伤害", e.damage_zh || e.damage) +
+            row("伤害类型", e.damage_type_zh || e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier_zh || e.fire_damage_multiplier) +
+            row("踉跄阈值", e.stagger_threshold_zh || e.stagger_threshold) + row("最低难度", e.minimum_difficulty_zh || e.minimum_difficulty) +
           '</table></div>' +
           partsHtml +
         '</div>' +
