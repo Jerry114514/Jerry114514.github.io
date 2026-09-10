@@ -22,12 +22,11 @@
       color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
-    }
-    h1, h2, h3, h4, .nav-link, .sector-header, .planet-name, .title, .news-float-title, .wiki-header h1, .wiki-header p, .cat-tag, .faction-tag, .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-      font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-    }
       letter-spacing: 0.01em;
       overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .nav-link, .sector-header, .planet-name, .news-float-title {
+      font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
     }
     body::before {
       content: "";

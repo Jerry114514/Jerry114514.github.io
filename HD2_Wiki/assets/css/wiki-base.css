@@ -1,5 +1,7 @@
-/* wiki 公共基座 —— 2026-09 由 12 页内嵌 <style> 抽取（规则级精确匹配）
-   页面专属样式仍在各页 <style>；本文件改动会波及全部 12 页，谨慎编辑 */
+/* wiki 公共基座 —— 2026-09 由 12 页内嵌 <style> 抽取（规则级精确匹配）；2026-09-11 P0 对齐统一色板并扩展刻度
+   页面专属样式仍在各页 <style>；本文件改动会波及全部 12 页，谨慎编辑
+   ── 断点规范 ──：≤768px 手机 / ≤1024px 平板（新断点只允许这两档，变量无法用于 media query 故此处为约定）
+   ── z 层级表 ──：悬浮 40 < 导航 50 < 遮罩 100 < 弹层 999，用变量勿拍数字 */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 @font-face { font-family: "ZZZ-thick"; src: url("../fonts/ZZZ-thick.ttf") format("truetype"); }
@@ -9,11 +11,20 @@ html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingF
 body { display: flex; flex-direction: column; }
 .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
 .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
+.wiki-footer a { color: var(--blue); text-decoration: none; }
+.wiki-footer a:hover { color: var(--yellow); }
+h1, h2, h3, h4, .wiki-header h1, .wiki-header p, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
   font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
 }
 :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --bg-deep: #0B0E14; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6;
+      --radius: 12px; --radius-s: 8px; --blur: 10px;
+
+      /* 间距刻度（与主站 tokens.css 同值） */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+
+      /* z 层级（与主站 tokens.css 同值） */
+      --z-float: 40; --z-nav: 50; --z-overlay: 100; --z-modal: 999;
     }

@@ -1,5 +1,9 @@
-/* HD2 主站设计变量 —— 单点真相（2026-09 自 index.html 抽取）
-   阵营色/主题色改动只改这里；wiki 侧核心变量见 HD2_Wiki/assets/css/wiki-base.css */
+/* HD2 主站设计变量 —— 单点真相（2026-09 自 index.html 抽取；2026-09-11 P0 对齐统一色板并扩展刻度）
+   阵营色/主题色改动只改这里；wiki 侧核心变量见 HD2_Wiki/assets/css/wiki-base.css
+   ── 断点规范 ──（CSS 变量无法用于 media query，以下为约定值，新增断点只允许这两档）
+   · ≤768px  手机（目录/网格收单列、双栏收单栏）
+   · ≤1024px 平板（三列收两列；固定列数网格的中间档）
+   ── z 层级表 ──：悬浮内容 40 < 导航 50 < 遮罩 100 < 弹层 999，新代码用变量勿拍数字 */
 :root {
       --bg-deep:   #0B0E14;
       --bg-deep-2: #131826;
@@ -7,9 +11,10 @@
       --yellow:    #F5C518;
       --yellow-2:  #FFD54F;
       --yellow-3:  #B8900E;
-      --text:      #FFFFFF;
-      --text-dim:  rgba(255, 255, 255, 0.72);
-      --text-mute: rgba(255, 255, 255, 0.45);
+      --blue:      #3B82F6;
+      --text:      #E2E8F0;
+      --text-dim:  #94A3B8;
+      --text-mute: #64748B;
       --border:    rgba(255, 255, 255, 0.08);
       --border-h:  rgba(245, 197, 24, 0.4);
       --card-bg:   rgba(255, 255, 255, 0.05);
@@ -17,6 +22,20 @@
       --blur:      blur(12px);
       --radius:    12px;
       --radius-s:  8px;
+
+      /* 间距刻度（统一草案，新样式一律取刻度值） */
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 24px;
+      --sp-6: 32px;
+
+      /* z 层级 */
+      --z-float:  40;
+      --z-nav:    50;
+      --z-overlay: 100;
+      --z-modal:  999;
 
       /* 阵营色 */
       --c-humans:     #5BA3D0;   /* 超级地球（蓝） */
