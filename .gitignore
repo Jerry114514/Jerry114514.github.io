@@ -8,3 +8,10 @@ HD2项目设计方案.md
 HD2项目上下文.md
 HD2数据抓取技术文档.md
 HD2项目留档_*.md
+
+# wiki 抓取脚本本地产物（不进生产仓；2026-09-11 恢复，曾被 0f770c9f2 的整文件覆盖丢失）
+HD2_Wiki/data/wiki/zh/fetch_reports/
+
+# 无引用的本地中间产物（gitignore 留本地，暂不删）
+HD2-Galatic_war-Map/tables/strat_icons.json
+HD2重构检查计划表.md
