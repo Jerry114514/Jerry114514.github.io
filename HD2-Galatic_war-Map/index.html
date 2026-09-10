@@ -260,6 +260,7 @@
   <!-- ============================================================
        脚本
        ============================================================ -->
+  <script src="./js/data-source.js"></script>
   <script>
   "use strict";
 
@@ -444,15 +445,12 @@
      ============================================================== */
   // 读取本地 data.json（GitHub Actions 生成：官方 API -> companion -> helldivers2.dev 三级回退）
   async function fetchAll() {
-    const r = await fetch(CONFIG.dataUrlBust(), { cache: "no-store" });
-    if (!r.ok) throw new Error(`HTTP ${r.status} on ${CONFIG.DATA_URL}`);
-    const data = await r.json();
+    const data = await HD2Source.json(CONFIG.dataUrlBust());
 
     // 星译表：尝试拉取 bot 仓库的 tables/starmap.json，失败时静默降级
     let starMap = null;
     try {
-      const sr = await fetch(CONFIG.STAR_MAP_URL, { cache: "no-store" });
-      if (sr.ok) starMap = await sr.json();
+      starMap = await HD2Source.jsonSoft(CONFIG.STAR_MAP_URL);
     } catch (_) { /* ignore */ }
 
     // 从 starmap 构建 星区英文 -> 中文 映射（覆盖内置 SECTOR_CN 的缺失/错误）
@@ -483,27 +481,26 @@
     // 行动变量对照表（DSS 效果描述等）
     let variables = null;
     try {
-      const vr = await fetch(CONFIG.VARIABLES_URL, { cache: "no-store" });
-      if (vr.ok) variables = await vr.json();
+      variables = await HD2Source.jsonSoft(CONFIG.VARIABLES_URL);
     } catch (_) { /* ignore */ }
 
     // 效果 ID -> 中文（星球行动变量）
     let effectMap = {};
     try {
-      const er = await fetch(CONFIG.EFFECT_URL, { cache: "no-store" });
-      if (er.ok) effectMap = await er.json();
+      const em = await HD2Source.jsonSoft(CONFIG.EFFECT_URL);
+      if (em) effectMap = em;
     } catch (_) { /* ignore */ }
     // 效果 ID -> 英文名+描述（词条详情）
     let effectDetailMap = {};
     try {
-      const dr = await fetch(CONFIG.EFFECT_DETAIL_URL, { cache: "no-store" });
-      if (dr.ok) effectDetailMap = await dr.json();
+      const ed = await HD2Source.jsonSoft(CONFIG.EFFECT_DETAIL_URL);
+      if (ed) effectDetailMap = ed;
     } catch (_) { /* ignore */ }
     // 战备库（战术搭配器）
     let stratagems = [];
     try {
-      const sr = await fetch(CONFIG.STRATAGEMS_URL, { cache: "no-store" });
-      if (sr.ok) stratagems = await sr.json();
+      const sg = await HD2Source.jsonSoft(CONFIG.STRATAGEMS_URL);
+      if (sg) stratagems = sg;
     } catch (_) { /* ignore */ }
 
     return {
@@ -1871,11 +1868,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   // 加载轮播配置（banner.json）
   async function loadBanner() {
     try {
-      const r = await fetch(CONFIG.BANNER_URL, { cache: "no-store" });
-      if (r.ok) {
-        const d = await r.json();
-        if (d && Array.isArray(d.items)) bannerItems = d.items;
-      }
+      const d = await HD2Source.jsonSoft(CONFIG.BANNER_URL);
+      if (d && Array.isArray(d.items)) bannerItems = d.items;
     } catch (_) { /* ignore */ }
     renderBanner();
     startBanner();
@@ -1992,8 +1986,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     const root = $("impact-content");
     const meta = $("impact-meta");
     const histUrl = "./data/history/player_distribution.json?t=" + Math.floor(Date.now() / 300_000);
-    fetch(histUrl, { cache: "no-store" })
-      .then(r => r.ok ? r.json() : Promise.reject("HTTP " + r.status))
+    HD2Source.json(histUrl)
       .then(hd => {
         const hist = hd.history || [];
         if (hist.length < 2) {
