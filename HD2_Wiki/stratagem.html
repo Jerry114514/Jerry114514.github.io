@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
             '<div class="meta"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
               (s.source ? '<span>📦 ' + esc(dsTranslate(s.source)) + '</span>' : '') + '</div>' +
             '<div class="meta">呼叫代码：' + renderCode(code) + '</div>' +
-            (s.description ? '<div class="desc">' + esc(s.description) + '</div>' : '') +
+            (s.description ? '<div class="desc">' + esc(s.description_zh || s.description) + '</div>' : '') +
           '</div>' +
           '<div class="card">' +
             '<h2>📊 详细属性</h2>' +
@@ -213,6 +213,7 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
       spare_magazines: "备用弹匣", starting_magazines: "初始弹匣", mags_from_supply: "补给弹匣", mags_from_ammo_box: "弹药箱弹匣",
       cooldown: "冷却时间", uses: "使用次数", bombs: "炸弹数量", salvos: "齐射次数", bombardment_area: "炮击区域范围",
       status_strength: "状态强度", status_duration: "状态持续时间", status: "状态效果", effect_type: "状态类型", element: "元素",
+      main_health: "主生命值", main_armor: "主装甲", aoe_duration: "范围持续时间", damage_damage_standard: "状态标准伤害", damage_damage_durable: "状态耐久伤害",
     };
     // 值翻译（长词优先）
     var DS_VALUE_MAP = [
@@ -293,7 +294,8 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .fact
       var seList = Array.isArray(se) ? se : (se && typeof se === "object" && Object.keys(se).length ? [se] : []);
       if (seList.length) {
         statusHtml = seList.map(function(item) {
-          var stRaw = item.effect_type || item.status || item.name || "状态";
+          var dmgEl = (item.damage && item.damage.element) || (item.stats && item.stats.element) || "";
+          var stRaw = item.effect_type || item.status || item.name || dmgEl || "状态";
           var stLower = String(stRaw).toLowerCase();
           var stName = stLower === "fire" ? "火焰" :
                        stLower === "gas" ? "毒气" :

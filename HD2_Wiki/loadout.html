@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战术搭配器 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 战术搭配器 - 随机抽取战备配装，按 对单/对群/穿甲/专项 四维评分与加权评级" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
+      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
+      --red: #ef4444; --green: #22c55e; --amber: #f59e0b;
+    }
+    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
+    @font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
+    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
+    body { display: flex; flex-direction: column; }
+    h1, h2, h3 { font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif; letter-spacing: 0.5px; }
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); }
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+    .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.8rem; padding: 4px 14px; border: 1px solid var(--border); border-radius: 16px; }
+    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .toolbar { max-width: 1200px; margin: 0 auto; padding: 18px 20px 0; width: 100%; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .draw-btn { padding: 10px 26px; border: none; border-radius: 10px; background: linear-gradient(135deg, #f5c518, #f59e0b); color: #0a0e1a; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; }
+    .draw-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,197,24,0.3); }
+    .toolbar .meta { color: var(--text-mute); font-size: 0.8rem; }
+
+    .layout { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; width: 100%; display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-content: start; }
+    @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+
+    .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; position: relative; overflow: hidden; }
+    .card.S { border-color: rgba(245,197,24,0.55); box-shadow: 0 0 22px rgba(245,197,24,0.12); }
+    .card .head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .card .name { font-size: 0.98rem; color: var(--text); font-weight: 700; }
+    .card .icon { width: 34px; height: 34px; object-fit: contain; border-radius: 6px; background: rgba(255,255,255,0.06); flex-shrink: 0; }
+    .card .type-tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+    .bar { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+    .bar .label { width: 66px; font-size: 0.72rem; color: var(--text-dim); flex-shrink: 0; }
+    .bar .track { flex: 1; height: 7px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    .bar .fill { height: 100%; border-radius: 4px; }
+    .bar .val { width: 22px; text-align: right; font-size: 0.74rem; color: var(--text); flex-shrink: 0; }
+    .card .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .bonus { font-size: 0.74rem; padding: 2px 9px; border-radius: 10px; }
+    .bonus-pos { color: #5DDB8E; background: rgba(46,204,113,0.14); }
+    .bonus-neg { color: #ff8f7a; background: rgba(239,68,68,0.14); }
+    .bonus-zero { color: var(--text-mute); background: rgba(255,255,255,0.05); }
+    .swap-btn { padding: 4px 12px; font-size: 0.72rem; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: var(--text-dim); cursor: pointer; font-family: inherit; }
+    .swap-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    .side { display: flex; flex-direction: column; gap: 12px; }
+    .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .panel h3 { font-size: 0.95rem; color: var(--yellow); margin-bottom: 12px; }
+    .prow { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-dim); padding: 4px 0; }
+    .prow strong { color: var(--text); }
+    .divider { height: 1px; background: var(--border); margin: 8px 0; }
+    .total { font-size: 1.3rem; }
+    .grade { text-align: center; font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: 2rem; margin: 6px 0; }
+    .g-S { color: var(--yellow); text-shadow: 0 0 18px rgba(245,197,24,0.5); }
+    .g-A { color: #5DDB8E; } .g-B { color: var(--blue); } .g-C { color: var(--amber); } .g-D { color: var(--text-mute); }
+    .hint { font-size: 0.72rem; color: var(--text-mute); text-align: center; }
+    .guide { margin-top: 10px; font-size: 0.68rem; color: var(--text-mute); text-align: center; border-top: 1px dashed var(--border); padding-top: 8px; }
+    .chart .crow { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
+    .chart .clabel { width: 66px; font-size: 0.72rem; color: var(--text-dim); flex-shrink: 0; }
+    .chart .ctrack { flex: 1; height: 10px; background: rgba(255,255,255,0.07); border-radius: 5px; overflow: hidden; }
+    .chart .cfill { height: 100%; border-radius: 5px; }
+    .chart .cval { width: 34px; text-align: right; font-size: 0.76rem; color: var(--text); flex-shrink: 0; }
+    .formula { font-size: 0.68rem; color: var(--text-mute); line-height: 1.7; margin-top: 8px; }
+    .formula code { color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 4px; }
+
+    .mask { position: fixed; inset: 0; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+    .modal { background: var(--bg-mid); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 420px; max-height: 72vh; display: flex; flex-direction: column; overflow: hidden; }
+    .modal .mhead { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .modal .mtitle { font-size: 0.88rem; color: var(--text); }
+    .modal .mclose { cursor: pointer; color: var(--text-dim); font-size: 1.05rem; padding: 0 4px; }
+    .modal .mlist { overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .modal .mitem { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.84rem; color: var(--text); }
+    .modal .mitem:hover { border-color: rgba(245,197,24,0.5); background: rgba(245,197,24,0.06); }
+    .modal .mstats { color: var(--text-mute); font-size: 0.7rem; }
+    .empty { text-align: center; color: var(--text-mute); padding: 40px 0; }
+
+    .wiki-footer { text-align: center; padding: 16px; color: var(--text-mute); font-size: 0.72rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="wiki-header">
+    <h1>🎯 战术搭配器</h1>
+    <p>随机抽取 4 个战备 · 按对单 / 对群 / 穿甲 / 专项四维评分 · 类型越多评级越高</p>
+    <a class="back" href="wiki.html">← 返回维基首页</a>
+  </div>
+
+  <div class="toolbar">
+    <button class="draw-btn" id="draw-btn">🎲 随机抽取</button>
+    <span class="meta" id="meta">正在加载战备库…</span>
+  </div>
+
+  <div class="layout" id="layout">
+    <div class="empty" style="grid-column:1/-1">正在加载战备库…</div>
+  </div>
+
+  <div class="wiki-footer">绝地潜兵2 中文维基 · 战术搭配器 · 评分数据来自社区评分表 · 仅供娱乐参考</div>
+
+  <script>
+    /* ===== 常量（与主站战术搭配器一致） ===== */
+    var DIM4_CN = { "轨道": "冷却", "飞鹰": "冷却", "支援武器": "人机工效", "重型支援武器": "压制力", "载具": "战术性", "可部署物": "战术灵活性", "背包": "战术价值" };
+    var TYPE_COLOR = { "轨道": "#F5C518", "飞鹰": "#5BA3D0", "支援武器": "#2ECC71", "重型支援武器": "#E74C3C", "载具": "#CF64F8", "可部署物": "#D6806D", "背包": "#6B7280" };
+    var DIM_COLOR = ["#FF6B4A", "#F5C518", "#CF64F8", "#5BA3D0"];
+    var DIM_LABEL = ["对单", "对群", "穿甲"];
+    var pool = [];
+    var loadout = [];
+
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+    function $(id) { return document.getElementById(id); }
+
+    function grade(score) {
+      if (score >= 44) return { g: "S", cls: "g-S" };
+      if (score >= 32) return { g: "A", cls: "g-A" };
+      if (score >= 20) return { g: "B", cls: "g-B" };
+      if (score >= 10) return { g: "C", cls: "g-C" };
+      return { g: "D", cls: "g-D" };
+    }
+
+    function draw() {
+      var p = pool.slice();
+      for (var i = p.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = p[i]; p[i] = p[j]; p[j] = t;
+      }
+      return p.slice(0, 4);
+    }
+
+    function cardHtml(x, isS) {
+      var d4 = DIM4_CN[x.type] || "专项";
+      var bonus = x.bonus || 0;
+      var bonusCls = bonus > 0 ? "bonus-pos" : bonus < 0 ? "bonus-neg" : "bonus-zero";
+      var bonusTxt = bonus > 0 ? "+" + bonus : String(bonus);
+      var dims = [
+        { label: "对单", val: x.stats[0], color: DIM_COLOR[0] },
+        { label: "对群", val: x.stats[1], color: DIM_COLOR[1] },
+        { label: "穿甲", val: x.stats[2], color: DIM_COLOR[2] },
+        { label: d4, val: x.stats[3], color: DIM_COLOR[3] }
+      ];
+      var bars = dims.map(function(d) {
+        return '<div class="bar"><span class="label">' + esc(d.label) + '</span>' +
+          '<div class="track"><div class="fill" style="width:' + Math.min(100, d.val / 10 * 100) + '%;background:' + d.color + '"></div></div>' +
+          '<span class="val">' + d.val + '</span></div>';
+      }).join("");
+      var iconHtml = x.icon
+        ? '<img class="icon" src="' + esc(x.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=&quot;type-tag&quot;>' + esc(x.type) + '</span>\'">'
+        : '<span class="type-tag" style="background:' + (TYPE_COLOR[x.type] || "#6B7280") + '22;color:' + (TYPE_COLOR[x.type] || "#6B7280") + ';border:1px solid ' + (TYPE_COLOR[x.type] || "#6B7280") + '55">' + esc(x.type) + '</span>';
+      return '<div class="card' + (isS ? " S" : "") + '">' +
+        '<div class="head"><div class="name">' + esc(x.name) + '</div>' + iconHtml + '</div>' +
+        bars +
+        '<div class="footer"><span class="bonus ' + bonusCls + '">Bonus: ' + bonusTxt + '</span>' +
+        '<button class="swap-btn" data-swap="' + esc(x.id) + '">换一个</button></div></div>';
+    }
+
+    function openSwap(id) {
+      var item = null;
+      for (var i = 0; i < pool.length; i++) if (pool[i].id === id) { item = pool[i]; break; }
+      if (!item) return;
+      var same = pool.filter(function(x) { return x.type === item.type && x.id !== id; });
+      var mask = document.createElement("div");
+      mask.className = "mask";
+      var list = same.map(function(x) {
+        return '<div class="mitem" data-pick="' + esc(x.id) + '"><span>' + esc(x.name) + '</span>' +
+          '<span class="mstats">' + x.stats.join("/") + ' · B' + (x.bonus || 0) + '</span></div>';
+      }).join("") || '<div class="empty">同类型无其他战备</div>';
+      mask.innerHTML = '<div class="modal"><div class="mhead"><span class="mtitle">🔄 更换「' + esc(item.name) + '」</span><span class="mclose">✕</span></div>' +
+        '<div class="mlist">' + list + '</div></div>';
+      document.body.appendChild(mask);
+      mask.querySelector(".mclose").addEventListener("click", function() { mask.remove(); });
+      mask.addEventListener("click", function(e) { if (e.target === mask) mask.remove(); });
+      mask.querySelectorAll(".mitem").forEach(function(el) {
+        el.addEventListener("click", function() {
+          var nid = el.dataset.pick, ni = null;
+          for (var i = 0; i < pool.length; i++) if (pool[i].id === nid) { ni = pool[i]; break; }
+          if (ni) {
+            var idx = loadout.findIndex(function(x) { return x.id === id; });
+            if (idx >= 0) loadout[idx] = ni;
+            render(loadout);
+          }
+          mask.remove();
+        });
+      });
+    }
+
+    function render(picked) {
+      var root = $("layout");
+      var types = {};
+      picked.forEach(function(x) { types[x.type] = (types[x.type] || 0) + 1; });
+      var T = Object.keys(types).length;
+      var M = picked.filter(function(x) { return x.subtag && x.subtag.length > 0; }).length;
+      var bonusSum = picked.reduce(function(s, x) { return s + (x.bonus || 0); }, 0);
+      var total = (T * 5 + T * T) - (M * M * 0.5) + bonusSum;
+      var g = grade(total);
+      var isS = g.g === "S";
+
+      var cardsHtml = picked.map(function(x) { return cardHtml(x, isS); }).join("");
+
+      var dimAvg = [0, 1, 2, 3].map(function(i) {
+        return picked.reduce(function(s, x) { return s + (x.stats[i] || 0); }, 0) / picked.length;
+      });
+      var domType = Object.keys(types).sort(function(a, b) { return types[b] - types[a]; })[0] || "";
+      var d4Name = DIM4_CN[domType] || "专项";
+      var chartLabels = ["对单", "对群", "穿甲", d4Name];
+      var chartBars = chartLabels.map(function(lb, i) {
+        return '<div class="crow"><span class="clabel">' + esc(lb) + '</span>' +
+          '<div class="ctrack"><div class="cfill" style="width:' + Math.min(100, dimAvg[i] / 12 * 100) + '%;background:' + DIM_COLOR[i] + '"></div></div>' +
+          '<span class="cval">' + dimAvg[i].toFixed(1) + '</span></div>';
+      }).join("");
+
+      root.innerHTML =
+        '<div class="cards">' + cardsHtml + '</div>' +
+        '<div class="side">' +
+          '<div class="panel"><h3>📊 评分明细</h3>' +
+            '<div class="prow"><span>类型数 T</span><strong>' + T + '</strong></div>' +
+            '<div class="prow"><span>多功能 M</span><strong>' + M + '</strong></div>' +
+            '<div class="prow"><span>Bonus 合计</span><strong>' + (bonusSum > 0 ? "+" + bonusSum : bonusSum) + '</strong></div>' +
+            '<div class="divider"></div>' +
+            '<div class="prow"><span>总评</span><strong class="total">' + total.toFixed(1) + '</strong></div>' +
+            '<div class="grade ' + g.cls + '">' + g.g + ' 级</div>' +
+            '<div class="hint">' + (isS ? "🏆 顶级配装，真理部为你骄傲！" : "搭配越多样，战术评级越高") + '</div>' +
+            '<div class="guide">评级标准：S≥44 · A≥32 · B≥20 · C≥10 · D&lt;10</div>' +
+            '<div class="formula">评分公式：<code>总评 = T×5 + T² − M²×0.5 + ΣBonus</code><br>T=配装类型数 · M=多功能战备数</div>' +
+          '</div>' +
+          '<div class="panel chart"><h3>📈 配装能力轮廓</h3>' + chartBars + '</div>' +
+        '</div>';
+
+      root.querySelectorAll(".swap-btn").forEach(function(b) {
+        b.addEventListener("click", function() { openSwap(b.dataset.swap); });
+      });
+    }
+
+    /* ===== 加载 ===== */
+    (async function() {
+      try {
+        var r = await fetch("./data/wiki/zh/loadout.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        pool = d.stratagems || [];
+        $("meta").textContent = pool.length + " 个战备可选 · 数据源：社区评分表";
+        loadout = draw();
+        render(loadout);
+        $("draw-btn").addEventListener("click", function() { loadout = draw(); render(loadout); });
+      } catch (e) {
+        $("layout").innerHTML = '<div class="empty" style="grid-column:1/-1">⚠️ 战备库加载失败：' + esc(String(e)) + '</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

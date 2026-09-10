@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-08-23T14:33:45Z",
   "source": "Helldivers Wiki.gg + community translations",
-  "total": 108,
+  "total": 109,
   "stratagems": [
     {
       "id": "orbital_120mm_he_barrage",
@@ -1734,6 +1734,87 @@
       },
       "icon": "https://helldivers.wiki.gg/images/Eagle_Cluster_Bomb_Stratagem_Icon_Background.svg",
       "unlock_zh": "4000 申购点"
+    },
+    {
+      "id": "eagle_gas_airstrike",
+      "name": "飞鹰毒气攻击",
+      "name_en": "Eagle Gas Airstrike",
+      "category": "eagle",
+      "category_label": "飞鹰",
+      "code": "URLR",
+      "call_in_time": null,
+      "cooldown": "15s",
+      "uses": "无限",
+      "unlock": "Counterdissident Hammer Campaign",
+      "image": "https://helldivers.wiki.gg/images/Eagle_Gas_Airstrike_Stratagem_Icon_Background.svg",
+      "description": "The Eagle Gas Airstrike is an offensive stratagem that releases a gas payload that damages enemies and applies a confusion effect over a large area.",
+      "description_zh": "飞鹰毒气攻击是一种进攻型战略，释放毒气载荷，对大范围敌人造成伤害并施加混乱效果。",
+      "source_page": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "detailed_stats": {
+        "cooldown": "15 s",
+        "uses": "2",
+        "main_health": "100",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "S P6",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "S_P6_IE"
+            },
+            "damage": {
+              "damage_standard": "1500 Ballistic",
+              "damage_durable": "1500 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Anti-Tank III"
+            },
+            "special_effects": {
+              "demolition_force": "40",
+              "stagger_force": "20",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "S P6 IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Gas",
+              "inner_radius": "0 Gas",
+              "inner_durable": "0 Gas"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "12 m",
+              "radius_shockwave": "15 m",
+              "aoe_duration": "15 s"
+            }
+          }
+        ],
+        "status_effects": {
+          "damage": {
+            "element": "Gas",
+            "damage_standard": "25 Gas",
+            "damage_durable": "25 Gas"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
+      "icon": "https://helldivers.wiki.gg/images/Eagle_Gas_Airstrike_Stratagem_Icon_Background.svg",
+      "unlock_zh": "「反击异见之锤」战役奖励"
     },
     {
       "id": "support_40_k_thermal_gun",
