@@ -20,27 +20,7 @@
     .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
 
 
-    .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
-
-    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-
-    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-
-    .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
-
-    .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-
-
-    .wiki-search { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
-
-    .wiki-search input { width: 100%; padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
-
-    .wiki-search input:focus { border-color: var(--blue); }
-
-    .wiki-search input::placeholder { color: var(--text-mute); }
-
-
-    .strat-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+    .strat-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; width: 100%; }
 
 
     .strat-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px 12px 20px; cursor: pointer; text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -81,11 +61,6 @@
 
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
-
-
-    @media (max-width: 1023px) { .strat-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    @media (max-width: 767px) { .strat-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -96,14 +71,14 @@
     <a class="back" href="wiki.html" style="margin-left:8px">◀ 返回维基首页</a>
   </header>
 
-  <div class="wiki-controls">
+  <div class="wiki-toolbar">
     <div class="filter-bar" id="filter-bar"></div>
-  </div>
-  <div class="wiki-search">
-    <input type="text" id="search-input" placeholder="🔍 搜索战略配备名称…" oninput="filterStrat()">
+    <span class="wt-divider"></span>
+    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索战略配备名称…" oninput="filterStrat()"></label>
+    <span class="wt-count" id="result-count"></span>
   </div>
 
-  <div class="strat-grid" id="strat-grid"><div class="loading">正在加载战略配备数据…</div></div>
+  <div class="strat-grid" id="strat-grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
@@ -181,6 +156,7 @@
 
     function renderGrid(list) {
       list = list || stratagems;
+      var rc = document.getElementById("result-count"); if (rc) rc.textContent = list.length + " / " + stratagems.length;
       var grid = document.getElementById("strat-grid");
       if (list.length === 0) { grid.innerHTML = '<div class="empty">没有匹配的战略配备</div>'; return; }
       grid.innerHTML = list.map(function(s) {

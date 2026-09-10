@@ -28,3 +28,33 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header p, .nav-item, .cat-tag, .faction-t
       /* z 层级（与主站 tokens.css 同值） */
       --z-float: 40; --z-nav: 50; --z-overlay: 100; --z-modal: 999;
     }
+
+/* ===== 统一筛选工具栏（P1 目录页组件；吸顶一行化：胶囊 + 搜索 + 计数） ===== */
+.wiki-toolbar { position: sticky; top: 0; z-index: var(--z-nav); width: 100%;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  max-width: 1200px; margin: 0 auto; padding: 12px 20px;
+  background: rgba(11,14,20,.88); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border); }
+.wiki-toolbar .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; max-width: none; margin: 0; padding: 0; }
+.wiki-toolbar .sub-filter { flex-basis: 100%; }
+.wiki-toolbar .wt-divider { width: 1px; height: 22px; background: var(--border); }
+.filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px;
+  background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+.filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+.filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.wt-search { flex: 1 1 180px; min-width: 150px; display: flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; }
+.wt-search input { flex: 1; min-width: 0; background: none; border: none; outline: none;
+  color: var(--text); font-size: 0.85rem; }
+.wt-search input::placeholder { color: var(--text-mute); }
+.wt-count { color: var(--text-mute); font-size: 0.78rem; white-space: nowrap; }
+
+/* ===== auto-fill 网格（目录页统一；容器必须 width:100%，窄容器随 --min-col 降列） ===== */
+.auto-fill-grid { display: grid; width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(var(--min-col, 300px), 1fr)); }
+
+/* ===== 骨架屏（加载态统一；.empty/.loading 仍由各页定义） ===== */
+.sk { height: 90px; border-radius: var(--radius);
+  background: linear-gradient(100deg, rgba(255,255,255,.04) 40%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 60%);
+  background-size: 200% 100%; animation: sk-shimmer 1.2s infinite; }
+@keyframes sk-shimmer { to { background-position: -200% 0; } }

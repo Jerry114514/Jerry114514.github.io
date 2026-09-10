@@ -20,16 +20,7 @@
     .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
 
 
-    .filter-bar { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; display: flex; gap: 8px; flex-wrap: wrap; }
-
-    .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-
-    .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
-
-    .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-
-
-    .enemy-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+    .enemy-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; width: 100%; }
 
     .enemy-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
 
@@ -63,11 +54,7 @@
 
     .group-title { font-size: 0.95rem; color: var(--yellow); font-weight: 600; margin: 14px 0 8px; padding-left: 4px; border-left: 3px solid var(--yellow); padding-left: 10px; }
 
-    .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-
-    @media (max-width: 1023px) { .group-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    @media (max-width: 767px) { .group-grid { grid-template-columns: 1fr; } }
+    .group-grid { display: grid; width: 100%; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
@@ -83,9 +70,14 @@
     <a class="back" href="wiki.html">◀ 返回维基首页</a>
   </header>
 
-  <div class="filter-bar" id="filter-bar"></div>
-  <div class="filter-bar" id="strain-filter" style="margin-top:8px"></div>
-  <div class="enemy-grid" id="enemy-grid"><div class="loading">正在加载敌人数据…</div></div>
+  <div class="wiki-toolbar">
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="filter-bar" id="strain-filter"></div>
+    <span class="wt-divider"></span>
+    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索敌人名称…（支持中文/英文）" oninput="curSearch = this.value.trim().toLowerCase(); renderGrid();"></label>
+    <span class="wt-count" id="result-count"></span>
+  </div>
+  <div class="enemy-grid" id="enemy-grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
@@ -94,6 +86,7 @@
     var enemies = [];
     var curFaction = "all";
     var curStrain = "all";  // 变种筛选
+    var curSearch = "";
     var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
     var FACTION_COLOR = { terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF" };
 
@@ -154,6 +147,8 @@
       if (curStrain !== "all") list = list.filter(function(e) { return e.strain === curStrain; });
       // 排除变种分类页（仅作筛选标签，不作为卡片）
       list = list.filter(function(e) { return !e.is_strain_page; });
+      if (curSearch) list = list.filter(function(e) { return (e.name + " " + (e.name_zh || "")).toLowerCase().indexOf(curSearch) >= 0; });
+      var rc = document.getElementById("result-count"); if (rc) rc.textContent = list.length + " / " + enemies.filter(function(e) { return !e.is_strain_page; }).length;
       if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
       var html = '<div class="enemy-group"><div class="group-grid">' + list.map(cardHtml).join("") + '</div></div>';
       grid.innerHTML = html;
