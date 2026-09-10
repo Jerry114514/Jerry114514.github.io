@@ -66,6 +66,13 @@
     box-shadow: 2px 0 4px rgba(0,0,0,.3); font-family: "ZZZ-thick","SourceHanSans",sans-serif; }
   .wp { color: #f59e0b; }
   .fatal { color: #ef4444; }
+  .cnt { color: var(--text-mute); font-size: .7rem; }
+  .p-img { height: 34px; display: flex; align-items: center; }
+  .p-img img { max-width: 52px; max-height: 34px; object-fit: contain; }
+  .variants { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+  .variants a { padding: 4px 14px; border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text-dim); text-decoration: none; font-size: .8rem; }
+  .variants a:hover { color: var(--blue); border-color: var(--blue); background: rgba(59,130,246,.08); }
 
   /* ===== 右栏：摘要 / 锚点 / 相关 ===== */
   .side { position: sticky; top: var(--sp-4); }
@@ -95,7 +102,7 @@
 <body>
   <div class="proto-bar">
     <span class="proto-tag">原型演示</span>
-    <span>详情页 v2：① 统一 70/30 两栏、max-1200（现状 60/40 + 1400 且右栏全空） ② 右栏=摘要卡+锚点导航+相关条目 ③ 部位表 sticky 首列+横滚提示 ④ 间距全部走刻度（--sp-1…6）</span>
+    <span>详情页 v2：① 统一 70/30 两栏、max-1200（现状 60/40 + 1400 且右栏全空） ② 右栏=摘要+锚点导航+同阵营+来源卡（承接原空置栏内容） ③ 部位表与生产同款翻译兜底（armor_level_zh/location_zh）+图片列+×N ④ 基础信息 8 行与生产一致 ⑤ 变种导航保留 ⑥ 间距走刻度</span>
     <a href="../enemy.html?id=agitator">返回现状页 →</a>
   </div>
 
@@ -109,33 +116,61 @@
     return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function param(n) { return new URLSearchParams(location.search).get(n); }
 
-  var PART_HEADS = ["部位", "生命值", "护甲等级", "位置", "持久", "主部位占比", "溢出上限", "体质", "致命", "弱点"];
+  var PART_HEADS = ["部位", "图片", "生命值", "护甲等级", "位置", "持久", "主部位占比", "溢出上限", "体质", "致命", "弱点"];
   var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
   function fcn(e) { return FACTION_CN[e.faction] || e.faction_label || e.faction; }
 
+  // 部位表与生产 enemy.html 同款翻译兜底链（armor_level_zh / location_zh 优先）
   function partRow(p) {
     return '<tr>' +
-      '<td>' + esc(p.name) + '</td>' +
-      '<td>' + esc(p.health) + '</td>' +
-      '<td>' + esc(p.armor_level || "-") + '</td>' +
-      '<td>' + esc(p.location || "-") + '</td>' +
-      '<td>' + esc(p.durable || "-") + '</td>' +
-      '<td>' + esc(p.percent_to_main || "-") + '</td>' +
-      '<td>' + esc(p.overflow_cap || "-") + '</td>' +
-      '<td>' + esc(p.constitution || "-") + '</td>' +
-      '<td>' + (p.fatal ? '<span class="fatal">✔ 致命</span>' : "-") + '</td>' +
-      '<td>' + (p.is_weak_point ? '<span class="wp">⚡ 弱点</span>' : "-") + '</td>' +
+      '<td>' + esc(p.name || p.name_en) + (p.count ? ' <span class="cnt">×' + p.count + '</span>' : '') + '</td>' +
+      '<td><div class="p-img">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility=\'hidden\'">' : '') + '</div></td>' +
+      '<td>' + esc(p.health != null ? p.health : "—") + '</td>' +
+      '<td>' + esc(p.armor_level_zh || p.armor_level || "—") + '</td>' +
+      '<td>' + esc(p.location_zh || p.location || "—") + '</td>' +
+      '<td>' + esc(p.durable || "—") + '</td>' +
+      '<td>' + esc(p.percent_to_main || p.pct_to_main || "—") + '</td>' +
+      '<td>' + esc(p.overflow_cap || "—") + '</td>' +
+      '<td>' + esc(p.constitution || "—") + '</td>' +
+      '<td>' + (p.fatal === true ? '<span class="fatal">💀 致命</span>' : "—") + '</td>' +
+      '<td>' + (p.is_weak_point === true ? '<span class="wp">⭐ 弱点</span>' : "—") + '</td>' +
     '</tr>';
   }
 
   function render(e, all) {
+    // 基础信息 8 行 = 生产 enemy.html 同款（全部 _zh 优先）
     var kv = [
-      ["阵营", fcn(e)], ["类别", e.category_zh || e.category],
-      ["总生命", e.health_total], ["最低难度", e.minimum_difficulty_zh || e.minimum_difficulty],
-      ["伤害", (e.damage_zh || e.damage || "-")], ["掉落", (e.drops || "-")]
+      ["阵营", fcn(e)], ["分类", e.category_zh || e.category],
+      ["总生命值", e.health_total], ["伤害", e.damage_zh || e.damage],
+      ["伤害类型", e.damage_type_zh || e.damage_type],
+      ["火焰伤害倍率", e.fire_damage_multiplier_zh || e.fire_damage_multiplier],
+      ["踉跄阈值", e.stagger_threshold_zh || e.stagger_threshold],
+      ["最低难度", e.minimum_difficulty_zh || e.minimum_difficulty],
     ];
     var sameFaction = all.filter(function (x) { return x.faction === e.faction && x.id !== e.id; }).slice(0, 6);
     var parts = Array.isArray(e.body_parts) ? e.body_parts : [];
+
+    // 变种导航（生产 enemy.html 同款逻辑：基础种 ↔ 变种互链）
+    var baseUnit = e.base_unit || e.name;
+    var isBase = !e.base_unit || e.base_unit === e.name;
+    var variantNav = "";
+    if (isBase && (e.variants || []).length) {
+      variantNav = '<div class="card" id="sec-variants"><h2>🔄 变种</h2><div class="variants">' +
+        e.variants.map(function (v) {
+          var ve = all.find(function (x) { return x.name === v; });
+          return '<a href="../enemy.html?id=' + encodeURIComponent(ve ? ve.id : v.toLowerCase().replace(/ /g, "_")) + '">' + esc(v) + '</a>';
+        }).join("") + '</div></div>';
+    } else if (!isBase) {
+      var siblings = all.filter(function (x) { return (x.base_unit || x.name) === baseUnit && x.name !== e.name && x.name !== baseUnit; });
+      variantNav = '<div class="card" id="sec-variants"><h2>🔗 所属：' + esc(baseUnit) + '</h2><div class="variants">' +
+        '<a href="../enemy.html?id=' + encodeURIComponent(baseUnit.toLowerCase().replace(/ /g, "_")) + '">' + esc(baseUnit) + '（基础）</a>' +
+        siblings.map(function (s) { return '<a href="../enemy.html?id=' + encodeURIComponent(s.id) + '">' + esc(s.name) + '</a>'; }).join("") +
+        '</div></div>';
+    }
+
+    var tocItems = [["sec-appearance", "外观"], ["sec-info", "基础信息"], ["sec-parts", "部位数据（" + parts.length + " 个部位）"]];
+    if (variantNav) tocItems.push(["sec-variants", "变种"]);
+
     document.getElementById("detail").innerHTML =
       '<div class="main-col">' +
         '<div class="card title-block">' +
@@ -145,6 +180,7 @@
             '<span class="tag">' + esc(e.category_zh || e.category || "") + '</span></div>' +
           '<div class="desc">' + esc(e.description_zh || e.description || "") + '</div>' +
         '</div>' +
+        variantNav +
         '<div class="card" id="sec-appearance"><h2>📷 外观</h2><div class="img-box">' +
           (e.image ? '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" referrerpolicy="no-referrer" loading="lazy">' : "暂无图片") +
         '</div></div>' +
@@ -165,15 +201,15 @@
         '</div>' +
         '<div class="sum-hp"><div class="n">' + esc(e.health_total) + '</div><div class="l">总生命值</div></div></div>' +
         '<div class="card"><h2>🧭 本页导航</h2><ul class="toc">' +
-          '<li><a href="#sec-appearance">外观</a></li>' +
-          '<li><a href="#sec-info">基础信息</a></li>' +
-          '<li><a href="#sec-parts">部位数据（' + parts.length + ' 个部位）</a></li>' +
+          tocItems.map(function (t) { return '<li><a href="#' + t[0] + '">' + esc(t[1]) + '</a></li>'; }).join("") +
         '</ul></div>' +
         '<div class="card rel"><h2>🔗 同阵营敌人</h2>' +
           sameFaction.map(function (x) {
             return '<a href="../enemy.html?id=' + encodeURIComponent(x.id) + '"><span>' + esc(x.name_zh || x.name) + '</span><span class="f">' + esc(x.category_zh || "") + '</span></a>';
           }).join("") +
         '</div>' +
+        // 来源卡：生产页里它独占空置右栏，新布局收纳进侧栏
+        '<div class="card"><h2>📄 来源</h2><p style="font-size:.75rem;color:var(--text-mute);word-break:break-all;margin:0">' + esc(e.source_page || "—") + '</p></div>' +
       '</aside>';
   }
 

@@ -181,9 +181,9 @@
   var stats = [
     { n: "69,963", l: "当前在线潜兵", c: "" },
     { n: "峰值 98,241", l: "24 小时峰值", c: "" },
-    { n: "+1,204", l: "较昨日", c: "up" },
-    { n: "2.31%", l: "银河影响力", c: "" },
-    { n: "-0.04", l: "影响力变化", c: "down" },
+    { n: "+1,204", l: "较上次更新", c: "up" },
+    { n: "2.31%", l: "银河影响力系数", c: "" },
+    { n: "-0.04", l: "影响力系数变化", c: "down" },
   ];
   document.getElementById("stats").innerHTML = stats.map(function (s) {
     return '<div class="stat-card"><div class="n ' + s.c + '">' + s.n + '</div><div class="l">' + s.l + '</div></div>';
