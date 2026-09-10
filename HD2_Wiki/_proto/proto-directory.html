@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原型 · 目录页 v2 — 武器</title>
+<link rel="stylesheet" href="../assets/css/wiki-base.css">
+<style>
+  /* ===== 原型局部：色板对齐草案 + 间距/z 刻度（未落生产，仅演示） ===== */
+  :root {
+    --bg-deep: #0B0E14; --bg-mid: #141B33; --bg-card: rgba(255,255,255,.05);
+    --border: rgba(255,255,255,.08); --border-h: rgba(255,255,255,.16);
+    --text: #e2e8f0; --text-dim: #94a3b8; --text-mute: #64748b;
+    --yellow: #f5c518; --blue: #3b82f6;
+    --radius: 12px; --radius-s: 8px;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+    --z-nav: 50;
+  }
+  html { background: var(--bg-deep); }
+  body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; color: var(--text); }
+
+  /* ===== 原型说明条 ===== */
+  .proto-bar { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: center;
+    padding: var(--sp-2) var(--sp-4); background: rgba(245,197,24,.08); border-bottom: 1px solid rgba(245,197,24,.25);
+    font-size: .8rem; color: var(--text-dim); }
+  .proto-tag { background: var(--yellow); color: #1a1a00; font-weight: 700; border-radius: 999px;
+    padding: 2px 10px; font-size: .72rem; flex-shrink: 0; }
+  .proto-bar a { margin-left: auto; color: var(--yellow); text-decoration: none; white-space: nowrap; }
+
+  .wiki-header { text-align: center; padding: var(--sp-5) var(--sp-4) var(--sp-4);
+    background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); }
+  .wiki-header h1 { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: 1.6rem; color: var(--yellow); }
+  .wiki-header .sub { color: var(--text-mute); font-size: .82rem; margin-top: var(--sp-1); }
+
+  /* ===== 统一工具栏：分类胶囊 + 搜索 + 计数 + 密度切换，一行化 ===== */
+  .toolbar { position: sticky; top: 0; z-index: var(--z-nav); width: 100%;
+    display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap;
+    max-width: 1200px; margin: 0 auto; padding: var(--sp-3) var(--sp-4);
+    background: color-mix(in srgb, var(--bg-deep) 88%, transparent);
+    backdrop-filter: blur(var(--radius-s)); border-bottom: 1px solid var(--border); }
+  .pill { border: 1px solid var(--border); border-radius: 999px; background: transparent;
+    color: var(--text-dim); padding: 5px 14px; cursor: pointer; font-size: .82rem; transition: all .15s; }
+  .pill:hover { border-color: var(--border-h); color: var(--text); }
+  .pill.active { border-color: var(--blue); color: var(--blue); background: rgba(59,130,246,.12); }
+  .toolbar .divider { width: 1px; height: 22px; background: var(--border); }
+  .search { flex: 1 1 180px; min-width: 140px; display: flex; align-items: center; gap: var(--sp-2);
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 14px; }
+  .search input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: .85rem; min-width: 0; }
+  .result-count { color: var(--text-mute); font-size: .78rem; white-space: nowrap; }
+  .density { display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .density button { background: none; border: none; color: var(--text-mute); padding: 5px 12px; cursor: pointer; font-size: .78rem; }
+  .density button.active { background: rgba(59,130,246,.15); color: var(--blue); }
+
+  /* ===== auto-fill 网格 + 紧凑卡片 ===== */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); width: 100%;
+    gap: var(--sp-3); max-width: 1200px; margin: 0 auto; padding: var(--sp-4); }
+  .grid.compact { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-2); }
+  .w-card { position: relative; display: flex; align-items: center; gap: var(--sp-3);
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: var(--sp-3) var(--sp-4) var(--sp-3) calc(var(--sp-4) + 4px);
+    text-decoration: none; color: var(--text); transition: border-color .15s, transform .15s; }
+  .grid.compact .w-card { padding: var(--sp-2) var(--sp-3) var(--sp-2) calc(var(--sp-3) + 4px); }
+  .w-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+  .cat-bar { position: absolute; left: 0; top: 10px; bottom: 10px; width: 4px; border-radius: 2px; }
+  .icon { flex: 0 0 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.04); border-radius: var(--radius-s); }
+  .grid.compact .icon { flex-basis: 44px; height: 44px; }
+  .icon img { max-width: 48px; max-height: 48px; object-fit: contain; }
+  .grid.compact .icon img { max-width: 38px; max-height: 38px; }
+  .w-body { min-width: 0; }
+  .w-name { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: .95rem; }
+  .w-meta { color: var(--text-mute); font-size: .74rem; margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .w-stats { display: flex; gap: var(--sp-3); margin-top: var(--sp-1); font-size: .78rem; color: var(--text-dim); }
+  .pen { padding: 0 6px; border-radius: 999px; font-size: .7rem; }
+  .pen-light { background: rgba(148,163,184,.15); color: #94a3b8; }
+  .pen-medium { background: rgba(245,158,11,.15); color: #f59e0b; }
+  .pen-heavy { background: rgba(239,68,68,.15); color: #ef4444; }
+
+  /* ===== 骨架屏 / 空态 ===== */
+  .sk { height: 88px; border-radius: var(--radius); background: linear-gradient(100deg,
+    rgba(255,255,255,.04) 40%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 60%);
+    background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-dim); }
+
+  .wiki-footer { text-align: center; padding: var(--sp-4); border-top: 1px solid var(--border);
+    color: var(--text-mute); font-size: .78rem; }
+  @media (max-width: 768px) { .result-count { display: none; } }
+</style>
+</head>
+<body>
+  <div class="proto-bar">
+    <span class="proto-tag">原型演示</span>
+    <span>目录页 v2：① 工具栏一行化（胶囊+搜索+计数+密度切换） ② auto-fill 网格（宽屏 4 列、随容器平滑降列） ③ 卡片紧凑化（图标 76→56px、留白收紧） ④ 骨架屏/空态统一 ⑤ 色板对齐草案（局部变量）</span>
+    <a href="../weapons.html">返回现状页 →</a>
+  </div>
+
+  <header class="wiki-header">
+    <h1>🎯 武器图鉴 <span style="font-size:.9rem;color:var(--text-mute)">· 布局原型</span></h1>
+    <div class="sub">数据为生产环境真实 JSON · 试试筛选、搜索与右上密度切换；拖拽窗口宽度观察 auto-fill 降列</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="pill active" data-cat="all">全部</button>
+    <button class="pill" data-cat="primary">主武器</button>
+    <button class="pill" data-cat="secondary">副武器</button>
+    <button class="pill" data-cat="throwables">投掷物</button>
+    <span class="divider"></span>
+    <label class="search">🔍<input id="q" type="text" placeholder="搜索武器名（中文/英文）…"></label>
+    <span class="result-count" id="count"></span>
+    <span class="density">
+      <button id="d-cozy" class="active">舒适</button>
+      <button id="d-compact">紧凑</button>
+    </span>
+  </div>
+
+  <main class="grid" id="grid"></main>
+  <footer class="wiki-footer">HD2 真理部 · 布局原型（_proto/，不进导航，确认后可整目录删除）</footer>
+
+<script>
+  "use strict";
+  var CAT = { primary: "主武器", secondary: "副武器", throwables: "投掷物" };
+  var COLORS = { primary: "#3b82f6", secondary: "#f59e0b", throwables: "#ef4444" };
+  var PEN = { light: ["轻甲", "pen-light"], medium: ["中甲", "pen-medium"], heavy: ["重甲", "pen-heavy"] };
+  var weapons = [], curCat = "all", grid = document.getElementById("grid");
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  function card(w) {
+    var s = w.stats_short || {};
+    var p = PEN[s.penetration];
+    return '<a class="w-card" href="../weapon.html?id=' + encodeURIComponent(w.id) + '">' +
+      '<div class="cat-bar" style="background:' + (COLORS[w.category] || "#64748b") + '"></div>' +
+      '<div class="icon">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">' : "") + '</div>' +
+      '<div class="w-body">' +
+        '<div class="w-name">' + esc(w.name) + '</div>' +
+        '<div class="w-meta">' + esc(w.name_en) + ' · ' + esc(w.subcategory_name) + '</div>' +
+        '<div class="w-stats">' +
+          (s.damage ? '<span>⚔️ ' + Math.round(s.damage) + '</span>' : "") +
+          (s.capacity ? '<span>🗂 ' + s.capacity + '</span>' : "") +
+          (p ? '<span class="pen ' + p[1] + '">' + p[0] + '</span>' : "") +
+        '</div>' +
+      '</div></a>';
+  }
+
+  function apply() {
+    var q = document.getElementById("q").value.trim().toLowerCase();
+    var list = weapons.filter(function (w) {
+      if (curCat !== "all" && w.category !== curCat) return false;
+      if (q && (w.name + " " + w.name_en).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    grid.innerHTML = list.length
+      ? list.map(card).join("")
+      : '<div class="empty">没有匹配「' + esc(q) + '」的武器</div>';
+    document.getElementById("count").textContent = list.length + " / " + weapons.length;
+  }
+
+  function skeleton(n) {
+    var h = "";
+    for (var i = 0; i < n; i++) h += '<div class="sk"></div>';
+    grid.innerHTML = h;
+  }
+
+  document.querySelectorAll(".pill").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll(".pill").forEach(function (x) { x.classList.remove("active"); });
+      b.classList.add("active");
+      curCat = b.dataset.cat;
+      apply();
+    });
+  });
+  document.getElementById("q").addEventListener("input", apply);
+  function setDensity(compact) {
+    grid.classList.toggle("compact", compact);
+    document.getElementById("d-cozy").classList.toggle("active", !compact);
+    document.getElementById("d-compact").classList.toggle("active", compact);
+  }
+  document.getElementById("d-cozy").addEventListener("click", function () { setDensity(false); });
+  document.getElementById("d-compact").addEventListener("click", function () { setDensity(true); });
+
+  skeleton(9);
+  fetch("../data/wiki/zh/weapons.json?t=" + Date.now(), { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) { weapons = d.weapons || []; apply(); })
+    .catch(function (e) { grid.innerHTML = '<div class="empty">⚠️ 数据加载失败：' + esc(e) + '</div>'; });
+</script>
+</body>
+</html>

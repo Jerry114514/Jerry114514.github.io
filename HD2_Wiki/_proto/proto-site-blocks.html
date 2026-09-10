@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原型 · 主站区块 v2 — 色板对齐 + 网格化星球卡</title>
+<link rel="stylesheet" href="../assets/css/wiki-base.css">
+<style>
+  :root {
+    /* 统一草案：主站深底 + wiki 柔和文字，两站合流 */
+    --bg-deep: #0B0E14; --bg-mid: #141B33; --bg-card: rgba(255,255,255,.05);
+    --border: rgba(255,255,255,.08); --border-h: rgba(255,255,255,.16);
+    --text: #e2e8f0; --text-dim: #94a3b8; --text-mute: #64748b;
+    --yellow: #f5c518; --blue: #3b82f6;
+    --radius: 12px; --radius-s: 8px;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+    --z-float: 40; --z-overlay: 100;
+    /* 阵营色（两站一致） */
+    --c-terminids: #f59e0b; --c-automaton: #ef4444; --c-illuminate: #AA44FF; --c-humans: #5BA3D0;
+  }
+  html { background: var(--bg-deep); }
+  body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; color: var(--text); }
+  h2.sec { font-family: "ZZZ-thick","SourceHanSans",sans-serif; color: var(--yellow); font-size: 1.15rem;
+    width: 100%; max-width: 1200px; margin: var(--sp-6) auto var(--sp-3); padding: 0 var(--sp-4); }
+  .sec-sub { width: 100%; max-width: 1200px; margin: -8px auto var(--sp-3); padding: 0 var(--sp-4);
+    color: var(--text-mute); font-size: .8rem; }
+
+  .proto-bar { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: center;
+    padding: var(--sp-2) var(--sp-4); background: rgba(245,197,24,.08);
+    border-bottom: 1px solid rgba(245,197,24,.25); font-size: .8rem; color: var(--text-dim); }
+  .proto-tag { background: var(--yellow); color: #1a1a00; font-weight: 700; border-radius: 999px;
+    padding: 2px 10px; font-size: .72rem; flex-shrink: 0; }
+  .proto-bar a { margin-left: auto; color: var(--yellow); text-decoration: none; white-space: nowrap; }
+
+  /* ===== 色板对齐演示 ===== */
+  .palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-3);
+    width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-4); }
+  .pal-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .pal-card.win { border-color: rgba(245,197,24,.5); }
+  .pal-head { padding: var(--sp-2) var(--sp-3); font-size: .82rem; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; }
+  .pal-head .badge { font-size: .68rem; padding: 1px 8px; border-radius: 999px; }
+  .badge.now { background: rgba(148,163,184,.15); color: var(--text-mute); }
+  .badge.draft { background: rgba(245,197,24,.15); color: var(--yellow); }
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .sw { padding: var(--sp-3) var(--sp-2) var(--sp-2); text-align: center; font-size: .68rem; }
+  .sw .chip { height: 34px; border-radius: var(--radius-s); border: 1px solid var(--border); margin-bottom: var(--sp-1); }
+  .sw .hex { color: var(--text-mute); font-family: monospace; }
+
+  /* ===== 星球卡：grid auto-fill（现状 flex wrap + min-width 三种）===== */
+  .planet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--sp-3);
+    width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-4); }
+  .p-card { position: relative; background: var(--bg-card); border: 1px solid var(--border);
+    border-left: 4px solid var(--bar, var(--c-humans)); border-radius: var(--radius);
+    padding: var(--sp-3) var(--sp-4); transition: border-color .15s; }
+  .p-card:hover { border-color: var(--border-h); }
+  .p-name { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: .95rem; }
+  .p-sector { color: var(--text-mute); font-size: .72rem; margin-top: 2px; }
+  .p-bar { margin-top: var(--sp-2); height: 7px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; }
+  .p-bar i { display: block; height: 100%; border-radius: 4px; background: var(--bar, var(--c-humans)); }
+  .p-meta { display: flex; justify-content: space-between; margin-top: var(--sp-1); font-size: .74rem; color: var(--text-dim); }
+
+  /* ===== 统计卡（现状 inline style 拼接 → 规范类）===== */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-3);
+    width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-4); }
+  .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: var(--sp-3) var(--sp-4); text-align: center; }
+  .stat-card .n { font-size: 1.35rem; font-family: "ZZZ-thick","SourceHanSans",sans-serif; color: var(--yellow); }
+  .stat-card .n.up { color: #22c55e; } .stat-card .n.down { color: #ef4444; }
+  .stat-card .l { color: var(--text-mute); font-size: .72rem; margin-top: 2px; }
+
+  /* ===== 资讯抽屉（现状 fixed 悬浮窗只能收起 → 可关闭 + 抽屉化）===== */
+  .demo-stage { position: relative; height: 300px; max-width: 1200px; margin: 0 auto;
+    margin-left: var(--sp-4); margin-right: var(--sp-4); border: 1px dashed var(--border);
+    border-radius: var(--radius); overflow: hidden; background: rgba(255,255,255,.02); }
+  .demo-stage .hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: var(--text-mute); font-size: .8rem; }
+  .drawer { position: absolute; right: 12px; bottom: 12px; width: 300px; max-height: 240px;
+    background: rgba(17,21,32,.92); backdrop-filter: blur(8px); border: 1px solid var(--border);
+    border-radius: var(--radius); z-index: var(--z-float); display: flex; flex-direction: column; }
+  .drawer-head { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3);
+    border-bottom: 1px solid var(--border); cursor: pointer; font-size: .84rem; }
+  .drawer-head .btns { margin-left: auto; display: flex; gap: var(--sp-1); }
+  .drawer-head button { background: none; border: none; color: var(--text-mute); cursor: pointer;
+    width: 22px; height: 22px; border-radius: var(--radius-s); }
+  .drawer-head button:hover { background: rgba(255,255,255,.1); color: var(--text); }
+  .drawer-body { overflow-y: auto; padding: var(--sp-2); }
+  .news-item { padding: var(--sp-2); border-radius: var(--radius-s); }
+  .news-item:hover { background: rgba(255,255,255,.04); }
+  .news-item .t { font-size: .78rem; }
+  .news-item .d { color: var(--text-mute); font-size: .68rem; margin-top: 2px; }
+  .drawer.collapsed .drawer-body { display: none; }
+  .drawer.closed { display: none; }
+  .reopen { position: absolute; right: 12px; bottom: 12px; z-index: var(--z-float); display: none;
+    border: 1px solid var(--border); background: rgba(17,21,32,.92); color: var(--yellow);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: .78rem; }
+  .reopen.show { display: block; }
+
+  footer { text-align: center; padding: var(--sp-5); border-top: 1px solid var(--border);
+    color: var(--text-mute); font-size: .78rem; margin-top: var(--sp-6); }
+</style>
+</head>
+<body>
+  <div class="proto-bar">
+    <span class="proto-tag">原型演示</span>
+    <span>主站区块 v2：① 色板对齐（两站四核心色合流为统一草案） ② 星球卡 flex-wrap → grid auto-fill ③ 统计卡去 inline style ④ 资讯悬浮窗 → 可关闭抽屉</span>
+    <a href="../../HD2-Galatic_war-Map/index.html">返回主站现状 →</a>
+  </div>
+
+  <h2 class="sec">🎨 色板对齐草案</h2>
+  <p class="sec-sub">左：wiki 现状（#0a0e1a / #e2e8f0）· 中：主站现状（#0B0E14 / #FFF）· 右（带框）：统一草案 —— 底色取主站、文字取 wiki（柔和护眼），视觉差异极小但组件从此可跨站复用</p>
+  <div class="palette" id="palette"></div>
+
+  <h2 class="sec">🪐 星球卡 · grid auto-fill</h2>
+  <p class="sec-sub">现状为 flex wrap（min-width 有 220/180/160 三种，行为不一）；改 auto-fill minmax(240px,1fr) 后列数随容器平滑变化，与 wiki 目录页同一网格语言</p>
+  <div class="planet-grid" id="planets"></div>
+
+  <h2 class="sec">📊 影响力统计卡 · 去掉 inline style</h2>
+  <p class="sec-sub">现状由 JS 拼整段 inline style（index.html 2008-2026），抽为 .stat-card 规范类</p>
+  <div class="stat-row" id="stats"></div>
+
+  <h2 class="sec">📰 资讯悬浮窗 → 可关闭抽屉</h2>
+  <p class="sec-sub">现状 fixed 悬浮窗只能收起、≤720px 会盖住内容且无法关掉；演示：可收起（▾）、可关闭（✕）、关闭后右下角可再唤起。虚线框模拟视口。</p>
+  <div class="demo-stage">
+    <div class="hint">（模拟视口区域）</div>
+    <div class="drawer" id="drawer">
+      <div class="drawer-head" id="drawer-toggle"><span>📰 最新资讯</span>
+        <span class="btns">
+          <button id="drawer-collapse" title="收起">▾</button>
+          <button id="drawer-close" title="关闭">✕</button>
+        </span>
+      </div>
+      <div class="drawer-body" id="drawer-body"></div>
+    </div>
+    <button class="reopen" id="drawer-reopen">📰 打开资讯</button>
+  </div>
+
+  <footer>HD2 真理部 · 布局原型（_proto/，不进导航，确认后可整目录删除）</footer>
+
+<script>
+  "use strict";
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  /* ---- 色板 ---- */
+  var groups = [
+    { name: "wiki 现状", badge: ["now", "现状"], vals: { "bg-deep": "#0a0e1a", "text": "#e2e8f0", "text-dim": "#94a3b8", "text-mute": "#64748b" } },
+    { name: "主站现状", badge: ["now", "现状"], vals: { "bg-deep": "#0B0E14", "text": "#FFFFFF", "text-dim": "rgba(255,255,255,.72)", "text-mute": "rgba(255,255,255,.45)" } },
+    { name: "统一草案", badge: ["draft", "草案"], win: true, vals: { "bg-deep": "#0B0E14", "text": "#e2e8f0", "text-dim": "#94a3b8", "text-mute": "#64748b" } },
+  ];
+  document.getElementById("palette").innerHTML = groups.map(function (g) {
+    return '<div class="pal-card' + (g.win ? ' win' : '') + '"><div class="pal-head"><span>' + g.name + '</span>' +
+      '<span class="badge ' + g.badge[0] + '">' + g.badge[1] + '</span></div><div class="swatches">' +
+      Object.keys(g.vals).map(function (k) {
+        return '<div class="sw"><div class="chip" style="background:' + g.vals[k] + '"></div>' +
+          '<div>' + k + '</div><div class="hex">' + g.vals[k] + '</div></div>';
+      }).join("") + '</div></div>';
+  }).join("");
+
+  /* ---- 星球卡（mock） ---- */
+  var planets = [
+    { n: "厄拉特四号", en: "Erata Prime", s: "塞维恩星区", f: "--c-terminids", p: 1.8, d: "+0.3%/h" },
+    { n: "文代塔", en: "Vandetta", s: "塞维恩星区", f: "--c-terminids", p: 0.4, d: "-0.1%/h" },
+    { n: "马特克斯", en: "Matarex", s: "塔尔金星区", f: "--c-automaton", p: 2.1, d: "+0.5%/h" },
+    { n: "特罗平行星", en: "Troy", s: " Xzar 星区", f: "--c-automaton", p: 0.0, d: "防守中" },
+    { n: "因努克斯", en: "Innox", s: "米兰星区", f: "--c-illuminate", p: 1.2, d: "+0.2%/h" },
+    { n: "弗恩威尔", en: "Vernwell", s: "米兰星区", f: "--c-illuminate", p: 0.7, d: "-0.2%/h" },
+    { n: "超级地球", en: "Super Earth", s: "核心星区", f: "--c-humans", p: 100, d: "和平" },
+    { n: "马林巴尔", en: "Malevelon Creek", s: "塞维恩星区", f: "--c-automaton", p: 3.4, d: "+1.1%/h" },
+  ];
+  document.getElementById("planets").innerHTML = planets.map(function (p) {
+    return '<div class="p-card" style="--bar:var(' + p.f + ')">' +
+      '<div class="p-name">' + esc(p.n) + '</div>' +
+      '<div class="p-sector">' + esc(p.en) + ' · ' + esc(p.s) + '</div>' +
+      '<div class="p-bar"><i style="width:' + Math.min(p.p * 5, 100) + '%"></i></div>' +
+      '<div class="p-meta"><span>解放 ' + p.p.toFixed(1) + '%</span><span>' + esc(p.d) + '</span></div>' +
+    '</div>';
+  }).join("");
+
+  /* ---- 统计卡（mock） ---- */
+  var stats = [
+    { n: "69,963", l: "当前在线潜兵", c: "" },
+    { n: "峰值 98,241", l: "24 小时峰值", c: "" },
+    { n: "+1,204", l: "较昨日", c: "up" },
+    { n: "2.31%", l: "银河影响力", c: "" },
+    { n: "-0.04", l: "影响力变化", c: "down" },
+  ];
+  document.getElementById("stats").innerHTML = stats.map(function (s) {
+    return '<div class="stat-card"><div class="n ' + s.c + '">' + s.n + '</div><div class="l">' + s.l + '</div></div>';
+  }).join("");
+
+  /* ---- 资讯抽屉交互 ---- */
+  var drawer = document.getElementById("drawer");
+  var reopen = document.getElementById("drawer-reopen");
+  var news = [
+    { t: "發現灼燒部隊", d: "1 天前" },
+    { t: "機器人噴氣旅已在文德塔姆里斯主星重新出現。", d: "1 天前" },
+    { t: "機器人噴氣旅已在極光灣重新出現。", d: "2 天前" },
+    { t: "新重要指令發佈", d: "2 天前" },
+    { t: "截獲的生化人通訊表明，即將發生一場旨在阻礙下一季度選舉管理工作的網絡攻擊", d: "3 天前" },
+  ];
+  document.getElementById("drawer-body").innerHTML = news.map(function (n) {
+    return '<div class="news-item"><div class="t">' + esc(n.t) + '</div><div class="d">' + esc(n.d) + '</div></div>';
+  }).join("");
+  document.getElementById("drawer-collapse").addEventListener("click", function (e) {
+    e.stopPropagation();
+    drawer.classList.toggle("collapsed");
+    this.textContent = drawer.classList.contains("collapsed") ? "▴" : "▾";
+  });
+  document.getElementById("drawer-close").addEventListener("click", function (e) {
+    e.stopPropagation();
+    drawer.classList.add("closed");
+    reopen.classList.add("show");
+  });
+  reopen.addEventListener("click", function () {
+    drawer.classList.remove("closed");
+    reopen.classList.remove("show");
+  });
+</script>
+</body>
+</html>

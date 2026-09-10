@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原型 · 详情页 v2 — 敌人（右栏修复演示）</title>
+<link rel="stylesheet" href="../assets/css/wiki-base.css">
+<style>
+  :root {
+    --bg-deep: #0B0E14; --bg-mid: #141B33; --bg-card: rgba(255,255,255,.05);
+    --border: rgba(255,255,255,.08); --border-h: rgba(255,255,255,.16);
+    --text: #e2e8f0; --text-dim: #94a3b8; --text-mute: #64748b;
+    --yellow: #f5c518; --blue: #3b82f6;
+    --radius: 12px; --radius-s: 8px;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+  }
+  html { background: var(--bg-deep); }
+  body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; color: var(--text); }
+
+  .proto-bar { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: center;
+    padding: var(--sp-2) var(--sp-4); background: rgba(245,197,24,.08);
+    border-bottom: 1px solid rgba(245,197,24,.25); font-size: .8rem; color: var(--text-dim); }
+  .proto-tag { background: var(--yellow); color: #1a1a00; font-weight: 700; border-radius: 999px;
+    padding: 2px 10px; font-size: .72rem; flex-shrink: 0; }
+  .proto-bar a { margin-left: auto; color: var(--yellow); text-decoration: none; white-space: nowrap; }
+
+  .breadcrumb { width: 100%; max-width: 1200px; margin: 0 auto; padding: var(--sp-3) var(--sp-4);
+    font-size: .82rem; color: var(--text-mute); }
+  .breadcrumb a { color: var(--blue); text-decoration: none; }
+
+  /* ===== 统一 70/30 两栏（现状 60/40 + 右栏空置）===== */
+  .detail { display: grid; grid-template-columns: 70% 30%; gap: var(--sp-4); width: 100%;
+    max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-4) var(--sp-6); align-items: start; }
+  .main-col { min-width: 0; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: var(--sp-4); margin-bottom: var(--sp-4); }
+  .card h2 { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: 1.05rem;
+    color: var(--yellow); margin-bottom: var(--sp-3); }
+  .title-block { border-left: 4px solid var(--blue); }
+  .d-name { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: 1.7rem; }
+  .d-name-en { color: var(--text-mute); font-size: .9rem; margin-top: 2px; }
+  .tags { display: flex; gap: var(--sp-2); margin: var(--sp-2) 0; flex-wrap: wrap; }
+  .tag { font-size: .72rem; padding: 2px 10px; border-radius: 999px; background: rgba(59,130,246,.15); color: var(--blue); }
+  .tag.faction { background: rgba(239,68,68,.15); color: #ef4444; }
+  .desc { color: var(--text-dim); font-size: .88rem; line-height: 1.6; }
+
+  .img-box { text-align: center; background: rgba(255,255,255,.03); border-radius: var(--radius-s);
+    padding: var(--sp-4); }
+  .img-box img { max-width: min(320px, 100%); border-radius: var(--radius-s); }
+
+  .kv { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-2); }
+  .kv .cell { background: rgba(255,255,255,.03); border-radius: var(--radius-s); padding: var(--sp-2) var(--sp-3); }
+  .kv .k { color: var(--text-mute); font-size: .72rem; }
+  .kv .v { font-size: .92rem; margin-top: 2px; }
+
+  /* ===== 部位表：sticky 首列 + 横滚渐隐提示 ===== */
+  .table-wrap { position: relative; overflow-x: auto; border-radius: var(--radius-s); }
+  .table-wrap::after { content: ""; position: sticky; right: 0; top: 0; bottom: 0; display: block;
+    position: absolute; right: 0; width: 28px; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(11,14,20,.9)); }
+  .scroll-hint { position: absolute; right: var(--sp-4); top: -26px; font-size: .7rem; color: var(--text-mute); }
+  table { border-collapse: collapse; width: 100%; font-size: .8rem; min-width: 760px; }
+  th, td { padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  th { color: var(--text-mute); font-weight: 500; font-size: .74rem; }
+  td:first-child, th:first-child { position: sticky; left: 0; background: #131826; z-index: 1;
+    box-shadow: 2px 0 4px rgba(0,0,0,.3); font-family: "ZZZ-thick","SourceHanSans",sans-serif; }
+  .wp { color: #f59e0b; }
+  .fatal { color: #ef4444; }
+
+  /* ===== 右栏：摘要 / 锚点 / 相关 ===== */
+  .side { position: sticky; top: var(--sp-4); }
+  .side .card { margin-bottom: var(--sp-3); }
+  .sum-head { display: flex; align-items: center; gap: var(--sp-3); }
+  .sum-head img { width: 56px; height: 56px; object-fit: contain; }
+  .sum-name { font-family: "ZZZ-thick","SourceHanSans",sans-serif; font-size: 1.1rem; }
+  .sum-hp { margin-top: var(--sp-3); text-align: center; background: rgba(255,255,255,.03);
+    border-radius: var(--radius-s); padding: var(--sp-3); }
+  .sum-hp .n { font-size: 1.6rem; font-family: "ZZZ-thick","SourceHanSans",sans-serif; color: var(--yellow); }
+  .sum-hp .l { color: var(--text-mute); font-size: .72rem; }
+  .toc { list-style: none; padding: 0; margin: 0; }
+  .toc a { display: block; padding: var(--sp-2) var(--sp-3); color: var(--text-dim);
+    text-decoration: none; border-left: 2px solid var(--border); font-size: .85rem; }
+  .toc a:hover { color: var(--blue); border-left-color: var(--blue); background: rgba(59,130,246,.08); }
+  .rel a { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2);
+    padding: var(--sp-2) 0; color: var(--text-dim); text-decoration: none; font-size: .84rem;
+    border-bottom: 1px dashed var(--border); }
+  .rel a:last-child { border-bottom: none; }
+  .rel a:hover { color: var(--blue); }
+  .rel .f { font-size: .7rem; color: var(--text-mute); }
+
+  .loading, .empty { text-align: center; padding: 80px 20px; color: var(--text-dim); }
+  @media (max-width: 900px) { .detail { grid-template-columns: 1fr; } .side { position: static; } }
+</style>
+</head>
+<body>
+  <div class="proto-bar">
+    <span class="proto-tag">原型演示</span>
+    <span>详情页 v2：① 统一 70/30 两栏、max-1200（现状 60/40 + 1400 且右栏全空） ② 右栏=摘要卡+锚点导航+相关条目 ③ 部位表 sticky 首列+横滚提示 ④ 间距全部走刻度（--sp-1…6）</span>
+    <a href="../enemy.html?id=agitator">返回现状页 →</a>
+  </div>
+
+  <nav class="breadcrumb"><a href="../enemies.html">← 敌人列表</a></nav>
+  <main class="detail" id="detail"><div class="loading">正在加载敌人数据…</div></main>
+  <footer class="wiki-footer" style="text-align:center;padding:16px;border-top:1px solid var(--border);color:var(--text-mute);font-size:.78rem">HD2 真理部 · 布局原型（_proto/）</footer>
+
+<script>
+  "use strict";
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function param(n) { return new URLSearchParams(location.search).get(n); }
+
+  var PART_HEADS = ["部位", "生命值", "护甲等级", "位置", "持久", "主部位占比", "溢出上限", "体质", "致命", "弱点"];
+  var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
+  function fcn(e) { return FACTION_CN[e.faction] || e.faction_label || e.faction; }
+
+  function partRow(p) {
+    return '<tr>' +
+      '<td>' + esc(p.name) + '</td>' +
+      '<td>' + esc(p.health) + '</td>' +
+      '<td>' + esc(p.armor_level || "-") + '</td>' +
+      '<td>' + esc(p.location || "-") + '</td>' +
+      '<td>' + esc(p.durable || "-") + '</td>' +
+      '<td>' + esc(p.percent_to_main || "-") + '</td>' +
+      '<td>' + esc(p.overflow_cap || "-") + '</td>' +
+      '<td>' + esc(p.constitution || "-") + '</td>' +
+      '<td>' + (p.fatal ? '<span class="fatal">✔ 致命</span>' : "-") + '</td>' +
+      '<td>' + (p.is_weak_point ? '<span class="wp">⚡ 弱点</span>' : "-") + '</td>' +
+    '</tr>';
+  }
+
+  function render(e, all) {
+    var kv = [
+      ["阵营", fcn(e)], ["类别", e.category_zh || e.category],
+      ["总生命", e.health_total], ["最低难度", e.minimum_difficulty_zh || e.minimum_difficulty],
+      ["伤害", (e.damage_zh || e.damage || "-")], ["掉落", (e.drops || "-")]
+    ];
+    var sameFaction = all.filter(function (x) { return x.faction === e.faction && x.id !== e.id; }).slice(0, 6);
+    var parts = Array.isArray(e.body_parts) ? e.body_parts : [];
+    document.getElementById("detail").innerHTML =
+      '<div class="main-col">' +
+        '<div class="card title-block">' +
+          '<div class="d-name">' + esc(e.name_zh || e.name) + '</div>' +
+          '<div class="d-name-en">' + esc(e.name) + '</div>' +
+          '<div class="tags"><span class="tag faction">' + esc(fcn(e)) + '</span>' +
+            '<span class="tag">' + esc(e.category_zh || e.category || "") + '</span></div>' +
+          '<div class="desc">' + esc(e.description_zh || e.description || "") + '</div>' +
+        '</div>' +
+        '<div class="card" id="sec-appearance"><h2>📷 外观</h2><div class="img-box">' +
+          (e.image ? '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" referrerpolicy="no-referrer" loading="lazy">' : "暂无图片") +
+        '</div></div>' +
+        '<div class="card" id="sec-info"><h2>📋 基础信息</h2><div class="kv">' +
+          kv.map(function (x) { return '<div class="cell"><div class="k">' + esc(x[0]) + '</div><div class="v">' + esc(x[1]) + '</div></div>'; }).join("") +
+        '</div></div>' +
+        '<div class="card" id="sec-parts"><h2>🧩 部位数据 <span class="scroll-hint">表可横向滚动 →</span></h2>' +
+          '<div class="table-wrap"><table><thead><tr>' +
+            PART_HEADS.map(function (h) { return '<th>' + h + '</th>'; }).join("") +
+          '</tr></thead><tbody>' + parts.map(partRow).join("") + '</tbody></table></div>' +
+        '</div>' +
+      '</div>' +
+      '<aside class="side">' +
+        '<div class="card"><div class="sum-head">' +
+          (e.image_thumb ? '<img src="' + esc(e.image_thumb) + '" alt="" referrerpolicy="no-referrer">' : "") +
+          '<div><div class="sum-name">' + esc(e.name_zh || e.name) + '</div>' +
+          '<div style="color:var(--text-mute);font-size:.76rem">' + esc(e.name) + '</div></div>' +
+        '</div>' +
+        '<div class="sum-hp"><div class="n">' + esc(e.health_total) + '</div><div class="l">总生命值</div></div></div>' +
+        '<div class="card"><h2>🧭 本页导航</h2><ul class="toc">' +
+          '<li><a href="#sec-appearance">外观</a></li>' +
+          '<li><a href="#sec-info">基础信息</a></li>' +
+          '<li><a href="#sec-parts">部位数据（' + parts.length + ' 个部位）</a></li>' +
+        '</ul></div>' +
+        '<div class="card rel"><h2>🔗 同阵营敌人</h2>' +
+          sameFaction.map(function (x) {
+            return '<a href="../enemy.html?id=' + encodeURIComponent(x.id) + '"><span>' + esc(x.name_zh || x.name) + '</span><span class="f">' + esc(x.category_zh || "") + '</span></a>';
+          }).join("") +
+        '</div>' +
+      '</aside>';
+  }
+
+  fetch("../data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) {
+      var all = d.enemies || [];
+      var id = param("id") || "agitator";
+      var e = all.find(function (x) { return x.id === id; }) || all[0];
+      render(e, all);
+    })
+    .catch(function (err) {
+      document.getElementById("detail").innerHTML = '<div class="empty">⚠️ 加载失败：' + esc(err) + '</div>';
+    });
+</script>
+</body>
+</html>
