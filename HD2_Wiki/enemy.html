@@ -5,73 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>敌人详情 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 敌人详情页" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
+:root {
       --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
       --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
       --terminid: #FF4444; --automaton: #4488FF; --illuminate: #AA44FF;
     }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
-    body { display: flex; flex-direction: column; }
+
 
     .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
     .breadcrumb { max-width: 1400px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+
     .breadcrumb a { color: var(--blue); text-decoration: none; }
+
     .breadcrumb a:hover { color: var(--yellow); }
 
+
     .detail-layout { flex: 1; max-width: 1400px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 60% 40%; gap: 20px; width: 100%; }
+
     .detail-layout > * { min-width: 0; }
 
+
     .main-content { display: flex; flex-direction: column; gap: 20px; }
+
     .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
     .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
 
+
     .title-block .name { font-size: 1.8rem; color: var(--text); }
+
     .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+
     .title-block .tags { display: flex; gap: 8px; margin-bottom: 10px; }
+
     .faction-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; color: #fff; }
+
     .cat-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
+
     .title-block .desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
+
     .img-big { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border-radius: 8px; min-height: 220px; }
+
     .img-big img { max-height: 300px; max-width: 100%; object-fit: contain; }
+
     .img-big .placeholder { font-size: 4rem; color: var(--text-mute); }
 
+
     .info-table { width: 100%; border-collapse: collapse; }
+
     .info-table tr { border-bottom: 1px solid var(--border); }
+
     .info-table td { padding: 8px 10px; font-size: 0.85rem; }
+
     .info-table td:first-child { color: var(--text-mute); width: 35%; }
+
     .info-table td:last-child { color: var(--text); }
 
+
         .part-table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+
     .part-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 8px; border-bottom: 1px solid var(--border); }
+
     .part-table td { padding: 6px 8px; font-size: 0.82rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); }
+
     .part-table td:first-child { color: var(--text); }
+
     .part-img { width: 60px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
     .part-img img { max-width: 60px; max-height: 40px; object-fit: contain; }
+
     .part-img .ph { font-size: 1.2rem; color: var(--text-mute); }
+
     .part-count { font-size: 0.7rem; color: var(--text-mute); }
+
     .fatal-tag { color: #ef4444; }
+
     .wp-tag { color: var(--yellow); }
+
     .enemy-variants { display: flex; flex-wrap: wrap; gap: 6px; }
+
     .enemy-variant { font-size: 0.78rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
+
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
 
+
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
 
     @media (max-width: 900px) { .detail-layout { grid-template-columns: 1fr; } }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
-
-</style>
+  </style>
 </head>
 <body>
   <header class="wiki-header">

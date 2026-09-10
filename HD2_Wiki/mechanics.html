@@ -5,37 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>游戏机制 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 游戏机制详解 - 伤害、难度、银河战争、状态效果" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
-    }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
-    .wiki-header { text-align: center; padding: 32px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
-    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); }
-    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
-    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
-    .grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; text-decoration: none; color: inherit; display: block; transition: transform 0.2s, box-shadow 0.2s; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.12); }
-    .card .icon { font-size: 2.2rem; margin-bottom: 8px; }
-    .card .name { font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
-    .card .name-en { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 6px; }
-    .card .desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
-    .loading { text-align: center; padding: 60px; color: var(--text-dim); grid-column: 1 / -1; }
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
-    @media (max-width: 767px) { .grid { grid-template-columns: 1fr; } }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
+body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
 
-</style>
+    .wiki-header { text-align: center; padding: 32px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); }
+
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+
+    .grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; text-decoration: none; color: inherit; display: block; transition: transform 0.2s, box-shadow 0.2s; }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.12); }
+
+    .card .icon { font-size: 2.2rem; margin-bottom: 8px; }
+
+    .card .name { font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+
+    .card .name-en { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 6px; }
+
+    .card .desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+    .loading { text-align: center; padding: 60px; color: var(--text-dim); grid-column: 1 / -1; }
+
+    @media (max-width: 767px) { .grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <header class="wiki-header">

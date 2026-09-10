@@ -5,73 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>任务总览 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 任务图鉴 - 主要目标、阵营特殊任务、战术目标" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
-    }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
-    body { display: flex; flex-direction: column; }
+.wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
 
-    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
     .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
     .wiki-header .sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+
     .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
-    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
 
     .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
+
     .wiki-controls .meta { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 12px; }
+
     .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
     .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+
     .filter-bar button:hover { border-color: var(--yellow); color: var(--yellow); }
+
     .filter-bar button.active { background: var(--yellow); color: #0a0e1a; border-color: var(--yellow); font-weight: 600; }
 
+
     .mission-wrap { flex: 1; max-width: 1200px; margin: 0 auto; padding: 10px 20px 40px; width: 100%; }
+
     .mission-table { width: 100%; border-collapse: collapse; }
+
     .mission-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 10px; border-bottom: 1px solid var(--border); }
+
     .mission-table td { padding: 8px 10px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); }
+
     .mission-table tbody tr { cursor: pointer; transition: background 0.15s; }
+
     .mission-table tbody tr:hover { background: rgba(245,197,24,0.06); }
+
     .mission-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
     .mission-table tbody tr:nth-child(even):hover { background: rgba(245,197,24,0.06); }
+
     .m-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
+
     .m-icon img { max-width: 36px; max-height: 36px; object-fit: contain; }
+
     .m-icon .ph { font-size: 1.3rem; color: var(--text-mute); }
+
     .m-name { color: var(--text); font-size: 0.92rem; }
+
     .m-name-en { color: var(--text-mute); font-size: 0.72rem; margin-top: 2px; }
+
     .m-diff { font-size: 0.8rem; color: var(--text-dim); white-space: nowrap; }
+
     .m-faction { font-size: 0.72rem; padding: 2px 10px; border-radius: 10px; color: #fff; white-space: nowrap; }
+
     .fa-any { background: rgba(100,116,139,0.3); color: var(--text-dim); }
+
     .fa-terminids { background: rgba(245,158,11,0.25); color: #f59e0b; }
+
     .fa-automatons { background: rgba(239,68,68,0.25); color: #ef4444; }
+
     .fa-illuminate { background: rgba(170,68,255,0.25); color: #c084fc; }
+
     .fa-super_earth { background: rgba(59,130,246,0.25); color: #60a5fa; }
 
+
     .mission-grid { display: none; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
     .m-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; text-decoration: none; color: inherit; display: flex; gap: 12px; align-items: center; transition: transform 0.2s, box-shadow 0.2s; }
+
     .m-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(245,197,24,0.08); }
 
+
     .loading { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
     .empty { text-align: center; padding: 60px 20px; color: var(--text-mute); font-size: 0.85rem; }
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
 
     @media (max-width: 1023px) { .mission-grid { grid-template-columns: repeat(2, 1fr); } }
+
     @media (max-width: 767px) {
       .mission-table { display: none; }
       .mission-grid { display: grid; grid-template-columns: 1fr; }
       .mission-grid.single { display: grid; }
     }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
-
-</style>
+  </style>
 </head>
 <body>
   <header class="wiki-header">

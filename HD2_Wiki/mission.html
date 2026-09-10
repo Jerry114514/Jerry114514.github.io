@@ -5,74 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>任务详情 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 任务详情页" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
-    }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
-    body { display: flex; flex-direction: column; }
+.wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
 
-    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
     .breadcrumb { max-width: 1100px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+
     .breadcrumb a { color: var(--blue); text-decoration: none; }
+
     .breadcrumb a:hover { color: var(--yellow); }
 
+
     .detail-layout { flex: 1; max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 68% 32%; gap: 20px; width: 100%; }
+
     .detail-layout > * { min-width: 0; }
+
     .main-content { display: flex; flex-direction: column; gap: 20px; }
+
     .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
     .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
 
+
     .title-block { display: flex; gap: 18px; align-items: center; }
+
     .title-block .t-icon { width: 84px; height: 84px; flex: none; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden; }
+
     .title-block .t-icon img { max-width: 72px; max-height: 72px; object-fit: contain; }
+
     .title-block .t-icon .ph { font-size: 2.6rem; color: var(--text-mute); }
+
     .title-block .name { font-size: 1.7rem; color: var(--text); }
+
     .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+
     .title-block .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
     .cat-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; background: rgba(245,197,24,0.15); color: var(--yellow); }
+
     .faction-tag { padding: 3px 12px; border-radius: 10px; font-size: 12px; color: #fff; }
 
+
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
     .info-item { display: flex; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; }
+
     .info-item .k { color: var(--text-mute); }
+
     .info-item .v { color: var(--text); text-align: right; }
 
+
     .steps-list { list-style: none; counter-reset: step; }
+
     .steps-list li { counter-increment: step; padding: 10px 12px; border-left: 3px solid var(--border); margin-bottom: 8px; background: rgba(255,255,255,0.02); border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
     .steps-list li::before { content: counter(step); display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; background: rgba(245,197,24,0.2); color: var(--yellow); border-radius: 50%; font-size: 0.75rem; margin-right: 8px; }
+
     .steps-list li .step-title { color: var(--text); font-weight: 600; }
+
     .steps-list li .step-sub { display: block; margin: 4px 0 0 30px; color: var(--text-dim); }
+
     .tac-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; white-space: pre-line; }
 
+
     .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+
     .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+
     .side-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+
     .side-card .field:last-child { border-bottom: none; }
+
     .side-card .field .k { color: var(--text-mute); }
+
     .side-card .field .v { color: var(--text); text-align: right; }
 
+
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
 
     @media (max-width: 900px) {
       .detail-layout { grid-template-columns: 1fr; }
       .info-side { order: 2; }
       .title-block { flex-direction: column; text-align: center; }
     }
-    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
 
-</style>
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <header class="wiki-header">

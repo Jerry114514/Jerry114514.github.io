@@ -5,68 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>武器图鉴 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 武器图鉴 - 主武器、副武器、投掷物数据" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
-    }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
-    body { display: flex; flex-direction: column; }
+.wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
 
-    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
     .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
     .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
-    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
 
     .wiki-controls { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; width: 100%; }
+
     .wiki-controls .meta { font-size: 0.8rem; color: var(--text-mute); margin-bottom: 12px; }
+
     .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
     .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+
     .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+
     .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
     .sub-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; min-height: 0; transition: all 0.2s; }
+
     .sub-filter button { padding: 4px 12px; border: 1px solid var(--border); border-radius: 14px; background: transparent; color: var(--text-mute); font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+
     .sub-filter button:hover { color: var(--text-dim); }
+
     .sub-filter button.active { background: rgba(59,130,246,0.15); color: var(--blue); border-color: var(--blue); }
 
+
     .wiki-search { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+
     .wiki-search input { width: 100%; padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
+
     .wiki-search input:focus { border-color: var(--blue); }
+
     .wiki-search input::placeholder { color: var(--text-mute); }
 
+
     .weapon-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+
     .weapon-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; cursor: pointer; text-decoration: none; color: inherit; display: block; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; overflow: hidden; }
+
     .weapon-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+
     .weapon-card .cat-bar { position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+
     .weapon-card .name { font-size: 1rem; color: var(--text); margin-bottom: 2px; }
+
     .weapon-card .name-en { font-size: 0.75rem; color: var(--text-mute); margin-bottom: 6px; }
+
     .weapon-card .subcat { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; }
+
     .weapon-icon { height: 76px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+
     .weapon-icon img { max-width: 68px; max-height: 68px; object-fit: contain; }
+
     .weapon-icon .ph { font-size: 2.2rem; color: var(--text-mute); }
+
     .weapon-card .stats { display: flex; gap: 12px; font-size: 0.78rem; color: var(--text-dim); }
+
     .weapon-card .stats span { display: flex; align-items: center; gap: 3px; }
-    .pen-light { color: #22c55e; } .pen-medium { color: #f59e0b; } .pen-heavy { color: #ef4444; }
+
+    .pen-light { color: #22c55e; }
+ .pen-medium { color: #f59e0b; }
+ .pen-heavy { color: #ef4444; }
+
 
     .loading { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+
     .empty { text-align: center; padding: 60px 20px; color: var(--text-mute); font-size: 0.85rem; grid-column: 1 / -1; }
 
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
     .wiki-footer a { color: var(--blue); text-decoration: none; }
 
-    @media (max-width: 1023px) { .weapon-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 767px) { .weapon-grid { grid-template-columns: 1fr; } }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
 
-</style>
+    @media (max-width: 1023px) { .weapon-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    @media (max-width: 767px) { .weapon-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <header class="wiki-header">

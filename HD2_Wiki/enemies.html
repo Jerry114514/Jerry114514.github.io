@@ -5,63 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>敌人图鉴 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 敌人图鉴 - 终结族、机器人、光能族" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
+:root {
       --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
       --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
       --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
       --terminid: #FF4444; --automaton: #4488FF; --illuminate: #AA44FF;
     }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
-    body { display: flex; flex-direction: column; }
+
 
     .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
     .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
     .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+
     .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
-    .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
+
 
     .filter-bar { max-width: 1200px; margin: 0 auto; padding: 16px 20px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+
     .filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+
     .filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
+
     .filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
+
     .enemy-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+
     .enemy-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
+
     .enemy-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+
     .enemy-card .color-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; }
+
     .enemy-card-image { height: 160px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; }
+
     .enemy-card-image img { max-height: 140px; max-width: 90%; object-fit: contain; }
+
     .enemy-card-image .placeholder { color: var(--text-mute); font-size: 2rem; }
+
     .enemy-card-body { padding: 12px 14px; }
+
     .enemy-faction-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; color: #fff; }
+
     .enemy-name { font-size: 1rem; color: var(--text); margin: 6px 0 2px; }
+
     .enemy-name-en { font-size: 0.75rem; color: var(--text-mute); }
+
     .enemy-category { display: inline-block; margin-top: 6px; font-size: 0.75rem; color: var(--text-dim); background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 8px; }
+
     .enemy-variants { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+
     .enemy-variant { font-size: 0.7rem; color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); transition: all 0.15s; }
+
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
+
     .enemy-group { grid-column: 1 / -1; margin-bottom: 8px; }
+
     .group-title { font-size: 0.95rem; color: var(--yellow); font-weight: 600; margin: 14px 0 8px; padding-left: 4px; border-left: 3px solid var(--yellow); padding-left: 10px; }
+
     .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
     @media (max-width: 1023px) { .group-grid { grid-template-columns: repeat(2, 1fr); } }
+
     @media (max-width: 767px) { .group-grid { grid-template-columns: 1fr; } }
 
+
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
-    .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
+
 
     @media (max-width: 1023px) { .enemy-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 767px) { .enemy-grid { grid-template-columns: 1fr; } }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
 
-</style>
+    @media (max-width: 767px) { .enemy-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <header class="wiki-header">

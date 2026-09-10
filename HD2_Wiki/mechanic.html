@@ -5,86 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>游戏机制 - 绝地潜兵2 中文维基</title>
   <meta name="description" content="绝地潜兵2 游戏机制详解" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-deep: #0a0e1a; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6; --radius: 12px;
-    }
-    @font-face { font-family: "ZZZ-thick"; src: url("./ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url('./assets/ChuangKeTieJinGangTi-2.otf') format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url('./assets/SourceHanSansCN-Medium.otf') format('opentype'); }
-    html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; }
+
     body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+
     .wiki-header { padding: 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
     .breadcrumb { max-width: 1400px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+
     .breadcrumb a { color: var(--blue); text-decoration: none; }
+
     .breadcrumb a:hover { color: var(--yellow); }
+
     .layout { flex: 1; max-width: 1400px; margin: 0 auto; padding: 20px; display: flex; gap: 20px; width: 100%; }
+
     .toc-sidebar { width: 260px; flex: 0 0 260px; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+
     .toc-sidebar .toc-title { font-size: 0.85rem; color: var(--text-mute); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
     .toc-item { display: block; padding: 4px 0; font-size: 0.8rem; color: var(--text-dim); text-decoration: none; border-radius: 4px; transition: color 0.15s; }
+
     .toc-item:hover { color: var(--yellow); }
+
     .toc-item.active { color: var(--yellow); }
+
     .toc-l3 { padding-left: 16px; }
+
     .toc-l4 { padding-left: 28px; }
+
     .main-content { flex: 1; min-width: 0; }
+
     .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+
     .card h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
     .card .desc { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px; }
+
     .section { scroll-margin-top: 80px; }
+
     .section h2 { font-size: 1.2rem; color: var(--text); margin: 24px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
     .section h3 { font-size: 1rem; color: var(--text); margin: 18px 0 8px; }
+
     .section h4 { font-size: 0.92rem; color: var(--text-dim); margin: 14px 0 6px; }
+
     .section p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; margin: 8px 0; }
+
     .section ul, .section ol { margin: 6px 0 6px 20px; font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
+
     .section table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.82rem; }
+
     .section th { text-align: left; padding: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text-dim); }
+
     .section td { padding: 6px 8px; border: 1px solid var(--border); color: var(--text-dim); }
+
     .section tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
     .section code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; color: var(--yellow); }
+
     .section pre { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: 0.82rem; color: var(--text-dim); margin: 10px 0; }
+
     .section blockquote { border-left: 3px solid var(--blue); padding: 8px 14px; margin: 10px 0; background: rgba(59,130,246,0.06); border-radius: 0 8px 8px 0; font-size: 0.85rem; color: var(--text-dim); }
+
     .section img { max-width: 100%; border-radius: 8px; }
+
 
     /* ===== 银河冲击计算器 ===== */
     .calculator-container { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 24px 28px; margin: 32px 0; color: #e0e0e0; }
+
     .calculator-container h3 { color: #f5c842; margin-top: 0; margin-bottom: 4px; font-size: 1.5rem; }
+
     .calc-desc { color: #aaa; margin-bottom: 20px; font-size: 0.95rem; }
+
     .calc-grid { display: flex; flex-wrap: wrap; gap: 30px; }
+
     .calc-inputs, .calc-results { flex: 1 1 300px; min-width: 260px; }
+
     .input-group { margin-bottom: 16px; }
+
     .input-group label { display: block; font-weight: 600; margin-bottom: 4px; color: #ddd; }
+
     .input-group input, .input-group select { width: 100%; padding: 8px 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #eee; font-size: 1rem; box-sizing: border-box; }
+
     .input-group input:focus, .input-group select:focus { outline: none; border-color: #f5c842; }
+
     .input-group .hint { display: block; font-size: 0.8rem; color: #888; margin-top: 2px; }
+
     button#calcBtn { background: #f5c842; color: #1a1a1a; border: none; padding: 10px 24px; font-size: 1.05rem; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 6px; }
+
     button#calcBtn:hover { background: #e0b032; }
+
     .calc-results h4 { margin-top: 0; margin-bottom: 16px; color: #f5c842; border-bottom: 1px solid #333; padding-bottom: 8px; }
+
     .result-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2a2a; font-size: 0.95rem; }
+
     .result-item.highlight { background: #252525; margin: 4px -8px; padding: 8px 8px; border-radius: 4px; border-left: 3px solid #f5c842; }
+
     .result-item .result-label { color: #aaa; }
+
     .result-item .result-value { font-weight: 600; color: #eee; }
+
     .result-item.highlight .result-value { color: #f5c842; }
+
     .result-item.result-note .result-value { color: #88ccff; font-weight: 400; font-size: 0.9rem; text-align: right; max-width: 60%; }
+
     .warning-block { background: #2a1a1a; border-left: 4px solid #ff6644; padding: 16px 20px; margin: 24px 0; border-radius: 6px; }
+
     .warning-block h4 { color: #ff6644; margin: 0 0 6px 0; }
+
     .warning-block p { margin: 6px 0; color: #ddd; }
+
     @media (max-width: 700px) { .calculator-container { padding: 16px 18px; } .calc-grid { flex-direction: column; gap: 20px; } }
+
     @media (max-width: 1023px) { .toc-sidebar { display: none; } }
+
     .toc-toggle { display: none; }
+
     @media (max-width: 1023px) {
       .toc-sidebar { display: none; }
       .toc-toggle { display: block; padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-dim); font-size: 0.85rem; cursor: pointer; margin-bottom: 12px; }
       .toc-sidebar.open { display: block; position: fixed; top: 60px; left: 10px; right: 10px; width: auto; z-index: 100; max-height: 80vh; }
     }
-  
-h1, h2, h3, h4, .wiki-header h1, .wiki-header .title, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
-  font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
-}
-
-</style>
+  </style>
 </head>
 <body>
   <header class="wiki-header">
