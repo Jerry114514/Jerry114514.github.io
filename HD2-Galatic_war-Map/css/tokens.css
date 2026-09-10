@@ -1,0 +1,32 @@
+/* HD2 主站设计变量 —— 单点真相（2026-09 自 index.html 抽取）
+   阵营色/主题色改动只改这里；wiki 侧核心变量见 HD2_Wiki/assets/css/wiki-base.css */
+:root {
+      --bg-deep:   #0B0E14;
+      --bg-deep-2: #131826;
+      --bg-deep-3: #1A1F2E;
+      --yellow:    #F5C518;
+      --yellow-2:  #FFD54F;
+      --yellow-3:  #B8900E;
+      --text:      #FFFFFF;
+      --text-dim:  rgba(255, 255, 255, 0.72);
+      --text-mute: rgba(255, 255, 255, 0.45);
+      --border:    rgba(255, 255, 255, 0.08);
+      --border-h:  rgba(245, 197, 24, 0.4);
+      --card-bg:   rgba(255, 255, 255, 0.05);
+      --card-h:    rgba(255, 255, 255, 0.08);
+      --blur:      blur(12px);
+      --radius:    12px;
+      --radius-s:  8px;
+
+      /* 阵营色 */
+      --c-humans:     #5BA3D0;   /* 超级地球（蓝） */
+      --c-humans-d:   #2A3948;   /* 超级地球 深 */
+      --c-terminids:  #F5C518;   /* 终结族（黄） */
+      --c-terminids-d:#C29B13;   /* 终结族 深 */
+      --c-automaton:  #D6806D;   /* 机器人（红粉） */
+      --c-automaton-d:#A36153;   /* 机器人 深 */
+      --c-illuminate: #CF64F8;   /* 光能族（紫） */
+      --c-illuminate-d:#8F45AB;  /* 光能族 深 */
+      --c-unknown:    #6B7280;
+      --c-mo:         #FF8C00;   /* MO 目标 橙 */
+}
