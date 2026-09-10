@@ -325,6 +325,20 @@ def fetch_official():
 
 
 # ---------------- companion 源 ----------------
+def _clean_war_stats(raw):
+    """warStats 清洗：galaxy_stats 原样；planets_stats 过滤 planetIndex<0 的哨兵假数据"""
+    if not isinstance(raw, dict):
+        return {}
+    out = {}
+    gs = raw.get("galaxy_stats")
+    if isinstance(gs, dict):
+        out["galaxy_stats"] = gs
+    plist = raw.get("planets_stats") or []
+    if isinstance(plist, list):
+        out["planets_stats"] = [x for x in plist if isinstance(x, dict) and (x.get("planetIndex") or 0) >= 0]
+    return out
+
+
 def fetch_companion():
     obj = fetch_json(COMPANION_LIVE, {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AstrBot-HD2-Plugin/1.0",
@@ -356,6 +370,7 @@ def fetch_companion():
             "attacking": bool(ps.get("attacking")),
             "activeEffects": comp_effects.get(ps.get("index"), []),
             "regenPerSecond": ps.get("regenPerSecond") or 0,
+            "position": ps.get("position") or {"x": 0, "y": 0},
         })
 
     campaigns = []
@@ -468,6 +483,9 @@ def fetch_companion():
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
             "assignments": assignment, "dispatches": dispatches, "dss": dss,
+            "war_stats": _clean_war_stats(obj.get("warStats")),
+            "planet_events": ws.get("planetEvents") or [],
+            "planet_attacks": ws.get("planetAttacks") or [],
             "_clientTimeMs": obj.get("clientTime") or (int(time.time()) * 1000),
             "_currentWarTime": (obj.get("warStatus") or {}).get("time") or 0}
 
@@ -545,6 +563,8 @@ def main():
                     p["players"] = cp["players"]
                 if cp.get("activeEffects"):
                     p["activeEffects"] = cp["activeEffects"]
+                if cp.get("position"):
+                    p["position"] = cp["position"]
                 p["_regen"] = cp.get("regenPerSecond") or 0
 
     # 用 hd2dev 的星球名/sector/maxHealth 统一覆盖（hd2dev sector 为社区维护、与对照表一致）
@@ -730,6 +750,9 @@ def main():
               "player_distribution": player_dist,
               "recon_stats": recon_stats,
               "impactMultiplier": None,
+              "war_stats": (companion or {}).get("war_stats") or {},
+              "planet_events": (companion or {}).get("planet_events") or [],
+              "planet_attacks": (companion or {}).get("planet_attacks") or [],
               **base}
 
     # 历史数据：从 extended API 获取玩家分布和影响力系数
