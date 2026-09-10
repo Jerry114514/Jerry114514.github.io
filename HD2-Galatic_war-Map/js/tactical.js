@@ -73,6 +73,7 @@ window.Tactical = (function () {
         : (circTargets.length > 2 ? "多重围攻" : "天体包围圈");
       tags.push({
         key: "circumvallation", title,
+        targets: circTargets.map(n => n),
         text: `解放${selfName}将对${tNames}的${raceCn}形成包围，切断其支援与增援。` +
               `固守该星可开启${circTargets.length}处围攻解放，降低当地敌方抵抗度。`,
       });
@@ -86,6 +87,7 @@ window.Tactical = (function () {
       const gNames = gambits.map(n => nameOf(n)).join("、");
       tags.push({
         key: "gambit", title: "对弈点",
+        targets: gambits.map(n => n),
         text: `解放${selfName}将立即结束${gNames}上的敌方战役，守军无需再坚守防线。`,
       });
     }

@@ -157,6 +157,14 @@
 <!-- ============================================================
          区块2：紧急战情（防御战+侦察战）
          ============================================================ -->
+    <section class="block" id="block-pevents" style="display:none">
+      <div class="block-head">
+        <span class="block-emoji">⚡</span>
+        <h2 class="block-title">活动事件</h2>
+        <span class="block-meta" id="pevents-meta"></span>
+      </div>
+      <div id="pevents-content"></div>
+    </section>
     <section class="block" id="block-urgent">
       <div class="block-head">
         <span class="block-emoji">🚨</span>
@@ -528,6 +536,9 @@
       stratagems,
       player_distribution: data.player_distribution || null,
       recon_stats: data.recon_stats || {},
+      war_stats: data.war_stats || {},
+      planet_events: data.planet_events || [],
+      planet_attacks: data.planet_attacks || [],
       waypoints:  waypoints || {},
       fetchedAt:  data.fetchedAt,
       source:     data.source,
@@ -1359,9 +1370,19 @@ function renderPlayers(data) {
         };
         const tacTags = window.Tactical.computeFor(p.index, tacCtx);
         if (tacTags.length) {
-          const chips = tacTags.map(t =>
-            `<div class="pd-chip pd-chip-tac" title="${esc(t.title)}">${esc(t.title)}<span class="pd-eff-arrow">▾</span></div>` +
-            `<div class="pd-eff-desc" style="display:none">${esc(t.text)}</div>`).join("");
+          const chips = tacTags.map(t => {
+            let descHtml = esc(t.text);
+            if (t.targets && t.targets.length) {
+              const links = t.targets.map(idx => {
+                const tp = (currentData.planets || []).find(x => x.index === idx);
+                const tn = tp ? (planetName(tp, starMap).cn || planetName(tp, starMap).en) : ("#" + idx);
+                return `<a class="tac-target" data-planet-index="${idx}" title="定位到该星球">${esc(tn)}</a>`;
+              }).join("、");
+              descHtml += `<div class="tac-jump">目标星球：${links}</div>`;
+            }
+            return `<div class="pd-chip pd-chip-tac" title="${esc(t.title)}">${esc(t.title)}<span class="pd-eff-arrow">▾</span></div>` +
+                   `<div class="pd-eff-desc" style="display:none">${descHtml}</div>`;
+          }).join("");
           tac = `<div class="pd-section"><div class="pd-title">战术目标<span class="pd-cn">TACTICAL OBJECTIVES</span></div><div class="pd-chips">${chips}</div></div>`;
         }
       }
@@ -1422,6 +1443,13 @@ function renderPlayers(data) {
     // DSS 停靠
     if (currentData && currentData.dss && currentData.dss.planetIndex === p.index) {
       poi.push(`<div class="pd-chip poi-dss">🛰️ DSS 民主空间站停靠中</div>`);
+    }
+    // 敌军反攻预警
+    const atk = ((currentData || {}).planet_attacks || []).find(a => a.target === p.index);
+    if (atk) {
+      const srcP = (currentData.planets || []).find(x => x.index === atk.source);
+      const srcN = srcP ? planetName(srcP, starMap) : null;
+      poi.push(`<div class="pd-chip poi-atk">⚠️ 敌军反攻中 · 来自 ${esc(srcN ? (srcN.cn || srcN.en) : "#" + atk.source)}</div>`);
     }
     poi.push(`<div class="pd-chip">🌍 星区：${esc(sectorCn(name.sector))}</div>`);
     const poiHtml = poi.join("");
@@ -1614,6 +1642,20 @@ function renderPlayers(data) {
     const card = e.target.closest(".planet-card");
     if (!card) return;
     // 行动变量词条点击展开详情
+    const tacJump = e.target.closest(".tac-target");
+    if (tacJump) {
+      e.stopPropagation();
+      const idx = tacJump.getAttribute("data-planet-index");
+      const card = document.querySelector(`.planet-card[data-planet-index="${idx}"]`);
+      if (card) {
+        const group = card.closest(".sector-group");
+        if (group) group.classList.add("open");
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("tac-highlight");
+        setTimeout(() => card.classList.remove("tac-highlight"), 2500);
+      }
+      return;
+    }
     const effChip = e.target.closest(".pd-chip-eff, .pd-chip-tac");
     if (effChip) {
       // desc div 紧跟 chip 之后（nextElementSibling），精确定位不串台
@@ -1637,6 +1679,70 @@ function renderPlayers(data) {
   /* ==============================================================
      渲染：区块2 可攻打星球
      ============================================================== */
+  // 活动事件：planetEvents 渲染（进度条 + warTime 倒计时，倒计时机制与 DSS 同款）
+  function renderPlanetEvents(data) {
+    // 独立倒计时格式化（fmtCountdown 定义于 DSS 模块作用域，此处不可达）
+    const fmtCd = (ms) => {
+      if (ms == null || ms <= 0) return "00:00";
+      const t = Math.floor(ms / 1000);
+      const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60;
+      return (h > 0 ? h + "小时 " : "") + (m < 10 ? "0" + m : m) + "分 " + (sec < 10 ? "0" + sec : sec) + "秒";
+    };
+    const block = $("block-pevents");
+    const root = $("pevents-content");
+    if (!block || !root) return;
+    const events = data.planet_events || [];
+    if (!events.length) { block.style.display = "none"; return; }
+    block.style.display = "";
+    const warTimeNow = (data.dss && data.dss.currentWarTime) || 0;
+    const startReal = Date.now();
+    const RACE = { Automaton: "机器人", Illuminate: "光能族", Terminids: "终结族" };
+    const html = events.map(ev => {
+      const p = (data.planets || []).find(x => x.index === ev.planetIndex) || { index: ev.planetIndex, name: "PLANET_" + ev.planetIndex };
+      const nm = planetName(p, data.starMap);
+      const camp = (data.campaigns || []).find(c => (c.planet || {}).index === ev.planetIndex);
+      const raceCn = RACE[(camp || {}).faction] || "敌方";
+      const pct = ev.maxHealth ? Math.min(100, Math.max(0, ev.health / ev.maxHealth * 100)) : 0;
+      const remainMs = warTimeNow ? Math.max(0, (ev.expireTime - warTimeNow) * 1000) : 0;
+      const atk = (data.planet_attacks || []).find(a => a.target === ev.planetIndex);
+      const evName = ev.eventType === 1 ? "紧急解放" : "星球事件 #" + ev.eventType;
+      return `
+        <div class="pe-event">
+          <div class="pe-head">
+            <span class="pe-title">⚡ ${esc(evName)} · ${esc(raceCn)}</span>
+            <span class="pe-planet">${esc(nm.cn || nm.en)}</span>
+            <span class="pe-countdown" data-expire-ms="${remainMs}">${fmtCd(remainMs)}</span>
+          </div>
+          <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(pct)}" style="width:${pct}%"></div></div>
+          <div class="pe-sub">${esc(nm.en || "")} · 防御余量 ${pct.toFixed(1)}%${atk ? ' · <span class="pe-atk">⚠ 该星正遭敌军反攻</span>' : ""}</div>
+        </div>`;
+    }).join("");
+    root.innerHTML = html;
+    if (window._peTimer) clearInterval(window._peTimer);
+    window._peTimer = setInterval(function() {
+      const elapsed = Date.now() - startReal;
+      root.querySelectorAll("[data-expire-ms]").forEach(function(el) {
+        const initMs = parseFloat(el.getAttribute("data-expire-ms"));
+        if (isFinite(initMs) && initMs > 0) el.textContent = fmtCd(Math.max(0, initMs - elapsed));
+      });
+    }, 1000);
+  }
+
+  // 反攻预警：urgent-meta 追加（renderDefenseRecon 之后调用）
+  function updateAttackWarning(data) {
+    const meta = $("urgent-meta");
+    if (!meta) return;
+    const atks = data.planet_attacks || [];
+    if (!atks.length) return;
+    const names = atks.map(a => {
+      const p = (data.planets || []).find(x => x.index === a.target);
+      const n = p ? planetName(p, data.starMap) : null;
+      return n ? (n.cn || n.en) : ("#" + a.target);
+    });
+    const cur = meta.textContent;
+    meta.textContent = (cur ? cur + " · " : "") + `⚠ 敌军进攻线 ${atks.length} 条：${names.slice(0, 3).join("、")}${atks.length > 3 ? " 等" : ""}`;
+  }
+
   function renderDefenseRecon(data) {
     const root = $("urgent-content");
     const meta = $("urgent-meta");
@@ -1990,6 +2096,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderImpact(data);
       renderDss(data);
       renderDefenseRecon(data);
+      renderPlanetEvents(data);
+      updateAttackWarning(data);
       renderAttackable(data);
       renderProspect(data);
       renderSectors(data);
