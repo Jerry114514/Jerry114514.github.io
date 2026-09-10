@@ -263,6 +263,7 @@
        脚本
        ============================================================ -->
   <script src="./js/data-source.js"></script>
+  <script src="./js/tactical.js"></script>
   <script>
   "use strict";
 
@@ -285,6 +286,7 @@
     STAR_MAP_URL: "./tables/starmap.json",
     VARIABLES_URL: "./tables/hd2_variables.json",  // 行动变量对照表（DSS 效果描述等）
     EFFECT_URL: "./tables/effect_id_cn.json",     // 效果 ID -> 中文（星球行动变量）
+    WAYPOINTS_URL: "./tables/waypoints.json",   // 补给线邻接（战术目标词条计算，冻结文件只读复用）
     EFFECT_DETAIL_URL: "./tables/galactic_effects.json",  // 效果 ID -> 英文名+描述（词条详情）
     STRATAGEMS_URL: "./tables/stratagems.json"  // 战备库（战术搭配器）
   };
@@ -494,9 +496,13 @@
     } catch (_) { /* ignore */ }
     // 效果 ID -> 英文名+描述（词条详情）
     let effectDetailMap = {};
+    // 补给线邻接（战术目标词条）
+    let waypoints = {};
     try {
       const ed = await HD2Source.jsonSoft(CONFIG.EFFECT_DETAIL_URL);
       if (ed) effectDetailMap = ed;
+      const wpRaw = await HD2Source.jsonSoft(CONFIG.WAYPOINTS_URL);
+      if (wpRaw) waypoints = wpRaw;
     } catch (_) { /* ignore */ }
     // 战备库（战术搭配器）
     let stratagems = [];
@@ -522,6 +528,7 @@
       stratagems,
       player_distribution: data.player_distribution || null,
       recon_stats: data.recon_stats || {},
+      waypoints:  waypoints || {},
       fetchedAt:  data.fetchedAt,
       source:     data.source,
     };
@@ -1333,6 +1340,33 @@ function renderPlayers(data) {
         <div class="pd-row"><span>玩家数量</span><strong>${p.players != null && p.players > 0 ? fmt(p.players) : "—"}</strong></div>
       </div>`;
 
+    // 1.5) 战术目标（蓝色词条：天体包围圈/双重围攻/被围攻/星域解放/对弈点）
+    let tac = "";
+    try {
+      if (window.Tactical && currentData) {
+        const tacCtx = {
+          planets: currentData.planets || [],
+          campaigns: currentData.campaigns || [],
+          waypoints: currentData.waypoints || {},
+          nameOf: (idx) => {
+            const pn = planetName((currentData.planets || []).find(x => x.index === idx), starMap);
+            return pn.cn || pn.en;
+          },
+          sectorCnOf: (sec) => {
+            const sc = sectorCn(sec);
+            return typeof sc === "string" ? sc : ((sc && (sc.cn || sc.en)) || sec);
+          },
+        };
+        const tacTags = window.Tactical.computeFor(p.index, tacCtx);
+        if (tacTags.length) {
+          const chips = tacTags.map(t =>
+            `<div class="pd-chip pd-chip-tac" title="${esc(t.title)}">${esc(t.title)}<span class="pd-eff-arrow">▾</span></div>` +
+            `<div class="pd-eff-desc" style="display:none">${esc(t.text)}</div>`).join("");
+          tac = `<div class="pd-section"><div class="pd-title">战术目标<span class="pd-cn">TACTICAL OBJECTIVES</span></div><div class="pd-chips">${chips}</div></div>`;
+        }
+      }
+    } catch (e) { console.warn("[Tactical] 词条计算失败:", e); }
+
     // 2) 行动变量（环境/变种）
     const effIds = [...new Set(p.activeEffects || [])];  // 去重：数据源偶发重复效果
     let effHtml;
@@ -1395,6 +1429,7 @@ function renderPlayers(data) {
     return `
       <div class="planet-detail">
         ${strat}
+        ${tac}
         ${oper}
         <div class="pd-section">
           <div class="pd-title">兴趣点<span class="pd-cn">POINTS OF INTEREST</span></div>
@@ -1579,7 +1614,7 @@ function renderPlayers(data) {
     const card = e.target.closest(".planet-card");
     if (!card) return;
     // 行动变量词条点击展开详情
-    const effChip = e.target.closest(".pd-chip-eff");
+    const effChip = e.target.closest(".pd-chip-eff, .pd-chip-tac");
     if (effChip) {
       // desc div 紧跟 chip 之后（nextElementSibling），精确定位不串台
       let desc = effChip.nextElementSibling;
