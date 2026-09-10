@@ -23,11 +23,11 @@ jobs:
           BASE="https://raw.githubusercontent.com/Jerry114514/HD2-Bot-Release/main/tables"
           # 翻译表（effect_id_cn/hd2_variables/galactic_effects）与 starmap.json 不在同步清单：
           # 由 Page 仓库本地维护为权威源（避免被 HD2-Bot-Release 旧版覆盖导致翻译回退）
+          # dss_effects.json 已移出同步清单（2026-09 核查：前端/脚本零消费，上游仍留存可随时恢复）
           for f in \
             "HD2行动变量对照表.md" \
             "星图对照表_修正版.md" \
             "群使用说明.txt" \
-            "dss_effects.json" \
           ; do
             echo "==> $f"
             # URL 编码中文文件名
