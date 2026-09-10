@@ -107,6 +107,7 @@
   <div class="detail-layout" id="detail-layout"><div class="loading">正在加载敌人数据…</div></div>
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
+  <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
     var allEnemies = [];
@@ -114,8 +115,7 @@
     var FACTION_COLOR = { terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF" };
 
     async function loadDetail() {
-      var params = new URLSearchParams(window.location.search);
-      var id = params.get("id");
+      var id = WikiRouter.param("id");
       var layout = document.getElementById("detail-layout");
       try {
         var r = await fetch("./data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" });

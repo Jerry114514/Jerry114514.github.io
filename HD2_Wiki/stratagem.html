@@ -163,6 +163,7 @@
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
+  <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
     var ARROW = {
@@ -181,8 +182,7 @@
     function iconOf(cat) { var m = { "轨道":"🚀","飞鹰":"🦅","支援武器":"🔫","背包":"🎒","可部署物":"🏗️","载具":"🚗","重型支援武器":"🔫" }; return m[cat] || "📦"; }
 
     async function loadDetail() {
-      var params = new URLSearchParams(window.location.search);
-      var id = params.get("id");
+      var id = WikiRouter.param("id");
       var layout = document.getElementById("detail-layout");
       try {
         var r = await fetch("./data/wiki/zh/stratagems_full.json?t=" + Date.now(), { cache: "no-store" });

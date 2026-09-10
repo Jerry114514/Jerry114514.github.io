@@ -139,11 +139,11 @@ html { scroll-behavior: smooth; }
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
+  <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
     async function load() {
-      var params = new URLSearchParams(window.location.search);
-      var id = params.get("id") || "damage";
+      var id = WikiRouter.param("id") || "damage";
       var layout = document.getElementById("layout");
       try {
         var r = await fetch("./data/wiki/zh/mechanics/" + id + "_zh.json?t=" + Date.now(), { cache: "no-store" });

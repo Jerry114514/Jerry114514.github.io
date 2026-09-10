@@ -113,6 +113,7 @@
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
+  <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
     var data = null;
@@ -132,7 +133,7 @@
         var r = await fetch("./data/wiki/zh/missions.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         data = await r.json();
-        var p = new URLSearchParams(window.location.search).get("category");
+        var p = WikiRouter.param("category");
         if (p && CATS.some(function(c) { return c.id === p; })) currentCat = p;
         renderFilters();
         renderList();

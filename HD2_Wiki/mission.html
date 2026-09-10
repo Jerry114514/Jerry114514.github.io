@@ -102,6 +102,7 @@
 
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
+  <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
     var CAT_ZH = { main: "主要目标", terminid: "终结族特殊任务", automaton: "机器人特殊任务", illuminate: "光能族特殊任务", tactical: "战术目标" };
@@ -109,8 +110,7 @@
     var FACTION_COLOR = { any: "#64748b", terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF", super_earth: "#3b82f6" };
 
     async function loadDetail() {
-      var params = new URLSearchParams(window.location.search);
-      var id = params.get("id");
+      var id = WikiRouter.param("id");
       var cat = params.get("category") || "main";
       var layout = document.getElementById("detail-layout");
       try {
