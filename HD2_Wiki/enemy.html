@@ -20,7 +20,7 @@
     .breadcrumb a:hover { color: var(--yellow); }
 
 
-    .detail-layout { flex: 1; max-width: 1400px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 60% 40%; gap: 20px; width: 100%; }
+    .detail-layout { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 70% 30%; gap: 20px; width: 100%; align-items: start; }
 
     .detail-layout > * { min-width: 0; }
 
@@ -63,7 +63,29 @@
     .info-table td:last-child { color: var(--text); }
 
 
-        .part-table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+        .part-table { width: 100%; border-collapse: collapse; }
+    .table-wrap { position: relative; overflow-x: auto; }
+    .table-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 24px; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(11,14,20,.85)); }
+    .scroll-hint { font-size: .68rem; color: var(--text-mute); font-weight: 400; margin-left: 8px; }
+    .part-table th:first-child, .part-table td:first-child { position: sticky; left: 0; background: #131826; z-index: 1;
+      box-shadow: 2px 0 4px rgba(0,0,0,.3); }
+    .info-side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; align-self: start; }
+    .sum-head { display: flex; align-items: center; gap: 12px; }
+    .sum-head img { width: 56px; height: 56px; object-fit: contain; }
+    .sum-name { font-size: 1.1rem; color: var(--text); }
+    .sum-en { font-size: .76rem; color: var(--text-mute); }
+    .sum-hp { margin-top: 12px; text-align: center; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; }
+    .sum-hp-n { font-size: 1.6rem; font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif; color: var(--yellow); }
+    .sum-hp-l { color: var(--text-mute); font-size: .72rem; }
+    .side-toc { list-style: none; padding: 0; margin: 0; }
+    .side-toc a { display: block; padding: 8px 10px; color: var(--text-dim); text-decoration: none; border-left: 2px solid var(--border); font-size: .85rem; }
+    .side-toc a:hover { color: var(--blue); border-left-color: var(--blue); background: rgba(59,130,246,.08); }
+    .side-link { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; color: var(--text-dim); text-decoration: none; font-size: .84rem; border-bottom: 1px dashed var(--border); }
+    .side-link:last-child { border-bottom: none; }
+    .side-link:hover { color: var(--blue); }
+    .side-sub { font-size: .7rem; color: var(--text-mute); }
+    .side-src { font-size: .75rem; color: var(--text-mute); word-break: break-all; margin: 0; }
 
     .part-table th { text-align: left; font-size: 0.75rem; color: var(--text-mute); padding: 8px; border-bottom: 1px solid var(--border); }
 
@@ -134,9 +156,9 @@
       document.getElementById("breadcrumb").innerHTML =
         '← <a href="enemies.html">敌人列表</a> › ' + esc(fcn) + ' › ' + esc(e.name_zh || e.name);
 
-      // 部位表格
+      // 部位表格（wrapper 横滚 + sticky 首列 + 渐隐提示）
       var parts = e.body_parts || [];
-      var partsHtml = parts.length ? '<div class="card"><h2>🦴 部位数据</h2><table class="part-table">' +
+      var partsHtml = parts.length ? '<div class="card" id="sec-parts"><h2>🦴 部位数据<span class="scroll-hint">表可横向滚动 →</span></h2><div class="table-wrap"><table class="part-table">' +
         '<tr><th>部位</th><th>图片</th><th>生命值</th><th>装甲</th><th>位置</th><th>耐久%</th><th>对主体%</th><th>致命</th><th>弱点</th></tr>' +
         parts.map(function(p) {
           var fatal = p.fatal === true ? '💀' : (p.fatal === false ? '' : (String(p.fatal || '').toLowerCase() === 'yes' ? '💀' : ''));
@@ -151,28 +173,57 @@
             '<td>' + esc(p.percent_to_main || p.pct_to_main || '—') + '</td>' +
             '<td>' + (fatal ? '<span class="fatal-tag">💀</span>' : '') + '</td>' +
             '<td>' + (wp ? '<span class="wp-tag">⭐</span>' : '') + '</td></tr>';
-        }).join("") + '</table></div>' : '';
+        }).join("") + '</table></div></div>' : '';
 
-      // 变种导航
+      // 变种导航（siblings 去重：不再重复列出基础种自身）
       var variantNav = "";
       var baseUnit = e.base_unit || e.name;
       var siblings = allEnemies.filter(function(x) {
-        return (x.base_unit || x.name) === baseUnit && x.name !== e.name;
+        return (x.base_unit || x.name) === baseUnit && x.name !== e.name && x.name !== baseUnit;
       });
       var isBase = !e.base_unit || e.base_unit === e.name;
       if (isBase && (e.variants || []).length) {
-        variantNav = '<div class="card"><h2>🔄 变种</h2><div class="enemy-variants">' +
+        variantNav = '<div class="card" id="sec-variants"><h2>🔄 变种</h2><div class="enemy-variants">' +
           e.variants.map(function(v) {
             var ve = allEnemies.find(function(x) { return x.name === v; });
             return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(ve ? ve.id : v.toLowerCase().replace(/ /g,"_") ) + '">' + esc(v) + '</a>';
           }).join("") + '</div></div>';
-      } else if (!isBase && siblings.length) {
-        variantNav = '<div class="card"><h2>🔗 所属：' + esc(baseUnit) + '</h2><div class="enemy-variants">' +
-          '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(baseUnit.toLowerCase().replace(/ /g,"_")) + '">' + esc(baseUnit) + ' (基础)</a>' +
-          siblings.map(function(s) {
-            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(s.id) + '">' + esc(s.name) + '</a>';
+      } else if (!isBase) {
+        var baseId = baseUnit.toLowerCase().replace(/ /g, "_");
+        var baseExists = allEnemies.some(function(x) { return x.id === baseId; });
+        if (!baseExists && !siblings.length) variantNav = "";
+        else variantNav = '<div class="card" id="sec-variants"><h2>🔗 所属：' + esc(baseUnit) + '</h2><div class="enemy-variants">' +
+          (baseExists ? '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(baseId) + '">' + esc(baseUnit) + ' (基础)</a>' : '') +
+          siblings.map(function(s2) {
+            return '<a class="enemy-variant" href="enemy.html?id=' + encodeURIComponent(s2.id) + '">' + esc(s2.name) + '</a>';
           }).join("") + '</div></div>';
       }
+
+      // 右栏：摘要 + 本页导航 + 同阵营 + 来源（承接原空置栏内容）
+      var sameFaction = allEnemies.filter(function(x) {
+        return x.faction === e.faction && x.id !== e.id && !x.is_strain_page;
+      }).slice(0, 6);
+      var sideHtml =
+        '<div class="info-side">' +
+          '<div class="card"><div class="sum-head">' +
+            (e.image_thumb ? '<img src="' + esc(e.image_thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '') +
+            '<div><div class="sum-name">' + esc(e.name_zh || e.name) + '</div>' +
+            '<div class="sum-en">' + esc(e.name) + '</div></div>' +
+          '</div>' +
+          '<div class="sum-hp"><div class="sum-hp-n">' + esc(e.health_total) + '</div><div class="sum-hp-l">总生命值</div></div></div>' +
+          '<div class="card"><h2>🧭 本页导航</h2><ul class="side-toc">' +
+            '<li><a href="#sec-appearance">外观</a></li>' +
+            '<li><a href="#sec-info">基础信息</a></li>' +
+            (parts.length ? '<li><a href="#sec-parts">部位数据（' + parts.length + ' 个部位）</a></li>' : '') +
+            (variantNav ? '<li><a href="#sec-variants">变种</a></li>' : '') +
+          '</ul></div>' +
+          '<div class="card"><h2>🔗 同阵营敌人</h2>' +
+            sameFaction.map(function(x) {
+              return '<a class="side-link" href="enemy.html?id=' + encodeURIComponent(x.id) + '"><span>' + esc(x.name_zh || x.name) + '</span><span class="side-sub">' + esc(x.category_zh || "") + '</span></a>';
+            }).join("") +
+          '</div>' +
+          '<div class="card"><h2>📄 来源</h2><p class="side-src">' + esc(e.source_page || "—") + '</p></div>' +
+        '</div>';
 
       layout.innerHTML =
         '<div class="main-content">' +
@@ -186,10 +237,10 @@
             (e.description ? '<div class="desc">' + esc(e.description_zh || e.description) + '</div>' : '') +
           '</div>' +
           variantNav +
-          '<div class="card"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
+          '<div class="card" id="sec-appearance"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
             '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
             '<div class="placeholder">🐛</div>') + '</div></div>' +
-          '<div class="card"><h2>📊 基础信息</h2><table class="info-table">' +
+          '<div class="card" id="sec-info"><h2>📊 基础信息</h2><table class="info-table">' +
             row("阵营", fcn) + row("分类", e.category_zh || e.category) +
             row("总生命值", e.health_total) + row("伤害", e.damage_zh || e.damage) +
             row("伤害类型", e.damage_type_zh || e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier_zh || e.fire_damage_multiplier) +
@@ -197,9 +248,7 @@
           '</table></div>' +
           partsHtml +
         '</div>' +
-        '<div class="main-content" style="grid-column:1">' +
-          '<div class="card"><h2>📄 来源</h2><p style="font-size:0.75rem;color:var(--text-mute)">数据来源：' + esc(e.source_page) + '</p></div>' +
-        '</div>';
+        sideHtml;
     }
 
     function row(k, v) { return v == null || v === "" ? "" : '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>'; }
