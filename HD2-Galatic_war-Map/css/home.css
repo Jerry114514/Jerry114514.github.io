@@ -394,13 +394,12 @@
        区块2 & 区块3：星球卡片
        ============================================================ */
     .planet-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 14px;
     }
     .planet-card {
-      flex: 1 1 240px;
-      min-width: 220px;
       max-width: 100%;
       background: var(--card-bg);
       backdrop-filter: var(--blur);
@@ -616,8 +615,6 @@
       gap: 8px;
     }
     .sector-body .planet-card {
-      flex: 1 1 200px;
-      min-width: 180px;
       padding: 10px 12px;
     }
     .sector-body .planet-name { font-size: 0.9rem; }
@@ -1029,7 +1026,6 @@
         width: auto;
         max-height: 50vh;
       }
-      .planet-card { min-width: 160px; }
       .block-head { flex-wrap: wrap; }
       .block-meta { width: 100%; margin-left: 0; }
     }
@@ -1047,3 +1043,47 @@
       height: 100% !important;
       display: block;
     }
+
+    /* ============================================================
+       影响力统计卡（P3：自 inline style 抽取为规范类）
+       ============================================================ */
+    .impact-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .impact-stat .l { font-size: 0.7rem; color: var(--text-dim); }
+    .impact-stat .n { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    .impact-stat .n .unit { font-size: 0.8rem; font-weight: 400; color: var(--text-dim); }
+    .impact-stat .n.pos { color: #22c55e; }
+    .impact-stat .n.mid { color: #f59e0b; }
+    .impact-stat .n.neg { color: #ef4444; }
+    .impact-stat .d { font-size: 0.65rem; color: var(--text-dim); max-width: 280px; }
+    .impact-trend { font-size: 0.85rem; }
+
+    /* news 悬浮窗关闭 / 重开（P3） */
+    .news-float-close {
+      color: var(--text-mute);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .news-float-close:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+    .news-float.closed { display: none; }
+    .news-reopen {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 39;
+      display: none;
+      border: 1px solid var(--border);
+      background: rgba(17,21,32,0.92);
+      color: var(--yellow);
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .news-reopen.show { display: block; }

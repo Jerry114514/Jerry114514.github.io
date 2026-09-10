@@ -251,11 +251,13 @@
     <div class="news-float-head" id="news-float-head">
       <div class="news-float-title">📰 最新资讯</div>
       <span class="news-float-toggle">▼</span>
+      <span class="news-float-close" id="news-float-close" title="关闭资讯窗">✕</span>
     </div>
     <div class="news-float-body" id="news-float-body">
       <div class="loading" style="padding: 24px 0;">正在接收超级地球广播…</div>
     </div>
   </aside>
+  <button class="news-reopen" id="news-reopen" title="打开最新资讯">📰 资讯</button>
 
   <!-- ============================================================
        脚本
@@ -1977,6 +1979,15 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   }
 
   // 资讯窗折叠
+  $("news-float-close").addEventListener("click", (e) => {
+    e.stopPropagation();
+    $("news-float").classList.add("closed");
+    $("news-reopen").classList.add("show");
+  });
+  $("news-reopen").addEventListener("click", () => {
+    $("news-float").classList.remove("closed");
+    $("news-reopen").classList.remove("show");
+  });
   $("news-float-head").addEventListener("click", () => {
     $("news-float").classList.toggle("collapsed");
   });
@@ -2005,18 +2016,19 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
           const color = diff >= 0 ? "#22c55e" : "#ef4444";
           trendHtml = '<span style="color:' + color + ';font-size:0.85rem">' + arrow + ' ' + Math.abs(diff).toLocaleString() + '</span>';
         }
+        var imCls = im > 0.9 ? "pos" : (im > 0.7 ? "mid" : "neg");
         root.innerHTML =
           '<div class="card" style="margin-bottom:12px">' +
-            '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">' +
-              '<div>' +
-                '<div style="font-size:0.7rem;color:var(--text-dim)">当前总玩家</div>' +
-                '<div style="font-size:1.5rem;font-weight:700">' + latest.totalPlayers.toLocaleString() + ' <span style="font-size:0.8rem;font-weight:400;color:var(--text-dim)">人</span></div>' +
-                trendHtml +
+            '<div class="impact-row">' +
+              '<div class="impact-stat">' +
+                '<div class="l">当前总玩家</div>' +
+                '<div class="n">' + latest.totalPlayers.toLocaleString() + ' <span class="unit">人</span></div>' +
+                '<span class="impact-trend">' + trendHtml + '</span>' +
               '</div>' +
-              '<div>' +
-                '<div style="font-size:0.7rem;color:var(--text-dim)">银河影响力系数</div>' +
-                '<div style="font-size:1.5rem;font-weight:700;color:' + imColor + '">' + imPct + '%</div>' +
-                '<div style="font-size:0.65rem;color:var(--text-dim);max-width:280px">银河影响力系数表示当前全银河玩家对战争进程的影响效率。系数越高，每个玩家的贡献越有效。</div>' +
+              '<div class="impact-stat">' +
+                '<div class="l">银河影响力系数</div>' +
+                '<div class="n ' + imCls + '">' + imPct + '%</div>' +
+                '<div class="d">银河影响力系数表示当前全银河玩家对战争进程的影响效率。系数越高，每个玩家的贡献越有效。</div>' +
               '</div>' +
             '</div>' +
           '</div>' +
