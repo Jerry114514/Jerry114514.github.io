@@ -1,5 +1,7 @@
 # HD2 Companion 星图设计总结
 
+> ⚠️ 冻结留档（2026-09）：星图页暂废，本文不再随实现演进更新；冻结清单见 tables/_DEPRECATED.md
+
 > 参考对象：helldivers-2/companion (Next.js 16 + Leaflet + Tailwind CSS)
 > 目标：将设计参数移植到当前 Canvas 星图版本
 
