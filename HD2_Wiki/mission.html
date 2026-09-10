@@ -111,7 +111,7 @@
 
     async function loadDetail() {
       var id = WikiRouter.param("id");
-      var cat = params.get("category") || "main";
+      var cat = WikiRouter.param("category") || "main";
       var layout = document.getElementById("detail-layout");
       try {
         var r = await fetch("./data/wiki/zh/missions.json?t=" + Date.now(), { cache: "no-store" });
