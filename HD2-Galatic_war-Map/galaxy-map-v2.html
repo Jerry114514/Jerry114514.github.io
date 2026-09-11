@@ -77,6 +77,11 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   #boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}
   #boot .msg small{color:var(--text-mute);font-size:.76rem}
+  #tac-empty{
+    position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;
+    background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);
+    border-radius:999px;padding:7px 16px;font-size:.78rem;
+  }
 
   /* tooltip */
   #tip{
@@ -293,8 +298,10 @@ async function pool(items, limit, worker) {
   });
 }
 
-/* ------------------------------------------------------- 星空背景 canvas ---- */
-function paintStarfield() {
+/* ------------------------------------------------------- 星空（贴图+暗角） ---- */
+// 星点/星云生成到一张可平铺贴图，作为 raster 图层挂进地图 —— 随平移/缩放真实移动；
+// 屏幕坐标只保留深色底与四周暗角（相机质感），不再画星点。
+function paintBackdrop() {
   const cv = $("stars");
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const w = cv.clientWidth || window.innerWidth;
@@ -303,38 +310,51 @@ function paintStarfield() {
   const g = cv.getContext("2d");
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
   g.fillStyle = "#05070C"; g.fillRect(0, 0, w, h);
-  // 星云：少量大半径、极低透明度的径向渐变
-  const nebulae = [
-    [w*0.30, h*0.34, Math.max(w,h)*0.45, "rgba(64,88,168,.10)"],
-    [w*0.74, h*0.62, Math.max(w,h)*0.42, "rgba(128,74,168,.085)"],
-    [w*0.55, h*0.20, Math.max(w,h)*0.34, "rgba(40,120,150,.06)"],
-  ];
-  for (const [x, y, r, col] of nebulae) {
-    const rg = g.createRadialGradient(x, y, 0, x, y, r);
-    rg.addColorStop(0, col); rg.addColorStop(1, "rgba(0,0,0,0)");
-    g.fillStyle = rg; g.fillRect(0, 0, w, h);
-  }
-  // 星点：多档尺寸 + 少量带十字光芒的亮星
-  const hi = Math.max(1, Math.round(w * h / 1100));
-  for (let n = 0; n < hi; n++) {
-    const x = Math.random() * w, y = Math.random() * h;
-    const big = Math.random() > 0.985;
-    const r = big ? 1.5 + Math.random() * 1.5 : Math.random() * 0.95 + 0.25;
-    const a = 0.20 + Math.random() * 0.72;
-    g.beginPath(); g.arc(x, y, r, 0, 6.2832);
-    g.fillStyle = big ? `rgba(255,246,220,${a})` : `rgba(226,238,255,${a})`;
-    g.fill();
-    if (big) {
-      g.strokeStyle = `rgba(255,246,220,${a * 0.35})`; g.lineWidth = 0.7;
-      const s = r * 4.2;
-      g.beginPath(); g.moveTo(x - s, y); g.lineTo(x + s, y);
-      g.moveTo(x, y - s); g.lineTo(x, y + s); g.stroke();
-    }
-  }
-  // 四周暗角
   const vg = g.createRadialGradient(w/2, h/2, Math.min(w,h)*0.32, w/2, h/2, Math.max(w,h)*0.78);
   vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,.55)");
   g.fillStyle = vg; g.fillRect(0, 0, w, h);
+}
+
+// 生成无缝星空贴图：星点在边缘处按 3×3 环绕补画，保证平铺无接缝
+function makeStarfieldTile(size) {
+  const cv = document.createElement("canvas");
+  cv.width = size; cv.height = size;
+  const g = cv.getContext("2d");
+  g.clearRect(0, 0, size, size);                 // 透明底，露出屏幕深色
+  const wrap = (fn) => { for (const ox of [-size, 0, size]) for (const oy of [-size, 0, size]) fn(ox, oy); };
+  const nebulae = [
+    [size*0.30, size*0.34, size*0.45, "rgba(64,88,168,.10)"],
+    [size*0.74, size*0.62, size*0.42, "rgba(128,74,168,.085)"],
+    [size*0.55, size*0.20, size*0.34, "rgba(40,120,150,.06)"],
+  ];
+  for (const [x, y, r, col] of nebulae) {
+    wrap((ox, oy) => {
+      const rg = g.createRadialGradient(x+ox, y+oy, 0, x+ox, y+oy, r);
+      rg.addColorStop(0, col); rg.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = rg; g.fillRect(x+ox-r, y+oy-r, r*2, r*2);
+    });
+  }
+  const count = Math.round(size * size / 2600);
+  for (let n = 0; n < count; n++) {
+    const x = Math.random() * size, y = Math.random() * size;
+    const big = Math.random() > 0.985;
+    const r = big ? 1.5 + Math.random() * 1.5 : Math.random() * 0.95 + 0.25;
+    const a = 0.20 + Math.random() * 0.72;
+    const col = big ? `rgba(255,246,220,${a})` : `rgba(226,238,255,${a})`;
+    wrap((ox, oy) => {
+      g.beginPath(); g.arc(x+ox, y+oy, r, 0, 6.2832);
+      g.fillStyle = col; g.fill();
+      if (big) {
+        g.strokeStyle = `rgba(255,246,220,${a * 0.35})`; g.lineWidth = 0.7;
+        const s2 = r * 4.2;
+        g.beginPath();
+        g.moveTo(x+ox - s2, y+oy); g.lineTo(x+ox + s2, y+oy);
+        g.moveTo(x+ox, y+oy - s2); g.lineTo(x+ox, y+oy + s2);
+        g.stroke();
+      }
+    });
+  }
+  return cv.toDataURL("image/png");
 }
 
 /* ------------------------------------------- 星区 / 势力 凸包（伪领土） ---- */
@@ -378,8 +398,8 @@ const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
 async function boot() {
   const setMsg = (h) => { $("bootmsg").innerHTML = h; };
-  paintStarfield();
-  window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintStarfield, 250); });
+  paintBackdrop();
+  window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
 
   // ---- 1) 数据 ----
   setMsg("正在加载战况数据…<br><small>data.json · waypoints.json</small>");
@@ -516,6 +536,19 @@ async function boot() {
              properties: { text: name, color: OWNER_COLOR[k], owner: k, n: list.length } };
   }).filter(Boolean));
 
+  // 节点玩家数分级表达式（planet-core 半径用；0→0，12000→1）
+  const PLAYER_T = ["interpolate", ["linear"], ["coalesce", ["get", "players"], 0],
+    0, 0, 800, .22, 2500, .45, 6000, .75, 12000, 1];
+  const resolvePlayersExpr = (tree) => JSON.parse(JSON.stringify(tree).replaceAll('["interp-players"]', JSON.stringify(PLAYER_T)));
+
+  // 战术空态：无任何战术目标时明确提示（避免误以为功能坏了）
+  if (!Object.keys(TACBY).length && !$("tac-empty")) {
+    const n = document.createElement("div");
+    n.id = "tac-empty";
+    n.innerHTML = "📭 当前无战术目标 —— 星图拓扑暂未形成可围攻局面，解放推进后自动出现";
+    $("stage").appendChild(n);
+  }
+
   // ---- 4) 顶栏统计 ----
   const owners = {};
   planets.forEach(p => { owners[p.currentOwner] = (owners[p.currentOwner] || 0) + 1; });
@@ -584,6 +617,16 @@ async function boot() {
               0, "rgba(91,163,208,.55)", 1, "rgba(207,100,248,.75)"],
           } },
 
+        // 补给线流光（细亮虚线叠加，相位动画在 load 后驱动）
+        { id: "supply-flow", type: "line", source: "supply",
+          filter: ["==", ["get", "grade"], "human"],
+          layout: { "line-cap": "round" },
+          paint: {
+            "line-width": ["interpolate", ["linear"], ["zoom"], 4, .8, 9, 1.4, 13, 3],
+            "line-color": "rgba(150,205,255,.55)",
+            "line-dasharray": [0, 4, 3],
+          } },
+
         // 反攻线：红色虚线
         { id: "attack-line", type: "line", source: "attack",
           layout: { "line-cap": "butt" },
@@ -594,22 +637,54 @@ async function boot() {
             "line-opacity": .8,
           } },
 
-        // 星球外发光（营造 3D 立体感）
+        // 节点投影（map 对齐 + 微下移，营造悬浮立体感）
+        { id: "planet-shadow", type: "circle", source: "planets",
+          paint: {
+            "circle-pitch-alignment": "map",
+            "circle-translate": [0, 1.6],
+            "circle-color": "rgba(0,0,0,.5)",
+            "circle-blur": .8,
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.6, 9, 6.4, 13, 15.5],
+          } },
+
+        // 星球外发光（外层宽晕）
         { id: "planet-glow", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
             "circle-blur": 1,
-            "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .16, 9, .3, 13, .42],
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 3.5, 9, 9, 13, 22],
+            "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .14, 9, .26, 13, .38],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.2, 9, 10.5, 13, 26],
           } },
 
-        // 星球本体
+        // 星球内发光（紧贴本体的亮晕，分层立体）
+        { id: "planet-glow-in", type: "circle", source: "planets",
+          paint: {
+            "circle-color": ["get", "color"],
+            "circle-blur": .5,
+            "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .2, 9, .34, 13, .5],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
+          } },
+
+        // 星球本体（半径按在线玩家数分级：0 → 基准，8000+ → 显著放大）
         { id: "planet-core", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.2, 9, 5.4, 13, 13],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"],
+              4, ["+", 2.0, ["*", 1.0, ["interp-players"]]],
+              9, ["+", 4.6, ["*", 2.6, ["interp-players"]]],
+              13, ["+", 11, ["*", 6, ["interp-players"]]]],
             "circle-stroke-color": "rgba(0,0,0,.55)",
             "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, 1.2, 13, 2],
+          } },
+
+        // 高人气星白环（玩家数 ≥ 2500）
+        { id: "planet-hot", type: "circle", source: "planets",
+          filter: [">", ["coalesce", ["get", "players"], 0], 2499],
+          paint: {
+            "circle-color": "rgba(0,0,0,0)",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 3.6, 9, 8, 13, 18.5],
+            "circle-stroke-color": "rgba(255,255,255,.45)",
+            "circle-stroke-width": 1,
           } },
 
         // 防御战红环
@@ -693,7 +768,7 @@ async function boot() {
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
           } },
-      ],
+      ].map(l => l.id === "planet-core" ? { ...l, paint: { ...l.paint, "circle-radius": resolvePlayersExpr(l.paint["circle-radius"]) } } : l),
     },
     center: HOME.center,
     zoom: HOME.zoom,
@@ -748,6 +823,16 @@ async function boot() {
     } else {
       $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
     }
+
+    // 补给线流光动画（等长相位 ping-pong，~9fps 足够顺滑且省电）
+    const FLOW = [[0, 4, 3], [1, 3, 3], [2, 2, 3], [3, 1, 3], [4, 0, 3], [3, 1, 3], [2, 2, 3], [1, 3, 3]];
+    let flowIdx = 0;
+    if (window._flowTimer) clearInterval(window._flowTimer);
+    window._flowTimer = setInterval(() => {
+      if (!MAP.getLayer("supply-flow") || !LAYER_ON.supply) return;
+      flowIdx = (flowIdx + 1) % FLOW.length;
+      try { MAP.setPaintProperty("supply-flow", "line-dasharray", FLOW[flowIdx]); } catch (_) {}
+    }, 110);
 
     $("boot").classList.add("gone");
     setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
@@ -908,7 +993,7 @@ function bindUI(data, planets) {
   }
   function applyFactionFilter() {
     const f = ownerFilterExpr();
-    for (const id of ["planet-glow", "planet-core", "planet-def", "planet-tac", "planet-event", "planet-icon", "planet-label"]) {
+    for (const id of ["planet-shadow", "planet-glow", "planet-glow-in", "planet-core", "planet-hot", "planet-def", "planet-tac", "planet-event", "planet-icon", "planet-label"]) {
       try { MAP.setFilter(id, id === "planet-def" ? ["all", f, ["==", ["get", "isDef"], 1]]
                         : id === "planet-tac" ? ["all", f, [">", ["get", "tacCount"], 0]]
                         : id === "planet-event" ? ["all", f, ["==", ["get", "isEvent"], 1]]
@@ -924,6 +1009,7 @@ function bindUI(data, planets) {
     setLayerVis("faction-fill", LAYER_ON.territory);
     setLayerVis("faction-line", LAYER_ON.territory);
     setLayerVis("flabel", LAYER_ON.territory);
+    setLayerVis("supply-flow", LAYER_ON.supply);
     setLayerVis("planet-icon", LAYER_ON.icons);
     setLayerVis("planet-label", LAYER_ON.labels);
     setLayerVis("heat", LAYER_ON.heat);
