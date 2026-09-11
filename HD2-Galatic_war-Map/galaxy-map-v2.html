@@ -10,7 +10,7 @@
   与 v1（galaxy-map.html，纯 SVG + viewBox）的差异：
     · 渲染层改为 MapLibre GL JS v4.7.1（WebGL），真实 3D 透视（pitch 48°）
     · 分层数据源，接近 helldiverscompanion 星图的图层结构
-    · 节点图标热链 helldivers.wiki.gg 的 Planet Icon（CORS 失败则回退纯色圆点）
+    · 星球图标走本地缓存 assets/planet-icons/（fetch_planet_icons.py 落库，缺失回退纯色圆点）
 
   自托管资源（不走 CDN，规避墙 + 离线兜底，与仓库既有 chart.umd.min.js 策略一致）：
     js/libs/maplibre/maplibre-gl-csp.js          库本体
@@ -308,15 +308,15 @@ function expandHull(hull, factor) {
 }
 function ring(coords) { const r = coords.slice(); if (r.length) r.push(r[0]); return r; }
 
-/* --------------------------------------------------------- wiki 图标名 ---- */
-// 「Acamar IV」->「Acamar_IV_Planet_Icon.png」；未收录的星球取不到图标，回退纯色圆点。
+/* --------------------------------------------------------- 星球图标 ---- */
+// 本地缓存 assets/planet-icons/（fetch_planet_icons.py 生成；来源与许可见该目录 README.md）
+// 键 = data.json 大写原名（如 "ACAMAR IV"），值 = 本地文件名；未命中返回空串回退纯色圆点。
+let ICON_INDEX = {};
+const ICON_DIR = "./assets/planet-icons/";
 function planetIconFile(name) {
-  const n = String(name || "").trim();
-  if (!n) return null;
-  return encodeURIComponent(n.replace(/ /g, "_") + "_Planet_Icon.png");
+  const key = String(name || "").trim().toUpperCase();
+  return ICON_INDEX[key] || "";
 }
-const ICON_BASE = "https://helldivers.wiki.gg/images/thumb/";
-function planetIconURL(file, px) { return ICON_BASE + file + "/" + px + "px-" + file; }
 
 /* ================================================================ 主流程 ==== */
 let MAP = null;
@@ -344,6 +344,10 @@ async function boot() {
     setMsg("⚠️ 数据加载失败<br><small>" + esc(e.message) + "</small>");
     return;
   }
+  // 星球图标索引（assets/planet-icons/index.json；缺失时全量回退纯色圆点，不致命）
+  try {
+    ICON_INDEX = await (await fetch("./assets/planet-icons/index.json?t=" + Date.now(), { cache: "no-store" })).json();
+  } catch (_) { ICON_INDEX = {}; }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
   (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
@@ -681,22 +685,19 @@ async function boot() {
     const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
     let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
     if (files.length) {
-      setMsg("正在加载星球图标…<br><small>helldivers.wiki.gg · " + files.length + " 个</small>");
+      setMsg("正在加载星球图标…<br><small>本地 planet-icons · " + files.length + " 个</small>");
       await pool(files, 6, async (file) => {
-        const img = await loadBitmapWithFallback(planetIconURL(file, 64));
+        const img = await loadBitmapWithFallback(ICON_DIR + file);   // 同源：无 CORS/纹理污染问题
         if (!img) { bad++; return; }
         try { if (!MAP.hasImage(file)) MAP.addImage(file, img, { pixelRatio: 2 }); ok++; }
         catch (_) { bad++; }
       });
-      $("srcnote").innerHTML = "图标：wiki.gg 命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（缺失的以纯色圆点显示）";
+      $("srcnote").innerHTML =
+        "图标：wiki.gg 命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（本地缓存，缺失的以纯色圆点显示）" +
+        "<br>星球图标 © <a href='https://helldivers.wiki.gg/' target='_blank' rel='noopener noreferrer' style='color:var(--blue)'>helldivers.wiki.gg</a>（CC BY-NC-SA 4.0）";
       console.info("[图标] 命中", ok, "缺失", bad, "共", files.length);
     } else {
       $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
-    }
-
-    if (bad === files.length && files.length) {
-      // 全部失败（多半是 CORS）：明确告知，避免误以为是数据问题
-      $("srcnote").innerHTML += "<br><span style='color:#f59e0b'>wiki.gg 未返回 CORS 头，浏览器拒绝作为 WebGL 纹理；已回退纯色圆点。</span>";
     }
 
     $("boot").classList.add("gone");
