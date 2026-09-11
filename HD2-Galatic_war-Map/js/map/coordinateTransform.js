@@ -1,4 +1,4 @@
-// @deprecated since 2026-09: 星图模块冻结，勿编辑（技术限制解除后复活，冻结清单见 tables/_DEPRECATED.md）
+// @deprecated since 2026-09: 已被 galaxy-map-v2.html（MapLibre 3D）取代；旧星图 map.html 已删除，本模块仅冻结留档勿编辑
 
 /* ============================================================
    HD2 银河战争态势图 - 坐标变换工具

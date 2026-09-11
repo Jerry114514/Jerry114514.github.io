@@ -1,25 +1,30 @@
-# 冻结文件说明（星图模块）
+# 冻结与已删除文件说明（星图模块）
 
-> 星图页（map.html）于 2026-09 冻结：功能暂废，受限于技术，待限制解除后可能复活。
-> 冻结 = 保留但不再编辑，不挪动位置（相对路径引用不变，降低复活成本）。
-> 本文件是冻结清单的单一事实来源；JSON 无法自注释，统一在此登记。
+> 旧星图页（map.html）已于 2026-09-11 删除，由 **`../galaxy-map-v2.html`**（MapLibre GL 3D）取代；
+> 其源码演进版 `../galaxy-map.html`（SVG v1）仍保留。旧 js/map 模块按"冻结=保留但不编辑"处理。
+> 本文件是冻结/删除清单的单一事实来源；JSON 无法自注释，统一在此登记。
 
-## 冻结清单
+## 已删除
+
+| 文件 | 删除时间 | 说明 |
+|---|---|---|
+| `../map.html` | 2026-09-11 | 旧星图入口；由 `../galaxy-map-v2.html` 取代（phase 4 清理） |
+
+## 冻结清单（保留但不编辑）
 
 | 文件 | 说明 |
 |---|---|
-| `../map.html` | 星图页入口（顶部已有 @deprecated 注释） |
-| `../js/map/main.js` `renderer.js` `dataLayer.js` `coordinateTransform.js` | 星图四件套（文件头有 @deprecated） |
-| `../css/map.css` | 星图专用样式（文件头有 @deprecated） |
-| `waypoints.json` | 仅服务星图攻击线 |
-| `planet_index.json` | 仅 `js/map/dataLayer.js` 引用 |
+| `../js/map/main.js` `renderer.js` `dataLayer.js` `coordinateTransform.js` | 旧星图四件套（文件头有 @deprecated，已被 galaxy-map-v2.html 取代） |
+| `../css/map.css` | 旧星图专用样式（文件头有 @deprecated，已被 galaxy-map-v2.html 取代） |
+| `planet_index.json` | 仅 `js/map/dataLayer.js` 引用（随四件套冻结） |
 | `starmap.json.abd` | 星图旧版数据备份 |
 
-## 明确不冻结（易误判，2026-09-10 核查）
+## 曾冻结、现已有活跃消费方（移出冻结清单）
 
-| 文件 | 原因 |
+| 文件 | 现消费方 |
 |---|---|
-| `starmap.json` | **index.html 活跃引用**（PLANET_xx 占位符 → 中文星球名桥接） |
+| `waypoints.json`（补给线有向邻接） | `../galaxy-map-v2.html`、`../galaxy-map.html`、`../index.html`（tactical.js 战术目标）、`../js/tactical.js` |
+| `starmap.json` | index.html（PLANET_xx 占位符 → 中文星球名桥接）；galaxy-map-v2 经 data.json 间接使用坐标 |
 | `../js/libs/chart.umd.min.js` | index.html 的 Chart.js CDN 兜底加载链最后一环 |
 
 ## 同步产物（无法加头注，特别说明）
