@@ -33,6 +33,14 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
+  /* 正文/标签字体：复用 wiki 侧思源黑体（不经 CDN）。
+     该字体同时供下方 MapLibre 的 localIdeographFontFamily 使用 ——
+     MapLibre 用 canvas 2D + TinySDF 走系统/本地字体渲染 CJK，故 @font-face 对地图标签同样生效。*/
+  @font-face{
+    font-family:"SourceHanSans";
+    src:url("../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf") format("opentype");
+    font-display:swap;
+  }
   body{
     display:flex;flex-direction:column;background:var(--bg-deep);color:var(--text);overflow:hidden;
     font-family:"SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
@@ -390,6 +398,7 @@ function planetIconFile(name) {
 /* ================================================================ 主流程 ==== */
 let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
+let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
 const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
@@ -400,6 +409,15 @@ async function boot() {
   const setMsg = (h) => { $("bootmsg").innerHTML = h; };
   paintBackdrop();
   window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
+
+  // ---- 0) 字体：必须在建图前把思源黑体登记进 document.fonts ----
+  // MapLibre 的 localIdeographFontFamily 走 canvas 2D 取字形，canvas 只能用到已加载的字体；
+  // 若字体未就绪就建图，CJK 标签会先用后备字体渲染且不会自动重绘。
+  setMsg("正在加载中文字体…<br><small>思源黑体 · HD2_Wiki/assets/fonts</small>");
+  try {
+    const ff = new FontFace("SourceHanSans", "url('../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
+    await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
+  } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
 
   // ---- 1) 数据 ----
   setMsg("正在加载战况数据…<br><small>data.json · waypoints.json</small>");
@@ -417,6 +435,27 @@ async function boot() {
   try {
     ICON_INDEX = await (await fetch("./assets/planet-icons/index.json?t=" + Date.now(), { cache: "no-store" })).json();
   } catch (_) { ICON_INDEX = {}; }
+  // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
+  // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
+  const SECTOR_ALIASES = {
+    "Arturion": "Arkturus", "Cantolus": "Cantorus", "Gallux": "Galux", "Gellert": "Gelert",
+    "Gothmar": "Gottma", "Guang": "Guan", "Idun": "Ipotus", "Iptus": "Ipotus",
+    "Korpus": "Corpus", "Marspira": "Maspira", "Meridian": "Meridia", "Morgon": "Morgen",
+    "Rictus": "Rectus", "Sten": "Stein", "Talus": "Talos", "Tarragon": "Tarago",
+    "Ursa": "Ursa Major", "Void": "The Void",
+  };
+  try {
+    const star = await (await fetch("./tables/starmap.json?t=" + Date.now(), { cache: "no-store" })).json();
+    for (const sysn of (star.systems || [])) {
+      if (sysn.name_en) SEC_CN[sysn.name_en.toUpperCase()] = sysn.name;
+      for (const pl of (sysn.planets || [])) {
+        if (pl.en) PL_CN[pl.en.toUpperCase()] = pl.cn || "";
+      }
+    }
+    for (const [off, canonical] of Object.entries(SECTOR_ALIASES)) {
+      if (!SEC_CN[off.toUpperCase()] && SEC_CN[canonical.toUpperCase()]) SEC_CN[off.toUpperCase()] = SEC_CN[canonical.toUpperCase()];
+    }
+  } catch (_) { /* 中文映射缺失不影响运行 */ }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
   (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
@@ -452,9 +491,11 @@ async function boot() {
       type: "Feature", geometry: pt(p.position.x, p.position.y),
       properties: {
         index: p.index, name: p.name || ("#" + p.index),
+        nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
         owner: p.currentOwner || "None", ownerCn: OWN_CN[p.currentOwner] || (p.currentOwner || "未知"),
         color: OWNER_COLOR[p.currentOwner] || "#64748b",
-        sector: p.sector || "", players: p.players || 0, lib: +libPct.toFixed(1),
+        sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
+        players: p.players || 0, lib: +libPct.toFixed(1),
         tacCount: tac.length, tacTitle: tac.join(" / "),
         icon: planetIconFile(p.name) || "",
         isDef: (data.campaigns || []).some(c => c.campaignType === "defense" && c.planet && c.planet.index === p.index) ? 1 : 0,
@@ -525,6 +566,16 @@ async function boot() {
                properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], count: list.length } };
     }).filter(Boolean));
 
+  // 星区中文名（放在星区质心）
+  const sectorLabelFC = fc(Object.entries(bySector)
+    .filter(([, list]) => list.length >= 3)
+    .map(([name, list]) => {
+      const cx = list.reduce((a, p) => a + p.position.x, 0) / list.length;
+      const cy = list.reduce((a, p) => a + p.position.y, 0) / list.length;
+      return { type: "Feature", geometry: pt(cx, cy),
+               properties: { text: SEC_CN[name.toUpperCase()] || name, n: list.length } };
+    }));
+
   // 势力名（放在该阵营凸包质心，沿地图旋转）
   const factionLabelFC = fc(FACTION_KEYS.map(k => {
     const list = planets.filter(p => p.currentOwner === k);
@@ -565,6 +616,10 @@ async function boot() {
 
   MAP = new maplibregl.Map({
     container: "map",
+    // CJK（汉字/假名/谚文）由 MapLibre 用 canvas 2D + TinySDF 本地取字形，
+    // 不请求字形 PBF —— 因此中文字形无需下载，复用上面的 @font-face 思源黑体。
+    // 拉丁字符仍走 glyphs PBF（仅 3 个区间，共 ~238 KB）。
+    localIdeographFontFamily: "'SourceHanSans','Microsoft YaHei','PingFang SC',sans-serif",
     style: {
       version: 8,
       name: "hd2-galaxy",
@@ -576,6 +631,7 @@ async function boot() {
         sector:     { type: "geojson", data: sectorFC },
         faction:    { type: "geojson", data: factionFC },
         flabel:     { type: "geojson", data: factionLabelFC },
+        slabel:     { type: "geojson", data: sectorLabelFC },
         heat:       { type: "geojson", data: heatFC },
       },
       layers: [
@@ -682,7 +738,7 @@ async function boot() {
           filter: [">", ["coalesce", ["get", "players"], 0], 2499],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 3.6, 9, 8, 13, 18.5],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.5, 9, 9.5, 13, 27],
             "circle-stroke-color": "rgba(255,255,255,.45)",
             "circle-stroke-width": 1,
           } },
@@ -692,7 +748,7 @@ async function boot() {
           filter: ["==", ["get", "isDef"], 1],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4, 9, 8.5, 13, 19],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5.5, 9, 11, 13, 28],
             "circle-stroke-color": "rgba(239,68,68,.85)",
             "circle-stroke-width": 1.4,
           } },
@@ -702,7 +758,7 @@ async function boot() {
           filter: [">", ["get", "tacCount"], 0],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5.4, 9, 10.5, 13, 22],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 6.5, 9, 12.5, 13, 30],
             "circle-stroke-color": "rgba(59,130,246,.9)",
             "circle-stroke-width": 1.5,
           } },
@@ -712,7 +768,7 @@ async function boot() {
           filter: ["==", ["get", "isEvent"], 1],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 6.8, 9, 12.5, 13, 26],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 7.5, 9, 14, 13, 33],
             "circle-stroke-color": "rgba(245,197,24,.9)",
             "circle-stroke-width": 1.3,
             "circle-stroke-opacity": .85,
@@ -722,7 +778,7 @@ async function boot() {
         { id: "planet-icon", type: "symbol", source: "planets",
           layout: {
             "icon-image": ["get", "icon"],
-            "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .14, 8, .2, 11, .3, 13, .46],
+            "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .5, 7, .78, 9, 1.0, 11, 1.25, 13, 1.6],
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
             "icon-anchor": "center",
@@ -730,11 +786,11 @@ async function boot() {
 
         // 星球名标签（缩放到一定级别才显示）
         { id: "planet-label", type: "symbol", source: "planets",
-          minzoom: 9.4,
+          minzoom: 8.2,
           layout: {
-            "text-field": ["get", "name"],
+            "text-field": ["coalesce", ["get", "nameCn"], ["get", "name"]],
             "text-font": ["NotoSansRegular"],
-            "text-size": ["interpolate", ["linear"], ["zoom"], 9.4, 9, 13, 13],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 8.2, 10, 11, 12, 13, 14.5],
             "text-anchor": "top",
             "text-offset": [0, 1.1],
             "text-allow-overlap": false,
@@ -742,6 +798,19 @@ async function boot() {
             "text-padding": 3,
           },
           paint: { "text-color": "rgba(226,232,240,.92)", "text-halo-color": "rgba(0,0,0,.85)", "text-halo-width": 1.3 } },
+
+        // 星区中文名（缩放到一定级别显示）
+        { id: "sector-label", type: "symbol", source: "slabel",
+          minzoom: 6.6,
+          layout: {
+            "text-field": ["get", "text"],
+            "text-font": ["NotoSansRegular"],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 6.6, 11, 9, 15, 13, 24],
+            "text-letter-spacing": .12,
+            "text-allow-overlap": true,
+            "text-ignore-placement": true,
+          },
+          paint: { "text-color": "rgba(226,232,240,.5)", "text-halo-color": "rgba(0,0,0,.6)", "text-halo-width": 1.1 } },
 
         // 势力名（沿地图旋转）
         { id: "flabel", type: "symbol", source: "flabel",
@@ -902,7 +971,9 @@ function bindUI(data, planets) {
   // 检索
   const q = $("q");
   const allNames = planets.map(p => ({ index: p.index, name: p.name || ("#" + p.index),
-    owner: p.currentOwner, sector: p.sector || "", lib: p.maxHealth > 0 ? (1 - p.health / p.maxHealth) * 100 : 0 }));
+    nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
+    owner: p.currentOwner, sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
+    lib: p.maxHealth > 0 ? (1 - p.health / p.maxHealth) * 100 : 0 }));
   let hitsTimer = null;
   q.addEventListener("input", () => { clearTimeout(hitsTimer); hitsTimer = setTimeout(renderHits, 130); });
   q.addEventListener("keydown", (e) => { if (e.key === "Enter") performSearch(q.value.trim()); });
@@ -911,11 +982,15 @@ function bindUI(data, planets) {
     const term = q.value.trim().toUpperCase();
     const box = $("hits");
     if (!term) { box.innerHTML = ""; return; }
-    const list = allNames.filter(p => p.name.toUpperCase().includes(term) || (p.sector || "").toUpperCase().includes(term)).slice(0, 40);
+    const list = allNames.filter(p =>
+      p.name.toUpperCase().includes(term) ||
+      (p.nameCn && p.nameCn.includes(q.value.trim())) ||
+      (p.sector || "").toUpperCase().includes(term) ||
+      (p.sectorCn && p.sectorCn.includes(q.value.trim()))).slice(0, 40);
     if (!list.length) { box.innerHTML = '<div class="muted" style="padding:4px 8px">无匹配</div>'; return; }
     box.innerHTML = list.map(p =>
       `<div class="hit" data-i="${p.index}"><span class="dot" style="background:${colorOf(p.owner)}"></span>` +
-      `<span>${esc(p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span></div>`).join("");
+      `<span>${esc(p.nameCn || p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span></div>`).join("");
   }
   function performSearch(term) {
     if (!term) return;
@@ -941,7 +1016,8 @@ function bindUI(data, planets) {
     const f = e.features && e.features[0]; if (!f) return;
     const pr = f.properties;
     tip.innerHTML =
-      `<div class="n">${esc(pr.name)}</div>` +
+      `<div class="n">${esc(pr.nameCn || pr.name)}${pr.nameCn ? ` <small style="color:var(--text-mute)">${esc(pr.name)}</small>` : ""}</div>` +
+      `<div class="r">星区：<span>${esc(pr.sectorCn || pr.sector || "—")}</span></div>` +
       `<div class="r">归属：<span>${esc(pr.ownerCn)}</span></div>` +
       `<div class="r">解放度：<span>${pr.lib}%</span> · 玩家 <span>${fmt(pr.players)}</span></div>` +
       (pr.tacCount ? `<div class="r" style="color:#60a5fa">⚡ ${esc(pr.tacTitle)}</div>` : "") +
@@ -968,7 +1044,9 @@ function bindUI(data, planets) {
     const campaigns = (data.campaigns || []).filter(c => c.planet && c.planet.index === index);
     const camp = campaigns[0];
     const ev = (data.planet_events || []).find(x => x.planetIndex === index);
-    $("detailTitle").textContent = "📋 " + (p.name || ("#" + index));
+    const pCn = PL_CN[String(p.name || "").toUpperCase()] || "";
+    const pSec = SEC_CN[(p.sector || "").toUpperCase()] || "";
+    $("detailTitle").textContent = "📋 " + (pCn ? pCn + " · " : "") + (p.name || ("#" + index));
     $("detail").innerHTML =
       `<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
          <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${colorOf(p.currentOwner)}"></span>
@@ -978,7 +1056,7 @@ function bindUI(data, planets) {
          <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</div></div>
          <div class="cell"><div class="k">解放度</div><div class="v">${lib}%</div></div>
          <div class="cell"><div class="k">在线玩家</div><div class="v">${fmt(p.players)}</div></div>
-         <div class="cell"><div class="k">星区</div><div class="v">${esc(p.sector || "—")}</div></div>
+         <div class="cell"><div class="k">星区</div><div class="v">${esc(pSec || p.sector || "—")}</div></div>
          <div class="cell"><div class="k">抵抗值</div><div class="v">${p.resistance != null ? p.resistance : "—"}</div></div>
          <div class="cell"><div class="k">索引</div><div class="v">${p.index}</div></div>
        </div>` +
