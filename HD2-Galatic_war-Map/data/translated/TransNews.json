@@ -2,8 +2,8 @@
  "mo_brief": {
   "title": "MAJOR ORDER",
   "original": "Liberate the designated Cyborg-occupied planets to disrupt an election-impeding cyberattack.",
-  "translated": "解放被生化人占领的指定星球，以瓦解一场阻碍选举的网络攻击。",
-  "translated_at": "2026-09-11T04:56:31Z"
+  "translated": "解放指定的生化人占领星球，以瓦解一场意图干扰选举的网络攻击。",
+  "translated_at": "2026-09-11T05:01:54Z"
  },
  "items": [
   {
@@ -96,5 +96,15 @@
    "source": "dispatch",
    "engine": "deepseek-chat"
   }
- ]
+ ],
+ "strategic": {
+  "active": false,
+  "status": "failed",
+  "status_cn": "已失败",
+  "dispatch_id": 3906,
+  "planet_en": null,
+  "published": null,
+  "computed_at": "2026-09-11T05:01:54Z",
+  "planet_index": null
+ }
 }
