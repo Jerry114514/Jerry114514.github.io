@@ -846,23 +846,38 @@ function renderPlayers(data) {
 
   // ============ 战略机遇 ============
   function renderStrategicOpportunities(data) {
+    // 生命周期状态由管线侧（translator.py）从**未剥离标签**的原始 dispatch 计算后写入 data.strategic。
+    // 不能在前端用文本匹配判断：strip_tags() 会剥掉区分「新机遇」与「已结束」的前导 <i=3> 标记，
+    // 使 "STRATEGIC OPPORTUNITY SEIZED" 这类收尾条目与开局条目无法区分（2026-09-11 实测 7 处歧义）。
+    // 旧数据无该字段时按「无活跃机遇」处理，不显示过期内容。
+    const s = data.strategic;
+    if (!s || !s.active) return "";
     const a = data.assignments;
     if (!a || !a.tasks || a.tasks.length < 2) return "";
-    // 从 dispatches/news 匹配最近的 STRATEGIC IMPERATIVE 完整描述（优先中文翻译，回退原文）
+    // 机遇正文：取开局 dispatch 的翻译（translated 缺失时回退原文去除标签）
     let siDesc = "";
     const disp = (data.dispatches || []).slice().sort((x, y) => (y.id || 0) - (x.id || 0));
     const newsMap = {};
     (data.news || []).forEach(n => { if (n.id != null) newsMap[n.id] = n; });
     for (const n of disp) {
       const msg = n.message || "";
-      if (/STRATEGIC IMPERATIVE/i.test(msg) && !/FAILED/i.test(msg)) {
+      // 开局条目：结尾的 </i> 即标题标记边界；行首可能带有 <p> 等包裹标签
+      if (/\bSTRATEGIC\s+(?:IMPERATIVE|OPPORTUNITY)\s*<\/i>/i.test(msg)) {
         const newsItem = newsMap[n.id];
         const zh = newsItem && (newsItem.translated || newsItem.message_zh || "");
-        siDesc = zh || stripTags(msg.replace(/^<i=\d+>[^<]*<\/i>\s*/i, "")).trim();
+        siDesc = zh || stripTags(msg.replace(/^<[^>]+>\s*/i, "")).trim();
         break;
       }
     }
-    // 从 tasks 中提取副任务作为战略机遇
+    // 目标星球（有则给定位链接，与战术目标词条同款机制）
+    const sp = s.planet_index != null ? s.planet_index : s.planetIndex;
+    let planetLink = "";
+    if (typeof sp === "number") {
+      const tp = (data.planets || []).find(x => x.index === sp);
+      const tn = tp ? (planetName(tp, data.starMap).cn || planetName(tp, data.starMap).en) : ("#" + sp);
+      planetLink = `<div class="tac-jump">目标星球：<a class="tac-target" data-planet-index="${sp}" title="定位到该星球">${esc(tn)}</a></div>`;
+    }
+    // 副任务进度（仅在活跃战略机遇期间展示）
     const tasks = a.tasks.slice(1).map((tk, i) => {
       const d = decodeTask(tk, a.progress ? a.progress[i + 1] : null);
       let goal = "—", current = "—", pct = 0;
@@ -887,6 +902,7 @@ function renderPlayers(data) {
       </div>
       <div class="card mo-sub">
         ${siDesc ? `<p class="mo-brief" style="font-size:0.8rem;opacity:0.9;margin-bottom:8px;">${richText(siDesc)}</p>` : ""}
+        ${planetLink}
         ${tasks.map(t => `
           <div class="mo-task" style="opacity:0.85;">
             <div class="mo-task-head">
