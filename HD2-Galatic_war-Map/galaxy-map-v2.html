@@ -32,7 +32,7 @@
     --radius:12px; --radius-s:8px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
+  html,body{height:100%;height:100dvh}
   /* 正文/标签字体：复用 wiki 侧思源黑体（不经 CDN）。
      该字体同时供下方 MapLibre 的 localIdeographFontFamily 使用 ——
      MapLibre 用 canvas 2D + TinySDF 走系统/本地字体渲染 CJK，故 @font-face 对地图标签同样生效。*/
@@ -107,10 +107,39 @@
   /* ---------- 侧栏 ---------- */
   aside{
     width:326px;flex-shrink:0;border-left:1px solid var(--border);background:var(--bg-mid);
-    overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;
+    overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;
+    transition:width .26s ease,padding .26s ease,opacity .2s ease;
   }
-  aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
+  /* 可收缩侧栏：收起后只留一条窄边条（点击恢复） */
+  body.aside-collapsed aside{width:0;padding:0;opacity:0;pointer-events:none;border-left:none}
+  #aside-rail{
+    display:none;position:absolute;top:0;right:0;bottom:0;width:22px;z-index:19;cursor:pointer;
+    background:linear-gradient(90deg,rgba(14,20,32,0),rgba(14,20,32,.9));
+    border-left:1px solid var(--border);align-items:center;justify-content:center;
+  }
+  body.aside-collapsed #aside-rail{display:flex}
+  #aside-rail span{color:var(--text-dim);font-size:.9rem}
+  #aside-rail:hover span{color:var(--blue)}
+
+  /* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */
+  #sector-card{
+    position:absolute;left:14px;top:14px;z-index:14;display:none;min-width:206px;max-width:288px;
+    background:rgba(10,14,26,.93);border:1px solid #334155;border-radius:var(--radius);
+    padding:10px 13px;box-shadow:0 8px 26px rgba(0,0,0,.6);
+  }
+  #sector-card.on{display:flex;gap:11px;align-items:flex-start}
+  #sector-card .ficon{width:38px;height:38px;flex-shrink:0;margin-top:2px}
+  #sector-card .ficon svg,#sector-card .ficon img{width:100%;height:100%;display:block}
+  #sector-card .sec-name{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.98rem;color:var(--text);line-height:1.2}
+  #sector-card .presence{font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:uppercase}
+  #sector-card .librow{font-size:.82rem;color:var(--text-dim);margin-top:5px}
+  #sector-card .librow b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+  #sector-card .bar{height:4px;border-radius:2px;background:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}
+  #sector-card .bar i{display:block;height:100%;background:var(--blue);transition:width .25s ease}
+  #sector-card .sub{font-size:.68rem;color:var(--text-mute);margin-top:5px}
+
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
+  aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
   .search{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:var(--radius-s);
     color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;outline:none}
   .search:focus{border-color:var(--blue)}
@@ -141,10 +170,34 @@
   ::-webkit-scrollbar{width:8px;height:8px}
   ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
   ::-webkit-scrollbar-track{background:transparent}
+  /* ---------- 移动端适配 ---------- */
+  #aside-toggle{display:none}   /* 桌面用顶栏按钮 */
   @media (max-width:900px){
-    aside{width:250px;padding:10px}
+    aside{width:270px;padding:10px}
     header h1{font-size:.92rem}
     header .stats{display:none}
+    #sector-card{left:10px;top:10px;min-width:0;max-width:calc(100% - 20px)}
+    #sector-card .ficon{width:30px;height:30px}
+  }
+  @media (max-width:767px){
+    /* 顶栏：只保留标题与侧栏开关 */
+    header{padding:8px 10px;gap:8px;flex-wrap:nowrap}
+    header .tag,header #btn-reset,header #btn-mode,header .btn.opt{display:none}
+    header h1{font-size:.86rem}
+    #aside-toggle{display:inline-block}
+    /* 侧栏改为右侧抽屉浮层，不占地图宽度 */
+    aside{
+      position:absolute;top:0;right:0;bottom:0;width:min(82vw,300px);
+      box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;
+    }
+    #aside-rail{width:100%;height:100%;top:0;background:rgba(10,14,26,.55)}
+    #aside-rail span{font-size:1.1rem}
+    /* 移动端：地图铺满，控件缩小 */
+    .maplibregl-ctrl-bottom-right{bottom:8px;right:6px}
+    .maplibregl-ctrl-bottom-left{display:none}
+    #sector-card{font-size:.92em}
+    #tac-empty{font-size:.7rem;left:10px;right:10px}
+    #tip{min-width:0;width:206px;max-width:206px;font-size:.72rem;padding:7px 10px}
   }
 </style>
 </head>
@@ -154,10 +207,12 @@
   <span class="tag">原型</span>
   <span class="tag v2">v2 · MapLibre 3D</span>
   <div class="stats" id="hdr"></div>
+  <button id="aside-toggle" title="侧栏">☰</button>
   <button id="btn-reset">重置视角</button>
   <button id="btn-mode">视图：银河</button>
-  <a class="btn" href="./galaxy-map.html">v1（SVG）</a>
-  <a class="btn" href="./index.html">← 战况面板</a>
+  <a class="btn opt" href="./galaxy-map.html">v1（SVG）</a>
+  <a class="btn opt" href="./index.html">← 战况面板</a>
+  <button id="aside-collapse" title="收起侧栏">▶</button>
 </header>
 
 <main>
@@ -165,11 +220,13 @@
     <canvas id="stars"></canvas>
     <div id="map"></div>
     <div id="tip"></div>
+    <div id="sector-card"></div>
     <div id="boot">
       <div class="ring"></div>
       <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
     </div>
   </div>
+  <div id="aside-rail" title="展开侧栏"><span>◀</span></div>
 
   <aside>
     <h2>🔍 检索</h2>
@@ -395,6 +452,31 @@ function planetIconFile(name) {
   return ICON_INDEX[key] || "";
 }
 
+/* ------------------------------------------------------ 阵营图标（SVG） ---- */
+// 取自 helldivers.wiki.gg 的 Faction Icons，本地同源缓存（assets/faction-icons/）。
+// 原 SVG 无 fill 属性（默认黑），内联进 DOM 后由 CSS 按阵营色着色，故不用 <img>。
+const FACTION_ICON_FILE = { Automaton:"automatons.svg", Terminids:"terminids.svg",
+                            Illuminate:"illuminate.svg", Humans:"humans.svg" };
+const __ficit = {};
+async function factionIconSVG(owner) {
+  const f = FACTION_ICON_FILE[owner];
+  if (!f) return null;
+  if (__ficit[owner] !== undefined) return __ficit[owner];
+  try {
+    const r = await fetch("./assets/faction-icons/" + f, { cache: "force-cache" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
+    svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")                    // 纵深防御
+             .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
+    __ficit[owner] = svg;
+  } catch (_) { __ficit[owner] = null; }
+  return __ficit[owner];
+}
+
+// 星区索引：名称 → {planets, total, lib, owner, races}
+// 供左上角星区卡与悬停联动使用（不依赖 bySector，避免与地图构建耦合）
+let SECTOR_IDX = {};
+
 /* ================================================================ 主流程 ==== */
 let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
@@ -439,11 +521,19 @@ async function boot() {
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
   const SECTOR_ALIASES = {
     "Arturion": "Arkturus", "Cantolus": "Cantorus", "Gallux": "Galux", "Gellert": "Gelert",
-    "Gothmar": "Gottma", "Guang": "Guan", "Idun": "Ipotus", "Iptus": "Ipotus",
+    "Gothmar": "Gottma", "Guang": "Guan",
     "Korpus": "Corpus", "Marspira": "Maspira", "Meridian": "Meridia", "Morgon": "Morgen",
     "Rictus": "Rectus", "Sten": "Stein", "Talus": "Talos", "Tarragon": "Tarago",
     "Ursa": "Ursa Major", "Void": "The Void",
+    // 2026-09 补充：官方 API 星区名与 starmap 系统名差异较大的，全部用
+    // 「该星区星球集合 ∩ starmap 系统星球集合」重合度确认（overlap 100%），非猜测：
+    "Cancri": "Kongulii",     // 刻耳柏洛斯IIIc/艾芙鲁维亚/庇护堡/繁荣瀑布/塞舌尔海滩 → 康古利伊
+    "Lacaille": "Lakieo",     // PENTA/CHOOHE/CHORT BAY/LESATH → 拉凯欧（与 companion 页面一致：75% 机器人占领）
+    "Ymir": "Hyperion",       // MEISSA/WASAT/VEGA BAY/WEZEN/X-45 → 土卫十九
+    "Idun": "Eaton",          // ATRAMA/MAW/MYRADESH/WRAITH → 伊顿（旧值指向 Ipotus 是错的）
+    "Iptus": "Ipodus",        // IRIDICA/KRAKABOS/PRIMORDIA/PROVIDENCE/RATCH/VALGAARD → 伊普都斯（旧值 Ipotus 拼写不符）
   };
+  const SECTOR_CN_FALLBACK = { "TBD": "待定" };   // starmap 未收录的名称直译
   try {
     const star = await (await fetch("./tables/starmap.json?t=" + Date.now(), { cache: "no-store" })).json();
     for (const sysn of (star.systems || [])) {
@@ -459,6 +549,44 @@ async function boot() {
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
   (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
+
+  // ---- 星区索引（供左上角星区卡：总解放度 / 占领方 / 交战中阵营） ----
+  {
+    const tmp = {};
+    (data.planets || []).forEach(p => {
+      const s = p.sector || "UNKNOWN";
+      (tmp[s] = tmp[s] || []).push(p);
+    });
+    SECTOR_IDX = {};
+    for (const [name, list] of Object.entries(tmp)) {
+      let human = 0, total = 0, np = 0;
+      const byRace = {};
+      for (const pl of list) {
+        const hp = pl.maxHealth || 0;
+        human += (pl.currentOwner === "Humans") ? hp : (hp - (pl.health || 0));
+        total += hp;
+        if (hp > 0) np++;
+        if (pl.currentOwner && pl.currentOwner !== "Humans") {
+          byRace[pl.currentOwner] = (byRace[pl.currentOwner] || 0) + 1;
+        }
+      }
+      // 主导阵营 = 该星区内占领星球最多的敌方阵营；并列或无敌方 → 交战区
+      let owner = null, best = 0, tie = false;
+      for (const [k, v] of Object.entries(byRace)) {
+        if (v > best) { best = v; owner = k; tie = false; }
+        else if (v === best) tie = true;
+      }
+      if (tie) owner = null;
+      // 中文名在此解析：SEC_CN 已含别名回填；starmap 未收录的回退直译，再不行用英文原名
+      const cn0 = SEC_CN[name.toUpperCase()] || SECTOR_CN_FALLBACK[name.toUpperCase()] || "";
+      SECTOR_IDX[name] = {
+        name, cn: (/[\u4e00-\u9fff]/.test(cn0) ? cn0 : name),
+        planets: np, total,
+        lib: total > 0 ? human / total * 100 : 0,
+        owner, races: Object.keys(byRace),
+      };
+    }
+  }
 
   // ---- 2) 战术目标（复用现有 tactical.js） ----
   setMsg("正在计算战术目标…<br><small>tactical.js</small>");
@@ -572,19 +700,20 @@ async function boot() {
     .map(([name, list]) => {
       const cx = list.reduce((a, p) => a + p.position.x, 0) / list.length;
       const cy = list.reduce((a, p) => a + p.position.y, 0) / list.length;
+      const idx = SECTOR_IDX[name] || {};
       return { type: "Feature", geometry: pt(cx, cy),
-               properties: { text: SEC_CN[name.toUpperCase()] || name, n: list.length } };
+               properties: { text: idx.cn || name, n: list.length } };
     }));
 
   // 势力名（放在该阵营凸包质心，沿地图旋转）
+  // 大字用中文：译名取自既有术语库 OWN_CN（与 HD2_Wiki/data/wiki/zh/factions.json 的 name_zh 同源）
   const factionLabelFC = fc(FACTION_KEYS.map(k => {
     const list = planets.filter(p => p.currentOwner === k);
     if (!list.length) return null;
     const cx = list.reduce((a, p) => a + p.position.x, 0) / list.length;
     const cy = list.reduce((a, p) => a + p.position.y, 0) / list.length;
-    const name = ({ Humans:"SUPER EARTH", Terminids:"TERMINIDS", Automaton:"AUTOMATONS", Illuminate:"ILLUMINATE" })[k];
     return { type: "Feature", geometry: pt(cx, cy),
-             properties: { text: name, color: OWNER_COLOR[k], owner: k, n: list.length } };
+             properties: { text: OWN_CN[k] || k, color: OWNER_COLOR[k], owner: k, n: list.length } };
   }).filter(Boolean));
 
   // 节点玩家数分级表达式（planet-core 半径用；0→0，12000→1）
@@ -817,15 +946,15 @@ async function boot() {
           layout: {
             "text-field": ["get", "text"],
             "text-font": ["NotoSansRegular"],
-            "text-size": ["interpolate", ["linear"], ["zoom"], 4, 16, 9, 30, 13, 72],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 4, 13, 9, 23, 13, 52],
             "text-rotate": 0,
             "text-pitch-alignment": "map",
             "text-rotation-alignment": "map",
             "text-allow-overlap": true,
             "text-ignore-placement": true,
-            "text-letter-spacing": .18,
+            "text-letter-spacing": .06,
           },
-          paint: { "text-color": ["get", "color"], "text-opacity": .34, "text-halo-color": "rgba(0,0,0,.5)", "text-halo-width": 1 } },
+          paint: { "text-color": ["get", "color"], "text-opacity": .38, "text-halo-color": "rgba(0,0,0,.5)", "text-halo-width": 1.4 } },
 
         // 反攻方向箭头
         { id: "attack-arrow", type: "symbol", source: "attack",
@@ -1024,17 +1153,58 @@ function bindUI(data, planets) {
       `<div class="bar"><i style="width:${pr.lib}%"></i></div>`;
     tip.style.display = "block";
     const st = $("stage").getBoundingClientRect();
-    let x = e.originalEvent.clientX - st.left + 15, y = e.originalEvent.clientY - st.top + 15;
-    if (x + 265 > st.width) x = e.originalEvent.clientX - st.left - 275;
-    if (y + 110 > st.height) y = e.originalEvent.clientY - st.top - 120;
+    const mob = window.matchMedia("(max-width:767px)").matches;
+    let x, y;
+    if (mob) {
+      // 移动端跟随手指，并避开左上角星区卡
+      x = Math.max(6, Math.min(st.width - 215, e.originalEvent.clientX - st.left - 102));
+      y = Math.max(96, e.originalEvent.clientY - st.top + 18);
+    } else {
+      x = e.originalEvent.clientX - st.left + 15;
+      y = e.originalEvent.clientY - st.top + 15;
+      if (x + 265 > st.width) x = e.originalEvent.clientX - st.left - 275;
+      if (y + 110 > st.height) y = e.originalEvent.clientY - st.top - 120;
+    }
     tip.style.left = x + "px"; tip.style.top = y + "px";
     MAP.getCanvas().style.cursor = "pointer";
+    showSectorCard(pr.sector);
   });
-  MAP.on("mouseleave", "planet-core", () => { tip.style.display = "none"; MAP.getCanvas().style.cursor = ""; });
+  MAP.on("mouseleave", "planet-core", () => {
+    tip.style.display = "none"; MAP.getCanvas().style.cursor = ""; hideSectorCard();
+  });
+  MAP.getCanvas().addEventListener("mouseleave", hideSectorCard);
+
+  /* ---- 左上角星区卡：星区名 / 占领方 / 总解放度 / 阵营图标 ---- */
+  let secToken = 0;
+  function hideSectorCard() { secToken++; $("sector-card").classList.remove("on"); }
+  async function showSectorCard(sector) {
+    const s = SECTOR_IDX[sector];
+    if (!s) { hideSectorCard(); return; }
+    const my = ++secToken, el = $("sector-card");
+    const dominant = s.owner || "Humans";
+    const color = OWNER_COLOR[dominant] || "#94a3b8";
+    el.innerHTML =
+      `<div class="ficon" style="color:${color}"></div>` +
+      `<div style="flex:1;min-width:0">` +
+        `<div class="sec-name">${esc(s.cn || sector)}</div>` +
+        `<div class="presence" style="color:${color}">` +
+          (s.owner ? `${esc(OWN_CN[s.owner] || s.owner)} 控制` : "交战区 · 多阵营") + `</div>` +
+        `<div class="librow">总解放度 <b>${s.lib.toFixed(2)}%</b></div>` +
+        `<div class="bar"><i style="width:${Math.max(0, Math.min(100, s.lib)).toFixed(2)}%"></i></div>` +
+        `<div class="sub">${s.planets} 个星球` +
+          (s.races.length ? ` · 敌军：${s.races.map(r => OWN_CN[r] || r).join("、")}` : "") + `</div>` +
+      `</div>`;
+    el.classList.add("on");
+    const svg = await factionIconSVG(dominant);
+    if (my !== secToken) return;                       // 已移开或切换到别的星区
+    const slot = el.querySelector(".ficon");
+    if (slot && svg) slot.innerHTML = svg;             // 失败则退化为空槽（仍保留文字信息）
+  }
 
   // 点击详情
   MAP.on("click", "planet-core", (e) => {
-    const f = e.features && e.features[0]; if (f) showDetail(f.properties.index);
+    const f = e.features && e.features[0];
+    if (f) { showDetail(f.properties.index); showSectorCard(f.properties.sector); }
   });
 
   function showDetail(index) {
@@ -1117,6 +1287,22 @@ function bindUI(data, planets) {
   }
 
   applyFactionFilter();
+
+  /* ---- 可收缩侧栏（桌面：折叠为窄边条；移动端：右侧抽屉 + 点地图关闭） ---- */
+  const isMobile = () => window.matchMedia("(max-width:767px)").matches;
+  const setAside = (collapsed) => {
+    document.body.classList.toggle("aside-collapsed", collapsed);
+    requestAnimationFrame(() => { if (MAP) MAP.resize(); });
+  };
+  $("aside-collapse").addEventListener("click", () => setAside(true));
+  $("aside-rail").addEventListener("click", () => setAside(false));
+  $("aside-toggle").addEventListener("click", () =>
+    setAside(!document.body.classList.contains("aside-collapsed")));
+  // 移动端：抽屉打开时，在「地图画布」上按下即收起（不误伤侧栏内输入框与图层开关）
+  $("stage").addEventListener("pointerdown", (e) => {
+    if (isMobile() && !document.body.classList.contains("aside-collapsed") && e.target.closest("#map"))
+      setAside(true);
+  }, { passive: true });
 }
 
 /* ---------------------------------------------------------------- 启动 ---- */
