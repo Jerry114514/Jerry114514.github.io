@@ -805,7 +805,18 @@ async function boot() {
     } catch (_) {}
     try { MAP.setPaintProperty("attack-arrow", "icon-color", "rgba(255,120,120,.95)"); } catch (_) {}
 
-    // 预载 wiki 星球图标
+    // 星空贴图：raster 图层挂在最底层，随地图平移/缩放真实移动（真视差）
+    try {
+      MAP.addSource("stars-src", {
+        type: "image",
+        url: makeStarfieldTile(2048),
+        coordinates: [[-2.6, 2.6], [2.6, 2.6], [2.6, -2.6], [-2.6, -2.6]],
+      });
+      MAP.addLayer({ id: "stars-raster", type: "raster", source: "stars-src",
+        paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, "bg");
+    } catch (e) { console.warn("[星空] raster 挂载失败", e); }
+
+    // 预载星球图标（本地 planet-icons 缓存）
     const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
     let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
     if (files.length) {
