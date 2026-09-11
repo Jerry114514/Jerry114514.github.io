@@ -878,16 +878,18 @@ async function boot() {
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
           } },
 
-        // 星球本体（半径按在线玩家数分级：0 → 基准，8000+ → 玩家权重放大）
+        // 星球本体（半径按在线玩家数分级：0 → 基准，12000 → 玩家权重放大）
+        // 半径 = 交互命中半径（MapLibre 的 circle 命中即该半径 + 描边/2 + clickTolerance），
+        // 故 icon-size 一律按本层半径换算，改这里即可同时放大图标与 hover 区。
         { id: "planet-core", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
             "circle-radius": ["interpolate", ["linear"], ["zoom"],
-              4, ["+", 2.0, ["*", 0.8, ["interp-players"]]],
-              9, ["+", 4.6, ["*", 1.8, ["interp-players"]]],
-              13, ["+", 11, ["*", 4.0, ["interp-players"]]]],
+              4, ["+", 4.4, ["*", 1.76, ["interp-players"]]],
+              9, ["+", 10.12, ["*", 3.96, ["interp-players"]]],
+              13, ["+", 24.2, ["*", 8.8, ["interp-players"]]]],
             "circle-stroke-color": "rgba(0,0,0,.55)",
-            "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, 1.0, 13, 1.6],
+            "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .6, 9, 1.2, 13, 1.8],
           } },
 
         // 高人气星白环（玩家数 ≥ 2500）
@@ -931,17 +933,15 @@ async function boot() {
             "circle-stroke-opacity": .85,
           } },
 
-        // wiki 星球图标（本地 assets/planet-icons，64px PNG 以 pixelRatio:2 载入）
-        // icon-size 按「图标直径 = planet-core 直径」换算：size = (4.6 + 1.8·T)/16
-        // （PNG 64px ÷ pixelRatio 2 = 32px 基准，半径 r → 直径 2r，故 2r/32 = r/16）
-        // 这样可互动区域与看到的图标大小一致，不再出现「点得到但看不见」的外圈。
+        // 图标大小 = 星球本体直径（PNG 经 pixelRatio 归一化到 32px 基准，故 size = 半径/16），
+        // 使图标与 hover/点击区严格一致；想整体缩放图标，只改 planet-core 的半径即可。
         { id: "planet-icon", type: "symbol", source: "planets",
           layout: {
             "icon-image": ["get", "icon"],
             "icon-size": ["interpolate", ["linear"], ["zoom"],
-              4,  ["+", 0.125, ["*", 0.05, ["interp-players"]]],
-              9,  ["+", 0.2875, ["*", 0.1125, ["interp-players"]]],
-              13, ["+", 0.6875, ["*", 0.25, ["interp-players"]]]],
+              4,  ["+", 0.275, ["*", 0.11, ["interp-players"]]],
+              9,  ["+", 0.6325, ["*", 0.2475, ["interp-players"]]],
+              13, ["+", 1.5125, ["*", 0.55, ["interp-players"]]]],
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
             "icon-anchor": "center",
