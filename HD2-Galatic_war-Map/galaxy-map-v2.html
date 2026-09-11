@@ -349,6 +349,34 @@ async function loadBitmapWithFallback(url) {
   try { return await fetchImageBitmap(url, false); }   // 无 CORS：能显示但纹理可能被污染
   catch (_) { return null; }
 }
+
+// 读 PNG 头部取像素尺寸（IHDR 位于固定偏移）。
+// 必要性：planet-icons 并非同尺寸 —— 实测 139 个 64px、122 个 48px（另有少数 47~65px）。
+// 若统一按 pixelRatio:2 注册，48px 图标在同一 icon-size 下会比 64px 小约 33%，
+// 这正是「图标大小与可互动区域不匹配」的根因。改为按各图实际宽度归一化后，
+// icon-size 才能与 planet-core 的直径精确对齐。
+function pngSizeFromBuffer(buf) {
+  const b = new Uint8Array(buf);
+  if (b.length < 24) return null;
+  if (b[0] !== 0x89 || b[1] !== 0x50 || b[2] !== 0x4e || b[3] !== 0x47) return null;  // \x89PNG
+  const w = (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
+  const h = (b[20] << 24) | (b[21] << 16) | (b[22] << 8) | b[23];
+  return (w > 0 && h > 0) ? { w, h } : null;
+}
+
+// 载入图标：返回 { image, pixelRatio }，pixelRatio 归一化到 32 CSS px 基准
+// （64px → 2，48px → 1.5），使所有图标在同一 icon-size 下视觉尺寸一致。
+async function loadPlanetIcon(url) {
+  let dim = null;
+  try {
+    const r = await fetch(url, { cache: "force-cache" });
+    if (r.ok) dim = pngSizeFromBuffer(await r.arrayBuffer());
+  } catch (_) { /* 读头失败则退回按 64px 假设 */ }
+  const img = await loadBitmapWithFallback(url);
+  if (!img) return null;
+  const w = (dim && dim.w) || img.naturalWidth || img.width || 64;
+  return { image: img, pixelRatio: w / 32 };
+}
 async function pool(items, limit, worker) {
   let i = 0, active = 0;
   return new Promise((resolve) => {
@@ -850,16 +878,16 @@ async function boot() {
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
           } },
 
-        // 星球本体（半径按在线玩家数分级：0 → 基准，8000+ → 显著放大）
+        // 星球本体（半径按在线玩家数分级：0 → 基准，8000+ → 玩家权重放大）
         { id: "planet-core", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
             "circle-radius": ["interpolate", ["linear"], ["zoom"],
-              4, ["+", 2.0, ["*", 1.0, ["interp-players"]]],
-              9, ["+", 4.6, ["*", 2.6, ["interp-players"]]],
-              13, ["+", 11, ["*", 6, ["interp-players"]]]],
+              4, ["+", 2.0, ["*", 0.8, ["interp-players"]]],
+              9, ["+", 4.6, ["*", 1.8, ["interp-players"]]],
+              13, ["+", 11, ["*", 4.0, ["interp-players"]]]],
             "circle-stroke-color": "rgba(0,0,0,.55)",
-            "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, 1.2, 13, 2],
+            "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, 1.0, 13, 1.6],
           } },
 
         // 高人气星白环（玩家数 ≥ 2500）
@@ -903,14 +931,21 @@ async function boot() {
             "circle-stroke-opacity": .85,
           } },
 
-        // wiki 星球图标（热链；取不到图标的星球保留上面的纯色圆点）
+        // wiki 星球图标（本地 assets/planet-icons，64px PNG 以 pixelRatio:2 载入）
+        // icon-size 按「图标直径 = planet-core 直径」换算：size = (4.6 + 1.8·T)/16
+        // （PNG 64px ÷ pixelRatio 2 = 32px 基准，半径 r → 直径 2r，故 2r/32 = r/16）
+        // 这样可互动区域与看到的图标大小一致，不再出现「点得到但看不见」的外圈。
         { id: "planet-icon", type: "symbol", source: "planets",
           layout: {
             "icon-image": ["get", "icon"],
-            "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .5, 7, .78, 9, 1.0, 11, 1.25, 13, 1.6],
+            "icon-size": ["interpolate", ["linear"], ["zoom"],
+              4,  ["+", 0.125, ["*", 0.05, ["interp-players"]]],
+              9,  ["+", 0.2875, ["*", 0.1125, ["interp-players"]]],
+              13, ["+", 0.6875, ["*", 0.25, ["interp-players"]]]],
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
             "icon-anchor": "center",
+            "icon-padding": 0,
           } },
 
         // 星球名标签（缩放到一定级别才显示）
@@ -977,6 +1012,9 @@ async function boot() {
     maxPitch: 70,
     minPitch: 0,
     maxBounds: [[-1.9, -1.7], [1.9, 1.75]],
+    // 交互命中留白默认 3px（CSS px），会让可点区域明显大于可见星球；
+    // 收窄到 1px，使点击/hover 判定贴近实际图标范围。
+    clickTolerance: 1,
     dragRotate: true,
     pitchWithRotate: true,
     attributionControl: false,
@@ -1020,9 +1058,10 @@ async function boot() {
     if (files.length) {
       setMsg("正在加载星球图标…<br><small>本地 planet-icons · " + files.length + " 个</small>");
       await pool(files, 6, async (file) => {
-        const img = await loadBitmapWithFallback(ICON_DIR + file);   // 同源：无 CORS/纹理污染问题
-        if (!img) { bad++; return; }
-        try { if (!MAP.hasImage(file)) MAP.addImage(file, img, { pixelRatio: 2 }); ok++; }
+        // 同源：无 CORS/纹理污染问题；pixelRatio 按各图实际宽度归一化
+        const res = await loadPlanetIcon(ICON_DIR + file);
+        if (!res) { bad++; return; }
+        try { if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio }); ok++; }
         catch (_) { bad++; }
       });
       $("srcnote").innerHTML =
@@ -1216,11 +1255,13 @@ function bindUI(data, planets) {
     const ev = (data.planet_events || []).find(x => x.planetIndex === index);
     const pCn = PL_CN[String(p.name || "").toUpperCase()] || "";
     const pSec = SEC_CN[(p.sector || "").toUpperCase()] || "";
-    $("detailTitle").textContent = "📋 " + (pCn ? pCn + " · " : "") + (p.name || ("#" + index));
+    // 标题栏保持固定文案（面板标签），星球名只在下方正文出现一次，避免重复显示
+    $("detailTitle").textContent = "📋 星球详情";
     $("detail").innerHTML =
       `<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
-         <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${colorOf(p.currentOwner)}"></span>
-         <b style="font-size:.95rem">${esc(p.name || ("#" + index))}</b>
+         <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${colorOf(p.currentOwner)};flex-shrink:0"></span>
+         <b style="font-size:.95rem">${esc(pCn || p.name || ("#" + index))}</b>
+         ${pCn && p.name ? `<span style="color:var(--text-mute);font-size:.72rem">${esc(p.name)}</span>` : ""}
        </div>` +
       `<div class="kv">
          <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</div></div>
