@@ -1001,7 +1001,18 @@ async function boot() {
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
           } },
-      ].map(l => l.id === "planet-core" ? { ...l, paint: { ...l.paint, "circle-radius": resolvePlayersExpr(l.paint["circle-radius"]) } } : l),
+      // 统一解析 ["interp-players"] 占位符：凡 layout/paint 用到它的图层都替换为真实表达式。
+      // 原先只对 planet-core 硬编码处理，新增图层（planet-icon 的 icon-size）复用该占位符后
+      // 会残留未知表达式，MapLibre 判该属性非法 → 图层加载失败、map 的 load 事件永不触发，
+      // 页面就永久停在「正在构建星图图层…」。改为遍历所有图层，杜绝同类问题。
+      ].map((l) => {
+        const out = { ...l };
+        for (const key of ["paint", "layout"]) {
+          if (!out[key]) continue;
+          if (JSON.stringify(out[key]).includes('["interp-players"]')) out[key] = resolvePlayersExpr(out[key]);
+        }
+        return out;
+      }),
     },
     center: HOME.center,
     zoom: HOME.zoom,
@@ -1028,7 +1039,21 @@ async function boot() {
 
   MAP.on("error", (e) => { if (e && e.error) console.warn("[MapLibre]", e.error.message || e.error); });
 
+  // 加载兜底：map 的 load 事件若因样式/资源问题永不触发，页面会永久停在加载遮罩上
+  // （2026-09 曾因 planet-icon 残留未解析的 ["interp-players"] 表达式而整页卡死）。
+  // 这里加超时保护，把失败暴露出来而不是静默卡住。
+  let mapLoaded = false;
+  const loadGuard = setTimeout(() => {
+    if (mapLoaded) return;
+    const b = $("boot");
+    if (!b) return;
+    b.innerHTML = '<div class="msg" style="color:#f59e0b">⚠️ 星图加载超时<br>' +
+      '<small>图层样式可能未通过校验，请查看控制台（[MapLibre] 前缀）后刷新重试</small></div>';
+    console.error("[星图] map load 事件超时未触发 —— 请检查图层样式表达式是否合法");
+  }, 25000);
+
   MAP.on("load", async () => {
+    mapLoaded = true; clearTimeout(loadGuard);
     // 反攻箭头图标（SDF，可着色）
     try {
       const HEAD = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">' +
