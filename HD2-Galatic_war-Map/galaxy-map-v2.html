@@ -203,6 +203,55 @@ const OWNER_COLOR = { Humans:"#5BA3D0", Terminids:"#F5C518", Automaton:"#D6806D"
 const OWN_CN     = { Humans:"超级地球", Terminids:"终结族", Automaton:"机器人", Illuminate:"光能族" };
 const FACTION_KEYS = ["Humans","Terminids","Automaton","Illuminate"];
 
+/* ------------------------------------------------ wiki 图鉴链接映射 ---- */
+// 阵营页（星球无变种效果时按当前归属链接阵营图鉴）
+const FACTION_PAGE = { Automaton: "Automatons", Terminids: "Terminids", Illuminate: "Illuminate" };
+// 变种效果 effectId -> wiki slug（galactic_effects/effect_id_cn 考据，slug 经 wiki API 验证存在）
+const EFFECT_TO_STRAIN = {
+  1202: "Jet_Brigade", 1203: "Jet_Brigade", 1239: "Jet_Brigade",
+  1243: "Predator_Strain", 1245: "Predator_Strain",
+  1244: "Spore_Burst_Strain", 1386: "Spore_Burst_Strain",
+  1248: "Incineration_Corps", 1249: "Incineration_Corps",
+  1303: "Rupture_Strain", 1310: "Rupture_Strain",
+  1360: "Cyborgs", 1361: "Cyborgs",
+  1377: "Mindless_Masses", 1378: "Mindless_Masses",
+  1379: "Appropriators", 1380: "Appropriators",
+  1402: "Vote_Snatchers", 1403: "Vote_Snatchers",
+  1269: "The_Great_Host", 1417: "Invasion_Fleet",
+};
+// 变种归属阵营（链接只在星球当前归属与其一致时显示）
+const STRAIN_FACTION = {
+  Jet_Brigade: "Automaton", Incineration_Corps: "Automaton", Cyborgs: "Automaton",
+  Predator_Strain: "Terminids", Spore_Burst_Strain: "Terminids", Rupture_Strain: "Terminids",
+  Mindless_Masses: "Illuminate", Appropriators: "Illuminate", Vote_Snatchers: "Illuminate",
+  The_Great_Host: "Illuminate", Invasion_Fleet: "Illuminate",
+};
+const STRAIN_CN = {
+  Jet_Brigade: "喷气旅", Incineration_Corps: "炽灼部队", Cyborgs: "生化人",
+  Predator_Strain: "掠食变种", Spore_Burst_Strain: "孢裂变种", Rupture_Strain: "爆裂变种",
+  Mindless_Masses: "无脑群氓", Appropriators: "占领者", Vote_Snatchers: "窃票者",
+  The_Great_Host: "伟大集群", Invasion_Fleet: "入侵舰队",
+};
+// 链接规则：变种（且归属一致）> 阵营页 > Super_Earth；无映射返回 null 不渲染，避免死链
+function wikiLinkFor(p) {
+  const owner = p.currentOwner || "";
+  for (const id of (p.activeEffects || [])) {
+    const slug = EFFECT_TO_STRAIN[id];
+    if (slug && STRAIN_FACTION[slug] === owner) {
+      return { url: "https://helldivers.wiki.gg/wiki/" + slug,
+               label: "🏷️ " + (STRAIN_CN[slug] || slug.replace(/_/g, " ")) + " · 查看图鉴" };
+    }
+  }
+  if (FACTION_PAGE[owner]) {
+    return { url: "https://helldivers.wiki.gg/wiki/" + FACTION_PAGE[owner],
+             label: "🏷️ " + (OWN_CN[owner] || owner) + " · 查看图鉴" };
+  }
+  if (owner === "Humans") {
+    return { url: "https://helldivers.wiki.gg/wiki/Super_Earth", label: "🏷️ 超级地球 · 查看图鉴" };
+  }
+  return null;
+}
+
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
   ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const fmt = (n) => (n || 0).toLocaleString("zh-CN");
@@ -844,6 +893,8 @@ function bindUI(data, planets) {
       (tags.length ? `<div style="margin-top:9px">` + tags.map(t =>
           `<span class="tac">${esc(t.title)}</span>`).join("") +
           tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
+      (() => { const wl = wikiLinkFor(p); return wl ?
+          `<div style="margin-top:9px"><a class="btn" style="width:100%;font-size:.74rem;text-align:center;display:block;text-decoration:none" href="${esc(wl.url)}" target="_blank" rel="noopener noreferrer">${esc(wl.label)}</a></div>` : ""; })() +
       `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
   }
 
