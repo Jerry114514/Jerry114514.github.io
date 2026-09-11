@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>银河星图 v2 · MapLibre 原型 — HD2 真理部</title>
+<title>银河星图 — HD2 真理部</title>
 <!--
-  银河星图 v2（可行性原型 · 不进主站导航）
+  银河星图（MapLibre GL 3D，主站正式入口）
   ============================================================
-  与 v1（galaxy-map.html，纯 SVG + viewBox）的差异：
-    · 渲染层改为 MapLibre GL JS v4.7.1（WebGL），真实 3D 透视（pitch 48°）
-    · 分层数据源，接近 helldiverscompanion 星图的图层结构
-    · 星球图标走本地缓存 assets/planet-icons/（fetch_planet_icons.py 落库，缺失回退纯色圆点）
+  渲染层：MapLibre GL JS v4.7.1（WebGL），真实 3D 透视（pitch 48°）
+  分层数据源，参考 helldiverscompanion 星图的图层结构
+  星球图标：本地缓存 assets/planet-icons/（fetch_planet_icons.py 落库，缺失回退纯色圆点）
+  效果图标：本地 assets/effect-icons/（势力变种 / DSS 战术行动）
+  中文字形：复用 HD2_Wiki 的思源黑体，经 localIdeographFontFamily 本地渲染（不下载 CJK 字形）
 
   自托管资源（不走 CDN，规避墙 + 离线兜底，与仓库既有 chart.umd.min.js 策略一致）：
     js/libs/maplibre/maplibre-gl-csp.js          库本体
     js/libs/maplibre/maplibre-gl-csp-worker.js   worker（显式文件，避免 blob worker）
-    js/libs/maplibre/fonts/Noto Sans Regular/    字形 PBF
+    js/libs/maplibre/fonts/NotoSansRegular/      拉丁字形 PBF
 
-  数据：data.json + tables/waypoints.json + js/tactical.js（均为现有文件，未改动）
+  数据：data.json + tables/waypoints.json + js/tactical.js + tables/galactic_effects.json
 
-  @prototype 2026-09-11：未挂入口，确认后再决定转正或归档
 -->
 <link rel="stylesheet" href="./js/libs/maplibre/maplibre-gl.css">
 <style>
@@ -137,6 +137,36 @@
   #sector-card .bar{height:4px;border-radius:2px;background:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}
   #sector-card .bar i{display:block;height:100%;background:var(--blue);transition:width .25s ease}
   #sector-card .sub{font-size:.68rem;color:var(--text-mute);margin-top:5px}
+  /* 敌军阵营：改为带阵营色的胶囊，取代原先挤在一起、不易读的「敌军：A、B」纯文本 */
+  #sector-card .enemy-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  #sector-card .enemy-chip{
+    display:inline-flex;align-items:center;gap:4px;font-size:.68rem;line-height:1;
+    padding:3px 7px;border-radius:999px;border:1px solid currentColor;
+    background:color-mix(in srgb, currentColor 14%, transparent);white-space:nowrap;
+  }
+  #sector-card .enemy-chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+  /* 无 color-mix 支持时退回半透明底，避免胶囊看不见 */
+  @supports not (background: color-mix(in srgb, red 10%, transparent)){
+    #sector-card .enemy-chip{background:rgba(255,255,255,.07)}
+  }
+
+  /* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */
+  #fx-layer{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden}
+  .fx-cluster{
+    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;
+    transform:translate(-50%,-50%);will-change:transform;
+  }
+  .fx-i{
+    width:17px;height:17px;display:flex;align-items:center;justify-content:center;
+    border-radius:5px;background:rgba(8,11,18,.86);border:1px solid rgba(255,255,255,.28);
+    box-shadow:0 1px 5px rgba(0,0,0,.6);pointer-events:auto;
+  }
+  .fx-i svg{width:12px;height:12px;display:block;fill:currentColor}
+  .fx-more{
+    font-size:.6rem;line-height:1;padding:3px 4px;border-radius:5px;color:var(--text-dim);
+    background:rgba(8,11,18,.86);border:1px solid rgba(255,255,255,.22);
+  }
+  @media (max-width:767px){ .fx-i{width:15px;height:15px} .fx-i svg{width:10px;height:10px} }
 
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
   aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
@@ -204,13 +234,11 @@
 <body>
 <header>
   <h1>🌌 银河星图</h1>
-  <span class="tag">原型</span>
-  <span class="tag v2">v2 · MapLibre 3D</span>
+  <span class="tag v2">实时战况 · 3D</span>
   <div class="stats" id="hdr"></div>
   <button id="aside-toggle" title="侧栏">☰</button>
   <button id="btn-reset">重置视角</button>
   <button id="btn-mode">视图：银河</button>
-  <a class="btn opt" href="./galaxy-map.html">v1（SVG）</a>
   <a class="btn opt" href="./index.html">← 战况面板</a>
   <button id="aside-collapse" title="收起侧栏">▶</button>
 </header>
@@ -221,6 +249,7 @@
     <div id="map"></div>
     <div id="tip"></div>
     <div id="sector-card"></div>
+    <div id="fx-layer"></div>
     <div id="boot">
       <div class="ring"></div>
       <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
@@ -264,7 +293,7 @@
 <script>
 "use strict";
 /* ============================================================================
-   银河星图 v2 · MapLibre 原型
+   银河星图 · MapLibre GL 3D
    ============================================================================ */
 const $ = (id) => document.getElementById(id);
 const SVGNS = "http://www.w3.org/2000/svg";
@@ -505,6 +534,70 @@ async function factionIconSVG(owner) {
 // 供左上角星区卡与悬停联动使用（不依赖 bySector，避免与地图构建耦合）
 let SECTOR_IDX = {};
 
+/* ------------------------------------------------- 星球效果图标 ------------ */
+// 图标来源：helldivers.wiki.gg（势力变种取自 Icons - POI Icons / 相关页面；
+// DSS 战术行动取自 Democracy Space Station 页），本地同源缓存于 assets/effect-icons/。
+// 每个 effectId 映射到「图标文件 + 展示用中文名」，同一图标的不同 id（含 (Enemies) 变体）
+// 在渲染时按图标去重，避免同一变种出现两次。
+// 注：「班机延误 / 缺少飞行员 / 补给不足 / 非军事化 / TCS+控制塔」等 wiki 暂无对应图标，
+//     已单独登记在下方 NO_ICON 名单，后续补图只需在此表加项。
+const EFFECT_ICON = {
+  1400: { icon:"seaf.svg",                 cn:"SEAF 武装部队" },
+  1401: { icon:"seaf.svg",                 cn:"SEAF 武装部队" },
+  1248: { icon:"incineration_corps.svg",   cn:"炽灼部队" },
+  1249: { icon:"incineration_corps.svg",   cn:"炽灼部队" },
+  1202: { icon:"jet_brigade.svg",          cn:"喷气旅" },
+  1203: { icon:"jet_brigade.svg",          cn:"喷气旅" },
+  1240: { icon:"jet_brigade.svg",          cn:"喷气旅" },
+  1239: { icon:"jet_brigade.svg",          cn:"喷气旅工厂" },
+  1243: { icon:"predator_strain.svg",      cn:"掠食变种" },
+  1245: { icon:"predator_strain.svg",      cn:"掠食变种" },
+  1244: { icon:"spore_burst_strain.svg",   cn:"孢裂变种" },
+  1386: { icon:"spore_burst_strain.svg",   cn:"孢裂变种" },
+  1303: { icon:"rupture_strain.svg",       cn:"爆裂变种" },
+  1310: { icon:"rupture_strain.svg",       cn:"爆裂变种" },
+  1379: { icon:"appropriators.svg",        cn:"占领者" },
+  1380: { icon:"appropriators.svg",        cn:"占领者" },
+  1377: { icon:"mindless_masses.svg",      cn:"无脑群氓" },
+  1378: { icon:"mindless_masses.svg",      cn:"无脑群氓" },
+  // 以下效果目前活跃但 wiki 无独立图标，先不列入（渲染层会自动跳过无图标项）：
+  //   1360/1361 生化人 CYBORGS、1417 入侵舰队、1413 教团先锋
+  //   1252 碎裂星球、1229 梅里迪亚黑洞、1188/1193 阴影迷雾、1395 TCS+控制塔
+  //   1315/1316/1317/1318/1319/1320 班机延误/缺少飞行员/补给不足/预算削减
+  //   1246 非军事化、1287/1291/1292 城市、1282 训练设施、1304/1236 POI 等
+};
+// 图标着色：势力变种用阵营色，SEAF 用我方蓝
+const EFFECT_COLOR = {
+  "seaf.svg":"#5BA3D0",
+  "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D",
+  "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
+  "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8",
+};
+const __fxsvg = {};
+// 取某星球可显示的效果（已按图标去重，保留首个中文名）
+function fxOf(planet) {
+  const seen = {}, out = [];
+  for (const id of (planet.activeEffects || [])) {
+    const e = EFFECT_ICON[id];
+    if (!e || seen[e.icon]) continue;
+    seen[e.icon] = 1;
+    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8" });
+  }
+  return out;
+}
+async function effectIconSVG(file) {
+  if (__fxsvg[file] !== undefined) return __fxsvg[file];
+  try {
+    const r = await fetch("./assets/effect-icons/" + file, { cache: "force-cache" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
+    svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")
+             .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
+    __fxsvg[file] = svg;
+  } catch (_) { __fxsvg[file] = null; }   // 缺图（如待补项）直接跳过，不显示空框
+  return __fxsvg[file];
+}
+
 /* ================================================================ 主流程 ==== */
 let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
@@ -654,6 +747,8 @@ async function boot() {
         players: p.players || 0, lib: +libPct.toFixed(1),
         tacCount: tac.length, tacTitle: tac.join(" / "),
         icon: planetIconFile(p.name) || "",
+        // 有可显示效果图标（去重后）的星球，供浮动图标层使用
+        fx: fxOf(p).length,
         isDef: (data.campaigns || []).some(c => c.campaignType === "defense" && c.planet && c.planet.index === p.index) ? 1 : 0,
         isEvent: (data.planet_events || []).some(e => e.planetIndex === p.index) ? 1 : 0,
       },
@@ -1109,7 +1204,75 @@ async function boot() {
 
     $("boot").classList.add("gone");
     setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
+
+    initFXLayer(planetFC);
   });
+
+  /* ---- 星球效果图标浮层 ----
+     把势力变种 / SEAF / DSS 等效果以小图标显示在星球旁边（参考 companion）。
+     实现方式：HTML 浮层 + map.project() 投影，而不是 MapLibre symbol 图层 ——
+     因为一个星球可能同时有多个效果，而 symbol 每要素只支持一个 icon-image。 */
+  function initFXLayer(planetFC) {
+    const fx = [];
+    for (const f of planetFC.features) {
+      const p = BYIDX[f.properties.index];
+      if (!p) continue;
+      const list = fxOf(p);
+      if (list.length && p.position) fx.push({ idx: f.properties.index, list });
+    }
+    if (!fx.length) { $("srcnote").innerHTML += "<br>效果图标：当前战局无带图标的效果"; return; }
+    const host = $("fx-layer");
+    host.innerHTML = "";
+    const nodes = fx.map(item => {
+      const el = document.createElement("div");
+      el.className = "fx-cluster";
+      el.innerHTML = item.list.slice(0, 3).map(e =>
+        `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
+        (item.list.length > 3 ? `<div class="fx-more">+${item.list.length - 3}</div>` : "");
+      host.appendChild(el);
+      return {
+        idx: item.idx, el,
+        n: Math.min(3, item.list.length) + (item.list.length > 3 ? 1 : 0),
+        list: item.list,
+      };
+    });
+    // 异步填充 SVG（按文件缓存；缺图项保持空框，不显示错误）
+    (async () => {
+      const files = [...new Set(fx.flatMap(x => x.list.map(e => e.icon)))];
+      for (const f of files) await effectIconSVG(f);
+      nodes.forEach(nd => {
+        const slots = nd.el.querySelectorAll(".fx-i");
+        nd.list.slice(0, 3).forEach((e, i) => {
+          const svg = __fxsvg[e.icon];
+          if (slots[i] && svg) slots[i].innerHTML = svg;
+        });
+      });
+    })();
+
+    // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
+    let rafId = 0, visible = true, lastZoom = MAP.getZoom();
+    const MINZ = 7.6, GAP = 21;
+    function sync() {
+      rafId = 0;
+      const z = MAP.getZoom();
+      const on = z >= MINZ;
+      if (on !== visible) { host.style.display = on ? "" : "none"; visible = on; }
+      if (!on) return;
+      for (const nd of nodes) {
+        const p = BYIDX[nd.idx];
+        if (!p || !p.position) continue;
+        const pt = MAP.project([p.position.x, p.position.y]);
+        // 图标排在星球右侧：整体右移，使簇的中心落在星球右侧
+        nd.el.style.transform = `translate(${(pt.x + GAP * nd.n / 2).toFixed(1)}px,${pt.y.toFixed(1)}px) translate(-50%,-50%)`;
+      }
+    }
+    function schedule() { if (!rafId) rafId = requestAnimationFrame(sync); }
+    MAP.on("move", schedule);
+    MAP.on("zoom", schedule);
+    MAP.on("resize", schedule);
+    MAP.on("moveend", schedule);
+    schedule();
+  }
 
   bindUI(data, planets);
 }
@@ -1255,8 +1418,12 @@ function bindUI(data, planets) {
           (s.owner ? `${esc(OWN_CN[s.owner] || s.owner)} 控制` : "交战区 · 多阵营") + `</div>` +
         `<div class="librow">总解放度 <b>${s.lib.toFixed(2)}%</b></div>` +
         `<div class="bar"><i style="width:${Math.max(0, Math.min(100, s.lib)).toFixed(2)}%"></i></div>` +
-        `<div class="sub">${s.planets} 个星球` +
-          (s.races.length ? ` · 敌军：${s.races.map(r => OWN_CN[r] || r).join("、")}` : "") + `</div>` +
+        `<div class="sub">${s.planets} 个星球</div>` +
+        (s.races.length
+          ? `<div class="enemy-row">` + s.races.map(r =>
+              `<span class="enemy-chip" style="color:${colorOf(r)}">` +
+                `<i class="dot"></i>${esc(OWN_CN[r] || r)}</span>`).join("") + `</div>`
+          : "") +
       `</div>`;
     el.classList.add("on");
     const svg = await factionIconSVG(dominant);
