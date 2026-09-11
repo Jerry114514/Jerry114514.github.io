@@ -15,3 +15,6 @@ HD2_Wiki/data/wiki/zh/fetch_reports/
 # 无引用的本地中间产物（gitignore 留本地，暂不删）
 HD2-Galatic_war-Map/tables/strat_icons.json
 HD2重构检查计划表.md
+
+# companion 前端 bundle 转储（探索战术目标/战略机遇逻辑用，11MB，勿入生产仓）
+HD2-Galatic_war-Map/tables/hd2_companion_*.js
