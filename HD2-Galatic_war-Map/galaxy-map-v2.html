@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>银河星图 v2 · MapLibre 原型 — HD2 真理部</title>
+<!--
+  银河星图 v2（可行性原型 · 不进主站导航）
+  ============================================================
+  与 v1（galaxy-map.html，纯 SVG + viewBox）的差异：
+    · 渲染层改为 MapLibre GL JS v4.7.1（WebGL），真实 3D 透视（pitch 48°）
+    · 分层数据源，接近 helldiverscompanion 星图的图层结构
+    · 节点图标热链 helldivers.wiki.gg 的 Planet Icon（CORS 失败则回退纯色圆点）
+
+  自托管资源（不走 CDN，规避墙 + 离线兜底，与仓库既有 chart.umd.min.js 策略一致）：
+    js/libs/maplibre/maplibre-gl-csp.js          库本体
+    js/libs/maplibre/maplibre-gl-csp-worker.js   worker（显式文件，避免 blob worker）
+    js/libs/maplibre/fonts/Noto Sans Regular/    字形 PBF
+
+  数据：data.json + tables/waypoints.json + js/tactical.js（均为现有文件，未改动）
+
+  @prototype 2026-09-11：未挂入口，确认后再决定转正或归档
+-->
+<link rel="stylesheet" href="./js/libs/maplibre/maplibre-gl.css">
+<style>
+  :root{
+    --bg-deep:#080B12; --bg-mid:#0E1420; --panel:rgba(14,20,32,.86);
+    --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);
+    --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;
+    --yellow:#f5c518; --blue:#3b82f6;
+    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
+    --radius:12px; --radius-s:8px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    display:flex;flex-direction:column;background:var(--bg-deep);color:var(--text);overflow:hidden;
+    font-family:"SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
+  }
+  /* ---------- 顶栏 ---------- */
+  header{
+    display:flex;align-items:center;gap:14px;padding:9px 18px;z-index:20;
+    border-bottom:1px solid var(--border);background:var(--bg-mid);
+  }
+  header h1{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:1.05rem;color:var(--yellow);white-space:nowrap}
+  .tag{background:var(--yellow);color:#1a1a00;font-weight:700;border-radius:999px;padding:2px 10px;font-size:.68rem;white-space:nowrap}
+  .tag.v2{background:var(--blue);color:#fff}
+  header .stats{margin-left:auto;color:var(--text-mute);font-size:.74rem;display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  header .stats b{color:var(--text-dim);font-weight:600}
+  header button,header .btn{
+    background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-dim);
+    border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.76rem;font-family:inherit;white-space:nowrap;
+  }
+  header button:hover,header .btn:hover{border-color:var(--blue);color:var(--blue)}
+  header a.btn{text-decoration:none;display:inline-block}
+
+  /* ---------- 主区 ---------- */
+  main{flex:1;display:flex;min-height:0;position:relative}
+  #stage{flex:1;position:relative;overflow:hidden;cursor:grab}
+  #stage.dragging{cursor:grabbing}
+  #stars{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+  #map{position:absolute;inset:0;z-index:1;background:transparent!important}
+  .maplibregl-canvas{outline:none}
+  .maplibregl-ctrl-attrib{display:none!important}
+
+  /* 载入遮罩 */
+  #boot{
+    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:14px;
+    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);
+    transition:opacity .5s ease;
+  }
+  #boot.gone{opacity:0;pointer-events:none}
+  #boot .ring{
+    width:46px;height:46px;border-radius:50%;border:3px solid rgba(245,197,24,.18);
+    border-top-color:var(--yellow);animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}
+  #boot .msg small{color:var(--text-mute);font-size:.76rem}
+
+  /* tooltip */
+  #tip{
+    position:absolute;z-index:15;pointer-events:none;display:none;
+    background:rgba(10,14,26,.95);border:1px solid #334155;border-radius:var(--radius-s);
+    padding:9px 12px;font-size:.76rem;line-height:1.6;min-width:170px;max-width:250px;
+    box-shadow:0 8px 26px rgba(0,0,0,.6);
+  }
+  #tip .n{font-weight:700;color:var(--yellow);margin-bottom:2px}
+  #tip .r{color:var(--text-dim)}
+  #tip .r span{color:var(--text)}
+  #tip .bar{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:6px;overflow:hidden}
+  #tip .bar i{display:block;height:100%;background:var(--yellow)}
+
+  /* ---------- 侧栏 ---------- */
+  aside{
+    width:326px;flex-shrink:0;border-left:1px solid var(--border);background:var(--bg-mid);
+    overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;
+  }
+  aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
+  .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
+  .search{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:var(--radius-s);
+    color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;outline:none}
+  .search:focus{border-color:var(--blue)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{
+    border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:.73rem;cursor:pointer;
+    color:var(--text-dim);background:rgba(255,255,255,.03);user-select:none;transition:.15s;
+  }
+  .chip:hover{border-color:var(--border-h);color:var(--text)}
+  .chip.on{border-color:currentColor;background:rgba(255,255,255,.09);color:var(--text)}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .legend{font-size:.75rem;color:var(--text-dim);line-height:1.95}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .legend .ln{display:inline-block;width:20px;height:0;border-top:2px solid;margin-right:8px;vertical-align:middle}
+  .muted{color:var(--text-mute);font-size:.73rem;line-height:1.7}
+  #detail .kv{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+  #detail .cell{background:rgba(255,255,255,.035);border-radius:var(--radius-s);padding:6px 9px}
+  #detail .cell .k{color:var(--text-mute);font-size:.68rem}
+  #detail .cell .v{font-size:.86rem;margin-top:2px}
+  #detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blue);background:rgba(59,130,246,.1);
+    border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}
+  #detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}
+  #hits{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+  #hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:.76rem}
+  #hits .hit:hover{background:rgba(255,255,255,.07)}
+  #hits .hit .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  #hits .hit .own{margin-left:auto;color:var(--text-mute);font-size:.68rem}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  ::-webkit-scrollbar-track{background:transparent}
+  @media (max-width:900px){
+    aside{width:250px;padding:10px}
+    header h1{font-size:.92rem}
+    header .stats{display:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>🌌 银河星图</h1>
+  <span class="tag">原型</span>
+  <span class="tag v2">v2 · MapLibre 3D</span>
+  <div class="stats" id="hdr"></div>
+  <button id="btn-reset">重置视角</button>
+  <button id="btn-mode">视图：银河</button>
+  <a class="btn" href="./galaxy-map.html">v1（SVG）</a>
+  <a class="btn" href="./index.html">← 战况面板</a>
+</header>
+
+<main>
+  <div id="stage">
+    <canvas id="stars"></canvas>
+    <div id="map"></div>
+    <div id="tip"></div>
+    <div id="boot">
+      <div class="ring"></div>
+      <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
+    </div>
+  </div>
+
+  <aside>
+    <h2>🔍 检索</h2>
+    <div class="card">
+      <input class="search" id="q" type="search" placeholder="输入星球名…（如 CHOOHE / 海尔迈尔）" autocomplete="off">
+      <div id="hits" style="margin-top:8px"></div>
+    </div>
+
+    <h2>🎛️ 阵营筛选</h2>
+    <div class="card"><div class="chips" id="factions"></div></div>
+
+    <h2>🗂️ 图层</h2>
+    <div class="card"><div class="chips" id="layers"></div></div>
+
+    <h2 id="detailTitle">📋 星球详情</h2>
+    <div class="card" id="detail">
+      <div class="muted">点击星图上的任意星球查看详情。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
+    </div>
+
+    <h2>📖 图例</h2>
+    <div class="card legend">
+      <div><i style="background:var(--c-humans)"></i>超级地球</div>
+      <div><i style="background:var(--c-terminids)"></i>终结族</div>
+      <div><i style="background:var(--c-automaton)"></i>机器人</div>
+      <div><i style="background:var(--c-illuminate)"></i>光能族</div>
+      <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>敌军反攻路线</div>
+      <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
+    </div>
+    <div class="muted" id="srcnote"></div>
+  </aside>
+</main>
+
+<script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
+<script src="./js/tactical.js"></script>
+<script>
+"use strict";
+/* ============================================================================
+   银河星图 v2 · MapLibre 原型
+   ============================================================================ */
+const $ = (id) => document.getElementById(id);
+const SVGNS = "http://www.w3.org/2000/svg";
+
+const OWNER_COLOR = { Humans:"#5BA3D0", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
+const OWN_CN     = { Humans:"超级地球", Terminids:"终结族", Automaton:"机器人", Illuminate:"光能族" };
+const FACTION_KEYS = ["Humans","Terminids","Automaton","Illuminate"];
+
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const fmt = (n) => (n || 0).toLocaleString("zh-CN");
+
+/* ---------------------------------------------------------------- 工具 ---- */
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+// 并发受限的图片加载（CORS 优先；wiki.gg 若不给 CORS 头则回退纯色圆点）
+async function fetchImageBitmap(url, crossOrigin) {
+  const img = new Image();
+  if (crossOrigin) img.crossOrigin = "anonymous";
+  img.referrerPolicy = "no-referrer";
+  img.decoding = "async";
+  await new Promise((res, rej) => {
+    img.onload = () => res();
+    img.onerror = () => rej(new Error("load fail"));
+    img.src = url;
+  });
+  if (img.decode) { try { await img.decode(); } catch (_) {} }
+  return img;
+}
+async function loadBitmapWithFallback(url) {
+  try { return await fetchImageBitmap(url, true); }
+  catch (_) {}
+  try { return await fetchImageBitmap(url, false); }   // 无 CORS：能显示但纹理可能被污染
+  catch (_) { return null; }
+}
+async function pool(items, limit, worker) {
+  let i = 0, active = 0;
+  return new Promise((resolve) => {
+    const next = () => {
+      if (i >= items.length && active === 0) return resolve();
+      while (active < limit && i < items.length) {
+        const item = items[i++]; active++;
+        Promise.resolve(worker(item)).catch(() => {}).then(() => { active--; next(); });
+      }
+    };
+    next();
+  });
+}
+
+/* ------------------------------------------------------- 星空背景 canvas ---- */
+function paintStarfield() {
+  const cv = $("stars");
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const w = cv.clientWidth || window.innerWidth;
+  const h = cv.clientHeight || window.innerHeight;
+  cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr);
+  const g = cv.getContext("2d");
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = "#05070C"; g.fillRect(0, 0, w, h);
+  // 星云：少量大半径、极低透明度的径向渐变
+  const nebulae = [
+    [w*0.30, h*0.34, Math.max(w,h)*0.45, "rgba(64,88,168,.10)"],
+    [w*0.74, h*0.62, Math.max(w,h)*0.42, "rgba(128,74,168,.085)"],
+    [w*0.55, h*0.20, Math.max(w,h)*0.34, "rgba(40,120,150,.06)"],
+  ];
+  for (const [x, y, r, col] of nebulae) {
+    const rg = g.createRadialGradient(x, y, 0, x, y, r);
+    rg.addColorStop(0, col); rg.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = rg; g.fillRect(0, 0, w, h);
+  }
+  // 星点：多档尺寸 + 少量带十字光芒的亮星
+  const hi = Math.max(1, Math.round(w * h / 1100));
+  for (let n = 0; n < hi; n++) {
+    const x = Math.random() * w, y = Math.random() * h;
+    const big = Math.random() > 0.985;
+    const r = big ? 1.5 + Math.random() * 1.5 : Math.random() * 0.95 + 0.25;
+    const a = 0.20 + Math.random() * 0.72;
+    g.beginPath(); g.arc(x, y, r, 0, 6.2832);
+    g.fillStyle = big ? `rgba(255,246,220,${a})` : `rgba(226,238,255,${a})`;
+    g.fill();
+    if (big) {
+      g.strokeStyle = `rgba(255,246,220,${a * 0.35})`; g.lineWidth = 0.7;
+      const s = r * 4.2;
+      g.beginPath(); g.moveTo(x - s, y); g.lineTo(x + s, y);
+      g.moveTo(x, y - s); g.lineTo(x, y + s); g.stroke();
+    }
+  }
+  // 四周暗角
+  const vg = g.createRadialGradient(w/2, h/2, Math.min(w,h)*0.32, w/2, h/2, Math.max(w,h)*0.78);
+  vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,.55)");
+  g.fillStyle = vg; g.fillRect(0, 0, w, h);
+}
+
+/* ------------------------------------------- 星区 / 势力 凸包（伪领土） ---- */
+// 星区多边形数据缺失，故按「同星区星球坐标 + 向质心外扩」构造近似范围。
+function convexHull(pts) {
+  if (pts.length < 3) return pts.slice();
+  const p = pts.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (o, a, b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
+  const lower = [], upper = [];
+  for (const pt of p) { while (lower.length >= 2 && cross(lower[lower.length-2], lower[lower.length-1], pt) <= 0) lower.pop(); lower.push(pt); }
+  for (let i = p.length - 1; i >= 0; i--) { const pt = p[i]; while (upper.length >= 2 && cross(upper[upper.length-2], upper[upper.length-1], pt) <= 0) upper.pop(); upper.push(pt); }
+  lower.pop(); upper.pop();
+  return lower.concat(upper);
+}
+function expandHull(hull, factor) {
+  if (!hull.length) return hull;
+  const cx = hull.reduce((a, p) => a + p[0], 0) / hull.length;
+  const cy = hull.reduce((a, p) => a + p[1], 0) / hull.length;
+  return hull.map(([x, y]) => [cx + (x - cx) * factor, cy + (y - cy) * factor]);
+}
+function ring(coords) { const r = coords.slice(); if (r.length) r.push(r[0]); return r; }
+
+/* --------------------------------------------------------- wiki 图标名 ---- */
+// 「Acamar IV」->「Acamar_IV_Planet_Icon.png」；未收录的星球取不到图标，回退纯色圆点。
+function planetIconFile(name) {
+  const n = String(name || "").trim();
+  if (!n) return null;
+  return encodeURIComponent(n.replace(/ /g, "_") + "_Planet_Icon.png");
+}
+const ICON_BASE = "https://helldivers.wiki.gg/images/thumb/";
+function planetIconURL(file, px) { return ICON_BASE + file + "/" + px + "px-" + file; }
+
+/* ================================================================ 主流程 ==== */
+let MAP = null;
+let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
+let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
+const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
+const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
+
+const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
+
+async function boot() {
+  const setMsg = (h) => { $("bootmsg").innerHTML = h; };
+  paintStarfield();
+  window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintStarfield, 250); });
+
+  // ---- 1) 数据 ----
+  setMsg("正在加载战况数据…<br><small>data.json · waypoints.json</small>");
+  let data, wpRaw;
+  try {
+    [data, wpRaw] = await Promise.all([
+      (await fetch("./data.json?t=" + Date.now(), { cache: "no-store" })).json(),
+      (await fetch("./tables/waypoints.json?t=" + Date.now(), { cache: "no-store" })).json(),
+    ]);
+  } catch (e) {
+    setMsg("⚠️ 数据加载失败<br><small>" + esc(e.message) + "</small>");
+    return;
+  }
+  DATA = data;
+  WP = wpRaw.waypoints || wpRaw;
+  (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
+
+  // ---- 2) 战术目标（复用现有 tactical.js） ----
+  setMsg("正在计算战术目标…<br><small>tactical.js</small>");
+  try {
+    if (window.Tactical) {
+      const ctx = {
+        planets: data.planets, campaigns: data.campaigns, waypoints: wpRaw,
+        nameOf: (idx) => (BYIDX[idx] ? BYIDX[idx].name : "#" + idx),
+        sectorCnOf: (s) => s,
+      };
+      for (const k of Object.keys(WP)) {
+        try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
+      }
+    }
+  } catch (_) { /* 词条失败不影响星图 */ }
+
+  // ---- 3) 构造 GeoJSON ----
+  const planets = (data.planets || []).filter(p => {
+    const pos = p.position || {};
+    return pos.x || pos.y;                       // 剔除 (0,0) 哨兵
+  });
+  const fc = (feats) => ({ type: "FeatureCollection", features: feats });
+  const pt = (x, y) => ({ type: "Point", coordinates: [x, y] });
+
+  // 星球点（带全部展示属性）
+  const planetFC = fc(planets.map(p => {
+    const libPct = p.maxHealth > 0 ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
+    const tac = (TACBY[p.index] || []).map(t => t.title);
+    return {
+      type: "Feature", geometry: pt(p.position.x, p.position.y),
+      properties: {
+        index: p.index, name: p.name || ("#" + p.index),
+        owner: p.currentOwner || "None", ownerCn: OWN_CN[p.currentOwner] || (p.currentOwner || "未知"),
+        color: OWNER_COLOR[p.currentOwner] || "#64748b",
+        sector: p.sector || "", players: p.players || 0, lib: +libPct.toFixed(1),
+        tacCount: tac.length, tacTitle: tac.join(" / "),
+        icon: planetIconFile(p.name) || "",
+        isDef: (data.campaigns || []).some(c => c.campaignType === "defense" && c.planet && c.planet.index === p.index) ? 1 : 0,
+        isEvent: (data.planet_events || []).some(e => e.planetIndex === p.index) ? 1 : 0,
+      },
+    };
+  }));
+
+  // 补给线（有向；按速率分级）
+  const ownerOf = (i) => (BYIDX[i] ? BYIDX[i].currentOwner : null);
+  const posOf = (i) => (BYIDX[i] && BYIDX[i].position) ? BYIDX[i].position : null;
+  const atkSet = new Set((data.planet_attacks || []).map(a => a.source + ">" + a.target));
+  const supplyFC = fc((() => {
+    const out = [];
+    for (const k of Object.keys(WP)) {
+      const a = posOf(+k); if (!a) continue;
+      for (const to of (WP[k] || [])) {
+        const b = posOf(+to); if (!b) continue;
+        const isAtk = atkSet.has(k + ">" + to);
+        out.push({
+          type: "Feature",
+          geometry: { type: "LineString", coordinates: [[a.x, a.y], [b.x, b.y]] },
+          properties: {
+            grade: isAtk ? "attack" : "human",
+            width: isAtk ? 1.9 : 1.15,
+            from: +k, to: +to,
+            owner: ownerOf(+k) || "None",
+          },
+        });
+      }
+    }
+    return out;
+  })());
+
+  // 反攻线（用于方向箭头）
+  const attackFC = fc((data.planet_attacks || []).map(a => {
+    const p1 = posOf(a.source), p2 = posOf(a.target);
+    if (!p1 || !p2) return null;
+    return { type: "Feature", geometry: { type: "LineString", coordinates: [[p1.x, p1.y], [p2.x, p2.y]] },
+             properties: { from: a.source, to: a.target } };
+  }).filter(Boolean));
+
+  // 玩家热力（按星球）
+  const heatFC = fc(planets.filter(p => (p.players || 0) > 0).map(p => ({
+    type: "Feature", geometry: pt(p.position.x, p.position.y),
+    properties: { value: Math.min(1, (p.players || 0) / 9000) },
+  })));
+
+  // 星区领土（近似凸包）——按星区聚合
+  const bySector = {};
+  planets.forEach(p => { const s = p.sector || "UNKNOWN"; (bySector[s] = bySector[s] || []).push(p); });
+  const sectorFC = fc(Object.entries(bySector)
+    .filter(([, list]) => list.length >= 3)
+    .map(([name, list]) => ({
+      type: "Feature",
+      geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.16))] },
+      properties: { name, count: list.length },
+    })));
+
+  // 势力领土（近似凸包，仅非我方阵营绘制，作为大色块）
+  const factionFC = fc(FACTION_KEYS
+    .filter(k => k !== "Humans")
+    .map(k => {
+      const list = planets.filter(p => p.currentOwner === k);
+      if (list.length < 3) return null;
+      const hull = expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.20);
+      return { type: "Feature", geometry: { type: "Polygon", coordinates: [ring(hull)] },
+               properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], count: list.length } };
+    }).filter(Boolean));
+
+  // 势力名（放在该阵营凸包质心，沿地图旋转）
+  const factionLabelFC = fc(FACTION_KEYS.map(k => {
+    const list = planets.filter(p => p.currentOwner === k);
+    if (!list.length) return null;
+    const cx = list.reduce((a, p) => a + p.position.x, 0) / list.length;
+    const cy = list.reduce((a, p) => a + p.position.y, 0) / list.length;
+    const name = ({ Humans:"SUPER EARTH", Terminids:"TERMINIDS", Automaton:"AUTOMATONS", Illuminate:"ILLUMINATE" })[k];
+    return { type: "Feature", geometry: pt(cx, cy),
+             properties: { text: name, color: OWNER_COLOR[k], owner: k, n: list.length } };
+  }).filter(Boolean));
+
+  // ---- 4) 顶栏统计 ----
+  const owners = {};
+  planets.forEach(p => { owners[p.currentOwner] = (owners[p.currentOwner] || 0) + 1; });
+  $("hdr").innerHTML =
+    `<span><b>星球</b> ${planets.length}</span>` +
+    FACTION_KEYS.map(k => `<span style="color:${OWNER_COLOR[k]}">${OWN_CN[k]} ${owners[k] || 0}</span>`).join("") +
+    `<span style="color:var(--blue)"><b>战术目标</b> ${Object.keys(TACBY).length}</span>` +
+    `<span style="color:#E74C3C"><b>反攻</b> ${(data.planet_attacks || []).length}</span>` +
+    `<span><b>更新</b> ${(data.fetchedAt || "").slice(5, 16).replace("T", " ")}</span>`;
+
+  // ---- 5) 地图 ----
+  setMsg("正在构建星图图层…<br><small>MapLibre GL · WebGL</small>");
+  maplibregl.setWorkerUrl("./js/libs/maplibre/maplibre-gl-csp-worker.js");
+
+  MAP = new maplibregl.Map({
+    container: "map",
+    style: {
+      version: 8,
+      name: "hd2-galaxy",
+      glyphs: "./js/libs/maplibre/fonts/{fontstack}/{range}.pbf",
+      sources: {
+        planets:    { type: "geojson", data: planetFC },
+        supply:     { type: "geojson", data: supplyFC, lineMetrics: true },
+        attack:     { type: "geojson", data: attackFC },
+        sector:     { type: "geojson", data: sectorFC },
+        faction:    { type: "geojson", data: factionFC },
+        flabel:     { type: "geojson", data: factionLabelFC },
+        heat:       { type: "geojson", data: heatFC },
+      },
+      layers: [
+        // 背景交给 CSS 星空，不在此处填色
+        { id: "bg", type: "background", paint: { "background-color": "rgba(0,0,0,0)" } },
+
+        // 星区（细虚线，弱）
+        { id: "sector-fill", type: "fill", source: "sector",
+          paint: { "fill-color": "rgba(255,255,255,.014)" } },
+        { id: "sector-line", type: "line", source: "sector",
+          paint: { "line-color": "rgba(255,255,255,.10)", "line-width": .8, "line-dasharray": [4, 4] } },
+
+        // 势力领土（大色块）
+        { id: "faction-fill", type: "fill", source: "faction",
+          paint: { "fill-color": ["get", "color"], "fill-opacity": .085 } },
+        { id: "faction-line", type: "line", source: "faction",
+          paint: { "line-color": ["get", "color"], "line-width": 1.1, "line-opacity": .45 } },
+
+        // 玩家热力（默认关）
+        { id: "heat", type: "heatmap", source: "heat", layout: { visibility: "none" },
+          paint: {
+            "heatmap-weight": ["get", "value"],
+            "heatmap-intensity": .9,
+            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 30, 12, 60],
+            "heatmap-opacity": .55,
+            "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
+              0, "rgba(0,0,0,0)", .2, "rgba(245,197,24,.25)", .5, "rgba(245,140,24,.5)",
+              .8, "rgba(239,68,68,.7)", 1, "rgba(239,68,68,.9)"],
+          } },
+
+        // 补给线：渐变（我方蓝 -> 敌方阵营色）
+        { id: "supply", type: "line", source: "supply",
+          filter: ["==", ["get", "grade"], "human"],
+          layout: { "line-cap": "round", "line-join": "round" },
+          paint: {
+            "line-width": ["interpolate", ["linear"], ["zoom"], 4, ["*", ["get", "width"], .5], 9, ["get", "width"], 13, ["*", ["get", "width"], 2.4]],
+            "line-opacity": .42,
+            "line-gradient": ["interpolate", ["linear"], ["line-progress"],
+              0, "rgba(91,163,208,.55)", 1, "rgba(207,100,248,.75)"],
+          } },
+
+        // 反攻线：红色虚线
+        { id: "attack-line", type: "line", source: "attack",
+          layout: { "line-cap": "butt" },
+          paint: {
+            "line-color": "rgba(239,68,68,.85)",
+            "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.2, 9, 2.2, 13, 4],
+            "line-dasharray": [2, 1.6],
+            "line-opacity": .8,
+          } },
+
+        // 星球外发光（营造 3D 立体感）
+        { id: "planet-glow", type: "circle", source: "planets",
+          paint: {
+            "circle-color": ["get", "color"],
+            "circle-blur": 1,
+            "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .16, 9, .3, 13, .42],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 3.5, 9, 9, 13, 22],
+          } },
+
+        // 星球本体
+        { id: "planet-core", type: "circle", source: "planets",
+          paint: {
+            "circle-color": ["get", "color"],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.2, 9, 5.4, 13, 13],
+            "circle-stroke-color": "rgba(0,0,0,.55)",
+            "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, 1.2, 13, 2],
+          } },
+
+        // 防御战红环
+        { id: "planet-def", type: "circle", source: "planets",
+          filter: ["==", ["get", "isDef"], 1],
+          paint: {
+            "circle-color": "rgba(0,0,0,0)",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4, 9, 8.5, 13, 19],
+            "circle-stroke-color": "rgba(239,68,68,.85)",
+            "circle-stroke-width": 1.4,
+          } },
+
+        // 战术目标蓝环
+        { id: "planet-tac", type: "circle", source: "planets",
+          filter: [">", ["get", "tacCount"], 0],
+          paint: {
+            "circle-color": "rgba(0,0,0,0)",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5.4, 9, 10.5, 13, 22],
+            "circle-stroke-color": "rgba(59,130,246,.9)",
+            "circle-stroke-width": 1.5,
+          } },
+
+        // 活动事件黄环
+        { id: "planet-event", type: "circle", source: "planets",
+          filter: ["==", ["get", "isEvent"], 1],
+          paint: {
+            "circle-color": "rgba(0,0,0,0)",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 6.8, 9, 12.5, 13, 26],
+            "circle-stroke-color": "rgba(245,197,24,.9)",
+            "circle-stroke-width": 1.3,
+            "circle-stroke-opacity": .85,
+          } },
+
+        // wiki 星球图标（热链；取不到图标的星球保留上面的纯色圆点）
+        { id: "planet-icon", type: "symbol", source: "planets",
+          layout: {
+            "icon-image": ["get", "icon"],
+            "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .14, 8, .2, 11, .3, 13, .46],
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true,
+            "icon-anchor": "center",
+          } },
+
+        // 星球名标签（缩放到一定级别才显示）
+        { id: "planet-label", type: "symbol", source: "planets",
+          minzoom: 9.4,
+          layout: {
+            "text-field": ["get", "name"],
+            "text-font": ["Noto Sans Regular"],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 9.4, 9, 13, 13],
+            "text-anchor": "top",
+            "text-offset": [0, 1.1],
+            "text-allow-overlap": false,
+            "text-optional": true,
+            "text-padding": 3,
+          },
+          paint: { "text-color": "rgba(226,232,240,.92)", "text-halo-color": "rgba(0,0,0,.85)", "text-halo-width": 1.3 } },
+
+        // 势力名（沿地图旋转）
+        { id: "flabel", type: "symbol", source: "flabel",
+          layout: {
+            "text-field": ["get", "text"],
+            "text-font": ["Noto Sans Regular"],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 4, 16, 9, 30, 13, 72],
+            "text-rotate": 0,
+            "text-pitch-alignment": "map",
+            "text-rotation-alignment": "map",
+            "text-allow-overlap": true,
+            "text-ignore-placement": true,
+            "text-letter-spacing": .18,
+          },
+          paint: { "text-color": ["get", "color"], "text-opacity": .34, "text-halo-color": "rgba(0,0,0,.5)", "text-halo-width": 1 } },
+
+        // 反攻方向箭头
+        { id: "attack-arrow", type: "symbol", source: "attack",
+          minzoom: 7.2,
+          layout: {
+            "symbol-placement": "line-center",
+            "icon-image": "arrow-head",
+            "icon-size": ["interpolate", ["linear"], ["zoom"], 7, .5, 12, 1.3],
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true,
+          } },
+      ],
+    },
+    center: HOME.center,
+    zoom: HOME.zoom,
+    pitch: HOME.pitch,
+    bearing: HOME.bearing,
+    minZoom: 3.2,
+    maxZoom: 15,
+    maxPitch: 70,
+    minPitch: 0,
+    maxBounds: [[-1.9, -1.7], [1.9, 1.75]],
+    dragRotate: true,
+    pitchWithRotate: true,
+    attributionControl: false,
+    antialias: true,
+    renderWorldCopies: false,
+    fadeDuration: 120,
+  });
+
+  MAP.addControl(new maplibregl.NavigationControl({ visualizePitch: true, showCompass: true }), "bottom-right");
+  MAP.addControl(new maplibregl.ScaleControl({ maxWidth: 90, unit: "metric" }), "bottom-left");
+
+  MAP.on("error", (e) => { if (e && e.error) console.warn("[MapLibre]", e.error.message || e.error); });
+
+  MAP.on("load", async () => {
+    // 反攻箭头图标（SDF，可着色）
+    try {
+      const HEAD = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">' +
+        '<path d="M2 3 L16 9 L2 15 L5.5 9 Z" fill="#fff"/></svg>';
+      const img = new Image();
+      img.referrerPolicy = "no-referrer";
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(HEAD);
+      await new Promise((res) => { img.onload = res; img.onerror = res; });
+      if (img.width) MAP.addImage("arrow-head", img, { sdf: true });
+    } catch (_) {}
+    try { MAP.setPaintProperty("attack-arrow", "icon-color", "rgba(255,120,120,.95)"); } catch (_) {}
+
+    // 预载 wiki 星球图标
+    const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
+    let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
+    if (files.length) {
+      setMsg("正在加载星球图标…<br><small>helldivers.wiki.gg · " + files.length + " 个</small>");
+      await pool(files, 6, async (file) => {
+        const img = await loadBitmapWithFallback(planetIconURL(file, 64));
+        if (!img) { bad++; return; }
+        try { if (!MAP.hasImage(file)) MAP.addImage(file, img, { pixelRatio: 2 }); ok++; }
+        catch (_) { bad++; }
+      });
+      $("srcnote").innerHTML = "图标：wiki.gg 命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（缺失的以纯色圆点显示）";
+      console.info("[图标] 命中", ok, "缺失", bad, "共", files.length);
+    } else {
+      $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
+    }
+
+    if (bad === files.length && files.length) {
+      // 全部失败（多半是 CORS）：明确告知，避免误以为是数据问题
+      $("srcnote").innerHTML += "<br><span style='color:#f59e0b'>wiki.gg 未返回 CORS 头，浏览器拒绝作为 WebGL 纹理；已回退纯色圆点。</span>";
+    }
+
+    $("boot").classList.add("gone");
+    setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
+  });
+
+  bindUI(data, planets);
+}
+
+/* -------------------------------------------------------------- UI 交互 ---- */
+function bindUI(data, planets) {
+  const CIRCLED = (n) => Math.max(0, Math.min(255, Math.round(n)));
+  const colorOf = (owner) => OWNER_COLOR[owner] || "#64748b";
+
+  // 阵营筛选
+  $("factions").innerHTML = FACTION_KEYS.map(k =>
+    `<span class="chip on" data-f="${k}" style="color:${OWNER_COLOR[k]}">` +
+    `<span class="dot" style="background:${OWNER_COLOR[k]}"></span>${OWN_CN[k]}</span>`).join("");
+  $("factions").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip"); if (!chip) return;
+    const k = chip.dataset.f;
+    if (ACTIVE_FACTIONS.has(k)) { if (ACTIVE_FACTIONS.size === 1) return; ACTIVE_FACTIONS.delete(k); chip.classList.remove("on"); }
+    else { ACTIVE_FACTIONS.add(k); chip.classList.add("on"); }
+    applyFactionFilter();
+  });
+
+  // 图层开关
+  const LAYER_LABEL = { territory:"领土/星区", supply:"补给线", attack:"反攻线", icons:"星球图标", heat:"玩家热力", labels:"星球名" };
+  $("layers").innerHTML = Object.keys(LAYER_ON).map(k =>
+    `<span class="chip${LAYER_ON[k] ? " on" : ""}" data-l="${k}">${LAYER_LABEL[k]}</span>`).join("");
+  $("layers").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip"); if (!chip) return;
+    const k = chip.dataset.l;
+    LAYER_ON[k] = !LAYER_ON[k];
+    chip.classList.toggle("on", LAYER_ON[k]);
+    applyLayerToggles();
+  });
+
+  // 视图模式
+  const MODES = [
+    ["galaxy",   "银河"],
+    ["tactical", "战术"],
+    ["region",   "区域"],
+  ];
+  let mi = 0;
+  $("btn-mode").addEventListener("click", () => {
+    mi = (mi + 1) % MODES.length;
+    VIEW_MODE = MODES[mi][0];
+    $("btn-mode").textContent = "视图：" + MODES[mi][1];
+    applyViewMode();
+  });
+
+  $("btn-reset").addEventListener("click", () => {
+    MAP.easeTo({ center: HOME.center, zoom: HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing, duration: 700 });
+  });
+
+  // 检索
+  const q = $("q");
+  const allNames = planets.map(p => ({ index: p.index, name: p.name || ("#" + p.index),
+    owner: p.currentOwner, sector: p.sector || "", lib: p.maxHealth > 0 ? (1 - p.health / p.maxHealth) * 100 : 0 }));
+  let hitsTimer = null;
+  q.addEventListener("input", () => { clearTimeout(hitsTimer); hitsTimer = setTimeout(renderHits, 130); });
+  q.addEventListener("keydown", (e) => { if (e.key === "Enter") performSearch(q.value.trim()); });
+
+  function renderHits() {
+    const term = q.value.trim().toUpperCase();
+    const box = $("hits");
+    if (!term) { box.innerHTML = ""; return; }
+    const list = allNames.filter(p => p.name.toUpperCase().includes(term) || (p.sector || "").toUpperCase().includes(term)).slice(0, 40);
+    if (!list.length) { box.innerHTML = '<div class="muted" style="padding:4px 8px">无匹配</div>'; return; }
+    box.innerHTML = list.map(p =>
+      `<div class="hit" data-i="${p.index}"><span class="dot" style="background:${colorOf(p.owner)}"></span>` +
+      `<span>${esc(p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span></div>`).join("");
+  }
+  function performSearch(term) {
+    if (!term) return;
+    const p = allNames.find(x => x.name.toUpperCase() === term.toUpperCase())
+           || allNames.find(x => x.name.toUpperCase().includes(term.toUpperCase()));
+    if (p) focusPlanet(p.index);
+  }
+  $("hits").addEventListener("click", (e) => {
+    const h = e.target.closest(".hit"); if (!h) return;
+    focusPlanet(+h.dataset.i);
+  });
+
+  function focusPlanet(index) {
+    const p = BYIDX[index]; if (!p || !p.position) return;
+    MAP.flyTo({ center: [p.position.x, p.position.y], zoom: Math.max(MAP.getZoom(), 10.4), pitch: 46, duration: 900 });
+    showDetail(index);
+  }
+  window.__focusPlanet = focusPlanet;
+
+  // hover tooltip
+  const tip = $("tip");
+  MAP.on("mousemove", "planet-core", (e) => {
+    const f = e.features && e.features[0]; if (!f) return;
+    const pr = f.properties;
+    tip.innerHTML =
+      `<div class="n">${esc(pr.name)}</div>` +
+      `<div class="r">归属：<span>${esc(pr.ownerCn)}</span></div>` +
+      `<div class="r">解放度：<span>${pr.lib}%</span> · 玩家 <span>${fmt(pr.players)}</span></div>` +
+      (pr.tacCount ? `<div class="r" style="color:#60a5fa">⚡ ${esc(pr.tacTitle)}</div>` : "") +
+      `<div class="bar"><i style="width:${pr.lib}%"></i></div>`;
+    tip.style.display = "block";
+    const st = $("stage").getBoundingClientRect();
+    let x = e.originalEvent.clientX - st.left + 15, y = e.originalEvent.clientY - st.top + 15;
+    if (x + 265 > st.width) x = e.originalEvent.clientX - st.left - 275;
+    if (y + 110 > st.height) y = e.originalEvent.clientY - st.top - 120;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+    MAP.getCanvas().style.cursor = "pointer";
+  });
+  MAP.on("mouseleave", "planet-core", () => { tip.style.display = "none"; MAP.getCanvas().style.cursor = ""; });
+
+  // 点击详情
+  MAP.on("click", "planet-core", (e) => {
+    const f = e.features && e.features[0]; if (f) showDetail(f.properties.index);
+  });
+
+  function showDetail(index) {
+    const p = BYIDX[index]; if (!p) return;
+    const lib = p.maxHealth > 0 ? ((1 - p.health / p.maxHealth) * 100).toFixed(2) : "—";
+    const tags = TACBY[index] || [];
+    const campaigns = (data.campaigns || []).filter(c => c.planet && c.planet.index === index);
+    const camp = campaigns[0];
+    const ev = (data.planet_events || []).find(x => x.planetIndex === index);
+    $("detailTitle").textContent = "📋 " + (p.name || ("#" + index));
+    $("detail").innerHTML =
+      `<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+         <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${colorOf(p.currentOwner)}"></span>
+         <b style="font-size:.95rem">${esc(p.name || ("#" + index))}</b>
+       </div>` +
+      `<div class="kv">
+         <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</div></div>
+         <div class="cell"><div class="k">解放度</div><div class="v">${lib}%</div></div>
+         <div class="cell"><div class="k">在线玩家</div><div class="v">${fmt(p.players)}</div></div>
+         <div class="cell"><div class="k">星区</div><div class="v">${esc(p.sector || "—")}</div></div>
+         <div class="cell"><div class="k">抵抗值</div><div class="v">${p.resistance != null ? p.resistance : "—"}</div></div>
+         <div class="cell"><div class="k">索引</div><div class="v">${p.index}</div></div>
+       </div>` +
+      (camp ? `<div style="margin-top:9px"><span class="tac">${camp.campaignType === "defense" ? "防御战役" : "解放战役"}</span>` +
+              `<span class="tac">${OWN_CN[camp.faction] || camp.faction || ""}</span></div>` : "") +
+      (ev ? `<div style="margin-top:9px"><span class="tac" style="border-color:rgba(245,197,24,.6);color:var(--yellow);background:rgba(245,197,24,.1)">活动事件</span>` +
+            `<div class="tacTxt">进度 ${(ev.maxHealth > 0 ? (1 - ev.health / ev.maxHealth) * 100 : 0).toFixed(1)}%</div></div>` : "") +
+      (tags.length ? `<div style="margin-top:9px">` + tags.map(t =>
+          `<span class="tac">${esc(t.title)}</span>`).join("") +
+          tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
+      `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
+  }
+
+  /* ---- 筛选 / 图层 / 视图 的实际生效 ---- */
+  function ownerFilterExpr() {
+    const list = [...ACTIVE_FACTIONS];
+    return ["in", ["get", "owner"], ["literal", list]];
+  }
+  function setLayerVis(id, on) {
+    try { MAP.setLayoutProperty(id, "visibility", on ? "visible" : "none"); } catch (_) {}
+  }
+  function applyFactionFilter() {
+    const f = ownerFilterExpr();
+    for (const id of ["planet-glow", "planet-core", "planet-def", "planet-tac", "planet-event", "planet-icon", "planet-label"]) {
+      try { MAP.setFilter(id, id === "planet-def" ? ["all", f, ["==", ["get", "isDef"], 1]]
+                        : id === "planet-tac" ? ["all", f, [">", ["get", "tacCount"], 0]]
+                        : id === "planet-event" ? ["all", f, ["==", ["get", "isEvent"], 1]]
+                        : f); } catch (_) {}
+    }
+  }
+  function applyLayerToggles() {
+    setLayerVis("supply", LAYER_ON.supply);
+    setLayerVis("attack-line", LAYER_ON.attack);
+    setLayerVis("attack-arrow", LAYER_ON.attack);
+    setLayerVis("sector-fill", LAYER_ON.territory);
+    setLayerVis("sector-line", LAYER_ON.territory);
+    setLayerVis("faction-fill", LAYER_ON.territory);
+    setLayerVis("faction-line", LAYER_ON.territory);
+    setLayerVis("flabel", LAYER_ON.territory);
+    setLayerVis("planet-icon", LAYER_ON.icons);
+    setLayerVis("planet-label", LAYER_ON.labels);
+    setLayerVis("heat", LAYER_ON.heat);
+  }
+  function applyViewMode() {
+    if (VIEW_MODE === "galaxy") {
+      LAYER_ON.territory = true; LAYER_ON.labels = true; LAYER_ON.heat = false; LAYER_ON.attack = true;
+    } else if (VIEW_MODE === "tactical") {
+      LAYER_ON.territory = false; LAYER_ON.labels = true; LAYER_ON.heat = false; LAYER_ON.attack = true;
+    } else {
+      LAYER_ON.territory = true; LAYER_ON.labels = false; LAYER_ON.heat = true; LAYER_ON.attack = false;
+    }
+    // 同步 chip 状态
+    $("layers").querySelectorAll(".chip").forEach(c => c.classList.toggle("on", !!LAYER_ON[c.dataset.l]));
+    applyLayerToggles();
+  }
+
+  applyFactionFilter();
+}
+
+/* ---------------------------------------------------------------- 启动 ---- */
+try {
+  boot();
+} catch (e) {
+  $("bootmsg").innerHTML = "⚠️ 初始化异常<br><small>" + esc(e.message) + "</small>";
+  console.error(e);
+}
+</script>
+</body>
+</html>
