@@ -802,7 +802,7 @@ def main():
         if os.path.exists(out_path):
             with open(out_path, encoding="utf-8") as f:
                 old = json.load(f)
-            for k in ("news", "major_order"):
+            for k in ("news", "major_order", "strategic"):
                 if k in old:
                     result[k] = old[k]
     except Exception:
