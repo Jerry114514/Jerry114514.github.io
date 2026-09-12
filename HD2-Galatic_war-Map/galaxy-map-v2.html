@@ -120,13 +120,10 @@
   body.aside-collapsed #aside-rail{display:flex}
   #aside-rail span{color:var(--text-dim);font-size:.9rem}
   #aside-rail:hover span{color:var(--blue)}
-  /* 移动端抽屉遮罩：仅在抽屉打开时铺在地图上，点它收抽屉。
-     注意它必须比 aside(z25) 低，且默认 display:none —— 否则会像旧的
-     #aside-rail 那样变成一张盖住整屏、无法与星图交互的透明玻璃。 */
-  #aside-backdrop{
-    display:none;position:absolute;inset:0;z-index:24;
-    background:rgba(3,6,14,.55);backdrop-filter:blur(2px);
-  }
+  /* 抽屉遮罩：桌面端始终关闭（桌面用窄边条展开），仅移动端媒体查询里启用。
+     注意它必须比 aside(z25) 低 —— 否则会像旧的 #aside-rail 那样变成
+     一张盖住整屏、无法与星图交互的透明玻璃。 */
+  #aside-backdrop{display:none;position:absolute;inset:0;z-index:24;background:rgba(3,6,14,.5)}
 
   /* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */
   #sector-card{
@@ -269,26 +266,36 @@
     header .tag,header #btn-reset,header #btn-mode,header .btn.opt{display:none}
     header h1{font-size:.86rem}
     #aside-toggle{display:inline-block}
-    /* 移动端：侧栏改为右侧抽屉浮层，不占地图宽度 */
+    /* 移动端：侧栏改为右侧抽屉浮层，不占地图宽度。
+       ⚠ 层叠陷阱：媒体查询里的 `aside{}` 特异度只有 (0,0,1)，会被通用的
+       `body.aside-collapsed aside{}` (0,1,1) 压过 —— 所以这里不能只靠
+       「默认隐藏」，必须用同等或更高特异度显式声明可见态，否则抽屉永远停在屏幕外。 */
     aside{
-      position:absolute;top:0;right:0;bottom:0;width:min(84vw,320px);
+      position:absolute;top:0;bottom:0;right:0;width:min(84vw,320px);
       box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;
       transform:translateX(105%);transition:transform .24s ease;
     }
-    body.aside-collapsed aside{transform:translateX(0)}
+    /* 抽屉打开 = 未收起。这样 ☰ 的语义在桌面/移动端保持一致：
+       桌面收成窄边条、移动端收进屏幕外，都是同一个「收起」。 */
+    body:not(.aside-collapsed) aside{transform:translateX(0)}
     /* 关键修复：旧规则把窄边条拉成 100%×100% 的半透明整屏，
        侧栏一收起就变成盖住整个星图、点不动任何东西的玻璃板。
-       移动端横向空间本就不够，展开侧栏改由顶栏 ☰ / 遮罩 / 点地图负责。 */
+       移动端横向空间本就不够，展开侧栏改由顶栏 ☰ / 遮罩负责。 */
     #aside-rail{display:none !important}
-    /* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点（变 ✕ 样式） */
+    /* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点 */
     #aside-toggle{
       position:absolute;top:7px;right:9px;z-index:27;
       padding:4px 10px;line-height:1.25;font-size:1.02rem;
       box-shadow:0 2px 10px rgba(0,0,0,.55);
     }
     body:not(.aside-collapsed) #aside-toggle{color:var(--yellow);border-color:var(--yellow)}
-    /* 抽屉打开时铺一层遮罩，点遮罩即收起 */
-    body:not(.aside-collapsed) #aside-backdrop{display:block}
+    /* 抽屉遮罩（仅移动端存在）：铺在地图上、位于抽屉之下，点它即收起。
+       不透明度只用 .5 —— 否则地图变暗后会被误认为「点不动」。 */
+    #aside-backdrop{
+      display:block;position:absolute;inset:0;z-index:24;
+      background:rgba(3,6,14,.5);backdrop-filter:blur(2px);
+    }
+    body.aside-collapsed #aside-backdrop{display:none}
     /* 移动端：地图铺满，控件缩小 */
     .maplibregl-ctrl-bottom-right{bottom:8px;right:6px}
     .maplibregl-ctrl-bottom-left{display:none}
@@ -322,7 +329,7 @@
       <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
     </div>
   </div>
-  <div id="aside-backdrop" hidden></div>
+  <div id="aside-backdrop"></div>
   <div id="aside-rail" title="展开侧栏"><span>◀</span></div>
 
   <aside>
