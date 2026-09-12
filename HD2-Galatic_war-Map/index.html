@@ -1227,25 +1227,28 @@ function renderPlayers(data) {
         const te = (t.effectIds || []);
         if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t;
       });
-      // DSS 战术行动三阶段（2026-09 实测校准）
-      //   status=1 → 募捐中（cost.current 持续增长）
-      //   status=2 → 冷却/禁用
-      //   status=3 → 已激活（cost.current=0，按 expireAtWarTime 倒计时）
-      // 旧代码把 2 当作「已激活」且未处理 3，导致已激活的行动被误显示为「募捐中」，
-      // 顶部计数也会算成 0 项生效。
+      // DSS 战术行动三阶段（2026-09 经用户确认 + 实测校准）
+      //   status=1 → 募捐中  （cost.current 持续增长）
+      //   status=2 → 已激活  （三个取值中唯一未被 1/3 占用者，与原设计一致）
+      //   status=3 → 冷却期  （用户确认：当前 EAGLE STORM 处于冷却）
+      // 判别要点：冷却期的 statusExpireAtWarTime 是「冷却结束时间」，同样落在未来，
+      // 因此【不能】用 expire 是否在未来来区分「激活」与「冷却」，必须看 status。
       let isActive = false, dInfo = {cur:0, target:1, pct:0};
       let remainMs = null;
       if (ta) {
         const cost = (ta.cost || [])[0] || {};
         const cur = cost.current || 0, target = cost.target || 1;
         dInfo = {cur, target, pct: Math.min(100, Math.max(0, (cur/target)*100))};
-        isActive = (ta.status === 3);
+        isActive = (ta.status === 2);
         if (isActive) remainMs = warRemainMs(ta.expireAtWarTime);
       } else {
         isActive = dss ? ids.some(id => activeIds.has(id)) : false;
       }
       const barColor = isActive ? "#2ECC71" : "#3B82F6";
-      const statusText = isActive ? "✅ 已激活" : "⏸ 募捐中";
+      // 三阶段文案：1=募捐中、2=已激活、3=冷却期（未命中任何行动时也按募捐中处理）
+      const phase = ta ? ta.status : 1;
+      const statusText = (phase === 2) ? "✅ 已激活" : (phase === 3 ? "❄️ 冷却中" : "⏸ 募捐中");
+      const isCooldown = (phase === 3);
       let descText = e.desc || "";
       if (ta && ta.strategicDescription) descText = stripTags(ta.strategicDescription);
       let barLabel = "";
@@ -1254,6 +1257,12 @@ function renderPlayers(data) {
         // 激活：倒计时条（24h 周期衰减）
         barPct = (remainMs != null) ? Math.min(100, Math.max(0, remainMs / (24*3600*1000) * 100)) : 100;
         barLabel = (remainMs != null) ? `⏳ 剩余 ${fmtCountdown(remainMs)}` : "⚡ 行动激活中（24h 周期）";
+      }
+      else if (isCooldown) {
+        // 冷却期：expireAtWarTime 此时表示「冷却结束时间」，据此显示剩余冷却
+        const cdMs = warRemainMs(ta && ta.expireAtWarTime);
+        barLabel = `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)` +
+                   (cdMs != null && cdMs > 0 ? ` · 冷却剩余 ${fmtCountdown(cdMs)}` : " · 冷却中");
       }
       else if (ta) barLabel = `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`;
       else barLabel = "等待募捐启动";
@@ -1295,12 +1304,12 @@ function renderPlayers(data) {
         <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
       </div>
     `;
-    // 只统计实际激活的行动（status===3；无 companion 数据时回退看 activeEffectIds 是否命中）
+    // 只统计实际激活的行动（status===2 已激活；status=1 募捐中、status=3 冷却期均不计）
     const activeCount = voteEntries.filter(e => {
       const ids = e.effect_ids || [];
       let ta = null;
       tacActions.forEach(t => { const te = (t.effectIds || []); if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t; });
-      if (ta) { return ta.status === 3; }
+      if (ta) { return ta.status === 2; }
       return dss ? ids.some(id => activeIds.has(id)) : false;
     }).length;
     meta.textContent = dss
