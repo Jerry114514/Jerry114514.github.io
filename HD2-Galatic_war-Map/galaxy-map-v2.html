@@ -613,45 +613,11 @@ function dssActionsAt(planetIndex) {
 }
 const __fxsvg = {};
 
-/* ------------------------------------------------- 雾气贴图（阴霾 / TCS+） ----
-   阴霾(The Gloom) 与 TCS+ 在 companion 里表现为大片半透明色雾。
-   这里程序化生成「中心亮、边缘透明」的径向渐变贴图，配合 fill-pattern 平铺，
-   得到无硬边的软雾气效果；不需要外部美术资源。
-   chaos 参数控制不规则程度，避免看起来像规则圆点。 */
-function makeFogTile(size, rgb, chaos) {
-  const cv = document.createElement("canvas");
-  cv.width = cv.height = size;
-  const g = cv.getContext("2d");
-  // 底噪：多个随机偏移的软斑叠加，形成不均匀的雾团
-  const blobs = 6;
-  for (let i = 0; i < blobs; i++) {
-    const r = size * (0.22 + Math.random() * 0.18);
-    const x = size / 2 + (Math.random() - 0.5) * size * chaos;
-    const y = size / 2 + (Math.random() - 0.5) * size * chaos;
-    const rg = g.createRadialGradient(x, y, 0, x, y, r);
-    rg.addColorStop(0, `rgba(${rgb},0.30)`);
-    rg.addColorStop(1, `rgba(${rgb},0)`);
-    g.fillStyle = rg;
-    g.fillRect(0, 0, size, size);
-  }
-  // 中心主体，保证平铺后整体仍有浓度
-  const cg = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size * 0.5);
-  cg.addColorStop(0, `rgba(${rgb},0.34)`);
-  cg.addColorStop(0.6, `rgba(${rgb},0.14)`);
-  cg.addColorStop(1, `rgba(${rgb},0)`);
-  g.fillStyle = cg;
-  g.fillRect(0, 0, size, size);
-  return cv.toDataURL("image/png");
-}
-function addFogImage(name, size, rgb, chaos) {
-  return new Promise((res) => {
-    const img = new Image();
-    img.onload = () => { try { if (!MAP.hasImage(name)) MAP.addImage(name, img); } catch (_) {} res(); };
-    img.onerror = () => res();
-    img.src = makeFogTile(size, rgb, chaos);
-  });
-}
-
+/* ------------------------------------------------- 阴霾 / TCS+ 雾气 ----------
+   实现说明：不用多边形 + fill-pattern（多边形是直线边，fill 三角化后会留可见折痕，
+   且平铺贴图浓度均匀、显得生硬）。改为「大量重叠的软边圆斑」：
+   以阴霾星球为骨架，沿骨架连线与凸包外圈补点，每个点由三层不同半径/透明度的
+   circle-blur 圆叠加 —— 无硬边、无折痕，重叠处自然变浓。点集在 build 阶段生成。 */
 // 取某星球可显示的效果（已按图标去重，保留首个中文名）
 // 组成：星球自身 activeEffects（势力变种 / SEAF 等）+ DSS 当前停靠地的战术行动
 function fxOf(planet) {
@@ -943,17 +909,62 @@ async function boot() {
   }
 
   // ---- 阴霾(The Gloom) / TCS+ 雾气 ----
-  // 阴霾：effectId 1188(浓)/1193(边界) 的星球连成一片，取凸包外扩形成大片黄色雾区
-  // TCS+：effectId 1395 的星球各自一个小范围蓝色雾环
+  // 阴霾：effectId 1188(浓)/1193(边界) 的星球连成一片。
+  // 早前用「凸包多边形 + fill-pattern」实现，问题有二：
+  //   ① 多边形是直线边，fill 三角化后在内部留下可见折痕，观感生硬；
+  //   ② 平铺贴图浓度均匀，缺少自然雾气的浓淡变化。
+  // 现改为「大量重叠的软边圆斑」：以阴霾星球为骨架，再沿骨架线段与凸包外圈补点，
+  // 每个点由多层不同半径/透明度的 circle-blur 叠加 —— 无硬边、无折痕，
+  // 且重叠处自然变浓。三套不同尺度的点集叠加，进一步打散规则感。
   const GLOOM_IDS = new Set([1188, 1193]);
   const TCS_IDS   = new Set([1395]);
   const gloomPts = planets.filter(p => (p.activeEffects || []).some(e => GLOOM_IDS.has(e)))
                           .map(p => [p.position.x, p.position.y]);
-  const gloomFC = fc(gloomPts.length >= 3 ? [{
-    type: "Feature",
-    geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(gloomPts), 1.22))] },
-    properties: { n: gloomPts.length },
-  }] : []);
+  const rnd = (s) => { let x = Math.sin(s * 12.9898) * 43758.5453; return x - Math.floor(x); };
+
+  function gloomBlobFC(step, jitter, ringN) {
+    if (gloomPts.length < 2) return fc([]);
+    const pts = gloomPts.slice();
+    // 沿骨架线段按固定间距补点（step 为坐标单位），把孤立星球连成连续雾带
+    for (let i = 0; i < gloomPts.length; i++) {
+      for (let j = i + 1; j < gloomPts.length; j++) {
+        const a = gloomPts[i], b = gloomPts[j];
+        const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+        if (d > step * 8) continue;                      // 只连接彼此较近的星球
+        const n = Math.max(1, Math.round(d / step));
+        for (let k = 1; k < n; k++) {
+          const t = k / n;
+          pts.push([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
+        }
+      }
+    }
+    // 凸包外圈按同间距补点，让边缘呈不规则消散而不是被"切"出来
+    const hull = expandHull(convexHull(gloomPts), 1.06);
+    for (let i = 0; i < hull.length; i++) {
+      const a = hull[i], b = hull[(i+1) % hull.length];
+      const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+      const n = Math.max(1, Math.round(d / step) * ringN);
+      for (let k = 0; k < n; k++) {
+        const t = k / n;
+        pts.push([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
+      }
+    }
+    const cx = pts.reduce((s,p)=>s+p[0],0)/pts.length;
+    const cy = pts.reduce((s,p)=>s+p[1],0)/pts.length;
+    return fc(pts.map((p, i) => {
+      const jx = (rnd(i*1.7+1) - 0.5) * step * jitter;
+      const jy = (rnd(i*3.1+7) - 0.5) * step * jitter;
+      return { type: "Feature",
+               geometry: pt(p[0] + jx, p[1] + jy),
+               properties: { v: +(0.6 + rnd(i*5.3+3) * 0.75).toFixed(3) } };
+    }));
+  }
+  // 三套尺度（点距 = 半径的一半，保证相邻圆斑充分重叠、连成片）
+  // 半径：wide 0.040 / main 0.030 / core 0.018 坐标单位 ≈ 阴霾范围的 10% / 7% / 4%
+  const gloomWide = gloomBlobFC(0.040, 0.9, 2);
+  const gloomMain = gloomBlobFC(0.030, 0.8, 2);
+  const gloomCore = gloomBlobFC(0.018, 0.7, 1);
+
   const tcsFC = fc(planets.filter(p => (p.activeEffects || []).some(e => TCS_IDS.has(e)))
     .map(p => ({ type: "Feature", geometry: pt(p.position.x, p.position.y), properties: { idx: p.index } })));
 
@@ -989,18 +1000,15 @@ async function boot() {
         faction:    { type: "geojson", data: factionFC },
         flabel:     { type: "geojson", data: factionLabelFC },
         slabel:     { type: "geojson", data: sectorLabelFC },
-        gloom:      { type: "geojson", data: gloomFC },
+        gloomWide:  { type: "geojson", data: gloomWide },
+        gloomMain:  { type: "geojson", data: gloomMain },
+        gloomCore:  { type: "geojson", data: gloomCore },
         tcs:        { type: "geojson", data: tcsFC },
         heat:       { type: "geojson", data: heatFC },
       },
       layers: [
         // 背景交给 CSS 星空，不在此处填色
         { id: "bg", type: "background", paint: { "background-color": "rgba(0,0,0,0)" } },
-
-        // 阴霾：大片半透明黄色雾气（贴图平铺，无硬边）
-        { id: "gloom-fog", type: "fill", source: "gloom",
-          layout: { visibility: "visible" },
-          paint: { "fill-pattern": "fog-yellow", "fill-opacity": 0.9 } },
 
         // TCS+：星球附近的小范围蓝色雾气（圆形软边）
         { id: "tcs-fog", type: "circle", source: "tcs",
@@ -1225,6 +1233,34 @@ async function boot() {
             "icon-allow-overlap": true,
             "icon-ignore-placement": true,
           } },
+
+        // ---- 阴霾雾气：**置于星球之上**，让星球呈现「被淹没」的观感 ----
+        // 三层叠加（外圈大而淡 → 中层 → 内层小而浓），靠重叠自然形成浓淡不均的雾团；
+        // 全部使用 circle-blur 软边：无多边形、无折痕。
+        // 半径按「坐标单位」校准后换算成屏幕像素 —— 实测本项目坐标系下
+        // 1 单位 = 182px @z7，每 +1 级翻倍（z9=728、z10=1456、z13=11651）。
+        // 目标半径：wide 0.040 / main 0.030 / core 0.018 单位（≈ 阴霾范围的 10%/7%/4%）。
+        { id: "gloom-wide", type: "circle", source: "gloomWide",
+          paint: {
+            "circle-color": "rgba(206,160,24,.26)",
+            "circle-blur": 1,
+            "circle-opacity": ["*", 0.5, ["get", "v"]],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 7.3, 8, 14.6, 9, 29.1, 10, 58.2, 11, 116.5, 12, 233, 13, 466],
+          } },
+        { id: "gloom-main", type: "circle", source: "gloomMain",
+          paint: {
+            "circle-color": "rgba(228,180,30,.38)",
+            "circle-blur": 1,
+            "circle-opacity": ["*", 0.58, ["get", "v"]],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 5.5, 8, 10.9, 9, 21.8, 10, 43.7, 11, 87.4, 12, 174.7, 13, 349.5],
+          } },
+        { id: "gloom-core", type: "circle", source: "gloomCore",
+          paint: {
+            "circle-color": "rgba(244,204,58,.52)",
+            "circle-blur": 1,
+            "circle-opacity": ["*", 0.66, ["get", "v"]],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3.3, 8, 6.6, 9, 13.1, 10, 26.2, 11, 52.4, 12, 104.8, 13, 209.7],
+          } },
       // 统一解析 ["interp-players"] 占位符：凡 layout/paint 用到它的图层都替换为真实表达式。
       // 原先只对 planet-core 硬编码处理，新增图层（planet-icon 的 icon-size）复用该占位符后
       // 会残留未知表达式，MapLibre 判该属性非法 → 图层加载失败、map 的 load 事件永不触发，
@@ -1289,12 +1325,6 @@ async function boot() {
       if (img.width) MAP.addImage("arrow-head", img, { sdf: true });
     } catch (_) {}
     try { MAP.setPaintProperty("attack-arrow", "icon-color", "rgba(255,120,120,.95)"); } catch (_) {}
-
-    // 雾气贴图（程序化生成，需在 addLayer 生效前注册）
-    await Promise.all([
-      addFogImage("fog-yellow", 160, "245,197,24", 0.9),
-      addFogImage("fog-blue", 128, "96,165,250", 0.6),
-    ]);
 
     // 星空贴图：raster 图层挂在最底层，随地图平移/缩放真实移动（真视差）
     try {
