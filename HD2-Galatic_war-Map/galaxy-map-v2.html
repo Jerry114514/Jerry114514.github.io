@@ -120,6 +120,13 @@
   body.aside-collapsed #aside-rail{display:flex}
   #aside-rail span{color:var(--text-dim);font-size:.9rem}
   #aside-rail:hover span{color:var(--blue)}
+  /* 移动端抽屉遮罩：仅在抽屉打开时铺在地图上，点它收抽屉。
+     注意它必须比 aside(z25) 低，且默认 display:none —— 否则会像旧的
+     #aside-rail 那样变成一张盖住整屏、无法与星图交互的透明玻璃。 */
+  #aside-backdrop{
+    display:none;position:absolute;inset:0;z-index:24;
+    background:rgba(3,6,14,.55);backdrop-filter:blur(2px);
+  }
 
   /* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */
   #sector-card{
@@ -165,6 +172,8 @@
   .fx-i svg,.fx-i img{width:24px;height:24px;display:block}
   .fx-i svg{fill:currentColor}
   .fx-i img{object-fit:contain;border-radius:2px}
+  /* 冷却期（DSS status=3）：本轮已结束，弱化显示以区分「正在生效」 */
+  .fx-i.fx-cd{opacity:.5;border-style:dashed}
   .fx-more{
     font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);
     background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);
@@ -260,13 +269,26 @@
     header .tag,header #btn-reset,header #btn-mode,header .btn.opt{display:none}
     header h1{font-size:.86rem}
     #aside-toggle{display:inline-block}
-    /* 侧栏改为右侧抽屉浮层，不占地图宽度 */
+    /* 移动端：侧栏改为右侧抽屉浮层，不占地图宽度 */
     aside{
-      position:absolute;top:0;right:0;bottom:0;width:min(82vw,300px);
+      position:absolute;top:0;right:0;bottom:0;width:min(84vw,320px);
       box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;
+      transform:translateX(105%);transition:transform .24s ease;
     }
-    #aside-rail{width:100%;height:100%;top:0;background:rgba(10,14,26,.55)}
-    #aside-rail span{font-size:1.1rem}
+    body.aside-collapsed aside{transform:translateX(0)}
+    /* 关键修复：旧规则把窄边条拉成 100%×100% 的半透明整屏，
+       侧栏一收起就变成盖住整个星图、点不动任何东西的玻璃板。
+       移动端横向空间本就不够，展开侧栏改由顶栏 ☰ / 遮罩 / 点地图负责。 */
+    #aside-rail{display:none !important}
+    /* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点（变 ✕ 样式） */
+    #aside-toggle{
+      position:absolute;top:7px;right:9px;z-index:27;
+      padding:4px 10px;line-height:1.25;font-size:1.02rem;
+      box-shadow:0 2px 10px rgba(0,0,0,.55);
+    }
+    body:not(.aside-collapsed) #aside-toggle{color:var(--yellow);border-color:var(--yellow)}
+    /* 抽屉打开时铺一层遮罩，点遮罩即收起 */
+    body:not(.aside-collapsed) #aside-backdrop{display:block}
     /* 移动端：地图铺满，控件缩小 */
     .maplibregl-ctrl-bottom-right{bottom:8px;right:6px}
     .maplibregl-ctrl-bottom-left{display:none}
@@ -300,6 +322,7 @@
       <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
     </div>
   </div>
+  <div id="aside-backdrop" hidden></div>
   <div id="aside-rail" title="展开侧栏"><span>◀</span></div>
 
   <aside>
@@ -697,23 +720,31 @@ const DSS_ACTION_ICON = {
   1208:{ icon:"dss_planetary_bombardment.svg",cn:"星球轰炸" },
   1211:{ icon:"dss_planetary_bombardment.svg",cn:"星球轰炸" },
 };
-// 取 DSS 当前生效的战术行动（已去重到图标级）
+// 取 DSS 战术行动（已去重到图标级）
 // DSS 战术行动三阶段（2026-09 经用户确认 + 实测校准）：
-//   status=1 → 募捐中
-//   status=2 → 已激活  ← 仅此时在停靠星球显示图标
-//   status=3 → 冷却期（EAGLE STORM 当前即处于此阶段：虽有未来 expire 时间，但未生效）
+//   status=1 → 募捐中（仅投票，对战场无效果 → 不显示图标）
+//   status=2 → 已激活（正在生效 → 高亮显示）
+//   status=3 → 冷却期（本轮已结束、尚未投出新一项 → 半透明显示，表示「刚用过」）
 // 注意：冷却期的 statusExpireAtWarTime 同样落在未来，故不能用 expire 区分激活/冷却。
+//
+// 【为什么一定要显示 status=3】实测站内数据里**没有任何** status=2 的行动
+// （EAGLE STORM=3、ORBITAL BLOCKADE=1、HEAVY ORDNANCE DISTRIBUTION=1），
+// 所以只认 status===2 会让 DSS 图标在整个战局周期里几乎永不出现。
 function dssActionsAt(planetIndex) {
   if (!DATA || !DATA.dss) return [];
   if (DATA.dss.planetIndex !== planetIndex) return [];
   const out = [], seen = {};
   for (const ta of (DATA.dss.tacticalActions || [])) {
-    if (ta.status !== 2) continue;                  // 仅已激活才显示
+    const cd = ta.status === 3;                     // 冷却期
+    if (ta.status !== 2 && !cd) continue;           // 募捐中（1）不显示
     for (const id of (ta.effectIds || [])) {
       const a = DSS_ACTION_ICON[id];
       if (!a || seen[a.icon]) continue;
       seen[a.icon] = 1;
-      out.push({ icon: a.icon, cn: a.cn, color: "#f5c518", tier: 1, dss: true });
+      out.push({
+        icon: a.icon, cn: a.cn + (cd ? "（冷却期）" : ""), color: "#f5c518",
+        tier: 1, dss: true, cd,
+      });
     }
   }
   return out;
@@ -734,7 +765,7 @@ function fxOf(planet) {
   const push = (e, tier) => {
     if (!e || seen[e.icon]) return;
     seen[e.icon] = 1;
-    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8", tier });
+    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8", tier, cd: !!e.cd });
   };
   for (const id of (planet.activeEffects || [])) {
     const e = EFFECT_ICON[id];
@@ -744,13 +775,19 @@ function fxOf(planet) {
   return out.sort((a, b) => a.tier - b.tier);
 }
 // 取图标的可插入标记：SVG 内联（可按阵营色着色）；PNG 用 <img>（保留原配色）
+// FX_ASSET_VER：图标资源版本号。历史上 cyborgs.svg 曾因缺 viewBox 而「整块不可见」，
+// 而此处用的是 cache:"force-cache"，浏览器会把那份坏文件长期钉在缓存里 ——
+// 即使 HTML 已更新，图标仍然不显示。加版本号即换新 URL，强制重新取图。
+// 以后只要改了 assets/effect-icons 下的任何文件，就把这个数字 +1。
+const FX_ASSET_VER = "2";
 async function effectIconMarkup(file) {
   if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
-    const r = await fetch("./assets/effect-icons/" + file, { cache: "force-cache" });
+    const src = `./assets/effect-icons/${file}?v=${FX_ASSET_VER}`;
+    const r = await fetch(src, { cache: "force-cache" });
     if (!r.ok) throw new Error("HTTP " + r.status);
     if (/\.png$/i.test(file)) {
-      __fxsvg[file] = `<img src="./assets/effect-icons/${file}" alt="" loading="lazy">`;
+      __fxsvg[file] = `<img src="${src}" alt="" loading="lazy">`;
     } else {
       let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
       svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -1544,7 +1581,7 @@ async function boot() {
         const el = document.createElement("div");
         el.className = "fx-cluster";
         el.innerHTML = arr.map(e =>
-          `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
+          `<div class="fx-i${e.cd ? " fx-cd" : ""}" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
           (extra > 0 ? `<div class="fx-more">+${extra}</div>` : "");
         host.appendChild(el);
         return el;
@@ -1874,6 +1911,8 @@ function bindUI(data, planets) {
   };
   $("aside-collapse").addEventListener("click", () => setAside(true));
   $("aside-rail").addEventListener("click", () => setAside(false));
+  // 移动端抽屉遮罩：点遮罩收起（与点地图收起同义，但遮罩本身不拦截地图拖动之外的区域）
+  $("aside-backdrop").addEventListener("click", () => setAside(true));
   $("aside-toggle").addEventListener("click", () =>
     setAside(!document.body.classList.contains("aside-collapsed")));
   // 移动端：抽屉打开时，在「地图画布」上按下即收起（不误伤侧栏内输入框与图层开关）
