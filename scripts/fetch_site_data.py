@@ -53,6 +53,44 @@ SECTOR_ID = {
     16: "Fenrir", 17: "Meridian", 18: "Valdis", 19: "Farsight", 20: "Gacrux",
 }
 
+# ---- 星球名兜底：本地对照表 ----
+# 为什么不只用 hd2dev：hd2dev 是社区中转，会整段失败（Actions 上实测过），
+# 而星球名此前**只**从它那里回填。一旦失败，273 颗星球全部退化成 PLANET_<index>，
+# 连锁后果是 assets/planet-icons/index.json 按真实名索引 → 全部查不到 →
+# 地图上所有星球图标消失（2026-09 实际发生的事故）。
+# planet_index.json 是 index -> 英文名的稳定对照表（随 sync-tables 每日同步），
+# 用它兜底可以保证「名字永远不会丢」。
+_TABLES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map", "tables")
+
+
+def _load_name_by_index():
+    """读取 tables/planet_index.json，返回 {index:int -> 英文名}；读不到返回 {}。"""
+    try:
+        p = os.path.join(_TABLES_DIR, "planet_index.json")
+        with open(p, encoding="utf-8") as f:
+            raw = json.load(f)
+        out = {}
+        for k, v in raw.items():
+            try:
+                if isinstance(v, str) and v.strip():
+                    out[int(k)] = v.strip()
+            except (TypeError, ValueError):
+                continue
+        print(f"  [OK] 本地星球名对照表 planet_index.json（{len(out)} 条）")
+        return out
+    except Exception as e:
+        print(f"  [FAIL] 本地星球名对照表: {type(e).__name__}: {e}")
+        return {}
+
+
+NAME_BY_INDEX = _load_name_by_index()
+
+
+def name_of_index(idx, fallback):
+    """优先本地对照表，其次传入的（可能是 hd2dev 的）名字。"""
+    n = NAME_BY_INDEX.get(idx)
+    return n if n else fallback
+
 
 def fetch_json(url, headers=None, timeout=20):
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
@@ -568,6 +606,7 @@ def main():
                 p["_regen"] = cp.get("regenPerSecond") or 0
 
     # 用 hd2dev 的星球名/sector/maxHealth 统一覆盖（hd2dev sector 为社区维护、与对照表一致）
+    # 星球名另有本地 planet_index.json 兜底：hd2dev 失败也不会退化成 PLANET_<index>
     hd2dev_map = {}
     if hd2dev and hd2dev.get("planets"):
         hd2dev_map = {p.get("index"): p for p in hd2dev["planets"]}
@@ -582,14 +621,34 @@ def main():
                 if not p.get("maxHealth") or p.get("maxHealth", 0) < 1000:
                     p["maxHealth"] = h.get("maxHealth", 0) or p.get("maxHealth", 0)
 
-    # campaigns 星球名/sector 用 hd2dev 补（独立循环）
+    # 名字兜底（无条件执行）：凡是仍是 PLANET_<index> 的，用本地对照表补齐
+    fixed = 0
+    for p in base.get("planets") or []:
+        nm = p.get("name")
+        if (not nm) or str(nm).startswith("PLANET_"):
+            idx = p.get("index")
+            if isinstance(idx, int):
+                n = name_of_index(idx, None)
+                if n:
+                    p["name"] = n
+                    fixed += 1
+    if fixed:
+        print(f"  [OK] 本地对照表补回 {fixed} 个星球名（hd2dev 未提供时兜底）")
+
+    # campaigns 星球名/sector 用 hd2dev 补（独立循环），同样套用本地兜底
     for c in base.get("campaigns") or []:
-        h = hd2dev_map.get(c.get("planet", {}).get("index"))
+        cp = c.get("planet") or {}
+        h = hd2dev_map.get(cp.get("index"))
         if h:
-            cp = c["planet"]
-            if not cp.get("name") or cp["name"].startswith("PLANET_"):
-                cp["name"] = h.get("name", cp["name"])
+            if not cp.get("name") or str(cp.get("name")).startswith("PLANET_"):
+                cp["name"] = h.get("name", cp.get("name"))
             cp["sector"] = h.get("sector", cp.get("sector", ""))
+        if (not cp.get("name")) or str(cp.get("name")).startswith("PLANET_"):
+            idx = cp.get("index")
+            if isinstance(idx, int):
+                n = name_of_index(idx, None)
+                if n:
+                    cp["name"] = n
 
     # maxHealth：hd2dev 成功时更新缓存；失败/缺失时用缓存兜底（避免满血 bug）
     maxh_cache = _load_maxh_cache()
