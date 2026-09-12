@@ -756,6 +756,27 @@ function dssActionsAt(planetIndex) {
   }
   return out;
 }
+
+/* DSS 本体图标 —— 即 helldivers.wiki.gg/wiki/Effects#Democracy_Space_Station
+   中「Effects」标题前那个图标（wiki 文件名为 DSS_Icon.svg，本地 dss.svg）。
+   它与三个「战术行动」图标是两回事，过去只接了战术行动，导致 DSS 停靠本身
+   在地图上毫无踪迹：只要没有任何行动处于 status=2/3，整张图就看不到 DSS。 */
+const DSS_STATION_ICON = { icon:"dss.svg", cn:"民主空间站" };
+// DSS 停靠星球：无条件返回一个图标，状态只影响外观，不再让 DSS「隐身」。
+function dssStationsAt(planetIndex) {
+  if (!DATA || !DATA.dss) return [];
+  if (DATA.dss.planetIndex !== planetIndex) return [];
+  const acts = DATA.dss.tacticalActions || [];
+  const live = acts.filter(a => a.status === 2);            // 已激活
+  const cd   = acts.filter(a => a.status === 3);            // 冷却期
+  const label = live.length ? "民主空间站（行动生效中）"
+              : cd.length   ? "民主空间站（冷却期）"
+              :               "民主空间站";
+  return [{
+    icon: DSS_STATION_ICON.icon, cn: label, color: "#f5c518",
+    tier: 1, dss: true, cd: (!live.length && !!cd.length),
+  }];
+}
 const __fxsvg = {};
 
 /* ------------------------------------------------- 阴霾 / TCS+ 雾气 ----------
@@ -779,6 +800,7 @@ function fxOf(planet) {
     if (e) push(e, e.tier || 2);
   }
   for (const a of dssActionsAt(planet.index)) push(a, 1);
+  for (const a of dssStationsAt(planet.index)) push(a, 1);
   return out.sort((a, b) => a.tier - b.tier);
 }
 // 取图标的可插入标记：SVG 内联（可按阵营色着色）；PNG 用 <img>（保留原配色）
@@ -786,7 +808,7 @@ function fxOf(planet) {
 // 而此处用的是 cache:"force-cache"，浏览器会把那份坏文件长期钉在缓存里 ——
 // 即使 HTML 已更新，图标仍然不显示。加版本号即换新 URL，强制重新取图。
 // 以后只要改了 assets/effect-icons 下的任何文件，就把这个数字 +1。
-const FX_ASSET_VER = "2";
+const FX_ASSET_VER = "3";
 async function effectIconMarkup(file) {
   if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
