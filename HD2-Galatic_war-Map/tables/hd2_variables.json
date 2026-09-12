@@ -215,15 +215,6 @@
      ]
     },
     {
-     "key": "Spearhead",
-     "name": "Spearhead",
-     "cn": "教团先锋",
-     "desc": "光能族的先遣武装（游戏内已确认存在，效果 ID 1413 = game_IllSpearheadArm）。",
-     "effect_ids": [
-      1413
-     ]
-    },
-    {
      "key": "Voteless Variant",
      "name": "Voteless Variant",
      "cn": "窃票者",
@@ -239,7 +230,9 @@
      "cn": "入侵舰队",
      "desc": "光能族的主要入侵舰队已抵达这颗星球，从傲慢的监督者到成群被洗脑的超级地球平民。见到即消灭，否则将面临暴力抵抗，甚至更糟——叛国宣传。",
      "effect_ids": [
-      1417
+      1417,
+      1413,
+      1414
      ]
     }
    ],
