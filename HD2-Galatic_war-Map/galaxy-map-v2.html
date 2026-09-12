@@ -196,6 +196,22 @@
     border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}
   #detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}
 
+  /* ---------- 行动变量 chip（含作战限制的红色 Tag） ---------- */
+  #detail .var-wrap{margin-top:11px;padding-top:9px;border-top:1px dashed rgba(255,255,255,.12)}
+  #detail .var-title{font-size:.7rem;color:var(--text-mute);margin-bottom:6px;letter-spacing:.04em}
+  #detail .var-chips{display:flex;flex-wrap:wrap;gap:5px}
+  #detail .var-chip{
+    display:inline-flex;align-items:center;gap:4px;font-size:.7rem;line-height:1;
+    padding:3px 8px;border-radius:999px;border:1px solid var(--border);
+    background:rgba(255,255,255,.045);color:var(--text-dim);
+  }
+  /* 作战限制：红色 Tag（与主站 .pd-chip-neg 同款语义） */
+  #detail .var-chip.neg{
+    border-color:rgba(231,76,60,.6);color:#E74C3C;
+    background:rgba(231,76,60,.09);font-weight:600;
+  }
+  #detail .var-chip .warn{font-size:.72rem}
+
   /* ---------- 图鉴链接：链接型行（区别于下方「聚焦到该星球」按钮） ---------- */
   .pd-wiki{
     display:flex;align-items:center;gap:7px;margin-top:10px;
@@ -360,23 +376,40 @@ const STRAIN_CN = {
   Mindless_Masses: "无脑群氓", Appropriators: "占领者", Vote_Snatchers: "窃票者",
   The_Great_Host: "伟大集群", Invasion_Fleet: "入侵舰队",
 };
-// 链接规则：变种（且归属一致）> 阵营页 > Super_Earth；无映射返回 null 不渲染，避免死链
-// 返回 { url, kind, badge, text }：kind 用于配色（strain 变种 / faction 阵营 / humans 我方）
+// 链接规则：变种（且归属一致）> 阵营目录页；指向**本仓 HD2_Wiki**，不再外链 wiki.gg。
+// HD2_Wiki 的敌人详情页支持 ?id=，且 enemies.json 里这 10 个变种都有对应 id。
+const STRAIN_WIKI_ID = {
+  Jet_Brigade:"jet_brigade", Incineration_Corps:"incineration_corps", Cyborgs:"cyborg_legion",
+  Predator_Strain:"predator_strain", Spore_Burst_Strain:"spore_burst_strain", Rupture_Strain:"rupture_strain",
+  Mindless_Masses:"mindless_masses", Appropriators:"appropriators",
+  Vote_Snatchers:"vote_snatchers", Invasion_Fleet:"invasion_fleet",
+};
+// 阵营代表色（与 HD2_Wiki/data/wiki/zh/factions.json 的 color 一致）
+const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#5BA3D0" };
+// 返回 { url, kind, color, badge, text }
 function wikiLinkFor(p) {
   const owner = p.currentOwner || "";
   for (const id of (p.activeEffects || [])) {
     const slug = EFFECT_TO_STRAIN[id];
     if (slug && STRAIN_FACTION[slug] === owner) {
-      return { url: "https://helldivers.wiki.gg/wiki/" + slug, kind: "strain",
-               badge: STRAIN_CN[slug] || slug.replace(/_/g, " "), text: "战斗序列图鉴" };
+      const wid = STRAIN_WIKI_ID[slug];
+      if (wid) {
+        return { url: "../HD2_Wiki/enemy.html?id=" + encodeURIComponent(wid),
+                 kind: "strain", color: FACTION_COLOR[owner] || "#94a3b8",
+                 badge: STRAIN_CN[slug] || slug.replace(/_/g, " "), text: "战斗序列图鉴" };
+      }
     }
   }
-  if (FACTION_PAGE[owner]) {
-    return { url: "https://helldivers.wiki.gg/wiki/" + FACTION_PAGE[owner], kind: "faction",
+  const cat = { Terminids:"terminids", Automaton:"automatons", Illuminate:"illuminate" }[owner];
+  if (cat) {
+    // HD2_Wiki 的目录页不支持 faction 参数（只用按钮筛选），故链接到目录页本身；
+    // 徽章已标明阵营，用户在目录页可自行按阵营筛选。
+    return { url: "../HD2_Wiki/enemies.html", kind: "faction",
+             color: FACTION_COLOR[owner] || "#94a3b8",
              badge: OWN_CN[owner] || owner, text: "阵营图鉴" };
   }
   if (owner === "Humans") {
-    return { url: "https://helldivers.wiki.gg/wiki/Super_Earth", kind: "humans",
+    return { url: "../HD2_Wiki/enemies.html", kind: "humans", color: FACTION_COLOR.Humans,
              badge: "超级地球", text: "阵营图鉴" };
   }
   return null;
@@ -565,6 +598,29 @@ async function factionIconSVG(owner) {
 // 供左上角星区卡与悬停联动使用（不依赖 bySector，避免与地图构建耦合）
 let SECTOR_IDX = {};
 
+/* ------------------------------------------- 行动变量（含作战限制红 Tag） ----
+   数据源 tables/hd2_variables.json：15 个分类、每条带 effect_ids。
+   其中 combat_restriction（作战限制，如 班机延误/缺少飞行员/补给不足/预算削减）
+   在详情面板以**红色 Tag** 呈现 —— 与主站 .pd-chip-neg 的语义保持一致。
+   说明：DSS 战略行动只有 6 条（tactical_action 分类），它们是全局的，
+   只作用于 DSS 停靠星球并以其专属图标表现，不参与此处的行动变量 chip。 */
+let VAR_BY_EFFECT = {};      // effectId -> { cn, desc, cat, catKey, neg }
+async function loadVariables() {
+  try {
+    const j = await (await fetch("./tables/hd2_variables.json?t=" + Date.now(), { cache: "no-store" })).json();
+    for (const cat of (j.categories || [])) {
+      const catKey = cat.key || "", catName = cat.name || "";
+      for (const e of (cat.entries || [])) {
+        for (const id of (e.effect_ids || [])) {
+          VAR_BY_EFFECT[id] = { cn: e.cn || e.name || ("效果 #" + id),
+                                desc: e.desc || "", cat: catName, catKey,
+                                neg: catKey === "combat_restriction" };
+        }
+      }
+    }
+  } catch (_) { VAR_BY_EFFECT = {}; }
+}
+
 /* ------------------------------------------------- 星球效果图标 ------------ */
 // 图标全部来源 helldivers.wiki.gg，本地同源缓存于 assets/effect-icons/（22 个，约 76 KB）。
 // 每个 effectId 映射「图标文件 + 中文名 + 优先级」；同一图标的不同 id（含 (Enemies) 变体）
@@ -593,54 +649,33 @@ const EFFECT_ICON = {
   1379:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1377:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
   1378:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
-  1402:{ icon:"voteless.png",           cn:"窃票者",     tier:1 },
-  1403:{ icon:"voteless.png",           cn:"窃票者",     tier:1 },
+  1402:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
+  1403:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
   1417:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
   1306:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
   1309:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
   1307:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
   1308:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
-  1311:{ icon:"hive_world.svg",         cn:"巢穴世界",   tier:1 },   // 待补图标
   1400:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
   1401:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
   1239:{ icon:"jet_brigade.svg",        cn:"喷气旅工厂", tier:1 },
-  // ---- tier 2：设施 / 兴趣点 ----
-  1234:{ icon:"center_of_science.png",  cn:"科学中心",   tier:2 },
-  1232:{ icon:"factory_hub.png",        cn:"工厂枢纽",   tier:2 },
-  1353:{ icon:"data_center.png",        cn:"数据中心",   tier:2 },   // 待补图标
-  1324:{ icon:"ultramafic_mine.png",    cn:"超镁铁质矿场", tier:2 },  // 待补图标
-  1344:{ icon:"pandora_base.png",       cn:"潘多拉基地", tier:2 },   // 待补图标
-  1304:{ icon:"outpost_alpha.png",      cn:"阿尔法前哨", tier:2 },   // 待补图标
-  1287:{ icon:"city.png",               cn:"新希望城",   tier:2 },   // 待补图标
-  1291:{ icon:"city.png",               cn:"新憧憬城",   tier:2 },   // 待补图标
-  1292:{ icon:"city.png",               cn:"新渴望城",   tier:2 },   // 待补图标
-  1236:{ icon:"civilian_center.png",    cn:"平民监控与安全中心", tier:2 }, // 待补图标
-  1282:{ icon:"training_facility.png",  cn:"绝地潜兵训练设施", tier:2 },   // 待补图标
-  1197:{ icon:"xeno_center.png",        cn:"异虫学研究中心", tier:2 },     // 待补图标
-  1198:{ icon:"forge_complex.png",      cn:"深地幔锻造综合体", tier:2 },   // 待补图标
-  1252:{ icon:"fractured.png",          cn:"碎裂星球",   tier:2 },   // 待补图标
-  1241:{ icon:"fractured.png",          cn:"已毁",       tier:2 },   // 待补图标
-  1229:{ icon:"black_hole.png",         cn:"梅里迪亚黑洞", tier:2 }, // 待补图标
-  1352:{ icon:"black_hole.png",         cn:"常规黑洞",   tier:2 },   // 待补图标
-  1279:{ icon:"arsenal_aug.png",        cn:"战备增强",   tier:2 },   // 待补图标
-  // 注：以下 effectId 确认无独立图标，且已有专门的视觉表达，故不列入：
-  //   1188/1193 阴影迷雾（已由黄色雾团图层表现）、1395 TCS+控制塔（已由蓝色雾环表现）、
-  //   1190 无法抵达（"不可达"状态，无需图标）、
-  //   1315/1316/1317/1318/1319/1320 班机延误/缺少飞行员/补给不足/预算削减（DSS 增益/减益类，无图）
+  // 说明：本表只放「有本地图标」的效果。以下类别不在此表，各有其呈现方式：
+  //   · 设施/兴趣点（科学中心、工厂枢纽、城市、黑洞、碎裂星球、训练设施…）
+  //     → wiki 无对应图标文件，改在「星球详情」面板以文字 chip 呈现
+  //   · 阴影迷雾(1188/1193) → 已由黄色雾团图层表现
+  //   · TCS+控制塔(1395)   → 已由蓝色雾环表现
+  //   · 无法抵达(1190)     → 状态类，无需图标
+  //   · DSS 增益/减益（班机延误/缺少飞行员/补给不足/预算削减 1315-1320）
+  //     → 属「作战限制」，在详情面板以**红色 chip** 呈现
 };
 // 图标着色（仅 SVG 生效；PNG 自带配色）
 const EFFECT_COLOR = {
   "seaf.svg":"#5BA3D0",
   "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D", "cyborgs.svg":"#D6806D",
   "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
-  "dragonroach.svg":"#F5C518", "hive_world.svg":"#F5C518",
-  "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8",
+  "dragonroach.svg":"#F5C518",
+  "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8", "vote_snatchers.svg":"#CF64F8",
 };
-// 待补图标清单（wiki 暂无对应文件）：渲染层遇到不存在的图标文件会跳过，不会显示空框。
-// 需要时把这些图标文件放进 assets/effect-icons/ 即可自动生效（表项已就位）。
-const PENDING_ICONS = ["hive_world.svg","data_center.png","ultramafic_mine.png","pandora_base.png",
-  "outpost_alpha.png","city.png","civilian_center.png","training_facility.png","xeno_center.png",
-  "forge_complex.png","fractured.png","black_hole.png","arsenal_aug.png","spearhead.png"];
 
 // DSS 战术行动（全局）：仅作用于 DSS 当前停靠星球，随其跃迁自动跟随。
 // effectId 取自 data.dss.tacticalActions[].effectIds；status===2 为已激活。
@@ -760,6 +795,8 @@ async function boot() {
   try {
     ICON_INDEX = await (await fetch("./assets/planet-icons/index.json?t=" + Date.now(), { cache: "no-store" })).json();
   } catch (_) { ICON_INDEX = {}; }
+  // 行动变量表（tables/hd2_variables.json；含作战限制红 Tag 判定）
+  await loadVariables();
   // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
   const SECTOR_ALIASES = {
@@ -1684,6 +1721,21 @@ function bindUI(data, planets) {
     const ev = (data.planet_events || []).find(x => x.planetIndex === index);
     const pCn = PL_CN[String(p.name || "").toUpperCase()] || "";
     const pSec = SEC_CN[(p.sector || "").toUpperCase()] || "";
+    // 行动变量：按 effectId 查 hd2_variables；作战限制(combat_restriction)显红色 Tag
+    // 同一效果常有 基础 id 与 (Enemies) 变体 id 两个，故按**中文名去重**（与主站一致）
+    const varSeen = {};
+    const varHtml = (() => {
+      const ids = [...new Set(p.activeEffects || [])]
+        .filter(id => VAR_BY_EFFECT[id])
+        .filter(id => { const n = VAR_BY_EFFECT[id].cn; if (varSeen[n]) return false; varSeen[n] = 1; return true; });
+      if (!ids.length) return "";
+      return `<div class="var-wrap"><div class="var-title">行动变量</div><div class="var-chips">` +
+        ids.map(id => {
+          const v = VAR_BY_EFFECT[id];
+          return `<span class="var-chip${v.neg ? " neg" : ""}" title="${esc(v.desc || v.cn)}">` +
+                 (v.neg ? `<span class="warn">⚠</span>` : "") + `${esc(v.cn)}</span>`;
+        }).join("") + `</div></div>`;
+    })();
     // 标题栏保持固定文案（面板标签），星球名只在下方正文出现一次，避免重复显示
     $("detailTitle").textContent = "📋 星球详情";
     $("detail").innerHTML =
@@ -1707,8 +1759,9 @@ function bindUI(data, planets) {
       (tags.length ? `<div style="margin-top:9px">` + tags.map(t =>
           `<span class="tac">${esc(t.title)}</span>`).join("") +
           tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
+      varHtml +
       (() => { const wl = wikiLinkFor(p); return wl ?
-          `<a class="pd-wiki ${wl.kind}" href="${esc(wl.url)}" target="_blank" rel="noopener noreferrer" title="在 helldivers.wiki.gg 查看该图鉴">` +
+          `<a class="pd-wiki" style="color:${esc(wl.color)}" href="${esc(wl.url)}" title="在本站中文维基查看该图鉴">` +
           `<span class="ic">🔗</span><span class="badge">${esc(wl.badge)}</span>` +
           `<span class="tx">${esc(wl.text)}</span><span class="go">↗</span></a>` : ""; })() +
       `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
