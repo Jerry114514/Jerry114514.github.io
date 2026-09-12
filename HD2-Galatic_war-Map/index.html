@@ -1227,14 +1227,19 @@ function renderPlayers(data) {
         const te = (t.effectIds || []);
         if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t;
       });
-      // 激活判断：status===2 已激活；status===1 募捐中；无 companion 用 activeEffectIds
+      // DSS 战术行动三阶段（2026-09 实测校准）
+      //   status=1 → 募捐中（cost.current 持续增长）
+      //   status=2 → 冷却/禁用
+      //   status=3 → 已激活（cost.current=0，按 expireAtWarTime 倒计时）
+      // 旧代码把 2 当作「已激活」且未处理 3，导致已激活的行动被误显示为「募捐中」，
+      // 顶部计数也会算成 0 项生效。
       let isActive = false, dInfo = {cur:0, target:1, pct:0};
       let remainMs = null;
       if (ta) {
         const cost = (ta.cost || [])[0] || {};
         const cur = cost.current || 0, target = cost.target || 1;
         dInfo = {cur, target, pct: Math.min(100, Math.max(0, (cur/target)*100))};
-        isActive = (ta.status === 2);
+        isActive = (ta.status === 3);
         if (isActive) remainMs = warRemainMs(ta.expireAtWarTime);
       } else {
         isActive = dss ? ids.some(id => activeIds.has(id)) : false;
@@ -1290,12 +1295,12 @@ function renderPlayers(data) {
         <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
       </div>
     `;
-    // 只统计实际激活的行动（companion status===2，或无companion时effectIds命中activeEffectIds）
+    // 只统计实际激活的行动（status===3；无 companion 数据时回退看 activeEffectIds 是否命中）
     const activeCount = voteEntries.filter(e => {
       const ids = e.effect_ids || [];
       let ta = null;
       tacActions.forEach(t => { const te = (t.effectIds || []); if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t; });
-      if (ta) { return ta.status === 2; }
+      if (ta) { return ta.status === 3; }
       return dss ? ids.some(id => activeIds.has(id)) : false;
     }).length;
     meta.textContent = dss
