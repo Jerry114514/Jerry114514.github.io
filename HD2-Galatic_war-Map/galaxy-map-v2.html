@@ -161,12 +161,15 @@
     border-radius:6px;background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.34);
     box-shadow:0 1px 6px rgba(0,0,0,.65);pointer-events:auto;
   }
-  .fx-i svg{width:17px;height:17px;display:block;fill:currentColor}
+  /* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */
+  .fx-i svg,.fx-i img{width:17px;height:17px;display:block}
+  .fx-i svg{fill:currentColor}
+  .fx-i img{object-fit:contain;border-radius:2px}
   .fx-more{
     font-size:.68rem;line-height:1;padding:5px;border-radius:6px;color:var(--text-dim);
     background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.26);
   }
-  @media (max-width:767px){ .fx-i{width:20px;height:20px} .fx-i svg{width:14px;height:14px} }
+  @media (max-width:767px){ .fx-i{width:20px;height:20px} .fx-i svg,.fx-i img{width:14px;height:14px} }
 
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
   aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
@@ -563,44 +566,81 @@ async function factionIconSVG(owner) {
 let SECTOR_IDX = {};
 
 /* ------------------------------------------------- 星球效果图标 ------------ */
-// 图标来源：helldivers.wiki.gg（势力变种取自 Icons - POI Icons / 相关页面；
-// DSS 战术行动取自 Democracy Space Station 页），本地同源缓存于 assets/effect-icons/。
-// 每个 effectId 映射到「图标文件 + 展示用中文名」，同一图标的不同 id（含 (Enemies) 变体）
-// 在渲染时按图标去重，避免同一变种出现两次。
-// 注：「班机延误 / 缺少飞行员 / 补给不足 / 非军事化 / TCS+控制塔」等 wiki 暂无对应图标，
-//     已单独登记在下方 NO_ICON 名单，后续补图只需在此表加项。
+// 图标全部来源 helldivers.wiki.gg，本地同源缓存于 assets/effect-icons/（22 个，约 76 KB）。
+// 每个 effectId 映射「图标文件 + 中文名 + 优先级」；同一图标的不同 id（含 (Enemies) 变体）
+// 渲染时按图标去重，避免同一效果出现两次。
+//
+// tier 说明（用于空间不足时的取舍）：
+//   tier 1 = 军事/生存威胁类（势力变种、特殊个体、虫巢世界）—— 必须优先显示
+//   tier 2 = 其余兴趣点/建筑/设施 —— 空间足够时才补显
+// 这样 POI 不会把关键信息挤出可显示名额。
 const EFFECT_ICON = {
-  1400: { icon:"seaf.svg",                 cn:"SEAF 武装部队" },
-  1401: { icon:"seaf.svg",                 cn:"SEAF 武装部队" },
-  1248: { icon:"incineration_corps.svg",   cn:"炽灼部队" },
-  1249: { icon:"incineration_corps.svg",   cn:"炽灼部队" },
-  1202: { icon:"jet_brigade.svg",          cn:"喷气旅" },
-  1203: { icon:"jet_brigade.svg",          cn:"喷气旅" },
-  1240: { icon:"jet_brigade.svg",          cn:"喷气旅" },
-  1239: { icon:"jet_brigade.svg",          cn:"喷气旅工厂" },
-  1243: { icon:"predator_strain.svg",      cn:"掠食变种" },
-  1245: { icon:"predator_strain.svg",      cn:"掠食变种" },
-  1244: { icon:"spore_burst_strain.svg",   cn:"孢裂变种" },
-  1386: { icon:"spore_burst_strain.svg",   cn:"孢裂变种" },
-  1303: { icon:"rupture_strain.svg",       cn:"爆裂变种" },
-  1310: { icon:"rupture_strain.svg",       cn:"爆裂变种" },
-  1379: { icon:"appropriators.svg",        cn:"占领者" },
-  1380: { icon:"appropriators.svg",        cn:"占领者" },
-  1377: { icon:"mindless_masses.svg",      cn:"无脑群氓" },
-  1378: { icon:"mindless_masses.svg",      cn:"无脑群氓" },
-  // 以下效果目前活跃但 wiki 无独立图标，先不列入（渲染层会自动跳过无图标项）：
-  //   1360/1361 生化人 CYBORGS、1417 入侵舰队、1413 教团先锋
-  //   1252 碎裂星球、1229 梅里迪亚黑洞、1188/1193 阴影迷雾、1395 TCS+控制塔
-  //   1315/1316/1317/1318/1319/1320 班机延误/缺少飞行员/补给不足/预算削减
-  //   1246 非军事化、1287/1291/1292 城市、1282 训练设施、1304/1236 POI 等
+  // ---- tier 1：军事 / 威胁 ----
+  1202:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
+  1203:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
+  1240:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
+  1248:{ icon:"incineration_corps.svg", cn:"炽灼部队",   tier:1 },
+  1249:{ icon:"incineration_corps.svg", cn:"炽灼部队",   tier:1 },
+  1360:{ icon:"cyborgs.svg",            cn:"生化人",     tier:1 },
+  1361:{ icon:"cyborgs.svg",            cn:"生化人",     tier:1 },
+  1243:{ icon:"predator_strain.svg",    cn:"掠食变种",   tier:1 },
+  1245:{ icon:"predator_strain.svg",    cn:"掠食变种",   tier:1 },
+  1244:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
+  1386:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
+  1303:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1310:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1380:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
+  1379:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
+  1377:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
+  1378:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
+  1402:{ icon:"voteless.png",           cn:"窃票者",     tier:1 },
+  1403:{ icon:"voteless.png",           cn:"窃票者",     tier:1 },
+  1417:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
+  1306:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
+  1309:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
+  1307:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
+  1308:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
+  1311:{ icon:"hive_world.svg",         cn:"巢穴世界",   tier:1 },   // 待补图标
+  1400:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
+  1401:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
+  1239:{ icon:"jet_brigade.svg",        cn:"喷气旅工厂", tier:1 },
+  // ---- tier 2：设施 / 兴趣点 ----
+  1234:{ icon:"center_of_science.png",  cn:"科学中心",   tier:2 },
+  1232:{ icon:"factory_hub.png",        cn:"工厂枢纽",   tier:2 },
+  1353:{ icon:"data_center.png",        cn:"数据中心",   tier:2 },   // 待补图标
+  1324:{ icon:"ultramafic_mine.png",    cn:"超镁铁质矿场", tier:2 },  // 待补图标
+  1344:{ icon:"pandora_base.png",       cn:"潘多拉基地", tier:2 },   // 待补图标
+  1304:{ icon:"outpost_alpha.png",      cn:"阿尔法前哨", tier:2 },   // 待补图标
+  1287:{ icon:"city.png",               cn:"新希望城",   tier:2 },   // 待补图标
+  1291:{ icon:"city.png",               cn:"新憧憬城",   tier:2 },   // 待补图标
+  1292:{ icon:"city.png",               cn:"新渴望城",   tier:2 },   // 待补图标
+  1236:{ icon:"civilian_center.png",    cn:"平民监控与安全中心", tier:2 }, // 待补图标
+  1282:{ icon:"training_facility.png",  cn:"绝地潜兵训练设施", tier:2 },   // 待补图标
+  1197:{ icon:"xeno_center.png",        cn:"异虫学研究中心", tier:2 },     // 待补图标
+  1198:{ icon:"forge_complex.png",      cn:"深地幔锻造综合体", tier:2 },   // 待补图标
+  1252:{ icon:"fractured.png",          cn:"碎裂星球",   tier:2 },   // 待补图标
+  1241:{ icon:"fractured.png",          cn:"已毁",       tier:2 },   // 待补图标
+  1229:{ icon:"black_hole.png",         cn:"梅里迪亚黑洞", tier:2 }, // 待补图标
+  1352:{ icon:"black_hole.png",         cn:"常规黑洞",   tier:2 },   // 待补图标
+  1279:{ icon:"arsenal_aug.png",        cn:"战备增强",   tier:2 },   // 待补图标
+  // 注：以下 effectId 确认无独立图标，且已有专门的视觉表达，故不列入：
+  //   1188/1193 阴影迷雾（已由黄色雾团图层表现）、1395 TCS+控制塔（已由蓝色雾环表现）、
+  //   1190 无法抵达（"不可达"状态，无需图标）、
+  //   1315/1316/1317/1318/1319/1320 班机延误/缺少飞行员/补给不足/预算削减（DSS 增益/减益类，无图）
 };
-// 图标着色：势力变种用阵营色，SEAF 用我方蓝
+// 图标着色（仅 SVG 生效；PNG 自带配色）
 const EFFECT_COLOR = {
   "seaf.svg":"#5BA3D0",
-  "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D",
+  "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D", "cyborgs.svg":"#D6806D",
   "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
+  "dragonroach.svg":"#F5C518", "hive_world.svg":"#F5C518",
   "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8",
 };
+// 待补图标清单（wiki 暂无对应文件）：渲染层遇到不存在的图标文件会跳过，不会显示空框。
+// 需要时把这些图标文件放进 assets/effect-icons/ 即可自动生效（表项已就位）。
+const PENDING_ICONS = ["hive_world.svg","data_center.png","ultramafic_mine.png","pandora_base.png",
+  "outpost_alpha.png","city.png","civilian_center.png","training_facility.png","xeno_center.png",
+  "forge_complex.png","fractured.png","black_hole.png","arsenal_aug.png","spearhead.png"];
 
 // DSS 战术行动（全局）：仅作用于 DSS 当前停靠星球，随其跃迁自动跟随。
 // effectId 取自 data.dss.tacticalActions[].effectIds；status===2 为已激活。
@@ -644,33 +684,39 @@ const __fxsvg = {};
    且平铺贴图浓度均匀、显得生硬）。改为「大量重叠的软边圆斑」：
    以阴霾星球为骨架，沿骨架连线与凸包外圈补点，每个点由三层不同半径/透明度的
    circle-blur 圆叠加 —— 无硬边、无折痕，重叠处自然变浓。点集在 build 阶段生成。 */
-// 取某星球可显示的效果（已按图标去重，保留首个中文名）
-// 组成：星球自身 activeEffects（势力变种 / SEAF 等）+ DSS 当前停靠地的战术行动
+// 取某星球可显示的效果（已按图标去重）
+// 组成：星球自身 activeEffects + DSS 当前停靠地的战术行动
+// 排序：tier 1（军事/威胁）在前，tier 2（设施/POI）在后 ——
+// 这样显示名额有限时，POI 不会把关键军事信息挤掉。
 function fxOf(planet) {
   const seen = {}, out = [];
+  const push = (e, tier) => {
+    if (!e || seen[e.icon]) return;
+    seen[e.icon] = 1;
+    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8", tier });
+  };
   for (const id of (planet.activeEffects || [])) {
     const e = EFFECT_ICON[id];
-    if (!e || seen[e.icon]) continue;
-    seen[e.icon] = 1;
-    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8" });
+    if (e) push(e, e.tier || 2);
   }
-  for (const a of dssActionsAt(planet.index)) {
-    if (seen[a.icon]) continue;
-    seen[a.icon] = 1;
-    out.push(a);
-  }
-  return out;
+  for (const a of dssActionsAt(planet.index)) push(a, 1);
+  return out.sort((a, b) => a.tier - b.tier);
 }
-async function effectIconSVG(file) {
+// 取图标的可插入标记：SVG 内联（可按阵营色着色）；PNG 用 <img>（保留原配色）
+async function effectIconMarkup(file) {
   if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
     const r = await fetch("./assets/effect-icons/" + file, { cache: "force-cache" });
     if (!r.ok) throw new Error("HTTP " + r.status);
-    let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
-    svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")
-             .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
-    __fxsvg[file] = svg;
-  } catch (_) { __fxsvg[file] = null; }   // 缺图（如待补项）直接跳过，不显示空框
+    if (/\.png$/i.test(file)) {
+      __fxsvg[file] = `<img src="./assets/effect-icons/${file}" alt="" loading="lazy">`;
+    } else {
+      let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
+      svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")
+               .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
+      __fxsvg[file] = svg;
+    }
+  } catch (_) { __fxsvg[file] = null; }   // 待补图标：跳过，不显示空框
   return __fxsvg[file];
 }
 
@@ -1389,14 +1435,31 @@ async function boot() {
      实现方式：HTML 浮层 + map.project() 投影，而不是 MapLibre symbol 图层 ——
      因为一个星球可能同时有多个效果，而 symbol 每要素只支持一个 icon-image。 */
   function initFXLayer(planetFC) {
-    const fx = [];
+    const raw = [];
     for (const f of planetFC.features) {
       const p = BYIDX[f.properties.index];
-      if (!p) continue;
+      if (!p || !p.position) continue;
       const list = fxOf(p);
-      if (list.length && p.position) fx.push({ idx: f.properties.index, list });
+      if (list.length) raw.push({ idx: f.properties.index, list });
     }
-    if (!fx.length) { $("srcnote").innerHTML += "<br>效果图标：当前战局无带图标的效果"; return; }
+    // 预载图标并把「无本地图标的待补项」剔除，避免出现空框或占位后无内容
+    return (async () => {
+      const files = [...new Set(raw.flatMap(x => x.list.map(e => e.icon)))];
+      for (const f of files) await effectIconMarkup(f);
+      const missing = files.filter(f => !__fxsvg[f]);
+      const fx = raw
+        .map(x => ({ idx: x.idx, list: x.list.filter(e => __fxsvg[e.icon]) }))
+        .filter(x => x.list.length);
+      if (missing.length) console.info("[效果图标] 本地缺图（已跳过）:", missing.join(", "));
+      if (!fx.length) {
+        $("srcnote").innerHTML += "<br>效果图标：当前战局无可用图标的效果";
+        return;
+      }
+      buildFXNodes(fx);
+    })();
+  }
+
+  function buildFXNodes(fx) {
     const host = $("fx-layer");
     host.innerHTML = "";
     const MAXICON = 4;
@@ -1414,18 +1477,14 @@ async function boot() {
         list: item.list, shown,
       };
     });
-    // 异步填充 SVG（按文件缓存；缺图项保持空框，不显示错误）
-    (async () => {
-      const files = [...new Set(fx.flatMap(x => x.list.map(e => e.icon)))];
-      for (const f of files) await effectIconSVG(f);
-      nodes.forEach(nd => {
-        const slots = nd.el.querySelectorAll(".fx-i");
-        nd.shown.forEach((e, i) => {
-          const svg = __fxsvg[e.icon];
-          if (slots[i] && svg) slots[i].innerHTML = svg;
-        });
+    // 图标已在 initFXLayer 预载并剔除缺图项，此处直接填充（同步，无空框）
+    nodes.forEach(nd => {
+      const slots = nd.el.querySelectorAll(".fx-i");
+      nd.shown.forEach((e, i) => {
+        const markup = __fxsvg[e.icon];
+        if (slots[i] && markup) slots[i].innerHTML = markup;
       });
-    })();
+    });
 
     // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
     let rafId = 0, visible = true, lastZoom = MAP.getZoom();
