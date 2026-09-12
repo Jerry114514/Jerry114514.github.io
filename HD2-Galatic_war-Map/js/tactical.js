@@ -100,6 +100,7 @@ window.Tactical = (function () {
         const secCn = sectorCnOf ? sectorCnOf(sector) : sector;
         tags.push({
           key: "libsector", title: "星域解放",
+          // 注意：sectorCnOf 只返回星区名本身（不带「星区」二字），故后缀在此补齐
           text: `解放${selfName}将使超级地球完全掌控${secCn}星区，并在大片星图上清除${ownerCn}的视觉标识。`,
         });
       }
