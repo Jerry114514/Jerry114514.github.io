@@ -153,20 +153,20 @@
   /* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */
   #fx-layer{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden}
   .fx-cluster{
-    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;
+    position:absolute;left:0;top:0;display:flex;align-items:center;gap:4px;
     transform:translate(-50%,-50%);will-change:transform;
   }
   .fx-i{
-    width:17px;height:17px;display:flex;align-items:center;justify-content:center;
-    border-radius:5px;background:rgba(8,11,18,.86);border:1px solid rgba(255,255,255,.28);
-    box-shadow:0 1px 5px rgba(0,0,0,.6);pointer-events:auto;
+    width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+    border-radius:6px;background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.34);
+    box-shadow:0 1px 6px rgba(0,0,0,.65);pointer-events:auto;
   }
-  .fx-i svg{width:12px;height:12px;display:block;fill:currentColor}
+  .fx-i svg{width:17px;height:17px;display:block;fill:currentColor}
   .fx-more{
-    font-size:.6rem;line-height:1;padding:3px 4px;border-radius:5px;color:var(--text-dim);
-    background:rgba(8,11,18,.86);border:1px solid rgba(255,255,255,.22);
+    font-size:.68rem;line-height:1;padding:5px;border-radius:6px;color:var(--text-dim);
+    background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.26);
   }
-  @media (max-width:767px){ .fx-i{width:15px;height:15px} .fx-i svg{width:10px;height:10px} }
+  @media (max-width:767px){ .fx-i{width:20px;height:20px} .fx-i svg{width:14px;height:14px} }
 
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
   aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
@@ -573,8 +573,87 @@ const EFFECT_COLOR = {
   "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
   "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8",
 };
+
+// DSS 战术行动（全局）：仅作用于 DSS 当前停靠星球，随其跃迁自动跟随。
+// effectId 取自 data.dss.tacticalActions[].effectIds；status===2 为已激活。
+const DSS_ACTION_ICON = {
+  1209:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
+  1212:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
+  1216:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
+  1210:{ icon:"dss_orbital_blockade.svg",     cn:"轨道封锁" },
+  1213:{ icon:"dss_orbital_blockade.svg",     cn:"轨道封锁" },
+  1215:{ icon:"dss_orbital_blockade.svg",     cn:"轨道封锁" },
+  1214:{ icon:"dss_heavy_ordnance.svg",       cn:"重型军械分发" },
+  1237:{ icon:"dss_heavy_ordnance.svg",       cn:"重型军械分发" },
+  1208:{ icon:"dss_planetary_bombardment.svg",cn:"星球轰炸" },
+  1211:{ icon:"dss_planetary_bombardment.svg",cn:"星球轰炸" },
+};
+// 取 DSS 当前生效的战术行动（已去重到图标级）
+// 激活判定：实测 companion 当前对「已激活」返回 status=3（EAGLE STORM：cost.current=0、
+// expireAtWarTime 最远、距当前 4 个游戏日），而募集中的两项为 status=1。
+// 这与项目文档「status===2 已激活」的记载不符（疑为上游语义变更），
+// 故此处采用更稳的判定：status 存在、且不是 1（募捐中）即视为已激活；
+// 另用 cost.current===0 作为补充信号（激活后捐献额归零）。
+function dssActionsAt(planetIndex) {
+  if (!DATA || !DATA.dss) return [];
+  if (DATA.dss.planetIndex !== planetIndex) return [];
+  const out = [], seen = {};
+  for (const ta of (DATA.dss.tacticalActions || [])) {
+    const cur = ((ta.cost || [{}])[0] || {}).current;
+    const active = ta.status != null && ta.status !== 1;
+    if (!active && cur !== 0) continue;
+    for (const id of (ta.effectIds || [])) {
+      const a = DSS_ACTION_ICON[id];
+      if (!a || seen[a.icon]) continue;
+      seen[a.icon] = 1;
+      out.push({ icon: a.icon, cn: a.cn, color: "#f5c518" });
+    }
+  }
+  return out;
+}
 const __fxsvg = {};
+
+/* ------------------------------------------------- 雾气贴图（阴霾 / TCS+） ----
+   阴霾(The Gloom) 与 TCS+ 在 companion 里表现为大片半透明色雾。
+   这里程序化生成「中心亮、边缘透明」的径向渐变贴图，配合 fill-pattern 平铺，
+   得到无硬边的软雾气效果；不需要外部美术资源。
+   chaos 参数控制不规则程度，避免看起来像规则圆点。 */
+function makeFogTile(size, rgb, chaos) {
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = size;
+  const g = cv.getContext("2d");
+  // 底噪：多个随机偏移的软斑叠加，形成不均匀的雾团
+  const blobs = 6;
+  for (let i = 0; i < blobs; i++) {
+    const r = size * (0.22 + Math.random() * 0.18);
+    const x = size / 2 + (Math.random() - 0.5) * size * chaos;
+    const y = size / 2 + (Math.random() - 0.5) * size * chaos;
+    const rg = g.createRadialGradient(x, y, 0, x, y, r);
+    rg.addColorStop(0, `rgba(${rgb},0.30)`);
+    rg.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle = rg;
+    g.fillRect(0, 0, size, size);
+  }
+  // 中心主体，保证平铺后整体仍有浓度
+  const cg = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size * 0.5);
+  cg.addColorStop(0, `rgba(${rgb},0.34)`);
+  cg.addColorStop(0.6, `rgba(${rgb},0.14)`);
+  cg.addColorStop(1, `rgba(${rgb},0)`);
+  g.fillStyle = cg;
+  g.fillRect(0, 0, size, size);
+  return cv.toDataURL("image/png");
+}
+function addFogImage(name, size, rgb, chaos) {
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => { try { if (!MAP.hasImage(name)) MAP.addImage(name, img); } catch (_) {} res(); };
+    img.onerror = () => res();
+    img.src = makeFogTile(size, rgb, chaos);
+  });
+}
+
 // 取某星球可显示的效果（已按图标去重，保留首个中文名）
+// 组成：星球自身 activeEffects（势力变种 / SEAF 等）+ DSS 当前停靠地的战术行动
 function fxOf(planet) {
   const seen = {}, out = [];
   for (const id of (planet.activeEffects || [])) {
@@ -582,6 +661,11 @@ function fxOf(planet) {
     if (!e || seen[e.icon]) continue;
     seen[e.icon] = 1;
     out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8" });
+  }
+  for (const a of dssActionsAt(planet.index)) {
+    if (seen[a.icon]) continue;
+    seen[a.icon] = 1;
+    out.push(a);
   }
   return out;
 }
@@ -725,9 +809,15 @@ async function boot() {
   } catch (_) { /* 词条失败不影响星图 */ }
 
   // ---- 3) 构造 GeoJSON ----
+  // 注意：不能按坐标 (0,0) 剔除 —— 超级地球(index 0) 的合法坐标就是 (0,0)，
+  // 早前用 `pos.x || pos.y` 过滤把超级地球一起丢掉了（正是"星图中心缺星球"的原因）。
+  // 改为只保留落在星图有效范围内的坐标：NEW INSIGHT / WAYWARD 是未启用占位星球，
+  // 坐标为哨兵值 (0,0)，靠索引名单剔除，避免与超级地球重叠。
+  const SENTINEL_IDX = new Set([264, 265]);   // NEW INSIGHT / WAYWARD
   const planets = (data.planets || []).filter(p => {
     const pos = p.position || {};
-    return pos.x || pos.y;                       // 剔除 (0,0) 哨兵
+    if (SENTINEL_IDX.has(p.index)) return false;
+    return Number.isFinite(pos.x) && Number.isFinite(pos.y);
   });
   const fc = (feats) => ({ type: "FeatureCollection", features: feats });
   const pt = (x, y) => ({ type: "Point", coordinates: [x, y] });
@@ -852,6 +942,21 @@ async function boot() {
     $("stage").appendChild(n);
   }
 
+  // ---- 阴霾(The Gloom) / TCS+ 雾气 ----
+  // 阴霾：effectId 1188(浓)/1193(边界) 的星球连成一片，取凸包外扩形成大片黄色雾区
+  // TCS+：effectId 1395 的星球各自一个小范围蓝色雾环
+  const GLOOM_IDS = new Set([1188, 1193]);
+  const TCS_IDS   = new Set([1395]);
+  const gloomPts = planets.filter(p => (p.activeEffects || []).some(e => GLOOM_IDS.has(e)))
+                          .map(p => [p.position.x, p.position.y]);
+  const gloomFC = fc(gloomPts.length >= 3 ? [{
+    type: "Feature",
+    geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(gloomPts), 1.22))] },
+    properties: { n: gloomPts.length },
+  }] : []);
+  const tcsFC = fc(planets.filter(p => (p.activeEffects || []).some(e => TCS_IDS.has(e)))
+    .map(p => ({ type: "Feature", geometry: pt(p.position.x, p.position.y), properties: { idx: p.index } })));
+
   // ---- 4) 顶栏统计 ----
   const owners = {};
   planets.forEach(p => { owners[p.currentOwner] = (owners[p.currentOwner] || 0) + 1; });
@@ -884,11 +989,35 @@ async function boot() {
         faction:    { type: "geojson", data: factionFC },
         flabel:     { type: "geojson", data: factionLabelFC },
         slabel:     { type: "geojson", data: sectorLabelFC },
+        gloom:      { type: "geojson", data: gloomFC },
+        tcs:        { type: "geojson", data: tcsFC },
         heat:       { type: "geojson", data: heatFC },
       },
       layers: [
         // 背景交给 CSS 星空，不在此处填色
         { id: "bg", type: "background", paint: { "background-color": "rgba(0,0,0,0)" } },
+
+        // 阴霾：大片半透明黄色雾气（贴图平铺，无硬边）
+        { id: "gloom-fog", type: "fill", source: "gloom",
+          layout: { visibility: "visible" },
+          paint: { "fill-pattern": "fog-yellow", "fill-opacity": 0.9 } },
+
+        // TCS+：星球附近的小范围蓝色雾气（圆形软边）
+        { id: "tcs-fog", type: "circle", source: "tcs",
+          paint: {
+            "circle-color": "rgba(96,165,250,.30)",
+            "circle-blur": 1,
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 22, 8, 40, 12, 78],
+            "circle-opacity": 0.85,
+          } },
+        { id: "tcs-ring", type: "circle", source: "tcs",
+          paint: {
+            "circle-color": "rgba(0,0,0,0)",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 22, 12, 44],
+            "circle-stroke-color": "rgba(147,197,253,.45)",
+            "circle-stroke-width": 1,
+            "circle-stroke-opacity": .7,
+          } },
 
         // 星区（细虚线，弱）
         { id: "sector-fill", type: "fill", source: "sector",
@@ -1161,6 +1290,12 @@ async function boot() {
     } catch (_) {}
     try { MAP.setPaintProperty("attack-arrow", "icon-color", "rgba(255,120,120,.95)"); } catch (_) {}
 
+    // 雾气贴图（程序化生成，需在 addLayer 生效前注册）
+    await Promise.all([
+      addFogImage("fog-yellow", 160, "245,197,24", 0.9),
+      addFogImage("fog-blue", 128, "96,165,250", 0.6),
+    ]);
+
     // 星空贴图：raster 图层挂在最底层，随地图平移/缩放真实移动（真视差）
     try {
       MAP.addSource("stars-src", {
@@ -1223,17 +1358,19 @@ async function boot() {
     if (!fx.length) { $("srcnote").innerHTML += "<br>效果图标：当前战局无带图标的效果"; return; }
     const host = $("fx-layer");
     host.innerHTML = "";
+    const MAXICON = 4;
     const nodes = fx.map(item => {
       const el = document.createElement("div");
       el.className = "fx-cluster";
-      el.innerHTML = item.list.slice(0, 3).map(e =>
+      const shown = item.list.slice(0, MAXICON);
+      el.innerHTML = shown.map(e =>
         `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
-        (item.list.length > 3 ? `<div class="fx-more">+${item.list.length - 3}</div>` : "");
+        (item.list.length > MAXICON ? `<div class="fx-more">+${item.list.length - MAXICON}</div>` : "");
       host.appendChild(el);
       return {
         idx: item.idx, el,
-        n: Math.min(3, item.list.length) + (item.list.length > 3 ? 1 : 0),
-        list: item.list,
+        n: shown.length + (item.list.length > MAXICON ? 1 : 0),
+        list: item.list, shown,
       };
     });
     // 异步填充 SVG（按文件缓存；缺图项保持空框，不显示错误）
@@ -1242,7 +1379,7 @@ async function boot() {
       for (const f of files) await effectIconSVG(f);
       nodes.forEach(nd => {
         const slots = nd.el.querySelectorAll(".fx-i");
-        nd.list.slice(0, 3).forEach((e, i) => {
+        nd.shown.forEach((e, i) => {
           const svg = __fxsvg[e.icon];
           if (slots[i] && svg) slots[i].innerHTML = svg;
         });
@@ -1251,7 +1388,7 @@ async function boot() {
 
     // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
     let rafId = 0, visible = true, lastZoom = MAP.getZoom();
-    const MINZ = 7.6, GAP = 21;
+    const MINZ = 7.0, GAP = 30;
     function sync() {
       rafId = 0;
       const z = MAP.getZoom();
