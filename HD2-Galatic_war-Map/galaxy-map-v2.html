@@ -589,19 +589,19 @@ const DSS_ACTION_ICON = {
   1211:{ icon:"dss_planetary_bombardment.svg",cn:"星球轰炸" },
 };
 // 取 DSS 当前生效的战术行动（已去重到图标级）
-// 激活判定：实测 companion 当前对「已激活」返回 status=3（EAGLE STORM：cost.current=0、
-// expireAtWarTime 最远、距当前 4 个游戏日），而募集中的两项为 status=1。
-// 这与项目文档「status===2 已激活」的记载不符（疑为上游语义变更），
-// 故此处采用更稳的判定：status 存在、且不是 1（募捐中）即视为已激活；
-// 另用 cost.current===0 作为补充信号（激活后捐献额归零）。
+// DSS 战术行动三阶段（2026-09 实测校准）：
+//   status=1 → 募捐中（cost.current 持续增长）
+//   status=2 → 冷却/禁用
+//   status=3 → 已激活（cost.current=0，按 expireAtWarTime 倒计时）
+// 仅在已激活(status===3)时于停靠星球显示图标；无 status 字段时回退用 cost.current===0 判断。
 function dssActionsAt(planetIndex) {
   if (!DATA || !DATA.dss) return [];
   if (DATA.dss.planetIndex !== planetIndex) return [];
   const out = [], seen = {};
   for (const ta of (DATA.dss.tacticalActions || [])) {
     const cur = ((ta.cost || [{}])[0] || {}).current;
-    const active = ta.status != null && ta.status !== 1;
-    if (!active && cur !== 0) continue;
+    const active = (ta.status != null) ? (ta.status === 3) : (cur === 0);
+    if (!active) continue;
     for (const id of (ta.effectIds || [])) {
       const a = DSS_ACTION_ICON[id];
       if (!a || seen[a.icon]) continue;
