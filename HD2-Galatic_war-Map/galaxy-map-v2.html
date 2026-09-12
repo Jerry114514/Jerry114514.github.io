@@ -153,23 +153,23 @@
   /* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */
   #fx-layer{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden}
   .fx-cluster{
-    position:absolute;left:0;top:0;display:flex;align-items:center;gap:4px;
+    position:absolute;left:0;top:0;display:flex;align-items:center;gap:5px;
     transform:translate(-50%,-50%);will-change:transform;
   }
   .fx-i{
-    width:24px;height:24px;display:flex;align-items:center;justify-content:center;
-    border-radius:6px;background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.34);
-    box-shadow:0 1px 6px rgba(0,0,0,.65);pointer-events:auto;
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    border-radius:8px;background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);
+    box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:auto;
   }
   /* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */
-  .fx-i svg,.fx-i img{width:17px;height:17px;display:block}
+  .fx-i svg,.fx-i img{width:24px;height:24px;display:block}
   .fx-i svg{fill:currentColor}
   .fx-i img{object-fit:contain;border-radius:2px}
   .fx-more{
-    font-size:.68rem;line-height:1;padding:5px;border-radius:6px;color:var(--text-dim);
-    background:rgba(8,11,18,.88);border:1px solid rgba(255,255,255,.26);
+    font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);
+    background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);
   }
-  @media (max-width:767px){ .fx-i{width:20px;height:20px} .fx-i svg,.fx-i img{width:14px;height:14px} }
+  @media (max-width:767px){ .fx-i{width:26px;height:26px} .fx-i svg,.fx-i img{width:18px;height:18px} }
 
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
   aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
@@ -1505,38 +1505,54 @@ async function boot() {
     const host = $("fx-layer");
     host.innerHTML = "";
     const MAXICON = 4;
+    // BUFF 类（SEAF 驻守 / DSS 战术行动）排在星球**左侧**，变种等效果排在**右侧**。
+    // dss:true 由 dssActionsAt 标注；SEAF 用图标文件名判定。
+    const isBuff = e => e.dss || /seaf/i.test(e.icon);
     const nodes = fx.map(item => {
-      const el = document.createElement("div");
-      el.className = "fx-cluster";
-      // 两段式选取，确保关键信息不被挤出：
-      //   ① 先无条件纳入全部 tier 1（军事/威胁）与 DSS 行动；
-      //   ② 剩余名额再按顺序补 tier 2。超出部分计入「+N」。
-      // 这样即使某星球有 5 个 tier1，也只会截断 tier1 而不会丢 DSS。
-      const t1 = item.list.filter(e => e.tier === 1 || e.dss);
-      const t2 = item.list.filter(e => !(e.tier === 1 || e.dss));
-      const shown = t1.slice(0, MAXICON).concat(t2.slice(0, Math.max(0, MAXICON - Math.min(t1.length, MAXICON))));
-      el.innerHTML = shown.map(e =>
-        `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
-        (item.list.length > shown.length ? `<div class="fx-more">+${item.list.length - shown.length}</div>` : "");
-      host.appendChild(el);
+      const buffs = item.list.filter(isBuff);
+      const effs  = item.list.filter(e => !isBuff(e));
+      // 各自独立截断到 MAXICON；两侧都超出时用 +N 提示
+      const shownL = buffs.slice(0, MAXICON);
+      const shownR = effs.slice(0, MAXICON);
+      const extraL = buffs.length - shownL.length;
+      const extraR = effs.length - shownR.length;
+      const mk = (arr, extra) => {
+        const el = document.createElement("div");
+        el.className = "fx-cluster";
+        el.innerHTML = arr.map(e =>
+          `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
+          (extra > 0 ? `<div class="fx-more">+${extra}</div>` : "");
+        host.appendChild(el);
+        return el;
+      };
       return {
-        idx: item.idx, el,
-        n: shown.length + (item.list.length > shown.length ? 1 : 0),
-        list: item.list, shown,
+        idx: item.idx,
+        elL: buffs.length ? mk(shownL, extraL) : null,
+        elR: effs.length ? mk(shownR, extraR) : null,
+        nL: shownL.length + (extraL > 0 ? 1 : 0),
+        nR: shownR.length + (extraR > 0 ? 1 : 0),
+        shownL, shownR,
       };
     });
     // 图标已在 initFXLayer 预载并剔除缺图项，此处直接填充（同步，无空框）
     nodes.forEach(nd => {
-      const slots = nd.el.querySelectorAll(".fx-i");
-      nd.shown.forEach((e, i) => {
-        const markup = __fxsvg[e.icon];
-        if (slots[i] && markup) slots[i].innerHTML = markup;
-      });
+      if (nd.elL) {
+        const s = nd.elL.querySelectorAll(".fx-i");
+        nd.shownL.forEach((e, i) => { const mk = __fxsvg[e.icon]; if (s[i] && mk) s[i].innerHTML = mk; });
+      }
+      if (nd.elR) {
+        const s = nd.elR.querySelectorAll(".fx-i");
+        nd.shownR.forEach((e, i) => { const mk = __fxsvg[e.icon]; if (s[i] && mk) s[i].innerHTML = mk; });
+      }
     });
 
     // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
-    let rafId = 0, visible = true, lastZoom = MAP.getZoom();
-    const MINZ = 7.0, GAP = 30;
+    let rafId = 0, visible = true;
+    const MINZ = 7.0, GAP = 42;   // 图标已放大，间距同步加大
+    const place = (el, n, x, y) => {
+      if (!el) return;
+      el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%)`;
+    };
     function sync() {
       rafId = 0;
       const z = MAP.getZoom();
@@ -1547,8 +1563,9 @@ async function boot() {
         const p = BYIDX[nd.idx];
         if (!p || !p.position) continue;
         const pt = MAP.project([p.position.x, p.position.y]);
-        // 图标排在星球右侧：整体右移，使簇的中心落在星球右侧
-        nd.el.style.transform = `translate(${(pt.x + GAP * nd.n / 2).toFixed(1)}px,${pt.y.toFixed(1)}px) translate(-50%,-50%)`;
+        // 左侧放 BUFF（SEAF / DSS），右侧放变种等效果；各自以星球为基准向左/右偏移
+        place(nd.elL, nd.nL, pt.x - GAP * nd.nL / 2, pt.y);
+        place(nd.elR, nd.nR, pt.x + GAP * nd.nR / 2, pt.y);
       }
     }
     function schedule() { if (!rafId) rafId = requestAnimationFrame(sync); }
