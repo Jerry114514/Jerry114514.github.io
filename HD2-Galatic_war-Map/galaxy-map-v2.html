@@ -652,10 +652,11 @@ const EFFECT_ICON = {
   1402:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
   1403:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
   1417:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
-  // 1413 教团先锋 / 1414 光能族宗派变体：wiki **没有** Spearhead 专属图标
-  // （只有一张无关的 Spearhead_Real_Estate.png 广告图），故按用户指示复用入侵舰队图标。
-  1413:{ icon:"invasion_fleet.png",     cn:"教团先锋",   tier:1 },
-  1414:{ icon:"invasion_fleet.png",     cn:"教团先锋",   tier:1 },
+  // 1413/1414：早期从解包数据得到「教团先锋(矛头先锋)」这个名字，实为对 wiki 图片的**翻译误会**；
+  // 现已证实 1413 指向的就是入侵舰队（1414 为同组变体，无独立中文名）。
+  // 故 1413/1414/1417 统一显示为「入侵舰队」并复用同一图标，按图标去重后只出现一个。
+  1413:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
+  1414:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
   1306:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
   1309:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
   1307:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
