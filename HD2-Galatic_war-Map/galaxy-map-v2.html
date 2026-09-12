@@ -192,6 +192,32 @@
   #detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blue);background:rgba(59,130,246,.1);
     border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}
   #detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}
+
+  /* ---------- 图鉴链接：链接型行（区别于下方「聚焦到该星球」按钮） ---------- */
+  .pd-wiki{
+    display:flex;align-items:center;gap:7px;margin-top:10px;
+    padding:7px 10px;border-radius:var(--radius-s);
+    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.035);
+    color:var(--text-dim);font-size:.74rem;text-decoration:none;
+    transition:border-color .15s,background .15s,color .15s;
+  }
+  .pd-wiki:hover{border-color:currentColor;background:rgba(255,255,255,.07)}
+  .pd-wiki .ic{font-size:.8rem;flex-shrink:0}
+  .pd-wiki .badge{
+    padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;
+    border:1px solid currentColor;
+    background:color-mix(in srgb, currentColor 16%, transparent);
+  }
+  @supports not (background: color-mix(in srgb, red 10%, transparent)){
+    .pd-wiki .badge{background:rgba(255,255,255,.08)}
+  }
+  .pd-wiki .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pd-wiki .go{flex-shrink:0;opacity:.65;font-size:.78rem;transition:transform .15s,opacity .15s}
+  .pd-wiki:hover .go{opacity:1;transform:translate(1px,-1px)}
+  /* 配色：变种=黄、阵营=紫、我方=蓝，与星球归属/效果图标语义一致 */
+  .pd-wiki.strain{color:var(--yellow)}
+  .pd-wiki.faction{color:var(--c-illuminate)}
+  .pd-wiki.humans{color:var(--c-humans)}
   #hits{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
   #hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:.76rem}
   #hits .hit:hover{background:rgba(255,255,255,.07)}
@@ -332,21 +358,23 @@ const STRAIN_CN = {
   The_Great_Host: "伟大集群", Invasion_Fleet: "入侵舰队",
 };
 // 链接规则：变种（且归属一致）> 阵营页 > Super_Earth；无映射返回 null 不渲染，避免死链
+// 返回 { url, kind, badge, text }：kind 用于配色（strain 变种 / faction 阵营 / humans 我方）
 function wikiLinkFor(p) {
   const owner = p.currentOwner || "";
   for (const id of (p.activeEffects || [])) {
     const slug = EFFECT_TO_STRAIN[id];
     if (slug && STRAIN_FACTION[slug] === owner) {
-      return { url: "https://helldivers.wiki.gg/wiki/" + slug,
-               label: "🏷️ " + (STRAIN_CN[slug] || slug.replace(/_/g, " ")) + " · 查看图鉴" };
+      return { url: "https://helldivers.wiki.gg/wiki/" + slug, kind: "strain",
+               badge: STRAIN_CN[slug] || slug.replace(/_/g, " "), text: "战斗序列图鉴" };
     }
   }
   if (FACTION_PAGE[owner]) {
-    return { url: "https://helldivers.wiki.gg/wiki/" + FACTION_PAGE[owner],
-             label: "🏷️ " + (OWN_CN[owner] || owner) + " · 查看图鉴" };
+    return { url: "https://helldivers.wiki.gg/wiki/" + FACTION_PAGE[owner], kind: "faction",
+             badge: OWN_CN[owner] || owner, text: "阵营图鉴" };
   }
   if (owner === "Humans") {
-    return { url: "https://helldivers.wiki.gg/wiki/Super_Earth", label: "🏷️ 超级地球 · 查看图鉴" };
+    return { url: "https://helldivers.wiki.gg/wiki/Super_Earth", kind: "humans",
+             badge: "超级地球", text: "阵营图鉴" };
   }
   return null;
 }
@@ -761,10 +789,16 @@ async function boot() {
   setMsg("正在计算战术目标…<br><small>tactical.js</small>");
   try {
     if (window.Tactical) {
+      // nameOf / sectorCnOf 必须返回**中文名**，否则战术词条正文里会混入英文原名
+      // （如「解放HEETH将对BRILLIANCE的…」）。PL_CN/SEC_CN 已在上方由 starmap.json 填充。
       const ctx = {
         planets: data.planets, campaigns: data.campaigns, waypoints: wpRaw,
-        nameOf: (idx) => (BYIDX[idx] ? BYIDX[idx].name : "#" + idx),
-        sectorCnOf: (s) => s,
+        nameOf: (idx) => {
+          const p = BYIDX[idx];
+          if (!p) return "#" + idx;
+          return PL_CN[String(p.name || "").toUpperCase()] || p.name;
+        },
+        sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,
       };
       for (const k of Object.keys(WP)) {
         try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
@@ -1615,7 +1649,9 @@ function bindUI(data, planets) {
           `<span class="tac">${esc(t.title)}</span>`).join("") +
           tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
       (() => { const wl = wikiLinkFor(p); return wl ?
-          `<div style="margin-top:9px"><a class="btn" style="width:100%;font-size:.74rem;text-align:center;display:block;text-decoration:none" href="${esc(wl.url)}" target="_blank" rel="noopener noreferrer">${esc(wl.label)}</a></div>` : ""; })() +
+          `<a class="pd-wiki ${wl.kind}" href="${esc(wl.url)}" target="_blank" rel="noopener noreferrer" title="在 helldivers.wiki.gg 查看该图鉴">` +
+          `<span class="ic">🔗</span><span class="badge">${esc(wl.badge)}</span>` +
+          `<span class="tx">${esc(wl.text)}</span><span class="go">↗</span></a>` : ""; })() +
       `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
   }
 
