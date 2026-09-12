@@ -935,38 +935,64 @@ async function boot() {
   // 补给线（有向；按速率分级）
   const ownerOf = (i) => (BYIDX[i] ? BYIDX[i].currentOwner : null);
   const posOf = (i) => (BYIDX[i] && BYIDX[i].position) ? BYIDX[i].position : null;
-  // 补给线：
-  //   · 普通线：我方(蓝) → 目标星球所属阵营代表色 的渐变（见下方按阵营拆分的 supply-* 图层）
-  //   · 入侵线：仅 campaignType=defense 的入侵战役叠加（红色虚线 + 箭头）
-  // 数据实测：planet_attacks 全部是「我方星球(source) ← 敌方(target) 被入侵」，
-  // 即 source 是**被入侵的星球**、target 是**入侵方**，故攻击箭头方向需 source→target 取反。
+  // 补给线：**全部** waypoint 边都要画（实测共 299 条：我方↔我方 215、敌方↔敌方 67、
+  // 跨阵营 57）。上一版误把「非跨阵营」的线全部丢弃，导致星图几乎看不到连线。
+  //   · 同阵营线：用该阵营代表色的暗色实线
+  //   · 跨阵营线：额外叠加一层「我方蓝 → 阵营代表色」渐变（见 supply-grad-* 图层）
   const SUPPLY_FACTION_COLOR = { Humans:"#3b82f6", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
-  const attackKey = (from, to) => from + ">" + to;
   const supplyFC = fc((() => {
     const out = [];
-    const seen = new Set();
     for (const k of Object.keys(WP)) {
       const a = posOf(+k); if (!a) continue;
       for (const to of (WP[k] || [])) {
         const b = posOf(+to); if (!b) continue;
-        const oA = ownerOf(+k), oB = ownerOf(+to);
-        // 渐变方向：以我方那端为蓝色起点（数据通常 from=我方，兜底判断一次）
+        const oA = ownerOf(+k) || "None", oB = ownerOf(+to) || "None";
+        // 跨阵营渐变以「我方那一端」为蓝色起点；其余取任一端阵营色
         let grad = null;
-        if (oA === "Humans" && oB && oB !== "Humans") grad = oB;
-        else if (oB === "Humans" && oA && oA !== "Humans") grad = oA;
-        if (!grad) continue;                      // 无跨阵营关系的线不绘制
-        const key = grad + ":" + Math.min(+k, +to) + "-" + Math.max(+k, +to);
-        if (seen.has(key)) continue;              // 双向重复只画一次
-        seen.add(key);
+        if (oA === "Humans" && oB !== "Humans") grad = oB;
+        else if (oB === "Humans" && oA !== "Humans") grad = oA;
+        const humanEnd = (oA === "Humans" && oB !== "Humans");
         out.push({
           type: "Feature",
           geometry: { type: "LineString", coordinates: [[a.x, a.y], [b.x, b.y]] },
-          properties: { grad, owner: grad, width: 1.2, from: +k, to: +to },
+          properties: {
+            from: +k, to: +to,
+            fromOwner: oA, toOwner: oB,
+            // cross: 跨阵营线标记（用于渐变层 + 实线是否加深）
+            cross: grad ? 1 : 0,
+            grad: grad || oA,               // 渐变终点阵营（非跨阵营时为自身阵营）
+            humanEnd: humanEnd ? 1 : 0,     // 1 表示 from 端为我方（蓝起点）
+            color: SUPPLY_FACTION_COLOR[grad || oA] || "#64748b",
+          },
         });
       }
     }
     return out;
   })());
+
+  // 跨阵营渐变图层：line-gradient 不是 data-driven，故按「阵营 × 我方端点」显式生成 6 条。
+  // humanEnd=1 → from 端是我方（蓝在 0%）；humanEnd=0 → to 端是我方（蓝在 100%）。
+  const GRAD_HEX = { Terminids:"245,158,11", Automaton:"239,68,68", Illuminate:"170,68,255" };
+  const BLUE_C = "rgba(59,130,246,.95)";
+  const SUPPLY_GRAD_LAYERS = [];
+  for (const [fac, rgb] of Object.entries(GRAD_HEX)) {
+    for (const humanEnd of [1, 0]) {
+      const FAC_C = `rgba(${rgb},1)`;
+      SUPPLY_GRAD_LAYERS.push({
+        id: `supply-grad-${fac.toLowerCase()}-${humanEnd}`,
+        type: "line", source: "supply",
+        filter: ["all", ["==", ["get", "cross"], 1], ["==", ["get", "grad"], fac],
+                 ["==", ["get", "humanEnd"], humanEnd]],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.4, 9, 3.2, 13, 7.5],
+          "line-opacity": .95,
+          "line-gradient": ["interpolate", ["linear"], ["line-progress"],
+            0, humanEnd ? BLUE_C : FAC_C, 1, humanEnd ? FAC_C : BLUE_C],
+        },
+      });
+    }
+  }
 
   // 入侵战役连线（用于方向箭头）：坐标取反，使箭头由**入侵方**指向**被入侵星球**
   const attackFC = fc((data.planet_attacks || []).map(a => {
@@ -1173,36 +1199,19 @@ async function boot() {
               .8, "rgba(239,68,68,.7)", 1, "rgba(239,68,68,.9)"],
           } },
 
-        // 补给线：我方(蓝) → 目标星球所属**阵营代表色** 的渐变。
-        // line-gradient 的色标不支持 ["get"]，故按阵营拆成 3 条同参图层，
-        // 用 filter 区分（终结族橙 / 机器人红 / 光能族紫）。
-        { id: "supply-terminids", type: "line", source: "supply",
-          filter: ["all", ["==", ["get", "grad"], "Terminids"]],
+        // 补给线（全部边）：同阵营用本阵营暗色，跨阵营稍暗以让渐变层突出
+        { id: "supply-base", type: "line", source: "supply",
           layout: { "line-cap": "round", "line-join": "round" },
           paint: {
-            "line-width": ["interpolate", ["linear"], ["zoom"], 4, ["*", ["get", "width"], .6], 9, ["*", ["get", "width"], 1.5], 13, ["*", ["get", "width"], 4]],
-            "line-opacity": .72,
-            "line-gradient": ["interpolate", ["linear"], ["line-progress"],
-              0, "rgba(59,130,246,.55)", 1, "rgba(245,158,11,.95)"],
+            "line-color": ["case", ["==", ["get", "cross"], 1], "rgba(255,255,255,.16)", ["get", "color"]],
+            "line-width": ["interpolate", ["linear"], ["zoom"], 4, .8, 9, 1.9, 13, 4.6],
+            "line-opacity": ["case", ["==", ["get", "cross"], 1], .5, .62],
           } },
-        { id: "supply-automaton", type: "line", source: "supply",
-          filter: ["all", ["==", ["get", "grad"], "Automaton"]],
-          layout: { "line-cap": "round", "line-join": "round" },
-          paint: {
-            "line-width": ["interpolate", ["linear"], ["zoom"], 4, ["*", ["get", "width"], .6], 9, ["*", ["get", "width"], 1.5], 13, ["*", ["get", "width"], 4]],
-            "line-opacity": .72,
-            "line-gradient": ["interpolate", ["linear"], ["line-progress"],
-              0, "rgba(59,130,246,.55)", 1, "rgba(239,68,68,.95)"],
-          } },
-        { id: "supply-illuminate", type: "line", source: "supply",
-          filter: ["all", ["==", ["get", "grad"], "Illuminate"]],
-          layout: { "line-cap": "round", "line-join": "round" },
-          paint: {
-            "line-width": ["interpolate", ["linear"], ["zoom"], 4, ["*", ["get", "width"], .6], 9, ["*", ["get", "width"], 1.5], 13, ["*", ["get", "width"], 4]],
-            "line-opacity": .72,
-            "line-gradient": ["interpolate", ["linear"], ["line-progress"],
-              0, "rgba(59,130,246,.55)", 1, "rgba(170,68,255,.95)"],
-          } },
+
+        // 跨阵营渐变（我方蓝 → 阵营代表色）。
+        // 注意：line-gradient 的色标**不是 data-driven**，不能在色标里用 ["case"]，
+        // 故按「阵营 × 方向」显式生成 6 条同参图层（见下方 makeGradLayer）。
+        ...SUPPLY_GRAD_LAYERS,
 
         // 入侵战役线：红色虚线（方向由 attack 源数据取反保证 = 入侵方 → 被入侵星球）
         { id: "attack-line", type: "line", source: "attack",
@@ -1828,9 +1837,9 @@ function bindUI(data, planets) {
     }
   }
   function applyLayerToggles() {
-    // 补给线按阵营拆成三条同参图层
-    for (const id of ["supply-terminids", "supply-automaton", "supply-illuminate"])
-      setLayerVis(id, LAYER_ON.supply);
+    // 补给线：1 条实线基底 + 6 条跨阵营渐变（阵营 × 方向）
+    setLayerVis("supply-base", LAYER_ON.supply);
+    for (const l of SUPPLY_GRAD_LAYERS) setLayerVis(l.id, LAYER_ON.supply);
     setLayerVis("attack-line", LAYER_ON.attack);
     setLayerVis("attack-arrow", LAYER_ON.attack);
     setLayerVis("sector-fill", LAYER_ON.territory);
