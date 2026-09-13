@@ -328,6 +328,15 @@
       margin-left: auto;
       font-size: 0.8rem;
       color: var(--text-mute);
+      text-align: right;
+      line-height: 1.35;
+    }
+    /* DSS 停靠位置（标题右侧）：等宽数字质感，与 HUD 的战术标签一致 */
+    #dss-meta {
+      font-family: "Rajdhani","Orbitron","Consolas",monospace;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #C9C9C9;
     }
 
     /* ============================================================
@@ -1133,9 +1142,6 @@
 
     /* ---------- 顶部：标题 + 三段式标签卡（按用户要求移除遥测与资源计数） ---------- */
     .dss-hud .dss-top{display:flex;align-items:center;gap:16px;padding:9px 12px;min-height:56px;background:var(--dss-panel)}
-    .dss-hud .dss-title{display:flex;flex-direction:column;justify-content:center;min-width:0}
-    .dss-hud .dss-title h3{margin:0;font-size:18px;font-weight:600;letter-spacing:.06em;white-space:nowrap;color:var(--dss-txt)}
-    .dss-hud .dss-title .sub{font-family:var(--dss-mono);font-size:9.5px;color:var(--dss-mute);letter-spacing:.2em;margin-top:3px}
     .dss-hud .dss-tabs{display:flex;align-items:flex-end;margin-left:auto}
     .dss-hud .dss-tabs .tab{
       display:flex;align-items:center;gap:7px;padding:6px 13px 5px;
@@ -1237,7 +1243,6 @@
     .dss-hud .dss-detail .tagline{display:flex;align-items:center;gap:8px}
     .dss-hud .dss-detail .tagline .bar-y{width:3px;height:15px;background:var(--dss-y)}
     .dss-hud .dss-detail .tagline span:last-child{font-size:12.5px;color:var(--dss-y);letter-spacing:.14em}
-    .dss-hud .dss-detail .faction{font-size:11.5px;color:var(--dss-dim);margin:6px 0 5px 11px;letter-spacing:.05em}
     .dss-hud .dss-detail h3{margin:0 0 9px;font-size:21px;font-weight:600;letter-spacing:.03em;color:var(--dss-txt)}
     .dss-hud .dss-detail .desc{
       font-size:12.5px;color:#B0B0B0;line-height:1.7;margin:0;
