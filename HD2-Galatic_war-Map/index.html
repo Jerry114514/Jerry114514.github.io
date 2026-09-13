@@ -154,8 +154,9 @@
     </section>
 
 <!-- ============================================================
-         区块2：紧急战情（防御战+侦察战）
+         区块2：活动事件（2026-09 用户决定暂缓：内容与「紧急战情」重叠，先整体停用）
          ============================================================ -->
+    <!--
     <section class="block" id="block-pevents" style="display:none">
       <div class="block-head">
         <span class="block-emoji">⚡</span>
@@ -164,6 +165,7 @@
       </div>
       <div id="pevents-content"></div>
     </section>
+    -->
     <section class="block" id="block-urgent">
       <div class="block-head">
         <span class="block-emoji">🚨</span>
@@ -1338,7 +1340,6 @@ function renderPlayers(data) {
         cn: it.cnName,
         img: heroSrcOf(it.cnName),
         label: it.label,
-        faction: "超级地球 · " + locText,
         desc: it.descText,
         contrib: (it.isActive ? 100 : it.dInfo.pct).toFixed(0) + "%　你的贡献：0",
         count: cLine,
@@ -1346,7 +1347,7 @@ function renderPlayers(data) {
     });
 
     const first = cardData[0] || {
-      img: heroSrcOf(""), label: "—", faction: "超级地球",
+      img: heroSrcOf(""), label: "—",
       desc: "当前没有可展示的 DSS 战术行动。", contrib: "0%　你的贡献：0", count: "",
     };
 
@@ -1354,10 +1355,6 @@ function renderPlayers(data) {
       ${notice}
       <div class="dss-hud dss-station">
         <header class="dss-top">
-          <div class="dss-title">
-            <h3>民主空间站 / DSS</h3>
-            <div class="sub">DEMOCRACY SPACE STATION · TACTICAL CONSOLE</div>
-          </div>
           <nav class="dss-tabs">
             <span class="tab">总结<i>1</i></span>
             <span class="tab on">行动<i>2</i></span>
@@ -1384,7 +1381,6 @@ function renderPlayers(data) {
             </div>
             <div class="dss-detail">
               <div class="tagline"><span class="bar-y"></span><span>战术行动</span></div>
-              <div class="faction" id="dss-detail-faction">${esc(first.faction)}</div>
               <h3 id="dss-detail-h3">${esc(sel ? sel.cnName : "—")}</h3>
               <p class="desc" id="dss-detail-desc">${esc(first.desc)}</p>
               <div class="dss-contrib">
@@ -1401,7 +1397,6 @@ function renderPlayers(data) {
     // ---- 点击行动卡片 → 右栏切换大图与详情（图3/图4 效果）----
     (function () {
       const hero = root.querySelector("#dss-hero-img");
-      const fEl = root.querySelector("#dss-detail-faction");
       const hEl = root.querySelector("#dss-detail-h3");
       const dEl = root.querySelector("#dss-detail-desc");
       const cEl = root.querySelector("#dss-contrib-box");
@@ -1414,7 +1409,6 @@ function renderPlayers(data) {
           card.classList.toggle("sel", card.getAttribute("data-i") === String(i));
         });
         if (hero) hero.src = info.img;
-        if (fEl) fEl.textContent = info.faction;
         if (hEl) hEl.textContent = info.cn;
         if (dEl) dEl.textContent = info.desc;
         if (cEl) cEl.textContent = info.contrib;
@@ -1432,7 +1426,7 @@ function renderPlayers(data) {
       });
     })();
 
-    // 只统计实际激活的行动（status===2 已激活；status=1 募捐中、status=3 冷却期均不计）
+    // 生效行动数（保留：模块标题右侧原先用它，现改为展示停靠位置）
     const activeCount = voteEntries.filter(e => {
       const ids = e.effect_ids || [];
       let ta = null;
@@ -1440,9 +1434,8 @@ function renderPlayers(data) {
       if (ta) { return ta.status === 2; }
       return dss ? ids.some(id => activeIds.has(id)) : false;
     }).length;
-    meta.textContent = dss
-      ? (activeCount ? `${activeCount} 项生效` : "无投票生效")
-      : "未停靠";
+    // 标题右侧：停靠位置（星球名 · 星区），替代原先的「N 项生效」
+    meta.textContent = dss ? locText : "未停靠";
 
     // 本地计时器：每秒刷新倒计时（云端 60s 刷新时会重新渲染校对）
     const timerEl = root.querySelector("#dss-jump-countdown");
@@ -2255,7 +2248,9 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderImpact(data);
       renderDss(data);
       renderDefenseRecon(data);
-      renderPlanetEvents(data);
+      // 活动事件（planetEvents）暂缓：与「紧急战情」内容重叠，先不渲染。
+      // 需要恢复时取消下一行注释即可（renderPlanetEvents 函数与 #block-pevents 均保留）。
+      // renderPlanetEvents(data);
       updateAttackWarning(data);
       renderAttackable(data);
       renderProspect(data);
