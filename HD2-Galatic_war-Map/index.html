@@ -128,8 +128,7 @@
 
     <section class="block" id="block-dss">
       <div class="block-head">
-        <span class="block-emoji">🛰️</span>
-        <h2 class="block-title">DSS 民主空间站</h2>
+        <h2 class="block-title">民主空间站 / DSS</h2>
         <span class="block-meta" id="dss-meta"></span>
       </div>
       <div id="dss-content">
@@ -1139,7 +1138,7 @@ function renderPlayers(data) {
 
     // 无状态：顶部红底通知
     const notice = !dss
-      ? `<div class="dss-notice">🛰️ DSS 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
+      ? `<div class="dss-notice"><b>DSS OFFLINE</b> 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
       : "";
 
     // warTime → 真实时间基准（云端校对）：clientTimeMs 对应 currentWarTime
@@ -1203,115 +1202,255 @@ function renderPlayers(data) {
       return { cur, target, pct };
     }
 
-    // buff 渲染：合并 hd2_variables（全部5个行动）+ companion（捐献/激活数据）
-    // 激活判断：companion status===2（已激活，倒计时中）；status===1（募捐中）
+    // ============ 行动列表 + 详情（军事战术 HUD 版式） ============
+    // 数据：hd2_variables 的 tactical_action 条目（全量行动）+ companion 的 tacticalActions（捐献/状态）
     let buffHtml = "";
     const tacMap = {};
     tacActions.forEach(ta => { tacMap[(ta.name || "").toUpperCase()] = ta; });
-    const cnMap = {"EAGLE STORM":"飞鹰风暴","ORBITAL BLOCKADE":"轨道封锁","HEAVY ORDNANCE DISTRIBUTION":"重型军械分发"};
-    // 遍历 hd2_variables 全部行动（含无 companion 数据的飞鹰封锁/星球轰炸）
     const allEntries = voteEntries.concat([]);
-    buffHtml = allEntries.map(e => {
+
+    // 先算出每个行动的完整状态，再统一渲染卡片与详情（避免两次 JSON.stringify 比较）
+    const items = allEntries.map(e => {
       const ids = e.effect_ids || [];
-      // 保留 emoji 作为图标加载失败时的备选（从 cn 提取前置 emoji；用 Unicode 属性覆盖全部 emoji）
       const emojiMatch = (e.cn || "").match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
       const emojiIcon = emojiMatch ? emojiMatch[1] : "🛰️";
       const cnName = (e.cn || "").replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, "");
       const iconUrl = dssIconOf(e.key || e.name || "");
-      const iconHtml = iconUrl
-        ? `<img class="dss-action-icon" src="${esc(iconUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${emojiIcon}</span>'">`
-        : `<span class="dss-emoji-fallback">${emojiIcon}</span>`;
-      // 找匹配的 companion 行动（effectIds 完全包含该条目的 ids 才算匹配，避免变种误匹配）
+      // 找匹配的 companion 行动（effectIds 需完整包含该条目的 ids，避免误匹配变种）
       let ta = null;
       tacActions.forEach(t => {
         const te = (t.effectIds || []);
         if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t;
       });
-      // DSS 战术行动三阶段（2026-09 经用户确认 + 实测校准）
-      //   status=1 → 募捐中  （cost.current 持续增长）
-      //   status=2 → 已激活  （三个取值中唯一未被 1/3 占用者，与原设计一致）
-      //   status=3 → 冷却期  （用户确认：当前 EAGLE STORM 处于冷却）
-      // 判别要点：冷却期的 statusExpireAtWarTime 是「冷却结束时间」，同样落在未来，
-      // 因此【不能】用 expire 是否在未来来区分「激活」与「冷却」，必须看 status。
-      let isActive = false, dInfo = {cur:0, target:1, pct:0};
-      let remainMs = null;
+      // 三阶段：1=募捐中、2=已激活、3=冷却期。冷却期的 expireAtWarTime 是「冷却结束时间」，
+      // 同样落在未来，故【不能】用 expire 是否在未来区分激活/冷却，必须看 status。
+      let isActive = false, dInfo = { cur: 0, target: 1, pct: 0 }, remainMs = null;
       if (ta) {
         const cost = (ta.cost || [])[0] || {};
-        const cur = cost.current || 0, target = cost.target || 1;
-        dInfo = {cur, target, pct: Math.min(100, Math.max(0, (cur/target)*100))};
+        dInfo = { cur: cost.current || 0, target: cost.target || 1,
+                  pct: Math.min(100, Math.max(0, ((cost.current || 0) / (cost.target || 1)) * 100)) };
         isActive = (ta.status === 2);
         if (isActive) remainMs = warRemainMs(ta.expireAtWarTime);
       } else {
         isActive = dss ? ids.some(id => activeIds.has(id)) : false;
       }
-      const barColor = isActive ? "#2ECC71" : "#3B82F6";
-      // 三阶段文案：1=募捐中、2=已激活、3=冷却期（未命中任何行动时也按募捐中处理）
       const phase = ta ? ta.status : 1;
-      const statusText = (phase === 2) ? "✅ 已激活" : (phase === 3 ? "❄️ 冷却中" : "⏸ 募捐中");
       const isCooldown = (phase === 3);
       let descText = e.desc || "";
       if (ta && ta.strategicDescription) descText = stripTags(ta.strategicDescription);
-      let barLabel = "";
+      // 进度条百分比与状态标签
       let barPct = isActive ? 100 : dInfo.pct;
+      let label;
       if (isActive) {
-        // 激活：倒计时条（24h 周期衰减）
-        barPct = (remainMs != null) ? Math.min(100, Math.max(0, remainMs / (24*3600*1000) * 100)) : 100;
-        barLabel = (remainMs != null) ? `⏳ 剩余 ${fmtCountdown(remainMs)}` : "⚡ 行动激活中（24h 周期）";
-      }
-      else if (isCooldown) {
-        // 冷却期：expireAtWarTime 此时表示「冷却结束时间」，据此显示剩余冷却
+        barPct = (remainMs != null) ? Math.min(100, Math.max(0, remainMs / (24 * 3600 * 1000) * 100)) : 100;
+        label = "已激活";
+      } else if (isCooldown) {
         const cdMs = warRemainMs(ta && ta.expireAtWarTime);
-        barLabel = `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)` +
-                   (cdMs != null && cdMs > 0 ? ` · 冷却剩余 ${fmtCountdown(cdMs)}` : " · 冷却中");
+        label = (cdMs != null && cdMs > 0) ? "冷却中 " + fmtCountdown(cdMs) : "冷却中";
+      } else {
+        label = "募捐中";
       }
-      else if (ta) barLabel = `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`;
-      else barLabel = "等待募捐启动";
-      return `
-        <div class="dss-buff ${isActive ? "dss-buff-on" : "dss-buff-off"}"${isActive && remainMs != null ? ` data-active-ms="${Math.round(remainMs)}"` : ""}>
-          <div class="dss-buff-head">
-            <span class="dss-buff-name">${iconHtml}<strong>${esc(cnName)}</strong></span>
-            <span class="dss-buff-status ${isActive ? "st-on" : "st-off"}">${statusText}</span>
-          </div>
-          <div class="dss-effect-desc">${esc(descText)}</div>
-          <div class="dss-progress" style="margin-top:8px">
-            <div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
-            <div class="dss-bar-label">${barLabel}</div>
-          </div>
-        </div>`;
+      const donLine = ta
+        ? `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`
+        : "等待募捐启动";
+      return {
+        e, ta, ids, emojiIcon, cnName, iconUrl, phase, isActive, isCooldown,
+        remainMs, descText, barPct, label, donLine, dInfo,
+      };
+    });
+
+    // 详情面板展示的那一项：优先「已激活」，否则第一项
+    const sel = items.find(x => x.isActive) || items[0] || null;
+
+    // 图标：16×16 方形战术图标（加载失败回退 emoji）
+    const iconBox = (it) => it.iconUrl
+      ? `<span class="ico"><img src="${esc(it.iconUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${it.emojiIcon}</span>'"></span>`
+      : `<span class="ico"><span class="dss-emoji-fallback">${it.emojiIcon}</span></span>`;
+
+    buffHtml = items.map(it => {
+      const isSel = sel && it === sel;
+      const classes = ["dss-buff"];
+      if (isSel) classes.push("sel");
+      if (it.isActive) classes.push("active");
+      if (it.isCooldown) classes.push("cd");
+      if (!it.isActive && !it.isCooldown) classes.push("fund");
+      // 冷却中徽章用「方括号」而非圆角药丸（规范：无圆角）
+      const pill = it.isCooldown ? `<span class="dss-pill">[ 冷却中 ]</span>` : "";
+      const stripe = (it.isActive && it.remainMs != null)
+        ? `<div class="strip">就位倒计时：${esc(fmtCountdown(it.remainMs))}</div>` : "";
+      const right = `<span class="pct">${it.isActive ? "100%" : Math.round(it.barPct) + "%"}</span>`;
+      const bar = `<div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${it.barPct.toFixed(1)}%"></div></div>`;
+      return `<article class="${classes.join(" ")}"${it.isActive && it.remainMs != null ? ` data-active-ms="${Math.round(it.remainMs)}"` : ""}>
+        ${pill}
+        ${iconBox(it)}
+        <div class="mid">
+          <div class="t">${esc(it.cnName)}</div>
+          <div class="s">${it.label} · ${esc(it.donLine)}</div>
+        </div>
+        ${right}
+        ${bar}
+        ${stripe}
+      </article>`;
     }).join("");
 
-    // 被动渲染
-    const passiveEntryCn = passiveEntry ? String(passiveEntry.cn || "") : "";
-    const passiveEmoji = passiveEntryCn.match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
-    const passiveIconHtml = `<img class="dss-action-icon" src="${esc(DSS_ICONS["Operational Support"])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;dss-emoji-fallback&quot;>${passiveEmoji ? passiveEmoji[1] : "✊"}</span>'">`;
-    const passiveHtml = passiveEntry
-      ? `<div class="dss-passive">
-          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>${esc(passiveEntryCn.replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, ""))}</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
-          <div class="dss-effect-desc">${esc(passiveEntry.desc)}</div>
-        </div>`
-      : `<div class="dss-passive">
-          <div class="dss-buff-head"><span class="dss-buff-name">${passiveIconHtml}<strong>行动支持</strong></span><span class="dss-buff-status st-on">⚡ 常驻被动</span></div>
-          <div class="dss-effect-desc">DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。</div>
-        </div>`;
+    // 被动：行动支持（常驻）
+    const passiveEntryCn = passiveEntry ? String(passiveEntry.cn || "") : "行动支持";
+    const passiveCn = passiveEntryCn.replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, "");
+    const passiveDesc = passiveEntry && passiveEntry.desc
+      ? passiveEntry.desc
+      : "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。";
 
+    const locText = dss
+      ? (function(){
+          const pinfo = (data.planets && !data.planets.__err) ? data.planets.find(p => p.index === dss.planetIndex) : null;
+          const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: "星球#" + dss.planetIndex };
+          return (nm.cn || nm.en) + (pinfo && pinfo.sector ? " · " + sectorCn(pinfo.sector) : "");
+        })()
+      : "未停靠";
 
+    // 详情面板
+    const selectedCn = sel ? sel.cnName : "—";
+    const selectedDesc = sel ? sel.descText : "当前没有可展示的 DSS 战术行动。";
+    const contribPct = sel ? (sel.isActive ? 100 : sel.dInfo.pct) : 0;
+    const contribLine = sel
+      ? `${contribPct.toFixed(0)}%　你的贡献：0`
+      : "—";
+    const countdownLine = sel
+      ? (sel.isActive && sel.remainMs != null
+          ? "就位倒计时：" + fmtCountdown(sel.remainMs)
+          : (sel.isCooldown
+              ? (function () {
+                  const cdMs = warRemainMs(sel.ta && sel.ta.expireAtWarTime);
+                  return (cdMs != null && cdMs > 0) ? "冷却剩余：" + fmtCountdown(cdMs) : "冷却中";
+                })()
+              : "募捐进度：" + sel.dInfo.pct.toFixed(1) + "%　（" + fmtNum(sel.dInfo.cur) + " / " + fmtNum(sel.dInfo.target) + "）"))
+      : "";
+
+    const resCells = [
+      { b: "R", cls: "", v: (data.war && data.war.statistics && data.war.statistics.playerCount) || 0, k: "在线玩家" },
+      { b: "▲", cls: "green", v: (data.planets || []).length, k: "活跃星球" },
+      { b: "◆", cls: "purple", v: dss ? (dss.planetIndex != null ? dss.planetIndex : "—") : "—", k: "停靠编号" },
+      { b: "▼", cls: "blue", v: items.filter(x => x.isActive).length, k: "生效行动" },
+    ].map(c => `<span class="cell"><span class="badge ${c.cls}">${c.b}</span><span><b>${c.v}</b><i>${c.k}</i></span></span>`).join("");
+
+    // 右上角浮条：空间站下次跃迁倒计时（用 data-jump-ms 承载初值，交给每秒计时器更新）
+    const jumpMs = (dss && dss.electionEndWarTime != null) ? warRemainMs(dss.electionEndWarTime) : null;
+    const jumpHtml = `<div class="dss-jump"${jumpMs != null ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>空间站即将移动：<span id="dss-jump-countdown">${jumpMs != null ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
+
+    const heroSvg = `
+      <svg viewBox="0 0 900 320" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="dssFlame" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stop-color="#EAF6FF" stop-opacity="1"/>
+            <stop offset="30%" stop-color="#8FD0FF" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#2E6FA8" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="dssGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#CFE9FF" stop-opacity=".85"/>
+            <stop offset="100%" stop-color="#CFE9FF" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="dssHull" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5C6570"/><stop offset="42%" stop-color="#262B32"/><stop offset="100%" stop-color="#0A0C0F"/>
+          </linearGradient>
+          <linearGradient id="dssHull2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0A0C0F"/><stop offset="52%" stop-color="#454C55"/><stop offset="100%" stop-color="#12161C"/>
+          </linearGradient>
+          <linearGradient id="dssTower" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#79838F"/><stop offset="100%" stop-color="#20252B"/>
+          </linearGradient>
+        </defs>
+        <g opacity=".95">
+          <path d="M452 120 L178 82 L452 142 Z" fill="url(#dssFlame)"/>
+          <path d="M452 200 L178 238 L452 178 Z" fill="url(#dssFlame)"/>
+          <ellipse cx="452" cy="130" rx="74" ry="40" fill="url(#dssGlow)"/>
+          <ellipse cx="452" cy="190" rx="74" ry="40" fill="url(#dssGlow)"/>
+        </g>
+        <g transform="translate(486 160) rotate(-13)">
+          <rect x="-190" y="-46" width="470" height="92" fill="url(#dssHull)"/>
+          <rect x="-190" y="-46" width="470" height="13" fill="#6E7885" opacity=".5"/>
+          <rect x="-190" y="33" width="470" height="13" fill="#05070A"/>
+          <path d="M280 -46 L352 -22 L352 22 L280 46 Z" fill="url(#dssHull2)"/>
+          <rect x="-40" y="-78" width="180" height="34" fill="url(#dssTower)"/>
+          <rect x="20" y="-96" width="86" height="20" fill="#2B3138"/>
+          <rect x="34" y="-104" width="58" height="10" fill="#5C6570"/>
+          <g fill="#7C8794" opacity=".45">
+            <rect x="-150" y="-28" width="120" height="5"/><rect x="-150" y="-14" width="210" height="4"/>
+            <rect x="-150" y="6" width="160" height="4"/><rect x="-150" y="20" width="96" height="5"/>
+            <rect x="90" y="-18" width="150" height="4"/><rect x="90" y="10" width="110" height="4"/>
+          </g>
+          <g fill="#FFE600" opacity=".85">
+            <rect x="-120" y="-40" width="8" height="8"/><rect x="-96" y="-40" width="8" height="8"/>
+            <rect x="-72" y="-40" width="8" height="8"/><rect x="-48" y="-40" width="8" height="8"/>
+          </g>
+          <g fill="#0A0C10"><rect x="-206" y="-44" width="20" height="34"/><rect x="-206" y="10" width="20" height="34"/></g>
+          <g fill="#BFE6FF"><rect x="-206" y="-38" width="13" height="22"/><rect x="-206" y="16" width="13" height="22"/></g>
+          <rect x="-60" y="46" width="150" height="22" fill="#141820"/>
+          <rect x="-20" y="68" width="70" height="14" fill="#0E1116"/>
+        </g>
+        <g opacity=".12">
+          <rect x="0" y="0" width="900" height="2" fill="#7FD4FF"/>
+          <rect x="0" y="158" width="900" height="1" fill="#7FD4FF"/>
+          <rect x="0" y="318" width="900" height="2" fill="#7FD4FF"/>
+        </g>
+      </svg>`;
 
     root.innerHTML = `
       ${notice}
-      <div class="dss-station">
-        ${locationHtml}
-        ${passiveHtml}
-        <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
+      <div class="dss-hud dss-station">
+        <header class="dss-top">
+          <div class="dss-tele">
+            <div>状态 <b>${dss ? "在线" : "离线"}</b> · 行动 <b>${items.length}</b></div>
+            <div>生效 <b>${items.filter(x => x.isActive).length}</b> · 募捐 <b>${items.filter(x => !x.isActive && !x.isCooldown).length}</b></div>
+            <div>停靠 <b>${esc(locText)}</b></div>
+          </div>
+          <div class="dss-title">
+            <h3>民主空间站 / DSS</h3>
+            <div class="sub">DEMOCRACY SPACE STATION · TACTICAL CONSOLE</div>
+          </div>
+          <nav class="dss-tabs">
+            <span class="tab">总结<i>1</i></span>
+            <span class="tab on">行动<i>2</i></span>
+            <span class="tab">地点<i>3</i></span>
+          </nav>
+          <div class="dss-res">${resCells}</div>
+        </header>
+        <div class="dss-div"></div>
+        <div class="dss-grid">
+          <section class="dss-col-l">
+            <div class="dss-sec"><h4>行动</h4><span class="n">${String(items.length).padStart(2, "0")}</span></div>
+            <p class="dss-note">捐赠目标达成时，相应的 DSS 战术行动就会激活。</p>
+            <div class="dss-votes">${buffHtml || `<div class="empty">暂无 DSS 战术行动。</div>`}</div>
+            <div class="dss-passive">
+              <div class="dss-sec small"><h4>常驻被动</h4></div>
+              <div class="pv-name">${esc(passiveCn)}</div>
+              <p class="dss-effect-desc">${esc(passiveDesc)}</p>
+            </div>
+          </section>
+          <section class="dss-col-r">
+            <div class="dss-hero">
+              ${heroSvg}
+              ${jumpHtml}
+            </div>
+            <div class="dss-detail">
+              <div class="tagline"><span class="bar-y"></span><span>战术行动</span></div>
+              <div class="faction">超级地球 · ${esc(locText)}</div>
+              <h3>${esc(selectedCn)}</h3>
+              <p class="desc">${esc(selectedDesc)}</p>
+              <div class="dss-contrib">
+                <div class="lbl">贡献度 / CONTRIBUTION</div>
+                <div class="box">${contribLine}</div>
+              </div>
+              ${countdownLine ? `<div class="dss-count"><span>${esc(countdownLine)}</span></div>` : ""}
+            </div>
+          </section>
+        </div>
       </div>
     `;
-    // 只统计实际激活的行动（status===2 已激活；status=1 募捐中、status=3 冷却期均不计）
-    const activeCount = voteEntries.filter(e => {
-      const ids = e.effect_ids || [];
-      let ta = null;
-      tacActions.forEach(t => { const te = (t.effectIds || []); if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t; });
-      if (ta) { return ta.status === 2; }
-      return dss ? ids.some(id => activeIds.has(id)) : false;
-    }).length;
+    // meta 行（标题右侧）：生效行动数 + 跃迁倒计时
+    // 生效行动数（供块外 meta 行使用）
+    const activeCount = items.filter(x => x.isActive).length;
+
+    // meta 行（标题右侧）：生效行动数 + 跃迁倒计时
     meta.textContent = dss
       ? (activeCount ? `${activeCount} 项生效` : "无投票生效")
       : "未停靠";
@@ -1322,9 +1461,10 @@ function renderPlayers(data) {
     if (window._dssTimer) clearInterval(window._dssTimer);
     window._dssTimer = setInterval(function() {
       const elapsed = Date.now() - startReal;
-      // 跃迁倒计时
+      // 跃迁倒计时（data-jump-ms 在浮条容器上，兼容放在 #dss-jump-countdown 自身的旧写法）
       if (timerEl) {
-        const initMs = parseFloat(timerEl.getAttribute("data-jump-ms"));
+        const holder = (timerEl.getAttribute("data-jump-ms") != null) ? timerEl : timerEl.parentElement;
+        const initMs = parseFloat(holder && holder.getAttribute("data-jump-ms"));
         if (isFinite(initMs) && initMs > 0) {
           const remain = Math.max(0, initMs - elapsed);
           timerEl.textContent = fmtCountdown(remain);
