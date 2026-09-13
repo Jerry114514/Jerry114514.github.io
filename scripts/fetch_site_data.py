@@ -550,12 +550,27 @@ def fetch_player_distribution():
         return None
 
 
+def biome_name_of(planet: dict) -> str:
+    """取星球的 biome 名（hd2dev 返回 {"name":..., "description":...} 结构）。
+    官方源只给 planetBiomeId32 数字 ID、无法直接用人读名，故 biome 一律以 hd2dev 为准。
+    缺少时返回空串，前端自行回退。"""
+    b = (planet or {}).get("biome")
+    if isinstance(b, dict):
+        return (b.get("name") or "").strip()
+    if isinstance(b, str):          # 兼容将来可能改成纯字符串
+        return b.strip()
+    return ""
+
+
 def fetch_hd2dev():
     war = fetch_json(f"{HD2DEV}/war", HEADERS_HD2DEV, 25)
     planets = fetch_json(f"{HD2DEV}/planets", HEADERS_HD2DEV, 25)
     campaigns = fetch_json(f"{HD2DEV}/campaigns", HEADERS_HD2DEV, 25)
     assignments = fetch_json(f"{HD2DEV}/assignments", HEADERS_HD2DEV, 25)
     dispatches = fetch_json(f"{HD2DEV}/dispatches", HEADERS_HD2DEV, 25)
+    # biome 提取成扁平字符串，随 planets 一起进入后续合并（见 main 的 planet 构造）
+    for p in (planets or []):
+        p["_biomeName"] = biome_name_of(p)
     # 只保留最新 30 条（网站展示 20）
     dispatches = sorted(dispatches, key=lambda x: x.get("id", 0), reverse=True)[:30]
 
@@ -634,6 +649,23 @@ def main():
                     fixed += 1
     if fixed:
         print(f"  [OK] 本地对照表补回 {fixed} 个星球名（hd2dev 未提供时兜底）")
+
+    # biome（环境/生物群系）：官方源只有 planetBiomeId32 数字 ID，取不到人读名；
+    # hd2dev 直接给 {"name": "Desert Cliffs", ...}，故一律以 hd2dev 为准。
+    # 前端据此选环境图（assets/biomes/，映射见该目录 index.json）。
+    biome_n = 0
+    for p in base.get("planets") or []:
+        h = hd2dev_map.get(p.get("index"))
+        bn = biome_name_of(h) if h else ""
+        if bn:
+            p["biome"] = bn
+            biome_n += 1
+        else:
+            p.setdefault("biome", "")
+    if biome_n:
+        print(f"  [OK] biome 字段补全 {biome_n} 颗星球")
+    else:
+        print("  [WARN] biome 未取到（hd2dev 失败？）—— 前端将回退无环境图")
 
     # campaigns 星球名/sector 用 hd2dev 补（独立循环），同样套用本地兜底
     for c in base.get("campaigns") or []:
