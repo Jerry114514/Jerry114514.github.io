@@ -1110,6 +1110,29 @@ async function boot() {
     0, 0, 800, .22, 2500, .45, 6000, .75, 12000, 1];
   const resolvePlayersExpr = (tree) => JSON.parse(JSON.stringify(tree).replaceAll('["interp-players"]', JSON.stringify(PLAYER_T)));
 
+  // 星球本体半径（与 planet-core 的 circle-radius 完全同源）。
+  // 抽成常量后：图层直接复用，效果图标也能算出「星球实际多大」，
+  // 从而把图标摆到星球**外面**而不是压在星球上（否则会挡掉 planet-core 的 hover）。
+  const PLANET_R_BASE = 4.4,  PLANET_R_GAIN = 1.76;   // z4
+  const PLANET_R_MID  = 10.12, PLANET_R_MID_GAIN = 3.96; // z9
+  const PLANET_R_HI   = 24.2, PLANET_R_HI_GAIN = 8.8;  // z13
+  const PLANET_RADIUS_EXPR = ["interpolate", ["linear"], ["zoom"],
+    4,  ["+", PLANET_R_BASE, ["*", PLANET_R_GAIN,     ["interp-players"]]],
+    9,  ["+", PLANET_R_MID,  ["*", PLANET_R_MID_GAIN, ["interp-players"]]],
+    13, ["+", PLANET_R_HI,   ["*", PLANET_R_HI_GAIN,  ["interp-players"]]]];
+  // 按 zoom 与玩家分级 t(0..1) 解出该星球的屏幕半径（px），与 MapLibre 的插值一致
+  function planetRadiusPx(zoom, t) {
+    const seg = (z, r, g) => r + g * t;
+    if (zoom <= 4)  return seg(4, PLANET_R_BASE, PLANET_R_GAIN);
+    if (zoom >= 13) return seg(13, PLANET_R_HI, PLANET_R_HI_GAIN);
+    if (zoom <= 9) {
+      const u = (zoom - 4) / 5;
+      return seg(4, PLANET_R_BASE, PLANET_R_GAIN) * (1 - u) + seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * u;
+    }
+    const u = (zoom - 9) / 4;
+    return seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * (1 - u) + seg(13, PLANET_R_HI, PLANET_R_HI_GAIN) * u;
+  }
+
   // 战术空态：无任何战术目标时明确提示（避免误以为功能坏了）
   if (!Object.keys(TACBY).length && !$("tac-empty")) {
     const n = document.createElement("div");
@@ -1318,10 +1341,7 @@ async function boot() {
         { id: "planet-core", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
-            "circle-radius": ["interpolate", ["linear"], ["zoom"],
-              4, ["+", 4.4, ["*", 1.76, ["interp-players"]]],
-              9, ["+", 10.12, ["*", 3.96, ["interp-players"]]],
-              13, ["+", 24.2, ["*", 8.8, ["interp-players"]]]],
+            "circle-radius": PLANET_RADIUS_EXPR,
             "circle-stroke-color": "rgba(0,0,0,.55)",
             "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .6, 9, 1.2, 13, 1.8],
           } },
@@ -1603,11 +1623,11 @@ async function boot() {
         $("srcnote").innerHTML += "<br>效果图标：当前战局无可用图标的效果";
         return;
       }
-      buildFXNodes(fx);
+      buildFXNodes(fx, PLAYER_T);
     })();
   }
 
-  function buildFXNodes(fx) {
+  function buildFXNodes(fx, playerT) {
     const host = $("fx-layer");
     host.innerHTML = "";
     const MAXICON = 4;
@@ -1667,12 +1687,12 @@ async function boot() {
     };
     function fxScale(z) {
       let base;
-      if (z >= 9)        base = { size: 34, img: 24, gap: 42 };
-      else if (z <= 7.2) base = { size: 22, img: 15, gap: 26 };
+      if (z >= 9)        base = { size: 30, img: 21, gap: 38 };
+      else if (z <= 7.2) base = { size: 22, img: 15, gap: 28 };
       else {
         const t = (z - 7.2) / (9 - 7.2);          // 7.2..9 线性过渡
         const lerp = (a, b) => Math.round(a + (b - a) * t);
-        base = { size: lerp(22, 34), img: lerp(15, 24), gap: lerp(26, 42) };
+        base = { size: lerp(22, 30), img: lerp(15, 21), gap: lerp(28, 38) };
       }
       // 移动端（窄屏）图标再缩一档，避免多个图标横向挤在一起
       if (window.matchMedia("(max-width:767px)").matches) {
@@ -1682,9 +1702,24 @@ async function boot() {
       return base;
     }
     let lastSize = 0;
-    const place = (el, n, x, y) => {
+    const place = (el, x, y) => {
       if (!el) return;
       el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%)`;
+    };
+    // 把某一侧的图标簇整体摆到星球**外面**：簇的近端留出 r + pad 的净距，
+    // 远端再按簇宽补 offset，使簇的视觉中心落在外侧。这样图标不会压住星球，
+    // 也不会吃掉 planet-core 的 hover/点击区（用户反馈的核心问题）。
+    const SIDE_PAD = 7;
+    const sideOffset = (n, r, sc) => (n <= 0 ? 0 : (r + SIDE_PAD) + (sc.size * n + 3 * (n - 1)) / 2);
+    const playerTAt = (t, v) => {
+      const pts = [[0, t[2]], [800, t[4]], [2500, t[6]], [6000, t[8]], [12000, t[10]]];
+      if (v <= pts[0][0]) return pts[0][1];
+      if (v >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
+      for (let i = 1; i < pts.length; i++) {
+        const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
+        if (v <= x1) return y0 + (y1 - y0) * (v - x0) / (x1 - x0);
+      }
+      return pts[pts.length - 1][1];
     };
     function sync() {
       rafId = 0;
@@ -1698,9 +1733,10 @@ async function boot() {
         const p = BYIDX[nd.idx];
         if (!p || !p.position) continue;
         const pt = MAP.project([p.position.x, p.position.y]);
+        const r = planetRadiusPx(z, playerTAt(playerT, p.players || 0));
         // 左侧放己方增益（SEAF / DSS 本体），右侧放敌军相关（变种 / DSS 战术行动）
-        place(nd.elL, nd.nL, pt.x - sc.gap * nd.nL / 2, pt.y, sc.gap);
-        place(nd.elR, nd.nR, pt.x + sc.gap * nd.nR / 2, pt.y, sc.gap);
+        if (nd.elL) place(nd.elL, pt.x - sideOffset(nd.nL, r, sc), pt.y);
+        if (nd.elR) place(nd.elR, pt.x + sideOffset(nd.nR, r, sc), pt.y);
       }
     }
     function schedule() { if (!rafId) rafId = requestAnimationFrame(sync); }
