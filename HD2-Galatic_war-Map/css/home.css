@@ -1287,9 +1287,13 @@
        ============================================================ */
     /* 栅格用 auto-fit + 320px 下限：按**实际容器宽**自适应（右侧栏会吃掉约 250px，
        按视口断点写死列数会让卡片被压到 267px、低于规范下限 320px） */
+    /* 栅格：auto-fit + 320–380px 列宽区间。
+       - 下限 320px：容器不够时自动减列，卡片不会被压窄
+       - 上限 380px：容器很宽时列也不会被拉太开（卡片自身还有 max-width 兜底）
+       实测容器约 1110px（右侧栏吃掉约 250px）时得到 3 列、卡片约 361px。 */
     .planet-grid{
-      display:grid;gap:14px;align-items:start;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      display:grid;gap:14px;align-items:start;justify-content:center;
+      grid-template-columns:repeat(auto-fit,minmax(320px,380px));
     }
     @media (max-width:767px){ .planet-grid{grid-template-columns:1fr} }
 
