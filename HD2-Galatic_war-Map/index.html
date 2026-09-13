@@ -1162,21 +1162,7 @@ function renderPlayers(data) {
       return (h > 0 ? h + "小时 " : "") + (m < 10 ? "0" + m : m) + "分 " + (sec < 10 ? "0" + sec : sec) + "秒";
     }
 
-    // 停靠星球（仅当有状态时）
-    let locationHtml = "";
-    if (dss) {
-      const idx = dss.planetIndex;
-      const pinfo = (data.planets && !data.planets.__err)
-        ? data.planets.find(p => p.index === idx) : null;
-      const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: `星球#${idx}` };
-      const planetNameStr = nm.cn || nm.en;
-      locationHtml = `<div class="dss-location">📍 当前停靠：<strong>${esc(planetNameStr)}</strong>${pinfo ? ` · ${esc(sectorCn(pinfo.sector))}` : ""}</div>`;
-      // 跃迁倒计时（本地计时器 + 云端校对）
-      if (dss.electionEndWarTime != null) {
-        const jumpMs = warRemainMs(dss.electionEndWarTime);
-        locationHtml += `<div class="dss-location" style="margin-top:4px;font-size:0.85rem">⏱ 下次跃迁：<span id="dss-jump-countdown" data-jump-ms="${jumpMs != null ? Math.round(jumpMs) : ''}">${jumpMs != null ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
-      }
-    }
+    // 停靠位置统一由 locText + 区块标题右侧的 #dss-meta 展示，此处不再产出 locationHtml
 
     // ============ 精确数据渲染（companion tacticalActions） ============
     const tacActions = (dss && dss.tacticalActions) || [];
@@ -1290,11 +1276,10 @@ function renderPlayers(data) {
       if (!it.isActive && !it.isCooldown) classes.push("fund");
       const pill = it.isCooldown ? `<span class="dss-pill">[ 冷却中 ]</span>` : "";
       const stripe = (it.isActive && it.remainMs != null)
-        ? `<div class="strip">就位倒计时：${esc(fmtCountdown(it.remainMs))}</div>` : "";
+        ? `<div class="strip" data-act="${Math.round(it.remainMs)}">就位倒计时：${esc(fmtCountdown(it.remainMs))}</div>` : "";
       const right = `<span class="pct">${it.isActive ? "100%" : Math.round(it.barPct) + "%"}</span>`;
       const bar = `<div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${it.barPct.toFixed(1)}%"></div></div>`;
-      return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button"
-        aria-label="查看 ${esc(it.cnName)} 详情"${it.isActive && it.remainMs != null ? ` data-active-ms="${Math.round(it.remainMs)}"` : ""}>
+      return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button" aria-label="查看 ${esc(it.cnName)} 详情">
         ${pill}
         ${iconBox(it)}
         <div class="mid">
@@ -1314,9 +1299,11 @@ function renderPlayers(data) {
       ? passiveEntry.desc
       : "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。";
 
-    // 右上角浮条：空间站下次跃迁倒计时（data-jump-ms 承载初值，交给每秒计时器）
+    // 右上角浮条：空间站下次跃迁倒计时。
+    // data-jump-ms 直接挂到 #dss-jump-countdown 自身（计时器就是按这个 id 取值的），
+    // 之前挂在父级 .dss-jump 上，导致每秒读取恒为 null → 永远显示「等待信息更新」。
     const jumpMs = (dss && dss.electionEndWarTime != null) ? warRemainMs(dss.electionEndWarTime) : null;
-    const jumpHtml = `<div class="dss-jump"${jumpMs != null ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>空间站即将移动：<span id="dss-jump-countdown">${jumpMs != null ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
+    const jumpHtml = `<div class="dss-jump">空间站即将移动：<span id="dss-jump-countdown"${jumpMs != null ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>${jumpMs != null ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
 
     const locText = dss
       ? (function () {
@@ -1341,14 +1328,18 @@ function renderPlayers(data) {
         img: heroSrcOf(it.cnName),
         label: it.label,
         desc: it.descText,
-        contrib: (it.isActive ? 100 : it.dInfo.pct).toFixed(0) + "%　你的贡献：0",
+        isActive: it.isActive,
+        isCooldown: it.isCooldown,
+        // 上方数据条：只放「达成比例」；下方状态条放阶段/倒计时，避免两处都写进度
+        ratio: (it.isActive ? 100 : it.dInfo.pct).toFixed(0) + "%",
         count: cLine,
+        actMs: (it.isActive && it.remainMs != null) ? Math.round(it.remainMs) : null,
       };
     });
 
     const first = cardData[0] || {
       img: heroSrcOf(""), label: "—",
-      desc: "当前没有可展示的 DSS 战术行动。", contrib: "0%　你的贡献：0", count: "",
+      desc: "当前没有可展示的 DSS 战术行动。", ratio: "0%", count: "", isActive: false, isCooldown: false, actMs: null,
     };
 
     root.innerHTML = `
@@ -1385,23 +1376,26 @@ function renderPlayers(data) {
               <p class="desc" id="dss-detail-desc">${esc(first.desc)}</p>
               <div class="dss-contrib">
                 <div class="lbl">贡献度 / CONTRIBUTION</div>
-                <div class="box" id="dss-contrib-box">${esc(first.contrib)}</div>
+                <div class="box" id="dss-contrib-box">${esc(first.ratio)}</div>
               </div>
-              <div class="dss-count" id="dss-count"${first.count ? "" : ' style="display:none"'}><span>${esc(first.count)}</span></div>
+              <div class="dss-count" id="dss-count"${first.count ? "" : ' style="display:none"'}><span id="dss-count-txt">${esc(first.count)}</span></div>
             </div>
           </section>
         </div>
       </div>
     `;
+    // 详情区顶部条/底部条的状态：.active=行动生效（黄底黑字+绿色倒计时），否则募捐中（黑底黄字+红橙进度）
+    const detailEl = root.querySelector(".dss-detail");
+    if (detailEl) detailEl.classList.toggle("active", !!first.isActive);
 
-    // ---- 点击行动卡片 → 右栏切换大图与详情（图3/图4 效果）----
+    // ---- 点击行动卡片 → 右栏切换大图与详情 ----
     (function () {
       const hero = root.querySelector("#dss-hero-img");
       const hEl = root.querySelector("#dss-detail-h3");
       const dEl = root.querySelector("#dss-detail-desc");
       const cEl = root.querySelector("#dss-contrib-box");
       const kEl = root.querySelector("#dss-count");
-      const kSpan = kEl ? kEl.querySelector("span") : null;
+      const kSpan = root.querySelector("#dss-count-txt");
       function select(i) {
         const info = cardData[i];
         if (!info) return;
@@ -1411,11 +1405,14 @@ function renderPlayers(data) {
         if (hero) hero.src = info.img;
         if (hEl) hEl.textContent = info.cn;
         if (dEl) dEl.textContent = info.desc;
-        if (cEl) cEl.textContent = info.contrib;
+        if (cEl) cEl.textContent = info.ratio;
+        if (detailEl) detailEl.classList.toggle("active", !!info.isActive);
         if (kEl) {
           if (info.count) { kEl.style.display = ""; if (kSpan) kSpan.textContent = info.count; }
           else kEl.style.display = "none";
         }
+        // 让每秒计时器接着刷新这一项的倒计时（重新渲染/切换后引用已失效）
+        if (kEl) kEl.setAttribute("data-act", info.actMs != null ? String(info.actMs) : "");
       }
       root.querySelectorAll(".dss-votes .dss-buff").forEach(function (card) {
         const i = parseInt(card.getAttribute("data-i"), 10);
@@ -1438,34 +1435,35 @@ function renderPlayers(data) {
     meta.textContent = dss ? locText : "未停靠";
 
     // 本地计时器：每秒刷新倒计时（云端 60s 刷新时会重新渲染校对）
-    const timerEl = root.querySelector("#dss-jump-countdown");
+    // 注意：每次 renderDss 都会重建 DOM，因此引用必须在帧内重新查询，不能闭包缓存旧节点。
     const startReal = Date.now();
     if (window._dssTimer) clearInterval(window._dssTimer);
     window._dssTimer = setInterval(function() {
       const elapsed = Date.now() - startReal;
-      // 跃迁倒计时
-      if (timerEl) {
-        const initMs = parseFloat(timerEl.getAttribute("data-jump-ms"));
-        if (isFinite(initMs) && initMs > 0) {
-          const remain = Math.max(0, initMs - elapsed);
-          timerEl.textContent = fmtCountdown(remain);
-        } else {
-          timerEl.textContent = "等待信息更新";
-        }
+      // ① 空间站跃迁倒计时（data-jump-ms 挂在 #dss-jump-countdown 自身；兼容挂在父级的旧写法）
+      const tEl = root.querySelector("#dss-jump-countdown");
+      if (tEl) {
+        const holder = (tEl.getAttribute("data-jump-ms") != null) ? tEl : tEl.parentElement;
+        const initMs = parseFloat(holder && holder.getAttribute("data-jump-ms"));
+        tEl.textContent = (isFinite(initMs) && initMs > 0)
+          ? fmtCountdown(Math.max(0, initMs - elapsed))
+          : "等待信息更新";
       }
-      // 激活行动倒计时条
-      root.querySelectorAll(".dss-buff[data-active-ms]").forEach(function(card) {
-        const initMs = parseFloat(card.getAttribute("data-active-ms"));
+      // ② 已激活行动的倒计时：卡片底部条 + 右栏底部条（两者用 data-act 承载初值）
+      root.querySelectorAll(".dss-buff .strip[data-act]").forEach(function(strip) {
+        const initMs = parseFloat(strip.getAttribute("data-act"));
         if (isFinite(initMs) && initMs > 0) {
-          const remain = Math.max(0, initMs - elapsed);
-          const pct = Math.min(100, Math.max(0, remain / (24*3600*1000) * 100));
-          const fill = card.querySelector(".dss-bar-fill");
-          const label = card.querySelector(".dss-bar-label");
-          if (fill) fill.style.width = pct.toFixed(1) + "%";
-          if (label) label.textContent = "⏳ 剩余 " + fmtCountdown(remain);
-          if (remain <= 0) { label.textContent = "⏳ 行动已结束"; }
+          strip.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
         }
       });
+      const kEl = root.querySelector("#dss-count");
+      const kTxt = root.querySelector("#dss-count-txt");
+      if (kEl && kTxt) {
+        const initMs = parseFloat(kEl.getAttribute("data-act"));
+        if (isFinite(initMs) && initMs > 0) {
+          kTxt.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
+        }
+      }
     }, 1000);
   }
 
