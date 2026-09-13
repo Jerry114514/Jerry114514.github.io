@@ -331,13 +331,7 @@
       text-align: right;
       line-height: 1.35;
     }
-    /* DSS 停靠位置（标题右侧）：等宽数字质感，与 HUD 的战术标签一致 */
-    #dss-meta {
-      font-family: "Rajdhani","Orbitron","Consolas",monospace;
-      font-weight: 700;
-      letter-spacing: .04em;
-      color: #C9C9C9;
-    }
+    /* DSS 停靠位置已移入面板内部（.dss-hud .dss-loc），原 #dss-meta 规则作废 */
 
     /* ============================================================
        区块1：重要指令
@@ -1136,22 +1130,27 @@
     }
     .dss-hud *{box-sizing:border-box}
     .dss-hud .num,.dss-hud .pct,.dss-hud .n,.dss-hud .ver,.dss-hud .don,.dss-hud .lbl,
-    .dss-hud .dss-bar-label,.dss-hud .box,.dss-hud .strip,.dss-hud .s,.dss-hud .tab i{
+    .dss-hud .dss-bar-label,.dss-hud .box,.dss-hud .strip,.dss-hud .s{
       font-family:var(--dss-mono);font-weight:700;letter-spacing:.02em;
     }
 
-    /* ---------- 顶部：标题 + 三段式标签卡（按用户要求移除遥测与资源计数） ---------- */
-    .dss-hud .dss-top{display:flex;align-items:center;gap:16px;padding:9px 12px;min-height:56px;background:var(--dss-panel)}
-    .dss-hud .dss-tabs{display:flex;align-items:flex-end;margin-left:auto}
-    .dss-hud .dss-tabs .tab{
-      display:flex;align-items:center;gap:7px;padding:6px 13px 5px;
-      border:1px solid var(--dss-line);border-bottom:none;background:#121212;
-      color:var(--dss-dim);font-size:12.5px;letter-spacing:.08em;position:relative;
+    /* ---------- 顶部：标题（左） + 停靠位置（右）
+         原「总结1 / 行动2 / 地点3」是游戏内 UI 的复刻，按用户要求删除；
+         区块标题由 .block-head 移入面板，停靠位置同时从区块头挪到面板右上角 ---------- */
+    .dss-hud .dss-top{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:9px 12px;min-height:56px;background:var(--dss-panel);
     }
-    .dss-hud .dss-tabs .tab i{font-style:normal;font-size:11.5px;color:var(--dss-mute)}
-    .dss-hud .dss-tabs .tab.on{background:var(--dss-stripe);color:var(--dss-txt);border-color:#3A3300}
-    .dss-hud .dss-tabs .tab.on i{color:var(--dss-y)}
-    .dss-hud .dss-tabs .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--dss-y)}
+    .dss-hud .dss-title{
+      margin:0;display:flex;align-items:center;gap:9px;
+      font-size:15px;font-weight:700;color:var(--dss-txt);letter-spacing:.06em;
+    }
+    .dss-hud .dss-title::before{content:"";width:4px;height:16px;background:var(--dss-y);flex:0 0 4px}
+    .dss-hud .dss-loc{
+      font-family:var(--dss-mono);font-weight:700;font-size:12.5px;
+      color:#C9C9C9;letter-spacing:.04em;
+      min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;
+    }
     .dss-hud .dss-div{height:5px;background:var(--dss-stripe);border-top:1px solid #241F00;border-bottom:1px solid #241F00}
 
     /* ---------- 主体 2 列 ---------- */

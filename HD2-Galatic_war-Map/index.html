@@ -6,8 +6,8 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913">
-  <link rel="stylesheet" href="./css/home.css?v=20260913">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913b">
+  <link rel="stylesheet" href="./css/home.css?v=20260913b">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -126,11 +126,8 @@
       </div>
     </section>
 
+    <!-- 标题与停靠位置已移入面板内部（.dss-title / .dss-loc），此处不再保留区块头 -->
     <section class="block" id="block-dss">
-      <div class="block-head">
-        <h2 class="block-title">民主空间站 / DSS</h2>
-        <span class="block-meta" id="dss-meta"></span>
-      </div>
       <div id="dss-content">
         <div class="loading">正在查询民主空间站当前状态…</div>
       </div>
@@ -945,12 +942,12 @@ function renderPlayers(data) {
     const a = data.assignments;
     if (!a || a.__err || !a.tasks) {
       root.innerHTML = `<div class="empty">📡 暂无重要指令数据，等待超级地球最高指挥部下达指令中...</div>`;
-      expireEl.textContent = "";
+      expireEl.innerHTML = "";
       return;
     }
     if (!a.tasks || a.tasks.length === 0) {
       root.innerHTML = `<div class="empty">当前无重要指令，去前线休息吧，公民。</div>`;
-      expireEl.textContent = "";
+      expireEl.innerHTML = "";
       return;
     }
 
@@ -1032,53 +1029,25 @@ function renderPlayers(data) {
       ${renderPersonalOrder(data)}
     `;
 
-    // 实时倒计时：用 deadline（ISO 截止时间）+ serverTime（抓取时服务器时间，用于本地校对）
+    // 实时倒计时：把服务器截止时刻换算到本地时钟，交给统一倒计时引擎
+    // （抓取时用 serverTime 校正本地时钟偏移；引擎每秒本地推算，下次 refresh 再校对）
     if (a.deadline || a.expiration) {
       const deadlineTs = new Date(a.deadline || a.expiration).getTime();
-      // serverTime 校对：本地时间 + (serverTime - 抓取时刻本地时间) 偏差
       let timeOffset = 0;
       if (a.serverTime) {
         const serverTs = new Date(a.serverTime).getTime();
-        if (!isNaN(serverTs) && !isNaN(deadlineTs)) {
-          // serverTime 是抓取时刻 UTC，本地此刻 = Date.now()；偏差 = serverTs - 抓取时刻
-          // 前端无法知道抓取时刻本地时间，用 serverTime 与 now 近似（抓取频率 5min，偏差可接受）
-          timeOffset = serverTs - Date.now();
-        }
+        // serverTime 是抓取时刻的服务器时间，本地此刻≈抓取时刻，差值即本地时钟误差
+        if (!isNaN(serverTs) && !isNaN(deadlineTs)) timeOffset = serverTs - Date.now();
       }
-      startMoCountdown(deadlineTs, timeOffset, expireEl);
+      expireEl.innerHTML = cdSpan(
+        isNaN(deadlineTs) ? null : deadlineTs - timeOffset,
+        "dhms", "⏳ 剩余 ", "⏳ 剩余时间获取中…",
+        ' data-cd-zero="⏳ 指令已过期" data-cd-tone'
+      );
+      cdTick();   // 立即刷一次，避免等下一秒
     } else {
-      expireEl.textContent = "";
+      expireEl.innerHTML = "";
     }
-  }
-
-  let moCountdownTimer = null;
-  function startMoCountdown(deadlineTs, timeOffset, expireEl) {
-    if (moCountdownTimer) clearInterval(moCountdownTimer);
-    function tick() {
-      const serverNow = Date.now() + timeOffset;  // 修正后的"服务器时间"
-      const remaining = deadlineTs - serverNow;
-      if (remaining <= 0) {
-        expireEl.textContent = "⏳ 指令已过期";
-        expireEl.style.color = "";
-        if (moCountdownTimer) clearInterval(moCountdownTimer);
-        return;
-      }
-      const d = Math.floor(remaining / 86400000);
-      const h = Math.floor((remaining % 86400000) / 3600000);
-      const m = Math.floor((remaining % 3600000) / 60000);
-      const s = Math.floor((remaining % 60000) / 1000);
-      expireEl.textContent = `⏳ 剩余 ${d}天 ${h}时 ${m}分 ${s}秒`;
-      // 颜色分级：<1h 红，<24h 橙，否则默认
-      if (remaining < 3600000) {
-        expireEl.style.color = "#E74C3C";
-      } else if (remaining < 86400000) {
-        expireEl.style.color = "#F5C518";
-      } else {
-        expireEl.style.color = "";
-      }
-    }
-    tick();
-    moCountdownTimer = setInterval(tick, 1000);
   }
 
   /* ==============================================================
@@ -1103,6 +1072,84 @@ function renderPlayers(data) {
     }
   }
 
+  /* ==============================================================
+     统一倒计时引擎 —— 网页本地每秒推算 + 抓取校对
+     --------------------------------------------------------------
+     用法：渲染时写
+       <span data-cd="绝对截止时刻ms" data-cd-fmt="cn|hms|def|dhms"
+             data-cd-prefix="保卫 " data-cd-zero="已过期" data-cd-tone>初值文案</span>
+     引擎每秒按 (data-cd − 本地时钟) 重写文案；每次 refresh() 重新渲染都会把
+     data-cd 换成「最新抓取结果」算出的截止时刻 → 自动校对，无需额外同步逻辑。
+     ⚠ 新增任何倒计时都只写属性，**不要再开新的 setInterval**。
+     ============================================================== */
+  const CD_FMT = {
+    cn(ms) {                                   // 1小时 21分 19秒
+      const s = Math.max(0, Math.floor(ms / 1000));
+      const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+      return (h > 0 ? h + "小时 " : "") + (m < 10 ? "0" + m : m) + "分 " + (sec < 10 ? "0" + sec : sec) + "秒";
+    },
+    hms(ms) {                                  // HH:MM:SS（超过 24h 继续进位到小时位）
+      const s = Math.max(0, Math.floor(ms / 1000)), p = n => (n < 10 ? "0" + n : "" + n);
+      return p(Math.floor(s / 3600)) + ":" + p(Math.floor((s % 3600) / 60)) + ":" + p(s % 60);
+    },
+    def(ms) {                                  // D:HH:MM:SS（与游戏内保卫战倒计时同形）
+      const s = Math.max(0, Math.floor(ms / 1000)), p = n => (n < 10 ? "0" + n : "" + n);
+      return p(Math.floor(s / 86400)) + ":" + p(Math.floor((s % 86400) / 3600)) + ":"
+        + p(Math.floor((s % 3600) / 60)) + ":" + p(s % 60);
+    },
+    dhms(ms) {                                 // 3天 04时 05分 06秒
+      const s = Math.max(0, Math.floor(ms / 1000)), p = n => (n < 10 ? "0" + n : "" + n);
+      return Math.floor(s / 86400) + "天 " + p(Math.floor((s % 86400) / 3600)) + "时 "
+        + p(Math.floor((s % 3600) / 60)) + "分 " + p(s % 60) + "秒";
+    },
+  };
+  // 生成带倒计时属性的 <span>。deadlineMs 为 null/NaN 时退化为静态文案（不参与倒数）。
+  function cdSpan(deadlineMs, fmt, prefix, staticText, extraAttrs) {
+    const attrs = extraAttrs || "", pf = prefix || "";
+    if (deadlineMs == null || !isFinite(deadlineMs)) {
+      return `<span${attrs}>${esc(staticText != null ? staticText : pf + "—")}</span>`;
+    }
+    const txt = pf + (CD_FMT[fmt] || CD_FMT.cn)(Math.max(0, deadlineMs - Date.now()));
+    return `<span data-cd="${Math.round(deadlineMs)}" data-cd-fmt="${fmt || "cn"}"`
+      + (pf ? ` data-cd-prefix="${esc(pf)}"` : "") + attrs + `>${esc(txt)}</span>`;
+  }
+  function cdTick() {
+    const now = Date.now();
+    document.querySelectorAll("[data-cd]").forEach(function (el) {
+      const dl = parseFloat(el.getAttribute("data-cd"));
+      if (!isFinite(dl)) return;
+      const ms = dl - now;
+      const f = CD_FMT[el.getAttribute("data-cd-fmt")] || CD_FMT.cn;
+      const txt = (el.getAttribute("data-cd-prefix") || "")
+        + (ms > 0 ? f(ms) : (el.getAttribute("data-cd-zero") || f(0)));
+      if (el.textContent !== txt) el.textContent = txt;   // 内容没变就不碰 DOM，省掉无谓的样式重算
+      // 可选紧迫配色（重要指令在用）：<1h 红 / <24h 黄 / 其余默认
+      if (el.hasAttribute("data-cd-tone")) {
+        el.style.color = ms < 3600000 ? "#E74C3C" : (ms < 86400000 ? "#F5C518" : "");
+      }
+    });
+  }
+  function startCountdownEngine() {
+    if (window._cdTicker) clearInterval(window._cdTicker);
+    cdTick();
+    window._cdTicker = setInterval(cdTick, 1000);
+  }
+
+  /* ---- 抓取时间基准：每次 refresh() 统一刷新一次，所有倒计时都从这里取绝对截止时刻 ---- */
+  let DATA_FETCH_MS = Date.now();     // 本次抓取的时刻（本地时钟）
+  let DATA_WAR_BASE = null;           // { realMs, warTime } warTime → 真实时间
+  function setTimeBase(data) {
+    DATA_FETCH_MS = (data && data.fetchedAt && Date.parse(data.fetchedAt)) || Date.now();
+    const d = data && data.dss;
+    DATA_WAR_BASE = (d && d.clientTimeMs && d.currentWarTime != null)
+      ? { realMs: d.clientTimeMs, warTime: d.currentWarTime } : null;
+  }
+  // warTime 目标值 → 本地绝对截止时刻(ms)；无基准返回 null
+  function warDeadline(targetWarTime) {
+    if (!DATA_WAR_BASE || targetWarTime == null) return null;
+    return DATA_WAR_BASE.realMs + (targetWarTime - DATA_WAR_BASE.warTime) * 1000;
+  }
+
   /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
   function hpColorClass(pct) {
     if (pct < 60) return (pct <= 30 ? "hp-low" : "hp-mid");
@@ -1111,7 +1158,6 @@ function renderPlayers(data) {
 
   function renderDss(data) {
     const root = $("dss-content");
-    const meta = $("dss-meta");
     if (!root) return;
 
     buildDssEffectMap(data.variables);
@@ -1143,26 +1189,13 @@ function renderPlayers(data) {
       ? `<div class="dss-notice"><b>DSS OFFLINE</b> 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
       : "";
 
-    // warTime → 真实时间基准（云端校对）：clientTimeMs 对应 currentWarTime
-    // 剩余真实毫秒 = 基准真实时间 + (目标warTime - 当前warTime)*1000 - 本地已流逝
-    let warBase = null;   // { realMs: 抓取时真实毫秒, warTime: 抓取时当前 warTime }
-    if (dss && dss.clientTimeMs && dss.currentWarTime != null) {
-      warBase = { realMs: dss.clientTimeMs, warTime: dss.currentWarTime };
-    }
-    // 由 warTime 目标值计算剩余真实毫秒（依赖基准，无基准返回 null）
+    // warTime → 剩余毫秒（时间基准由 refresh() 里的 setTimeBase 统一维护，各处不再各算一遍）
     function warRemainMs(targetWarTime) {
-      if (!warBase || targetWarTime == null) return null;
-      const targetReal = warBase.realMs + (targetWarTime - warBase.warTime) * 1000;
-      return Math.max(0, targetReal - Date.now());
-    }
-    function fmtCountdown(ms) {
-      if (ms == null || ms <= 0) return "00:00";
-      const s = Math.floor(ms / 1000);
-      const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
-      return (h > 0 ? h + "小时 " : "") + (m < 10 ? "0" + m : m) + "分 " + (sec < 10 ? "0" + sec : sec) + "秒";
+      const dl = warDeadline(targetWarTime);
+      return dl == null ? null : Math.max(0, dl - Date.now());
     }
 
-    // 停靠位置统一由 locText + 区块标题右侧的 #dss-meta 展示，此处不再产出 locationHtml
+    // 停靠位置由 locText 渲染进面板右上角（.dss-loc），此处不再产出 locationHtml
 
     // ============ 精确数据渲染（companion tacticalActions） ============
     const tacActions = (dss && dss.tacticalActions) || [];
@@ -1225,13 +1258,16 @@ function renderPlayers(data) {
       // 三阶段：1=募捐中、2=已激活、3=冷却期。
       // 冷却期的 expireAtWarTime 是「冷却结束时间」，同样落在未来，
       // 故【不能】用 expire 是否在未来区分激活/冷却，必须看 status。
-      let isActive = false, dInfo = { cur: 0, target: 1, pct: 0 }, remainMs = null;
+      let isActive = false, dInfo = { cur: 0, target: 1, pct: 0 }, remainMs = null, activeDeadline = null;
       if (ta) {
         const cost = (ta.cost || [])[0] || {};
         const cur = cost.current || 0, target = cost.target || 1;
         dInfo = { cur, target, pct: Math.min(100, Math.max(0, (cur / target) * 100)) };
         isActive = (ta.status === 2);
-        if (isActive) remainMs = warRemainMs(ta.expireAtWarTime);
+        if (isActive) {
+          activeDeadline = warDeadline(ta.expireAtWarTime);
+          remainMs = activeDeadline == null ? null : Math.max(0, activeDeadline - Date.now());
+        }
       } else {
         isActive = dss ? ids.some(id => activeIds.has(id)) : false;
       }
@@ -1239,23 +1275,26 @@ function renderPlayers(data) {
       const isCooldown = (phase === 3);
       let descText = e.desc || "";
       if (ta && ta.strategicDescription) descText = stripTags(ta.strategicDescription);
+      // 冷却截止时刻：status=3 时 expireAtWarTime 表示「冷却结束时间」
+      const cdDeadline = isCooldown ? warDeadline(ta && ta.expireAtWarTime) : null;
       let barPct = isActive ? 100 : dInfo.pct;
-      let label;
+      // labelHtml：卡片副标题里的阶段文案。倒计时一律用 cdSpan 产节点，交给每秒引擎倒数。
+      let labelHtml;
       if (isActive) {
         barPct = (remainMs != null) ? Math.min(100, Math.max(0, remainMs / (24 * 3600 * 1000) * 100)) : 100;
-        label = "已激活";
+        labelHtml = "<span>已激活</span>";
       } else if (isCooldown) {
-        const cdMs = warRemainMs(ta && ta.expireAtWarTime);
-        label = (cdMs != null && cdMs > 0) ? "冷却中 " + fmtCountdown(cdMs) : "冷却中";
+        labelHtml = (cdDeadline != null && cdDeadline > Date.now())
+          ? cdSpan(cdDeadline, "cn", "冷却中 ") : "<span>冷却中</span>";
       } else {
-        label = "募捐中";
+        labelHtml = "<span>募捐中</span>";
       }
       const donLine = ta
         ? `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`
         : "等待募捐启动";
       return {
         e, ta, ids, emojiIcon, cnName, iconUrl, phase, isActive, isCooldown,
-        remainMs, descText, barPct, label, donLine, dInfo,
+        remainMs, activeDeadline, cdDeadline, descText, barPct, labelHtml, donLine, dInfo,
       };
     });
 
@@ -1275,8 +1314,8 @@ function renderPlayers(data) {
       if (it.isCooldown) classes.push("cd");
       if (!it.isActive && !it.isCooldown) classes.push("fund");
       const pill = it.isCooldown ? `<span class="dss-pill">[ 冷却中 ]</span>` : "";
-      const stripe = (it.isActive && it.remainMs != null)
-        ? `<div class="strip" data-act="${Math.round(it.remainMs)}">就位倒计时：${esc(fmtCountdown(it.remainMs))}</div>` : "";
+      const stripe = (it.isActive && it.activeDeadline != null)
+        ? `<div class="strip">${cdSpan(it.activeDeadline, "cn", "就位倒计时：")}</div>` : "";
       const right = `<span class="pct">${it.isActive ? "100%" : Math.round(it.barPct) + "%"}</span>`;
       const bar = `<div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${it.barPct.toFixed(1)}%"></div></div>`;
       return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button" aria-label="查看 ${esc(it.cnName)} 详情">
@@ -1284,7 +1323,7 @@ function renderPlayers(data) {
         ${iconBox(it)}
         <div class="mid">
           <div class="t">${esc(it.cnName)}</div>
-          <div class="s">${it.label} · ${esc(it.donLine)}</div>
+          <div class="s">${it.labelHtml} · ${esc(it.donLine)}</div>
         </div>
         ${right}
         ${bar}
@@ -1300,12 +1339,11 @@ function renderPlayers(data) {
       : "DSS 停靠在这颗星球附近，一定程度上有助于该星球的解放战争进程。";
 
     // 右上角浮条：空间站下次跃迁倒计时。
-    // data-jump-ms 直接挂到 #dss-jump-countdown 自身（计时器就是按这个 id 取值的），
-    // 之前挂在父级 .dss-jump 上，导致每秒读取恒为 null → 永远显示「等待信息更新」。
-    // 注意：目标时间已过（返回值 0）时不再写 data-jump-ms，避免出现无意义的「00:00」。
-    const jumpMs = (dss && dss.electionEndWarTime != null) ? warRemainMs(dss.electionEndWarTime) : null;
-    const jumpValid = (jumpMs != null && jumpMs > 0);
-    const jumpHtml = `<div class="dss-jump">空间站即将移动：<span id="dss-jump-countdown"${jumpValid ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>${jumpValid ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
+    // 只写 data-cd（绝对截止时刻），倒数交给每秒引擎；已过期则不写属性 → 保持静态文案。
+    const jumpDeadline = (dss && dss.electionEndWarTime != null) ? warDeadline(dss.electionEndWarTime) : null;
+    const jumpValid = (jumpDeadline != null && jumpDeadline > Date.now());
+    const jumpHtml = `<div class="dss-jump">空间站即将移动：`
+      + cdSpan(jumpValid ? jumpDeadline : null, "cn", "", "等待信息更新", ' id="dss-jump-countdown"') + `</div>`;
 
     const locText = dss
       ? (function () {
@@ -1317,42 +1355,37 @@ function renderPlayers(data) {
 
     // 每张卡片的详情数据（供点击时替换右栏）
     const cardData = items.map(it => {
-      const cdMs = it.isCooldown ? warRemainMs(it.ta && it.ta.expireAtWarTime) : null;
+      // 底部状态条文案：一律包一层 <span>（.dss-count span 的样式依赖它）
       const cLine = it.isActive
-        ? (it.remainMs != null ? "就位倒计时：" + fmtCountdown(it.remainMs) : "行动已激活")
+        ? (it.activeDeadline != null ? cdSpan(it.activeDeadline, "cn", "就位倒计时：") : "<span>行动已激活</span>")
         : (it.isCooldown
-            ? ((cdMs != null && cdMs > 0) ? "冷却剩余：" + fmtCountdown(cdMs) : "冷却中")
+            ? ((it.cdDeadline != null && it.cdDeadline > Date.now()) ? cdSpan(it.cdDeadline, "cn", "冷却剩余：") : "<span>冷却中</span>")
             : (it.ta
-                ? `募捐进度：${it.dInfo.pct.toFixed(1)}%　（${fmtNum(it.dInfo.cur)} / ${fmtNum(it.dInfo.target)}）`
-                : "等待募捐启动"));
+                ? `<span>募捐进度：${esc(it.dInfo.pct.toFixed(1) + "%　（" + fmtNum(it.dInfo.cur) + " / " + fmtNum(it.dInfo.target) + "）")}</span>`
+                : "<span>等待募捐启动</span>"));
       return {
         cn: it.cnName,
         img: heroSrcOf(it.cnName),
-        label: it.label,
         desc: it.descText,
         isActive: it.isActive,
         isCooldown: it.isCooldown,
         // 上方数据条：只放「达成比例」；下方状态条放阶段/倒计时，避免两处都写进度
         ratio: (it.isActive ? 100 : it.dInfo.pct).toFixed(0) + "%",
-        count: cLine,
-        actMs: (it.isActive && it.remainMs != null) ? Math.round(it.remainMs) : null,
+        countHtml: cLine,
       };
     });
 
     const first = cardData[0] || {
-      img: heroSrcOf(""), label: "—",
-      desc: "当前没有可展示的 DSS 战术行动。", ratio: "0%", count: "", isActive: false, isCooldown: false, actMs: null,
+      img: heroSrcOf(""), desc: "当前没有可展示的 DSS 战术行动。",
+      ratio: "0%", countHtml: "", isActive: false, isCooldown: false,
     };
 
     root.innerHTML = `
       ${notice}
       <div class="dss-hud dss-station">
         <header class="dss-top">
-          <nav class="dss-tabs">
-            <span class="tab">总结<i>1</i></span>
-            <span class="tab on">行动<i>2</i></span>
-            <span class="tab">地点<i>3</i></span>
-          </nav>
+          <h3 class="dss-title">民主空间站 / DSS</h3>
+          <span class="dss-loc">${esc(dss ? locText : "未停靠")}</span>
         </header>
         <div class="dss-div"></div>
         <div class="dss-grid">
@@ -1380,7 +1413,7 @@ function renderPlayers(data) {
                 <div class="lbl">贡献度 / CONTRIBUTION</div>
                 <div class="box" id="dss-contrib-box">${esc(first.ratio)}</div>
               </div>
-              <div class="dss-count" id="dss-count"${first.count ? "" : ' style="display:none"'}><span id="dss-count-txt">${esc(first.count)}</span></div>
+              <div class="dss-count" id="dss-count"${first.countHtml ? "" : ' style="display:none"'}>${first.countHtml || ""}</div>
             </div>
           </section>
         </div>
@@ -1397,7 +1430,6 @@ function renderPlayers(data) {
       const dEl = root.querySelector("#dss-detail-desc");
       const cEl = root.querySelector("#dss-contrib-box");
       const kEl = root.querySelector("#dss-count");
-      const kSpan = root.querySelector("#dss-count-txt");
       function select(i) {
         const info = cardData[i];
         if (!info) return;
@@ -1409,12 +1441,12 @@ function renderPlayers(data) {
         if (dEl) dEl.textContent = info.desc;
         if (cEl) cEl.textContent = info.ratio;
         if (detailEl) detailEl.classList.toggle("active", !!info.isActive);
+        // 整块换掉即可：新节点自带 data-cd，会被每秒引擎接管；旧节点随之丢弃
         if (kEl) {
-          if (info.count) { kEl.style.display = ""; if (kSpan) kSpan.textContent = info.count; }
-          else kEl.style.display = "none";
+          kEl.innerHTML = info.countHtml || "";
+          kEl.style.display = info.countHtml ? "" : "none";
         }
-        // 让每秒计时器接着刷新这一项的倒计时（重新渲染/切换后引用已失效）
-        if (kEl) kEl.setAttribute("data-act", info.actMs != null ? String(info.actMs) : "");
+        cdTick();
       }
       root.querySelectorAll(".dss-votes .dss-buff").forEach(function (card) {
         const i = parseInt(card.getAttribute("data-i"), 10);
@@ -1425,53 +1457,8 @@ function renderPlayers(data) {
       });
     })();
 
-    // 生效行动数（保留：模块标题右侧原先用它，现改为展示停靠位置）
-    const activeCount = voteEntries.filter(e => {
-      const ids = e.effect_ids || [];
-      let ta = null;
-      tacActions.forEach(t => { const te = (t.effectIds || []); if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t; });
-      if (ta) { return ta.status === 2; }
-      return dss ? ids.some(id => activeIds.has(id)) : false;
-    }).length;
-    // 标题右侧：停靠位置（星球名 · 星区），替代原先的「N 项生效」
-    meta.textContent = dss ? locText : "未停靠";
-
-    // 本地计时器：每秒刷新倒计时（云端 60s 刷新时会重新渲染校对）
-    // 注意：每次 renderDss 都会重建 DOM，因此引用必须在每帧重新查询，不能闭包缓存旧节点。
-    // 只认 data-jump-ms / data-act 为**正数**的节点，避免把「已过期(0)」当成有效倒计时。
-    const startReal = Date.now();
-    // 读取一个元素上的倒计时初值（优先 data-jump-ms，其次 data-act）；
-    // 只有正数才算有效 —— 「已过期(0)」不会再被当成倒计时去覆盖文案。
-    const msOf = (el, attr) => {
-      if (!el) return null;
-      const raw = el.getAttribute(attr);
-      if (raw == null) return null;
-      const v = parseFloat(raw);
-      return (isFinite(v) && v > 0) ? v : null;
-    };
-    if (window._dssTimer) clearInterval(window._dssTimer);
-    window._dssTimer = setInterval(function() {
-      const elapsed = Date.now() - startReal;
-      // ① 空间站跃迁倒计时（data-jump-ms 挂自身；兼容挂在父级的旧写法）
-      const tEl = root.querySelector("#dss-jump-countdown");
-      if (tEl) {
-        const initMs = (msOf(tEl, "data-jump-ms") != null)
-          ? msOf(tEl, "data-jump-ms")
-          : msOf(tEl.parentElement, "data-jump-ms");
-        if (initMs != null) tEl.textContent = fmtCountdown(Math.max(0, initMs - elapsed));
-      }
-      // ② 已激活行动的倒计时：卡片底部条 + 右栏底部条（用 data-act 承载初值）
-      root.querySelectorAll(".dss-buff .strip[data-act]").forEach(function (strip) {
-        const initMs = msOf(strip, "data-act");
-        if (initMs != null) strip.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
-      });
-      const kEl = root.querySelector("#dss-count");
-      const kTxt = root.querySelector("#dss-count-txt");
-      if (kEl && kTxt) {
-        const initMs = msOf(kEl, "data-act");
-        if (initMs != null) kTxt.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
-      }
-    }, 1000);
+    // 倒计时全部由统一引擎（startCountdownEngine）按 data-cd 每秒推进，
+    // 本模块不再自建 setInterval；下次 refresh() 重新渲染即完成校对。
   }
 
 
@@ -1842,11 +1829,14 @@ function renderPlayers(data) {
     // ---- ⑥ 入侵等级（仅防御战，取 campaign.invasionLevel 与 remainingTime） ----
     let invasion = "";
     if (isDefense && camp.invasionLevel != null) {
+      // 保卫倒计时：截止时刻 = 抓取时刻 + 剩余秒。不能用 Date.now()，
+      // 否则 data.json 自身的滞后（最长约 15 分钟）会被当成额外的剩余时间算进去。
+      const defDeadline = (camp.remainingTime > 0) ? DATA_FETCH_MS + camp.remainingTime * 1000 : null;
       invasion = `<div class="pc-invasion">
         ${pcInvasionShield(camp.invasionLevel)}
         <span class="pc-invtxt">
           <span class="k">入侵等级</span>
-          <span class="timer">保卫 ${esc(fmtDefTimer(camp.remainingTime))}</span>
+          ${cdSpan(defDeadline, "def", "保卫 ", "保卫 " + fmtDefTimer(camp.remainingTime), ' class="timer"')}
         </span>
       </div>`;
     }
@@ -2053,21 +2043,12 @@ function renderPlayers(data) {
      ============================================================== */
   // 活动事件：planetEvents 渲染（进度条 + warTime 倒计时，倒计时机制与 DSS 同款）
   function renderPlanetEvents(data) {
-    // 独立倒计时格式化（fmtCountdown 定义于 DSS 模块作用域，此处不可达）
-    const fmtCd = (ms) => {
-      if (ms == null || ms <= 0) return "00:00";
-      const t = Math.floor(ms / 1000);
-      const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60;
-      return (h > 0 ? h + "小时 " : "") + (m < 10 ? "0" + m : m) + "分 " + (sec < 10 ? "0" + sec : sec) + "秒";
-    };
     const block = $("block-pevents");
     const root = $("pevents-content");
     if (!block || !root) return;
     const events = data.planet_events || [];
     if (!events.length) { block.style.display = "none"; return; }
     block.style.display = "";
-    const warTimeNow = (data.dss && data.dss.currentWarTime) || 0;
-    const startReal = Date.now();
     const RACE = { Automaton: "机器人", Illuminate: "光能族", Terminids: "终结族" };
     const html = events.map(ev => {
       const p = (data.planets || []).find(x => x.index === ev.planetIndex) || { index: ev.planetIndex, name: "PLANET_" + ev.planetIndex };
@@ -2075,7 +2056,7 @@ function renderPlayers(data) {
       const camp = (data.campaigns || []).find(c => (c.planet || {}).index === ev.planetIndex);
       const raceCn = RACE[(camp || {}).faction] || "敌方";
       const pct = ev.maxHealth ? Math.min(100, Math.max(0, ev.health / ev.maxHealth * 100)) : 0;
-      const remainMs = warTimeNow ? Math.max(0, (ev.expireTime - warTimeNow) * 1000) : 0;
+      const expDeadline = warDeadline(ev.expireTime);
       const atk = (data.planet_attacks || []).find(a => a.target === ev.planetIndex);
       const evName = ev.eventType === 1 ? "紧急解放" : "星球事件 #" + ev.eventType;
       return `
@@ -2083,21 +2064,14 @@ function renderPlayers(data) {
           <div class="pe-head">
             <span class="pe-title">⚡ ${esc(evName)} · ${esc(raceCn)}</span>
             <span class="pe-planet">${esc(nm.cn || nm.en)}</span>
-            <span class="pe-countdown" data-expire-ms="${remainMs}">${fmtCd(remainMs)}</span>
+            ${cdSpan(expDeadline, "cn", "", "00:00", ' class="pe-countdown"')}
           </div>
           <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(pct)}" style="width:${pct}%"></div></div>
           <div class="pe-sub">${esc(nm.en || "")} · 防御余量 ${pct.toFixed(1)}%${atk ? ' · <span class="pe-atk">⚠ 该星正遭敌军反攻</span>' : ""}</div>
         </div>`;
     }).join("");
     root.innerHTML = html;
-    if (window._peTimer) clearInterval(window._peTimer);
-    window._peTimer = setInterval(function() {
-      const elapsed = Date.now() - startReal;
-      root.querySelectorAll("[data-expire-ms]").forEach(function(el) {
-        const initMs = parseFloat(el.getAttribute("data-expire-ms"));
-        if (isFinite(initMs) && initMs > 0) el.textContent = fmtCd(Math.max(0, initMs - elapsed));
-      });
-    }, 1000);
+    cdTick();   // 立即刷新一次；此后由全局倒计时引擎每秒推进
   }
 
   // 反攻预警：urgent-meta 追加（renderDefenseRecon 之后调用）
@@ -2459,6 +2433,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     try {
       const data = await fetchAll();
       currentData = data;
+      // 抓取时间基准（fetchedAt / warTime 基准）必须先设：所有倒计时都从它算绝对截止时刻
+      setTimeBase(data);
       currentEffectMap = data.effectMap || {};
       currentEffectDetailMap = data.effectDetailMap || {};
       // 星球卡片用的图标/环境图映射：必须在任何 renderPlanetCard 之前载入
@@ -2626,6 +2602,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
     loadBanner();
+    startCountdownEngine();   // 全局单例：所有 data-cd 节点由它每秒推进
     refresh();
     startAutoRefresh();
   });
