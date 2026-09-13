@@ -1200,10 +1200,10 @@
     .dss-hud .dss-buff .dss-bar-label{
       grid-column:1 / -1;font-size:10.5px;color:var(--dss-mute);margin-top:5px;
     }
-    /* 激活：底部红橙实心条（跨整宽，贴齐卡片内边距） */
+    /* 激活：底部条与右栏一致改用绿色（就位倒计时），不再用红橙警告色 */
     .dss-hud .dss-buff .strip{
       grid-column:1 / -1;margin:8px -11px 0;padding:5px 11px;text-align:center;
-      background:var(--dss-warn);color:#160500;font-size:12px;letter-spacing:.06em;
+      background:#1FA84A;color:#EFFFF2;font-size:12px;letter-spacing:.06em;
     }
     .dss-hud .dss-buff.active .dss-bar-bg{margin-top:6px}
     /* 冷却：右上角黄色角标（无圆角，≤18px 高） */
@@ -1250,15 +1250,26 @@
     }
     .dss-hud .dss-contrib{margin-top:14px}
     .dss-hud .dss-contrib .lbl{font-size:10.5px;color:var(--dss-mute);letter-spacing:.14em;margin-bottom:5px}
+    /* 顶部数据条：只显示达成比例。
+       未激活（募捐中）→ 黑底黄字；已激活 → 黄底黑字 */
     .dss-hud .dss-contrib .box{
-      background:var(--dss-y);color:#000;text-align:center;font-size:15px;
-      padding:7px 0;letter-spacing:.05em;border-radius:0;
+      background:#000;color:var(--dss-y);
+      border:1px solid #2A2A2A;
+      text-align:center;font-size:15px;
+      padding:7px 0;letter-spacing:.06em;border-radius:0;
+      transition:background .2s,color .2s,border-color .2s;
     }
+    .dss-hud .dss-detail.active .dss-contrib .box{
+      background:var(--dss-y);color:#000;border-color:var(--dss-y);
+    }
+    /* 底部状态条：未激活＝红橙斜纹（募捐进度）；已激活＝绿色实心（就位倒计时） */
     .dss-hud .dss-count{margin-top:12px;height:24px;background:var(--dss-stripe-red);display:grid;place-items:center}
     .dss-hud .dss-count span{
       font-family:var(--dss-mono);font-weight:700;font-size:12.5px;color:#fff;
       background:#000;padding:1px 12px;letter-spacing:.05em;
     }
+    .dss-hud .dss-detail.active .dss-count{background:#1FA84A}
+    .dss-hud .dss-detail.active .dss-count span{color:#EFFFF2}
 
     /* ---------- 未停靠通知 ---------- */
     .dss-hud + .dss-notice, .dss-notice{
