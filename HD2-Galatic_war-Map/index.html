@@ -6,8 +6,8 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913c">
-  <link rel="stylesheet" href="./css/home.css?v=20260913c">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913d">
+  <link rel="stylesheet" href="./css/home.css?v=20260913d">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -1148,6 +1148,38 @@ function renderPlayers(data) {
   function warDeadline(targetWarTime) {
     if (!DATA_WAR_BASE || targetWarTime == null) return null;
     return DATA_WAR_BASE.realMs + (targetWarTime - DATA_WAR_BASE.warTime) * 1000;
+  }
+
+  /* ==============================================================
+     星球卡片栅格布局（必须 JS 算，纯 CSS 做不到）
+     --------------------------------------------------------------
+     不用 auto-fit 的原因（两个都验证过）：
+     ① minmax 的上限是**确定值**时，auto-fit 按「上限 + gap」算列数而不是按下限
+        （repeat(auto-fit,minmax(340px,380px)) 在 1152px 下只有 2 列）；
+     ② 把上限换成 1fr 虽然能自适应列数，但「卡片数不满一行」时空轨道会塌缩，
+        剩余轨道被 1fr 拉到 657px 宽，卡片被 max-width 卡在 380 后左对齐 →
+        两张卡之间出现巨大空洞（MO 目标 / 待确认 / 紧急战情都会中招）。
+     所以这里显式算：列数 = 放得下几张（每张至少 GRID_MIN_W），
+     卡片宽 = 尽量占满（上限 GRID_MAX_W、下限 GRID_MIN_W），
+     再把 --cols 收到 min(列数, 该行实际卡片数) —— 卡片少的行因此仍然居中，
+     且卡片宽度与其它行保持一致。
+     ============================================================== */
+  // MIN_W 是「什么时候值得切成 4 列」的门槛：280 → 视口约 1217px 起就是 4 列
+  // （= 4×280 + 3×14 + 两侧留白 40 + 滚动条）。想更保守就调大它。
+  const GRID_GAP = 14, GRID_MIN_W = 280, GRID_MAX_W = 380, GRID_MAX_BAND = 1562, GRID_GUTTER = 40;
+  function layoutPlanetGrids() {
+    const grids = document.querySelectorAll(".planet-grid");
+    if (!grids.length) return;
+    // 可用宽：优先用布局视口（clientWidth 已排除滚动条），并给两侧留 GRID_GUTTER/2
+    const avail = Math.max(240, Math.min(GRID_MAX_BAND, document.documentElement.clientWidth - GRID_GUTTER));
+    const cols = Math.min(4, Math.max(1, Math.floor((avail + GRID_GAP) / (GRID_MIN_W + GRID_GAP))));
+    const cardW = Math.max(1, Math.min(GRID_MAX_W, Math.floor((avail - (cols - 1) * GRID_GAP) / cols)));
+    grids.forEach(function (g) {
+      const n = g.querySelectorAll(":scope > .planet-card").length || 1;
+      g.style.setProperty("--cols", String(Math.max(1, Math.min(cols, n))));
+      g.style.setProperty("--card-w", cardW + "px");
+      g.style.setProperty("--band-w", avail + "px");
+    });
   }
 
   /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
@@ -2455,6 +2487,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderSectors(data);
       renderStratagem(data);
       renderNews(data);
+      // 栅格布局：必须在所有卡片渲染完成后再算（列宽取决于各行的卡片数）
+      layoutPlanetGrids();
       lastSuccessAt = Date.now();
       $("pulse").classList.remove("stale");
     } catch (e) {
@@ -2603,6 +2637,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   document.addEventListener("DOMContentLoaded", () => {
     loadBanner();
     startCountdownEngine();   // 全局单例：所有 data-cd 节点由它每秒推进
+    window.addEventListener("resize", layoutPlanetGrids);
     refresh();
     startAutoRefresh();
   });
