@@ -6,8 +6,8 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css">
-  <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913">
+  <link rel="stylesheet" href="./css/home.css?v=20260913">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -1713,6 +1713,64 @@ function renderPlayers(data) {
     </svg></span>`;
   }
 
+  // 阵营色令牌（卡片体系）：防御战「敌方」进度条靠它着色
+  const PC_FACTION_VARS = {
+    Automaton:  ["--c-faction-auto", "--c-faction-auto-d"],
+    Terminids:  ["--c-faction-term", "--c-faction-term-d"],
+    Illuminate: ["--c-faction-illu", "--c-faction-illu-d"],
+    Humans:     ["--c-faction-hum",  "--c-faction-hum-d"],
+  };
+  // 双进度条的一行：复用 .pc-bar 的斜纹 + 三角游标，着色交给行内 --fc/--fcd
+  function pcRaceRow(label, pct, varPair) {
+    const known = pct != null && isFinite(pct);
+    const w = known ? Math.max(0, Math.min(100, Number(pct))).toFixed(2) : "0";
+    const style = varPair ? ` style="--fc:var(${varPair[0]});--fcd:var(${varPair[1]})"` : "";
+    return `<div class="pc-race-row"${style}>
+      <span class="lbl">${esc(label)}</span>
+      <div class="pc-bar"><span class="cursor"></span>
+        <div class="fill" style="width:${w}%"></div>
+        <div class="slot"></div>
+      </div>
+      <span class="val">${known ? Number(pct).toFixed(2) + "%" : "--"}</span>
+    </div>`;
+  }
+  // 防御战 = 赛跑（谁先打满 100% 谁赢）：
+  //   敌方入侵进度 = 固定速率(100/总时长h) × 已历时间 —— 到点必满，不看玩家
+  //   我方防御进度 = 对入侵舰队造成的伤害占比（事件血量，不是星球血量）
+  // ⚠ 不要用 planet.health 兜底：防御战里星球归 Humans，health 恒满血 → 解放度恒 0%，
+  //   真实进度只存在于 campaign.attackersProgress / defendersProgress。
+  function pcDefenseRace(p, camp) {
+    const atkF = hostileFactionOf(p, camp);
+    const atk = camp.attackersProgress;
+    const def = camp.defendersProgress;
+    const aR = camp.attackersRate;              // 固定速率 = 100 / 总时长(h)
+    const dR = camp.defendersRate;              // 实测速率（需两次抓取差值，常为 null）
+    const remainH = (camp.remainingTime || 0) / 3600;
+    // 我方均速：进度 / 已历时间（已历时间 = 入侵进度 / 固定速率）
+    const elapsedH = (aR > 0 && atk > 0) ? atk / aR : 0;
+    const pace = (dR != null && dR > 0) ? dR : ((elapsedH > 0 && def != null) ? def / elapsedH : null);
+    // 战况：剩余时间内能打满 = 优势
+    let st, cls;
+    if (pace != null && def != null && remainH > 0) {
+      const win = pace * remainH >= (100 - def);
+      st = win ? "优势" : "劣势"; cls = win ? "win" : "lose";
+    } else if (def != null && atk != null) {
+      st = def >= atk ? "优势" : "劣势"; cls = def >= atk ? "win" : "lose";
+    } else {
+      st = "数据不足"; cls = "even";
+    }
+    const paceTxt = pace != null ? pace.toFixed(3) + "%/h" : "--";
+    const speedTxt = aR != null ? Number(aR).toFixed(3) + "%/h" : "--";
+    return `<div class="pc-race">
+      ${pcRaceRow(ownerCn(atkF) || atkF || "敌方", atk, PC_FACTION_VARS[atkF] || PC_FACTION_VARS.Automaton)}
+      ${pcRaceRow("超级地球", def, null)}
+      <div class="pc-stats">
+        <span class="k">进攻 ${speedTxt} · 防守 ${paceTxt}</span>
+        <span class="r"><span class="k">战况</span><span class="v ${cls}">${esc(st)}</span></span>
+      </div>
+    </div>`;
+  }
+
   // 星球卡片（2026-09-13 改版：战役图标 + 环境图 + 进度条 + 侵蚀等级 + 词条）
   function renderPlanetCard(p, starMap, statusLabel, statusClass) {
     const name = planetName(p, starMap);
@@ -1757,11 +1815,14 @@ function renderPlayers(data) {
     const desc = isDefense ? "这颗星球遇袭。绝地潜兵必须保卫星球，抵御暴政军队。"
                            : "这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。";
 
-    // ---- ⑤ 进度条 + 抵抗强度 ----
+    // ---- ⑤ 进度：解放战=单条解放度；防御战=双进度赛跑 ----
+    // 防御战必须走 campaign 双进度：星球血量恒满血（归 Humans），算出来的解放度恒 0.00%
     const res = p.resistance;
     const tier = resTier(res);
     let progress;
-    if (isLiberated) {
+    if (isDefense) {
+      progress = pcDefenseRace(p, camp);
+    } else if (isLiberated) {
       progress = `<div class="pc-liberated">✓ 已解放</div>`;
     } else {
       progress = `<div class="pc-progress">
@@ -1857,7 +1918,10 @@ function renderPlayers(data) {
       </div>`;
   }
 
-  // 防御战双进度条（时间比值法：进攻=已消耗时间占比，防守=剩余时间占比，数据由抓取脚本提供）
+  // ⚠ 旧版防御战双进度条 —— 已被 renderPlanetCard 内的 .pc-race 取代，当前**无任何调用点**。
+  //    保留仅作参考；若要复活请注意两点：
+  //    ① 它的血量兜底已失效（防御战 planet.health 恒满血，兜底会算出「防守 100% / 进攻 0%」）
+  //    ② 它用的是旧圆角条（.defense-bar-track radius 4px），不符合零圆角规范
   function renderDefenseBars(p, camp) {
     // 独立双进度（血量赛跑模型）：进攻方=已损失血量%，防守方=剩余血量%（各自独立计算）
     let atk = camp.attackersProgress;

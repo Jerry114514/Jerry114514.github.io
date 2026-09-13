@@ -1437,3 +1437,22 @@
       padding:0 12px 11px;font-size:12px;font-weight:700;
       color:var(--c-res-mid);letter-spacing:.08em;
     }
+
+    /* ---- 防御战双进度（赛跑：敌方入侵进度 vs 我方防御进度）----
+       本质是赛跑：敌方按固定速率必然在到期时打满 100%，我方必须在剩余时间内打满。
+       两条轨道复用 .pc-bar（斜纹 + 三角游标），敌方轨道靠行内 --fc/--fcd 切到敌方阵营色 */
+    .planet-card .pc-race{display:flex;flex-direction:column;gap:7px;padding:0 12px 10px}
+    .planet-card .pc-race-row{display:flex;align-items:center;gap:8px}
+    .planet-card .pc-race-row .lbl{
+      flex:0 0 60px;width:60px;font-size:11px;color:var(--text-dim);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .planet-card .pc-race-row .pc-bar{flex:1;min-width:0}
+    .planet-card .pc-race-row .val{
+      flex:0 0 54px;width:54px;text-align:right;
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;font-size:11.5px;color:var(--text);
+    }
+    .planet-card .pc-race .pc-stats{margin-top:0}
+    .planet-card .pc-race .v.win {color:var(--c-res-mid)}
+    .planet-card .pc-race .v.lose{color:var(--c-res-max)}
+    .planet-card .pc-race .v.even{color:var(--c-res-high)}
