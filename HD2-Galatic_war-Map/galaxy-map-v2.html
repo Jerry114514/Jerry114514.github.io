@@ -803,7 +803,7 @@ function fxOf(planet) {
 // 而此处用的是 cache:"force-cache"，浏览器会把那份坏文件长期钉在缓存里 ——
 // 即使 HTML 已更新，图标仍然不显示。加版本号即换新 URL，强制重新取图。
 // 以后只要改了 assets/effect-icons 下的任何文件，就把这个数字 +1。
-const FX_ASSET_VER = "3";
+const FX_ASSET_VER = "4";
 async function effectIconMarkup(file) {
   if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
