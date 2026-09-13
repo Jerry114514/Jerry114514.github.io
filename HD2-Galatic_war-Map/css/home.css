@@ -1127,21 +1127,16 @@
     }
     .dss-hud *{box-sizing:border-box}
     .dss-hud .num,.dss-hud .pct,.dss-hud .n,.dss-hud .ver,.dss-hud .don,.dss-hud .lbl,
-    .dss-hud .dss-bar-label,.dss-hud .box,.dss-hud .strip,.dss-hud .s,.dss-hud .tab i,
-    .dss-hud .badge,.dss-hud .dss-res b,.dss-hud .dss-tele b{font-family:var(--dss-mono);font-weight:700;letter-spacing:.02em}
-
-    /* ---------- 顶部 HUD 条 ---------- */
-    .dss-hud .dss-top{display:flex;align-items:stretch;gap:14px;padding:8px 12px;min-height:60px;background:var(--dss-panel)}
-    .dss-hud .dss-tele{
-      display:flex;flex-direction:column;justify-content:center;gap:2px;
-      font-size:11px;color:var(--dss-dim);padding-right:14px;
-      border-right:1px solid var(--dss-line);min-width:200px;line-height:1.5;
+    .dss-hud .dss-bar-label,.dss-hud .box,.dss-hud .strip,.dss-hud .s,.dss-hud .tab i{
+      font-family:var(--dss-mono);font-weight:700;letter-spacing:.02em;
     }
-    .dss-hud .dss-tele b{color:var(--dss-y);font-weight:700}
+
+    /* ---------- 顶部：标题 + 三段式标签卡（按用户要求移除遥测与资源计数） ---------- */
+    .dss-hud .dss-top{display:flex;align-items:center;gap:16px;padding:9px 12px;min-height:56px;background:var(--dss-panel)}
     .dss-hud .dss-title{display:flex;flex-direction:column;justify-content:center;min-width:0}
     .dss-hud .dss-title h3{margin:0;font-size:18px;font-weight:600;letter-spacing:.06em;white-space:nowrap;color:var(--dss-txt)}
     .dss-hud .dss-title .sub{font-family:var(--dss-mono);font-size:9.5px;color:var(--dss-mute);letter-spacing:.2em;margin-top:3px}
-    .dss-hud .dss-tabs{display:flex;align-items:flex-end;margin-left:6px}
+    .dss-hud .dss-tabs{display:flex;align-items:flex-end;margin-left:auto}
     .dss-hud .dss-tabs .tab{
       display:flex;align-items:center;gap:7px;padding:6px 13px 5px;
       border:1px solid var(--dss-line);border-bottom:none;background:#121212;
@@ -1151,18 +1146,6 @@
     .dss-hud .dss-tabs .tab.on{background:var(--dss-stripe);color:var(--dss-txt);border-color:#3A3300}
     .dss-hud .dss-tabs .tab.on i{color:var(--dss-y)}
     .dss-hud .dss-tabs .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--dss-y)}
-    .dss-hud .dss-res{display:flex;align-items:center;margin-left:auto}
-    .dss-hud .dss-res .cell{display:flex;align-items:center;gap:6px;padding:0 12px;border-left:1px solid var(--dss-line)}
-    .dss-hud .dss-res .cell:first-child{border-left:none;padding-left:0}
-    .dss-hud .dss-res .badge{
-      width:16px;height:16px;display:grid;place-items:center;flex-shrink:0;
-      font-size:10px;color:#000;background:var(--dss-y);border-radius:0;
-    }
-    .dss-hud .dss-res .badge.blue{background:#5BA3D0}
-    .dss-hud .dss-res .badge.purple{background:#CF64F8}
-    .dss-hud .dss-res .badge.green{background:#4ADE80}
-    .dss-hud .dss-res b{display:block;font-size:16px;line-height:1.05;color:var(--dss-txt)}
-    .dss-hud .dss-res i{display:block;font-style:normal;font-size:9px;color:var(--dss-mute);letter-spacing:.12em;margin-top:1px}
     .dss-hud .dss-div{height:5px;background:var(--dss-stripe);border-top:1px solid #241F00;border-bottom:1px solid #241F00}
 
     /* ---------- 主体 2 列 ---------- */
@@ -1237,6 +1220,11 @@
       background:
         radial-gradient(420px 200px at 62% 48%, rgba(120,150,190,.16), transparent 70%),
         linear-gradient(180deg,#05070C 0%,#000 100%);
+    }
+    /* 行动大图（素材 995×357，容器 272px 高，cover 裁切以保持满宽） */
+    .dss-hud .dss-hero img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;display:block;border-radius:0;
     }
     .dss-hud .dss-hero svg{position:absolute;inset:0;width:100%;height:100%;display:block}
     .dss-hud .dss-jump{
