@@ -155,27 +155,31 @@
   }
 
   /* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */
-  #fx-layer{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden}
+  /* --fx-size / --fx-img / --fx-gap 由 buildFXNodes 的 sync() 按当前 zoom 写入，
+     使图标随星球本体一起缩放（低缩放下不再盖住星球）。 */
+  #fx-layer{
+    position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;
+    --fx-size:34px;--fx-img:24px;--fx-gap:42px;
+  }
   .fx-cluster{
-    position:absolute;left:0;top:0;display:flex;align-items:center;gap:5px;
+    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;
     transform:translate(-50%,-50%);will-change:transform;
   }
   .fx-i{
-    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    width:var(--fx-size);height:var(--fx-size);
+    display:flex;align-items:center;justify-content:center;
     border-radius:8px;background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);
     box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:auto;
   }
   /* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */
-  .fx-i svg,.fx-i img{width:24px;height:24px;display:block}
+  .fx-i svg,.fx-i img{width:var(--fx-img);height:var(--fx-img);display:block}
   .fx-i svg{fill:currentColor}
   .fx-i img{object-fit:contain;border-radius:2px}
-  /* 冷却期（DSS status=3）：本轮已结束，弱化显示以区分「正在生效」 */
-  .fx-i.fx-cd{opacity:.5;border-style:dashed}
   .fx-more{
     font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);
     background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);
   }
-  @media (max-width:767px){ .fx-i{width:26px;height:26px} .fx-i svg,.fx-i img{width:18px;height:18px} }
+  @media (max-width:767px){ .fx-cluster{gap:2px} }
 
   .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
   aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
@@ -729,29 +733,25 @@ const DSS_ACTION_ICON = {
 };
 // 取 DSS 战术行动（已去重到图标级）
 // DSS 战术行动三阶段（2026-09 经用户确认 + 实测校准）：
-//   status=1 → 募捐中（仅投票，对战场无效果 → 不显示图标）
-//   status=2 → 已激活（正在生效 → 高亮显示）
-//   status=3 → 冷却期（本轮已结束、尚未投出新一项 → 半透明显示，表示「刚用过」）
+//   status=1 → 募捐中（仅投票，对战场无效果 → 不显示）
+//   status=2 → 已激活（正在生效 → 显示图标）
+//   status=3 → 冷却期（本轮已结束 → 不显示）
 // 注意：冷却期的 statusExpireAtWarTime 同样落在未来，故不能用 expire 区分激活/冷却。
 //
-// 【为什么一定要显示 status=3】实测站内数据里**没有任何** status=2 的行动
-// （EAGLE STORM=3、ORBITAL BLOCKADE=1、HEAVY ORDNANCE DISTRIBUTION=1），
-// 所以只认 status===2 会让 DSS 图标在整个战局周期里几乎永不出现。
+// 【2026-09 用户明确要求】只有「已激活」才加图标：募捐中与冷却期都不加。
+// （此前为让 DSS 有机会露面，曾把冷却期也显示成半透明虚线框，属于多余信息，已移除。
+//   DSS 停靠本身由 dssStationsAt() 单独负责显示，不依赖战术行动是否生效。）
 function dssActionsAt(planetIndex) {
   if (!DATA || !DATA.dss) return [];
   if (DATA.dss.planetIndex !== planetIndex) return [];
   const out = [], seen = {};
   for (const ta of (DATA.dss.tacticalActions || [])) {
-    const cd = ta.status === 3;                     // 冷却期
-    if (ta.status !== 2 && !cd) continue;           // 募捐中（1）不显示
+    if (ta.status !== 2) continue;                  // 仅「已激活」显示
     for (const id of (ta.effectIds || [])) {
       const a = DSS_ACTION_ICON[id];
       if (!a || seen[a.icon]) continue;
       seen[a.icon] = 1;
-      out.push({
-        icon: a.icon, cn: a.cn + (cd ? "（冷却期）" : ""), color: "#f5c518",
-        tier: 1, dss: true, cd,
-      });
+      out.push({ icon: a.icon, cn: a.cn, color: "#f5c518", tier: 1, dss: true });
     }
   }
   return out;
@@ -760,21 +760,16 @@ function dssActionsAt(planetIndex) {
 /* DSS 本体图标 —— 即 helldivers.wiki.gg/wiki/Effects#Democracy_Space_Station
    中「Effects」标题前那个图标（wiki 文件名为 DSS_Icon.svg，本地 dss.svg）。
    它与三个「战术行动」图标是两回事，过去只接了战术行动，导致 DSS 停靠本身
-   在地图上毫无踪迹：只要没有任何行动处于 status=2/3，整张图就看不到 DSS。 */
+   在地图上毫无踪迹：只要没有任何行动处于 status=2，整张图就看不到 DSS。 */
 const DSS_STATION_ICON = { icon:"dss.svg", cn:"民主空间站" };
-// DSS 停靠星球：无条件返回一个图标，状态只影响外观，不再让 DSS「隐身」。
+// DSS 停靠星球：无条件返回本体图标，且**不因冷却期做视觉弱化**（用户要求）。
+// 排队位置由 buildFXNodes 的 isBuff 决定 —— 与 SEAF 一样归入「左侧 BUFF 列」。
 function dssStationsAt(planetIndex) {
   if (!DATA || !DATA.dss) return [];
   if (DATA.dss.planetIndex !== planetIndex) return [];
-  const acts = DATA.dss.tacticalActions || [];
-  const live = acts.filter(a => a.status === 2);            // 已激活
-  const cd   = acts.filter(a => a.status === 3);            // 冷却期
-  const label = live.length ? "民主空间站（行动生效中）"
-              : cd.length   ? "民主空间站（冷却期）"
-              :               "民主空间站";
   return [{
-    icon: DSS_STATION_ICON.icon, cn: label, color: "#f5c518",
-    tier: 1, dss: true, cd: (!live.length && !!cd.length),
+    icon: DSS_STATION_ICON.icon, cn: DSS_STATION_ICON.cn, color: "#f5c518",
+    tier: 1, dss: true,
   }];
 }
 const __fxsvg = {};
@@ -1616,9 +1611,10 @@ async function boot() {
     const host = $("fx-layer");
     host.innerHTML = "";
     const MAXICON = 4;
-    // BUFF 类（SEAF 驻守 / DSS 战术行动）排在星球**左侧**，变种等效果排在**右侧**。
-    // dss:true 由 dssActionsAt 标注；SEAF 用图标文件名判定。
-    const isBuff = e => e.dss || /seaf/i.test(e.icon);
+    // 星球**左侧**：己方增益/设施 —— SEAF 驻守、DSS 本体（民主空间站）。
+    // 星球**右侧**：敌军相关 —— 变种/子阵营、以及 DSS 的战术行动（飞鹰风暴等，属打击手段）。
+    // 【2026-09 用户要求】DSS 相关图标一律靠左、且只有「已激活」的行动才出现。
+    const isBuff = e => e.icon === DSS_STATION_ICON.icon || /seaf/i.test(e.icon);
     const nodes = fx.map(item => {
       const buffs = item.list.filter(isBuff);
       const effs  = item.list.filter(e => !isBuff(e));
@@ -1631,7 +1627,7 @@ async function boot() {
         const el = document.createElement("div");
         el.className = "fx-cluster";
         el.innerHTML = arr.map(e =>
-          `<div class="fx-i${e.cd ? " fx-cd" : ""}" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
+          `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
           (extra > 0 ? `<div class="fx-more">+${extra}</div>` : "");
         host.appendChild(el);
         return el;
@@ -1659,7 +1655,33 @@ async function boot() {
 
     // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
     let rafId = 0, visible = true;
-    const MINZ = 7.0, GAP = 42;   // 图标已放大，间距同步加大
+    const MINZ = 7.0;
+    // 图标与间距随缩放同步缩小：星球本体半径是按屏幕像素算的（z7≈8.5px、z8.6≈13.6px），
+    // 而 .fx-i 曾是固定 34px —— 低缩放下图标会盖住星球（用户截图可见）。
+    // 这里把「图标盒 / 内部图 / 间距」统一成随 zoom 插值的 CSS 变量，
+    // 由 sync() 按帧写入，各元素直接复用，不必逐个改样式。
+    const FX_VARS = v => {
+      host.style.setProperty("--fx-size", v.size + "px");
+      host.style.setProperty("--fx-img", v.img + "px");
+      host.style.setProperty("--fx-gap", v.gap + "px");
+    };
+    function fxScale(z) {
+      let base;
+      if (z >= 9)        base = { size: 34, img: 24, gap: 42 };
+      else if (z <= 7.2) base = { size: 22, img: 15, gap: 26 };
+      else {
+        const t = (z - 7.2) / (9 - 7.2);          // 7.2..9 线性过渡
+        const lerp = (a, b) => Math.round(a + (b - a) * t);
+        base = { size: lerp(22, 34), img: lerp(15, 24), gap: lerp(26, 42) };
+      }
+      // 移动端（窄屏）图标再缩一档，避免多个图标横向挤在一起
+      if (window.matchMedia("(max-width:767px)").matches) {
+        const k = 0.8;
+        base = { size: Math.round(base.size * k), img: Math.round(base.img * k), gap: Math.round(base.gap * k) };
+      }
+      return base;
+    }
+    let lastSize = 0;
     const place = (el, n, x, y) => {
       if (!el) return;
       el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%)`;
@@ -1670,13 +1692,15 @@ async function boot() {
       const on = z >= MINZ;
       if (on !== visible) { host.style.display = on ? "" : "none"; visible = on; }
       if (!on) return;
+      const sc = fxScale(z);
+      if (sc.size !== lastSize) { FX_VARS(sc); lastSize = sc.size; }
       for (const nd of nodes) {
         const p = BYIDX[nd.idx];
         if (!p || !p.position) continue;
         const pt = MAP.project([p.position.x, p.position.y]);
-        // 左侧放 BUFF（SEAF / DSS），右侧放变种等效果；各自以星球为基准向左/右偏移
-        place(nd.elL, nd.nL, pt.x - GAP * nd.nL / 2, pt.y);
-        place(nd.elR, nd.nR, pt.x + GAP * nd.nR / 2, pt.y);
+        // 左侧放己方增益（SEAF / DSS 本体），右侧放敌军相关（变种 / DSS 战术行动）
+        place(nd.elL, nd.nL, pt.x - sc.gap * nd.nL / 2, pt.y, sc.gap);
+        place(nd.elR, nd.nR, pt.x + sc.gap * nd.nR / 2, pt.y, sc.gap);
       }
     }
     function schedule() { if (!rafId) rafId = requestAnimationFrame(sync); }
