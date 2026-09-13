@@ -1,11 +1,15 @@
 {
- "mo_brief": {
-  "title": "MAJOR ORDER",
-  "original": "Liberate the designated Cyborg-occupied planets to disrupt an election-impeding cyberattack.",
-  "translated": "解放指定的生化人占领星球，以瓦解一场意图干扰选举的网络攻击。",
-  "translated_at": "2026-09-13T10:20:42Z"
- },
+ "mo_brief": null,
  "items": [
+  {
+   "id": 3920,
+   "original": "MAJOR ORDER FAILED\n\nThe Helldivers recaptured CHARBAL-VII, by the Cyborgs retained hold of ZZANIAH PRIME. \n\nMassive server banks were discovered in the captured Megafactories. Cybersecurity specialists have confirmed that these server banks could be used in the conduct of cyberattacks—confirming the enemy's intent beyond doubt.",
+   "translated": "重要指令失败\n\n绝地潜兵夺回了查巴尔 VII，但生化人仍牢牢控制着藏尼亚主星。\n\n在缴获的超大型工厂中发现了大规模服务器组。网络安全专家已确认，这些服务器组可用于发动网络攻击——敌人的意图已确凿无疑。",
+   "published_at": "2026-09-13T12:07:06Z",
+   "translated_at": "2026-09-13T14:34:54Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3919,
    "original": "INCINERATION CORPS SIGHTED\n\nThe Automaton Incineration Corps has resurfaced on VINDEMITARIX PRIME.",
@@ -86,15 +90,6 @@
    "translated_at": "2026-09-09T17:10:58Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3910,
-   "original": "MAJOR ORDER WON\n\nDeputized citizens have apprehended thousands of suspected dissidents across the Federation. They were motivated and rewarded by premium trophies of Freedom's enemies valiantly secured by the Helldivers.\n\nHundreds of apprehended suspects have already confessed to conspiracy to sabotage the TCS+ and destroy Managed Democracy. The dissident network, which existed, is rapidly being mapped and dismantled.",
-   "translated": "重要指令完成\n\n被授权的公民已在联邦各地逮捕了数千名疑似异见分子。他们因绝地潜兵英勇夺取的自由之敌的珍贵战利品而受到激励和奖赏。\n\n数百名被捕嫌疑人已承认密谋破坏TCS+并摧毁管理式民主。这个确实存在的异见网络正在被迅速绘制并瓦解。",
-   "published_at": "2026-09-03T12:57:12Z",
-   "translated_at": "2026-09-09T17:10:58Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +99,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-13T10:20:42Z",
+  "computed_at": "2026-09-13T14:34:55Z",
   "planet_index": null
  }
 }
