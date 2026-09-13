@@ -1285,12 +1285,12 @@
        设计稿见 HD2-Galatic_war-Map/_card_demo.html；计划见根目录 HD2主页改版计划.md
        卡内局部变量 --fc / --fcd 由 .f-auto/.f-term/.f-illu/.f-hum 切换
        ============================================================ */
+    /* 栅格用 auto-fit + 320px 下限：按**实际容器宽**自适应（右侧栏会吃掉约 250px，
+       按视口断点写死列数会让卡片被压到 267px、低于规范下限 320px） */
     .planet-grid{
       display:grid;gap:14px;align-items:start;
-      grid-template-columns:repeat(4,minmax(0,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     }
-    @media (max-width:1279px){ .planet-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
-    @media (max-width:1023px){ .planet-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
     @media (max-width:767px){ .planet-grid{grid-template-columns:1fr} }
 
     .planet-card{
