@@ -1278,3 +1278,161 @@
       color:#FFB59E;font-size:12.5px;padding:9px 12px;margin-bottom:10px;
     }
     .dss-notice b{color:#FF4D2E;font-family:var(--dss-mono);letter-spacing:.06em}
+
+    /* ============================================================
+       星球卡片体系（2026-09-13 主页改版）
+       Diegetic Tactical HUD / Diesel Punk：零圆角 · 零阴影 · 阵营色主导 · 高信息密度
+       设计稿见 HD2-Galatic_war-Map/_card_demo.html；计划见根目录 HD2主页改版计划.md
+       卡内局部变量 --fc / --fcd 由 .f-auto/.f-term/.f-illu/.f-hum 切换
+       ============================================================ */
+    .planet-grid{
+      display:grid;gap:14px;align-items:start;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+    @media (max-width:1279px){ .planet-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+    @media (max-width:1023px){ .planet-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media (max-width:767px){ .planet-grid{grid-template-columns:1fr} }
+
+    .planet-card{
+      --fc:var(--c-faction-hum);--fcd:var(--c-faction-hum-d);
+      background:var(--bg-deep);
+      border:2px solid var(--fc);
+      border-radius:0;box-shadow:none;
+      max-width:380px;overflow:hidden;
+      display:flex;flex-direction:column;
+    }
+    .planet-card.f-auto{--fc:var(--c-faction-auto);--fcd:var(--c-faction-auto-d)}
+    .planet-card.f-term{--fc:var(--c-faction-term);--fcd:var(--c-faction-term-d)}
+    .planet-card.f-illu{--fc:var(--c-faction-illu);--fcd:var(--c-faction-illu-d)}
+    .planet-card.f-hum {--fc:var(--c-faction-hum); --fcd:var(--c-faction-hum-d)}
+
+    /* ---- 图标：尺寸只在这里控制；阵营色一律由 --fc 驱动 ---- */
+    .planet-card .pc-ficon{width:18px;height:18px;flex:0 0 18px;display:block;fill:var(--fc)}
+    .planet-card .pc-ficon path,.planet-card .pc-ficon polygon{fill:var(--fc)}
+    .planet-card .pc-tico{width:16px;height:16px;flex:0 0 16px;display:block;fill:var(--fc)}
+    .planet-card .pc-tico path,.planet-card .pc-tico polygon{fill:var(--fc)}
+    .planet-card .pc-reinf{width:16px;height:16px;flex:0 0 16px;display:block}
+    .planet-card .pc-campic{width:32px;height:32px;display:block}
+
+    /* ---- ① 顶部状态条 ---- */
+    .planet-card .pc-top{
+      display:flex;align-items:center;gap:8px;height:38px;padding:0 10px;
+      background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);
+    }
+    .planet-card .pc-fname{
+      font-size:12.5px;font-weight:700;color:var(--fc);letter-spacing:.06em;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .planet-card .pc-res{margin-left:auto;display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .planet-card .pc-res .item{display:flex;align-items:center;gap:5px}
+    .planet-card .pc-res .chip{
+      width:16px;height:16px;display:grid;place-items:center;
+      background:var(--yellow);color:#000;border-radius:0;
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;font-size:10px;line-height:1;
+    }
+    .planet-card .pc-res .num{
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;
+      font-size:13px;color:#FFF;letter-spacing:.02em;
+    }
+
+    /* ---- ② 环境图（按 biome 取 assets/biomes/，460×148） ---- */
+    .planet-card .pc-landmark{
+      position:relative;height:148px;flex:0 0 148px;overflow:hidden;
+      border-bottom:1px solid var(--border);background:#0D1118;
+    }
+    .planet-card .pc-landmark img{width:100%;height:100%;object-fit:cover;display:block}
+    /* 无环境图时的回退（ACCESS DENIED 等）：暗底 + 极淡斜纹，不喧宾夺主 */
+    .planet-card .pc-landmark.pc-nobiome{
+      background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 6px, transparent 6px 12px),
+        linear-gradient(180deg,#151B26 0%,#0B0E14 100%);
+    }
+    .planet-card .pc-landmark.pc-nobiome::after{
+      content:"NO LANDMARK";position:absolute;left:8px;bottom:6px;
+      font-family:var(--font-mono,Consolas,monospace);font-size:9.5px;
+      letter-spacing:.18em;color:rgba(255,255,255,.20);
+    }
+
+    /* ---- ③ 战役类型 + 星球名 ---- */
+    .planet-card .pc-head{display:flex;align-items:center;gap:10px;padding:12px 12px 10px}
+    .planet-card .pc-campwrap{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center}
+    .planet-card .pc-headtxt{min-width:0;flex:1}
+    .planet-card .pc-type{
+      font-size:12px;color:var(--text);letter-spacing:.1em;line-height:1.2;display:block;
+    }
+    .planet-card .pc-name{
+      font-size:19px;font-weight:700;color:var(--yellow);line-height:1.25;margin-top:2px;display:block;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .planet-card .pc-name.def{
+      color:#FFF;font-family:var(--font-mono,Consolas,monospace);font-size:22px;
+    }
+    .planet-card .pc-desc{
+      padding:0 12px 11px;font-size:11.5px;line-height:1.65;color:var(--text-dim);margin:0;
+    }
+
+    /* ---- ④ 进度条 ---- */
+    .planet-card .pc-progress{padding:0 12px 10px}
+    .planet-card .pc-bar{
+      position:relative;height:9px;border-radius:0;display:flex;overflow:hidden;
+    }
+    .planet-card .pc-bar .fill{background:var(--fc);height:100%}
+    .planet-card .pc-bar .slot{
+      flex:1;height:100%;
+      background:repeating-linear-gradient(45deg,var(--fcd) 0 6px,transparent 6px 12px);
+    }
+    .planet-card .pc-bar .cursor{
+      position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:1;
+      width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;
+      border-left:6px solid var(--fc);
+    }
+    .planet-card .pc-stats{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;
+    }
+    .planet-card .pc-stats .k{font-size:11px;color:var(--text-mute)}
+    .planet-card .pc-stats .v{
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;font-size:11.5px;
+    }
+    .planet-card .pc-stats .v.dim{color:var(--text-dim)}
+    .planet-card .pc-stats .r{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    /* 抵抗强度四档（阈值见 tokens.css） */
+    .planet-card .pc-stats .v.res-low {color:var(--c-res-low)}
+    .planet-card .pc-stats .v.res-mid {color:var(--c-res-mid)}
+    .planet-card .pc-stats .v.res-high{color:var(--c-res-high)}
+    .planet-card .pc-stats .v.res-max {color:var(--c-res-max)}
+
+    /* ---- ⑤ 入侵等级行（防御战）：钝角盾牌 + 等级数字 ---- */
+    .planet-card .pc-invasion{
+      display:flex;align-items:center;gap:12px;padding:9px 12px;
+      border-top:1px solid color-mix(in srgb, var(--fc) 40%, transparent);
+      border-bottom:1px solid color-mix(in srgb, var(--fc) 40%, transparent);
+    }
+    @supports not (background: color-mix(in srgb, red 10%, transparent)){
+      .planet-card .pc-invasion{
+        border-top-color:rgba(255,255,255,.14);border-bottom-color:rgba(255,255,255,.14);
+      }
+    }
+    .planet-card .pc-shield{width:52px;height:66px;flex:0 0 52px;display:block}
+    .planet-card .pc-shield svg{width:100%;height:100%;display:block}
+    .planet-card .pc-invtxt{min-width:0;flex:1}
+    .planet-card .pc-invtxt .k{font-size:12px;color:var(--text-mute)}
+    .planet-card .pc-invtxt .timer{
+      display:block;font-family:var(--font-mono,Consolas,monospace);font-weight:700;
+      font-size:15px;color:var(--warn);margin-top:3px;
+    }
+
+    /* ---- ⑥ 词条列表 ---- */
+    .planet-card .pc-traits{border-top:2px solid var(--fcd)}
+    .planet-card .pc-trait{padding:9px 12px;border-bottom:1px solid var(--border)}
+    .planet-card .pc-trait:last-child{border-bottom:none}
+    .planet-card .pc-trait .h{display:flex;align-items:center;gap:7px}
+    .planet-card .pc-trait .h b{
+      font-size:12.5px;font-weight:700;color:var(--fc);letter-spacing:.05em;
+    }
+    .planet-card .pc-trait p{margin:5px 0 0;font-size:11.5px;line-height:1.65;color:var(--text-dim)}
+
+    /* ---- 已解放：去掉进度条区，仅保留状态行 ---- */
+    .planet-card .pc-liberated{
+      padding:0 12px 11px;font-size:12px;font-weight:700;
+      color:var(--c-res-mid);letter-spacing:.08em;
+    }
