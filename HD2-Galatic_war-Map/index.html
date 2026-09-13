@@ -1623,52 +1623,201 @@ function renderPlayers(data) {
       </div>`;
   }
 
+  /* ==============================================================
+     星球卡片体系（2026-09-13 主页改版）
+     设计稿 _card_demo.html / 计划 HD2主页改版计划.md
+     阵营色由 --fc 驱动；图标一律内联，颜色交给 CSS（不可依赖 SVG 自带 fill，行内样式会压过 CSS）
+     ============================================================== */
+  // 阵营图标：文件名映射（本地缓存，wiki.gg 素材）
+  const PC_FACTION_ICON = {
+    Automaton: "automatons.svg", Terminids: "terminids.svg",
+    Illuminate: "illuminate.svg", Humans: "humans.svg",
+  };
+  // 战役类型图标：解放战役=靶心，防御战=盾牌
+  const PC_CAMPAIGN_ICON = { liberation: "liberation_campaign.svg", defense: "defense_campaign.svg" };
+  // 环境图：API biome 名 -> 本地文件名（assets/biomes/index.json 由抓取脚本生成）
+  let PC_BIOME_INDEX = null;
+  // 图标内联缓存（同 MapLibre 那套：同源取文本再内联，才能被 currentColor 着色）
+  const PC_SVG = {};
+  async function preloadPlanetIcons() {
+    const files = [
+      ...new Set([...Object.values(PC_FACTION_ICON), ...Object.values(PC_CAMPAIGN_ICON)]),
+      "reinforce.svg",
+    ];
+    try { PC_BIOME_INDEX = await (await fetch("./assets/biomes/index.json", { cache: "force-cache" })).json(); }
+    catch (_) { PC_BIOME_INDEX = {}; }
+    await Promise.all(files.map(async (f) => {
+      try {
+        const dir = /reinforce|campaign/.test(f) ? "./assets/ui-icons/" : "./assets/faction-icons/";
+        const t = await (await fetch(dir + f, { cache: "force-cache" })).text();
+        PC_SVG[f] = t.replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
+      } catch (_) { PC_SVG[f] = null; }
+    }));
+  }
+  // 取内联 SVG 并注入 class —— 尺寸/着色全部由 CSS 控制，
+  // 否则 SVG 会按自带 width/height（如 1024×1024）渲染，把卡片撑爆。
+  const pcIcon = (file, cls) => {
+    const s = file ? PC_SVG[file] : null;
+    if (!s) return "";
+    if (!cls) return s;
+    return s.replace(/<svg\b([^>]*)>/i, (m, attrs) => {
+      const cleaned = attrs.replace(/\sclass="[^"]*"/i, "").replace(/\s(width|height)="[^"]*"/gi, "");
+      return `<svg class="${cls}"${cleaned}>`;
+    });
+  };
+  const pcBiomeImg = (biome) => {
+    if (!biome || !PC_BIOME_INDEX) return null;
+    const f = PC_BIOME_INDEX[biome];
+    return f ? "./assets/biomes/" + f : null;
+  };
+  // 抵抗强度四档配色（阈值由用户给定：低 ≤1.99 / 中 2–2.99 / 高 3–3.99 / 极高 ≥4）
+  function resTier(pct) {
+    if (!(pct > 0)) return { cls: "dim", key: "none" };
+    if (pct < 2) return { cls: "res-low", key: "low" };
+    if (pct < 3) return { cls: "res-mid", key: "mid" };
+    if (pct < 4) return { cls: "res-high", key: "high" };
+    return { cls: "res-max", key: "max" };
+  }
+  function resLabel(pct) {
+    if (!(pct > 0)) return "无";
+    if (pct < 2) return "低";
+    if (pct < 3) return "中";
+    if (pct < 4) return "高";
+    return "极高";
+  }
+  // 秒 -> D:HH:MM:SS（与游戏内防御战倒计时同形）
+  function fmtDefTimer(sec) {
+    if (sec == null || !isFinite(sec) || sec <= 0) return "—";
+    const s = Math.floor(sec);
+    const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60), ss = s % 60;
+    const p = (n) => (n < 10 ? "0" + n : "" + n);
+    return `${p(d)}:${p(h)}:${p(m)}:${p(ss)}`;
+  }
+  // 敌方正营：优先取战役 faction，其次星球归属
+  function hostileFactionOf(p, camp) {
+    if (camp && camp.faction && camp.faction !== "Humans") return camp.faction;
+    const o = p.currentOwner || "";
+    return (o && o !== "Humans") ? o : "";
+  }
+  // 入侵等级盾牌徽章：规则盾牌 + 钝角底段（张角 98.2°）
+  function pcInvasionShield(level) {
+    return `<span class="pc-shield"><svg viewBox="0 0 72 74" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="36,4 66,4 66,42 36,68 6,42 6,4" fill="#0B0E14" stroke="var(--fc)" stroke-width="3"/>
+      <polygon points="6,39 66,39 66,42 36,68 6,42" fill="var(--fc)"/>
+      <text x="36" y="32" text-anchor="middle" font-size="24" font-weight="700" fill="var(--fc)"
+            font-family="Rajdhani,Orbitron,Consolas,monospace">${esc(String(level))}</text>
+    </svg></span>`;
+  }
+
+  // 星球卡片（2026-09-13 改版：战役图标 + 环境图 + 进度条 + 侵蚀等级 + 词条）
   function renderPlanetCard(p, starMap, statusLabel, statusClass) {
     const name = planetName(p, starMap);
     const owner = p.currentOwner || "Unknown";
-    const ownerKey = owner.toLowerCase();
-    const isHuman = owner === "Humans";
-
-    // 血量百分比（用户公式 Lib = 当前HP/MaxHP × 100%，两位小数）
-    const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
-    const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;   // 状态判断用整数
-    const hpPctShow = (p.maxHealth > 0) ? hpPctRaw.toFixed(2) : "0.00";  // 显示用两位小数
-    const libPctDetail = (100 - hpPctRaw).toFixed(2);              // 解放度 = 100% - HP%（两位小数）
-    // 解放进度（bot 公式 1-HP/MaxHP，用于状态判断）
-    const libPct = 100 - hpPct;
-    const ownerTag = `<span class="owner-tag">${esc(ownerCn(owner))}</span>`;
-    const statusTag = statusLabel
-      ? `<span class="status-tag ${esc(statusClass)}">${esc(statusLabel)}</span>`
-      : "";
-
-    // 防御战：双进度条（进攻方 vs 防守方）
     const camp = p._campaign || {};
-    const isDefense = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
-    let hpSection = "";
-    if (statusLabel === "已解放" || libPct >= 99.9) {
-      hpSection = `<div class="planet-hp">已解放</div>`;
-    } else if (isDefense) {
-      hpSection = renderDefenseBars(p, camp);
-    } else {
-      hpSection = `
-        <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(hpPct)}" style="width:${hpPctShow}%"></div></div>
-        <div class="planet-hp">${hpPctShow}% · ${fmt(p.health)} / ${fmt(p.maxHealth)}</div>`;
-    }
-    return `
-      <div class="planet-card ${ownerClass(owner)}" data-planet-index="${p.index}">
-        <div class="planet-name">${esc(name.cn || name.en)}</div>
-        ${name.cn ? `<div class="planet-name-en">${esc(name.en)}</div>` : ""}
-        <div class="planet-meta">
-          ${ownerTag}
-          ${statusTag}
-          <span>· ${esc(sectorCn(name.sector))}</span>
-        </div>
-        ${hpSection}
-        <div class="planet-detail-wrap" style="display:none">
-          ${planetDetailHtml(p, starMap, statusLabel)}
-        </div>
+    const isDefense = camp.campaignType === "defense" || camp.eventType === 1
+      || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    // 血量 / 解放度（沿用原有公式）
+    const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
+    const libPctRaw = Math.max(0, Math.min(100, 100 - hpPctRaw));
+    const libShown = libPctRaw.toFixed(2);
+    const isLiberated = statusLabel === "已解放" || libPctRaw >= 99.9;
+
+    // ---- ① 顶部：阵营 + 资源/玩家 ----
+    const fk = { Automaton: "auto", Terminids: "term", Illuminate: "illu", Humans: "hum" }[owner] || "hum";
+    const fIcon = pcIcon(PC_FACTION_ICON[owner], "pc-ficon");
+    const top = `<div class="pc-top">
+      ${fIcon}
+      <span class="pc-fname">${esc(ownerCn(owner))}</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">0</span></span>
+        <span class="item">${pcIcon("reinforce.svg", "pc-reinf")}<span class="num">${fmt(p.players)}</span></span>
       </div>
-    `;
+    </div>`;
+
+    // ---- ② 环境图（API biome -> 本地缓存） ----
+    const bImg = pcBiomeImg(p.biome);
+    const landmark = bImg
+      ? `<div class="pc-landmark"><img src="${esc(bImg)}" alt="${esc(p.biome || "")}" decoding="async"></div>`
+      : `<div class="pc-landmark pc-nobiome"></div>`;
+
+    // ---- ③ 战役类型 + 星球名 ----
+    const campIcon = pcIcon(isDefense ? PC_CAMPAIGN_ICON.defense : PC_CAMPAIGN_ICON.liberation, "pc-campic");
+    const head = `<div class="pc-head">
+      <span class="pc-campwrap">${campIcon}</span>
+      <span class="pc-headtxt">
+        <span class="pc-type">${esc(isDefense ? "防御战" : "解放战役")}</span>
+        <span class="pc-name${isDefense ? " def" : ""}">${esc(name.cn || name.en)}</span>
+      </span>
+    </div>`;
+
+    // ---- ④ 描述 ----
+    const desc = isDefense ? "这颗星球遇袭。绝地潜兵必须保卫星球，抵御暴政军队。"
+                           : "这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。";
+
+    // ---- ⑤ 进度条 + 抵抗强度 ----
+    const res = p.resistance;
+    const tier = resTier(res);
+    let progress;
+    if (isLiberated) {
+      progress = `<div class="pc-liberated">✓ 已解放</div>`;
+    } else {
+      progress = `<div class="pc-progress">
+        <div class="pc-bar"><span class="cursor"></span>
+          <div class="fill" style="width:${libPctRaw.toFixed(3)}%"></div>
+          <div class="slot"></div>
+        </div>
+        <div class="pc-stats">
+          <span class="k">已解放 <span class="v dim">${libShown}%</span></span>
+          <span class="r"><span class="k">抵抗强度</span>
+            <span class="v ${tier.cls}">${res > 0 ? resLabel(res) + " (" + res.toFixed(2) + "%)" : "无"}</span>
+          </span>
+        </div>
+      </div>`;
+    }
+
+    // ---- ⑥ 入侵等级（仅防御战，取 campaign.invasionLevel 与 remainingTime） ----
+    let invasion = "";
+    if (isDefense && camp.invasionLevel != null) {
+      invasion = `<div class="pc-invasion">
+        ${pcInvasionShield(camp.invasionLevel)}
+        <span class="pc-invtxt">
+          <span class="k">入侵等级</span>
+          <span class="timer">保卫 ${esc(fmtDefTimer(camp.remainingTime))}</span>
+        </span>
+      </div>`;
+    }
+
+    // ---- ⑦ 词条（星球行动变量；标题取阵营色）
+    // 注意：主页没有星图那套 EFFECT_ICON，用的是 buildDssEffectMap 产出的
+    // effectCnDescMap（effectId -> {cn, desc, cat}）；这里按 id 反查并去重。
+    let traits = "";
+    {
+      const seen = {};
+      const hits = [];
+      for (const id of (p.activeEffects || [])) {
+        const t = effectCnDescMap[id];
+        if (!t || !t.cn || seen[t.cn]) continue;
+        seen[t.cn] = 1;
+        hits.push(t);
+      }
+      if (hits.length) {
+        traits = `<div class="pc-traits">` + hits.slice(0, 3).map(t => `
+          <div class="pc-trait">
+            <div class="h"><b>${esc(t.cn)}</b></div>
+            ${t.desc ? `<p>${esc(t.desc)}</p>` : ""}
+          </div>`).join("") + `</div>`;
+      }
+    }
+
+    return `<div class="planet-card f-${fk}" data-planet-index="${p.index}">
+      ${top}${landmark}${head}
+      <p class="pc-desc">${desc}</p>
+      ${progress}${invasion}${traits}
+      <div class="planet-detail-wrap" style="display:none">
+        ${planetDetailHtml(p, starMap, statusLabel)}
+      </div>
+    </div>`;
   }
 
   // 侦察战 侦察 卡片（数据缺失显示 -- 不报错）
@@ -2246,6 +2395,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       currentData = data;
       currentEffectMap = data.effectMap || {};
       currentEffectDetailMap = data.effectDetailMap || {};
+      // 星球卡片用的图标/环境图映射：必须在任何 renderPlanetCard 之前载入
+      await preloadPlanetIcons();
       buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
