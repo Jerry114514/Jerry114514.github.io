@@ -1637,6 +1637,9 @@ function renderPlayers(data) {
   const PC_CAMPAIGN_ICON = { liberation: "liberation_campaign.svg", defense: "defense_campaign.svg" };
   // 环境图：API biome 名 -> 本地文件名（assets/biomes/index.json 由抓取脚本生成）
   let PC_BIOME_INDEX = null;
+  // 图标缓存版本：assets/ 下图标内容改动后必须 +1
+  // （下面的 fetch 用 force-cache，不换 URL 的话旧图标会被浏览器钉在缓存里 —— 改了也看不到）
+  const PC_ICON_VER = "2";
   // 图标内联缓存（同 MapLibre 那套：同源取文本再内联，才能被 currentColor 着色）
   const PC_SVG = {};
   async function preloadPlanetIcons() {
@@ -1649,7 +1652,7 @@ function renderPlayers(data) {
     await Promise.all(files.map(async (f) => {
       try {
         const dir = /reinforce|campaign/.test(f) ? "./assets/ui-icons/" : "./assets/faction-icons/";
-        const t = await (await fetch(dir + f, { cache: "force-cache" })).text();
+        const t = await (await fetch(dir + f + "?v=" + PC_ICON_VER, { cache: "force-cache" })).text();
         PC_SVG[f] = t.replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
       } catch (_) { PC_SVG[f] = null; }
     }));
