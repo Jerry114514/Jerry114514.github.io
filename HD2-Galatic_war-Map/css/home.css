@@ -1101,3 +1101,176 @@
       font-size: 0.85rem;
     }
     .news-reopen.show { display: block; }
+
+    /* ============================================================
+       DSS 民主空间站 —— 军事战术 HUD 版式（2026-09 改版）
+       设计 token：#000 底 / #0F0F0F 面板 / #1F1F1F 描边 / #FFE600 强调
+                    #FF4D2E 警告 / 斜纹分隔 45deg / 圆角一律 0
+       ============================================================ */
+    .dss-hud{
+      --dss-panel:#0F0F0F;
+      --dss-line:#1F1F1F;
+      --dss-txt:#FFFFFF;
+      --dss-dim:#9A9A9A;
+      --dss-mute:#6E6E6E;
+      --dss-y:#FFE600;
+      --dss-warn:#FF4D2E;
+      --dss-slot:#1A1A1A;
+      --dss-stripe:repeating-linear-gradient(45deg,#1A1500 0 6px,transparent 6px 12px);
+      --dss-stripe-warn:repeating-linear-gradient(45deg,#3A1200 0 6px,transparent 6px 12px);
+      --dss-stripe-red:repeating-linear-gradient(45deg,#FF4D2E 0 8px,#7A1F0E 8px 16px);
+      --dss-mono:"Rajdhani","Orbitron","Consolas","Courier New",monospace;
+      background:#000;
+      border:1px solid var(--dss-line);
+      color:var(--dss-txt);
+      display:flex;flex-direction:column;gap:0;
+    }
+    .dss-hud *{box-sizing:border-box}
+    .dss-hud .num,.dss-hud .pct,.dss-hud .n,.dss-hud .ver,.dss-hud .don,.dss-hud .lbl,
+    .dss-hud .dss-bar-label,.dss-hud .box,.dss-hud .strip,.dss-hud .s,.dss-hud .tab i,
+    .dss-hud .badge,.dss-hud .dss-res b,.dss-hud .dss-tele b{font-family:var(--dss-mono);font-weight:700;letter-spacing:.02em}
+
+    /* ---------- 顶部 HUD 条 ---------- */
+    .dss-hud .dss-top{display:flex;align-items:stretch;gap:14px;padding:8px 12px;min-height:60px;background:var(--dss-panel)}
+    .dss-hud .dss-tele{
+      display:flex;flex-direction:column;justify-content:center;gap:2px;
+      font-size:11px;color:var(--dss-dim);padding-right:14px;
+      border-right:1px solid var(--dss-line);min-width:200px;line-height:1.5;
+    }
+    .dss-hud .dss-tele b{color:var(--dss-y);font-weight:700}
+    .dss-hud .dss-title{display:flex;flex-direction:column;justify-content:center;min-width:0}
+    .dss-hud .dss-title h3{margin:0;font-size:18px;font-weight:600;letter-spacing:.06em;white-space:nowrap;color:var(--dss-txt)}
+    .dss-hud .dss-title .sub{font-family:var(--dss-mono);font-size:9.5px;color:var(--dss-mute);letter-spacing:.2em;margin-top:3px}
+    .dss-hud .dss-tabs{display:flex;align-items:flex-end;margin-left:6px}
+    .dss-hud .dss-tabs .tab{
+      display:flex;align-items:center;gap:7px;padding:6px 13px 5px;
+      border:1px solid var(--dss-line);border-bottom:none;background:#121212;
+      color:var(--dss-dim);font-size:12.5px;letter-spacing:.08em;position:relative;
+    }
+    .dss-hud .dss-tabs .tab i{font-style:normal;font-size:11.5px;color:var(--dss-mute)}
+    .dss-hud .dss-tabs .tab.on{background:var(--dss-stripe);color:var(--dss-txt);border-color:#3A3300}
+    .dss-hud .dss-tabs .tab.on i{color:var(--dss-y)}
+    .dss-hud .dss-tabs .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--dss-y)}
+    .dss-hud .dss-res{display:flex;align-items:center;margin-left:auto}
+    .dss-hud .dss-res .cell{display:flex;align-items:center;gap:6px;padding:0 12px;border-left:1px solid var(--dss-line)}
+    .dss-hud .dss-res .cell:first-child{border-left:none;padding-left:0}
+    .dss-hud .dss-res .badge{
+      width:16px;height:16px;display:grid;place-items:center;flex-shrink:0;
+      font-size:10px;color:#000;background:var(--dss-y);border-radius:0;
+    }
+    .dss-hud .dss-res .badge.blue{background:#5BA3D0}
+    .dss-hud .dss-res .badge.purple{background:#CF64F8}
+    .dss-hud .dss-res .badge.green{background:#4ADE80}
+    .dss-hud .dss-res b{display:block;font-size:16px;line-height:1.05;color:var(--dss-txt)}
+    .dss-hud .dss-res i{display:block;font-style:normal;font-size:9px;color:var(--dss-mute);letter-spacing:.12em;margin-top:1px}
+    .dss-hud .dss-div{height:5px;background:var(--dss-stripe);border-top:1px solid #241F00;border-bottom:1px solid #241F00}
+
+    /* ---------- 主体 2 列 ---------- */
+    .dss-hud .dss-grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:14px;padding:12px;align-items:start}
+    @media (max-width:1023px){ .dss-hud .dss-grid{grid-template-columns:1fr} }
+
+    /* 小节标题 */
+    .dss-hud .dss-sec{
+      display:flex;align-items:center;gap:8px;background:var(--dss-stripe);
+      border:1px solid #3A3300;padding:5px 10px;
+    }
+    .dss-hud .dss-sec.small{margin-top:14px;padding:4px 9px}
+    .dss-hud .dss-sec h4{margin:0;font-size:13px;font-weight:600;color:var(--dss-y);letter-spacing:.12em}
+    .dss-hud .dss-sec .n{margin-left:auto;font-size:11px;color:var(--dss-mute)}
+    .dss-hud .dss-note{
+      font-size:11.5px;color:var(--dss-mute);line-height:1.6;
+      margin:0;padding:7px 2px 9px;border-bottom:1px dashed #1B1B1B;
+    }
+    .dss-hud .dss-votes{display:flex;flex-direction:column;gap:0}
+
+    /* ---------- 行动卡片 ---------- */
+    .dss-hud .dss-buff{
+      position:relative;border:1px solid var(--dss-line);background:var(--dss-panel);
+      border-radius:0;padding:9px 11px;margin-top:7px;
+      display:grid;grid-template-columns:16px minmax(0,1fr) auto;
+      gap:10px;align-items:center;
+    }
+    .dss-hud .dss-buff.sel{border:2px solid var(--dss-y);padding-bottom:0}
+    .dss-hud .dss-buff .ico{
+      width:16px;height:16px;flex-shrink:0;background:#2A2A2A;border-radius:0;
+      display:grid;place-items:center;overflow:hidden;
+    }
+    .dss-hud .dss-buff .ico img{width:16px;height:16px;object-fit:contain;display:block}
+    .dss-hud .dss-buff .dss-emoji-fallback{font-size:12px;line-height:1}
+    .dss-hud .dss-buff .mid{min-width:0}
+    .dss-hud .dss-buff .t{font-size:13.5px;font-weight:600;color:var(--dss-txt);line-height:1.25;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dss-hud .dss-buff .s{font-size:10.5px;color:var(--dss-mute);margin-top:3px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dss-hud .dss-buff .pct{font-size:12.5px;color:var(--dss-y);line-height:1;text-align:right}
+    .dss-hud .dss-buff .dss-bar-bg{
+      grid-column:1 / -1;height:3px;background:var(--dss-slot);
+      border-radius:0;overflow:hidden;margin-top:8px;
+    }
+    .dss-hud .dss-buff .dss-bar-fill{height:100%;background:var(--dss-y);border-radius:0;transition:width .5s}
+    .dss-hud .dss-buff .dss-bar-label{
+      grid-column:1 / -1;font-size:10.5px;color:var(--dss-mute);margin-top:5px;
+    }
+    /* 激活：底部红橙实心条（跨整宽，贴齐卡片内边距） */
+    .dss-hud .dss-buff .strip{
+      grid-column:1 / -1;margin:8px -11px 0;padding:5px 11px;text-align:center;
+      background:var(--dss-warn);color:#160500;font-size:12px;letter-spacing:.06em;
+    }
+    .dss-hud .dss-buff.active .dss-bar-bg{margin-top:6px}
+    /* 冷却：右上角黄色角标（无圆角，≤18px 高） */
+    .dss-hud .dss-buff .dss-pill{
+      position:absolute;top:-1px;right:-1px;height:18px;display:flex;align-items:center;
+      padding:0 7px;background:var(--dss-y);color:#000;font-size:10.5px;letter-spacing:.06em;
+    }
+    .dss-hud .dss-buff.cd{opacity:.92}
+    .dss-hud .dss-buff.cd .dss-bar-bg{display:none}
+
+    /* 常驻被动 */
+    .dss-hud .dss-passive{border:1px solid var(--dss-line);background:var(--dss-panel);border-radius:0;padding:0 11px 11px;margin-top:0}
+    .dss-hud .dss-passive .pv-name{font-size:13px;font-weight:600;color:var(--dss-txt);margin-top:9px}
+    .dss-hud .dss-effect-desc{margin:5px 0 0;color:var(--dss-dim);font-size:12px;line-height:1.65}
+
+    /* ---------- 右侧详情 ---------- */
+    .dss-hud .dss-col-r{border:1px solid var(--dss-line);background:var(--dss-panel)}
+    .dss-hud .dss-hero{
+      position:relative;height:272px;overflow:hidden;border-bottom:1px solid var(--dss-line);
+      background:
+        radial-gradient(420px 200px at 62% 48%, rgba(120,150,190,.16), transparent 70%),
+        linear-gradient(180deg,#05070C 0%,#000 100%);
+    }
+    .dss-hud .dss-hero svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .dss-hud .dss-jump{
+      position:absolute;top:12px;right:12px;background:var(--dss-y);color:#000;
+      font-family:var(--dss-mono);font-weight:700;font-size:11.5px;letter-spacing:.04em;
+      padding:5px 10px;border-radius:0;white-space:nowrap;
+      max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;
+    }
+    .dss-hud .dss-detail{padding:13px 15px 15px}
+    .dss-hud .dss-detail .tagline{display:flex;align-items:center;gap:8px}
+    .dss-hud .dss-detail .tagline .bar-y{width:3px;height:15px;background:var(--dss-y)}
+    .dss-hud .dss-detail .tagline span:last-child{font-size:12.5px;color:var(--dss-y);letter-spacing:.14em}
+    .dss-hud .dss-detail .faction{font-size:11.5px;color:var(--dss-dim);margin:6px 0 5px 11px;letter-spacing:.05em}
+    .dss-hud .dss-detail h3{margin:0 0 9px;font-size:21px;font-weight:600;letter-spacing:.03em;color:var(--dss-txt)}
+    .dss-hud .dss-detail .desc{
+      font-size:12.5px;color:#B0B0B0;line-height:1.7;margin:0;
+      border-top:1px solid #191919;padding-top:10px;
+    }
+    .dss-hud .dss-contrib{margin-top:14px}
+    .dss-hud .dss-contrib .lbl{font-size:10.5px;color:var(--dss-mute);letter-spacing:.14em;margin-bottom:5px}
+    .dss-hud .dss-contrib .box{
+      background:var(--dss-y);color:#000;text-align:center;font-size:15px;
+      padding:7px 0;letter-spacing:.05em;border-radius:0;
+    }
+    .dss-hud .dss-count{margin-top:12px;height:24px;background:var(--dss-stripe-red);display:grid;place-items:center}
+    .dss-hud .dss-count span{
+      font-family:var(--dss-mono);font-weight:700;font-size:12.5px;color:#fff;
+      background:#000;padding:1px 12px;letter-spacing:.05em;
+    }
+
+    /* ---------- 未停靠通知 ---------- */
+    .dss-hud + .dss-notice, .dss-notice{
+      border-radius:0;background:var(--dss-stripe-warn);
+      border:1px solid #5A1F0A;border-left:3px solid #FF4D2E;
+      color:#FFB59E;font-size:12.5px;padding:9px 12px;margin-bottom:10px;
+    }
+    .dss-notice b{color:#FF4D2E;font-family:var(--dss-mono);letter-spacing:.06em}
