@@ -1302,8 +1302,10 @@ function renderPlayers(data) {
     // 右上角浮条：空间站下次跃迁倒计时。
     // data-jump-ms 直接挂到 #dss-jump-countdown 自身（计时器就是按这个 id 取值的），
     // 之前挂在父级 .dss-jump 上，导致每秒读取恒为 null → 永远显示「等待信息更新」。
+    // 注意：目标时间已过（返回值 0）时不再写 data-jump-ms，避免出现无意义的「00:00」。
     const jumpMs = (dss && dss.electionEndWarTime != null) ? warRemainMs(dss.electionEndWarTime) : null;
-    const jumpHtml = `<div class="dss-jump">空间站即将移动：<span id="dss-jump-countdown"${jumpMs != null ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>${jumpMs != null ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
+    const jumpValid = (jumpMs != null && jumpMs > 0);
+    const jumpHtml = `<div class="dss-jump">空间站即将移动：<span id="dss-jump-countdown"${jumpValid ? ` data-jump-ms="${Math.round(jumpMs)}"` : ""}>${jumpValid ? fmtCountdown(jumpMs) : "等待信息更新"}</span></div>`;
 
     const locText = dss
       ? (function () {
@@ -1435,34 +1437,39 @@ function renderPlayers(data) {
     meta.textContent = dss ? locText : "未停靠";
 
     // 本地计时器：每秒刷新倒计时（云端 60s 刷新时会重新渲染校对）
-    // 注意：每次 renderDss 都会重建 DOM，因此引用必须在帧内重新查询，不能闭包缓存旧节点。
+    // 注意：每次 renderDss 都会重建 DOM，因此引用必须在每帧重新查询，不能闭包缓存旧节点。
+    // 只认 data-jump-ms / data-act 为**正数**的节点，避免把「已过期(0)」当成有效倒计时。
     const startReal = Date.now();
+    // 读取一个元素上的倒计时初值（优先 data-jump-ms，其次 data-act）；
+    // 只有正数才算有效 —— 「已过期(0)」不会再被当成倒计时去覆盖文案。
+    const msOf = (el, attr) => {
+      if (!el) return null;
+      const raw = el.getAttribute(attr);
+      if (raw == null) return null;
+      const v = parseFloat(raw);
+      return (isFinite(v) && v > 0) ? v : null;
+    };
     if (window._dssTimer) clearInterval(window._dssTimer);
     window._dssTimer = setInterval(function() {
       const elapsed = Date.now() - startReal;
-      // ① 空间站跃迁倒计时（data-jump-ms 挂在 #dss-jump-countdown 自身；兼容挂在父级的旧写法）
+      // ① 空间站跃迁倒计时（data-jump-ms 挂自身；兼容挂在父级的旧写法）
       const tEl = root.querySelector("#dss-jump-countdown");
       if (tEl) {
-        const holder = (tEl.getAttribute("data-jump-ms") != null) ? tEl : tEl.parentElement;
-        const initMs = parseFloat(holder && holder.getAttribute("data-jump-ms"));
-        tEl.textContent = (isFinite(initMs) && initMs > 0)
-          ? fmtCountdown(Math.max(0, initMs - elapsed))
-          : "等待信息更新";
+        const initMs = (msOf(tEl, "data-jump-ms") != null)
+          ? msOf(tEl, "data-jump-ms")
+          : msOf(tEl.parentElement, "data-jump-ms");
+        if (initMs != null) tEl.textContent = fmtCountdown(Math.max(0, initMs - elapsed));
       }
-      // ② 已激活行动的倒计时：卡片底部条 + 右栏底部条（两者用 data-act 承载初值）
-      root.querySelectorAll(".dss-buff .strip[data-act]").forEach(function(strip) {
-        const initMs = parseFloat(strip.getAttribute("data-act"));
-        if (isFinite(initMs) && initMs > 0) {
-          strip.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
-        }
+      // ② 已激活行动的倒计时：卡片底部条 + 右栏底部条（用 data-act 承载初值）
+      root.querySelectorAll(".dss-buff .strip[data-act]").forEach(function (strip) {
+        const initMs = msOf(strip, "data-act");
+        if (initMs != null) strip.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
       });
       const kEl = root.querySelector("#dss-count");
       const kTxt = root.querySelector("#dss-count-txt");
       if (kEl && kTxt) {
-        const initMs = parseFloat(kEl.getAttribute("data-act"));
-        if (isFinite(initMs) && initMs > 0) {
-          kTxt.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
-        }
+        const initMs = msOf(kEl, "data-act");
+        if (initMs != null) kTxt.textContent = "就位倒计时：" + fmtCountdown(Math.max(0, initMs - elapsed));
       }
     }, 1000);
   }
