@@ -48,4 +48,19 @@
       --c-illuminate-d:#8F45AB;  /* 光能族 深 */
       --c-unknown:    #6B7280;
       --c-mo:         #FF8C00;   /* MO 目标 橙 */
+
+      /* ---- 星球卡片体系（2026-09-13 主页改版新增，与 --c-* 并存）----
+         卡片描边/进度条/词条标题统一取 --fc（卡内局部变量，由 .f-xxx 类切换） */
+      --c-faction-auto:  #E74C3C;  --c-faction-auto-d:  #7A1F0E;   /* 机器人 */
+      --c-faction-term:  #F5C518;  --c-faction-term-d:  #5C4A0A;   /* 终结族 */
+      --c-faction-illu:  #CF64F8;  --c-faction-illu-d:  #4A1F5C;   /* 光能族 */
+      --c-faction-hum:   #5BA3D0;  --c-faction-hum-d:   #1F3A52;   /* 超级地球 */
+
+      /* ---- 抵抗强度色阶（2026-09-13 用户给定阈值）----
+         低 ≤1.99% / 中 2–2.99% / 高 3–3.99% / 极高 ≥4%
+         实测当前战局四档均有分布（213/20/6/16），非空档设计 */
+      --c-res-low:  #3B82F6;   /* 低 = 蓝 */
+      --c-res-mid:  #1FA84A;   /* 中 = 绿 */
+      --c-res-high: #F59E0B;   /* 高 = 橙 */
+      --c-res-max:  #FF4D2E;   /* 极高 = 红 */
 }
