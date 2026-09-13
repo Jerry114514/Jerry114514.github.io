@@ -1284,18 +1284,43 @@
        设计稿见 HD2-Galatic_war-Map/_card_demo.html；计划见根目录 HD2主页改版计划.md
        卡内局部变量 --fc / --fcd 由 .f-auto/.f-term/.f-illu/.f-hum 切换
        ============================================================ */
-    /* 栅格用 auto-fit + 320px 下限：按**实际容器宽**自适应（右侧栏会吃掉约 250px，
-       按视口断点写死列数会让卡片被压到 267px、低于规范下限 320px） */
-    /* 栅格列宽锁定在规范区间 320–380px。
-       注意 main.container 的 max-width 只有 1200px（实测栅格容器约 1152px），
-       下限设 320px 时浏览器会挤出 4 列、把卡片压到 278px；
-       故下限提到 340px —— 1152px 容器只放得下 3 列（约 361px），落在区间内。
-       更宽的屏幕（container 仍 1200px 上限）也稳定为 3 列，卡片不会失控变宽。 */
+    /* 栅格：宽屏每行 4 张。两个坑记在这里，免得下次又踩：
+       ① **minmax 的上限若是确定值，auto-fit/auto-fill 按「上限 + gap」算列数，不是按下限。**
+          所以原来的 repeat(auto-fit, minmax(340px,380px)) 在 1152px 可用宽下只有 2 列
+          （floor((1152+14)/(380+14)) = 2；3 列要 1168px，只差 16px）。
+          ⇒ 改为**显式列数**，用 minmax(0,380px) 让轨道自适应、上限 380 仍由轨道兜住。
+       ② 4 列 × 320px 需要 1322px，而 main.container 限宽 1200 → 内容仅 1152px。
+          ⇒ 卡片区**突破文字栏**：宽度取 min(1400px, 100vw-56px) 并以父级中心展开，
+            文字区仍是 1200px 不动（父级居中，故负 margin 能对称外扩）。
+       flex:0 0 auto 是给「卡片区落在 .mo-targets（display:flex）」的情况，
+       否则 flex-shrink 会把外扩又压回去。 */
     .planet-grid{
+      --grid-w:min(1168px, calc(100vw - 56px));
       display:grid;gap:14px;align-items:start;justify-content:center;
-      grid-template-columns:repeat(auto-fit,minmax(340px,380px));
+      grid-template-columns:repeat(3, minmax(0, 380px));
+      width:var(--grid-w);
+      margin-left:calc(50% - var(--grid-w) / 2);
+      flex:0 0 auto;
     }
-    @media (max-width:767px){ .planet-grid{grid-template-columns:1fr} }
+    /* 4 列：1330px 起（此时每张 ≈308px，1384 视口 ≈322px，1400 封顶 ≈340px） */
+    @media (min-width:1330px){
+      .planet-grid{
+        --grid-w:min(1400px, calc(100vw - 56px));
+        grid-template-columns:repeat(4, minmax(0, 380px));
+      }
+    }
+    /* 3 列：1050–1329px（每张 322–380px） */
+    @media (max-width:1049px){
+      .planet-grid{
+        --grid-w:min(774px, calc(100vw - 56px));
+        grid-template-columns:repeat(2, minmax(0, 380px));
+      }
+    }
+    /* 单列：手机（收回外扩，卡片居中） */
+    @media (max-width:767px){
+      .planet-grid{--grid-w:100%;margin-left:0;grid-template-columns:1fr}
+      .planet-grid .planet-card{justify-self:center;width:100%}
+    }
 
     .planet-card{
       --fc:var(--c-faction-hum);--fcd:var(--c-faction-hum-d);
