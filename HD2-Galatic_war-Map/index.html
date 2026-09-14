@@ -1410,7 +1410,12 @@ function renderPlayers(data) {
       };
     });
 
-    const first = cardData[0] || {
+    // 右栏详情（大图 / 描述 / 贡献度 / 底部状态条 / .active 类）必须跟**选中的那一项**一致。
+    // ⚠ 原来写死 cardData[0]：标题用 sel、其余用第一项，于是当默认选中「已激活」的行动时，
+    //   会出现「标题是已激活的重型军械分发、正文却是飞鹰风暴、底部条还是红色『冷却剩余』」
+    //   这种自相矛盾（2026-09-15 用户报告）。这里改为取选中项对应的 cardData。
+    const selIdx = sel ? items.indexOf(sel) : -1;
+    const first = (selIdx >= 0 ? cardData[selIdx] : cardData[0]) || {
       img: heroSrcOf(""), desc: "当前没有可展示的 DSS 战术行动。",
       ratio: "0%", countHtml: "", isActive: false, isCooldown: false,
     };
