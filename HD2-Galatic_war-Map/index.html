@@ -6,8 +6,10 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913d">
-  <link rel="stylesheet" href="./css/home.css?v=20260913d">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913e">
+  <link rel="stylesheet" href="./css/home.css?v=20260913e">
+  <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913e">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -2604,16 +2606,36 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     var illuminate = hist.map(function(h) { return h.factions.Illuminate; });
     var impact = hist.map(function(h) { return (h.impactMultiplier || 0); });
         // 尺寸由 CSS 容器控制
+    // 主题：直接从 tokens.css 读变量（等宽字体 / 硬网格线 / 直角图例），避免再散一份硬编码色
+    var C = (function () {
+      var cs = getComputedStyle(document.documentElement);
+      var g = function (n, f) { var v = (cs.getPropertyValue(n) || "").trim(); return v || f; };
+      return {
+        line: g("--border", "#1F1F1F"), mute: g("--text-mute", "#6E6E6E"),
+        dim: g("--text-dim", "#A8A8A8"), text: g("--text", "#F2F2F2"),
+        yellow: g("--yellow", "#FFB000"), brass: g("--brass", "#C8862A"),
+        hum: g("--c-humans", "#5BA3D0"), term: g("--c-terminids", "#F5C518"),
+        auto: g("--c-faction-auto", "#E74C3C"), illu: g("--c-illuminate", "#CF64F8"),
+        mono: g("--font-mono", "Consolas, monospace")
+      };
+    })();
+    var mkLine = function (label, data, color, axis, dash) {
+      return {
+        label: label, data: data, borderColor: color, backgroundColor: color + "1F",
+        borderWidth: 2, borderDash: dash || [], fill: false, tension: 0.25,
+        pointRadius: 0, pointHoverRadius: 3, yAxisID: axis
+      };
+    };
     impactChart = new Chart(canvas.getContext("2d"), {
       type: "line",
       data: {
         labels: labels,
         datasets: [
-          { label: "\u8d85\u7ea7\u5730\u7403", data: humans, borderColor: "#3b82f6", backgroundColor: "rgba(59,130,246,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
-          { label: "\u7ec8\u7ed3\u65cf", data: terminids, borderColor: "#f59e0b", backgroundColor: "rgba(245,158,11,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
-          { label: "\u673a\u5668\u4eba", data: automatons, borderColor: "#ef4444", backgroundColor: "rgba(239,68,68,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
-          { label: "\u5149\u80fd\u65cf", data: illuminate, borderColor: "#8b5cf6", backgroundColor: "rgba(139,92,246,0.1)", fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y" },
-          { label: "\u5f71\u54cd\u529b\u7cfb\u6570", data: impact, borderColor: "#ffffff", borderDash: [5,5], fill: false, tension: 0.3, pointRadius: 0, yAxisID: "y1" },
+          mkLine("超级地球", humans, C.hum, "y"),
+          mkLine("终结族", terminids, C.term, "y"),
+          mkLine("机器人", automatons, C.auto, "y"),
+          mkLine("光能族", illuminate, C.illu, "y"),
+          mkLine("影响力系数", impact, C.text, "y1", [5, 5]),
         ]
       },
       options: {
@@ -2621,13 +2643,33 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
         maintainAspectRatio: false,
         interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { labels: { color: "#94a3b8", font: { size: 11 } } },
-          tooltip: { backgroundColor: "rgba(10,14,26,0.94)", titleColor: "#e2e8f0", bodyColor: "#94a3b8", borderColor: "#334155", borderWidth: 1 }
+          legend: { labels: { color: C.dim, boxWidth: 10, boxHeight: 10, font: { size: 11, family: C.mono } } },
+          tooltip: {
+            backgroundColor: "#000000", titleColor: C.yellow, bodyColor: C.dim,
+            borderColor: C.line, borderWidth: 1, cornerRadius: 0, padding: 8,
+            titleFont: { family: C.mono }, bodyFont: { family: C.mono }
+          }
         },
         scales: {
-          x: { ticks: { color: "#64748b", maxTicksLimit: 12, font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" } },
-          y: { type: "linear", position: "left", ticks: { color: "#64748b", font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.05)" }, title: { display: true, text: "\u73a9\u5bb6\u6570", color: "#94a3b8" } },
-          y1: { type: "linear", position: "right", min: 0, max: 0.025, ticks: { color: "#64748b", font: { size: 10 }, stepSize: 0.005, callback: function(v) { return (v * 100).toFixed(1) + "%"; } }, grid: { drawOnChartArea: false }, title: { display: true, text: "\u5f71\u54cd\u529b\u7cfb\u6570", color: "#94a3b8" } }
+          x: {
+            ticks: { color: C.mute, maxTicksLimit: 12, font: { size: 10, family: C.mono } },
+            grid: { color: C.line }, border: { color: C.line }
+          },
+          y: {
+            type: "linear", position: "left",
+            ticks: { color: C.mute, font: { size: 10, family: C.mono } },
+            grid: { color: C.line }, border: { color: C.line },
+            title: { display: true, text: "玩家数", color: C.brass, font: { size: 10, family: C.mono } }
+          },
+          y1: {
+            type: "linear", position: "right", min: 0, max: 0.025,
+            ticks: {
+              color: C.mute, font: { size: 10, family: C.mono }, stepSize: 0.005,
+              callback: function (v) { return (v * 100).toFixed(1) + "%"; }
+            },
+            grid: { drawOnChartArea: false }, border: { color: C.line },
+            title: { display: true, text: "影响力系数", color: C.brass, font: { size: 10, family: C.mono } }
+          }
         }
       }
     });

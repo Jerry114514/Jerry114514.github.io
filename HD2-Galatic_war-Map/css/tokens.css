@@ -1,27 +1,56 @@
-/* HD2 主站设计变量 —— 单点真相（2026-09 自 index.html 抽取；2026-09-11 P0 对齐统一色板并扩展刻度）
+/* HD2 主站设计变量 —— 单点真相
+   ── 2026-09-13 第二轮改版：Diegetic Tactical HUD / Diesel Punk ──
+   规则：**零圆角 · 零阴影 · 零毛玻璃 · 强对比 · 高信息密度**
+   参考基准 = 已完成的 `.dss-hud` 模块（黑底 / #0F0F0F 面板 / #1F1F1F 硬描边 / 琥珀强调 / 45° 斜纹）
    阵营色/主题色改动只改这里；wiki 侧核心变量见 HD2_Wiki/assets/css/wiki-base.css
    ── 断点规范 ──（CSS 变量无法用于 media query，以下为约定值，新增断点只允许这两档）
    · ≤768px  手机（目录/网格收单列、双栏收单栏）
    · ≤1024px 平板（三列收两列；固定列数网格的中间档）
    ── z 层级表 ──：悬浮内容 40 < 导航 50 < 遮罩 100 < 弹层 999，新代码用变量勿拍数字 */
 :root {
-      --bg-deep:   #0B0E14;
-      --bg-deep-2: #131826;
-      --bg-deep-3: #1A1F2E;
-      --yellow:    #F5C518;
-      --yellow-2:  #FFD54F;
-      --yellow-3:  #B8900E;
-      --blue:      #3B82F6;
-      --text:      #E2E8F0;
-      --text-dim:  #94A3B8;
-      --text-mute: #64748B;
-      --border:    rgba(255, 255, 255, 0.08);
-      --border-h:  rgba(245, 197, 24, 0.4);
-      --card-bg:   rgba(255, 255, 255, 0.05);
-      --card-h:    rgba(255, 255, 255, 0.08);
-      --blur:      blur(12px);
-      --radius:    12px;
-      --radius-s:  8px;
+      /* ── 底色：纯黑系（靠硬描边分层，不再靠半透明白 + 阴影） ── */
+      --bg-deep:   #0A0A0A;
+      --bg-deep-2: #101010;
+      --bg-deep-3: #161616;
+
+      /* ── 强调色：琥珀（压力表/黄铜感），替代原来的柠檬黄 ── */
+      --yellow:    #FFB000;
+      --yellow-2:  #FFC94A;
+      --yellow-3:  #8A5E00;
+      --brass:     #C8862A;   /* 次强调：黄铜，用于分隔线/次要描边 */
+      --blue:      #3B82F6;   /* 保留：战术目标/中性信息 */
+
+      /* ── 文本：对比拉高 ── */
+      --text:      #F2F2F2;
+      --text-dim:  #A8A8A8;
+      --text-mute: #6E6E6E;
+
+      /* ── 面板与描边：一律不透明实色 ── */
+      --border:    #1F1F1F;
+      --border-h:  #3A2A00;
+      --card-bg:   #111111;
+      --card-h:    #171717;
+      --panel:     #111111;
+      --panel-2:   #0F0F0F;
+      --line-2:    #2A2A2A;
+
+      /* ── 质感：零圆角 / 零模糊（变量保留是为了不动 392 条选择器的写法） ── */
+      --blur:      none;
+      --radius:    0;
+      --radius-s:  0;
+
+      /* ── 状态色：与 DSS 对齐 ── */
+      --ok:        #1FA84A;
+      --warn:      #FF4D2E;
+      --info:      #5BA3D0;
+
+      /* ── 45° 斜纹（HUD 通用分隔/警示底纹） ── */
+      --stripe:      repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);
+      --stripe-warn: repeating-linear-gradient(45deg, rgba(255,77,46,.22) 0 8px, transparent 8px 16px);
+      --stripe-solid:repeating-linear-gradient(45deg, #FF4D2E 0 8px, #7A1F0E 8px 16px);
+
+      /* ── 等宽数字（战术数据一律等宽） ── */
+      --font-mono: "Rajdhani","Orbitron","Consolas","Courier New",monospace;
 
       /* 间距刻度（统一草案，新样式一律取刻度值） */
       --sp-1: 4px;
@@ -37,7 +66,7 @@
       --z-overlay: 100;
       --z-modal:  999;
 
-      /* 阵营色 */
+      /* 阵营色（用户决策：阵营色保留不动，辨识度优先） */
       --c-humans:     #5BA3D0;   /* 超级地球（蓝） */
       --c-humans-d:   #2A3948;   /* 超级地球 深 */
       --c-terminids:  #F5C518;   /* 终结族（黄） */

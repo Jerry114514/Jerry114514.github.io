@@ -1,0 +1,605 @@
+/* ============================================================
+   HD2 主站 · HUD 皮肤层（Diegetic Tactical HUD / Diesel Punk）
+   ------------------------------------------------------------
+   加载顺序：tokens.css → home.css → **本文件**（最后加载，同特异度即可覆盖）
+   为什么要单独一层：home.css 有 392 条选择器 / 63 处圆角 / 11 处阴影 / 16 处毛玻璃，
+   逐条重写风险高、回归难定位。本层只做三件事：
+     ① 一次性清零反模式（圆角 / 阴影 / 毛玻璃 / 文字阴影）
+     ② 提供共享质感原语（实心铸铁面板 · 1px 硬描边 · 45° 斜纹 · 等宽数字 · 键帽）
+     ③ 按组件点名覆盖（导航 / 首屏 / 区块头 / 指令 / 统计 / 图表 / 搭配器 / 资讯 / 页脚）
+   参考基准 = 已完成的 `.dss-hud` 模块；星球卡片 `.planet-card` 与 DSS 已经是新规范，本层不动它们。
+   ⚠ 第①节用了 !important 一次性压制历史写法；**新增组件请直接写规范样式，不要依赖它**。
+   ============================================================ */
+
+/* ════════════════ ① 反模式清零 ════════════════ */
+*, *::before, *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  text-shadow: none !important;
+}
+html { background: var(--bg-deep); }
+body {
+  background: var(--bg-deep);          /* 去掉原来的径向渐变 + 星空点阵 */
+  color: var(--text);
+  font-size: 14px;                     /* 基准字号上调一档，配合紧行距提密度 */
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+body::before { display: none; }
+
+/* ════════════════ ② 共享质感原语 ════════════════ */
+.container { max-width: 1200px; padding: 0 24px; }
+
+/* 战术数据一律等宽 */
+.impact-stat .n, .strat-bar-val, .strat-chart-val, .strat-total, .strat-grade,
+.recon-rate-big, .recon-metric-val, .mo-task-progress, .sector-count,
+.news-item-time, #player-count, .pd-row strong, .footer-bottom { font-family: var(--font-mono); }
+
+/* 面板 = 铸铁实心块 + 1px 硬描边（无阴影，靠描边分层） */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--brass);
+  padding: 14px 16px;
+}
+.card:hover { background: var(--card-h); border-color: var(--border-h); border-left-color: var(--yellow); }
+
+/* 小标题（黄铜 / 等宽 / 全大写 / 字距） */
+.pd-title, .strat-panel-title, .strat-chart-title, .footer-col h4 {
+  color: var(--brass);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-2);
+  padding-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+/* 键帽：方角 + 硬描边 + 顶部高光条（替代圆角药丸按钮） */
+.btn {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--brass);
+  background: var(--panel);
+  color: var(--text);
+}
+.btn-primary { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
+.btn-primary:hover { background: var(--yellow-2); color: #000; }
+.btn-ghost { background: var(--panel-2); }
+.btn-ghost:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+
+/* 数据标签 / 词条 chip：方角、硬描边、等宽 */
+.pd-chip {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 2px solid var(--brass);
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.pd-chip-eff:hover, .pd-chip-eff.open { border-color: var(--yellow); border-left-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+.pd-eff-desc {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--yellow);
+  padding: 6px 10px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+/* 进度条：直角 + 深槽 + 描边（与星球卡片同款） */
+.progress-bar, .hp-bar, .strat-bar-track, .strat-chart-track,
+.defense-bar-track, .dss-bar-bg, .player-dist-bar {
+  background: #1A1A1A;
+  border: 1px solid var(--line-2);
+  overflow: hidden;
+}
+.progress-bar { height: 10px; }
+.hp-bar { height: 8px; }
+.progress-bar-fill, .hp-bar-fill, .strat-bar-fill, .strat-chart-fill, .defense-bar-fill, .dss-bar-fill { transition: width .4s ease; }
+.progress-bar-fill { background: linear-gradient(90deg, var(--yellow-3) 0%, var(--yellow) 100%); }
+
+/* ════════════════ ③ 顶部导航 ════════════════ */
+.topnav {
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+}
+.topnav::after {                        /* 导航下沿的琥珀斜纹带（与 DSS 分隔条同款） */
+  content: "";
+  display: block;
+  height: 3px;
+  background: var(--stripe);
+  border-top: 1px solid #241B00;
+}
+.topnav-inner { height: 52px; gap: 14px; }
+.brand { letter-spacing: .16em; }
+.brand-emoji { display: none; }         /* 用琥珀角标代替 emoji */
+.brand::before {
+  content: "";
+  width: 4px; height: 16px;
+  background: var(--yellow);
+  flex: 0 0 4px;
+}
+.brand-title { font-size: 15px; }
+.nav-cta {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid var(--yellow);
+  background: transparent;
+  color: var(--yellow);
+}
+.nav-cta:hover { background: var(--yellow); color: #000; }
+.topnav-meta { font-size: 11.5px; color: var(--text-mute); font-family: var(--font-mono); }
+.banner-item { color: var(--text-dim); font-size: 12px; }
+
+/* 状态灯：方块（圆点在小尺寸下不像 HUD 仪表） */
+.pulse-dot {
+  width: 8px; height: 8px;
+  background: var(--ok);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.pulse-dot.stale { background: var(--warn); }
+
+/* 玩家数独立行 */
+.player-line {
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  padding: 4px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: .02em;
+}
+#player-count { color: var(--yellow); font-weight: 700; }
+
+/* ════════════════ ④ 首屏：作战简报 ════════════════ */
+.hero {
+  padding: 26px 0 22px;
+  text-align: left;                     /* 由居中营销式改为左对齐简报式 */
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #101010 0%, var(--bg-deep) 100%);
+}
+.hero .container { position: relative; padding-right: 24px; }
+.hero h1 {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--text);
+  font-size: clamp(1.35rem, 2.6vw, 2.05rem);
+  letter-spacing: .05em;
+  margin: 0 0 8px;
+  padding-left: 12px;
+  border-left: 4px solid var(--yellow);
+}
+.hero-sub {
+  max-width: none;
+  margin: 0 0 16px 16px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+}
+.hero-cta { justify-content: flex-start; gap: 10px; }
+/* 首屏右上角的斜纹角标 */
+.hero .container::after {
+  content: "TACTICAL DATA LINK";
+  position: absolute;
+  top: 2px; right: 24px;
+  background: var(--stripe);
+  border: 1px solid #33270A;
+  color: var(--brass);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  padding: 3px 8px;
+}
+
+/* ════════════════ ⑤ 区块与区块标题 ════════════════ */
+/* 默认（含内容里的二级小标题）：细下划线 + 黄铜字 */
+.block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--line-2);
+  background: none;
+}
+.block-title { font-size: 13px; color: var(--brass); letter-spacing: .12em; text-transform: uppercase; margin: 0; }
+.block-emoji { display: none; }         /* 去掉彩色 emoji，改由琥珀序号角标承担识别 */
+.block-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* 一级区块：用硬线分区替代大留白，密度拉高 */
+main.container { counter-reset: blk; }
+main.container > .block { padding: 16px 0; border-top: 1px solid var(--border); }
+main.container > .block { counter-increment: blk; }
+main.container > .block:first-of-type { border-top: none; padding-top: 6px; }
+/* DSS 区块头已移入面板内部，不参与编号，避免序号跳号 */
+main.container > #block-dss { counter-increment: none; }
+main.container > #block-pevents { counter-increment: none; }
+
+main.container > .block > .block-head {
+  background: var(--stripe);
+  border: 1px solid #33270A;
+  border-left: 3px solid var(--yellow);
+  padding: 6px 10px;
+  margin: 0 0 10px;
+}
+main.container > .block > .block-head::before {
+  content: counter(blk, decimal-leading-zero);
+  flex: 0 0 auto;
+  background: var(--yellow);
+  color: #000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .04em;
+  padding: 2px 6px;
+  line-height: 1.35;
+}
+main.container > .block > .block-head .block-title { font-size: 14px; color: var(--yellow); font-weight: 700; }
+
+/* ════════════════ ⑥ 重要指令 / 个人指令 ════════════════ */
+.mo-brief { font-size: 13px; line-height: 1.7; color: var(--text-dim); margin: 0 0 10px; }
+.mo-brief strong { color: var(--yellow); }
+.mo-tasks { gap: 8px; margin-bottom: 14px; }
+.mo-task {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--yellow);
+  padding: 9px 11px;
+}
+.mo-task-head { font-size: 12px; color: var(--text-dim); margin-bottom: 5px; }
+.mo-task-head span:first-child { color: var(--text); font-weight: 600; letter-spacing: .04em; }
+.mo-task-progress { font-size: 13px; font-weight: 700; color: var(--yellow); }
+.mo-task-type { font-size: 10.5px; color: var(--text-mute); letter-spacing: .12em; font-family: var(--font-mono); }
+.mo-sub {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--info);
+  padding: 11px 13px;
+}
+.mo-sub p { font-size: 12.5px; }
+
+/* ════════════════ ⑦ 玩家分布 / 影响力 / 图表 ════════════════ */
+.player-dist-bar { height: 12px; display: flex; margin: 10px 0 12px; }
+.player-dist-dot { width: 9px; height: 9px; }   /* 圆点已被清零为方块 */
+.player-dist-legend { gap: 12px; }
+.player-dist-item { font-size: 11.5px; font-family: var(--font-mono); }
+.player-dist-item strong { color: var(--text); }
+.player-dist-total { font-size: 12px; font-family: var(--font-mono); color: var(--text-dim); }
+
+.impact-row { gap: 0; border: 1px solid var(--border); background: var(--panel-2); }
+.impact-stat {
+  flex: 1 1 150px;
+  padding: 10px 14px;
+  border-right: 1px solid var(--border);
+}
+.impact-stat:last-child { border-right: none; }
+.impact-stat .l { font-size: 10.5px; color: var(--text-mute); letter-spacing: .12em; text-transform: uppercase; }
+.impact-stat .n { font-size: 1.45rem; font-weight: 700; }
+.impact-stat .n .unit { font-size: .72rem; color: var(--text-mute); }
+.impact-stat .d { font-size: 10.5px; color: var(--text-mute); max-width: none; margin-top: 2px; }
+.impact-trend { font-size: 12px; color: var(--text-dim); }
+.trend-chart-container { border: 1px solid var(--border); background: var(--panel-2); padding: 4px; }
+
+/* ════════════════ ⑧ 星球详情（展开区） ════════════════ */
+.planet-detail { border-top: 1px solid var(--border); padding-top: 9px; margin-top: 8px; gap: 10px; }
+.pd-section { gap: 4px; }
+.pd-cn { color: var(--text-mute); font-size: 10px; letter-spacing: .14em; }
+.pd-row { font-size: 11.5px; color: var(--text-dim); padding: 2px 0; border-bottom: 1px dotted #232323; }
+.pd-row:last-child { border-bottom: none; }
+.pd-row span { color: var(--text-mute); }
+.pd-row strong { color: var(--text); font-weight: 700; }
+.pd-empty { font-size: 11.5px; color: var(--text-mute); font-style: normal; }
+.pd-chip.pd-chip-tac { border-color: var(--blue); border-left-color: var(--blue); color: #7CA9F8; background: rgba(59,130,246,.08); }
+.pd-chip.poi-atk, .pd-chip.pd-chip-neg { border-color: var(--warn); border-left-color: var(--warn); color: var(--warn); background: rgba(255,77,46,.08); }
+.poi-mo { border-color: #FF8C00; border-left-color: #FF8C00; color: #FFA940; }
+.poi-camp { border-color: var(--yellow); border-left-color: var(--yellow); color: var(--yellow); }
+.poi-dss { border-color: var(--info); border-left-color: var(--info); color: #7FC0E8; }
+
+/* ════════════════ ⑨ 战术搭配器 ════════════════ */
+.stratagem-big-btn {
+  background: var(--panel);
+  border: 1px solid var(--yellow);
+  border-top: 3px solid var(--yellow);
+  color: var(--yellow);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+}
+.stratagem-big-btn:hover { background: var(--yellow); color: #000; }
+.stratagem-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--brass);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 8px 18px;
+}
+.stratagem-btn:hover { border-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+.stratagem-cards { gap: 10px; }
+.strat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--line-2);
+  padding: 11px 12px;
+  gap: 7px;
+}
+.strat-card:hover { border-color: var(--line-2); border-top-color: var(--brass); }
+/* S 级：用琥珀顶条 + 实色角标表示，不用光晕（零阴影规范） */
+.strat-card.strat-card-S {
+  border-color: var(--yellow);
+  border-top: 3px solid var(--yellow);
+  animation: none;
+}
+.strat-card-name { font-size: 12.5px; }
+.strat-card-type {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  background: #1A1A1A;
+  border: 1px solid var(--line-2);
+  color: var(--text-dim);
+}
+.strat-card-icon { width: 26px; height: 26px; background: #1A1A1A; border: 1px solid var(--line-2); }
+.strat-bar { font-size: 11px; gap: 7px; }
+.strat-bar-track { height: 7px; }
+.strat-bar-label { color: var(--text-mute); }
+.strat-card-footer { border-top: 1px solid var(--line-2); padding-top: 6px; }
+.strat-card-bonus { font-family: var(--font-mono); font-size: 11px; }
+.strat-swap-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  color: var(--text-dim);
+  font-size: 10.5px;
+  padding: 3px 9px;
+  letter-spacing: .06em;
+}
+.strat-swap-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+.strat-panel, .strat-chart {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--brass);
+  padding: 12px 14px;
+  gap: 8px;
+}
+.strat-panel-row { font-size: 11.5px; }
+.strat-panel-divider { border-top: 1px solid var(--line-2); }
+.strat-total { font-size: 1.1rem; color: var(--yellow); }
+.strat-grade-S { color: var(--yellow); font-size: 2.1rem; }
+.strat-grade-A { color: var(--info); }
+.strat-grade-B { color: var(--ok); }
+.strat-grade-C { color: #6B7280; }
+.strat-grade-D { color: var(--warn); }
+.strat-grade-guide { font-size: 10.5px; color: var(--text-mute); border-top: 1px solid var(--line-2); padding-top: 6px; line-height: 1.7; }
+.strat-hint { font-size: 11px; color: var(--text-mute); font-style: normal; }
+.strat-chart-track { height: 9px; }
+.strat-chart-label { color: var(--text-mute); }
+.strat-side { flex: 0 0 270px; gap: 10px; }
+/* 换一个弹层 */
+.strat-modal-mask { background: rgba(0,0,0,.78); }
+.strat-modal {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--yellow);
+  padding: 14px 16px;
+  width: min(520px, 92vw);
+}
+.strat-modal-title { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--yellow); }
+.strat-modal-list { gap: 4px; }
+.strat-modal-item {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  padding: 7px 11px;
+  font-size: 12px;
+}
+.strat-modal-item:hover { border-color: var(--yellow); background: #1A1200; }
+.strat-modal-item-stats { font-size: 10.5px; color: var(--text-mute); }
+
+/* ════════════════ ⑩ 侦察战 ════════════════ */
+.recon-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warn);
+  padding: 12px 14px;
+}
+.recon-tag {
+  background: var(--stripe-warn);
+  border: 1px solid #5A1F0A;
+  border-left: 3px solid var(--warn);
+  color: #FFB59E;
+  font-size: 10.5px;
+  padding: 2px 8px;
+  letter-spacing: .14em;
+}
+.recon-name { font-size: 12.5px; }
+.recon-sector { font-size: 10.5px; color: var(--text-mute); }
+.recon-rate-big { font-size: 1.55rem; }
+.recon-rate-label { font-size: 10px; color: var(--text-mute); letter-spacing: .1em; text-transform: uppercase; }
+.recon-grid { gap: 6px; }
+.recon-metric {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--line-2);
+  padding: 7px 9px;
+}
+.recon-metric-label { font-size: 10px; color: var(--text-mute); letter-spacing: .06em; }
+.recon-metric-val { font-size: 15px; }
+.recon-footer { font-size: 10px; color: var(--text-mute); border-top: 1px solid var(--line-2); padding-top: 6px; }
+/* 与令牌对齐 */
+.recon-rate-big-good, .recon-metric-val-good { color: var(--ok); }
+.recon-rate-big-bad, .recon-metric-val-bad { color: var(--warn); }
+.recon-metric-val-info { color: var(--c-illuminate); }
+.recon-metric-val-death { color: #9CA3AF; }
+
+/* ════════════════ ⑪ 星球事件 / 紧急战情 ════════════════ */
+.pe-event {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warn);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.pe-title { font-size: 12.5px; }
+.pe-planet { color: var(--yellow); font-size: 12.5px; }
+.pe-countdown { font-size: 15px; color: var(--yellow); font-family: var(--font-mono); }
+.pe-sub { font-size: 10.5px; color: var(--text-mute); }
+.pe-atk { color: var(--warn); }
+.hp-low { background: var(--warn); }
+.hp-mid { background: var(--c-res-high); }
+.hp-high { background: var(--ok); }
+
+/* ════════════════ ⑫ 星区目录 ════════════════ */
+.sector-group {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.sector-head {
+  padding: 8px 12px;
+  border-left: 3px solid var(--brass);
+  gap: 8px;
+}
+.sector-head:hover { background: #1A1200; }
+.sector-group.open > .sector-head { border-left-color: var(--yellow); background: var(--stripe); }
+.sector-name { font-size: 13px; letter-spacing: .1em; }
+.sector-name-en { font-size: 11px; color: var(--text-mute); }
+.sector-count { font-size: 11px; color: var(--text-mute); }
+.sector-body-inner { padding: 8px 10px 10px; gap: 10px; }
+.sector-chevron { color: var(--yellow); }
+
+/* ════════════════ ⑬ 悬浮资讯窗 ════════════════ */
+.news-float {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--yellow);
+  width: 340px;
+  max-height: 62vh;
+  z-index: var(--z-float);
+}
+.news-float-head {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-2);
+  background: var(--stripe);
+}
+.news-float-title { font-size: 12px; letter-spacing: .14em; }
+.news-float-toggle { color: var(--yellow); }
+.news-float-close { color: var(--text-mute); border: 1px solid transparent; padding: 1px 6px; }
+.news-float-close:hover { color: var(--warn); border-color: var(--warn); background: rgba(255,77,46,.08); }
+.news-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-2);
+  border-left: 2px solid transparent;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.news-item:hover { border-left-color: var(--yellow); background: var(--panel-2); }
+.news-item-title { font-size: 10.5px; color: var(--yellow); letter-spacing: .12em; }
+.news-item-time { font-size: 10px; color: var(--text-mute); }
+.news-reopen {
+  background: var(--panel);
+  border: 1px solid var(--yellow);
+  border-top: 3px solid var(--yellow);
+  color: var(--yellow);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 7px 12px;
+  z-index: 39;
+}
+.news-reopen:hover { background: var(--yellow); color: #000; }
+
+/* ════════════════ ⑭ 页脚 ════════════════ */
+footer {
+  margin-top: 40px;
+  padding: 22px 0 16px;
+  border-top: 1px solid var(--border);
+  background: var(--panel-2);
+}
+.footer-grid { gap: 24px; }
+.footer-col h4 { margin-bottom: 8px; }
+.footer-col p, .footer-col a { font-size: 11.5px; line-height: 1.75; }
+.footer-col a { color: var(--yellow); }
+.footer-col a:hover { color: var(--yellow-2); text-decoration: underline; }
+.footer-bottom {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-2);
+  font-size: 10.5px;
+  color: var(--text-mute);
+}
+.footer-bottom a { color: var(--text-dim); }
+
+/* ════════════════ ⑮ 占位态 ════════════════ */
+.loading, .empty {
+  color: var(--text-mute);
+  font-size: 12px;
+  letter-spacing: .08em;
+  padding: 18px 0;
+}
+.loading::before { content: "▍ "; color: var(--yellow); }
+.empty::before { content: "— "; color: var(--line-2); }
+.error {
+  background: var(--stripe-warn);
+  border: 1px solid #5A1F0A;
+  border-left: 3px solid var(--warn);
+  color: #FFB59E;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+/* ════════════════ ⑯ 响应式密度复核 ════════════════ */
+@media (max-width: 1024px) {
+  .impact-stat { flex: 1 1 46%; border-bottom: 1px solid var(--border); }
+  /* 关键：基础规则是 align-items:flex-start，配合换行后子项会退化成 fit-content
+     （实测 390 视口下卡片只有 218px、右栏 267px，都填不满 347px 的容器）；
+     这里显式让两项都占满整行，各自独占一行。 */
+  .stratagem-layout { flex-wrap: wrap; align-items: stretch; }
+  .stratagem-cards { flex: 1 1 100%; width: 100%; }
+  .strat-side { flex: 0 0 auto; flex-basis: 100%; width: 100%; }
+}
+@media (max-width: 768px) {
+  .container { padding: 0 14px; }
+  html body { font-size: 13.5px; }
+  .hero { padding: 18px 0 14px; }
+  .hero .container::after { display: none; }
+  .hero h1 { font-size: 1.5rem; letter-spacing: .04em; }
+  .hero-sub { margin-left: 16px; font-size: 12px; }
+  .topnav-inner { height: 48px; }
+  .topnav-meta { display: none; }
+  .block-title { font-size: 12.5px; }
+  main.container > .block > .block-head { padding: 5px 8px; }
+  main.container > .block > .block-head .block-title { font-size: 13px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 16px; }
+  .news-float { right: 8px; bottom: 8px; left: 8px; width: auto; max-height: 52vh; }
+  .impact-stat { flex: 1 1 100%; border-right: none; }
+  .stratagem-cards { grid-template-columns: 1fr; }
+  .recon-grid { grid-template-columns: 1fr 1fr; }
+}
