@@ -32,6 +32,13 @@ body::before { display: none; }
 /* ════════════════ ② 共享质感原语 ════════════════ */
 .container { max-width: 1200px; padding: 0 24px; }
 
+/* 字体统一（2026-09-13 用户要求）：除标题层（ZZZ-thick）外一律思源黑体。
+   表单控件默认走系统字体，必须显式继承，否则按钮/输入框会「漏」出非思源黑体的字形。 */
+button, input, select, textarea, optgroup { font-family: inherit; }
+/* 数字尽量等宽对齐（思源黑体若带 tnum 特征则生效，不带则无副作用） */
+.impact-stat .n, .strat-bar-val, .strat-chart-val, .strat-total, .recon-rate-big,
+.mo-task-progress, .sector-count, #player-count, [data-cd] { font-variant-numeric: tabular-nums; }
+
 /* 战术数据一律等宽 */
 .impact-stat .n, .strat-bar-val, .strat-chart-val, .strat-total, .strat-grade,
 .recon-rate-big, .recon-metric-val, .mo-task-progress, .sector-count,

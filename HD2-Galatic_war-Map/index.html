@@ -6,10 +6,10 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913e">
-  <link rel="stylesheet" href="./css/home.css?v=20260913e">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913f">
+  <link rel="stylesheet" href="./css/home.css?v=20260913f">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
-  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913e">
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913f">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -1730,7 +1730,7 @@ function renderPlayers(data) {
       <polygon points="36,4 66,4 66,42 36,68 6,42 6,4" fill="#0B0E14" stroke="var(--fc)" stroke-width="3"/>
       <polygon points="6,39 66,39 66,42 36,68 6,42" fill="var(--fc)"/>
       <text x="36" y="32" text-anchor="middle" font-size="24" font-weight="700" fill="var(--fc)"
-            font-family="Rajdhani,Orbitron,Consolas,monospace">${esc(String(level))}</text>
+            font-family="SourceHanSans, Microsoft YaHei, sans-serif">${esc(String(level))}</text>
     </svg></span>`;
   }
 
@@ -2616,7 +2616,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
         yellow: g("--yellow", "#FFB000"), brass: g("--brass", "#C8862A"),
         hum: g("--c-humans", "#5BA3D0"), term: g("--c-terminids", "#F5C518"),
         auto: g("--c-faction-auto", "#E74C3C"), illu: g("--c-illuminate", "#CF64F8"),
-        mono: g("--font-mono", "Consolas, monospace")
+        mono: g("--font-body", '"SourceHanSans", "Microsoft YaHei", sans-serif')
       };
     })();
     var mkLine = function (label, data, color, axis, dash) {

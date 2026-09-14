@@ -208,7 +208,7 @@
     .pe-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
     .pe-title { font-weight: 600; color: var(--text); }
     .pe-planet { color: var(--yellow); font-weight: 600; }
-    .pe-countdown { margin-left: auto; font-family: "ZZZ-thick", "SourceHanSans", sans-serif; color: var(--yellow); font-size: 1.05rem; }
+    .pe-countdown { margin-left: auto; font-family: "SourceHanSans","Microsoft YaHei",sans-serif; color: var(--yellow); font-size: 1.05rem; }
     .pe-sub { margin-top: 6px; font-size: 0.74rem; color: var(--text-mute); }
     .pe-atk { color: #E74C3C; }
     .pd-chip.pd-chip-neg { border-color: rgba(231, 76, 60, 0.6) !important; color: #E74C3C !important; }
@@ -1122,7 +1122,7 @@
       --dss-stripe:repeating-linear-gradient(45deg,#1A1500 0 6px,transparent 6px 12px);
       --dss-stripe-warn:repeating-linear-gradient(45deg,#3A1200 0 6px,transparent 6px 12px);
       --dss-stripe-red:repeating-linear-gradient(45deg,#FF4D2E 0 8px,#7A1F0E 8px 16px);
-      --dss-mono:"Rajdhani","Orbitron","Consolas","Courier New",monospace;
+      --dss-mono:"SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;   /* 2026-09-13：DSS 也并入思源黑体 */
       background:#000;
       border:1px solid var(--dss-line);
       color:var(--dss-txt);

@@ -50,7 +50,14 @@
       --stripe-solid:repeating-linear-gradient(45deg, #FF4D2E 0 8px, #7A1F0E 8px 16px);
 
       /* ── 等宽数字（战术数据一律等宽） ── */
-      --font-mono: "Rajdhani","Orbitron","Consolas","Courier New",monospace;
+      /* ── 字体：2026-09-13 起全站统一思源黑体（用户要求）──
+         除「标题层」（home.css 里 h1–h4/.planet-name/.news-float-title 等仍用 ZZZ-thick）
+         之外，正文/数据/标签一律思源黑体，不再混用等宽字体。
+         ⚠ --font-mono 这个名字保留，只是为了不动 17 处 var(--font-mono) 调用点，
+           它现在指向与正文相同的字体（语义已由「等宽」变为「数据字体」）。 */
+      --font-body: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
+      --font-title: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
+      --font-mono: var(--font-body);
 
       /* 间距刻度（统一草案，新样式一律取刻度值） */
       --sp-1: 4px;
