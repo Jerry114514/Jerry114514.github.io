@@ -264,6 +264,15 @@ main.container > .block > .block-head::before {
   line-height: 1.35;
 }
 main.container > .block > .block-head .block-title { font-size: 14px; color: var(--yellow); font-weight: 700; }
+/* 区块头右侧允许多个 meta（区块2 合并后有两个：玩家分布 + 影响力） */
+main.container > .block > .block-head .block-meta + .block-meta { margin-left: 10px; }
+
+/* 区块2（玩家分布 + 银河影响力）合并后：两段内容之间用一条硬分隔，避免糊成一块 */
+#block-players #impact-content {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
 
 /* ════════════════ ⑥ 重要指令 / 个人指令 ════════════════ */
 .mo-brief { font-size: 13px; line-height: 1.7; color: var(--text-dim); margin: 0 0 10px; }

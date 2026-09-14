@@ -5,19 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
-  <meta name="theme-color" content="#0B0E14" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913f">
-  <link rel="stylesheet" href="./css/home.css?v=20260913f">
+  <meta name="theme-color" content="#0A0A0A" />
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913g">
+  <link rel="stylesheet" href="./css/home.css?v=20260913g">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
-  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913f">
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913g">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
+    // ⚠ 2026-09-15 修复两个会让「整页图表加载失败」的坑：
+    //   ① cdnjs 上 Chart.js **4.4.7 不存在**（HEAD 返回 404），所以原来第 1 个源永远失败、白等一轮；
+    //   ② 本地兜底写成了绝对路径 '/js/libs/chart.umd.min.js' —— 本站部署在 /HD2-Galatic_war-Map/ 下，
+    //      绝对路径会指向域名根而 404，等于兜底链的最后一环是断的。
+    //   现在把**同源文件放第一位**（它已在仓库里、随 Pages 一起发布，不依赖任何外部 CDN），
+    //   CDN 只作为后备；版本统一为实际存在的 4.4.1。
     var CDN_SOURCES = [
-      'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js',
-      'https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
-      'https://cdn.jsdmirror.com/npm/chart.js@4.4.7/dist/chart.umd.min.js',
-      '/js/libs/chart.umd.min.js'
+      './js/libs/chart.umd.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
+      'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
+      'https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js'
     ];
     var idx = 0;
     function load() {
@@ -104,24 +110,19 @@
          DSS 民主空间站（重要指令下方）
          ============================================================ -->
     <!-- ============================================================
-         区块1.5：在线玩家分布
+         区块2：玩家分布与银河影响力
+         （2026-09-15 由原「在线玩家分布」+「玩家分布与银河影响力」两个区块合并）
+         两个容器仍各自由 renderPlayers / renderImpact 独立渲染，只共用一个区块头与序号
          ============================================================ -->
     <section class="block" id="block-players">
       <div class="block-head">
         <span class="block-emoji">👥</span>
-        <h2 class="block-title">在线玩家分布</h2>
+        <h2 class="block-title">玩家分布与银河影响力</h2>
         <span class="block-meta" id="players-meta"></span>
+        <span class="block-meta" id="impact-meta"></span>
       </div>
       <div id="players-content">
         <div class="loading">正在统计在线士兵…</div>
-      </div>
-    </section>
-
-    <section class="block" id="block-impact">
-      <div class="block-head">
-        <span class="block-emoji">👥</span>
-        <h2 class="block-title">玩家分布与银河影响力</h2>
-        <span class="block-meta" id="impact-meta"></span>
       </div>
       <div id="impact-content">
         <div class="loading">正在加载影响力数据…</div>
