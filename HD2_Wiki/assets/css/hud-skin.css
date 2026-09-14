@@ -1,0 +1,320 @@
+/* ============================================================
+   HD2 中文维基 · HUD 皮肤层（Diegetic Tactical HUD / Diesel Punk）
+   ------------------------------------------------------------
+   加载顺序：wiki-base.css → 各页 <style> → **本文件**（插在 </head> 前，最后一个）
+   与主站 `HD2-Galatic_war-Map/css/hud-skin.css` 同源同规则，只是选择器换成 wiki 侧。
+   12 个页面共 357 条页面级选择器，本层按**家族**统一覆盖，不逐条重写。
+   ⚠ 第①节用 !important 一次性压制历史写法；新增组件请直接写规范样式，不要依赖它。
+   ============================================================ */
+
+/* ════════════════ ① 反模式清零 ════════════════ */
+*, *::before, *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  text-shadow: none !important;
+}
+
+/* ════════════════ ② 基础与密度 ════════════════ */
+html { background: var(--bg-deep); }
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+/* 战术数据一律等宽 */
+.stat-item .v, .info-item .v, .side-card .field .v, .result-item .result-value,
+.sum-hp-n, .bar .val, .chart .cval, .ds-v, .part-count, .grade, .bonus,
+.wt-count, .nav-item .count, .calc-results .result-value { font-family: var(--font-mono); }
+
+/* ════════════════ ③ 面板 / 卡片家族 ════════════════
+   统一「铸铁块」：实心面板 + 1px 硬描边 + 2px 黄铜顶条（代替阴影分层） */
+.card, .wiki-card, .weapon-card, .strat-card, .enemy-card, .m-card,
+.variant-card, .faction-card, .ds-card, .side-card, .info-card, .panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--brass);
+}
+.card:hover, .wiki-card:hover, .weapon-card:hover, .strat-card:hover,
+.enemy-card:hover, .m-card:hover, .variant-card:hover {
+  background: var(--card-h, #171717);
+  border-color: var(--border-h);
+  border-top-color: var(--yellow);
+}
+/* 卡片内的徽标/头像容器：深色方块 */
+.card .icon, .weapon-icon, .m-icon, .title-block .t-icon, .detail-icon,
+.enemy-card-image, .img-big, .part-img {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+}
+.card .head, .card .footer, .strat-card .row1, .strat-card .row2,
+.strat-card .row3, .strat-card .row4 { border-color: var(--border); }
+.card .name, .weapon-card .name, .enemy-name, .m-name, .title-block .name,
+.sum-name, .variant-card .v-name { color: var(--text); }
+.card .name-en, .weapon-card .name-en, .enemy-name-en, .m-name-en,
+.title-block .name-en, .sum-en { color: var(--text-mute); font-family: var(--font-mono); }
+.card .desc, .card .meta, .variant-card .v-desc, .title-block .desc,
+.title-block .lore, .faction-card p { color: var(--text-dim); }
+
+/* 左侧色条（阵营/分类标识）保留颜色语义，但改成硬边 */
+.enemy-card .color-bar, .strat-card .color-bar, .title-block .color-bar,
+.weapon-card .cat-bar { width: 4px; }
+
+/* ════════════════ ④ 标签 / 徽章家族 ════════════════
+   原来全是 999px 胶囊，统一改方角 + 硬描边 + 等宽大写 */
+.tag, .cat-tag, .faction-tag, .mode-tag, .wp-tag, .enemy-faction-tag,
+.fatal-tag, .card .type-tag, .type-tag, .sum-hp,
+.tag-eagle, .tag-orbital, .tag-backpack, .tag-deployable, .tag-mission,
+.tag-ship, .tag-support, .tag-vehicle {
+  padding: 2px 7px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  color: var(--text-dim);
+}
+.tag { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.tag.v2 { background: var(--blue); color: #fff; border-color: var(--blue); }
+/* 分类色标签：只保留描边与文字着色，去掉彩色底 */
+.tag-eagle, .tag-orbital, .tag-backpack, .tag-deployable, .tag-mission,
+.tag-ship, .tag-support, .tag-vehicle,
+.tag-eagle, .mode-tag, .cat-tag { background: transparent; border-color: currentColor; color: var(--brass); }
+.faction-tag, .enemy-faction-tag { background: transparent; border-color: currentColor; }
+.fatal-tag { background: var(--stripe-warn); border-color: var(--warn); color: #FFB59E; }
+.ds-type, .ds-status, .mode-tag { background: transparent; border: 1px solid var(--line-2); color: var(--text-dim); }
+
+/* ════════════════ ⑤ 按钮（键帽式） ════════════════ */
+.btn, .draw-btn, .swap-btn, .wiki-card .btn, button#calcBtn, .toc-toggle, .scroll-hint {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--brass);
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.btn:hover, .draw-btn:hover, .swap-btn:hover, .wiki-card .btn:hover,
+button#calcBtn:hover, .toc-toggle:hover {
+  border-color: var(--yellow);
+  border-top-color: var(--yellow);
+  color: var(--yellow);
+  background: #1A1200;
+}
+.wiki-header .back {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brass);
+  color: var(--text-dim);
+}
+
+/* ════════════════ ⑥ 输入控件 ════════════════ */
+.wiki-search, .input-group input, .input-group select, .search {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brass);
+  color: var(--text);
+  outline: none;
+}
+.wiki-search:focus-within, .input-group input:focus, .input-group select:focus {
+  border-color: var(--yellow);
+  border-left-color: var(--yellow);
+}
+.wiki-search input { background: none; border: none; color: var(--text); outline: none; }
+.input-group label, .input-group .hint, .calc-desc { color: var(--text-mute); font-size: 0.74rem; }
+
+/* ════════════════ ⑦ 表格（表头硬线 + 行细线） ════════════════ */
+.info-table, .part-table, .stats-table, .section table { border-collapse: collapse; width: 100%; }
+.info-table th, .part-table th, .stats-table th, .section th {
+  background: var(--stripe);
+  border: 1px solid #33270A;
+  color: var(--yellow);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 9px;
+}
+.info-table td, .part-table td, .stats-table td, .section td {
+  border-bottom: 1px solid var(--line-2);
+  padding: 6px 9px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+.info-table td:first-child, .part-table td:first-child,
+.stats-table td:first-child, .section td:first-child { color: var(--text-mute); }
+.info-table tr:nth-child(even) td, .stats-table tr:nth-child(even) td,
+.section tr:nth-child(even) td { background: #0D0D0D; }
+.table-wrap::after { background: linear-gradient(90deg, transparent, var(--panel)) !important; }
+
+/* ════════════════ ⑧ 进度条 ════════════════ */
+.bar .track, .chart .ctrack, .sum-hp, .bar, .ds-cell .bar {
+  background: #1A1A1A;
+  border: 1px solid var(--line-2);
+  overflow: hidden;
+}
+.bar .fill, .chart .cfill, .ds-cell .fill { transition: width .4s ease; }
+.bar .label, .chart .clabel, .bar .val, .chart .cval { font-size: 0.72rem; color: var(--text-dim); }
+.sum-hp-l { color: var(--text-mute); font-size: 0.72rem; }
+
+/* ════════════════ ⑨ 页头 / 标题块 ════════════════ */
+.wiki-header {
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 20px 14px;
+  position: relative;
+}
+/* 页头下沿琥珀斜纹带（与主站导航同款） */
+.wiki-header::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--stripe); border-top: 1px solid #241B00; pointer-events: none;
+}
+.wiki-header h1 {
+  font-size: 1.35rem;
+  color: var(--text);
+  padding-left: 12px;
+  border-left: 4px solid var(--yellow);
+  letter-spacing: 0.04em;
+}
+.wiki-header p, .wiki-header .sub { color: var(--text-dim); font-size: 0.82rem; }
+.wiki-header .nav-links a {
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--brass);
+  background: var(--panel-2);
+  color: var(--text-dim);
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.wiki-header .nav-links a:hover { border-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+.breadcrumb { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-mute); }
+.breadcrumb a { color: var(--text-dim); }
+.breadcrumb a:hover { color: var(--yellow); }
+.title-block {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--brass);
+  padding: 14px 16px;
+}
+.title-block .meta, .title-block .unlock { color: var(--text-mute); font-size: 0.74rem; }
+
+/* ════════════════ ⑩ 导航 / 目录 / 侧栏 ════════════════ */
+.nav-grid, .wiki-grid, .weapon-grid, .strat-grid, .enemy-grid, .mission-grid,
+.group-grid, .stat-grid, .info-grid, .calc-grid, .ds-grid { gap: 10px; }
+
+.nav-item, .toc-item, .side-toc a, .side-link, .enemy-variant, .modal .mitem,
+.news-item, .result-item, .info-item, .stat-item, .ds-cell, .ds-attack, .prow {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-left: 2px solid transparent;
+  color: var(--text-dim);
+}
+.nav-item:hover, .toc-item:hover, .side-toc a:hover, .side-link:hover,
+.enemy-variant:hover, .modal .mitem:hover, .result-item.highlight {
+  background: #1A1200;
+  border-left-color: var(--yellow);
+  color: var(--text);
+}
+.toc-item.active, .side-toc a.active { border-left-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+.nav-item .icon { background: var(--panel); border: 1px solid var(--line-2); }
+.nav-item .desc, .side-sub, .side-src, .side-card .field .k { color: var(--text-mute); font-size: 0.74rem; }
+.nav-item .count { color: var(--yellow); }
+.toc-sidebar, .side { background: var(--panel); border: 1px solid var(--border); }
+.toc-sidebar .toc-title, .side-card h3, .panel h3, .group-title {
+  font-size: 0.78rem; color: var(--brass); letter-spacing: 0.12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--line-2); padding-bottom: 5px; margin-bottom: 6px;
+}
+.side-card .field { border-bottom: 1px solid var(--line-2); padding: 4px 0; }
+.side-card .field:last-child { border-bottom: none; }
+
+/* ════════════════ ⑪ 正文排版 ════════════════ */
+.section h2 {
+  font-size: 1.05rem; color: var(--yellow); letter-spacing: 0.06em;
+  padding-left: 10px; border-left: 4px solid var(--yellow); margin: 18px 0 8px;
+}
+.section h3 { font-size: 0.94rem; color: var(--brass); margin: 14px 0 6px; letter-spacing: 0.05em; }
+.section h4 { font-size: 0.86rem; color: var(--text-dim); margin: 10px 0 4px; }
+.section p, .section li { color: var(--text-dim); font-size: 0.86rem; line-height: 1.75; }
+.section strong, .prow strong { color: var(--text); }
+.section code, .formula code, .code-display {
+  background: var(--panel-2); border: 1px solid var(--line-2);
+  color: var(--yellow); font-family: var(--font-mono); padding: 1px 6px; font-size: 0.8rem;
+}
+.section pre {
+  background: var(--panel-2); border: 1px solid var(--line-2); border-left: 3px solid var(--brass);
+  padding: 10px 12px; overflow-x: auto;
+}
+.section pre code { background: none; border: none; padding: 0; }
+.section blockquote {
+  border-left: 3px solid var(--brass); background: var(--panel-2);
+  padding: 8px 12px; color: var(--text-dim);
+}
+.divider { border-top: 1px solid var(--line-2); }
+.formula { background: var(--panel-2); border: 1px solid var(--line-2); border-left: 3px solid var(--yellow); padding: 10px 12px; }
+.warning-block {
+  background: var(--stripe-warn); border: 1px solid #5A1F0A; border-left: 3px solid var(--warn);
+  color: #FFB59E; padding: 10px 12px;
+}
+.warning-block h4 { color: var(--warn); }
+.steps-list li::before { color: var(--yellow); font-family: var(--font-mono); }
+.steps-list li, .tips-list li, .features-list li { border-bottom: 1px solid var(--line-2); }
+.steps-list li .step-title { color: var(--text); }
+.steps-list li .step-sub { color: var(--text-mute); }
+
+/* 评级：保留色相，去掉发光，字重拉满 */
+.grade, .g-S, .g-A, .g-B, .g-C, .g-D { text-shadow: none !important; }
+.g-S { color: var(--yellow); }
+.g-A { color: var(--info); }
+.g-B { color: var(--ok); }
+.g-C { color: #6B7280; }
+.g-D { color: var(--warn); }
+.result-item.highlight .result-value { color: var(--yellow); }
+.bonus-pos, .pen-light { color: var(--ok); }
+.bonus-neg, .pen-heavy { color: var(--warn); }
+.bonus-zero, .pen-medium { color: var(--text-mute); }
+.hint, .tac-text, .muted, .trait, .traits { color: var(--text-mute); }
+
+/* ════════════════ ⑫ 弹层 / 遮罩 ════════════════ */
+.mask { background: rgba(0, 0, 0, .78); }
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--yellow);
+  padding: 14px 16px;
+}
+.modal .mhead { border-bottom: 1px solid var(--line-2); padding-bottom: 8px; }
+.modal .mtitle { color: var(--yellow); font-size: 0.9rem; letter-spacing: 0.08em; }
+.modal .mclose { color: var(--text-mute); border: 1px solid transparent; padding: 0 6px; }
+.modal .mclose:hover { color: var(--warn); border-color: var(--warn); }
+.modal .mlist { gap: 4px; }
+.modal .mstats { color: var(--text-mute); font-family: var(--font-mono); font-size: 0.72rem; }
+
+/* ════════════════ ⑬ 占位态 / 页脚 ════════════════ */
+.loading, .empty { color: var(--text-mute); font-size: 0.82rem; letter-spacing: 0.06em; }
+.loading::before { content: "▍ "; color: var(--yellow); }
+.empty::before { content: "— "; color: var(--line-2); }
+.wiki-footer { background: var(--panel-2); border-top: 1px solid var(--border); font-size: 0.74rem; }
+.wiki-footer a { color: var(--yellow); }
+
+/* 滚动条：方角 + 琥珀滑块 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #2A2A2A; }
+::-webkit-scrollbar-thumb:hover { background: var(--brass); }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+
+/* ════════════════ ⑭ 响应式密度 ════════════════ */
+@media (max-width: 1024px) {
+  .detail-layout, .calc-grid { gap: 12px; }
+}
+@media (max-width: 768px) {
+  body { font-size: 13.5px; }
+  .wiki-toolbar { padding: 8px 12px; }
+  .wiki-header { padding: 14px 12px 12px; }
+  .wiki-header h1 { font-size: 1.1rem; }
+  .section h2 { font-size: 1rem; }
+  .section p, .section li { font-size: 0.84rem; }
+  .nav-grid, .wiki-grid, .weapon-grid, .strat-grid, .enemy-grid { gap: 8px; }
+}

@@ -1,4 +1,7 @@
-/* wiki 公共基座 —— 2026-09 由 12 页内嵌 <style> 抽取（规则级精确匹配）；2026-09-11 P0 对齐统一色板并扩展刻度
+/* wiki 公共基座 —— 2026-09 由 12 页内嵌 <style> 抽取（规则级精确匹配）
+   ── 2026-09-13 换装：Diegetic Tactical HUD / Diesel Punk，与主站 tokens.css 同色板 ──
+   规则：零圆角 · 零阴影 · 零毛玻璃 · 强对比 · 高信息密度
+   参考基准 = 主站 `.dss-hud` 模块与 `HD2-Galatic_war-Map/css/hud-skin.css`
    页面专属样式仍在各页 <style>；本文件改动会波及全部 12 页，谨慎编辑
    ── 断点规范 ──：≤768px 手机 / ≤1024px 平板（新断点只允许这两档，变量无法用于 media query 故此处为约定）
    ── z 层级表 ──：悬浮 40 < 导航 50 < 遮罩 100 < 弹层 999，用变量勿拍数字 */
@@ -11,16 +14,37 @@ html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingF
 body { display: flex; flex-direction: column; }
 .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }
 .wiki-footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text-mute); font-size: 0.78rem; }
-.wiki-footer a { color: var(--blue); text-decoration: none; }
-.wiki-footer a:hover { color: var(--yellow); }
+.wiki-footer a { color: var(--yellow); text-decoration: none; }
+.wiki-footer a:hover { color: var(--yellow-2); }
 h1, h2, h3, h4, .wiki-header h1, .wiki-header p, .nav-item, .cat-tag, .faction-tag, .m-name, .name, .title-block .name, .card h1, .card h2, .toc-item, .breadcrumb a, .calc-container h3, .calc-results h4, .result-item.highlight .result-value {
   font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
 }
 :root {
-      --bg-deep: #0B0E14; --bg-mid: #141b33; --bg-card: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text-dim: #94a3b8;
-      --text-mute: #64748b; --yellow: #f5c518; --blue: #3b82f6;
-      --radius: 12px; --radius-s: 8px; --blur: 10px;
+      /* ── 底色：纯黑系（靠硬描边分层，不再靠半透明白 + 毛玻璃） ── */
+      --bg-deep: #0A0A0A; --bg-mid: #101010; --bg-card: #111111;
+      --panel: #111111; --panel-2: #0F0F0F;
+
+      /* ── 描边：一律不透明实色 ── */
+      --border: #1F1F1F; --line-2: #2A2A2A; --border-h: #3A2A00;
+
+      /* ── 文本：对比拉高 ── */
+      --text: #F2F2F2; --text-dim: #A8A8A8; --text-mute: #6E6E6E;
+
+      /* ── 强调：琥珀 + 黄铜（替代原来的柠檬黄） ── */
+      --yellow: #FFB000; --yellow-2: #FFC94A; --yellow-3: #8A5E00;
+      --brass: #C8862A; --blue: #3B82F6;
+
+      /* ── 状态色（与主站对齐） ── */
+      --ok: #1FA84A; --warn: #FF4D2E; --info: #5BA3D0;
+
+      /* ── 质感：零圆角 / 零模糊（变量保留是为了不动各页既有写法） ── */
+      --radius: 0; --radius-s: 0; --blur: none;
+      --stripe: repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);
+      --stripe-warn: repeating-linear-gradient(45deg, rgba(255,77,46,.22) 0 8px, transparent 8px 16px);
+      --font-mono: "Rajdhani","Orbitron","Consolas","Courier New",monospace;
+
+      /* 阵营色（保留不动，辨识度优先） */
+      --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
 
       /* 间距刻度（与主站 tokens.css 同值） */
       --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
@@ -29,32 +53,36 @@ h1, h2, h3, h4, .wiki-header h1, .wiki-header p, .nav-item, .cat-tag, .faction-t
       --z-float: 40; --z-nav: 50; --z-overlay: 100; --z-modal: 999;
     }
 
-/* ===== 统一筛选工具栏（P1 目录页组件；吸顶一行化：胶囊 + 搜索 + 计数） ===== */
+/* ===== 统一筛选工具栏（P1 目录页组件；吸顶一行化：方角键帽 + 搜索 + 计数） ===== */
 .wiki-toolbar { position: sticky; top: 0; z-index: var(--z-nav); width: 100%;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  max-width: 1200px; margin: 0 auto; padding: 12px 20px;
-  background: rgba(11,14,20,.88); backdrop-filter: blur(8px);
+  max-width: 1200px; margin: 0 auto; padding: 9px 20px;
+  background: var(--bg-deep);
   border-bottom: 1px solid var(--border); }
-.wiki-toolbar .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; max-width: none; margin: 0; padding: 0; }
+/* 工具栏下沿的琥珀斜纹带（与主站导航同款） */
+.wiki-toolbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;
+  background: var(--stripe); border-top: 1px solid #241B00; pointer-events: none; }
+.wiki-toolbar .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; max-width: none; margin: 0; padding: 0; }
 .wiki-toolbar .sub-filter { flex-basis: 100%; }
-.wiki-toolbar .wt-divider { width: 1px; height: 22px; background: var(--border); }
-.filter-bar button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px;
-  background: transparent; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-.filter-bar button:hover { border-color: var(--blue); color: var(--blue); }
-.filter-bar button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.wiki-toolbar .wt-divider { width: 1px; height: 22px; background: var(--line-2); }
+.filter-bar button { padding: 5px 12px; border: 1px solid var(--line-2); border-top: 2px solid var(--brass);
+  background: var(--panel-2); color: var(--text-dim); font-size: 0.78rem; cursor: pointer;
+  font-weight: 700; letter-spacing: .06em; transition: none; }
+.filter-bar button:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+.filter-bar button.active { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
 .wt-search { flex: 1 1 180px; min-width: 150px; display: flex; align-items: center; gap: 8px;
-  border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; }
+  border: 1px solid var(--line-2); border-left: 3px solid var(--brass); padding: 5px 12px; background: var(--panel-2); }
 .wt-search input { flex: 1; min-width: 0; background: none; border: none; outline: none;
-  color: var(--text); font-size: 0.85rem; }
+  color: var(--text); font-size: 0.84rem; }
 .wt-search input::placeholder { color: var(--text-mute); }
-.wt-count { color: var(--text-mute); font-size: 0.78rem; white-space: nowrap; }
+.wt-count { color: var(--text-mute); font-size: 0.76rem; white-space: nowrap; font-family: var(--font-mono); }
 
 /* ===== auto-fill 网格（目录页统一；容器必须 width:100%，窄容器随 --min-col 降列） ===== */
 .auto-fill-grid { display: grid; width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(var(--min-col, 300px), 1fr)); }
 
 /* ===== 骨架屏（加载态统一；.empty/.loading 仍由各页定义） ===== */
-.sk { height: 90px; border-radius: var(--radius);
-  background: linear-gradient(100deg, rgba(255,255,255,.04) 40%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 60%);
+.sk { height: 90px;
+  background: linear-gradient(100deg, #141414 40%, #1D1D1D 50%, #141414 60%);
   background-size: 200% 100%; animation: sk-shimmer 1.2s infinite; }
 @keyframes sk-shimmer { to { background-position: -200% 0; } }

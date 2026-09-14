@@ -1,0 +1,282 @@
+/* ============================================================
+   银河星图（galaxy-map-v2） · HUD 皮肤层
+   Diegetic Tactical HUD / Diesel Punk —— 与主站 hud-skin.css 同源同规则
+   ------------------------------------------------------------
+   加载顺序：`<style>`（本文件第 25–310 行的内联样式）→ maplibre-gl.css → **本文件**
+   星图的样式全部内联在页面里（284 行），本层插在其后，同特异度即可覆盖。
+   ⚠ 第①节用 !important 一次性压制历史写法；新增组件请直接写规范样式。
+   ============================================================ */
+
+/* ════════════════ ① 反模式清零 ════════════════ */
+*, *::before, *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  text-shadow: none !important;
+}
+
+/* ════════════════ ② 令牌：与主站对齐 ════════════════ */
+:root {
+  --bg-deep: #0A0A0A;
+  --bg-mid: #101010;
+  --panel: #111111;
+  --panel-2: #0F0F0F;
+  --border: #1F1F1F;
+  --border-h: #3A2A00;
+  --line-2: #2A2A2A;
+  --text: #F2F2F2;
+  --text-dim: #A8A8A8;
+  --text-mute: #6E6E6E;
+  --yellow: #FFB000;
+  --yellow-2: #FFC94A;
+  --brass: #C8862A;
+  --blue: #3B82F6;
+  --ok: #1FA84A;
+  --warn: #FF4D2E;
+  --radius: 0;
+  --radius-s: 0;
+  --blur: none;
+  --stripe: repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);
+  --font-mono: "Rajdhani","Orbitron","Consolas","Courier New",monospace;
+  /* 阵营色保留不动（辨识度优先） */
+  --c-humans: #5BA3D0; --c-terminids: #F5C518; --c-automaton: #D6806D; --c-illuminate: #CF64F8;
+}
+body { background: var(--bg-deep); color: var(--text); font-size: 14px; }
+
+/* 战术数据一律等宽 */
+header .stats, #tip .r span, #sector-card .librow b, #detail .cell .v,
+.pd-wiki .badge, .legend, #hits .hit .own, #sector-card .sub { font-family: var(--font-mono); }
+
+/* ════════════════ ③ 顶栏 ════════════════ */
+header {
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  padding: 8px 16px;
+}
+/* 顶栏下沿的琥珀斜纹带（与主站导航同款） */
+header::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;
+  background: var(--stripe); border-top: 1px solid #241B00; pointer-events: none; z-index: 21;
+}
+header h1 { color: var(--text); letter-spacing: .05em; padding-left: 10px; border-left: 4px solid var(--yellow); }
+.tag { background: var(--yellow); color: #000; border: 1px solid var(--yellow); padding: 2px 7px;
+  font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .66rem; }
+.tag.v2 { background: var(--blue); color: #fff; border-color: var(--blue); }
+header .stats { color: var(--text-mute); font-size: .72rem; }
+header .stats b { color: var(--text-dim); }
+header button, header .btn {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--brass);
+  color: var(--text-dim);
+  padding: 4px 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  font-size: .74rem;
+}
+header button:hover, header .btn:hover {
+  border-color: var(--yellow); border-top-color: var(--yellow);
+  color: var(--yellow); background: #1A1200;
+}
+body:not(.aside-collapsed) #aside-toggle { color: var(--yellow); border-color: var(--yellow); }
+
+/* ════════════════ ④ 载入遮罩 / 提示浮层 ════════════════ */
+#boot { background: var(--bg-deep); }
+/* 转圈改「扫描方框」：方角 + 只有顶边是琥珀 */
+#boot .ring {
+  width: 42px; height: 42px;
+  border: 2px solid var(--line-2);
+  border-top-color: var(--yellow);
+  animation: spin 1s linear infinite;
+}
+#boot .msg { color: var(--text-dim); }
+#boot .msg small { color: var(--text-mute); }
+#tac-empty {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--yellow);
+  color: var(--text-dim);
+  padding: 6px 14px;
+  font-size: .76rem;
+}
+#tip {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-top: 2px solid var(--yellow);
+  color: var(--text-dim);
+  padding: 8px 11px;
+}
+#tip .n { color: var(--yellow); }
+#tip .r { color: var(--text-mute); }
+#tip .r span { color: var(--text); }
+#tip .bar { height: 5px; background: #1A1A1A; border: 1px solid var(--line-2); }
+#tip .bar i { background: var(--yellow); }
+
+/* ════════════════ ⑤ 侧栏 ════════════════ */
+aside {
+  background: var(--panel-2);
+  border-left: 1px solid var(--border);
+  padding: 12px;
+  gap: 10px;
+}
+#aside-rail {
+  background: var(--panel);
+  border-left: 1px solid var(--line-2);
+}
+#aside-rail:hover { background: #1A1200; }
+#aside-rail:hover span { color: var(--yellow); }
+#aside-backdrop { background: rgba(0,0,0,.72); }
+#aside-toggle { background: var(--panel); border: 1px solid var(--line-2); border-top: 2px solid var(--brass); color: var(--text-dim); }
+
+/* 侧栏小节标题：复刻 DSS 小节标题（斜纹底 + 琥珀字 + 硬描边） */
+aside h2 {
+  font-size: .78rem;
+  color: var(--yellow);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: var(--stripe);
+  border: 1px solid #33270A;
+  border-left: 3px solid var(--yellow);
+  padding: 5px 9px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--brass);
+  padding: 10px 12px;
+}
+.search {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brass);
+  color: var(--text);
+  padding: 6px 9px;
+}
+.search:focus { border-color: var(--yellow); border-left-color: var(--yellow); }
+
+/* 筛选 chip：方角 + 硬描边 */
+.chip {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  color: var(--text-dim);
+  padding: 3px 10px;
+  font-size: .72rem;
+}
+.chip:hover { border-color: var(--brass); color: var(--text); }
+.chip.on { border-color: var(--yellow); background: #1A1200; color: var(--yellow); font-weight: 700; }
+.chip .dot { width: 7px; height: 7px; }
+.legend { color: var(--text-dim); font-size: .73rem; }
+.legend i { width: 9px; height: 9px; }
+.muted { color: var(--text-mute); }
+
+/* ════════════════ ⑥ 星区信息卡（悬停星球） ════════════════ */
+#sector-card {
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--yellow);
+  padding: 9px 12px;
+}
+#sector-card .sec-name { color: var(--text); }
+#sector-card .librow { color: var(--text-dim); }
+#sector-card .librow b { color: var(--text); }
+#sector-card .bar { height: 6px; background: rgba(255,77,46,.55); border: 1px solid var(--line-2); }
+#sector-card .bar i { background: var(--c-humans); }
+#sector-card .sub { color: var(--text-mute); }
+#sector-card .enemy-chip {
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,.05);
+  padding: 2px 6px;
+  font-size: .66rem;
+}
+#sector-card .enemy-chip .dot { width: 6px; height: 6px; }
+
+/* ════════════════ ⑦ 效果图标浮层 ════════════════ */
+.fx-i {
+  background: rgba(10,10,10,.92);
+  border: 1px solid var(--line-2);
+}
+.fx-i:hover { border-color: var(--yellow); }
+.fx-i img { border-radius: 0; }
+.fx-more {
+  background: rgba(10,10,10,.92);
+  border: 1px solid var(--line-2);
+  color: var(--text-dim);
+}
+
+/* ════════════════ ⑧ 详情面板（右栏下半） ════════════════ */
+#detail .kv { gap: 6px; }
+#detail .cell {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--line-2);
+  padding: 5px 8px;
+}
+#detail .cell .k { color: var(--text-mute); font-size: .66rem; letter-spacing: .06em; }
+#detail .cell .v { color: var(--text); }
+#detail .tac {
+  border: 1px solid var(--blue);
+  background: rgba(59,130,246,.10);
+  color: var(--blue);
+  padding: 2px 8px;
+  font-size: .7rem;
+}
+#detail .tacTxt { color: var(--text-dim); }
+#detail .var-wrap { border-top: 1px solid var(--line-2); }
+#detail .var-title { color: var(--text-mute); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+#detail .var-chip {
+  border: 1px solid var(--line-2);
+  border-left: 2px solid var(--brass);
+  background: var(--panel-2);
+  color: var(--text-dim);
+  padding: 2px 7px;
+  font-size: .68rem;
+}
+#detail .var-chip.neg {
+  border-color: var(--warn); border-left-color: var(--warn);
+  background: rgba(255,77,46,.09); color: var(--warn); font-weight: 600;
+}
+
+/* 图鉴链接行 */
+.pd-wiki {
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brass);
+  background: var(--panel-2);
+  color: var(--text-dim);
+  padding: 6px 9px;
+}
+.pd-wiki:hover { border-color: currentColor; border-left-color: currentColor; background: #1A1200; }
+.pd-wiki .badge {
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,.05);
+  padding: 1px 7px;
+  font-size: .68rem;
+}
+.pd-wiki.strain { color: var(--yellow); }
+.pd-wiki.faction { color: var(--c-illuminate); }
+.pd-wiki.humans { color: var(--c-humans); }
+
+/* 搜索命中列表 */
+#hits .hit { padding: 4px 8px; border-left: 2px solid transparent; font-size: .74rem; color: var(--text-dim); }
+#hits .hit:hover { background: #1A1200; border-left-color: var(--yellow); color: var(--text); }
+#hits .hit .dot { width: 7px; height: 7px; }
+#hits .hit .own { color: var(--text-mute); }
+
+/* ════════════════ ⑨ 滚动条 ════════════════ */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #2A2A2A; }
+::-webkit-scrollbar-thumb:hover { background: var(--brass); }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+
+/* ════════════════ ⑩ 移动端密度 ════════════════ */
+@media (max-width: 900px) {
+  aside { width: min(84vw, 300px); background: var(--panel); border-left: 1px solid var(--line-2); }
+  header h1 { font-size: .88rem; }
+}
+@media (max-width: 767px) {
+  header { padding: 7px 10px; }
+  header h1 { font-size: .82rem; padding-left: 8px; border-left-width: 3px; }
+  #tip { font-size: .7rem; }
+  #sector-card { border-top-width: 2px; }
+}
