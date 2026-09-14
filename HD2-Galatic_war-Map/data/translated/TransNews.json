@@ -1,6 +1,20 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "title": "MAJOR ORDER",
+  "original": "Decommission the targeted quantity of Automaton Troopers, by any means necessary, to prevent their use in posing as voters.",
+  "translated": "以任何必要手段，消灭指定数量的机器人步兵，防止其冒充选民。",
+  "translated_at": "2026-09-14T16:37:16Z"
+ },
  "items": [
+  {
+   "id": 3922,
+   "original": "NEW MAJOR ORDER\n\nEvidence of an even more abhorrent Cyborg plot to manipulate the upcoming Quarter-term elections has been discovered: to create androids, disguised as Super Earth citizens, to infiltrate voting centers.\n\nThe Helldivers are ordered to immediately deploy to destroy 200,000,000 Automaton Troopers, depleting their stock of potential infiltrators.",
+   "translated": "新重要指令\n\n已发现生化人更为可憎的阴谋，其意图操纵即将到来的季度选举：制造伪装成超级地球公民的仿生人，渗透投票中心。\n\n绝地潜兵奉命立即部署，消灭200,000,000名机器人步兵，耗尽其后备渗透单位。",
+   "published_at": "2026-09-14T15:22:49Z",
+   "translated_at": "2026-09-14T16:37:15Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3920,
    "original": "MAJOR ORDER FAILED\n\nThe Helldivers recaptured CHARBAL-VII, by the Cyborgs retained hold of ZZANIAH PRIME. \n\nMassive server banks were discovered in the captured Megafactories. Cybersecurity specialists have confirmed that these server banks could be used in the conduct of cyberattacks—confirming the enemy's intent beyond doubt.",
@@ -81,15 +95,6 @@
    "translated_at": "2026-09-09T17:10:58Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3911,
-   "original": "NEW MAJOR ORDER\n\nRecent sabotages of the TCS+ by dissidents have threatened the populace and inflamed public outrage. \n\nThe Helldivers are ordered to liberate BORE ROCK and NIVEL 43, Terminid-held planets adjacent to those sabotaged by dissidents, so that the TCS+ can be built on those planets as well. In so doing, the impregnable barrier of the TCS+ will be made twice as impregnable as before.",
-   "translated": "新重要指令\n\n异议分子近期对TCS+的破坏活动威胁到了民众安全，激起了公愤。\n\n绝地潜兵奉命解放博尔岩和尼维尔43——这两颗被终结族占领的星球紧邻遭异议分子破坏的星球，以便TCS+也能在这些星球上建设。如此一来，坚不可摧的TCS+屏障将变得比以往更加坚不可摧。",
-   "published_at": "2026-09-04T12:56:39Z",
-   "translated_at": "2026-09-09T17:10:58Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -99,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-14T10:41:32Z",
+  "computed_at": "2026-09-14T16:37:16Z",
   "planet_index": null
  }
 }
