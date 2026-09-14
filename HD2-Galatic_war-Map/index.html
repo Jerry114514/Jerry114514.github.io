@@ -1350,7 +1350,7 @@ function renderPlayers(data) {
       if (!it.isActive && !it.isCooldown) classes.push("fund");
       const pill = it.isCooldown ? `<span class="dss-pill">[ 冷却中 ]</span>` : "";
       const stripe = (it.isActive && it.activeDeadline != null)
-        ? `<div class="strip">${cdSpan(it.activeDeadline, "cn", "就位倒计时：")}</div>` : "";
+        ? `<div class="strip">${cdSpan(it.activeDeadline, "cn", "可用时间：")}</div>` : "";
       const right = `<span class="pct">${it.isActive ? "100%" : Math.round(it.barPct) + "%"}</span>`;
       const bar = `<div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${it.barPct.toFixed(1)}%"></div></div>`;
       return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button" aria-label="查看 ${esc(it.cnName)} 详情">
@@ -1392,7 +1392,7 @@ function renderPlayers(data) {
     const cardData = items.map(it => {
       // 底部状态条文案：一律包一层 <span>（.dss-count span 的样式依赖它）
       const cLine = it.isActive
-        ? (it.activeDeadline != null ? cdSpan(it.activeDeadline, "cn", "就位倒计时：") : "<span>行动已激活</span>")
+        ? (it.activeDeadline != null ? cdSpan(it.activeDeadline, "cn", "可用时间：") : "<span>行动已激活</span>")
         : (it.isCooldown
             ? ((it.cdDeadline != null && it.cdDeadline > Date.now()) ? cdSpan(it.cdDeadline, "cn", "冷却剩余：") : "<span>冷却中</span>")
             : (it.ta

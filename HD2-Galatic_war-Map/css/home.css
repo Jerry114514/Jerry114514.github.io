@@ -1199,7 +1199,7 @@
     .dss-hud .dss-buff .dss-bar-label{
       grid-column:1 / -1;font-size:10.5px;color:var(--dss-mute);margin-top:5px;
     }
-    /* 激活：底部条与右栏一致改用绿色（就位倒计时），不再用红橙警告色 */
+    /* 激活：底部条与右栏一致改用绿色（可用时间），不再用红橙警告色 */
     .dss-hud .dss-buff .strip{
       grid-column:1 / -1;margin:8px -11px 0;padding:5px 11px;text-align:center;
       background:#1FA84A;color:#EFFFF2;font-size:12px;letter-spacing:.06em;
@@ -1261,7 +1261,7 @@
     .dss-hud .dss-detail.active .dss-contrib .box{
       background:var(--dss-y);color:#000;border-color:var(--dss-y);
     }
-    /* 底部状态条：未激活＝红橙斜纹（募捐进度）；已激活＝绿色实心（就位倒计时） */
+    /* 底部状态条：未激活＝红橙斜纹（募捐进度）；已激活＝绿色实心（可用时间） */
     .dss-hud .dss-count{margin-top:12px;height:24px;background:var(--dss-stripe-red);display:grid;place-items:center}
     .dss-hud .dss-count span{
       font-family:var(--dss-mono);font-weight:700;font-size:12.5px;color:#fff;
