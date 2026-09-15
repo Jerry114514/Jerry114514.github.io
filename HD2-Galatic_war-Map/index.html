@@ -1812,11 +1812,15 @@ function renderPlayers(data) {
     const isLiberated = statusLabel === "已解放" || libPctRaw >= 99.9;
 
     // ---- ① 顶部：阵营 + 资源/玩家 ----
-    const fk = { Automaton: "auto", Terminids: "term", Illuminate: "illu", Humans: "hum" }[owner] || "hum";
-    const fIcon = pcIcon(PC_FACTION_ICON[owner], "pc-ficon");
+    // 入侵（防御战）星球：整张卡改用**入侵方**的阵营色与图标。
+    // 卡片色由 .f-* 切 --fc、图标 fill:var(--fc)，两者同源 —— 若只改色不改图标，
+    // 会得到「黄色的超级地球徽记」，看起来像 bug，故一并切到入侵方。
+    const cardFaction = isDefense ? (hostileFactionOf(p, camp) || owner) : owner;
+    const fk = { Automaton: "auto", Terminids: "term", Illuminate: "illu", Humans: "hum" }[cardFaction] || "hum";
+    const fIcon = pcIcon(PC_FACTION_ICON[cardFaction], "pc-ficon");
     const top = `<div class="pc-top">
       ${fIcon}
-      <span class="pc-fname">${esc(ownerCn(owner))}</span>
+      <span class="pc-fname">${esc(ownerCn(cardFaction))}</span>
       <div class="pc-res">
         <span class="item">${pcIcon("reinforce.svg", "pc-reinf")}<span class="num">${fmt(p.players)}</span></span>
       </div>
@@ -1905,7 +1909,7 @@ function renderPlayers(data) {
 
     return `<div class="planet-card f-${fk}" data-planet-index="${p.index}">
       ${top}${landmark}${head}
-      <p class="pc-desc">${desc}</p>
+      ${isLiberated ? "" : `<p class="pc-desc">${desc}</p>`}
       ${progress}${invasion}${traits}
       <div class="planet-detail-wrap" style="display:none">
         ${planetDetailHtml(p, starMap, statusLabel)}
