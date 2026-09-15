@@ -2094,7 +2094,7 @@ function bindUI(data, planets) {
   //   反代入 players=21608、impactMultiplier≈0.013、maxHealth=1.6e6 得 K≈32
   const LIB_RATE_K = 32;
   const PC_SNAP = {};              // {index:{t,lib}} 观测快照，供「实测」速率
-  let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null;
+  let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null, BIOME_FB = null;
 
   const libPct = (p) => (p && p.maxHealth > 0) ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
   const plCn   = (p) => PL_CN[String(p.name || "").toUpperCase()] || "";
@@ -2109,6 +2109,16 @@ function bindUI(data, planets) {
     const v = BIOME_IDX[biome];
     if (!v) return null;
     return typeof v === "string" ? v : (v.file || v.img || v.image || null);
+  }
+  // biome 名兜底：data.json 的 biome 只由 hd2dev 提供，它偶发失败（限流）时 273 颗星球会
+  // 全部变空字符串；tables/planet_biomes.json（随仓库提交）按星球英文名兜底，环境图照常显示。
+  async function biomeNameOf(p) {
+    if (p.biome) return p.biome;
+    if (BIOME_FB === null) {
+      try { BIOME_FB = await (await fetch("./tables/planet_biomes.json", { cache: "force-cache" })).json(); }
+      catch (_) { BIOME_FB = {}; }
+    }
+    return (BIOME_FB || {})[String(p.name || "").trim().toUpperCase()] || "";
   }
 
   // 解放速率（%/h）：优先实测（同会话两次观测差值），否则公式推演
@@ -2229,7 +2239,7 @@ function bindUI(data, planets) {
       if (alive() && svg) { const s = $("planet-card").querySelector(".ficon"); if (s) s.innerHTML = svg; }
     } catch (_) {}
     try {
-      const bimg = await biomeImage(p.biome);
+      const bimg = await biomeImage(await biomeNameOf(p));
       if (alive()) {
         const s = $("planet-card").querySelector("#pc-biome");
         if (s) s.innerHTML = bimg ? `<img src="./assets/biomes/${esc(bimg)}" alt="${esc(p.biome || "")}" loading="lazy">`

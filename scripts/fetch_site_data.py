@@ -92,6 +92,27 @@ def name_of_index(idx, fallback):
     return n if n else fallback
 
 
+def _load_biome_by_name():
+    """读取 tables/planet_biomes.json，返回 {星球英文名(大写) -> biome 名}；读不到返回 {}。
+
+    背景同 planet_index.json：biome 只由 hd2dev 提供，它偶发失败（限流）时 273 颗星球的
+    biome 会**全部**退化成空字符串，前端所有环境图一起消失（2026-09 实际发生）。
+    本表随仓库提交，失败时按星球名兜底，避免单个上游抖动导致环境图全灭。"""
+    try:
+        p = os.path.join(_TABLES_DIR, "planet_biomes.json")
+        with open(p, encoding="utf-8") as f:
+            raw = json.load(f)
+        out = {str(k).strip().upper(): str(v).strip() for k, v in raw.items() if v}
+        print(f"  [OK] 本地 biome 对照表 planet_biomes.json（{len(out)} 条）")
+        return out
+    except Exception as e:
+        print(f"  [FAIL] 本地 biome 对照表: {type(e).__name__}: {e}")
+        return {}
+
+
+BIOME_BY_NAME = _load_biome_by_name()
+
+
 def fetch_json(url, headers=None, timeout=20):
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -654,18 +675,24 @@ def main():
     # hd2dev 直接给 {"name": "Desert Cliffs", ...}，故一律以 hd2dev 为准。
     # 前端据此选环境图（assets/biomes/，映射见该目录 index.json）。
     biome_n = 0
+    biome_fb = 0
     for p in base.get("planets") or []:
         h = hd2dev_map.get(p.get("index"))
         bn = biome_name_of(h) if h else ""
+        if not bn:                                  # hd2dev 失败/缺字段 → 本地表按星球名兜底
+            bn = BIOME_BY_NAME.get(str(p.get("name") or "").strip().upper(), "")
+            if bn:
+                biome_fb += 1
         if bn:
             p["biome"] = bn
             biome_n += 1
         else:
             p.setdefault("biome", "")
     if biome_n:
-        print(f"  [OK] biome 字段补全 {biome_n} 颗星球")
+        extra = f"（其中 {biome_fb} 颗来自本地对照表兜底）" if biome_fb else ""
+        print(f"  [OK] biome 字段补全 {biome_n} 颗星球{extra}")
     else:
-        print("  [WARN] biome 未取到（hd2dev 失败？）—— 前端将回退无环境图")
+        print("  [WARN] biome 未取到（hd2dev 失败，且本地对照表也没命中）—— 前端将回退无环境图")
 
     # campaigns 星球名/sector 用 hd2dev 补（独立循环），同样套用本地兜底
     for c in base.get("campaigns") or []:

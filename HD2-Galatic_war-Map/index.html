@@ -1664,6 +1664,10 @@ function renderPlayers(data) {
   const PC_CAMPAIGN_ICON = { liberation: "liberation_campaign.svg", defense: "defense_campaign.svg" };
   // 环境图：API biome 名 -> 本地文件名（assets/biomes/index.json 由抓取脚本生成）
   let PC_BIOME_INDEX = null;
+  // biome 兜底表：tables/planet_biomes.json（星球英文名 -> biome 名，随仓库提交）。
+  // 背景：biome 只由 hd2dev 提供，它偶发失败（限流）时 data.json 里 273 颗星球的 biome
+  // 会**全部**变空字符串，前端所有环境图一起消失（2026-09 实际发生）。有这张表即可照常出图。
+  let PC_BIOME_FALLBACK = null;
   // 图标缓存版本：assets/ 下图标内容改动后必须 +1
   // （下面的 fetch 用 force-cache，不换 URL 的话旧图标会被浏览器钉在缓存里 —— 改了也看不到）
   const PC_ICON_VER = "2";
@@ -1676,6 +1680,8 @@ function renderPlayers(data) {
     ];
     try { PC_BIOME_INDEX = await (await fetch("./assets/biomes/index.json", { cache: "force-cache" })).json(); }
     catch (_) { PC_BIOME_INDEX = {}; }
+    try { PC_BIOME_FALLBACK = await (await fetch("./tables/planet_biomes.json", { cache: "force-cache" })).json(); }
+    catch (_) { PC_BIOME_FALLBACK = {}; }
     await Promise.all(files.map(async (f) => {
       try {
         const dir = /reinforce|campaign/.test(f) ? "./assets/ui-icons/" : "./assets/faction-icons/";
@@ -1700,6 +1706,9 @@ function renderPlayers(data) {
     const f = PC_BIOME_INDEX[biome];
     return f ? "./assets/biomes/" + f : null;
   };
+  // 环境图取法：优先 data.json 的 biome；缺失时按星球英文名查兜底表（见 PC_BIOME_FALLBACK 注释）
+  const pcBiomeOf = (p, nameEn) => pcBiomeImg(p.biome)
+    || pcBiomeImg((PC_BIOME_FALLBACK || {})[String(nameEn || "").trim().toUpperCase()]);
   // 抵抗强度四档配色（阈值由用户给定：低 ≤1.99 / 中 2–2.99 / 高 3–3.99 / 极高 ≥4）
   function resTier(pct) {
     if (!(pct > 0)) return { cls: "dim", key: "none" };
@@ -1788,9 +1797,14 @@ function renderPlayers(data) {
     }
     const paceTxt = pace != null ? pace.toFixed(3) + "%/h" : "--";
     const speedTxt = aR != null ? Number(aR).toFixed(3) + "%/h" : "--";
+    // ⚠ P0 易错点（已多次踩）：防御战双进度条的**顺序固定为上=超级地球、下=入侵方**，
+    //   且超级地球那条的色条**必须保持蓝色**。
+    //   注意 pcRaceRow 第三参传 null 并不是"默认色"——那是**不写行内 --fc**，会继承卡片的 --fc；
+    //   而入侵卡片现在把 --fc 切成了入侵方色，于是超级地球的条会被连带染色（实际踩过）。
+    //   故这里显式传 PC_FACTION_VARS.Humans，让该行恒为超级地球蓝，与卡片外框色解耦。
     return `<div class="pc-race">
+      ${pcRaceRow("超级地球", def, PC_FACTION_VARS.Humans)}
       ${pcRaceRow(ownerCn(atkF) || atkF || "敌方", atk, PC_FACTION_VARS[atkF] || PC_FACTION_VARS.Automaton)}
-      ${pcRaceRow("超级地球", def, null)}
       <div class="pc-stats">
         <span class="k">进攻 ${speedTxt} · 防守 ${paceTxt}</span>
         <span class="r"><span class="k">战况</span><span class="v ${cls}">${esc(st)}</span></span>
@@ -1827,7 +1841,7 @@ function renderPlayers(data) {
     </div>`;
 
     // ---- ② 环境图（API biome -> 本地缓存） ----
-    const bImg = pcBiomeImg(p.biome);
+    const bImg = pcBiomeOf(p, name.en);
     const landmark = bImg
       ? `<div class="pc-landmark"><img src="${esc(bImg)}" alt="${esc(p.biome || "")}" decoding="async"></div>`
       : `<div class="pc-landmark pc-nobiome"></div>`;
