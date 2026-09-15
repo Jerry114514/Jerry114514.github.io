@@ -2339,10 +2339,12 @@ function renderPlayers(data) {
 
     const html = sorted.map(cn => {
       const list = groups[cn].sort((a, b) => a.name.localeCompare(b.name));
-      // 英文星区名只在同组内唯一一致时才显示 —— data.json 的 sector 不可信，
-      // 组内混着多个英文名还硬显示一个，会和中文名自相矛盾
+      // 英文星区名只在「该组不是来自写死表」且组内唯一一致时才显示 ——
+      // data.json 的 sector 与用户对照表是两套命名（例：对照表叫「盖勒特」，数据里写 ANGELS VENTURE），
+      // 中文名旁边挂一个对不上的英文只会再造一次「乱了」。
       const ens = [...new Set(list.map(x => (x.sector || "").toUpperCase()).filter(Boolean))];
-      const enLabel = ens.length === 1 ? ens[0] : "";
+      const fromTable = list.some(x => SECTOR_MAP[String(x.name || "").toUpperCase()]);
+      const enLabel = (fromTable || ens.length !== 1) ? "" : ens[0];
       const cards = list.map(p => {
         const owner = p.currentOwner || "Unknown";
         const isHuman = owner === "Humans";
