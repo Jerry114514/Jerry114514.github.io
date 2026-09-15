@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>敌人图鉴 - 绝地潜兵2 中文维基</title>
-  <meta name="description" content="绝地潜兵2 敌人图鉴 - 终结族、机器人、光能族" />
+  <meta name="description" content="绝地潜兵2 敌人图鉴 - 终结族、机器人、光能族、超级地球及其变种" />
   <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
   <style>
 /* 页面专属变量（核心 10 变量见 assets/css/wiki-base.css） */
@@ -50,24 +50,104 @@
 
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
 
-    .enemy-group { grid-column: 1 / -1; margin-bottom: 8px; }
-
-    .group-title { font-size: 0.95rem; color: var(--yellow); font-weight: 600; margin: 14px 0 8px; padding-left: 4px; border-left: 3px solid var(--yellow); padding-left: 10px; }
-
     .group-grid { display: grid; width: 100%; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
 
 
+    /* ════════════════════════════════════════════════════════════
+       2026-09-15 结构重构：参考 helldivers.wiki.gg/wiki/Factions 的目录结构
+       阵营（h2，编号 1/2/3…）→ 亚阵营/变种（h3，编号 1.1/1.2…）→ 卡片网格
+       ════════════════════════════════════════════════════════════ */
 
+    /* ── 目录（Contents）── */
+    .toc {
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--yellow);
+      background: var(--panel, #111);
+      margin: 0 0 18px;
+    }
+    .toc-head {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12.5px; font-weight: 700; color: var(--yellow);
+      letter-spacing: .12em; text-transform: uppercase;
+      background: var(--stripe, repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px));
+      border-bottom: 1px solid var(--border);
+      padding: 6px 10px;
+    }
+    .toc-head .toc-hint { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-mute); text-transform: none; letter-spacing: 0; }
+    .toc-body { padding: 8px 10px 10px; columns: 2; column-gap: 24px; }
+    .toc-l1 { break-inside: avoid; margin: 0 0 6px; }
+    .toc-l1 > a {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      text-decoration: none; padding: 3px 6px;
+      border-left: 3px solid var(--toc-color, var(--brass, #C8862A));
+      background: #0F0F0F;
+    }
+    .toc-l1 > a:hover { background: #1A1200; color: var(--yellow); }
+    .toc-num { font-family: var(--font-mono); color: var(--toc-color, var(--brass, #C8862A)); min-width: 18px; }
+    .toc-en { color: var(--text-mute); font-size: 11px; font-weight: 400; }
+    .toc-cnt { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-mute); }
+    .toc-sub { list-style: none; margin: 2px 0 6px; padding: 0 0 0 18px; }
+    .toc-sub li { margin: 1px 0; }
+    .toc-sub a {
+      display: flex; align-items: baseline; gap: 7px;
+      font-size: 12px; color: var(--text-dim); text-decoration: none; padding: 1px 6px;
+      border-left: 2px solid transparent;
+    }
+    .toc-sub a:hover { color: var(--yellow); border-left-color: var(--yellow); background: #141000; }
+    .toc-sub .toc-num { min-width: 26px; font-size: 11px; }
+
+    /* ── 阵营区块（一级）── */
+    .fac-sec { margin: 0 0 22px; scroll-margin-top: 64px; }
+    .fac-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 15px; font-weight: 700; color: var(--yellow);
+      letter-spacing: .06em;
+      background: var(--stripe, repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px));
+      border: 1px solid #33270A;
+      border-left: 4px solid var(--fac-color, var(--yellow));
+      padding: 7px 11px; margin: 0 0 10px;
+    }
+    .fac-num {
+      font-family: var(--font-mono); font-weight: 700; font-size: 12px;
+      background: var(--fac-color, var(--yellow)); color: #000;
+      padding: 2px 7px;
+    }
+    .fac-en { font-size: 12px; font-weight: 400; color: var(--text-mute); letter-spacing: .04em; }
+    .fac-cnt { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-mute); }
+
+    /* ── 变种 / 亚阵营（二级）── */
+    .strain-sec { margin: 0 0 14px; scroll-margin-top: 64px; }
+    .strain-title {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      border-bottom: 1px solid var(--line-2, #2A2A2A);
+      padding: 0 0 5px; margin: 14px 0 9px;
+    }
+    .strain-title::before { content: ""; width: 3px; height: 14px; background: var(--fac-color, var(--brass, #C8862A)); flex: 0 0 3px; }
+    .strain-num { font-family: var(--font-mono); font-size: 11.5px; color: var(--fac-color, var(--yellow)); min-width: 30px; }
+    .strain-en { font-size: 11.5px; font-weight: 400; color: var(--text-mute); }
+    .strain-cnt { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-mute); }
+    /* 基础兵种：不属于任何变种的单位 */
+    .base-title { color: var(--text-dim); }
+    .base-title::before { background: var(--line-2, #2A2A2A); }
+
+    @media (max-width: 768px) {
+      .toc-body { columns: 1; }
+      .group-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+      .enemy-card-image { height: 120px; }
+      .fac-title { font-size: 14px; padding: 6px 9px; }
+    }
   </style>
   <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
 </head>
 <body>
   <header class="wiki-header">
     <h1>🐛 敌人图鉴</h1>
-    <p>共 <span id="total-count">0</span> 种敌人 · 终结族 / 机器人 / 光能族</p>
+    <p>共 <span id="total-count">0</span> 种敌人 · 4 大阵营 · <span id="total-strain">0</span> 个变种</p>
     <a class="back" href="wiki.html">◀ 返回维基首页</a>
   </header>
 
@@ -88,16 +168,48 @@
     var curFaction = "all";
     var curStrain = "all";  // 变种筛选
     var curSearch = "";
-    var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族" };
-    var FACTION_COLOR = { terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF" };
+
+    /* ── 阵营：顺序与命名对齐 helldivers.wiki.gg/wiki/Factions ── */
+    var FACTION_ORDER = ["terminids", "automatons", "illuminate", "super_earth"];
+    var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
+    var FACTION_EN = { terminids: "Terminids", automatons: "Automatons", illuminate: "Illuminate", super_earth: "Super Earth" };
+    var FACTION_COLOR = { terminids: "#f59e0b", automatons: "#ef4444", illuminate: "#AA44FF", super_earth: "#3b82f6" };
+
+    /* ── 变种/亚阵营：中文名 + 展示顺序（顺序取自 wiki 的 Factions 页目录）── */
+    var STRAIN_CN = { "Predator Strain": "掠食变种", "Spore Burst Strain": "孢裂变种", "Rupture Strain": "爆裂变种",
+      "Jet Brigade": "喷气旅", "Incineration Corps": "炽灼部队", "Cyborg Legion": "生化人",
+      "Appropriators": "占领者", "Vote Snatchers": "窃票者", "Mindless Masses": "无脑群氓", "Invasion Fleet": "入侵舰队" };
+    var STRAIN_ORDER = {
+      terminids:  ["Predator Strain", "Spore Burst Strain", "Rupture Strain"],
+      automatons: ["Jet Brigade", "Incineration Corps", "Cyborg Legion"],
+      illuminate: ["Appropriators", "Vote Snatchers", "Mindless Masses", "Invasion Fleet"],
+      super_earth: []
+    };
+
+    function strainCn(s) { return STRAIN_CN[s] || s; }
+    function strainRank(fac, s) {
+      var i = (STRAIN_ORDER[fac] || []).indexOf(s);
+      return i < 0 ? 99 : i;
+    }
+    // 变种排序键：先按阵营顺序，再按该阵营内的变种顺序（与正文/目录一致）
+    function strainSortKey(fac, s) {
+      var fi = FACTION_ORDER.indexOf(fac);
+      return (fi < 0 ? 99 : fi) * 1000 + strainRank(fac, s);
+    }
+    // 绝对编号：阵营 1..4；变种 1.1、1.2…（顺序定义在 STRAIN_ORDER，取自 wiki Factions 页目录）
+    function facNo(fac) { var i = FACTION_ORDER.indexOf(fac); return i < 0 ? 9 : i + 1; }
+    function strainNo(fac, s) { var r = strainRank(fac, s); return r >= 99 ? "?" : r + 1; }
 
     async function loadEnemies() {
       try {
         var r = await fetch("./data/wiki/zh/enemies.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
-        enemies = d.enemies || [];
+        enemies = (d.enemies || []).filter(function(e) { return !e.is_strain_page; });  // 亚阵营占位记录不再作为单位显示
         document.getElementById("total-count").textContent = enemies.length;
+        var strains = {};
+        enemies.forEach(function(e) { if (e.strain) strains[e.strain] = 1; });
+        document.getElementById("total-strain").textContent = Object.keys(strains).length;
         renderFilters();
         renderStrainFilters();
         renderGrid();
@@ -111,12 +223,11 @@
       var bar = document.getElementById("filter-bar");
       var counts = {};
       enemies.forEach(function(e) { counts[e.faction] = (counts[e.faction] || 0) + 1; });
-      var cats = [
-        { id: "all", label: "全部 " + enemies.length },
-        { id: "terminids", label: "终结族 " + (counts.terminids||0) },
-        { id: "automatons", label: "机器人 " + (counts.automatons||0) },
-        { id: "illuminate", label: "光能族 " + (counts.illuminate||0) },
-      ];
+      var cats = [{ id: "all", label: "全部 " + enemies.length }];
+      FACTION_ORDER.forEach(function(f) {
+        if (!counts[f]) return;
+        cats.push({ id: f, label: FACTION_CN[f] + " " + counts[f] });
+      });
       bar.innerHTML = cats.map(function(c) {
         return '<button class="' + (c.id === curFaction ? "active" : "") + '" onclick="setFaction(\'' + c.id + '\')">' + c.label + '</button>';
       }).join("");
@@ -127,42 +238,116 @@
     function renderStrainFilters() {
       var bar = document.getElementById("strain-filter");
       if (!bar) return;
-      // 当前阵营下的变种（含基础单位=all）
+      // 当前阵营下出现过的变种，按展示顺序排列
       var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
-      var strains = {};
-      list.forEach(function(e) { if (e.strain) strains[e.strain] = true; });
-      var keys = Object.keys(strains).sort();
+      var seen = {};
+      list.forEach(function(e) { if (e.strain) seen[e.strain] = 1; });
+      var facOf = {};
+      list.forEach(function(e) { if (e.strain && !facOf[e.strain]) facOf[e.strain] = e.faction; });
+      var keys = Object.keys(seen).sort(function(a, b) {
+        return strainSortKey(facOf[a], a) - strainSortKey(facOf[b], b) || a.localeCompare(b);
+      });
       var html = '<button class="' + (curStrain === "all" ? "active" : "") + '" onclick="setStrain(\'all\')">全部</button>';
       keys.forEach(function(s) {
-        var cn = STRAIN_CN[s] || s;
-        html += '<button class="' + (curStrain === s ? "active" : "") + '" onclick="setStrain(\'' + s + '\')">' + cn + '</button>';
+        html += '<button class="' + (curStrain === s ? "active" : "") + '" onclick="setStrain(\'' + s + '\')">' + strainCn(s) + '</button>';
       });
       bar.innerHTML = html;
     }
 
     function setStrain(s) { curStrain = s; renderStrainFilters(); renderGrid(); }
 
+    /* 按「阵营 → 变种」构建树：基础单位（无 strain）单独一组，变种按 STRAIN_ORDER 排序 */
+    function buildTree(list) {
+      var tree = [];
+      FACTION_ORDER.forEach(function(fac) {
+        var facItems = list.filter(function(e) { return e.faction === fac; });
+        if (!facItems.length) return;
+        var base = facItems.filter(function(e) { return !e.strain; });
+        var seen = {};
+        facItems.forEach(function(e) { if (e.strain) seen[e.strain] = 1; });
+        var strains = Object.keys(seen).sort(function(a, b) {
+          return strainRank(fac, a) - strainRank(fac, b) || a.localeCompare(b);
+        }).map(function(s) {
+          return { key: s, cn: strainCn(s), items: facItems.filter(function(e) { return e.strain === s; }) };
+        });
+        tree.push({ fac: fac, cn: FACTION_CN[fac] || fac, en: FACTION_EN[fac] || fac,
+                    color: FACTION_COLOR[fac] || "#64748b", total: facItems.length, base: base, strains: strains });
+      });
+      return tree;
+    }
+
     function renderGrid() {
       var grid = document.getElementById("enemy-grid");
-      var list = curFaction === "all" ? enemies : enemies.filter(function(e) { return e.faction === curFaction; });
+      var list = enemies.slice();
+      if (curFaction !== "all") list = list.filter(function(e) { return e.faction === curFaction; });
       if (curStrain !== "all") list = list.filter(function(e) { return e.strain === curStrain; });
-      // 排除变种分类页（仅作筛选标签，不作为卡片）
-      list = list.filter(function(e) { return !e.is_strain_page; });
       if (curSearch) list = list.filter(function(e) { return (e.name + " " + (e.name_zh || "")).toLowerCase().indexOf(curSearch) >= 0; });
-      var rc = document.getElementById("result-count"); if (rc) rc.textContent = list.length + " / " + enemies.filter(function(e) { return !e.is_strain_page; }).length;
-      if (!list.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
-      var html = '<div class="enemy-group"><div class="group-grid">' + list.map(cardHtml).join("") + '</div></div>';
+
+      var rc = document.getElementById("result-count");
+      if (rc) rc.textContent = list.length + " / " + enemies.length;
+
+      var tree = buildTree(list);
+      if (!tree.length) { grid.innerHTML = '<div class="empty">没有匹配的敌人</div>'; return; }
+
+      var html = tocHtml(tree);
+      tree.forEach(function(f) {
+        // 编号取「在 FACTION_ORDER / STRAIN_ORDER 中的绝对位次」，筛选后编号也不变（可稳定引用，如「2.1 喷气旅」）
+        var n = facNo(f.fac);
+        html += '<section class="fac-sec" id="fac-' + f.fac + '" style="--fac-color:' + f.color + '">' +
+          '<h2 class="fac-title"><span class="fac-num">' + n + '</span>' + esc(f.cn) +
+          '<span class="fac-en">' + esc(f.en) + '</span>' +
+          '<span class="fac-cnt">' + f.total + ' 种</span></h2>';
+        // 只有存在变种时才需要「基础兵种」这个小标题，否则直接铺网格
+        var hasStrains = f.strains.length > 0;
+        if (f.base.length) {
+          html += hasStrains
+            ? '<div class="strain-sec"><h3 class="strain-title base-title">基础兵种<span class="strain-cnt">' + f.base.length + ' 种</span></h3>' + gridHtml(f.base) + '</div>'
+            : gridHtml(f.base);
+        }
+        f.strains.forEach(function(s) {
+          html += '<div class="strain-sec" id="strain-' + slug(s.key) + '">' +
+            '<h3 class="strain-title"><span class="strain-num">' + n + '.' + strainNo(f.fac, s.key) + '</span>' + esc(s.cn) +
+            '<span class="strain-en">' + esc(s.key) + '</span>' +
+            '<span class="strain-cnt">' + s.items.length + ' 种</span></h3>' +
+            gridHtml(s.items) + '</div>';
+        });
+        html += '</section>';
+      });
       grid.innerHTML = html;
     }
 
-    var STRAIN_CN = { "Predator Strain": "掠食变种", "Spore Burst Strain": "孢裂变种", "Rupture Strain": "爆裂变种",
-      "Jet Brigade": "喷气旅", "Incineration Corps": "炽灼部队", "Cyborg Legion": "生化人",
-      "Appropriators": "占领者", "Vote Snatchers": "窃票者", "Mindless Masses": "无脑群氓", "Invasion Fleet": "入侵舰队" };
+    function gridHtml(items) { return '<div class="group-grid">' + items.map(cardHtml).join("") + '</div>'; }
+
+    /* 目录（Contents）：与正文同样的 1 / 1.1 编号，点击跳锚点 */
+    function tocHtml(tree) {
+      var total = 0;
+      tree.forEach(function(f) { total += f.total; });
+      var h = '<nav class="toc" aria-label="目录"><div class="toc-head">目录 / Contents' +
+        '<span class="toc-hint">' + tree.length + ' 阵营 · ' + total + ' 种</span></div><div class="toc-body">';
+      tree.forEach(function(f) {
+        var n = facNo(f.fac);
+        h += '<div class="toc-l1" style="--toc-color:' + f.color + '">' +
+          '<a href="#fac-' + f.fac + '"><span class="toc-num">' + n + '</span>' + esc(f.cn) +
+          '<span class="toc-en">' + esc(f.en) + '</span><span class="toc-cnt">' + f.total + '</span></a>';
+        if (f.strains.length) {
+          h += '<ul class="toc-sub">';
+          f.strains.forEach(function(s) {
+            h += '<li><a href="#strain-' + slug(s.key) + '"><span class="toc-num">' + n + '.' + strainNo(f.fac, s.key) + '</span>' +
+              esc(s.cn) + '<span class="toc-cnt">' + s.items.length + '</span></a></li>';
+          });
+          h += '</ul>';
+        }
+        h += '</div>';
+      });
+      return h + '</div></nav>';
+    }
+
+    function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
     function cardHtml(e) {
       var color = FACTION_COLOR[e.faction] || "#64748b";
       var fcn = FACTION_CN[e.faction] || e.faction_label || "未知";
-      var tag = e.is_strain_page ? '<span class="enemy-category">变种分类</span>' : (e.category ? '<span class="enemy-category">' + esc(e.category_zh || e.category) + '</span>' : '');
+      var tag = e.category ? '<span class="enemy-category">' + esc(e.category_zh || e.category) + '</span>' : '';
       return '<a class="enemy-card" href="enemy.html?id=' + encodeURIComponent(e.id) + '">' +
         '<div class="color-bar" style="background:' + color + '"></div>' +
         '<div class="enemy-card-image">' + (e.image_thumb || e.image ?
