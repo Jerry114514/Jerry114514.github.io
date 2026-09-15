@@ -909,6 +909,7 @@ async function effectIconMarkup(file) {
 let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
+let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（tables/sector_map.json，写死）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
 const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
@@ -976,6 +977,13 @@ async function boot() {
       if (!SEC_CN[off.toUpperCase()] && SEC_CN[canonical.toUpperCase()]) SEC_CN[off.toUpperCase()] = SEC_CN[canonical.toUpperCase()];
     }
   } catch (_) { /* 中文映射缺失不影响运行 */ }
+  // 星区写死对照表（星球英文名 -> 中文星区），与主页同源：tables/sector_map.json。
+  // 为什么不能用 p.sector 直接分组：实测 273 颗里 152 颗为空、其余与用户对照表冲突，
+  // 直接分组会得到「未分区」和一个假星区列表。
+  try {
+    const smp = await (await fetch("./tables/sector_map.json?t=" + Date.now(), { cache: "no-store" })).json();
+    if (smp && typeof smp === "object" && !Array.isArray(smp)) SEC_BY_PLANET = smp;
+  } catch (_) { /* 缺表时退回 sector 字段与旧映射 */ }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
   (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
@@ -984,7 +992,8 @@ async function boot() {
   {
     const tmp = {};
     (data.planets || []).forEach(p => {
-      const s = p.sector || "UNKNOWN";
+      // 星区归属以写死对照表为准（见上方 SEC_BY_PLANET 注释）
+      const s = SEC_BY_PLANET[String(p.name || "").toUpperCase()] || p.sector || "UNKNOWN";
       (tmp[s] = tmp[s] || []).push(p);
     });
     SECTOR_IDX = {};
@@ -1007,8 +1016,9 @@ async function boot() {
         else if (v === best) tie = true;
       }
       if (tie) owner = null;
-      // 中文名在此解析：SEC_CN 已含别名回填；starmap 未收录的回退直译，再不行用英文原名
-      const cn0 = SEC_CN[name.toUpperCase()] || SECTOR_CN_FALLBACK[name.toUpperCase()] || "";
+      // 中文名在此解析：分组键若已是中文（写死对照表）直接用；否则查 SEC_CN / 内置兜底
+      const cn0 = /[\u4e00-\u9fff]/.test(name) ? name
+        : (SEC_CN[name.toUpperCase()] || SECTOR_CN_FALLBACK[name.toUpperCase()] || "");
       SECTOR_IDX[name] = {
         name, cn: (/[\u4e00-\u9fff]/.test(cn0) ? cn0 : name),
         planets: np, total,
