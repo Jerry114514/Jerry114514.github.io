@@ -332,6 +332,7 @@
   #planet-card .kind{font-family:var(--font-mono);font-size:.66rem;font-weight:700;
     color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}
   #planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}
+  #planet-card .eta.lose{color:#FF4D2E;font-weight:700}
   #planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}
   #planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}
   #planet-card .ficon svg,#planet-card .ficon img{width:100%;height:100%;display:block}
@@ -2183,7 +2184,10 @@ function bindUI(data, planets) {
     el.innerHTML =
       `<div class="hd"><span class="kind">${esc(kind)}</span>` +
         // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）
-        (eta != null ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>` : "") + `</div>` +
+        (eta != null
+          ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>`
+          : (r.v < 0 ? `<span class="eta lose">▼ 正在失守 ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : "")) +
+      `</div>` +
       `<div class="title"><span class="ficon"></span><span class="names">` +
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
         `<span class="en">${esc(p.name || "")}</span>` +
