@@ -333,6 +333,7 @@
     color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}
   #planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}
   #planet-card .eta.lose{color:#FF4D2E;font-weight:700}
+  #planet-card .kind.ok{color:#1FA84A;font-size:.7rem}
   #planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}
   #planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}
   #planet-card .ficon svg,#planet-card .ficon img{width:100%;height:100%;display:block}
@@ -2174,19 +2175,26 @@ function bindUI(data, planets) {
     const color = colorOf(owner);
     const lib = libPct(p);
     const camp = (data.campaigns || []).find(c => c.planet && c.planet.index === index);
-    const kind = camp ? (String(camp.campaignType).toLowerCase() === "defense" ? "入侵 · 防御战役" : "解放战役")
-                      : (p.attacking ? "遭受进攻" : "无战役");
+    // 超级地球持有的星球：其 health 恒为满血（见主页 index.html 中同类注释），
+    // 于是 (1-health/maxHealth) 会算出 0% —— 与「已解放」自相矛盾。
+    // 这类星球一律按「已解放」呈现：战争性质=✓ 已解放（绿）、进度 100%、不显示速率。
+    const humanOwned = String(p.currentOwner || "Humans").toLowerCase() === "humans";
+    const libShow = humanOwned ? 100 : lib;
+    const kind = humanOwned ? "✓ 已解放"
+      : (camp ? (String(camp.campaignType).toLowerCase() === "defense" ? "入侵 · 防御战役" : "解放战役")
+              : (p.attacking ? "遭受进攻" : "无战役"));
     const r = rateOf(p), eta = etaOf(p);
     const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
     const gross = grossOf(p);
     el.style.setProperty("--pc-color", color);
     el.innerHTML =
-      `<div class="hd"><span class="kind">${esc(kind)}</span>` +
-        // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）
-        (eta != null
+      `<div class="hd"><span class="kind${humanOwned ? " ok" : ""}">${esc(kind)}</span>` +
+        // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）；
+        // 已解放的星球不显示任何速率
+        (humanOwned ? "" : (eta != null
           ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>`
-          : (r.v < 0 ? `<span class="eta lose">▼ ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : "")) +
+          : (r.v < 0 ? `<span class="eta lose">▼ ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : ""))) +
       `</div>` +
       `<div class="title"><span class="ficon"></span><span class="names">` +
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
@@ -2195,10 +2203,11 @@ function bindUI(data, planets) {
       `</span></div>` +
       `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
       `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
-      `<div class="bar"><i style="width:${lib.toFixed(2)}%"></i><span class="mk" style="left:${lib.toFixed(2)}%"></span></div>` +
-      `<div class="lib"><b>${lib.toFixed(4)}%</b><span class="st">已解放</span>` +
+      `<div class="bar"><i style="width:${libShow.toFixed(2)}%"></i><span class="mk" style="left:${libShow.toFixed(2)}%"></span></div>` +
+      `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${humanOwned ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
+        (humanOwned ? "" :
         `<span class="rate" style="color:${r.v >= 0 ? "#1FA84A" : "#FF4D2E"}">` +
-        `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span></div>` +
+        `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span>`) + `</div>` +
       `<div class="stats">` +
         `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
         `<span class="st2">施加 <b>${gross.toFixed(3)}%</b>/h</span>` +
