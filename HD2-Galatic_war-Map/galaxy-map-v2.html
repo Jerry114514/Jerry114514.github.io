@@ -2186,7 +2186,7 @@ function bindUI(data, planets) {
         // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）
         (eta != null
           ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>`
-          : (r.v < 0 ? `<span class="eta lose">▼ 正在失守 ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : "")) +
+          : (r.v < 0 ? `<span class="eta lose">▼ ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : "")) +
       `</div>` +
       `<div class="title"><span class="ficon"></span><span class="names">` +
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
