@@ -2073,7 +2073,10 @@ function bindUI(data, planets) {
        · 实测：同一会话内两次观测的差值（最可靠）
        · 推演：影响力公式估算，仅用于显示，**不写入任何数据文件、不改动抓取管线**
      ============================================================ */
-  const LIB_RATE_K = 1.0;          // 速率推演常数（影响力→血量的折算系数）
+  // 推演常数：由 helldiverscompanion 同一星球的三个自洽数据反推 ——
+  //   施加 0.558%/h − 抵抗 0.31%/h ≈ 它显示的净速率 0.245%/h
+  //   反代入 players=21608、impactMultiplier≈0.013、maxHealth=1.6e6 得 K≈32
+  const LIB_RATE_K = 32;
   const PC_SNAP = {};              // {index:{t,lib}} 观测快照，供「实测」速率
   let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null;
 
@@ -2099,9 +2102,12 @@ function bindUI(data, planets) {
       const dt = (now - s.t) / 3600000, dv = lib - s.lib;
       if (dt > 0.001) return { v: dv / dt, m: "实测" };
     }
+    return { v: grossOf(p) - (p.resistance || 0), m: "推演" };
+  }
+  // 对该星球施加的影响力（总率，未扣抵抗），%/h
+  function grossOf(p) {
     const imp = (DATA && DATA.impactMultiplier) || 0;
-    const gross = p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
-    return { v: gross - (p.resistance || 0), m: "推演" };
+    return p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
   }
   // 预估解放时间：按当前净速率线性外推
   function etaOf(p) {
@@ -2154,7 +2160,7 @@ function bindUI(data, planets) {
     const r = rateOf(p), eta = etaOf(p);
     const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
-    const infl = ((DATA && DATA.impactMultiplier) || 0) * share * 100;   // 该星球承载的银河影响力份额
+    const gross = grossOf(p);                       // 施加影响力 %/h（推演）
     el.style.setProperty("--pc-color", color);
     const bimg = await biomeImage(p.biome);
     const buffs = (typeof fxOf === "function" ? fxOf(p) : []).slice(0, 10);
@@ -2180,7 +2186,7 @@ function bindUI(data, planets) {
         `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span></div>` +
       `<div class="stats">` +
         `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
-        `<span class="st2">影响力 <b>${infl.toFixed(3)}%</b></span>` +
+        `<span class="st2">施加 <b>${gross.toFixed(3)}%</b>/h</span>` +
         `<span class="st2">抵抗度 <b>${p.resistance != null ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
