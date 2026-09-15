@@ -2124,9 +2124,12 @@ function bindUI(data, planets) {
     return p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
   }
   // 预估解放时间：按当前净速率线性外推
+  const ETA_MAX_H = 720;          // 30 天：超过它就不显示（战役以天计，1800 天这种数字是噪声）
   function etaOf(p) {
     const r = rateOf(p), left = 100 - libPct(p);
-    return (r.v > 0.0005) ? left / r.v : null;
+    if (!(r.v > 0.0005)) return null;
+    const h = left / r.v;
+    return h <= ETA_MAX_H ? h : null;
   }
   function fmtHours(h) {
     if (h == null) return "—";
@@ -2179,7 +2182,8 @@ function bindUI(data, planets) {
     el.style.setProperty("--pc-color", color);
     el.innerHTML =
       `<div class="hd"><span class="kind">${esc(kind)}</span>` +
-        `<span class="eta">${eta != null ? "预估解放 " + fmtHours(eta) + " · " + r.m : "解放时间无法估算"}</span></div>` +
+        // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）
+        (eta != null ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>` : "") + `</div>` +
       `<div class="title"><span class="ficon"></span><span class="names">` +
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
         `<span class="en">${esc(p.name || "")}</span>` +
