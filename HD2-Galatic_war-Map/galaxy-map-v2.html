@@ -307,6 +307,83 @@
     #tac-empty{font-size:.7rem;left:10px;right:10px}
     #tip{min-width:0;width:206px;max-width:206px;font-size:.72rem;padding:7px 10px}
   }
+
+  /* ════════════════════════════════════════════════════════════
+     2026-09-15：点击星球 → 星球**正上方**信息卡（不再直接弹侧栏）
+                 再次点击 → 轮盘（星球详细信息 / DSS 效果）
+     参考 helldiverscompanion.com/#map 的交互与信息组织
+     ════════════════════════════════════════════════════════════ */
+  #planet-card{
+    position:absolute;z-index:18;display:none;width:322px;
+    background:var(--panel);border:1px solid var(--line-2);
+    border-top:3px solid var(--pc-color,var(--yellow));
+    cursor:pointer;
+  }
+  #planet-card.on{display:block}
+  #planet-card::after{                       /* 指向星球的小三角 */
+    content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);
+    width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;
+    border-top:7px solid var(--pc-color,var(--yellow));
+  }
+  #planet-card .hd{
+    display:flex;align-items:center;gap:8px;padding:4px 9px;
+    background:var(--stripe);border-bottom:1px solid #33270A;
+  }
+  #planet-card .kind{font-family:var(--font-mono);font-size:.66rem;font-weight:700;
+    color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}
+  #planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}
+  #planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}
+  #planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}
+  #planet-card .ficon svg,#planet-card .ficon img{width:100%;height:100%;display:block}
+  #planet-card .names{min-width:0;line-height:1.25}
+  #planet-card .nm{display:block;font-family:"ZZZ-thick","SourceHanSans",sans-serif;
+    font-size:.94rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #planet-card .en{display:block;font-family:var(--font-mono);font-size:.62rem;color:var(--text-mute);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #planet-card .sec{display:block;font-size:.66rem;color:var(--text-dim);margin-top:2px}
+  #planet-card .biome{position:relative;height:72px;overflow:hidden;
+    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:#0D0D0D}
+  #planet-card .biome img{width:100%;height:100%;object-fit:cover;display:block}
+  #planet-card .biome .noimg{display:grid;place-items:center;height:100%;font-size:.66rem;color:var(--text-mute)}
+  #planet-card .buffs{display:flex;flex-wrap:wrap;gap:3px;padding:4px 9px;background:#0B0B0B;min-height:24px;align-items:center}
+  #planet-card .bi{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--line-2);
+    background:#141414;display:grid;place-items:center}
+  #planet-card .bi svg,#planet-card .bi img{width:14px;height:14px;display:block}
+  #planet-card .bar{position:relative;height:11px;margin:8px 9px 0;background:#1A1A1A;
+    border:1px solid var(--line-2);overflow:hidden}
+  #planet-card .bar i{display:block;height:100%;background:var(--pc-color,var(--yellow))}
+  #planet-card .bar .mk{position:absolute;top:-2px;width:2px;height:15px;background:#fff;opacity:.85}
+  #planet-card .lib{display:flex;align-items:baseline;gap:8px;padding:5px 9px 0}
+  #planet-card .lib b{font-family:var(--font-mono);font-size:1rem;color:var(--text)}
+  #planet-card .lib .st{font-size:.68rem;color:var(--text-dim)}
+  #planet-card .rate{margin-left:auto;font-family:var(--font-mono);font-size:.74rem;font-weight:700}
+  #planet-card .rate .m{font-size:.6rem;font-weight:400;color:var(--text-mute);margin-left:3px}
+  #planet-card .stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;
+    padding:6px 9px;margin-top:6px;border-top:1px solid var(--line-2)}
+  #planet-card .st2{font-size:.68rem;color:var(--text-mute);white-space:nowrap}
+  #planet-card .st2 b{font-family:var(--font-mono);color:var(--text);font-weight:700}
+  #planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mute);
+    font-family:var(--font-mono);border-top:1px solid #161616}
+
+  /* 轮盘 */
+  #wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;
+    transform:translate(-50%,-50%);cursor:pointer}
+  #wheel.on{display:block}
+  #wheel svg{width:100%;height:100%;display:block;overflow:visible}
+  #wheel .sect path{fill:rgba(12,12,12,.94);stroke:var(--line-2);stroke-width:1}
+  #wheel .sect:hover path{fill:#1A1200;stroke:var(--yellow)}
+  #wheel .sect text{fill:var(--text-dim);font-size:10.5px;font-family:var(--font-mono);
+    pointer-events:none;letter-spacing:.04em}
+  #wheel .sect:hover text{fill:var(--yellow)}
+  #wheel .sect text.sub{font-size:8.5px;fill:var(--text-mute)}
+  #wheel .ctr circle{fill:#0B0B0B;stroke:var(--yellow);stroke-width:2}
+  #wheel .ctr:hover circle{fill:#1A1200}
+  #wheel .ctr text{fill:var(--yellow);font-size:9px;font-family:var(--font-mono);
+    text-anchor:middle;pointer-events:none;letter-spacing:.06em}
+  @media (max-width:767px){
+    #planet-card{width:min(300px,calc(100% - 16px))}
+    #wheel{width:160px;height:160px}
+  }
 </style>
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
 <link rel="stylesheet" href="./css/map-hud.css?v=20260913e">
@@ -330,6 +407,8 @@
     <div id="tip"></div>
     <div id="sector-card"></div>
     <div id="fx-layer"></div>
+    <div id="planet-card"></div>
+    <div id="wheel"></div>
     <div id="boot">
       <div class="ring"></div>
       <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
@@ -353,7 +432,7 @@
 
     <h2 id="detailTitle">📋 星球详情</h2>
     <div class="card" id="detail">
-      <div class="muted">点击星图上的任意星球查看详情。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
+      <div class="muted">点击星球→星球上方显示信息卡；再次点击→轮盘（星球详细信息 / DSS 效果）。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
     </div>
 
     <h2>📖 图例</h2>
@@ -1134,6 +1213,9 @@ async function boot() {
     const u = (zoom - 9) / 4;
     return seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * (1 - u) + seg(13, PLANET_R_HI, PLANET_R_HI_GAIN) * u;
   }
+  // 该函数定义在 boot() 闭包内，而「星球信息卡」需要在 bindUI 里用它算卡片与星球的间距，
+  // 故显式对外暴露一份（只此一个引用点，避免整段搬迁带来的回归风险）
+  window.__planetR = planetRadiusPx;
 
   // 战术空态：无任何战术目标时明确提示（避免误以为功能坏了）
   if (!Object.keys(TACBY).length && !$("tac-empty")) {
@@ -1907,11 +1989,26 @@ function bindUI(data, planets) {
     if (slot && svg) slot.innerHTML = svg;             // 失败则退化为空槽（仍保留文字信息）
   }
 
-  // 点击详情
+  // 点击星球：① 在星球正上方显示信息卡 ② 再次点击同一星球 → 轮盘
   MAP.on("click", "planet-core", (e) => {
     const f = e.features && e.features[0];
-    if (f) { showDetail(f.properties.index); showSectorCard(f.properties.sector); }
+    if (!f) return;
+    const idx = f.properties.index;
+    if (WHEEL_IDX === idx) { hideWheel(); return; }                       // 轮盘已开 → 收起
+    if (PC_IDX === idx && $("planet-card").classList.contains("on")) {    // 二次点击 → 轮盘
+      hidePlanetCard(); showWheel(idx); return;
+    }
+    hideWheel();
+    showPlanetCard(idx);
+    showSectorCard(f.properties.sector);
   });
+  // 点空白处收起
+  MAP.on("click", (e) => {
+    if (!e.features || !e.features.length) { hidePlanetCard(); hideWheel(); }
+  });
+  // 地图移动时让卡片/轮盘跟随星球
+  MAP.on("move", positionOverlays);
+  MAP.on("zoom", positionOverlays);
 
   function showDetail(index) {
     const p = BYIDX[index]; if (!p) return;
@@ -1966,6 +2063,221 @@ function bindUI(data, planets) {
           `<span class="ic">🔗</span><span class="badge">${esc(wl.badge)}</span>` +
           `<span class="tx">${esc(wl.text)}</span><span class="go">↗</span></a>` : ""; })() +
       `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
+  }
+
+  /* ============================================================
+     星球信息卡（2026-09-15）
+     点击星球 → 在星球**正上方**显示信息卡；再次点击 → 轮盘。
+     参考 helldiverscompanion.com/#map 的信息组织。
+     「预估解放时间 / 解放速率 / 影响力」属**前端推演**：
+       · 实测：同一会话内两次观测的差值（最可靠）
+       · 推演：影响力公式估算，仅用于显示，**不写入任何数据文件、不改动抓取管线**
+     ============================================================ */
+  const LIB_RATE_K = 1.0;          // 速率推演常数（影响力→血量的折算系数）
+  const PC_SNAP = {};              // {index:{t,lib}} 观测快照，供「实测」速率
+  let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null;
+
+  const libPct = (p) => (p && p.maxHealth > 0) ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
+  const plCn   = (p) => PL_CN[String(p.name || "").toUpperCase()] || "";
+  const secCn  = (p) => SEC_CN[String(p.sector || "").toUpperCase()] || p.sector || "—";
+
+  async function biomeImage(biome) {
+    if (!biome) return null;
+    if (BIOME_IDX === null) {
+      try { BIOME_IDX = await (await fetch("./assets/biomes/index.json", { cache: "force-cache" })).json(); }
+      catch (_) { BIOME_IDX = {}; }
+    }
+    const v = BIOME_IDX[biome];
+    if (!v) return null;
+    return typeof v === "string" ? v : (v.file || v.img || v.image || null);
+  }
+
+  // 解放速率（%/h）：优先实测（同会话两次观测差值），否则公式推演
+  function rateOf(p) {
+    const lib = libPct(p), s = PC_SNAP[p.index], now = Date.now();
+    if (s && now - s.t >= 60000) {
+      const dt = (now - s.t) / 3600000, dv = lib - s.lib;
+      if (dt > 0.001) return { v: dv / dt, m: "实测" };
+    }
+    const imp = (DATA && DATA.impactMultiplier) || 0;
+    const gross = p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
+    return { v: gross - (p.resistance || 0), m: "推演" };
+  }
+  // 预估解放时间：按当前净速率线性外推
+  function etaOf(p) {
+    const r = rateOf(p), left = 100 - libPct(p);
+    return (r.v > 0.0005) ? left / r.v : null;
+  }
+  function fmtHours(h) {
+    if (h == null) return "—";
+    if (h >= 24) return Math.floor(h / 24) + "天 " + Math.round(h % 24) + "时";
+    if (h >= 1)  return Math.floor(h) + "小时 " + Math.round((h % 1) * 60) + "分";
+    return Math.max(1, Math.round(h * 60)) + "分";
+  }
+
+  function hidePlanetCard() { PC_IDX = null; const el = $("planet-card"); if (el) el.classList.remove("on"); }
+  function hideWheel() { WHEEL_IDX = null; const w = $("wheel"); if (w) w.classList.remove("on"); }
+
+  // 让卡片/轮盘跟随星球（地图移动、缩放时调用）
+  function positionOverlays() {
+    const rfn = window.__planetR;
+    const off = Math.max(18, (typeof rfn === "function" ? rfn(MAP.getZoom(), 1) : 18) + 12);
+    if (PC_IDX != null) {
+      const p = BYIDX[PC_IDX], el = $("planet-card");
+      if (p && p.position && el && el.classList.contains("on")) {
+        const pt = MAP.project([p.position.x, p.position.y]);
+        el.style.left = pt.x.toFixed(1) + "px";
+        el.style.top = (pt.y - off).toFixed(1) + "px";
+        el.style.transform = "translate(-50%,-100%)";
+      }
+    }
+    if (WHEEL_IDX != null) {
+      const p = BYIDX[WHEEL_IDX], w = $("wheel");
+      if (p && p.position && w && w.classList.contains("on")) {
+        const pt = MAP.project([p.position.x, p.position.y]);
+        w.style.left = pt.x.toFixed(1) + "px";
+        w.style.top = pt.y.toFixed(1) + "px";
+      }
+    }
+  }
+
+  async function showPlanetCard(index) {
+    const p = BYIDX[index]; if (!p) return;
+    const el = $("planet-card"); if (!el) return;
+    PC_IDX = index;
+    const owner = p.currentOwner || "Humans";
+    const color = colorOf(owner);
+    const lib = libPct(p);
+    const camp = (data.campaigns || []).find(c => c.planet && c.planet.index === index);
+    const kind = camp ? (String(camp.campaignType).toLowerCase() === "defense" ? "入侵 · 防御战役" : "解放战役")
+                      : (p.attacking ? "遭受进攻" : "无战役");
+    const r = rateOf(p), eta = etaOf(p);
+    const total = (data.player_distribution && data.player_distribution.total) || 0;
+    const share = total > 0 ? (p.players || 0) / total * 100 : 0;
+    const infl = ((DATA && DATA.impactMultiplier) || 0) * share * 100;   // 该星球承载的银河影响力份额
+    el.style.setProperty("--pc-color", color);
+    const bimg = await biomeImage(p.biome);
+    const buffs = (typeof fxOf === "function" ? fxOf(p) : []).slice(0, 10);
+    const buffHtml = (await Promise.all(buffs.map(async b => {
+      const ic = await effectIconMarkup(b.icon);
+      return ic ? `<span class="bi" style="color:${b.color || "#94a3b8"}" title="${esc(b.cn || "")}">${ic}</span>` : "";
+    }))).join("");
+    if (PC_IDX !== index) return;                     // 期间切到别的星球了
+    el.innerHTML =
+      `<div class="hd"><span class="kind">${esc(kind)}</span>` +
+        `<span class="eta">${eta != null ? "预估解放 " + fmtHours(eta) + " · " + r.m : "解放时间无法估算"}</span></div>` +
+      `<div class="title"><span class="ficon"></span><span class="names">` +
+        `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
+        `<span class="en">${esc(p.name || "")}</span>` +
+        `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
+      `</span></div>` +
+      `<div class="biome">${bimg ? `<img src="./assets/biomes/${esc(bimg)}" alt="${esc(p.biome || "")}" loading="lazy">`
+                                 : `<div class="noimg">${esc(p.biome || "未知生态")}（无图）</div>`}</div>` +
+      `<div class="buffs">${buffHtml || `<span class="st2">无星球增益 / 减益</span>`}</div>` +
+      `<div class="bar"><i style="width:${lib.toFixed(2)}%"></i><span class="mk" style="left:${lib.toFixed(2)}%"></span></div>` +
+      `<div class="lib"><b>${lib.toFixed(4)}%</b><span class="st">已解放</span>` +
+        `<span class="rate" style="color:${r.v >= 0 ? "#1FA84A" : "#FF4D2E"}">` +
+        `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span></div>` +
+      `<div class="stats">` +
+        `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
+        `<span class="st2">影响力 <b>${infl.toFixed(3)}%</b></span>` +
+        `<span class="st2">抵抗度 <b>${p.resistance != null ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
+        `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
+      `</div>` +
+      `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
+    el.classList.add("on");
+    positionOverlays();
+    const svg = await factionIconSVG(owner);
+    if (PC_IDX === index && svg) { const s = el.querySelector(".ficon"); if (s) s.innerHTML = svg; }
+    PC_SNAP[index] = { t: Date.now(), lib: lib };     // 记录观测点，供下次「实测」
+  }
+
+  /* ---- 轮盘：上=星球详细信息，下=DSS 效果，中心=关闭 ---- */
+  function showWheel(index) {
+    const p = BYIDX[index]; if (!p || !p.position) return;
+    const w = $("wheel"); if (!w) return;
+    WHEEL_IDX = index;
+    const R = 84, CX = 90, CY = 90;
+    w.innerHTML =
+      `<svg viewBox="0 0 180 180">` +
+        `<g class="sect" data-act="detail">` +
+          `<path d="M${CX - R} ${CY} A${R} ${R} 0 0 1 ${CX + R} ${CY} Z"/>` +
+          `<text x="${CX}" y="${CY - 44}" text-anchor="middle">星球详细信息</text>` +
+          `<text class="sub" x="${CX}" y="${CY - 31}" text-anchor="middle">PLANET DATA</text>` +
+        `</g>` +
+        `<g class="sect" data-act="dss">` +
+          `<path d="M${CX - R} ${CY} A${R} ${R} 0 0 0 ${CX + R} ${CY} Z"/>` +
+          `<text x="${CX}" y="${CY + 48}" text-anchor="middle">DSS 效果</text>` +
+          `<text class="sub" x="${CX}" y="${CY + 61}" text-anchor="middle">DEMOCRACY SPACE STATION</text>` +
+        `</g>` +
+        `<g class="ctr" data-act="close">` +
+          `<circle cx="${CX}" cy="${CY}" r="27"/>` +
+          `<text x="${CX}" y="${CY - 2}">OPTIONS</text>` +
+          `<text x="${CX}" y="${CY + 10}">CLOSE</text>` +
+        `</g>` +
+      `</svg>`;
+    w.classList.add("on");
+    positionOverlays();
+    w.querySelectorAll("[data-act]").forEach(g => {
+      g.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        const act = g.getAttribute("data-act");
+        hideWheel();
+        if (act === "detail") { showDetail(index); openAside(); }
+        else if (act === "dss") { showDssPanel(index); openAside(); }
+      });
+    });
+  }
+  function openAside() { document.body.classList.remove("aside-collapsed"); }
+  window.__planetCard = showPlanetCard;      // 供自检/调试
+  window.__wheel = showWheel;
+  window.__rateOf = rateOf;                  // 速率推演（自检用）
+  window.__pcSnap = PC_SNAP;                 // 观测快照（自检用）
+  // 点信息卡本身也打开轮盘
+  (function bindCardClick() {
+    const el = $("planet-card");
+    if (!el) return;
+    el.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (PC_IDX == null) return;
+      const i = PC_IDX; hidePlanetCard(); showWheel(i);
+    });
+  })();
+
+  /* ---- DSS 效果面板：复用主页 DSS 区块的数据（捐献进度取 cost[0].current / target）---- */
+  function showDssPanel(index) {
+    const p = BYIDX[index]; if (!p) return;
+    const box = $("detail"), title = $("detailTitle");
+    if (!box) return;
+    const dss = DATA && DATA.dss;
+    if (title) title.textContent = "🛰️ DSS 效果";
+    const head = `<div style="font-size:.8rem;color:var(--yellow);margin-bottom:6px">🛰️ 民主空间站 · ${esc(plCn(p) || p.name || "")}</div>`;
+    const tail = `<div style="margin-top:9px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
+    if (!dss || dss.planetIndex !== index) {
+      box.innerHTML = head + `<div class="muted">民主空间站当前<strong>未停靠</strong>在该星球。</div>` + tail;
+      return;
+    }
+    const ST = { 1: ["募捐中", "#f5c518"], 2: ["已激活", "#1FA84A"], 3: ["冷却中", "#FF4D2E"] };
+    const acts = dss.tacticalActions || [];
+    const rows = acts.map(ta => {
+      const meta = DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {};
+      const s = ST[ta.status] || ["未知", "#94a3b8"];
+      const c0 = (ta.cost && ta.cost[0]) || null;
+      const prog = (c0 && c0.target) ? Math.min(100, (c0.current || 0) / c0.target * 100) : null;
+      return `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);background:#0D0D0D">` +
+        `<div style="display:flex;align-items:center;gap:6px">` +
+          `<span style="color:${s[1]};font-size:.64rem;font-family:var(--font-mono)">${s[0]}</span>` +
+          `<strong style="font-size:.78rem;color:var(--text)">${esc(meta.cn || ta.name || "战术行动")}</strong>` +
+          (prog != null ? `<span style="margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${prog.toFixed(1)}%</span>` : "") +
+        `</div>` +
+        (prog != null ? `<div style="height:5px;background:#1A1A1A;margin-top:5px"><i style="display:block;height:100%;width:${prog.toFixed(1)}%;background:${s[1]}"></i></div>` +
+          `<div class="muted" style="margin-top:3px">已捐献 ${fmt(c0.current)} / ${fmt(c0.target)}</div>` : "") +
+      `</div>`;
+    }).join("");
+    box.innerHTML = head +
+      `<div class="muted">行动 ${acts.length} 项 · 数据与主页「民主空间站 / DSS」区块同源。</div>` +
+      (rows || `<div class="muted" style="margin-top:6px">暂无战术行动数据</div>`) +
+      tail;
   }
 
   /* ---- 筛选 / 图层 / 视图 的实际生效 ---- */
