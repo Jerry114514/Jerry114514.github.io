@@ -1990,9 +1990,13 @@ function bindUI(data, planets) {
   }
 
   // 点击星球：① 在星球正上方显示信息卡 ② 再次点击同一星球 → 轮盘
+  // LAST_PLANET_CLICK：给下面的「点空白收起」用 —— 只要星球 handler 触发过，
+  // 400ms 内的地图级 click 一律不许收起，避免两个 handler 互相打架（见下方说明）。
+  let LAST_PLANET_CLICK = 0;
   MAP.on("click", "planet-core", (e) => {
     const f = e.features && e.features[0];
     if (!f) return;
+    LAST_PLANET_CLICK = Date.now();
     const idx = f.properties.index;
     if (WHEEL_IDX === idx) { hideWheel(); return; }                       // 轮盘已开 → 收起
     if (PC_IDX === idx && $("planet-card").classList.contains("on")) {    // 二次点击 → 轮盘
@@ -2002,9 +2006,19 @@ function bindUI(data, planets) {
     showPlanetCard(idx);
     showSectorCard(f.properties.sector);
   });
-  // 点空白处收起
+  // 点空白处收起。
+  // ⚠ 2026-09-15 修复：原来用 `!e.features || !e.features.length` 判断空白 ——
+  //   但 MapLibre 的**地图级** click 事件并不保证带 features，
+  //   于是点星球时这个 handler 也会判定为空白并立刻收起卡片，
+  //   表现为「点击星球毫无反应」（卡片刚进入异步渲染就被取消）。
+  //   现在显式查询 planet-core 图层，只有确实没点到星球才收起。
   MAP.on("click", (e) => {
-    if (!e.features || !e.features.length) { hidePlanetCard(); hideWheel(); }
+    if (Date.now() - LAST_PLANET_CLICK < 400) return;   // 刚点过星球 → 绝不收起
+    let onPlanet = false;
+    try {
+      onPlanet = !!(e.point && MAP.queryRenderedFeatures(e.point, { layers: ["planet-core"] }).length);
+    } catch (_) { onPlanet = true; }        // 查询异常时宁可不收起
+    if (!onPlanet) { hidePlanetCard(); hideWheel(); }
   });
   // 地图移动时让卡片/轮盘跟随星球
   MAP.on("move", positionOverlays);
@@ -2147,7 +2161,8 @@ function bindUI(data, planets) {
     }
   }
 
-  async function showPlanetCard(index) {
+  // 同步渲染核心信息（保证「点击必有反馈」），图片/图标随后异步补上
+  function showPlanetCard(index) {
     const p = BYIDX[index]; if (!p) return;
     const el = $("planet-card"); if (!el) return;
     PC_IDX = index;
@@ -2160,15 +2175,8 @@ function bindUI(data, planets) {
     const r = rateOf(p), eta = etaOf(p);
     const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
-    const gross = grossOf(p);                       // 施加影响力 %/h（推演）
+    const gross = grossOf(p);
     el.style.setProperty("--pc-color", color);
-    const bimg = await biomeImage(p.biome);
-    const buffs = (typeof fxOf === "function" ? fxOf(p) : []).slice(0, 10);
-    const buffHtml = (await Promise.all(buffs.map(async b => {
-      const ic = await effectIconMarkup(b.icon);
-      return ic ? `<span class="bi" style="color:${b.color || "#94a3b8"}" title="${esc(b.cn || "")}">${ic}</span>` : "";
-    }))).join("");
-    if (PC_IDX !== index) return;                     // 期间切到别的星球了
     el.innerHTML =
       `<div class="hd"><span class="kind">${esc(kind)}</span>` +
         `<span class="eta">${eta != null ? "预估解放 " + fmtHours(eta) + " · " + r.m : "解放时间无法估算"}</span></div>` +
@@ -2177,9 +2185,8 @@ function bindUI(data, planets) {
         `<span class="en">${esc(p.name || "")}</span>` +
         `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
       `</span></div>` +
-      `<div class="biome">${bimg ? `<img src="./assets/biomes/${esc(bimg)}" alt="${esc(p.biome || "")}" loading="lazy">`
-                                 : `<div class="noimg">${esc(p.biome || "未知生态")}（无图）</div>`}</div>` +
-      `<div class="buffs">${buffHtml || `<span class="st2">无星球增益 / 减益</span>`}</div>` +
+      `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
+      `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
       `<div class="bar"><i style="width:${lib.toFixed(2)}%"></i><span class="mk" style="left:${lib.toFixed(2)}%"></span></div>` +
       `<div class="lib"><b>${lib.toFixed(4)}%</b><span class="st">已解放</span>` +
         `<span class="rate" style="color:${r.v >= 0 ? "#1FA84A" : "#FF4D2E"}">` +
@@ -2193,9 +2200,38 @@ function bindUI(data, planets) {
       `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
     el.classList.add("on");
     positionOverlays();
-    const svg = await factionIconSVG(owner);
-    if (PC_IDX === index && svg) { const s = el.querySelector(".ficon"); if (s) s.innerHTML = svg; }
     PC_SNAP[index] = { t: Date.now(), lib: lib };     // 记录观测点，供下次「实测」
+    decoratePlanetCard(index, owner, p);
+  }
+
+  // 异步装饰：势力图标 / 生态图 / 增益图标。任一失败都不影响卡片本体。
+  async function decoratePlanetCard(index, owner, p) {
+    const alive = () => PC_IDX === index && $("planet-card").classList.contains("on");
+    try {
+      const svg = await factionIconSVG(owner);
+      if (alive() && svg) { const s = $("planet-card").querySelector(".ficon"); if (s) s.innerHTML = svg; }
+    } catch (_) {}
+    try {
+      const bimg = await biomeImage(p.biome);
+      if (alive()) {
+        const s = $("planet-card").querySelector("#pc-biome");
+        if (s) s.innerHTML = bimg ? `<img src="./assets/biomes/${esc(bimg)}" alt="${esc(p.biome || "")}" loading="lazy">`
+                                  : `<div class="noimg">${esc(p.biome || "未知生态")}（无图）</div>`;
+      }
+    } catch (_) {}
+    try {
+      const buffs = (typeof fxOf === "function" ? fxOf(p) : []).slice(0, 10);
+      const html = (await Promise.all(buffs.map(async b => {
+        try {
+          const ic = await effectIconMarkup(b.icon);
+          return ic ? `<span class="bi" style="color:${b.color || "#94a3b8"}" title="${esc(b.cn || "")}">${ic}</span>` : "";
+        } catch (_) { return ""; }
+      }))).join("");
+      if (alive()) {
+        const s = $("planet-card").querySelector("#pc-buffs");
+        if (s) s.innerHTML = html || `<span class="st2">无星球增益 / 减益</span>`;
+      }
+    } catch (_) {}
   }
 
   /* ---- 轮盘：上=星球详细信息，下=DSS 效果，中心=关闭 ---- */
