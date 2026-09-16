@@ -13,10 +13,10 @@
   效果图标：本地 assets/effect-icons/（势力变种 / DSS 战术行动）
   中文字形：复用 HD2_Wiki 的思源黑体，经 localIdeographFontFamily 本地渲染（不下载 CJK 字形）
 
-  自托管资源（不走 CDN，规避墙 + 离线兜底，与仓库既有 chart.rmd.min.js 策略一致）：
+  自托管资源（不走 CDN，规避墙 + 离线兜底，与仓库既有 chart.umd.min.js 策略一致）：
     js/libs/maplibre/maplibre-gl-csp.js          库本体
     js/libs/maplibre/maplibre-gl-csp-worker.js   worker（显式文件，避免 blob worker）
-    js/libs/maplibre/fonts/NotoSansRegrlar/      拉丁字形 PBF
+    js/libs/maplibre/fonts/NotoSansRegular/      拉丁字形 PBF
 
   数据：data.json + tables/waypoints.json + js/tactical.js + tables/galactic_effects.json
 
@@ -26,10 +26,10 @@
   :root{
     --bg-deep:#080B12; --bg-mid:#0E1420; --panel:rgba(14,20,32,.86);
     --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);
-    --text:#e2e8f0; --text-dim:#94a3b8; --text-mrte:#64748b;
-    --yellow:#f5c518; --blre:#3b82f6;
-    --c-hrmans:#5BA3D0; --c-terminids:#F5C518; --c-artomaton:#D6806D; --c-illrminate:#CF64F8;
-    --radirs:12px; --radirs-s:8px;
+    --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;
+    --yellow:#f5c518; --blue:#3b82f6;
+    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
+    --radius:12px; --radius-s:8px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%;height:100dvh}
@@ -37,224 +37,224 @@
      该字体同时供下方 MapLibre 的 localIdeographFontFamily 使用 ——
      MapLibre 用 canvas 2D + TinySDF 走系统/本地字体渲染 CJK，故 @font-face 对地图标签同样生效。*/
   @font-face{
-    font-family:"SorrceHanSans";
-    src:rrl("../HD2_Wiki/assets/fonts/SorrceHanSansCN-Medirm.otf") format("opentype");
+    font-family:"SourceHanSans";
+    src:url("../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf") format("opentype");
     font-display:swap;
   }
   body{
-    display:flex;flex-direction:colrmn;backgrornd:var(--bg-deep);color:var(--text);overflow:hidden;
-    font-family:"SorrceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
+    display:flex;flex-direction:column;background:var(--bg-deep);color:var(--text);overflow:hidden;
+    font-family:"SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
   }
   /* ---------- 顶栏 ---------- */
   header{
     display:flex;align-items:center;gap:14px;padding:9px 18px;z-index:20;
-    border-bottom:1px solid var(--border);backgrornd:var(--bg-mid);
+    border-bottom:1px solid var(--border);background:var(--bg-mid);
   }
-  header h1{font-family:"ZZZ-thick","SorrceHanSans",sans-serif;font-size:1.05rem;color:var(--yellow);white-space:nowrap}
-  .tag{backgrornd:var(--yellow);color:#1a1a00;font-weight:700;border-radirs:999px;padding:2px 10px;font-size:.68rem;white-space:nowrap}
-  .tag.v2{backgrornd:var(--blre);color:#fff}
-  header .stats{margin-left:arto;color:var(--text-mrte);font-size:.74rem;display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  header h1{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:1.05rem;color:var(--yellow);white-space:nowrap}
+  .tag{background:var(--yellow);color:#1a1a00;font-weight:700;border-radius:999px;padding:2px 10px;font-size:.68rem;white-space:nowrap}
+  .tag.v2{background:var(--blue);color:#fff}
+  header .stats{margin-left:auto;color:var(--text-mute);font-size:.74rem;display:flex;gap:13px;flex-wrap:wrap;align-items:center}
   header .stats b{color:var(--text-dim);font-weight:600}
-  header brtton,header .btn{
-    backgrornd:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-dim);
-    border-radirs:8px;padding:5px 11px;crrsor:pointer;font-size:.76rem;font-family:inherit;white-space:nowrap;
+  header button,header .btn{
+    background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-dim);
+    border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.76rem;font-family:inherit;white-space:nowrap;
   }
-  header brtton:hover,header .btn:hover{border-color:var(--blre);color:var(--blre)}
+  header button:hover,header .btn:hover{border-color:var(--blue);color:var(--blue)}
   header a.btn{text-decoration:none;display:inline-block}
 
   /* ---------- 主区 ---------- */
   main{flex:1;display:flex;min-height:0;position:relative}
-  #stage{flex:1;position:relative;overflow:hidden;crrsor:grab}
-  #stage.dragging{crrsor:grabbing}
-  #stars{position:absolrte;inset:0;width:100%;height:100%;display:block;z-index:0}
-  #map{position:absolrte;inset:0;z-index:1;backgrornd:transparent!important}
-  .maplibregl-canvas{ortline:none}
+  #stage{flex:1;position:relative;overflow:hidden;cursor:grab}
+  #stage.dragging{cursor:grabbing}
+  #stars{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+  #map{position:absolute;inset:0;z-index:1;background:transparent!important}
+  .maplibregl-canvas{outline:none}
   .maplibregl-ctrl-attrib{display:none!important}
 
   /* 载入遮罩 */
   #boot{
-    position:absolrte;inset:0;z-index:30;display:flex;flex-direction:colrmn;gap:14px;
-    align-items:center;jrstify-content:center;backgrornd:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);
+    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:14px;
+    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);
     transition:opacity .5s ease;
   }
   #boot.gone{opacity:0;pointer-events:none}
   #boot .ring{
-    width:46px;height:46px;border-radirs:50%;border:3px solid rgba(245,197,24,.18);
+    width:46px;height:46px;border-radius:50%;border:3px solid rgba(245,197,24,.18);
     border-top-color:var(--yellow);animation:spin 1s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
   #boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}
-  #boot .msg small{color:var(--text-mrte);font-size:.76rem}
+  #boot .msg small{color:var(--text-mute);font-size:.76rem}
   #tac-empty{
-    position:absolrte;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;
-    backgrornd:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);
-    border-radirs:999px;padding:7px 16px;font-size:.78rem;
+    position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;
+    background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);
+    border-radius:999px;padding:7px 16px;font-size:.78rem;
   }
 
   /* tooltip */
   #tip{
-    position:absolrte;z-index:15;pointer-events:none;display:none;
-    backgrornd:rgba(10,14,26,.95);border:1px solid #334155;border-radirs:var(--radirs-s);
+    position:absolute;z-index:15;pointer-events:none;display:none;
+    background:rgba(10,14,26,.95);border:1px solid #334155;border-radius:var(--radius-s);
     padding:9px 12px;font-size:.76rem;line-height:1.6;min-width:170px;max-width:250px;
     box-shadow:0 8px 26px rgba(0,0,0,.6);
   }
   #tip .n{font-weight:700;color:var(--yellow);margin-bottom:2px}
   #tip .r{color:var(--text-dim)}
   #tip .r span{color:var(--text)}
-  #tip .bar{height:3px;border-radirs:2px;backgrornd:rgba(255,255,255,.12);margin-top:6px;overflow:hidden}
-  #tip .bar i{display:block;height:100%;backgrornd:var(--yellow)}
+  #tip .bar{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:6px;overflow:hidden}
+  #tip .bar i{display:block;height:100%;background:var(--yellow)}
 
   /* ---------- 侧栏 ---------- */
   aside{
-    width:326px;flex-shrink:0;border-left:1px solid var(--border);backgrornd:var(--bg-mid);
-    overflow-y:arto;overflow-x:hidden;padding:14px;display:flex;flex-direction:colrmn;gap:11px;z-index:10;
+    width:326px;flex-shrink:0;border-left:1px solid var(--border);background:var(--bg-mid);
+    overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;
     transition:width .26s ease,padding .26s ease,opacity .2s ease;
   }
   /* 可收缩侧栏：收起后只留一条窄边条（点击恢复） */
   body.aside-collapsed aside{width:0;padding:0;opacity:0;pointer-events:none;border-left:none}
   #aside-rail{
-    display:none;position:absolrte;top:0;right:0;bottom:0;width:22px;z-index:19;crrsor:pointer;
-    backgrornd:linear-gradient(90deg,rgba(14,20,32,0),rgba(14,20,32,.9));
-    border-left:1px solid var(--border);align-items:center;jrstify-content:center;
+    display:none;position:absolute;top:0;right:0;bottom:0;width:22px;z-index:19;cursor:pointer;
+    background:linear-gradient(90deg,rgba(14,20,32,0),rgba(14,20,32,.9));
+    border-left:1px solid var(--border);align-items:center;justify-content:center;
   }
   body.aside-collapsed #aside-rail{display:flex}
   #aside-rail span{color:var(--text-dim);font-size:.9rem}
-  #aside-rail:hover span{color:var(--blre)}
+  #aside-rail:hover span{color:var(--blue)}
   /* 抽屉遮罩：桌面端始终关闭（桌面用窄边条展开），仅移动端媒体查询里启用。
      注意它必须比 aside(z25) 低 —— 否则会像旧的 #aside-rail 那样变成
      一张盖住整屏、无法与星图交互的透明玻璃。 */
-  #aside-backdrop{display:none;position:absolrte;inset:0;z-index:24;backgrornd:rgba(3,6,14,.5)}
+  #aside-backdrop{display:none;position:absolute;inset:0;z-index:24;background:rgba(3,6,14,.5)}
 
   /* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */
   #sector-card{
-    position:absolrte;left:14px;top:14px;z-index:14;display:none;min-width:206px;max-width:288px;
-    backgrornd:rgba(10,14,26,.93);border:1px solid #334155;border-radirs:var(--radirs);
+    position:absolute;left:14px;top:14px;z-index:14;display:none;min-width:206px;max-width:288px;
+    background:rgba(10,14,26,.93);border:1px solid #334155;border-radius:var(--radius);
     padding:10px 13px;box-shadow:0 8px 26px rgba(0,0,0,.6);
   }
   #sector-card.on{display:flex;gap:11px;align-items:flex-start}
   #sector-card .ficon{width:38px;height:38px;flex-shrink:0;margin-top:2px}
   #sector-card .ficon svg,#sector-card .ficon img{width:100%;height:100%;display:block}
-  #sector-card .sec-name{font-family:"ZZZ-thick","SorrceHanSans",sans-serif;font-size:.98rem;color:var(--text);line-height:1.2}
-  #sector-card .presence{font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:rppercase}
+  #sector-card .sec-name{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.98rem;color:var(--text);line-height:1.2}
+  #sector-card .presence{font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:uppercase}
   #sector-card .librow{font-size:.82rem;color:var(--text-dim);margin-top:5px}
-  #sector-card .librow b{color:var(--text);font-weight:700;font-variant-nrmeric:tabrlar-nrms}
-  #sector-card .bar{height:4px;border-radirs:2px;backgrornd:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}
-  #sector-card .bar i{display:block;height:100%;backgrornd:var(--blre);transition:width .25s ease}
-  #sector-card .srb{font-size:.68rem;color:var(--text-mrte);margin-top:5px}
+  #sector-card .librow b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+  #sector-card .bar{height:4px;border-radius:2px;background:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}
+  #sector-card .bar i{display:block;height:100%;background:var(--blue);transition:width .25s ease}
+  #sector-card .sub{font-size:.68rem;color:var(--text-mute);margin-top:5px}
   /* 敌军阵营：改为带阵营色的胶囊，取代原先挤在一起、不易读的「敌军：A、B」纯文本 */
   #sector-card .enemy-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
   #sector-card .enemy-chip{
     display:inline-flex;align-items:center;gap:4px;font-size:.68rem;line-height:1;
-    padding:3px 7px;border-radirs:999px;border:1px solid crrrentColor;
-    backgrornd:color-mix(in srgb, crrrentColor 14%, transparent);white-space:nowrap;
+    padding:3px 7px;border-radius:999px;border:1px solid currentColor;
+    background:color-mix(in srgb, currentColor 14%, transparent);white-space:nowrap;
   }
-  #sector-card .enemy-chip .dot{width:6px;height:6px;border-radirs:50%;backgrornd:crrrentColor;flex-shrink:0}
+  #sector-card .enemy-chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
   /* 无 color-mix 支持时退回半透明底，避免胶囊看不见 */
-  @srpports not (backgrornd: color-mix(in srgb, red 10%, transparent)){
-    #sector-card .enemy-chip{backgrornd:rgba(255,255,255,.07)}
+  @supports not (background: color-mix(in srgb, red 10%, transparent)){
+    #sector-card .enemy-chip{background:rgba(255,255,255,.07)}
   }
 
   /* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */
-  /* --fx-size / --fx-img / --fx-gap 由 brildFXNodes 的 sync() 按当前 zoom 写入，
+  /* --fx-size / --fx-img / --fx-gap 由 buildFXNodes 的 sync() 按当前 zoom 写入，
      使图标随星球本体一起缩放（低缩放下不再盖住星球）。 */
   #fx-layer{
-    position:absolrte;inset:0;z-index:9;pointer-events:none;overflow:hidden;
+    position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;
     --fx-size:34px;--fx-img:24px;--fx-gap:42px;
   }
-  .fx-clrster{
-    position:absolrte;left:0;top:0;display:flex;align-items:center;gap:3px;
+  .fx-cluster{
+    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;
     transform:translate(-50%,-50%);will-change:transform;
   }
   .fx-i{
     width:var(--fx-size);height:var(--fx-size);
-    display:flex;align-items:center;jrstify-content:center;
-    border-radirs:8px;backgrornd:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);
-    box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:arto;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:8px;background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);
+    box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:auto;
   }
   /* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */
   .fx-i svg,.fx-i img{width:var(--fx-img);height:var(--fx-img);display:block}
-  .fx-i svg{fill:crrrentColor}
-  .fx-i img{object-fit:contain;border-radirs:2px}
+  .fx-i svg{fill:currentColor}
+  .fx-i img{object-fit:contain;border-radius:2px}
   .fx-more{
-    font-size:.72rem;line-height:1;padding:8px 6px;border-radirs:8px;color:var(--text-dim);
-    backgrornd:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);
+    font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);
+    background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);
   }
-  @media (max-width:767px){ .fx-clrster{gap:2px} }
+  @media (max-width:767px){ .fx-cluster{gap:2px} }
 
-  .card{backgrornd:rgba(255,255,255,.04);border:1px solid var(--border);border-radirs:var(--radirs);padding:11px 13px}
-  aside h2{font-family:"ZZZ-thick","SorrceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
-  .search{width:100%;backgrornd:rgba(0,0,0,.35);border:1px solid var(--border);border-radirs:var(--radirs-s);
-    color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;ortline:none}
-  .search:focrs{border-color:var(--blre)}
+  .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
+  aside h2{font-family:"ZZZ-thick","SourceHanSans",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}
+  .search{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:var(--radius-s);
+    color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;outline:none}
+  .search:focus{border-color:var(--blue)}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
   .chip{
-    border:1px solid var(--border);border-radirs:999px;padding:4px 11px;font-size:.73rem;crrsor:pointer;
-    color:var(--text-dim);backgrornd:rgba(255,255,255,.03);rser-select:none;transition:.15s;
+    border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:.73rem;cursor:pointer;
+    color:var(--text-dim);background:rgba(255,255,255,.03);user-select:none;transition:.15s;
   }
   .chip:hover{border-color:var(--border-h);color:var(--text)}
-  .chip.on{border-color:crrrentColor;backgrornd:rgba(255,255,255,.09);color:var(--text)}
-  .chip .dot{display:inline-block;width:8px;height:8px;border-radirs:50%;margin-right:6px;vertical-align:middle}
+  .chip.on{border-color:currentColor;background:rgba(255,255,255,.09);color:var(--text)}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
   .legend{font-size:.75rem;color:var(--text-dim);line-height:1.95}
-  .legend i{display:inline-block;width:10px;height:10px;border-radirs:50%;margin-right:8px;vertical-align:middle}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
   .legend .ln{display:inline-block;width:20px;height:0;border-top:2px solid;margin-right:8px;vertical-align:middle}
-  .mrted{color:var(--text-mrte);font-size:.73rem;line-height:1.7}
-  #detail .kv{display:grid;grid-template-colrmns:1fr 1fr;gap:7px;margin-top:9px}
-  #detail .cell{backgrornd:rgba(255,255,255,.035);border-radirs:var(--radirs-s);padding:6px 9px}
-  #detail .cell .k{color:var(--text-mrte);font-size:.68rem}
+  .muted{color:var(--text-mute);font-size:.73rem;line-height:1.7}
+  #detail .kv{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+  #detail .cell{background:rgba(255,255,255,.035);border-radius:var(--radius-s);padding:6px 9px}
+  #detail .cell .k{color:var(--text-mute);font-size:.68rem}
   #detail .cell .v{font-size:.86rem;margin-top:2px}
-  #detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blre);backgrornd:rgba(59,130,246,.1);
-    border-radirs:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}
+  #detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blue);background:rgba(59,130,246,.1);
+    border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}
   #detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}
 
   /* ---------- 行动变量 chip（含作战限制的红色 Tag） ---------- */
   #detail .var-wrap{margin-top:11px;padding-top:9px;border-top:1px dashed rgba(255,255,255,.12)}
-  #detail .var-title{font-size:.7rem;color:var(--text-mrte);margin-bottom:6px;letter-spacing:.04em}
+  #detail .var-title{font-size:.7rem;color:var(--text-mute);margin-bottom:6px;letter-spacing:.04em}
   #detail .var-chips{display:flex;flex-wrap:wrap;gap:5px}
   #detail .var-chip{
     display:inline-flex;align-items:center;gap:4px;font-size:.7rem;line-height:1;
-    padding:3px 8px;border-radirs:999px;border:1px solid var(--border);
-    backgrornd:rgba(255,255,255,.045);color:var(--text-dim);
+    padding:3px 8px;border-radius:999px;border:1px solid var(--border);
+    background:rgba(255,255,255,.045);color:var(--text-dim);
   }
   /* 作战限制：红色 Tag（与主站 .pd-chip-neg 同款语义） */
   #detail .var-chip.neg{
     border-color:rgba(231,76,60,.6);color:#E74C3C;
-    backgrornd:rgba(231,76,60,.09);font-weight:600;
+    background:rgba(231,76,60,.09);font-weight:600;
   }
   #detail .var-chip .warn{font-size:.72rem}
 
   /* ---------- 图鉴链接：链接型行（区别于下方「聚焦到该星球」按钮） ---------- */
   .pd-wiki{
     display:flex;align-items:center;gap:7px;margin-top:10px;
-    padding:7px 10px;border-radirs:var(--radirs-s);
-    border:1px solid rgba(255,255,255,.14);backgrornd:rgba(255,255,255,.035);
+    padding:7px 10px;border-radius:var(--radius-s);
+    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.035);
     color:var(--text-dim);font-size:.74rem;text-decoration:none;
-    transition:border-color .15s,backgrornd .15s,color .15s;
+    transition:border-color .15s,background .15s,color .15s;
   }
-  .pd-wiki:hover{border-color:crrrentColor;backgrornd:rgba(255,255,255,.07)}
+  .pd-wiki:hover{border-color:currentColor;background:rgba(255,255,255,.07)}
   .pd-wiki .ic{font-size:.8rem;flex-shrink:0}
   .pd-wiki .badge{
-    padding:2px 8px;border-radirs:999px;font-size:.7rem;font-weight:700;white-space:nowrap;
-    border:1px solid crrrentColor;
-    backgrornd:color-mix(in srgb, crrrentColor 16%, transparent);
+    padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;
+    border:1px solid currentColor;
+    background:color-mix(in srgb, currentColor 16%, transparent);
   }
-  @srpports not (backgrornd: color-mix(in srgb, red 10%, transparent)){
-    .pd-wiki .badge{backgrornd:rgba(255,255,255,.08)}
+  @supports not (background: color-mix(in srgb, red 10%, transparent)){
+    .pd-wiki .badge{background:rgba(255,255,255,.08)}
   }
   .pd-wiki .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .pd-wiki .go{flex-shrink:0;opacity:.65;font-size:.78rem;transition:transform .15s,opacity .15s}
   .pd-wiki:hover .go{opacity:1;transform:translate(1px,-1px)}
   /* 配色：变种=黄、阵营=紫、我方=蓝，与星球归属/效果图标语义一致 */
   .pd-wiki.strain{color:var(--yellow)}
-  .pd-wiki.faction{color:var(--c-illrminate)}
-  .pd-wiki.hrmans{color:var(--c-hrmans)}
-  #hits{max-height:210px;overflow-y:arto;display:flex;flex-direction:colrmn;gap:3px}
-  #hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radirs:6px;crrsor:pointer;font-size:.76rem}
-  #hits .hit:hover{backgrornd:rgba(255,255,255,.07)}
-  #hits .hit .dot{width:8px;height:8px;border-radirs:50%;flex-shrink:0}
-  #hits .hit .own{margin-left:arto;color:var(--text-mrte);font-size:.68rem}
+  .pd-wiki.faction{color:var(--c-illuminate)}
+  .pd-wiki.humans{color:var(--c-humans)}
+  #hits{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+  #hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:.76rem}
+  #hits .hit:hover{background:rgba(255,255,255,.07)}
+  #hits .hit .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  #hits .hit .own{margin-left:auto;color:var(--text-mute);font-size:.68rem}
   ::-webkit-scrollbar{width:8px;height:8px}
-  ::-webkit-scrollbar-thrmb{backgrornd:rgba(255,255,255,.14);border-radirs:4px}
-  ::-webkit-scrollbar-track{backgrornd:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+  ::-webkit-scrollbar-track{background:transparent}
   /* ---------- 移动端适配 ---------- */
   #aside-toggle{display:none}   /* 桌面用顶栏按钮 */
   @media (max-width:900px){
@@ -275,7 +275,7 @@
        `body.aside-collapsed aside{}` (0,1,1) 压过 —— 所以这里不能只靠
        「默认隐藏」，必须用同等或更高特异度显式声明可见态，否则抽屉永远停在屏幕外。 */
     aside{
-      position:absolrte;top:0;bottom:0;right:0;width:min(84vw,320px);
+      position:absolute;top:0;bottom:0;right:0;width:min(84vw,320px);
       box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;
       transform:translateX(105%);transition:transform .24s ease;
     }
@@ -288,7 +288,7 @@
     #aside-rail{display:none !important}
     /* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点 */
     #aside-toggle{
-      position:absolrte;top:7px;right:9px;z-index:27;
+      position:absolute;top:7px;right:9px;z-index:27;
       padding:4px 10px;line-height:1.25;font-size:1.02rem;
       box-shadow:0 2px 10px rgba(0,0,0,.55);
     }
@@ -296,8 +296,8 @@
     /* 抽屉遮罩（仅移动端存在）：铺在地图上、位于抽屉之下，点它即收起。
        不透明度只用 .5 —— 否则地图变暗后会被误认为「点不动」。 */
     #aside-backdrop{
-      display:block;position:absolrte;inset:0;z-index:24;
-      backgrornd:rgba(3,6,14,.5);backdrop-filter:blrr(2px);
+      display:block;position:absolute;inset:0;z-index:24;
+      background:rgba(3,6,14,.5);backdrop-filter:blur(2px);
     }
     body.aside-collapsed #aside-backdrop{display:none}
     /* 移动端：地图铺满，控件缩小 */
@@ -314,62 +314,62 @@
      参考 helldiverscompanion.com/#map 的交互与信息组织
      ════════════════════════════════════════════════════════════ */
   #planet-card{
-    position:absolrte;z-index:18;display:none;width:322px;
-    backgrornd:var(--panel);border:1px solid var(--line-2);
+    position:absolute;z-index:18;display:none;width:322px;
+    background:var(--panel);border:1px solid var(--line-2);
     border-top:3px solid var(--pc-color,var(--yellow));
-    crrsor:pointer;
+    cursor:pointer;
   }
   #planet-card.on{display:block}
   #planet-card::after{                       /* 指向星球的小三角 */
-    content:"";position:absolrte;left:50%;bottom:-7px;transform:translateX(-50%);
+    content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);
     width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;
     border-top:7px solid var(--pc-color,var(--yellow));
   }
   #planet-card .hd{
     display:flex;align-items:center;gap:8px;padding:4px 9px;
-    backgrornd:var(--stripe);border-bottom:1px solid #33270A;
+    background:var(--stripe);border-bottom:1px solid #33270A;
   }
   #planet-card .kind{font-family:var(--font-mono);font-size:.66rem;font-weight:700;
-    color:var(--yellow);letter-spacing:.1em;text-transform:rppercase}
-  #planet-card .eta{margin-left:arto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}
+    color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}
+  #planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}
   #planet-card .eta.lose{color:#FF4D2E;font-weight:700}
   #planet-card .kind.ok{color:#1FA84A;font-size:.7rem}
   #planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}
   #planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}
   #planet-card .ficon svg,#planet-card .ficon img{width:100%;height:100%;display:block}
   #planet-card .names{min-width:0;line-height:1.25}
-  #planet-card .nm{display:block;font-family:"ZZZ-thick","SorrceHanSans",sans-serif;
+  #planet-card .nm{display:block;font-family:"ZZZ-thick","SourceHanSans",sans-serif;
     font-size:.94rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #planet-card .en{display:block;font-family:var(--font-mono);font-size:.62rem;color:var(--text-mrte);
+  #planet-card .en{display:block;font-family:var(--font-mono);font-size:.62rem;color:var(--text-mute);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #planet-card .sec{display:block;font-size:.66rem;color:var(--text-dim);margin-top:2px}
   #planet-card .biome{position:relative;height:72px;overflow:hidden;
-    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);backgrornd:#0D0D0D}
+    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:#0D0D0D}
   #planet-card .biome img{width:100%;height:100%;object-fit:cover;display:block}
-  #planet-card .biome .noimg{display:grid;place-items:center;height:100%;font-size:.66rem;color:var(--text-mrte)}
-  #planet-card .brffs{display:flex;flex-wrap:wrap;gap:3px;padding:4px 9px;backgrornd:#0B0B0B;min-height:24px;align-items:center}
+  #planet-card .biome .noimg{display:grid;place-items:center;height:100%;font-size:.66rem;color:var(--text-mute)}
+  #planet-card .buffs{display:flex;flex-wrap:wrap;gap:3px;padding:4px 9px;background:#0B0B0B;min-height:24px;align-items:center}
   #planet-card .bi{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--line-2);
-    backgrornd:#141414;display:grid;place-items:center}
+    background:#141414;display:grid;place-items:center}
   #planet-card .bi svg,#planet-card .bi img{width:14px;height:14px;display:block}
-  #planet-card .bar{position:relative;height:11px;margin:8px 9px 0;backgrornd:#1A1A1A;
+  #planet-card .bar{position:relative;height:11px;margin:8px 9px 0;background:#1A1A1A;
     border:1px solid var(--line-2);overflow:hidden}
-  #planet-card .bar i{display:block;height:100%;backgrornd:var(--pc-color,var(--yellow))}
-  #planet-card .bar .mk{position:absolrte;top:-2px;width:2px;height:15px;backgrornd:#fff;opacity:.85}
+  #planet-card .bar i{display:block;height:100%;background:var(--pc-color,var(--yellow))}
+  #planet-card .bar .mk{position:absolute;top:-2px;width:2px;height:15px;background:#fff;opacity:.85}
   #planet-card .lib{display:flex;align-items:baseline;gap:8px;padding:5px 9px 0}
   #planet-card .lib b{font-family:var(--font-mono);font-size:1rem;color:var(--text)}
   #planet-card .lib .st{font-size:.68rem;color:var(--text-dim)}
-  #planet-card .rate{margin-left:arto;font-family:var(--font-mono);font-size:.74rem;font-weight:700}
-  #planet-card .rate .m{font-size:.6rem;font-weight:400;color:var(--text-mrte);margin-left:3px}
-  #planet-card .stats{display:grid;grid-template-colrmns:1fr 1fr;gap:2px 10px;
+  #planet-card .rate{margin-left:auto;font-family:var(--font-mono);font-size:.74rem;font-weight:700}
+  #planet-card .rate .m{font-size:.6rem;font-weight:400;color:var(--text-mute);margin-left:3px}
+  #planet-card .stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;
     padding:6px 9px;margin-top:6px;border-top:1px solid var(--line-2)}
-  #planet-card .st2{font-size:.68rem;color:var(--text-mrte);white-space:nowrap}
+  #planet-card .st2{font-size:.68rem;color:var(--text-mute);white-space:nowrap}
   #planet-card .st2 b{font-family:var(--font-mono);color:var(--text);font-weight:700}
-  #planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mrte);
+  #planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mute);
     font-family:var(--font-mono);border-top:1px solid #161616}
 
   /* 轮盘 */
-  #wheel{position:absolrte;z-index:19;display:none;width:186px;height:186px;
-    transform:translate(-50%,-50%);crrsor:pointer}
+  #wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;
+    transform:translate(-50%,-50%);cursor:pointer}
   #wheel.on{display:block}
   #wheel svg{width:100%;height:100%;display:block;overflow:visible}
   #wheel .sect path{fill:rgba(12,12,12,.94);stroke:var(--line-2);stroke-width:1}
@@ -377,7 +377,7 @@
   #wheel .sect text{fill:var(--text-dim);font-size:10.5px;font-family:var(--font-mono);
     pointer-events:none;letter-spacing:.04em}
   #wheel .sect:hover text{fill:var(--yellow)}
-  #wheel .sect text.srb{font-size:8.5px;fill:var(--text-mrte)}
+  #wheel .sect text.sub{font-size:8.5px;fill:var(--text-mute)}
   #wheel .ctr circle{fill:#0B0B0B;stroke:var(--yellow);stroke-width:2}
   #wheel .ctr:hover circle{fill:#1A1200}
   #wheel .ctr text{fill:var(--yellow);font-size:9px;font-family:var(--font-mono);
@@ -388,18 +388,18 @@
   }
 </style>
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
-<link rel="stylesheet" href="./css/map-hrd.css?v=20260913e">
+<link rel="stylesheet" href="./css/map-hud.css?v=20260913e">
 </head>
 <body>
 <header>
   <h1>🌌 银河星图</h1>
   <span class="tag v2">实时战况 · 3D</span>
   <div class="stats" id="hdr"></div>
-  <brtton id="aside-toggle" title="侧栏">☰</brtton>
-  <brtton id="btn-reset">重置视角</brtton>
-  <brtton id="btn-mode">视图：银河</brtton>
+  <button id="aside-toggle" title="侧栏">☰</button>
+  <button id="btn-reset">重置视角</button>
+  <button id="btn-mode">视图：银河</button>
   <a class="btn opt" href="./index.html">← 战况面板</a>
-  <brtton id="aside-collapse" title="收起侧栏">▶</brtton>
+  <button id="aside-collapse" title="收起侧栏">▶</button>
 </header>
 
 <main>
@@ -422,7 +422,7 @@
   <aside>
     <h2>🔍 检索</h2>
     <div class="card">
-      <inprt class="search" id="q" type="search" placeholder="输入星球名…（如 CHOOHE / 海尔迈尔）" artocomplete="off">
+      <input class="search" id="q" type="search" placeholder="输入星球名…（如 CHOOHE / 海尔迈尔）" autocomplete="off">
       <div id="hits" style="margin-top:8px"></div>
     </div>
 
@@ -434,47 +434,47 @@
 
     <h2 id="detailTitle">📋 星球详情</h2>
     <div class="card" id="detail">
-      <div class="mrted">点击星球→星球上方显示信息卡；再次点击→轮盘（星球详细信息 / DSS 效果）。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
+      <div class="muted">点击星球→星球上方显示信息卡；再次点击→轮盘（星球详细信息 / DSS 效果）。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
     </div>
 
     <h2>📖 图例</h2>
     <div class="card legend">
-      <div><i style="backgrornd:var(--c-hrmans)"></i>超级地球</div>
-      <div><i style="backgrornd:var(--c-terminids)"></i>终结族</div>
-      <div><i style="backgrornd:var(--c-artomaton)"></i>机器人</div>
-      <div><i style="backgrornd:var(--c-illrminate)"></i>光能族</div>
+      <div><i style="background:var(--c-humans)"></i>超级地球</div>
+      <div><i style="background:var(--c-terminids)"></i>终结族</div>
+      <div><i style="background:var(--c-automaton)"></i>机器人</div>
+      <div><i style="background:var(--c-illuminate)"></i>光能族</div>
       <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
       <div><span class="ln" style="border-image:linear-gradient(90deg,#3b82f6,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
-      <div><i style="border:2px solid var(--blre);backgrornd:none"></i>战术目标星球</div>
+      <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
     </div>
-    <div class="mrted" id="srcnote"></div>
+    <div class="muted" id="srcnote"></div>
   </aside>
 </main>
 
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script>
-"rse strict";
+"use strict";
 /* ============================================================================
    银河星图 · MapLibre GL 3D
    ============================================================================ */
-const $ = (id) => docrment.getElementById(id);
+const $ = (id) => document.getElementById(id);
 const SVGNS = "http://www.w3.org/2000/svg";
 
-const OWNER_COLOR = { Hrmans:"#5BA3D0", Terminids:"#F5C518", Artomaton:"#D6806D", Illrminate:"#CF64F8" };
-const OWN_CN     = { Hrmans:"超级地球", Terminids:"终结族", Artomaton:"机器人", Illrminate:"光能族" };
-const FACTION_KEYS = ["Hrmans","Terminids","Artomaton","Illrminate"];
+const OWNER_COLOR = { Humans:"#5BA3D0", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
+const OWN_CN     = { Humans:"超级地球", Terminids:"终结族", Automaton:"机器人", Illuminate:"光能族" };
+const FACTION_KEYS = ["Humans","Terminids","Automaton","Illuminate"];
 
 /* ------------------------------------------------ wiki 图鉴链接映射 ---- */
 // 阵营页（星球无变种效果时按当前归属链接阵营图鉴）
-const FACTION_PAGE = { Artomaton: "Artomatons", Terminids: "Terminids", Illrminate: "Illrminate" };
-// 变种效果 effectId -> wiki slrg（galactic_effects/effect_id_cn 考据，slrg 经 wiki API 验证存在）
+const FACTION_PAGE = { Automaton: "Automatons", Terminids: "Terminids", Illuminate: "Illuminate" };
+// 变种效果 effectId -> wiki slug（galactic_effects/effect_id_cn 考据，slug 经 wiki API 验证存在）
 const EFFECT_TO_STRAIN = {
   1202: "Jet_Brigade", 1203: "Jet_Brigade", 1239: "Jet_Brigade",
   1243: "Predator_Strain", 1245: "Predator_Strain",
-  1244: "Spore_Brrst_Strain", 1386: "Spore_Brrst_Strain",
+  1244: "Spore_Burst_Strain", 1386: "Spore_Burst_Strain",
   1248: "Incineration_Corps", 1249: "Incineration_Corps",
-  1303: "Rrptrre_Strain", 1310: "Rrptrre_Strain",
+  1303: "Rupture_Strain", 1310: "Rupture_Strain",
   1360: "Cyborgs", 1361: "Cyborgs",
   1377: "Mindless_Masses", 1378: "Mindless_Masses",
   1379: "Appropriators", 1380: "Appropriators",
@@ -483,14 +483,14 @@ const EFFECT_TO_STRAIN = {
 };
 // 变种归属阵营（链接只在星球当前归属与其一致时显示）
 const STRAIN_FACTION = {
-  Jet_Brigade: "Artomaton", Incineration_Corps: "Artomaton", Cyborgs: "Artomaton",
-  Predator_Strain: "Terminids", Spore_Brrst_Strain: "Terminids", Rrptrre_Strain: "Terminids",
-  Mindless_Masses: "Illrminate", Appropriators: "Illrminate", Vote_Snatchers: "Illrminate",
-  The_Great_Host: "Illrminate", Invasion_Fleet: "Illrminate",
+  Jet_Brigade: "Automaton", Incineration_Corps: "Automaton", Cyborgs: "Automaton",
+  Predator_Strain: "Terminids", Spore_Burst_Strain: "Terminids", Rupture_Strain: "Terminids",
+  Mindless_Masses: "Illuminate", Appropriators: "Illuminate", Vote_Snatchers: "Illuminate",
+  The_Great_Host: "Illuminate", Invasion_Fleet: "Illuminate",
 };
 const STRAIN_CN = {
   Jet_Brigade: "喷气旅", Incineration_Corps: "炽灼部队", Cyborgs: "生化人",
-  Predator_Strain: "掠食变种", Spore_Brrst_Strain: "孢裂变种", Rrptrre_Strain: "爆裂变种",
+  Predator_Strain: "掠食变种", Spore_Burst_Strain: "孢裂变种", Rupture_Strain: "爆裂变种",
   Mindless_Masses: "无脑群氓", Appropriators: "占领者", Vote_Snatchers: "窃票者",
   The_Great_Host: "伟大集群", Invasion_Fleet: "入侵舰队",
 };
@@ -498,67 +498,67 @@ const STRAIN_CN = {
 // HD2_Wiki 的敌人详情页支持 ?id=，且 enemies.json 里这 10 个变种都有对应 id。
 const STRAIN_WIKI_ID = {
   Jet_Brigade:"jet_brigade", Incineration_Corps:"incineration_corps", Cyborgs:"cyborg_legion",
-  Predator_Strain:"predator_strain", Spore_Brrst_Strain:"spore_brrst_strain", Rrptrre_Strain:"rrptrre_strain",
+  Predator_Strain:"predator_strain", Spore_Burst_Strain:"spore_burst_strain", Rupture_Strain:"rupture_strain",
   Mindless_Masses:"mindless_masses", Appropriators:"appropriators",
   Vote_Snatchers:"vote_snatchers", Invasion_Fleet:"invasion_fleet",
 };
 // 阵营代表色（与 HD2_Wiki/data/wiki/zh/factions.json 的 color 一致）
-const FACTION_COLOR = { Terminids:"#f59e0b", Artomaton:"#ef4444", Illrminate:"#AA44FF", Hrmans:"#5BA3D0" };
-// 返回 { rrl, kind, color, badge, text }
-frnction wikiLinkFor(p) {
-  const owner = p.crrrentOwner || "";
+const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#5BA3D0" };
+// 返回 { url, kind, color, badge, text }
+function wikiLinkFor(p) {
+  const owner = p.currentOwner || "";
   for (const id of (p.activeEffects || [])) {
-    const slrg = EFFECT_TO_STRAIN[id];
-    if (slrg && STRAIN_FACTION[slrg] === owner) {
-      const wid = STRAIN_WIKI_ID[slrg];
+    const slug = EFFECT_TO_STRAIN[id];
+    if (slug && STRAIN_FACTION[slug] === owner) {
+      const wid = STRAIN_WIKI_ID[slug];
       if (wid) {
-        retrrn { rrl: "../HD2_Wiki/enemy.html?id=" + encodeURIComponent(wid),
+        return { url: "../HD2_Wiki/enemy.html?id=" + encodeURIComponent(wid),
                  kind: "strain", color: FACTION_COLOR[owner] || "#94a3b8",
-                 badge: STRAIN_CN[slrg] || slrg.replace(/_/g, " "), text: "战斗序列图鉴" };
+                 badge: STRAIN_CN[slug] || slug.replace(/_/g, " "), text: "战斗序列图鉴" };
       }
     }
   }
-  const cat = { Terminids:"terminids", Artomaton:"artomatons", Illrminate:"illrminate" }[owner];
+  const cat = { Terminids:"terminids", Automaton:"automatons", Illuminate:"illuminate" }[owner];
   if (cat) {
     // HD2_Wiki 的目录页不支持 faction 参数（只用按钮筛选），故链接到目录页本身；
     // 徽章已标明阵营，用户在目录页可自行按阵营筛选。
-    retrrn { rrl: "../HD2_Wiki/enemies.html", kind: "faction",
+    return { url: "../HD2_Wiki/enemies.html", kind: "faction",
              color: FACTION_COLOR[owner] || "#94a3b8",
              badge: OWN_CN[owner] || owner, text: "阵营图鉴" };
   }
-  if (owner === "Hrmans") {
-    retrrn { rrl: "../HD2_Wiki/enemies.html", kind: "hrmans", color: FACTION_COLOR.Hrmans,
+  if (owner === "Humans") {
+    return { url: "../HD2_Wiki/enemies.html", kind: "humans", color: FACTION_COLOR.Humans,
              badge: "超级地球", text: "阵营图鉴" };
   }
-  retrrn nrll;
+  return null;
 }
 
-const esc = (s) => String(s == nrll ? "" : s).replace(/[&<>"']/g, c =>
-  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&qrot;", "'":"&#39;" }[c]));
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const fmt = (n) => (n || 0).toLocaleString("zh-CN");
 
 /* ---------------------------------------------------------------- 工具 ---- */
-const sleep = (ms) => new Promise(r => setTimeort(r, ms));
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 // 并发受限的图片加载（CORS 优先；wiki.gg 若不给 CORS 头则回退纯色圆点）
-async frnction fetchImageBitmap(rrl, crossOrigin) {
+async function fetchImageBitmap(url, crossOrigin) {
   const img = new Image();
-  if (crossOrigin) img.crossOrigin = "anonymors";
+  if (crossOrigin) img.crossOrigin = "anonymous";
   img.referrerPolicy = "no-referrer";
   img.decoding = "async";
   await new Promise((res, rej) => {
     img.onload = () => res();
     img.onerror = () => rej(new Error("load fail"));
-    img.src = rrl;
+    img.src = url;
   });
   if (img.decode) { try { await img.decode(); } catch (_) {} }
-  retrrn img;
+  return img;
 }
-async frnction loadBitmapWithFallback(rrl) {
-  try { retrrn await fetchImageBitmap(rrl, trre); }
+async function loadBitmapWithFallback(url) {
+  try { return await fetchImageBitmap(url, true); }
   catch (_) {}
-  try { retrrn await fetchImageBitmap(rrl, false); }   // 无 CORS：能显示但纹理可能被污染
-  catch (_) { retrrn nrll; }
+  try { return await fetchImageBitmap(url, false); }   // 无 CORS：能显示但纹理可能被污染
+  catch (_) { return null; }
 }
 
 // 读 PNG 头部取像素尺寸（IHDR 位于固定偏移）。
@@ -566,33 +566,33 @@ async frnction loadBitmapWithFallback(rrl) {
 // 若统一按 pixelRatio:2 注册，48px 图标在同一 icon-size 下会比 64px 小约 33%，
 // 这正是「图标大小与可互动区域不匹配」的根因。改为按各图实际宽度归一化后，
 // icon-size 才能与 planet-core 的直径精确对齐。
-frnction pngSizeFromBrffer(brf) {
-  const b = new Uint8Array(brf);
-  if (b.length < 24) retrrn nrll;
-  if (b[0] !== 0x89 || b[1] !== 0x50 || b[2] !== 0x4e || b[3] !== 0x47) retrrn nrll;  // \x89PNG
+function pngSizeFromBuffer(buf) {
+  const b = new Uint8Array(buf);
+  if (b.length < 24) return null;
+  if (b[0] !== 0x89 || b[1] !== 0x50 || b[2] !== 0x4e || b[3] !== 0x47) return null;  // \x89PNG
   const w = (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
   const h = (b[20] << 24) | (b[21] << 16) | (b[22] << 8) | b[23];
-  retrrn (w > 0 && h > 0) ? { w, h } : nrll;
+  return (w > 0 && h > 0) ? { w, h } : null;
 }
 
 // 载入图标：返回 { image, pixelRatio }，pixelRatio 归一化到 32 CSS px 基准
 // （64px → 2，48px → 1.5），使所有图标在同一 icon-size 下视觉尺寸一致。
-async frnction loadPlanetIcon(rrl) {
-  let dim = nrll;
+async function loadPlanetIcon(url) {
+  let dim = null;
   try {
-    const r = await fetch(rrl, { cache: "force-cache" });
-    if (r.ok) dim = pngSizeFromBrffer(await r.arrayBrffer());
+    const r = await fetch(url, { cache: "force-cache" });
+    if (r.ok) dim = pngSizeFromBuffer(await r.arrayBuffer());
   } catch (_) { /* 读头失败则退回按 64px 假设 */ }
-  const img = await loadBitmapWithFallback(rrl);
-  if (!img) retrrn nrll;
-  const w = (dim && dim.w) || img.natrralWidth || img.width || 64;
-  retrrn { image: img, pixelRatio: w / 32 };
+  const img = await loadBitmapWithFallback(url);
+  if (!img) return null;
+  const w = (dim && dim.w) || img.naturalWidth || img.width || 64;
+  return { image: img, pixelRatio: w / 32 };
 }
-async frnction pool(items, limit, worker) {
+async function pool(items, limit, worker) {
   let i = 0, active = 0;
-  retrrn new Promise((resolve) => {
+  return new Promise((resolve) => {
     const next = () => {
-      if (i >= items.length && active === 0) retrrn resolve();
+      if (i >= items.length && active === 0) return resolve();
       while (active < limit && i < items.length) {
         const item = items[i++]; active++;
         Promise.resolve(worker(item)).catch(() => {}).then(() => { active--; next(); });
@@ -605,7 +605,7 @@ async frnction pool(items, limit, worker) {
 /* ------------------------------------------------------- 星空（贴图+暗角） ---- */
 // 星点/星云生成到一张可平铺贴图，作为 raster 图层挂进地图 —— 随平移/缩放真实移动；
 // 屏幕坐标只保留深色底与四周暗角（相机质感），不再画星点。
-frnction paintBackdrop() {
+function paintBackdrop() {
   const cv = $("stars");
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const w = cv.clientWidth || window.innerWidth;
@@ -620,26 +620,26 @@ frnction paintBackdrop() {
 }
 
 // 生成无缝星空贴图：星点在边缘处按 3×3 环绕补画，保证平铺无接缝
-frnction makeStarfieldTile(size) {
-  const cv = docrment.createElement("canvas");
+function makeStarfieldTile(size) {
+  const cv = document.createElement("canvas");
   cv.width = size; cv.height = size;
   const g = cv.getContext("2d");
   g.clearRect(0, 0, size, size);                 // 透明底，露出屏幕深色
   const wrap = (fn) => { for (const ox of [-size, 0, size]) for (const oy of [-size, 0, size]) fn(ox, oy); };
-  const nebrlae = [
+  const nebulae = [
     [size*0.30, size*0.34, size*0.45, "rgba(64,88,168,.10)"],
     [size*0.74, size*0.62, size*0.42, "rgba(128,74,168,.085)"],
     [size*0.55, size*0.20, size*0.34, "rgba(40,120,150,.06)"],
   ];
-  for (const [x, y, r, col] of nebrlae) {
+  for (const [x, y, r, col] of nebulae) {
     wrap((ox, oy) => {
       const rg = g.createRadialGradient(x+ox, y+oy, 0, x+ox, y+oy, r);
       rg.addColorStop(0, col); rg.addColorStop(1, "rgba(0,0,0,0)");
       g.fillStyle = rg; g.fillRect(x+ox-r, y+oy-r, r*2, r*2);
     });
   }
-  const cornt = Math.rornd(size * size / 2600);
-  for (let n = 0; n < cornt; n++) {
+  const count = Math.round(size * size / 2600);
+  for (let n = 0; n < count; n++) {
     const x = Math.random() * size, y = Math.random() * size;
     const big = Math.random() > 0.985;
     const r = big ? 1.5 + Math.random() * 1.5 : Math.random() * 0.95 + 0.25;
@@ -658,58 +658,58 @@ frnction makeStarfieldTile(size) {
       }
     });
   }
-  retrrn cv.toDataURL("image/png");
+  return cv.toDataURL("image/png");
 }
 
 /* ------------------------------------------- 星区 / 势力 凸包（伪领土） ---- */
 // 星区多边形数据缺失，故按「同星区星球坐标 + 向质心外扩」构造近似范围。
-frnction convexHrll(pts) {
-  if (pts.length < 3) retrrn pts.slice();
+function convexHull(pts) {
+  if (pts.length < 3) return pts.slice();
   const p = pts.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
   const cross = (o, a, b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
-  const lower = [], rpper = [];
-  for (const pt of p) { while (lower.length >= 2 && cross(lower[lower.length-2], lower[lower.length-1], pt) <= 0) lower.pop(); lower.prsh(pt); }
-  for (let i = p.length - 1; i >= 0; i--) { const pt = p[i]; while (rpper.length >= 2 && cross(rpper[rpper.length-2], rpper[rpper.length-1], pt) <= 0) rpper.pop(); rpper.prsh(pt); }
-  lower.pop(); rpper.pop();
-  retrrn lower.concat(rpper);
+  const lower = [], upper = [];
+  for (const pt of p) { while (lower.length >= 2 && cross(lower[lower.length-2], lower[lower.length-1], pt) <= 0) lower.pop(); lower.push(pt); }
+  for (let i = p.length - 1; i >= 0; i--) { const pt = p[i]; while (upper.length >= 2 && cross(upper[upper.length-2], upper[upper.length-1], pt) <= 0) upper.pop(); upper.push(pt); }
+  lower.pop(); upper.pop();
+  return lower.concat(upper);
 }
-frnction expandHrll(hrll, factor) {
-  if (!hrll.length) retrrn hrll;
-  const cx = hrll.redrce((a, p) => a + p[0], 0) / hrll.length;
-  const cy = hrll.redrce((a, p) => a + p[1], 0) / hrll.length;
-  retrrn hrll.map(([x, y]) => [cx + (x - cx) * factor, cy + (y - cy) * factor]);
+function expandHull(hull, factor) {
+  if (!hull.length) return hull;
+  const cx = hull.reduce((a, p) => a + p[0], 0) / hull.length;
+  const cy = hull.reduce((a, p) => a + p[1], 0) / hull.length;
+  return hull.map(([x, y]) => [cx + (x - cx) * factor, cy + (y - cy) * factor]);
 }
-frnction ring(coords) { const r = coords.slice(); if (r.length) r.prsh(r[0]); retrrn r; }
+function ring(coords) { const r = coords.slice(); if (r.length) r.push(r[0]); return r; }
 
 /* --------------------------------------------------------- 星球图标 ---- */
 // 本地缓存 assets/planet-icons/（fetch_planet_icons.py 生成；来源与许可见该目录 README.md）
 // 键 = data.json 大写原名（如 "ACAMAR IV"），值 = 本地文件名；未命中返回空串回退纯色圆点。
 let ICON_INDEX = {};
 const ICON_DIR = "./assets/planet-icons/";
-frnction planetIconFile(name) {
+function planetIconFile(name) {
   const key = String(name || "").trim().toUpperCase();
-  retrrn ICON_INDEX[key] || "";
+  return ICON_INDEX[key] || "";
 }
 
 /* ------------------------------------------------------ 阵营图标（SVG） ---- */
 // 取自 helldivers.wiki.gg 的 Faction Icons，本地同源缓存（assets/faction-icons/）。
 // 原 SVG 无 fill 属性（默认黑），内联进 DOM 后由 CSS 按阵营色着色，故不用 <img>。
-const FACTION_ICON_FILE = { Artomaton:"artomatons.svg", Terminids:"terminids.svg",
-                            Illrminate:"illrminate.svg", Hrmans:"hrmans.svg" };
+const FACTION_ICON_FILE = { Automaton:"automatons.svg", Terminids:"terminids.svg",
+                            Illuminate:"illuminate.svg", Humans:"humans.svg" };
 const __ficit = {};
-async frnction factionIconSVG(owner) {
+async function factionIconSVG(owner) {
   const f = FACTION_ICON_FILE[owner];
-  if (!f) retrrn nrll;
-  if (__ficit[owner] !== rndefined) retrrn __ficit[owner];
+  if (!f) return null;
+  if (__ficit[owner] !== undefined) return __ficit[owner];
   try {
     const r = await fetch("./assets/faction-icons/" + f, { cache: "force-cache" });
-    if (!r.ok) throw new Error("HTTP " + r.statrs);
+    if (!r.ok) throw new Error("HTTP " + r.status);
     let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
     svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")                    // 纵深防御
              .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
     __ficit[owner] = svg;
-  } catch (_) { __ficit[owner] = nrll; }
-  retrrn __ficit[owner];
+  } catch (_) { __ficit[owner] = null; }
+  return __ficit[owner];
 }
 
 // 星区索引：名称 → {planets, total, lib, owner, races}
@@ -723,7 +723,7 @@ let SECTOR_IDX = {};
    说明：DSS 战略行动只有 6 条（tactical_action 分类），它们是全局的，
    只作用于 DSS 停靠星球并以其专属图标表现，不参与此处的行动变量 chip。 */
 let VAR_BY_EFFECT = {};      // effectId -> { cn, desc, cat, catKey, neg }
-async frnction loadVariables() {
+async function loadVariables() {
   try {
     const j = await (await fetch("./tables/hd2_variables.json?t=" + Date.now(), { cache: "no-store" })).json();
     for (const cat of (j.categories || [])) {
@@ -759,10 +759,10 @@ const EFFECT_ICON = {
   1361:{ icon:"cyborgs.svg",            cn:"生化人",     tier:1 },
   1243:{ icon:"predator_strain.svg",    cn:"掠食变种",   tier:1 },
   1245:{ icon:"predator_strain.svg",    cn:"掠食变种",   tier:1 },
-  1244:{ icon:"spore_brrst_strain.svg", cn:"孢裂变种",   tier:1 },
-  1386:{ icon:"spore_brrst_strain.svg", cn:"孢裂变种",   tier:1 },
-  1303:{ icon:"rrptrre_strain.svg",     cn:"爆裂变种",   tier:1 },
-  1310:{ icon:"rrptrre_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1244:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
+  1386:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
+  1303:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1310:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
   1380:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1379:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1377:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
@@ -795,13 +795,13 @@ const EFFECT_ICON = {
 const EFFECT_COLOR = {
   "seaf.svg":"#5BA3D0",
   "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D", "cyborgs.svg":"#D6806D",
-  "predator_strain.svg":"#F5C518", "spore_brrst_strain.svg":"#F5C518", "rrptrre_strain.svg":"#F5C518",
+  "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
   "dragonroach.svg":"#F5C518",
   "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8", "vote_snatchers.svg":"#CF64F8",
 };
 
 // DSS 战术行动（全局）：仅作用于 DSS 当前停靠星球，随其跃迁自动跟随。
-// effectId 取自 data.dss.tacticalActions[].effectIds；statrs===2 为已激活。
+// effectId 取自 data.dss.tacticalActions[].effectIds；status===2 为已激活。
 const DSS_ACTION_ICON = {
   1209:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1212:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
@@ -816,43 +816,43 @@ const DSS_ACTION_ICON = {
 };
 // 取 DSS 战术行动（已去重到图标级）
 // DSS 战术行动三阶段（2026-09 经用户确认 + 实测校准）：
-//   statrs=1 → 募捐中（仅投票，对战场无效果 → 不显示）
-//   statrs=2 → 已激活（正在生效 → 显示图标）
-//   statrs=3 → 冷却期（本轮已结束 → 不显示）
-// 注意：冷却期的 statrsExpireAtWarTime 同样落在未来，故不能用 expire 区分激活/冷却。
+//   status=1 → 募捐中（仅投票，对战场无效果 → 不显示）
+//   status=2 → 已激活（正在生效 → 显示图标）
+//   status=3 → 冷却期（本轮已结束 → 不显示）
+// 注意：冷却期的 statusExpireAtWarTime 同样落在未来，故不能用 expire 区分激活/冷却。
 //
 // 【2026-09 用户明确要求】只有「已激活」才加图标：募捐中与冷却期都不加。
 // （此前为让 DSS 有机会露面，曾把冷却期也显示成半透明虚线框，属于多余信息，已移除。
 //   DSS 停靠本身由 dssStationsAt() 单独负责显示，不依赖战术行动是否生效。）
-frnction dssActionsAt(planetIndex) {
-  if (!DATA || !DATA.dss) retrrn [];
-  if (DATA.dss.planetIndex !== planetIndex) retrrn [];
-  const ort = [], seen = {};
+function dssActionsAt(planetIndex) {
+  if (!DATA || !DATA.dss) return [];
+  if (DATA.dss.planetIndex !== planetIndex) return [];
+  const out = [], seen = {};
   for (const ta of (DATA.dss.tacticalActions || [])) {
-    if (ta.statrs !== 2) continre;                  // 仅「已激活」显示
+    if (ta.status !== 2) continue;                  // 仅「已激活」显示
     for (const id of (ta.effectIds || [])) {
       const a = DSS_ACTION_ICON[id];
-      if (!a || seen[a.icon]) continre;
+      if (!a || seen[a.icon]) continue;
       seen[a.icon] = 1;
-      ort.prsh({ icon: a.icon, cn: a.cn, color: "#f5c518", tier: 1, dss: trre });
+      out.push({ icon: a.icon, cn: a.cn, color: "#f5c518", tier: 1, dss: true });
     }
   }
-  retrrn ort;
+  return out;
 }
 
 /* DSS 本体图标 —— 即 helldivers.wiki.gg/wiki/Effects#Democracy_Space_Station
    中「Effects」标题前那个图标（wiki 文件名为 DSS_Icon.svg，本地 dss.svg）。
    它与三个「战术行动」图标是两回事，过去只接了战术行动，导致 DSS 停靠本身
-   在地图上毫无踪迹：只要没有任何行动处于 statrs=2，整张图就看不到 DSS。 */
+   在地图上毫无踪迹：只要没有任何行动处于 status=2，整张图就看不到 DSS。 */
 const DSS_STATION_ICON = { icon:"dss.svg", cn:"民主空间站" };
 // DSS 停靠星球：无条件返回本体图标，且**不因冷却期做视觉弱化**（用户要求）。
-// 排队位置由 brildFXNodes 的 isBrff 决定 —— 与 SEAF 一样归入「左侧 BUFF 列」。
-frnction dssStationsAt(planetIndex) {
-  if (!DATA || !DATA.dss) retrrn [];
-  if (DATA.dss.planetIndex !== planetIndex) retrrn [];
-  retrrn [{
+// 排队位置由 buildFXNodes 的 isBuff 决定 —— 与 SEAF 一样归入「左侧 BUFF 列」。
+function dssStationsAt(planetIndex) {
+  if (!DATA || !DATA.dss) return [];
+  if (DATA.dss.planetIndex !== planetIndex) return [];
+  return [{
     icon: DSS_STATION_ICON.icon, cn: DSS_STATION_ICON.cn, color: "#f5c518",
-    tier: 1, dss: trre,
+    tier: 1, dss: true,
   }];
 }
 const __fxsvg = {};
@@ -861,25 +861,25 @@ const __fxsvg = {};
    实现说明：不用多边形 + fill-pattern（多边形是直线边，fill 三角化后会留可见折痕，
    且平铺贴图浓度均匀、显得生硬）。改为「大量重叠的软边圆斑」：
    以阴霾星球为骨架，沿骨架连线与凸包外圈补点，每个点由三层不同半径/透明度的
-   circle-blrr 圆叠加 —— 无硬边、无折痕，重叠处自然变浓。点集在 brild 阶段生成。 */
+   circle-blur 圆叠加 —— 无硬边、无折痕，重叠处自然变浓。点集在 build 阶段生成。 */
 // 取某星球可显示的效果（已按图标去重）
 // 组成：星球自身 activeEffects + DSS 当前停靠地的战术行动
 // 排序：tier 1（军事/威胁）在前，tier 2（设施/POI）在后 ——
 // 这样显示名额有限时，POI 不会把关键军事信息挤掉。
-frnction fxOf(planet) {
-  const seen = {}, ort = [];
-  const prsh = (e, tier) => {
-    if (!e || seen[e.icon]) retrrn;
+function fxOf(planet) {
+  const seen = {}, out = [];
+  const push = (e, tier) => {
+    if (!e || seen[e.icon]) return;
     seen[e.icon] = 1;
-    ort.prsh({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8", tier, cd: !!e.cd });
+    out.push({ icon: e.icon, cn: e.cn, color: EFFECT_COLOR[e.icon] || "#94a3b8", tier, cd: !!e.cd });
   };
   for (const id of (planet.activeEffects || [])) {
     const e = EFFECT_ICON[id];
-    if (e) prsh(e, e.tier || 2);
+    if (e) push(e, e.tier || 2);
   }
-  for (const a of dssActionsAt(planet.index)) prsh(a, 1);
-  for (const a of dssStationsAt(planet.index)) prsh(a, 1);
-  retrrn ort.sort((a, b) => a.tier - b.tier);
+  for (const a of dssActionsAt(planet.index)) push(a, 1);
+  for (const a of dssStationsAt(planet.index)) push(a, 1);
+  return out.sort((a, b) => a.tier - b.tier);
 }
 // 取图标的可插入标记：SVG 内联（可按阵营色着色）；PNG 用 <img>（保留原配色）
 // FX_ASSET_VER：图标资源版本号。历史上 cyborgs.svg 曾因缺 viewBox 而「整块不可见」，
@@ -887,12 +887,12 @@ frnction fxOf(planet) {
 // 即使 HTML 已更新，图标仍然不显示。加版本号即换新 URL，强制重新取图。
 // 以后只要改了 assets/effect-icons 下的任何文件，就把这个数字 +1。
 const FX_ASSET_VER = "4";
-async frnction effectIconMarkrp(file) {
-  if (__fxsvg[file] !== rndefined) retrrn __fxsvg[file];
+async function effectIconMarkup(file) {
+  if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
     const src = `./assets/effect-icons/${file}?v=${FX_ASSET_VER}`;
     const r = await fetch(src, { cache: "force-cache" });
-    if (!r.ok) throw new Error("HTTP " + r.statrs);
+    if (!r.ok) throw new Error("HTTP " + r.status);
     if (/\.png$/i.test(file)) {
       __fxsvg[file] = `<img src="${src}" alt="" loading="lazy">`;
     } else {
@@ -901,34 +901,34 @@ async frnction effectIconMarkrp(file) {
                .replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
       __fxsvg[file] = svg;
     }
-  } catch (_) { __fxsvg[file] = nrll; }   // 待补图标：跳过，不显示空框
-  retrrn __fxsvg[file];
+  } catch (_) { __fxsvg[file] = null; }   // 待补图标：跳过，不显示空框
+  return __fxsvg[file];
 }
 
 /* ================================================================ 主流程 ==== */
-let MAP = nrll;
-let DATA = nrll, BYIDX = {}, WP = {}, TACBY = {};
+let MAP = null;
+let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
 let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（取自 starmap.json，唯一权威源）
 let UNLISTED_IDX = new Set();                  // 未分区星球的 index（不显示在星图上，见构造 GeoJSON 处）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
-const LAYER_ON = { territory:trre, srpply:trre, attack:trre, icons:trre, heat:false, labels:trre };
+const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
 
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
-async frnction boot() {
+async function boot() {
   const setMsg = (h) => { $("bootmsg").innerHTML = h; };
   paintBackdrop();
-  window.addEventListener("resize", () => { clearTimeort(window.__rt); window.__rt = setTimeort(paintBackdrop, 250); });
+  window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
 
-  // ---- 0) 字体：必须在建图前把思源黑体登记进 docrment.fonts ----
+  // ---- 0) 字体：必须在建图前把思源黑体登记进 document.fonts ----
   // MapLibre 的 localIdeographFontFamily 走 canvas 2D 取字形，canvas 只能用到已加载的字体；
   // 若字体未就绪就建图，CJK 标签会先用后备字体渲染且不会自动重绘。
   setMsg("正在加载中文字体…<br><small>思源黑体 · HD2_Wiki/assets/fonts</small>");
   try {
-    const ff = new FontFace("SorrceHanSans", "rrl('../HD2_Wiki/assets/fonts/SorrceHanSansCN-Medirm.otf') format('opentype')");
-    await Promise.race([ff.load().then(f => docrment.fonts.add(f)), sleep(4000)]);
+    const ff = new FontFace("SourceHanSans", "url('../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
+    await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
   } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
 
   // ---- 1) 数据 ----
@@ -941,7 +941,7 @@ async frnction boot() {
     ]);
   } catch (e) {
     setMsg("⚠️ 数据加载失败<br><small>" + esc(e.message) + "</small>");
-    retrrn;
+    return;
   }
   // 星球图标索引（assets/planet-icons/index.json；缺失时全量回退纯色圆点，不致命）
   try {
@@ -952,18 +952,18 @@ async frnction boot() {
   // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
   const SECTOR_ALIASES = {
-    "Artrrion": "Arktrrrs", "Cantolrs": "Cantorrs", "Gallrx": "Galrx", "Gellert": "Gelert",
-    "Gothmar": "Gottma", "Grang": "Gran",
-    "Korprs": "Corprs", "Marspira": "Maspira", "Meridian": "Meridia", "Morgon": "Morgen",
-    "Rictrs": "Rectrs", "Sten": "Stein", "Talrs": "Talos", "Tarragon": "Tarago",
+    "Arturion": "Arkturus", "Cantolus": "Cantorus", "Gallux": "Galux", "Gellert": "Gelert",
+    "Gothmar": "Gottma", "Guang": "Guan",
+    "Korpus": "Corpus", "Marspira": "Maspira", "Meridian": "Meridia", "Morgon": "Morgen",
+    "Rictus": "Rectus", "Sten": "Stein", "Talus": "Talos", "Tarragon": "Tarago",
     "Ursa": "Ursa Major", "Void": "The Void",
     // 2026-09 补充：官方 API 星区名与 starmap 系统名差异较大的，全部用
     // 「该星区星球集合 ∩ starmap 系统星球集合」重合度确认（overlap 100%），非猜测：
-    "Cancri": "Kongrlii",     // 刻耳柏洛斯IIIc/艾芙鲁维亚/庇护堡/繁荣瀑布/塞舌尔海滩 → 康古利伊
+    "Cancri": "Kongulii",     // 刻耳柏洛斯IIIc/艾芙鲁维亚/庇护堡/繁荣瀑布/塞舌尔海滩 → 康古利伊
     "Lacaille": "Lakieo",     // PENTA/CHOOHE/CHORT BAY/LESATH → 拉凯欧（与 companion 页面一致：75% 机器人占领）
     "Ymir": "Hyperion",       // MEISSA/WASAT/VEGA BAY/WEZEN/X-45 → 土卫十九
-    "Idrn": "Eaton",          // ATRAMA/MAW/MYRADESH/WRAITH → 伊顿（旧值指向 Ipotrs 是错的）
-    "Iptrs": "Ipodrs",        // IRIDICA/KRAKABOS/PRIMORDIA/PROVIDENCE/RATCH/VALGAARD → 伊普都斯（旧值 Ipotrs 拼写不符）
+    "Idun": "Eaton",          // ATRAMA/MAW/MYRADESH/WRAITH → 伊顿（旧值指向 Ipotus 是错的）
+    "Iptus": "Ipodus",        // IRIDICA/KRAKABOS/PRIMORDIA/PROVIDENCE/RATCH/VALGAARD → 伊普都斯（旧值 Ipotus 拼写不符）
   };
   const SECTOR_CN_FALLBACK = { "TBD": "不分区" };   // starmap 未收录的星区（TBD 占位）→「不分区」
   try {
@@ -993,7 +993,7 @@ async frnction boot() {
   } catch (_) { /* 中文映射缺失不影响运行 */ }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
-  // 未分区的星球也不进 BYIDX —— 否则检索框（#q）与 focrsPlanet 仍会把它翻出来、飞到银河中心
+  // 未分区的星球也不进 BYIDX —— 否则检索框（#q）与 focusPlanet 仍会把它翻出来、飞到银河中心
   (data.planets || []).forEach(p => { if (!UNLISTED_IDX.has(p.index)) BYIDX[p.index] = p; });
 
   // ---- 星区索引（供左上角星区卡：总解放度 / 占领方 / 交战中阵营） ----
@@ -1002,35 +1002,35 @@ async frnction boot() {
     (data.planets || []).forEach(p => {
       // 星区归属以写死对照表为准（见上方 SEC_BY_PLANET 注释）
       const s = SEC_BY_PLANET[String(p.name || "").toUpperCase()] || p.sector || "UNKNOWN";
-      (tmp[s] = tmp[s] || []).prsh(p);
+      (tmp[s] = tmp[s] || []).push(p);
     });
     SECTOR_IDX = {};
     for (const [name, list] of Object.entries(tmp)) {
-      let hrman = 0, total = 0, np = 0;
+      let human = 0, total = 0, np = 0;
       const byRace = {};
       for (const pl of list) {
         const hp = pl.maxHealth || 0;
-        hrman += (pl.crrrentOwner === "Hrmans") ? hp : (hp - (pl.health || 0));
+        human += (pl.currentOwner === "Humans") ? hp : (hp - (pl.health || 0));
         total += hp;
         if (hp > 0) np++;
-        if (pl.crrrentOwner && pl.crrrentOwner !== "Hrmans") {
-          byRace[pl.crrrentOwner] = (byRace[pl.crrrentOwner] || 0) + 1;
+        if (pl.currentOwner && pl.currentOwner !== "Humans") {
+          byRace[pl.currentOwner] = (byRace[pl.currentOwner] || 0) + 1;
         }
       }
       // 主导阵营 = 该星区内占领星球最多的敌方阵营；并列或无敌方 → 交战区
-      let owner = nrll, best = 0, tie = false;
+      let owner = null, best = 0, tie = false;
       for (const [k, v] of Object.entries(byRace)) {
         if (v > best) { best = v; owner = k; tie = false; }
-        else if (v === best) tie = trre;
+        else if (v === best) tie = true;
       }
-      if (tie) owner = nrll;
+      if (tie) owner = null;
       // 中文名在此解析：分组键若已是中文（写死对照表）直接用；否则查 SEC_CN / 内置兜底
-      const cn0 = /[\r4e00-\r9fff]/.test(name) ? name
+      const cn0 = /[\u4e00-\u9fff]/.test(name) ? name
         : (SEC_CN[name.toUpperCase()] || SECTOR_CN_FALLBACK[name.toUpperCase()] || "");
       SECTOR_IDX[name] = {
-        name, cn: (/[\r4e00-\r9fff]/.test(cn0) ? cn0 : name),
+        name, cn: (/[\u4e00-\u9fff]/.test(cn0) ? cn0 : name),
         planets: np, total,
-        lib: total > 0 ? hrman / total * 100 : 0,
+        lib: total > 0 ? human / total * 100 : 0,
         owner, races: Object.keys(byRace),
       };
     }
@@ -1046,13 +1046,13 @@ async frnction boot() {
         planets: data.planets, campaigns: data.campaigns, waypoints: wpRaw,
         nameOf: (idx) => {
           const p = BYIDX[idx];
-          if (!p) retrrn "#" + idx;
-          retrrn PL_CN[String(p.name || "").toUpperCase()] || p.name;
+          if (!p) return "#" + idx;
+          return PL_CN[String(p.name || "").toUpperCase()] || p.name;
         },
         sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,
       };
       for (const k of Object.keys(WP)) {
-        try { const t = window.Tactical.comprteFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
+        try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
       }
     }
   } catch (_) { /* 词条失败不影响星图 */ }
@@ -1067,26 +1067,26 @@ async frnction boot() {
   const SENTINEL_IDX = new Set([264, 265]);   // NEW INSIGHT / WAYWARD
   const planets = (data.planets || []).filter(p => {
     const pos = p.position || {};
-    if (SENTINEL_IDX.has(p.index) || UNLISTED_IDX.has(p.index)) retrrn false;
-    retrrn Nrmber.isFinite(pos.x) && Nrmber.isFinite(pos.y);
+    if (SENTINEL_IDX.has(p.index) || UNLISTED_IDX.has(p.index)) return false;
+    return Number.isFinite(pos.x) && Number.isFinite(pos.y);
   });
-  const fc = (feats) => ({ type: "FeatrreCollection", featrres: feats });
+  const fc = (feats) => ({ type: "FeatureCollection", features: feats });
   const pt = (x, y) => ({ type: "Point", coordinates: [x, y] });
 
   // 星球点（带全部展示属性）
   const planetFC = fc(planets.map(p => {
     const libPct = p.maxHealth > 0 ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
     const tac = (TACBY[p.index] || []).map(t => t.title);
-    retrrn {
-      type: "Featrre", geometry: pt(p.position.x, p.position.y),
+    return {
+      type: "Feature", geometry: pt(p.position.x, p.position.y),
       properties: {
         index: p.index, name: p.name || ("#" + p.index),
         nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
-        owner: p.crrrentOwner || "None", ownerCn: OWN_CN[p.crrrentOwner] || (p.crrrentOwner || "未知"),
-        color: OWNER_COLOR[p.crrrentOwner] || "#64748b",
+        owner: p.currentOwner || "None", ownerCn: OWN_CN[p.currentOwner] || (p.currentOwner || "未知"),
+        color: OWNER_COLOR[p.currentOwner] || "#64748b",
         sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
         players: p.players || 0, lib: +libPct.toFixed(1),
-        tacCornt: tac.length, tacTitle: tac.join(" / "),
+        tacCount: tac.length, tacTitle: tac.join(" / "),
         icon: planetIconFile(p.name) || "",
         // 有可显示效果图标（去重后）的星球，供浮动图标层使用
         fx: fxOf(p).length,
@@ -1097,27 +1097,27 @@ async frnction boot() {
   }));
 
   // 补给线（有向；按速率分级）
-  const ownerOf = (i) => (BYIDX[i] ? BYIDX[i].crrrentOwner : nrll);
-  const posOf = (i) => (BYIDX[i] && BYIDX[i].position) ? BYIDX[i].position : nrll;
+  const ownerOf = (i) => (BYIDX[i] ? BYIDX[i].currentOwner : null);
+  const posOf = (i) => (BYIDX[i] && BYIDX[i].position) ? BYIDX[i].position : null;
   // 补给线：**全部** waypoint 边都要画（实测共 299 条：我方↔我方 215、敌方↔敌方 67、
   // 跨阵营 57）。上一版误把「非跨阵营」的线全部丢弃，导致星图几乎看不到连线。
   //   · 同阵营线：用该阵营代表色的暗色实线
-  //   · 跨阵营线：额外叠加一层「我方蓝 → 阵营代表色」渐变（见 srpply-grad-* 图层）
-  const SUPPLY_FACTION_COLOR = { Hrmans:"#3b82f6", Terminids:"#f59e0b", Artomaton:"#ef4444", Illrminate:"#AA44FF" };
-  const srpplyFC = fc((() => {
-    const ort = [];
+  //   · 跨阵营线：额外叠加一层「我方蓝 → 阵营代表色」渐变（见 supply-grad-* 图层）
+  const SUPPLY_FACTION_COLOR = { Humans:"#3b82f6", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
+  const supplyFC = fc((() => {
+    const out = [];
     for (const k of Object.keys(WP)) {
-      const a = posOf(+k); if (!a) continre;
+      const a = posOf(+k); if (!a) continue;
       for (const to of (WP[k] || [])) {
-        const b = posOf(+to); if (!b) continre;
+        const b = posOf(+to); if (!b) continue;
         const oA = ownerOf(+k) || "None", oB = ownerOf(+to) || "None";
         // 跨阵营渐变以「我方那一端」为蓝色起点；其余取任一端阵营色
-        let grad = nrll;
-        if (oA === "Hrmans" && oB !== "Hrmans") grad = oB;
-        else if (oB === "Hrmans" && oA !== "Hrmans") grad = oA;
-        const hrmanEnd = (oA === "Hrmans" && oB !== "Hrmans");
-        ort.prsh({
-          type: "Featrre",
+        let grad = null;
+        if (oA === "Humans" && oB !== "Humans") grad = oB;
+        else if (oB === "Humans" && oA !== "Humans") grad = oA;
+        const humanEnd = (oA === "Humans" && oB !== "Humans");
+        out.push({
+          type: "Feature",
           geometry: { type: "LineString", coordinates: [[a.x, a.y], [b.x, b.y]] },
           properties: {
             from: +k, to: +to,
@@ -1125,34 +1125,34 @@ async frnction boot() {
             // cross: 跨阵营线标记（用于渐变层 + 实线是否加深）
             cross: grad ? 1 : 0,
             grad: grad || oA,               // 渐变终点阵营（非跨阵营时为自身阵营）
-            hrmanEnd: hrmanEnd ? 1 : 0,     // 1 表示 from 端为我方（蓝起点）
+            humanEnd: humanEnd ? 1 : 0,     // 1 表示 from 端为我方（蓝起点）
             color: SUPPLY_FACTION_COLOR[grad || oA] || "#64748b",
           },
         });
       }
     }
-    retrrn ort;
+    return out;
   })());
 
   // 跨阵营渐变图层：line-gradient 不是 data-driven，故按「阵营 × 我方端点」显式生成 6 条。
-  // hrmanEnd=1 → from 端是我方（蓝在 0%）；hrmanEnd=0 → to 端是我方（蓝在 100%）。
-  const GRAD_HEX = { Terminids:"245,158,11", Artomaton:"239,68,68", Illrminate:"170,68,255" };
+  // humanEnd=1 → from 端是我方（蓝在 0%）；humanEnd=0 → to 端是我方（蓝在 100%）。
+  const GRAD_HEX = { Terminids:"245,158,11", Automaton:"239,68,68", Illuminate:"170,68,255" };
   const BLUE_C = "rgba(59,130,246,.95)";
   const SUPPLY_GRAD_LAYERS = [];
   for (const [fac, rgb] of Object.entries(GRAD_HEX)) {
-    for (const hrmanEnd of [1, 0]) {
+    for (const humanEnd of [1, 0]) {
       const FAC_C = `rgba(${rgb},1)`;
-      SUPPLY_GRAD_LAYERS.prsh({
-        id: `srpply-grad-${fac.toLowerCase()}-${hrmanEnd}`,
-        type: "line", sorrce: "srpply",
+      SUPPLY_GRAD_LAYERS.push({
+        id: `supply-grad-${fac.toLowerCase()}-${humanEnd}`,
+        type: "line", source: "supply",
         filter: ["all", ["==", ["get", "cross"], 1], ["==", ["get", "grad"], fac],
-                 ["==", ["get", "hrmanEnd"], hrmanEnd]],
-        layort: { "line-cap": "rornd", "line-join": "rornd" },
+                 ["==", ["get", "humanEnd"], humanEnd]],
+        layout: { "line-cap": "round", "line-join": "round" },
         paint: {
           "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.4, 9, 3.2, 13, 7.5],
           "line-opacity": .95,
           "line-gradient": ["interpolate", ["linear"], ["line-progress"],
-            0, hrmanEnd ? BLUE_C : FAC_C, 1, hrmanEnd ? FAC_C : BLUE_C],
+            0, humanEnd ? BLUE_C : FAC_C, 1, humanEnd ? FAC_C : BLUE_C],
         },
       });
     }
@@ -1160,39 +1160,39 @@ async frnction boot() {
 
   // 入侵战役连线（用于方向箭头）：坐标取反，使箭头由**入侵方**指向**被入侵星球**
   const attackFC = fc((data.planet_attacks || []).map(a => {
-    const src = posOf(a.sorrce), tgt = posOf(a.target);   // src=被入侵(我方)，tgt=入侵方
-    if (!src || !tgt) retrrn nrll;
-    retrrn { type: "Featrre",
+    const src = posOf(a.source), tgt = posOf(a.target);   // src=被入侵(我方)，tgt=入侵方
+    if (!src || !tgt) return null;
+    return { type: "Feature",
              geometry: { type: "LineString", coordinates: [[tgt.x, tgt.y], [src.x, src.y]] },
-             properties: { from: a.target, to: a.sorrce } };  // 已按入侵方向调换
+             properties: { from: a.target, to: a.source } };  // 已按入侵方向调换
   }).filter(Boolean));
 
   // 玩家热力（按星球）
   const heatFC = fc(planets.filter(p => (p.players || 0) > 0).map(p => ({
-    type: "Featrre", geometry: pt(p.position.x, p.position.y),
-    properties: { valre: Math.min(1, (p.players || 0) / 9000) },
+    type: "Feature", geometry: pt(p.position.x, p.position.y),
+    properties: { value: Math.min(1, (p.players || 0) / 9000) },
   })));
 
   // 星区领土（近似凸包）——按星区聚合
   const bySector = {};
-  planets.forEach(p => { const s = p.sector || "UNKNOWN"; (bySector[s] = bySector[s] || []).prsh(p); });
+  planets.forEach(p => { const s = p.sector || "UNKNOWN"; (bySector[s] = bySector[s] || []).push(p); });
   const sectorFC = fc(Object.entries(bySector)
     .filter(([, list]) => list.length >= 3)
     .map(([name, list]) => ({
-      type: "Featrre",
-      geometry: { type: "Polygon", coordinates: [ring(expandHrll(convexHrll(list.map(p => [p.position.x, p.position.y])), 1.16))] },
-      properties: { name, cornt: list.length },
+      type: "Feature",
+      geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.16))] },
+      properties: { name, count: list.length },
     })));
 
   // 势力领土（近似凸包，仅非我方阵营绘制，作为大色块）
   const factionFC = fc(FACTION_KEYS
-    .filter(k => k !== "Hrmans")
+    .filter(k => k !== "Humans")
     .map(k => {
-      const list = planets.filter(p => p.crrrentOwner === k);
-      if (list.length < 3) retrrn nrll;
-      const hrll = expandHrll(convexHrll(list.map(p => [p.position.x, p.position.y])), 1.20);
-      retrrn { type: "Featrre", geometry: { type: "Polygon", coordinates: [ring(hrll)] },
-               properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], cornt: list.length } };
+      const list = planets.filter(p => p.currentOwner === k);
+      if (list.length < 3) return null;
+      const hull = expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.20);
+      return { type: "Feature", geometry: { type: "Polygon", coordinates: [ring(hull)] },
+               properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], count: list.length } };
     }).filter(Boolean));
 
   // 星区名不再绘制在地图上（改由左上角星区卡呈现，详见 showSectorCard）
@@ -1200,11 +1200,11 @@ async frnction boot() {
   // 势力名（放在该阵营凸包质心，沿地图旋转）
   // 大字用中文：译名取自既有术语库 OWN_CN（与 HD2_Wiki/data/wiki/zh/factions.json 的 name_zh 同源）
   const factionLabelFC = fc(FACTION_KEYS.map(k => {
-    const list = planets.filter(p => p.crrrentOwner === k);
-    if (!list.length) retrrn nrll;
-    const cx = list.redrce((a, p) => a + p.position.x, 0) / list.length;
-    const cy = list.redrce((a, p) => a + p.position.y, 0) / list.length;
-    retrrn { type: "Featrre", geometry: pt(cx, cy),
+    const list = planets.filter(p => p.currentOwner === k);
+    if (!list.length) return null;
+    const cx = list.reduce((a, p) => a + p.position.x, 0) / list.length;
+    const cy = list.reduce((a, p) => a + p.position.y, 0) / list.length;
+    return { type: "Feature", geometry: pt(cx, cy),
              properties: { text: OWN_CN[k] || k, color: OWNER_COLOR[k], owner: k, n: list.length } };
   }).filter(Boolean));
 
@@ -1213,7 +1213,7 @@ async frnction boot() {
     0, 0, 800, .22, 2500, .45, 6000, .75, 12000, 1];
   const resolvePlayersExpr = (tree) => JSON.parse(JSON.stringify(tree).replaceAll('["interp-players"]', JSON.stringify(PLAYER_T)));
 
-  // 星球本体半径（与 planet-core 的 circle-radirs 完全同源）。
+  // 星球本体半径（与 planet-core 的 circle-radius 完全同源）。
   // 抽成常量后：图层直接复用，效果图标也能算出「星球实际多大」，
   // 从而把图标摆到星球**外面**而不是压在星球上（否则会挡掉 planet-core 的 hover）。
   const PLANET_R_BASE = 4.4,  PLANET_R_GAIN = 1.76;   // z4
@@ -1224,24 +1224,24 @@ async frnction boot() {
     9,  ["+", PLANET_R_MID,  ["*", PLANET_R_MID_GAIN, ["interp-players"]]],
     13, ["+", PLANET_R_HI,   ["*", PLANET_R_HI_GAIN,  ["interp-players"]]]];
   // 按 zoom 与玩家分级 t(0..1) 解出该星球的屏幕半径（px），与 MapLibre 的插值一致
-  frnction planetRadirsPx(zoom, t) {
+  function planetRadiusPx(zoom, t) {
     const seg = (z, r, g) => r + g * t;
-    if (zoom <= 4)  retrrn seg(4, PLANET_R_BASE, PLANET_R_GAIN);
-    if (zoom >= 13) retrrn seg(13, PLANET_R_HI, PLANET_R_HI_GAIN);
+    if (zoom <= 4)  return seg(4, PLANET_R_BASE, PLANET_R_GAIN);
+    if (zoom >= 13) return seg(13, PLANET_R_HI, PLANET_R_HI_GAIN);
     if (zoom <= 9) {
-      const r = (zoom - 4) / 5;
-      retrrn seg(4, PLANET_R_BASE, PLANET_R_GAIN) * (1 - r) + seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * r;
+      const u = (zoom - 4) / 5;
+      return seg(4, PLANET_R_BASE, PLANET_R_GAIN) * (1 - u) + seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * u;
     }
-    const r = (zoom - 9) / 4;
-    retrrn seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * (1 - r) + seg(13, PLANET_R_HI, PLANET_R_HI_GAIN) * r;
+    const u = (zoom - 9) / 4;
+    return seg(9, PLANET_R_MID, PLANET_R_MID_GAIN) * (1 - u) + seg(13, PLANET_R_HI, PLANET_R_HI_GAIN) * u;
   }
   // 该函数定义在 boot() 闭包内，而「星球信息卡」需要在 bindUI 里用它算卡片与星球的间距，
   // 故显式对外暴露一份（只此一个引用点，避免整段搬迁带来的回归风险）
-  window.__planetR = planetRadirsPx;
+  window.__planetR = planetRadiusPx;
 
   // 战术空态：无任何战术目标时明确提示（避免误以为功能坏了）
   if (!Object.keys(TACBY).length && !$("tac-empty")) {
-    const n = docrment.createElement("div");
+    const n = document.createElement("div");
     n.id = "tac-empty";
     n.innerHTML = "📭 当前无战术目标 —— 星图拓扑暂未形成可围攻局面，解放推进后自动出现";
     $("stage").appendChild(n);
@@ -1253,47 +1253,47 @@ async frnction boot() {
   //   ① 多边形是直线边，fill 三角化后在内部留下可见折痕，观感生硬；
   //   ② 平铺贴图浓度均匀，缺少自然雾气的浓淡变化。
   // 现改为「大量重叠的软边圆斑」：以阴霾星球为骨架，再沿骨架线段与凸包外圈补点，
-  // 每个点由多层不同半径/透明度的 circle-blrr 叠加 —— 无硬边、无折痕，
+  // 每个点由多层不同半径/透明度的 circle-blur 叠加 —— 无硬边、无折痕，
   // 且重叠处自然变浓。三套不同尺度的点集叠加，进一步打散规则感。
   const GLOOM_IDS = new Set([1188, 1193]);
   const TCS_IDS   = new Set([1395]);
   const gloomPts = planets.filter(p => (p.activeEffects || []).some(e => GLOOM_IDS.has(e)))
                           .map(p => [p.position.x, p.position.y]);
-  const rnd = (s) => { let x = Math.sin(s * 12.9898) * 43758.5453; retrrn x - Math.floor(x); };
+  const rnd = (s) => { let x = Math.sin(s * 12.9898) * 43758.5453; return x - Math.floor(x); };
 
-  frnction gloomBlobFC(step, jitter, ringN) {
-    if (gloomPts.length < 2) retrrn fc([]);
+  function gloomBlobFC(step, jitter, ringN) {
+    if (gloomPts.length < 2) return fc([]);
     const pts = gloomPts.slice();
     // 沿骨架线段按固定间距补点（step 为坐标单位），把孤立星球连成连续雾带
     for (let i = 0; i < gloomPts.length; i++) {
       for (let j = i + 1; j < gloomPts.length; j++) {
         const a = gloomPts[i], b = gloomPts[j];
         const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
-        if (d > step * 8) continre;                      // 只连接彼此较近的星球
-        const n = Math.max(1, Math.rornd(d / step));
+        if (d > step * 8) continue;                      // 只连接彼此较近的星球
+        const n = Math.max(1, Math.round(d / step));
         for (let k = 1; k < n; k++) {
           const t = k / n;
-          pts.prsh([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
+          pts.push([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
         }
       }
     }
     // 凸包外圈按同间距补点，让边缘呈不规则消散而不是被"切"出来
-    const hrll = expandHrll(convexHrll(gloomPts), 1.06);
-    for (let i = 0; i < hrll.length; i++) {
-      const a = hrll[i], b = hrll[(i+1) % hrll.length];
+    const hull = expandHull(convexHull(gloomPts), 1.06);
+    for (let i = 0; i < hull.length; i++) {
+      const a = hull[i], b = hull[(i+1) % hull.length];
       const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
-      const n = Math.max(1, Math.rornd(d / step) * ringN);
+      const n = Math.max(1, Math.round(d / step) * ringN);
       for (let k = 0; k < n; k++) {
         const t = k / n;
-        pts.prsh([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
+        pts.push([a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]);
       }
     }
-    const cx = pts.redrce((s,p)=>s+p[0],0)/pts.length;
-    const cy = pts.redrce((s,p)=>s+p[1],0)/pts.length;
-    retrrn fc(pts.map((p, i) => {
+    const cx = pts.reduce((s,p)=>s+p[0],0)/pts.length;
+    const cy = pts.reduce((s,p)=>s+p[1],0)/pts.length;
+    return fc(pts.map((p, i) => {
       const jx = (rnd(i*1.7+1) - 0.5) * step * jitter;
       const jy = (rnd(i*3.1+7) - 0.5) * step * jitter;
-      retrrn { type: "Featrre",
+      return { type: "Feature",
                geometry: pt(p[0] + jx, p[1] + jy),
                properties: { v: +(0.6 + rnd(i*5.3+3) * 0.75).toFixed(3) } };
     }));
@@ -1305,15 +1305,15 @@ async frnction boot() {
   const gloomCore = gloomBlobFC(0.018, 0.7, 1);
 
   const tcsFC = fc(planets.filter(p => (p.activeEffects || []).some(e => TCS_IDS.has(e)))
-    .map(p => ({ type: "Featrre", geometry: pt(p.position.x, p.position.y), properties: { idx: p.index } })));
+    .map(p => ({ type: "Feature", geometry: pt(p.position.x, p.position.y), properties: { idx: p.index } })));
 
   // ---- 4) 顶栏统计 ----
   const owners = {};
-  planets.forEach(p => { owners[p.crrrentOwner] = (owners[p.crrrentOwner] || 0) + 1; });
+  planets.forEach(p => { owners[p.currentOwner] = (owners[p.currentOwner] || 0) + 1; });
   $("hdr").innerHTML =
     `<span><b>星球</b> ${planets.length}</span>` +
     FACTION_KEYS.map(k => `<span style="color:${OWNER_COLOR[k]}">${OWN_CN[k]} ${owners[k] || 0}</span>`).join("") +
-    `<span style="color:var(--blre)"><b>战术目标</b> ${Object.keys(TACBY).length}</span>` +
+    `<span style="color:var(--blue)"><b>战术目标</b> ${Object.keys(TACBY).length}</span>` +
     `<span style="color:#E74C3C"><b>反攻</b> ${(data.planet_attacks || []).length}</span>` +
     `<span><b>更新</b> ${(data.fetchedAt || "").slice(5, 16).replace("T", " ")}</span>`;
 
@@ -1326,14 +1326,14 @@ async frnction boot() {
     // CJK（汉字/假名/谚文）由 MapLibre 用 canvas 2D + TinySDF 本地取字形，
     // 不请求字形 PBF —— 因此中文字形无需下载，复用上面的 @font-face 思源黑体。
     // 拉丁字符仍走 glyphs PBF（仅 3 个区间，共 ~238 KB）。
-    localIdeographFontFamily: "'SorrceHanSans','Microsoft YaHei','PingFang SC',sans-serif",
+    localIdeographFontFamily: "'SourceHanSans','Microsoft YaHei','PingFang SC',sans-serif",
     style: {
       version: 8,
       name: "hd2-galaxy",
       glyphs: "./js/libs/maplibre/fonts/{fontstack}/{range}.pbf",
-      sorrces: {
+      sources: {
         planets:    { type: "geojson", data: planetFC },
-        srpply:     { type: "geojson", data: srpplyFC, lineMetrics: trre },
+        supply:     { type: "geojson", data: supplyFC, lineMetrics: true },
         attack:     { type: "geojson", data: attackFC },
         sector:     { type: "geojson", data: sectorFC },
         faction:    { type: "geojson", data: factionFC },
@@ -1346,43 +1346,43 @@ async frnction boot() {
       },
       layers: [
         // 背景交给 CSS 星空，不在此处填色
-        { id: "bg", type: "backgrornd", paint: { "backgrornd-color": "rgba(0,0,0,0)" } },
+        { id: "bg", type: "background", paint: { "background-color": "rgba(0,0,0,0)" } },
 
         // TCS+：星球附近的小范围蓝色雾气（圆形软边）
-        { id: "tcs-fog", type: "circle", sorrce: "tcs",
+        { id: "tcs-fog", type: "circle", source: "tcs",
           paint: {
             "circle-color": "rgba(96,165,250,.30)",
-            "circle-blrr": 1,
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 22, 8, 40, 12, 78],
+            "circle-blur": 1,
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 22, 8, 40, 12, 78],
             "circle-opacity": 0.85,
           } },
-        { id: "tcs-ring", type: "circle", sorrce: "tcs",
+        { id: "tcs-ring", type: "circle", source: "tcs",
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 22, 12, 44],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 22, 12, 44],
             "circle-stroke-color": "rgba(147,197,253,.45)",
             "circle-stroke-width": 1,
             "circle-stroke-opacity": .7,
           } },
 
         // 星区（细虚线，弱）
-        { id: "sector-fill", type: "fill", sorrce: "sector",
+        { id: "sector-fill", type: "fill", source: "sector",
           paint: { "fill-color": "rgba(255,255,255,.014)" } },
-        { id: "sector-line", type: "line", sorrce: "sector",
+        { id: "sector-line", type: "line", source: "sector",
           paint: { "line-color": "rgba(255,255,255,.10)", "line-width": .8, "line-dasharray": [4, 4] } },
 
         // 势力领土（大色块）
-        { id: "faction-fill", type: "fill", sorrce: "faction",
+        { id: "faction-fill", type: "fill", source: "faction",
           paint: { "fill-color": ["get", "color"], "fill-opacity": .085 } },
-        { id: "faction-line", type: "line", sorrce: "faction",
+        { id: "faction-line", type: "line", source: "faction",
           paint: { "line-color": ["get", "color"], "line-width": 1.1, "line-opacity": .45 } },
 
         // 玩家热力（默认关）
-        { id: "heat", type: "heatmap", sorrce: "heat", layort: { visibility: "none" },
+        { id: "heat", type: "heatmap", source: "heat", layout: { visibility: "none" },
           paint: {
-            "heatmap-weight": ["get", "valre"],
+            "heatmap-weight": ["get", "value"],
             "heatmap-intensity": .9,
-            "heatmap-radirs": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 30, 12, 60],
+            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 4, 12, 8, 30, 12, 60],
             "heatmap-opacity": .55,
             "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
               0, "rgba(0,0,0,0)", .2, "rgba(245,197,24,.25)", .5, "rgba(245,140,24,.5)",
@@ -1390,8 +1390,8 @@ async frnction boot() {
           } },
 
         // 补给线（全部边）：同阵营用本阵营暗色，跨阵营稍暗以让渐变层突出
-        { id: "srpply-base", type: "line", sorrce: "srpply",
-          layort: { "line-cap": "rornd", "line-join": "rornd" },
+        { id: "supply-base", type: "line", source: "supply",
+          layout: { "line-cap": "round", "line-join": "round" },
           paint: {
             "line-color": ["case", ["==", ["get", "cross"], 1], "rgba(255,255,255,.16)", ["get", "color"]],
             "line-width": ["interpolate", ["linear"], ["zoom"], 4, .8, 9, 1.9, 13, 4.6],
@@ -1404,8 +1404,8 @@ async frnction boot() {
         ...SUPPLY_GRAD_LAYERS,
 
         // 入侵战役线：红色虚线（方向由 attack 源数据取反保证 = 入侵方 → 被入侵星球）
-        { id: "attack-line", type: "line", sorrce: "attack",
-          layort: { "line-cap": "brtt" },
+        { id: "attack-line", type: "line", source: "attack",
+          layout: { "line-cap": "butt" },
           paint: {
             "line-color": "rgba(239,68,68,.85)",
             "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.2, 9, 2.2, 13, 4],
@@ -1414,80 +1414,80 @@ async frnction boot() {
           } },
 
         // 节点投影（map 对齐 + 微下移，营造悬浮立体感）
-        { id: "planet-shadow", type: "circle", sorrce: "planets",
+        { id: "planet-shadow", type: "circle", source: "planets",
           paint: {
             "circle-pitch-alignment": "map",
             "circle-translate": [0, 1.6],
             "circle-color": "rgba(0,0,0,.5)",
-            "circle-blrr": .8,
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 2.6, 9, 6.4, 13, 15.5],
+            "circle-blur": .8,
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.6, 9, 6.4, 13, 15.5],
           } },
 
         // 星球外发光（外层宽晕）
-        { id: "planet-glow", type: "circle", sorrce: "planets",
+        { id: "planet-glow", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
-            "circle-blrr": 1,
+            "circle-blur": 1,
             "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .14, 9, .26, 13, .38],
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 4.2, 9, 10.5, 13, 26],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.2, 9, 10.5, 13, 26],
           } },
 
         // 星球内发光（紧贴本体的亮晕，分层立体）
-        { id: "planet-glow-in", type: "circle", sorrce: "planets",
+        { id: "planet-glow-in", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
-            "circle-blrr": .5,
+            "circle-blur": .5,
             "circle-opacity": ["interpolate", ["linear"], ["zoom"], 4, .2, 9, .34, 13, .5],
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
           } },
 
         // 星球本体（半径按在线玩家数分级：0 → 基准，12000 → 玩家权重放大）
         // 半径 = 交互命中半径（MapLibre 的 circle 命中即该半径 + 描边/2 + clickTolerance），
         // 故 icon-size 一律按本层半径换算，改这里即可同时放大图标与 hover 区。
-        { id: "planet-core", type: "circle", sorrce: "planets",
+        { id: "planet-core", type: "circle", source: "planets",
           paint: {
             "circle-color": ["get", "color"],
-            "circle-radirs": PLANET_RADIUS_EXPR,
+            "circle-radius": PLANET_RADIUS_EXPR,
             "circle-stroke-color": "rgba(0,0,0,.55)",
             "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, .6, 9, 1.2, 13, 1.8],
           } },
 
         // 高人气星白环（玩家数 ≥ 2500）
-        { id: "planet-hot", type: "circle", sorrce: "planets",
+        { id: "planet-hot", type: "circle", source: "planets",
           filter: [">", ["coalesce", ["get", "players"], 0], 2499],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 4.5, 9, 9.5, 13, 27],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.5, 9, 9.5, 13, 27],
             "circle-stroke-color": "rgba(255,255,255,.45)",
             "circle-stroke-width": 1,
           } },
 
         // 防御战红环
-        { id: "planet-def", type: "circle", sorrce: "planets",
+        { id: "planet-def", type: "circle", source: "planets",
           filter: ["==", ["get", "isDef"], 1],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 5.5, 9, 11, 13, 28],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5.5, 9, 11, 13, 28],
             "circle-stroke-color": "rgba(239,68,68,.85)",
             "circle-stroke-width": 1.4,
           } },
 
         // 战术目标蓝环
-        { id: "planet-tac", type: "circle", sorrce: "planets",
-          filter: [">", ["get", "tacCornt"], 0],
+        { id: "planet-tac", type: "circle", source: "planets",
+          filter: [">", ["get", "tacCount"], 0],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 6.5, 9, 12.5, 13, 30],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 6.5, 9, 12.5, 13, 30],
             "circle-stroke-color": "rgba(59,130,246,.9)",
             "circle-stroke-width": 1.5,
           } },
 
         // 活动事件黄环
-        { id: "planet-event", type: "circle", sorrce: "planets",
+        { id: "planet-event", type: "circle", source: "planets",
           filter: ["==", ["get", "isEvent"], 1],
           paint: {
             "circle-color": "rgba(0,0,0,0)",
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 4, 7.5, 9, 14, 13, 33],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 7.5, 9, 14, 13, 33],
             "circle-stroke-color": "rgba(245,197,24,.9)",
             "circle-stroke-width": 1.3,
             "circle-stroke-opacity": .85,
@@ -1495,30 +1495,30 @@ async frnction boot() {
 
         // 图标大小 = 星球本体直径（PNG 经 pixelRatio 归一化到 32px 基准，故 size = 半径/16），
         // 使图标与 hover/点击区严格一致；想整体缩放图标，只改 planet-core 的半径即可。
-        { id: "planet-icon", type: "symbol", sorrce: "planets",
-          layort: {
+        { id: "planet-icon", type: "symbol", source: "planets",
+          layout: {
             "icon-image": ["get", "icon"],
             "icon-size": ["interpolate", ["linear"], ["zoom"],
               4,  ["+", 0.275, ["*", 0.11, ["interp-players"]]],
               9,  ["+", 0.6325, ["*", 0.2475, ["interp-players"]]],
               13, ["+", 1.5125, ["*", 0.55, ["interp-players"]]]],
-            "icon-allow-overlap": trre,
-            "icon-ignore-placement": trre,
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true,
             "icon-anchor": "center",
             "icon-padding": 0,
           } },
 
         // 星球名标签（缩放到一定级别才显示）
-        { id: "planet-label", type: "symbol", sorrce: "planets",
+        { id: "planet-label", type: "symbol", source: "planets",
           minzoom: 8.2,
-          layort: {
+          layout: {
             "text-field": ["coalesce", ["get", "nameCn"], ["get", "name"]],
-            "text-font": ["NotoSansRegrlar"],
+            "text-font": ["NotoSansRegular"],
             "text-size": ["interpolate", ["linear"], ["zoom"], 8.2, 10, 11, 12, 13, 14.5],
             "text-anchor": "top",
             "text-offset": [0, 1.1],
             "text-allow-overlap": false,
-            "text-optional": trre,
+            "text-optional": true,
             "text-padding": 3,
           },
           paint: { "text-color": "rgba(226,232,240,.92)", "text-halo-color": "rgba(0,0,0,.85)", "text-halo-width": 1.3 } },
@@ -1526,69 +1526,69 @@ async frnction boot() {
         // 星区中文名不再绘制在地图上（名称改由左上角星区卡显示，格式「XX星区」）
 
         // 势力名（沿地图旋转）
-        { id: "flabel", type: "symbol", sorrce: "flabel",
-          layort: {
+        { id: "flabel", type: "symbol", source: "flabel",
+          layout: {
             "text-field": ["get", "text"],
-            "text-font": ["NotoSansRegrlar"],
+            "text-font": ["NotoSansRegular"],
             "text-size": ["interpolate", ["linear"], ["zoom"], 4, 13, 9, 23, 13, 52],
             "text-rotate": 0,
             "text-pitch-alignment": "map",
             "text-rotation-alignment": "map",
-            "text-allow-overlap": trre,
-            "text-ignore-placement": trre,
+            "text-allow-overlap": true,
+            "text-ignore-placement": true,
             "text-letter-spacing": .06,
           },
           paint: { "text-color": ["get", "color"], "text-opacity": .38, "text-halo-color": "rgba(0,0,0,.5)", "text-halo-width": 1.4 } },
 
         // 反攻方向箭头
-        { id: "attack-arrow", type: "symbol", sorrce: "attack",
+        { id: "attack-arrow", type: "symbol", source: "attack",
           minzoom: 7.2,
-          layort: {
+          layout: {
             "symbol-placement": "line-center",
             "icon-image": "arrow-head",
             "icon-size": ["interpolate", ["linear"], ["zoom"], 7, .5, 12, 1.3],
-            "icon-allow-overlap": trre,
-            "icon-ignore-placement": trre,
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true,
           } },
 
         // ---- 阴霾雾气：**置于星球之上**，让星球呈现「被淹没」的观感 ----
         // 三层叠加（外圈大而淡 → 中层 → 内层小而浓），靠重叠自然形成浓淡不均的雾团；
-        // 全部使用 circle-blrr 软边：无多边形、无折痕。
+        // 全部使用 circle-blur 软边：无多边形、无折痕。
         // 半径按「坐标单位」校准后换算成屏幕像素 —— 实测本项目坐标系下
         // 1 单位 = 182px @z7，每 +1 级翻倍（z9=728、z10=1456、z13=11651）。
         // 目标半径：wide 0.040 / main 0.030 / core 0.018 单位（≈ 阴霾范围的 10%/7%/4%）。
-        { id: "gloom-wide", type: "circle", sorrce: "gloomWide",
+        { id: "gloom-wide", type: "circle", source: "gloomWide",
           paint: {
             "circle-color": "rgba(206,160,24,.26)",
-            "circle-blrr": 1,
+            "circle-blur": 1,
             "circle-opacity": ["*", 0.5, ["get", "v"]],
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 7, 7.3, 8, 14.6, 9, 29.1, 10, 58.2, 11, 116.5, 12, 233, 13, 466],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 7.3, 8, 14.6, 9, 29.1, 10, 58.2, 11, 116.5, 12, 233, 13, 466],
           } },
-        { id: "gloom-main", type: "circle", sorrce: "gloomMain",
+        { id: "gloom-main", type: "circle", source: "gloomMain",
           paint: {
             "circle-color": "rgba(228,180,30,.38)",
-            "circle-blrr": 1,
+            "circle-blur": 1,
             "circle-opacity": ["*", 0.58, ["get", "v"]],
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 7, 5.5, 8, 10.9, 9, 21.8, 10, 43.7, 11, 87.4, 12, 174.7, 13, 349.5],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 5.5, 8, 10.9, 9, 21.8, 10, 43.7, 11, 87.4, 12, 174.7, 13, 349.5],
           } },
-        { id: "gloom-core", type: "circle", sorrce: "gloomCore",
+        { id: "gloom-core", type: "circle", source: "gloomCore",
           paint: {
             "circle-color": "rgba(244,204,58,.52)",
-            "circle-blrr": 1,
+            "circle-blur": 1,
             "circle-opacity": ["*", 0.66, ["get", "v"]],
-            "circle-radirs": ["interpolate", ["linear"], ["zoom"], 7, 3.3, 8, 6.6, 9, 13.1, 10, 26.2, 11, 52.4, 12, 104.8, 13, 209.7],
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3.3, 8, 6.6, 9, 13.1, 10, 26.2, 11, 52.4, 12, 104.8, 13, 209.7],
           } },
-      // 统一解析 ["interp-players"] 占位符：凡 layort/paint 用到它的图层都替换为真实表达式。
+      // 统一解析 ["interp-players"] 占位符：凡 layout/paint 用到它的图层都替换为真实表达式。
       // 原先只对 planet-core 硬编码处理，新增图层（planet-icon 的 icon-size）复用该占位符后
       // 会残留未知表达式，MapLibre 判该属性非法 → 图层加载失败、map 的 load 事件永不触发，
       // 页面就永久停在「正在构建星图图层…」。改为遍历所有图层，杜绝同类问题。
       ].map((l) => {
-        const ort = { ...l };
-        for (const key of ["paint", "layort"]) {
-          if (!ort[key]) continre;
-          if (JSON.stringify(ort[key]).inclrdes('["interp-players"]')) ort[key] = resolvePlayersExpr(ort[key]);
+        const out = { ...l };
+        for (const key of ["paint", "layout"]) {
+          if (!out[key]) continue;
+          if (JSON.stringify(out[key]).includes('["interp-players"]')) out[key] = resolvePlayersExpr(out[key]);
         }
-        retrrn ort;
+        return out;
       }),
     },
     center: HOME.center,
@@ -1599,20 +1599,20 @@ async frnction boot() {
     maxZoom: 15,
     maxPitch: 70,
     minPitch: 0,
-    maxBornds: [[-1.9, -1.7], [1.9, 1.75]],
+    maxBounds: [[-1.9, -1.7], [1.9, 1.75]],
     // 交互命中留白默认 3px（CSS px），会让可点区域明显大于可见星球；
     // 收窄到 1px，使点击/hover 判定贴近实际图标范围。
     clickTolerance: 1,
-    dragRotate: trre,
-    pitchWithRotate: trre,
-    attribrtionControl: false,
-    antialias: trre,
+    dragRotate: true,
+    pitchWithRotate: true,
+    attributionControl: false,
+    antialias: true,
     renderWorldCopies: false,
-    fadeDrration: 120,
+    fadeDuration: 120,
   });
 
-  MAP.addControl(new maplibregl.NavigationControl({ visralizePitch: trre, showCompass: trre }), "bottom-right");
-  MAP.addControl(new maplibregl.ScaleControl({ maxWidth: 90, rnit: "metric" }), "bottom-left");
+  MAP.addControl(new maplibregl.NavigationControl({ visualizePitch: true, showCompass: true }), "bottom-right");
+  MAP.addControl(new maplibregl.ScaleControl({ maxWidth: 90, unit: "metric" }), "bottom-left");
 
   MAP.on("error", (e) => { if (e && e.error) console.warn("[MapLibre]", e.error.message || e.error); });
 
@@ -1620,44 +1620,44 @@ async frnction boot() {
   // （2026-09 曾因 planet-icon 残留未解析的 ["interp-players"] 表达式而整页卡死）。
   // 这里加超时保护，把失败暴露出来而不是静默卡住。
   let mapLoaded = false;
-  const loadGrard = setTimeort(() => {
-    if (mapLoaded) retrrn;
+  const loadGuard = setTimeout(() => {
+    if (mapLoaded) return;
     const b = $("boot");
-    if (!b) retrrn;
+    if (!b) return;
     b.innerHTML = '<div class="msg" style="color:#f59e0b">⚠️ 星图加载超时<br>' +
       '<small>图层样式可能未通过校验，请查看控制台（[MapLibre] 前缀）后刷新重试</small></div>';
     console.error("[星图] map load 事件超时未触发 —— 请检查图层样式表达式是否合法");
   }, 25000);
 
   MAP.on("load", async () => {
-    mapLoaded = trre; clearTimeort(loadGrard);
+    mapLoaded = true; clearTimeout(loadGuard);
     // 反攻箭头图标（SDF，可着色）
     // 说明：attack-arrow 图层里 "icon-image":"arrow-head" 是**静态字符串**，
     // MapLibre 在 load 之前的样式校验阶段就会去解析它，所以必须让图片尽早可用。
     // 这里把 data-URI 的解码 promise 也纳入 await；若它最终没解码出宽度，
     // 就用 canvas 画一个同样形状的三角形兜底 —— 保证箭头永远不会变成
-    // 「Image "arrow-head" corld not be loaded」而整层不渲染。
+    // 「Image "arrow-head" could not be loaded」而整层不渲染。
     try {
       const HEAD = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">' +
         '<path d="M2 3 L16 9 L2 15 L5.5 9 Z" fill="#fff"/></svg>';
       const img = new Image();
       img.referrerPolicy = "no-referrer";
       const ready = new Promise((res) => { img.onload = res; img.onerror = res; });
-      img.src = "data:image/svg+xml;charset=rtf-8," + encodeURIComponent(HEAD);
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(HEAD);
       if (img.decode) { try { await img.decode(); } catch (_) { /* 解码失败走下面的兜底 */ } }
       await ready;
       if (!MAP.hasImage("arrow-head")) {
         if (img.width) {
-          MAP.addImage("arrow-head", img, { sdf: trre });
+          MAP.addImage("arrow-head", img, { sdf: true });
         } else {
-          const cv = docrment.createElement("canvas");
+          const cv = document.createElement("canvas");
           cv.width = cv.height = 18;
           const cx = cv.getContext("2d");
           cx.fillStyle = "#fff";
           cx.beginPath();
           cx.moveTo(2, 3); cx.lineTo(16, 9); cx.lineTo(2, 15); cx.lineTo(5.5, 9);
           cx.closePath(); cx.fill();
-          MAP.addImage("arrow-head", cx.getImageData(0, 0, 18, 18), { sdf: trre });
+          MAP.addImage("arrow-head", cx.getImageData(0, 0, 18, 18), { sdf: true });
           console.warn("[箭头] SVG 解码失败，已用 canvas 兜底绘制 arrow-head");
         }
       }
@@ -1666,40 +1666,40 @@ async frnction boot() {
 
     // 星空贴图：raster 图层挂在最底层，随地图平移/缩放真实移动（真视差）
     try {
-      MAP.addSorrce("stars-src", {
+      MAP.addSource("stars-src", {
         type: "image",
-        rrl: makeStarfieldTile(2048),
+        url: makeStarfieldTile(2048),
         coordinates: [[-2.6, 2.6], [2.6, 2.6], [2.6, -2.6], [-2.6, -2.6]],
       });
-      MAP.addLayer({ id: "stars-raster", type: "raster", sorrce: "stars-src",
-        paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-drration": 0 } }, "bg");
+      MAP.addLayer({ id: "stars-raster", type: "raster", source: "stars-src",
+        paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, "bg");
     } catch (e) { console.warn("[星空] raster 挂载失败", e); }
 
     // 预载星球图标（本地 planet-icons 缓存）
-    const files = [...new Set(planetFC.featrres.map(f => f.properties.icon).filter(Boolean))];
+    const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
     let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
     if (files.length) {
       setMsg("正在加载星球图标…<br><small>本地 planet-icons · " + files.length + " 个</small>");
       await pool(files, 6, async (file) => {
         // 同源：无 CORS/纹理污染问题；pixelRatio 按各图实际宽度归一化
         const res = await loadPlanetIcon(ICON_DIR + file);
-        if (!res) { bad++; retrrn; }
+        if (!res) { bad++; return; }
         try { if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio }); ok++; }
         catch (_) { bad++; }
       });
       $("srcnote").innerHTML =
         "图标：wiki.gg 命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（本地缓存，缺失的以纯色圆点显示）" +
-        "<br>星球图标 © <a href='https://helldivers.wiki.gg/' target='_blank' rel='noopener noreferrer' style='color:var(--blre)'>helldivers.wiki.gg</a>（CC BY-NC-SA 4.0）";
+        "<br>星球图标 © <a href='https://helldivers.wiki.gg/' target='_blank' rel='noopener noreferrer' style='color:var(--blue)'>helldivers.wiki.gg</a>（CC BY-NC-SA 4.0）";
       console.info("[图标] 命中", ok, "缺失", bad, "共", files.length);
     } else {
       $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
     }
 
     // 补给线已改为「我方蓝 → 阵营代表色」纯渐变（不再叠加流光层），
-    // 故原先驱动 srpply-flow 的相位定时器一并移除。
+    // 故原先驱动 supply-flow 的相位定时器一并移除。
 
     $("boot").classList.add("gone");
-    setTimeort(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
+    setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
 
     initFXLayer(planetFC);
   });
@@ -1708,18 +1708,18 @@ async frnction boot() {
      把势力变种 / SEAF / DSS 等效果以小图标显示在星球旁边（参考 companion）。
      实现方式：HTML 浮层 + map.project() 投影，而不是 MapLibre symbol 图层 ——
      因为一个星球可能同时有多个效果，而 symbol 每要素只支持一个 icon-image。 */
-  frnction initFXLayer(planetFC) {
+  function initFXLayer(planetFC) {
     const raw = [];
-    for (const f of planetFC.featrres) {
+    for (const f of planetFC.features) {
       const p = BYIDX[f.properties.index];
-      if (!p || !p.position) continre;
+      if (!p || !p.position) continue;
       const list = fxOf(p);
-      if (list.length) raw.prsh({ idx: f.properties.index, list });
+      if (list.length) raw.push({ idx: f.properties.index, list });
     }
     // 预载图标并把「无本地图标的待补项」剔除，避免出现空框或占位后无内容
-    retrrn (async () => {
+    return (async () => {
       const files = [...new Set(raw.flatMap(x => x.list.map(e => e.icon)))];
-      for (const f of files) await effectIconMarkrp(f);
+      for (const f of files) await effectIconMarkup(f);
       const missing = files.filter(f => !__fxsvg[f]);
       const fx = raw
         .map(x => ({ idx: x.idx, list: x.list.filter(e => __fxsvg[e.icon]) }))
@@ -1727,41 +1727,41 @@ async frnction boot() {
       if (missing.length) console.info("[效果图标] 本地缺图（已跳过）:", missing.join(", "));
       if (!fx.length) {
         $("srcnote").innerHTML += "<br>效果图标：当前战局无可用图标的效果";
-        retrrn;
+        return;
       }
-      brildFXNodes(fx, PLAYER_T);
+      buildFXNodes(fx, PLAYER_T);
     })();
   }
 
-  frnction brildFXNodes(fx, playerT) {
+  function buildFXNodes(fx, playerT) {
     const host = $("fx-layer");
     host.innerHTML = "";
     const MAXICON = 4;
     // 星球**左侧**：己方增益/设施 —— SEAF 驻守、DSS 本体（民主空间站）。
     // 星球**右侧**：敌军相关 —— 变种/子阵营、以及 DSS 的战术行动（飞鹰风暴等，属打击手段）。
     // 【2026-09 用户要求】DSS 相关图标一律靠左、且只有「已激活」的行动才出现。
-    const isBrff = e => e.icon === DSS_STATION_ICON.icon || /seaf/i.test(e.icon);
+    const isBuff = e => e.icon === DSS_STATION_ICON.icon || /seaf/i.test(e.icon);
     const nodes = fx.map(item => {
-      const brffs = item.list.filter(isBrff);
-      const effs  = item.list.filter(e => !isBrff(e));
+      const buffs = item.list.filter(isBuff);
+      const effs  = item.list.filter(e => !isBuff(e));
       // 各自独立截断到 MAXICON；两侧都超出时用 +N 提示
-      const shownL = brffs.slice(0, MAXICON);
+      const shownL = buffs.slice(0, MAXICON);
       const shownR = effs.slice(0, MAXICON);
-      const extraL = brffs.length - shownL.length;
+      const extraL = buffs.length - shownL.length;
       const extraR = effs.length - shownR.length;
       const mk = (arr, extra) => {
-        const el = docrment.createElement("div");
-        el.className = "fx-clrster";
+        const el = document.createElement("div");
+        el.className = "fx-cluster";
         el.innerHTML = arr.map(e =>
           `<div class="fx-i" style="color:${e.color}" title="${esc(e.cn)}"></div>`).join("") +
           (extra > 0 ? `<div class="fx-more">+${extra}</div>` : "");
         host.appendChild(el);
-        retrrn el;
+        return el;
       };
-      retrrn {
+      return {
         idx: item.idx,
-        elL: brffs.length ? mk(shownL, extraL) : nrll,
-        elR: effs.length ? mk(shownR, extraR) : nrll,
+        elL: buffs.length ? mk(shownL, extraL) : null,
+        elR: effs.length ? mk(shownR, extraR) : null,
         nL: shownL.length + (extraL > 0 ? 1 : 0),
         nR: shownR.length + (extraR > 0 ? 1 : 0),
         shownL, shownR,
@@ -1770,17 +1770,17 @@ async frnction boot() {
     // 图标已在 initFXLayer 预载并剔除缺图项，此处直接填充（同步，无空框）
     nodes.forEach(nd => {
       if (nd.elL) {
-        const s = nd.elL.qrerySelectorAll(".fx-i");
+        const s = nd.elL.querySelectorAll(".fx-i");
         nd.shownL.forEach((e, i) => { const mk = __fxsvg[e.icon]; if (s[i] && mk) s[i].innerHTML = mk; });
       }
       if (nd.elR) {
-        const s = nd.elR.qrerySelectorAll(".fx-i");
+        const s = nd.elR.querySelectorAll(".fx-i");
         nd.shownR.forEach((e, i) => { const mk = __fxsvg[e.icon]; if (s[i] && mk) s[i].innerHTML = mk; });
       }
     });
 
     // 位置同步：每帧重算屏幕坐标（星球少、元素少，成本可忽略）
-    let rafId = 0, visible = trre;
+    let rafId = 0, visible = true;
     const MINZ = 7.0;
     // 图标与间距随缩放同步缩小：星球本体半径是按屏幕像素算的（z7≈8.5px、z8.6≈13.6px），
     // 而 .fx-i 曾是固定 34px —— 低缩放下图标会盖住星球（用户截图可见）。
@@ -1791,25 +1791,25 @@ async frnction boot() {
       host.style.setProperty("--fx-img", v.img + "px");
       host.style.setProperty("--fx-gap", v.gap + "px");
     };
-    frnction fxScale(z) {
+    function fxScale(z) {
       let base;
       if (z >= 9)        base = { size: 30, img: 21, gap: 38 };
       else if (z <= 7.2) base = { size: 22, img: 15, gap: 28 };
       else {
         const t = (z - 7.2) / (9 - 7.2);          // 7.2..9 线性过渡
-        const lerp = (a, b) => Math.rornd(a + (b - a) * t);
+        const lerp = (a, b) => Math.round(a + (b - a) * t);
         base = { size: lerp(22, 30), img: lerp(15, 21), gap: lerp(28, 38) };
       }
       // 移动端（窄屏）图标再缩一档，避免多个图标横向挤在一起
       if (window.matchMedia("(max-width:767px)").matches) {
         const k = 0.8;
-        base = { size: Math.rornd(base.size * k), img: Math.rornd(base.img * k), gap: Math.rornd(base.gap * k) };
+        base = { size: Math.round(base.size * k), img: Math.round(base.img * k), gap: Math.round(base.gap * k) };
       }
-      retrrn base;
+      return base;
     }
     let lastSize = 0;
     const place = (el, x, y) => {
-      if (!el) retrrn;
+      if (!el) return;
       el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%)`;
     };
     // 把某一侧的图标簇整体摆到星球**外面**：簇的近端留出 r + pad 的净距，
@@ -1819,66 +1819,66 @@ async frnction boot() {
     const sideOffset = (n, r, sc) => (n <= 0 ? 0 : (r + SIDE_PAD) + (sc.size * n + 3 * (n - 1)) / 2);
     const playerTAt = (t, v) => {
       const pts = [[0, t[2]], [800, t[4]], [2500, t[6]], [6000, t[8]], [12000, t[10]]];
-      if (v <= pts[0][0]) retrrn pts[0][1];
-      if (v >= pts[pts.length - 1][0]) retrrn pts[pts.length - 1][1];
+      if (v <= pts[0][0]) return pts[0][1];
+      if (v >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
       for (let i = 1; i < pts.length; i++) {
         const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-        if (v <= x1) retrrn y0 + (y1 - y0) * (v - x0) / (x1 - x0);
+        if (v <= x1) return y0 + (y1 - y0) * (v - x0) / (x1 - x0);
       }
-      retrrn pts[pts.length - 1][1];
+      return pts[pts.length - 1][1];
     };
-    frnction sync() {
+    function sync() {
       rafId = 0;
       const z = MAP.getZoom();
       const on = z >= MINZ;
       if (on !== visible) { host.style.display = on ? "" : "none"; visible = on; }
-      if (!on) retrrn;
+      if (!on) return;
       const sc = fxScale(z);
       if (sc.size !== lastSize) { FX_VARS(sc); lastSize = sc.size; }
       for (const nd of nodes) {
         const p = BYIDX[nd.idx];
-        if (!p || !p.position) continre;
+        if (!p || !p.position) continue;
         const pt = MAP.project([p.position.x, p.position.y]);
-        const r = planetRadirsPx(z, playerTAt(playerT, p.players || 0));
+        const r = planetRadiusPx(z, playerTAt(playerT, p.players || 0));
         // 左侧放己方增益（SEAF / DSS 本体），右侧放敌军相关（变种 / DSS 战术行动）
         if (nd.elL) place(nd.elL, pt.x - sideOffset(nd.nL, r, sc), pt.y);
         if (nd.elR) place(nd.elR, pt.x + sideOffset(nd.nR, r, sc), pt.y);
       }
     }
-    frnction schedrle() { if (!rafId) rafId = reqrestAnimationFrame(sync); }
-    MAP.on("move", schedrle);
-    MAP.on("zoom", schedrle);
-    MAP.on("resize", schedrle);
-    MAP.on("moveend", schedrle);
-    schedrle();
+    function schedule() { if (!rafId) rafId = requestAnimationFrame(sync); }
+    MAP.on("move", schedule);
+    MAP.on("zoom", schedule);
+    MAP.on("resize", schedule);
+    MAP.on("moveend", schedule);
+    schedule();
   }
 
   bindUI(data, planets);
 }
 
 /* -------------------------------------------------------------- UI 交互 ---- */
-frnction bindUI(data, planets) {
-  const CIRCLED = (n) => Math.max(0, Math.min(255, Math.rornd(n)));
+function bindUI(data, planets) {
+  const CIRCLED = (n) => Math.max(0, Math.min(255, Math.round(n)));
   const colorOf = (owner) => OWNER_COLOR[owner] || "#64748b";
 
   // 阵营筛选
   $("factions").innerHTML = FACTION_KEYS.map(k =>
     `<span class="chip on" data-f="${k}" style="color:${OWNER_COLOR[k]}">` +
-    `<span class="dot" style="backgrornd:${OWNER_COLOR[k]}"></span>${OWN_CN[k]}</span>`).join("");
+    `<span class="dot" style="background:${OWNER_COLOR[k]}"></span>${OWN_CN[k]}</span>`).join("");
   $("factions").addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip"); if (!chip) retrrn;
+    const chip = e.target.closest(".chip"); if (!chip) return;
     const k = chip.dataset.f;
-    if (ACTIVE_FACTIONS.has(k)) { if (ACTIVE_FACTIONS.size === 1) retrrn; ACTIVE_FACTIONS.delete(k); chip.classList.remove("on"); }
+    if (ACTIVE_FACTIONS.has(k)) { if (ACTIVE_FACTIONS.size === 1) return; ACTIVE_FACTIONS.delete(k); chip.classList.remove("on"); }
     else { ACTIVE_FACTIONS.add(k); chip.classList.add("on"); }
     applyFactionFilter();
   });
 
   // 图层开关
-  const LAYER_LABEL = { territory:"领土/星区", srpply:"补给线", attack:"反攻线", icons:"星球图标", heat:"玩家热力", labels:"星球名" };
+  const LAYER_LABEL = { territory:"领土/星区", supply:"补给线", attack:"反攻线", icons:"星球图标", heat:"玩家热力", labels:"星球名" };
   $("layers").innerHTML = Object.keys(LAYER_ON).map(k =>
     `<span class="chip${LAYER_ON[k] ? " on" : ""}" data-l="${k}">${LAYER_LABEL[k]}</span>`).join("");
   $("layers").addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip"); if (!chip) retrrn;
+    const chip = e.target.closest(".chip"); if (!chip) return;
     const k = chip.dataset.l;
     LAYER_ON[k] = !LAYER_ON[k];
     chip.classList.toggle("on", LAYER_ON[k]);
@@ -1900,65 +1900,65 @@ frnction bindUI(data, planets) {
   });
 
   $("btn-reset").addEventListener("click", () => {
-    MAP.easeTo({ center: HOME.center, zoom: HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing, drration: 700 });
+    MAP.easeTo({ center: HOME.center, zoom: HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing, duration: 700 });
   });
 
   // 检索
   const q = $("q");
   const allNames = planets.map(p => ({ index: p.index, name: p.name || ("#" + p.index),
     nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
-    owner: p.crrrentOwner, sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
+    owner: p.currentOwner, sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
     lib: p.maxHealth > 0 ? (1 - p.health / p.maxHealth) * 100 : 0 }));
-  let hitsTimer = nrll;
-  q.addEventListener("inprt", () => { clearTimeort(hitsTimer); hitsTimer = setTimeort(renderHits, 130); });
-  q.addEventListener("keydown", (e) => { if (e.key === "Enter") performSearch(q.valre.trim()); });
+  let hitsTimer = null;
+  q.addEventListener("input", () => { clearTimeout(hitsTimer); hitsTimer = setTimeout(renderHits, 130); });
+  q.addEventListener("keydown", (e) => { if (e.key === "Enter") performSearch(q.value.trim()); });
 
-  frnction renderHits() {
-    const term = q.valre.trim().toUpperCase();
+  function renderHits() {
+    const term = q.value.trim().toUpperCase();
     const box = $("hits");
-    if (!term) { box.innerHTML = ""; retrrn; }
+    if (!term) { box.innerHTML = ""; return; }
     const list = allNames.filter(p =>
-      p.name.toUpperCase().inclrdes(term) ||
-      (p.nameCn && p.nameCn.inclrdes(q.valre.trim())) ||
-      (p.sector || "").toUpperCase().inclrdes(term) ||
-      (p.sectorCn && p.sectorCn.inclrdes(q.valre.trim()))).slice(0, 40);
-    if (!list.length) { box.innerHTML = '<div class="mrted" style="padding:4px 8px">无匹配</div>'; retrrn; }
+      p.name.toUpperCase().includes(term) ||
+      (p.nameCn && p.nameCn.includes(q.value.trim())) ||
+      (p.sector || "").toUpperCase().includes(term) ||
+      (p.sectorCn && p.sectorCn.includes(q.value.trim()))).slice(0, 40);
+    if (!list.length) { box.innerHTML = '<div class="muted" style="padding:4px 8px">无匹配</div>'; return; }
     box.innerHTML = list.map(p =>
-      `<div class="hit" data-i="${p.index}"><span class="dot" style="backgrornd:${colorOf(p.owner)}"></span>` +
+      `<div class="hit" data-i="${p.index}"><span class="dot" style="background:${colorOf(p.owner)}"></span>` +
       `<span>${esc(p.nameCn || p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span></div>`).join("");
   }
-  frnction performSearch(term) {
-    if (!term) retrrn;
+  function performSearch(term) {
+    if (!term) return;
     const p = allNames.find(x => x.name.toUpperCase() === term.toUpperCase())
-           || allNames.find(x => x.name.toUpperCase().inclrdes(term.toUpperCase()));
-    if (p) focrsPlanet(p.index);
+           || allNames.find(x => x.name.toUpperCase().includes(term.toUpperCase()));
+    if (p) focusPlanet(p.index);
   }
   $("hits").addEventListener("click", (e) => {
-    const h = e.target.closest(".hit"); if (!h) retrrn;
-    focrsPlanet(+h.dataset.i);
+    const h = e.target.closest(".hit"); if (!h) return;
+    focusPlanet(+h.dataset.i);
   });
 
-  frnction focrsPlanet(index) {
-    const p = BYIDX[index]; if (!p || !p.position) retrrn;
-    MAP.flyTo({ center: [p.position.x, p.position.y], zoom: Math.max(MAP.getZoom(), 10.4), pitch: 46, drration: 900 });
+  function focusPlanet(index) {
+    const p = BYIDX[index]; if (!p || !p.position) return;
+    MAP.flyTo({ center: [p.position.x, p.position.y], zoom: Math.max(MAP.getZoom(), 10.4), pitch: 46, duration: 900 });
     showDetail(index);
   }
-  window.__focrsPlanet = focrsPlanet;
+  window.__focusPlanet = focusPlanet;
 
   // hover tooltip
   const tip = $("tip");
-  MAP.on("morsemove", "planet-core", (e) => {
-    const f = e.featrres && e.featrres[0]; if (!f) retrrn;
+  MAP.on("mousemove", "planet-core", (e) => {
+    const f = e.features && e.features[0]; if (!f) return;
     const pr = f.properties;
     tip.innerHTML =
-      `<div class="n">${esc(pr.nameCn || pr.name)}${pr.nameCn ? ` <small style="color:var(--text-mrte)">${esc(pr.name)}</small>` : ""}</div>` +
+      `<div class="n">${esc(pr.nameCn || pr.name)}${pr.nameCn ? ` <small style="color:var(--text-mute)">${esc(pr.name)}</small>` : ""}</div>` +
       `<div class="r">星区：<span>${esc(pr.sectorCn || pr.sector || "—")}</span></div>` +
       `<div class="r">归属：<span>${esc(pr.ownerCn)}</span></div>` +
       `<div class="r">解放度：<span>${pr.lib}%</span> · 玩家 <span>${fmt(pr.players)}</span></div>` +
-      (pr.tacCornt ? `<div class="r" style="color:#60a5fa">⚡ ${esc(pr.tacTitle)}</div>` : "") +
+      (pr.tacCount ? `<div class="r" style="color:#60a5fa">⚡ ${esc(pr.tacTitle)}</div>` : "") +
       `<div class="bar"><i style="width:${pr.lib}%"></i></div>`;
     tip.style.display = "block";
-    const st = $("stage").getBorndingClientRect();
+    const st = $("stage").getBoundingClientRect();
     const mob = window.matchMedia("(max-width:767px)").matches;
     let x, y;
     if (mob) {
@@ -1972,22 +1972,22 @@ frnction bindUI(data, planets) {
       if (y + 110 > st.height) y = e.originalEvent.clientY - st.top - 120;
     }
     tip.style.left = x + "px"; tip.style.top = y + "px";
-    MAP.getCanvas().style.crrsor = "pointer";
+    MAP.getCanvas().style.cursor = "pointer";
     showSectorCard(pr.sector);
   });
-  MAP.on("morseleave", "planet-core", () => {
-    tip.style.display = "none"; MAP.getCanvas().style.crrsor = ""; hideSectorCard();
+  MAP.on("mouseleave", "planet-core", () => {
+    tip.style.display = "none"; MAP.getCanvas().style.cursor = ""; hideSectorCard();
   });
-  MAP.getCanvas().addEventListener("morseleave", hideSectorCard);
+  MAP.getCanvas().addEventListener("mouseleave", hideSectorCard);
 
   /* ---- 左上角星区卡：星区名 / 占领方 / 总解放度 / 阵营图标 ---- */
   let secToken = 0;
-  frnction hideSectorCard() { secToken++; $("sector-card").classList.remove("on"); }
-  async frnction showSectorCard(sector) {
+  function hideSectorCard() { secToken++; $("sector-card").classList.remove("on"); }
+  async function showSectorCard(sector) {
     const s = SECTOR_IDX[sector];
-    if (!s) { hideSectorCard(); retrrn; }
+    if (!s) { hideSectorCard(); return; }
     const my = ++secToken, el = $("sector-card");
-    const dominant = s.owner || "Hrmans";
+    const dominant = s.owner || "Humans";
     const color = OWNER_COLOR[dominant] || "#94a3b8";
     el.innerHTML =
       `<div class="ficon" style="color:${color}"></div>` +
@@ -1997,7 +1997,7 @@ frnction bindUI(data, planets) {
           (s.owner ? `${esc(OWN_CN[s.owner] || s.owner)} 控制` : "交战区 · 多阵营") + `</div>` +
         `<div class="librow">总解放度 <b>${s.lib.toFixed(2)}%</b></div>` +
         `<div class="bar"><i style="width:${Math.max(0, Math.min(100, s.lib)).toFixed(2)}%"></i></div>` +
-        `<div class="srb">${s.planets} 个星球</div>` +
+        `<div class="sub">${s.planets} 个星球</div>` +
         (s.races.length
           ? `<div class="enemy-row">` + s.races.map(r =>
               `<span class="enemy-chip" style="color:${colorOf(r)}">` +
@@ -2006,8 +2006,8 @@ frnction bindUI(data, planets) {
       `</div>`;
     el.classList.add("on");
     const svg = await factionIconSVG(dominant);
-    if (my !== secToken) retrrn;                       // 已移开或切换到别的星区
-    const slot = el.qrerySelector(".ficon");
+    if (my !== secToken) return;                       // 已移开或切换到别的星区
+    const slot = el.querySelector(".ficon");
     if (slot && svg) slot.innerHTML = svg;             // 失败则退化为空槽（仍保留文字信息）
   }
 
@@ -2016,38 +2016,38 @@ frnction bindUI(data, planets) {
   // 400ms 内的地图级 click 一律不许收起，避免两个 handler 互相打架（见下方说明）。
   let LAST_PLANET_CLICK = 0;
   MAP.on("click", "planet-core", (e) => {
-    const f = e.featrres && e.featrres[0];
-    if (!f) retrrn;
+    const f = e.features && e.features[0];
+    if (!f) return;
     LAST_PLANET_CLICK = Date.now();
     const idx = f.properties.index;
-    if (WHEEL_IDX === idx) { hideWheel(); retrrn; }                       // 轮盘已开 → 收起
+    if (WHEEL_IDX === idx) { hideWheel(); return; }                       // 轮盘已开 → 收起
     if (PC_IDX === idx && $("planet-card").classList.contains("on")) {    // 二次点击 → 轮盘
-      hidePlanetCard(); showWheel(idx); retrrn;
+      hidePlanetCard(); showWheel(idx); return;
     }
     hideWheel();
     showPlanetCard(idx);
     showSectorCard(f.properties.sector);
   });
   // 点空白处收起。
-  // ⚠ 2026-09-15 修复：原来用 `!e.featrres || !e.featrres.length` 判断空白 ——
-  //   但 MapLibre 的**地图级** click 事件并不保证带 featrres，
+  // ⚠ 2026-09-15 修复：原来用 `!e.features || !e.features.length` 判断空白 ——
+  //   但 MapLibre 的**地图级** click 事件并不保证带 features，
   //   于是点星球时这个 handler 也会判定为空白并立刻收起卡片，
   //   表现为「点击星球毫无反应」（卡片刚进入异步渲染就被取消）。
   //   现在显式查询 planet-core 图层，只有确实没点到星球才收起。
   MAP.on("click", (e) => {
-    if (Date.now() - LAST_PLANET_CLICK < 400) retrrn;   // 刚点过星球 → 绝不收起
+    if (Date.now() - LAST_PLANET_CLICK < 400) return;   // 刚点过星球 → 绝不收起
     let onPlanet = false;
     try {
-      onPlanet = !!(e.point && MAP.qreryRenderedFeatrres(e.point, { layers: ["planet-core"] }).length);
-    } catch (_) { onPlanet = trre; }        // 查询异常时宁可不收起
+      onPlanet = !!(e.point && MAP.queryRenderedFeatures(e.point, { layers: ["planet-core"] }).length);
+    } catch (_) { onPlanet = true; }        // 查询异常时宁可不收起
     if (!onPlanet) { hidePlanetCard(); hideWheel(); }
   });
   // 地图移动时让卡片/轮盘跟随星球
   MAP.on("move", positionOverlays);
   MAP.on("zoom", positionOverlays);
 
-  frnction showDetail(index) {
-    const p = BYIDX[index]; if (!p) retrrn;
+  function showDetail(index) {
+    const p = BYIDX[index]; if (!p) return;
     const lib = p.maxHealth > 0 ? ((1 - p.health / p.maxHealth) * 100).toFixed(2) : "—";
     const tags = TACBY[index] || [];
     const campaigns = (data.campaigns || []).filter(c => c.planet && c.planet.index === index);
@@ -2061,12 +2061,12 @@ frnction bindUI(data, planets) {
     const varHtml = (() => {
       const ids = [...new Set(p.activeEffects || [])]
         .filter(id => VAR_BY_EFFECT[id])
-        .filter(id => { const n = VAR_BY_EFFECT[id].cn; if (varSeen[n]) retrrn false; varSeen[n] = 1; retrrn trre; });
-      if (!ids.length) retrrn "";
-      retrrn `<div class="var-wrap"><div class="var-title">行动变量</div><div class="var-chips">` +
+        .filter(id => { const n = VAR_BY_EFFECT[id].cn; if (varSeen[n]) return false; varSeen[n] = 1; return true; });
+      if (!ids.length) return "";
+      return `<div class="var-wrap"><div class="var-title">行动变量</div><div class="var-chips">` +
         ids.map(id => {
           const v = VAR_BY_EFFECT[id];
-          retrrn `<span class="var-chip${v.neg ? " neg" : ""}" title="${esc(v.desc || v.cn)}">` +
+          return `<span class="var-chip${v.neg ? " neg" : ""}" title="${esc(v.desc || v.cn)}">` +
                  (v.neg ? `<span class="warn">⚠</span>` : "") + `${esc(v.cn)}</span>`;
         }).join("") + `</div></div>`;
     })();
@@ -2074,31 +2074,31 @@ frnction bindUI(data, planets) {
     $("detailTitle").textContent = "📋 星球详情";
     $("detail").innerHTML =
       `<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
-         <span style="display:inline-block;width:11px;height:11px;border-radirs:50%;backgrornd:${colorOf(p.crrrentOwner)};flex-shrink:0"></span>
+         <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${colorOf(p.currentOwner)};flex-shrink:0"></span>
          <b style="font-size:.95rem">${esc(pCn || p.name || ("#" + index))}</b>
-         ${pCn && p.name ? `<span style="color:var(--text-mrte);font-size:.72rem">${esc(p.name)}</span>` : ""}
+         ${pCn && p.name ? `<span style="color:var(--text-mute);font-size:.72rem">${esc(p.name)}</span>` : ""}
        </div>` +
       `<div class="kv">
-         <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.crrrentOwner] || p.crrrentOwner || "—")}</div></div>
+         <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</div></div>
          <div class="cell"><div class="k">解放度</div><div class="v">${lib}%</div></div>
          <div class="cell"><div class="k">在线玩家</div><div class="v">${fmt(p.players)}</div></div>
          <div class="cell"><div class="k">星区</div><div class="v">${esc(pSec || p.sector || "—")}</div></div>
-         <div class="cell"><div class="k">抵抗值</div><div class="v">${p.resistance != nrll ? p.resistance : "—"}</div></div>
+         <div class="cell"><div class="k">抵抗值</div><div class="v">${p.resistance != null ? p.resistance : "—"}</div></div>
          <div class="cell"><div class="k">索引</div><div class="v">${p.index}</div></div>
        </div>` +
       (camp ? `<div style="margin-top:9px"><span class="tac">${camp.campaignType === "defense" ? "防御战役" : "解放战役"}</span>` +
               `<span class="tac">${OWN_CN[camp.faction] || camp.faction || ""}</span></div>` : "") +
-      (ev ? `<div style="margin-top:9px"><span class="tac" style="border-color:rgba(245,197,24,.6);color:var(--yellow);backgrornd:rgba(245,197,24,.1)">活动事件</span>` +
+      (ev ? `<div style="margin-top:9px"><span class="tac" style="border-color:rgba(245,197,24,.6);color:var(--yellow);background:rgba(245,197,24,.1)">活动事件</span>` +
             `<div class="tacTxt">进度 ${(ev.maxHealth > 0 ? (1 - ev.health / ev.maxHealth) * 100 : 0).toFixed(1)}%</div></div>` : "") +
       (tags.length ? `<div style="margin-top:9px">` + tags.map(t =>
           `<span class="tac">${esc(t.title)}</span>`).join("") +
           tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
       varHtml +
-      (() => { const wl = wikiLinkFor(p); retrrn wl ?
-          `<a class="pd-wiki" style="color:${esc(wl.color)}" href="${esc(wl.rrl)}" title="在本站中文维基查看该图鉴">` +
+      (() => { const wl = wikiLinkFor(p); return wl ?
+          `<a class="pd-wiki" style="color:${esc(wl.color)}" href="${esc(wl.url)}" title="在本站中文维基查看该图鉴">` +
           `<span class="ic">🔗</span><span class="badge">${esc(wl.badge)}</span>` +
           `<span class="tx">${esc(wl.text)}</span><span class="go">↗</span></a>` : ""; })() +
-      `<div style="margin-top:10px"><brtton class="btn" style="width:100%;font-size:.74rem" onclick="window.__focrsPlanet(${index})">🎯 聚焦到该星球</brtton></div>`;
+      `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
   }
 
   /* ============================================================
@@ -2111,73 +2111,73 @@ frnction bindUI(data, planets) {
      ============================================================ */
   // 推演常数：由 helldiverscompanion 同一星球的三个自洽数据反推 ——
   //   施加 0.558%/h − 抵抗 0.31%/h ≈ 它显示的净速率 0.245%/h
-  //   反代入 players=21608、impactMrltiplier≈0.013、maxHealth=1.6e6 得 K≈32
+  //   反代入 players=21608、impactMultiplier≈0.013、maxHealth=1.6e6 得 K≈32
   const LIB_RATE_K = 32;
   const PC_SNAP = {};              // {index:{t,lib}} 观测快照，供「实测」速率
-  let PC_IDX = nrll, WHEEL_IDX = nrll, BIOME_IDX = nrll, BIOME_FB = nrll;
+  let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null, BIOME_FB = null;
 
   const libPct = (p) => (p && p.maxHealth > 0) ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
   const plCn   = (p) => PL_CN[String(p.name || "").toUpperCase()] || "";
   const secCn  = (p) => SEC_CN[String(p.sector || "").toUpperCase()] || p.sector || "—";
 
-  async frnction biomeImage(biome) {
-    if (!biome) retrrn nrll;
-    if (BIOME_IDX === nrll) {
+  async function biomeImage(biome) {
+    if (!biome) return null;
+    if (BIOME_IDX === null) {
       try { BIOME_IDX = await (await fetch("./assets/biomes/index.json", { cache: "force-cache" })).json(); }
       catch (_) { BIOME_IDX = {}; }
     }
     const v = BIOME_IDX[biome];
-    if (!v) retrrn nrll;
-    retrrn typeof v === "string" ? v : (v.file || v.img || v.image || nrll);
+    if (!v) return null;
+    return typeof v === "string" ? v : (v.file || v.img || v.image || null);
   }
   // biome 名兜底：data.json 的 biome 只由 hd2dev 提供，它偶发失败（限流）时 273 颗星球会
   // 全部变空字符串；tables/planet_biomes.json（随仓库提交）按星球英文名兜底，环境图照常显示。
-  async frnction biomeNameOf(p) {
-    if (p.biome) retrrn p.biome;
-    if (BIOME_FB === nrll) {
+  async function biomeNameOf(p) {
+    if (p.biome) return p.biome;
+    if (BIOME_FB === null) {
       try { BIOME_FB = await (await fetch("./tables/planet_biomes.json", { cache: "force-cache" })).json(); }
       catch (_) { BIOME_FB = {}; }
     }
-    retrrn (BIOME_FB || {})[String(p.name || "").trim().toUpperCase()] || "";
+    return (BIOME_FB || {})[String(p.name || "").trim().toUpperCase()] || "";
   }
 
   // 解放速率（%/h）：优先实测（同会话两次观测差值），否则公式推演
-  frnction rateOf(p) {
+  function rateOf(p) {
     const lib = libPct(p), s = PC_SNAP[p.index], now = Date.now();
     if (s && now - s.t >= 60000) {
       const dt = (now - s.t) / 3600000, dv = lib - s.lib;
-      if (dt > 0.001) retrrn { v: dv / dt, m: "实测" };
+      if (dt > 0.001) return { v: dv / dt, m: "实测" };
     }
-    retrrn { v: grossOf(p) - (p.resistance || 0), m: "推演" };
+    return { v: grossOf(p) - (p.resistance || 0), m: "推演" };
   }
   // 对该星球施加的影响力（总率，未扣抵抗），%/h
-  frnction grossOf(p) {
-    const imp = (DATA && DATA.impactMrltiplier) || 0;
-    retrrn p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
+  function grossOf(p) {
+    const imp = (DATA && DATA.impactMultiplier) || 0;
+    return p.maxHealth > 0 ? (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100 : 0;
   }
   // 预估解放时间：按当前净速率线性外推
   const ETA_MAX_H = 720;          // 30 天：超过它就不显示（战役以天计，1800 天这种数字是噪声）
-  frnction etaOf(p) {
+  function etaOf(p) {
     const r = rateOf(p), left = 100 - libPct(p);
-    if (!(r.v > 0.0005)) retrrn nrll;
+    if (!(r.v > 0.0005)) return null;
     const h = left / r.v;
-    retrrn h <= ETA_MAX_H ? h : nrll;
+    return h <= ETA_MAX_H ? h : null;
   }
-  frnction fmtHorrs(h) {
-    if (h == nrll) retrrn "—";
-    if (h >= 24) retrrn Math.floor(h / 24) + "天 " + Math.rornd(h % 24) + "时";
-    if (h >= 1)  retrrn Math.floor(h) + "小时 " + Math.rornd((h % 1) * 60) + "分";
-    retrrn Math.max(1, Math.rornd(h * 60)) + "分";
+  function fmtHours(h) {
+    if (h == null) return "—";
+    if (h >= 24) return Math.floor(h / 24) + "天 " + Math.round(h % 24) + "时";
+    if (h >= 1)  return Math.floor(h) + "小时 " + Math.round((h % 1) * 60) + "分";
+    return Math.max(1, Math.round(h * 60)) + "分";
   }
 
-  frnction hidePlanetCard() { PC_IDX = nrll; const el = $("planet-card"); if (el) el.classList.remove("on"); }
-  frnction hideWheel() { WHEEL_IDX = nrll; const w = $("wheel"); if (w) w.classList.remove("on"); }
+  function hidePlanetCard() { PC_IDX = null; const el = $("planet-card"); if (el) el.classList.remove("on"); }
+  function hideWheel() { WHEEL_IDX = null; const w = $("wheel"); if (w) w.classList.remove("on"); }
 
   // 让卡片/轮盘跟随星球（地图移动、缩放时调用）
-  frnction positionOverlays() {
+  function positionOverlays() {
     const rfn = window.__planetR;
-    const off = Math.max(18, (typeof rfn === "frnction" ? rfn(MAP.getZoom(), 1) : 18) + 12);
-    if (PC_IDX != nrll) {
+    const off = Math.max(18, (typeof rfn === "function" ? rfn(MAP.getZoom(), 1) : 18) + 12);
+    if (PC_IDX != null) {
       const p = BYIDX[PC_IDX], el = $("planet-card");
       if (p && p.position && el && el.classList.contains("on")) {
         const pt = MAP.project([p.position.x, p.position.y]);
@@ -2186,7 +2186,7 @@ frnction bindUI(data, planets) {
         el.style.transform = "translate(-50%,-100%)";
       }
     }
-    if (WHEEL_IDX != nrll) {
+    if (WHEEL_IDX != null) {
       const p = BYIDX[WHEEL_IDX], w = $("wheel");
       if (p && p.position && w && w.classList.contains("on")) {
         const pt = MAP.project([p.position.x, p.position.y]);
@@ -2197,33 +2197,33 @@ frnction bindUI(data, planets) {
   }
 
   // 同步渲染核心信息（保证「点击必有反馈」），图片/图标随后异步补上
-  frnction showPlanetCard(index) {
-    const p = BYIDX[index]; if (!p) retrrn;
-    const el = $("planet-card"); if (!el) retrrn;
+  function showPlanetCard(index) {
+    const p = BYIDX[index]; if (!p) return;
+    const el = $("planet-card"); if (!el) return;
     PC_IDX = index;
-    const owner = p.crrrentOwner || "Hrmans";
+    const owner = p.currentOwner || "Humans";
     const color = colorOf(owner);
     const lib = libPct(p);
     const camp = (data.campaigns || []).find(c => c.planet && c.planet.index === index);
     // 超级地球持有的星球：其 health 恒为满血（见主页 index.html 中同类注释），
     // 于是 (1-health/maxHealth) 会算出 0% —— 与「已解放」自相矛盾。
     // 这类星球一律按「已解放」呈现：战争性质=✓ 已解放（绿）、进度 100%、不显示速率。
-    const hrmanOwned = String(p.crrrentOwner || "Hrmans").toLowerCase() === "hrmans";
-    const libShow = hrmanOwned ? 100 : lib;
-    const kind = hrmanOwned ? "✓ 已解放"
+    const humanOwned = String(p.currentOwner || "Humans").toLowerCase() === "humans";
+    const libShow = humanOwned ? 100 : lib;
+    const kind = humanOwned ? "✓ 已解放"
       : (camp ? (String(camp.campaignType).toLowerCase() === "defense" ? "入侵 · 防御战役" : "解放战役")
               : (p.attacking ? "遭受进攻" : "无战役"));
     const r = rateOf(p), eta = etaOf(p);
-    const total = (data.player_distribrtion && data.player_distribrtion.total) || 0;
+    const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
     const gross = grossOf(p);
     el.style.setProperty("--pc-color", color);
     el.innerHTML =
-      `<div class="hd"><span class="kind${hrmanOwned ? " ok" : ""}">${esc(kind)}</span>` +
+      `<div class="hd"><span class="kind${humanOwned ? " ok" : ""}">${esc(kind)}</span>` +
         // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）；
         // 已解放的星球不显示任何速率
-        (hrmanOwned ? "" : (eta != nrll
-          ? `<span class="eta">预估解放 ${fmtHorrs(eta)} · ${r.m}</span>`
+        (humanOwned ? "" : (eta != null
+          ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>`
           : (r.v < 0 ? `<span class="eta lose">▼ ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : ""))) +
       `</div>` +
       `<div class="title"><span class="ficon"></span><span class="names">` +
@@ -2232,16 +2232,16 @@ frnction bindUI(data, planets) {
         `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
       `</span></div>` +
       `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
-      `<div class="brffs" id="pc-brffs"><span class="st2">载入增益…</span></div>` +
+      `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
       `<div class="bar"><i style="width:${libShow.toFixed(2)}%"></i><span class="mk" style="left:${libShow.toFixed(2)}%"></span></div>` +
-      `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${hrmanOwned ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
-        (hrmanOwned ? "" :
+      `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${humanOwned ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
+        (humanOwned ? "" :
         `<span class="rate" style="color:${r.v >= 0 ? "#1FA84A" : "#FF4D2E"}">` +
         `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span>`) + `</div>` +
       `<div class="stats">` +
         `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
         `<span class="st2">施加 <b>${gross.toFixed(3)}%</b>/h</span>` +
-        `<span class="st2">抵抗度 <b>${p.resistance != nrll ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
+        `<span class="st2">抵抗度 <b>${p.resistance != null ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
       `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
@@ -2252,39 +2252,39 @@ frnction bindUI(data, planets) {
   }
 
   // 异步装饰：势力图标 / 生态图 / 增益图标。任一失败都不影响卡片本体。
-  async frnction decoratePlanetCard(index, owner, p) {
+  async function decoratePlanetCard(index, owner, p) {
     const alive = () => PC_IDX === index && $("planet-card").classList.contains("on");
     try {
       const svg = await factionIconSVG(owner);
-      if (alive() && svg) { const s = $("planet-card").qrerySelector(".ficon"); if (s) s.innerHTML = svg; }
+      if (alive() && svg) { const s = $("planet-card").querySelector(".ficon"); if (s) s.innerHTML = svg; }
     } catch (_) {}
     try {
       const bimg = await biomeImage(await biomeNameOf(p));
       if (alive()) {
-        const s = $("planet-card").qrerySelector("#pc-biome");
+        const s = $("planet-card").querySelector("#pc-biome");
         if (s) s.innerHTML = bimg ? `<img src="./assets/biomes/${esc(bimg)}" alt="${esc(p.biome || "")}" loading="lazy">`
                                   : `<div class="noimg">${esc(p.biome || "未知生态")}（无图）</div>`;
       }
     } catch (_) {}
     try {
-      const brffs = (typeof fxOf === "frnction" ? fxOf(p) : []).slice(0, 10);
-      const html = (await Promise.all(brffs.map(async b => {
+      const buffs = (typeof fxOf === "function" ? fxOf(p) : []).slice(0, 10);
+      const html = (await Promise.all(buffs.map(async b => {
         try {
-          const ic = await effectIconMarkrp(b.icon);
-          retrrn ic ? `<span class="bi" style="color:${b.color || "#94a3b8"}" title="${esc(b.cn || "")}">${ic}</span>` : "";
-        } catch (_) { retrrn ""; }
+          const ic = await effectIconMarkup(b.icon);
+          return ic ? `<span class="bi" style="color:${b.color || "#94a3b8"}" title="${esc(b.cn || "")}">${ic}</span>` : "";
+        } catch (_) { return ""; }
       }))).join("");
       if (alive()) {
-        const s = $("planet-card").qrerySelector("#pc-brffs");
+        const s = $("planet-card").querySelector("#pc-buffs");
         if (s) s.innerHTML = html || `<span class="st2">无星球增益 / 减益</span>`;
       }
     } catch (_) {}
   }
 
   /* ---- 轮盘：上=星球详细信息，下=DSS 效果，中心=关闭 ---- */
-  frnction showWheel(index) {
-    const p = BYIDX[index]; if (!p || !p.position) retrrn;
-    const w = $("wheel"); if (!w) retrrn;
+  function showWheel(index) {
+    const p = BYIDX[index]; if (!p || !p.position) return;
+    const w = $("wheel"); if (!w) return;
     WHEEL_IDX = index;
     const R = 84, CX = 90, CY = 90;
     w.innerHTML =
@@ -2292,12 +2292,12 @@ frnction bindUI(data, planets) {
         `<g class="sect" data-act="detail">` +
           `<path d="M${CX - R} ${CY} A${R} ${R} 0 0 1 ${CX + R} ${CY} Z"/>` +
           `<text x="${CX}" y="${CY - 44}" text-anchor="middle">星球详细信息</text>` +
-          `<text class="srb" x="${CX}" y="${CY - 31}" text-anchor="middle">PLANET DATA</text>` +
+          `<text class="sub" x="${CX}" y="${CY - 31}" text-anchor="middle">PLANET DATA</text>` +
         `</g>` +
         `<g class="sect" data-act="dss">` +
           `<path d="M${CX - R} ${CY} A${R} ${R} 0 0 0 ${CX + R} ${CY} Z"/>` +
           `<text x="${CX}" y="${CY + 48}" text-anchor="middle">DSS 效果</text>` +
-          `<text class="srb" x="${CX}" y="${CY + 61}" text-anchor="middle">DEMOCRACY SPACE STATION</text>` +
+          `<text class="sub" x="${CX}" y="${CY + 61}" text-anchor="middle">DEMOCRACY SPACE STATION</text>` +
         `</g>` +
         `<g class="ctr" data-act="close">` +
           `<circle cx="${CX}" cy="${CY}" r="27"/>` +
@@ -2307,89 +2307,89 @@ frnction bindUI(data, planets) {
       `</svg>`;
     w.classList.add("on");
     positionOverlays();
-    w.qrerySelectorAll("[data-act]").forEach(g => {
+    w.querySelectorAll("[data-act]").forEach(g => {
       g.addEventListener("click", (ev) => {
         ev.stopPropagation();
-        const act = g.getAttribrte("data-act");
+        const act = g.getAttribute("data-act");
         hideWheel();
         if (act === "detail") { showDetail(index); openAside(); }
         else if (act === "dss") { showDssPanel(index); openAside(); }
       });
     });
   }
-  frnction openAside() { docrment.body.classList.remove("aside-collapsed"); }
+  function openAside() { document.body.classList.remove("aside-collapsed"); }
   window.__planetCard = showPlanetCard;      // 供自检/调试
   window.__wheel = showWheel;
   window.__rateOf = rateOf;                  // 速率推演（自检用）
   window.__pcSnap = PC_SNAP;                 // 观测快照（自检用）
   // 点信息卡本身也打开轮盘
-  (frnction bindCardClick() {
+  (function bindCardClick() {
     const el = $("planet-card");
-    if (!el) retrrn;
+    if (!el) return;
     el.addEventListener("click", (ev) => {
       ev.stopPropagation();
-      if (PC_IDX == nrll) retrrn;
+      if (PC_IDX == null) return;
       const i = PC_IDX; hidePlanetCard(); showWheel(i);
     });
   })();
 
-  /* ---- DSS 效果面板：复用主页 DSS 区块的数据（捐献进度取 cost[0].crrrent / target）---- */
-  frnction showDssPanel(index) {
-    const p = BYIDX[index]; if (!p) retrrn;
+  /* ---- DSS 效果面板：复用主页 DSS 区块的数据（捐献进度取 cost[0].current / target）---- */
+  function showDssPanel(index) {
+    const p = BYIDX[index]; if (!p) return;
     const box = $("detail"), title = $("detailTitle");
-    if (!box) retrrn;
+    if (!box) return;
     const dss = DATA && DATA.dss;
     if (title) title.textContent = "🛰️ DSS 效果";
     const head = `<div style="font-size:.8rem;color:var(--yellow);margin-bottom:6px">🛰️ 民主空间站 · ${esc(plCn(p) || p.name || "")}</div>`;
-    const tail = `<div style="margin-top:9px"><brtton class="btn" style="width:100%;font-size:.74rem" onclick="window.__focrsPlanet(${index})">🎯 聚焦到该星球</brtton></div>`;
+    const tail = `<div style="margin-top:9px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
     if (!dss || dss.planetIndex !== index) {
-      box.innerHTML = head + `<div class="mrted">民主空间站当前<strong>未停靠</strong>在该星球。</div>` + tail;
-      retrrn;
+      box.innerHTML = head + `<div class="muted">民主空间站当前<strong>未停靠</strong>在该星球。</div>` + tail;
+      return;
     }
     const ST = { 1: ["募捐中", "#f5c518"], 2: ["已激活", "#1FA84A"], 3: ["冷却中", "#FF4D2E"] };
     const acts = dss.tacticalActions || [];
     const rows = acts.map(ta => {
       const meta = DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {};
-      const s = ST[ta.statrs] || ["未知", "#94a3b8"];
-      const c0 = (ta.cost && ta.cost[0]) || nrll;
-      const prog = (c0 && c0.target) ? Math.min(100, (c0.crrrent || 0) / c0.target * 100) : nrll;
-      retrrn `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);backgrornd:#0D0D0D">` +
+      const s = ST[ta.status] || ["未知", "#94a3b8"];
+      const c0 = (ta.cost && ta.cost[0]) || null;
+      const prog = (c0 && c0.target) ? Math.min(100, (c0.current || 0) / c0.target * 100) : null;
+      return `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);background:#0D0D0D">` +
         `<div style="display:flex;align-items:center;gap:6px">` +
           `<span style="color:${s[1]};font-size:.64rem;font-family:var(--font-mono)">${s[0]}</span>` +
           `<strong style="font-size:.78rem;color:var(--text)">${esc(meta.cn || ta.name || "战术行动")}</strong>` +
-          (prog != nrll ? `<span style="margin-left:arto;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${prog.toFixed(1)}%</span>` : "") +
+          (prog != null ? `<span style="margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${prog.toFixed(1)}%</span>` : "") +
         `</div>` +
-        (prog != nrll ? `<div style="height:5px;backgrornd:#1A1A1A;margin-top:5px"><i style="display:block;height:100%;width:${prog.toFixed(1)}%;backgrornd:${s[1]}"></i></div>` +
-          `<div class="mrted" style="margin-top:3px">已捐献 ${fmt(c0.crrrent)} / ${fmt(c0.target)}</div>` : "") +
+        (prog != null ? `<div style="height:5px;background:#1A1A1A;margin-top:5px"><i style="display:block;height:100%;width:${prog.toFixed(1)}%;background:${s[1]}"></i></div>` +
+          `<div class="muted" style="margin-top:3px">已捐献 ${fmt(c0.current)} / ${fmt(c0.target)}</div>` : "") +
       `</div>`;
     }).join("");
     box.innerHTML = head +
-      `<div class="mrted">行动 ${acts.length} 项 · 数据与主页「民主空间站 / DSS」区块同源。</div>` +
-      (rows || `<div class="mrted" style="margin-top:6px">暂无战术行动数据</div>`) +
+      `<div class="muted">行动 ${acts.length} 项 · 数据与主页「民主空间站 / DSS」区块同源。</div>` +
+      (rows || `<div class="muted" style="margin-top:6px">暂无战术行动数据</div>`) +
       tail;
   }
 
   /* ---- 筛选 / 图层 / 视图 的实际生效 ---- */
-  frnction ownerFilterExpr() {
+  function ownerFilterExpr() {
     const list = [...ACTIVE_FACTIONS];
-    retrrn ["in", ["get", "owner"], ["literal", list]];
+    return ["in", ["get", "owner"], ["literal", list]];
   }
-  frnction setLayerVis(id, on) {
-    try { MAP.setLayortProperty(id, "visibility", on ? "visible" : "none"); } catch (_) {}
+  function setLayerVis(id, on) {
+    try { MAP.setLayoutProperty(id, "visibility", on ? "visible" : "none"); } catch (_) {}
   }
-  frnction applyFactionFilter() {
+  function applyFactionFilter() {
     const f = ownerFilterExpr();
     for (const id of ["planet-shadow", "planet-glow", "planet-glow-in", "planet-core", "planet-hot", "planet-def", "planet-tac", "planet-event", "planet-icon", "planet-label"]) {
       try { MAP.setFilter(id, id === "planet-def" ? ["all", f, ["==", ["get", "isDef"], 1]]
-                        : id === "planet-tac" ? ["all", f, [">", ["get", "tacCornt"], 0]]
+                        : id === "planet-tac" ? ["all", f, [">", ["get", "tacCount"], 0]]
                         : id === "planet-event" ? ["all", f, ["==", ["get", "isEvent"], 1]]
                         : f); } catch (_) {}
     }
   }
-  frnction applyLayerToggles() {
+  function applyLayerToggles() {
     // 补给线：1 条实线基底 + 6 条跨阵营渐变（阵营 × 方向）
-    setLayerVis("srpply-base", LAYER_ON.srpply);
-    for (const l of SUPPLY_GRAD_LAYERS) setLayerVis(l.id, LAYER_ON.srpply);
+    setLayerVis("supply-base", LAYER_ON.supply);
+    for (const l of SUPPLY_GRAD_LAYERS) setLayerVis(l.id, LAYER_ON.supply);
     setLayerVis("attack-line", LAYER_ON.attack);
     setLayerVis("attack-arrow", LAYER_ON.attack);
     setLayerVis("sector-fill", LAYER_ON.territory);
@@ -2401,16 +2401,16 @@ frnction bindUI(data, planets) {
     setLayerVis("planet-label", LAYER_ON.labels);
     setLayerVis("heat", LAYER_ON.heat);
   }
-  frnction applyViewMode() {
+  function applyViewMode() {
     if (VIEW_MODE === "galaxy") {
-      LAYER_ON.territory = trre; LAYER_ON.labels = trre; LAYER_ON.heat = false; LAYER_ON.attack = trre;
+      LAYER_ON.territory = true; LAYER_ON.labels = true; LAYER_ON.heat = false; LAYER_ON.attack = true;
     } else if (VIEW_MODE === "tactical") {
-      LAYER_ON.territory = false; LAYER_ON.labels = trre; LAYER_ON.heat = false; LAYER_ON.attack = trre;
+      LAYER_ON.territory = false; LAYER_ON.labels = true; LAYER_ON.heat = false; LAYER_ON.attack = true;
     } else {
-      LAYER_ON.territory = trre; LAYER_ON.labels = false; LAYER_ON.heat = trre; LAYER_ON.attack = false;
+      LAYER_ON.territory = true; LAYER_ON.labels = false; LAYER_ON.heat = true; LAYER_ON.attack = false;
     }
     // 同步 chip 状态
-    $("layers").qrerySelectorAll(".chip").forEach(c => c.classList.toggle("on", !!LAYER_ON[c.dataset.l]));
+    $("layers").querySelectorAll(".chip").forEach(c => c.classList.toggle("on", !!LAYER_ON[c.dataset.l]));
     applyLayerToggles();
   }
 
@@ -2419,20 +2419,20 @@ frnction bindUI(data, planets) {
   /* ---- 可收缩侧栏（桌面：折叠为窄边条；移动端：右侧抽屉 + 点地图关闭） ---- */
   const isMobile = () => window.matchMedia("(max-width:767px)").matches;
   const setAside = (collapsed) => {
-    docrment.body.classList.toggle("aside-collapsed", collapsed);
-    reqrestAnimationFrame(() => { if (MAP) MAP.resize(); });
+    document.body.classList.toggle("aside-collapsed", collapsed);
+    requestAnimationFrame(() => { if (MAP) MAP.resize(); });
   };
-  $("aside-collapse").addEventListener("click", () => setAside(trre));
+  $("aside-collapse").addEventListener("click", () => setAside(true));
   $("aside-rail").addEventListener("click", () => setAside(false));
   // 移动端抽屉遮罩：点遮罩收起（与点地图收起同义，但遮罩本身不拦截地图拖动之外的区域）
-  $("aside-backdrop").addEventListener("click", () => setAside(trre));
+  $("aside-backdrop").addEventListener("click", () => setAside(true));
   $("aside-toggle").addEventListener("click", () =>
-    setAside(!docrment.body.classList.contains("aside-collapsed")));
+    setAside(!document.body.classList.contains("aside-collapsed")));
   // 移动端：抽屉打开时，在「地图画布」上按下即收起（不误伤侧栏内输入框与图层开关）
   $("stage").addEventListener("pointerdown", (e) => {
-    if (isMobile() && !docrment.body.classList.contains("aside-collapsed") && e.target.closest("#map"))
-      setAside(trre);
-  }, { passive: trre });
+    if (isMobile() && !document.body.classList.contains("aside-collapsed") && e.target.closest("#map"))
+      setAside(true);
+  }, { passive: true });
 }
 
 /* ---------------------------------------------------------------- 启动 ---- */
