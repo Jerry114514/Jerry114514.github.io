@@ -909,7 +909,7 @@ async function effectIconMarkup(file) {
 let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
-let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（tables/sector_map.json，写死）
+let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（取自 starmap.json，唯一权威源）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
 const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
@@ -973,17 +973,16 @@ async function boot() {
         if (pl.en) PL_CN[pl.en.toUpperCase()] = pl.cn || "";
       }
     }
+    // 星球 -> 中文星区（starmap.planets[].system）：**唯一权威源**（用户指定）。
+    // 不能拿 data.json 的 p.sector 分组 —— 实测 273 颗里 152 颗为空，会分出「未分区」和一堆假星区。
+    SEC_BY_PLANET = {};
+    for (const [en, v] of Object.entries(star.planets || {})) {
+      if (v && v.system) SEC_BY_PLANET[String(en).toUpperCase()] = v.system;
+    }
     for (const [off, canonical] of Object.entries(SECTOR_ALIASES)) {
       if (!SEC_CN[off.toUpperCase()] && SEC_CN[canonical.toUpperCase()]) SEC_CN[off.toUpperCase()] = SEC_CN[canonical.toUpperCase()];
     }
   } catch (_) { /* 中文映射缺失不影响运行 */ }
-  // 星区写死对照表（星球英文名 -> 中文星区），与主页同源：tables/sector_map.json。
-  // 为什么不能用 p.sector 直接分组：实测 273 颗里 152 颗为空、其余与用户对照表冲突，
-  // 直接分组会得到「未分区」和一个假星区列表。
-  try {
-    const smp = await (await fetch("./tables/sector_map.json?t=" + Date.now(), { cache: "no-store" })).json();
-    if (smp && typeof smp === "object" && !Array.isArray(smp)) SEC_BY_PLANET = smp;
-  } catch (_) { /* 缺表时退回 sector 字段与旧映射 */ }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
   (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
