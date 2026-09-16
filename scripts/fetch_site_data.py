@@ -32,8 +32,8 @@ WAR_ID = 801
 HEADERS_OFFICIAL = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AstrBot-HD2-Plugin/1.0",
     "Accept": "application/json",
-    "X-Super-Client": "374200774",
-    "X-Super-Contact": "374200774@qq.com",
+    "X-Super-Client": "Jerry114514",
+    "X-Super-Contact": "Kar98kyj@qq.com",
     "Accept-Language": "en-US",
 }
 HEADERS_HD2DEV = {
