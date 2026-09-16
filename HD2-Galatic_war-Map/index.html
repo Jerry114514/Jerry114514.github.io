@@ -6,10 +6,10 @@
   <title>HD2 真理部 · 实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913g">
-  <link rel="stylesheet" href="./css/home.css?v=20260913g">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260913h">
+  <link rel="stylesheet" href="./css/home.css?v=20260913h">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
-  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913g">
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913h">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -2749,7 +2749,47 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     window.addEventListener("resize", layoutPlanetGrids);
     refresh();
     startAutoRefresh();
+    initBackToTop();
   });
+
+  // 返回顶部：JS 建节点（不动 HTML 结构），滚动超过约一屏才出现。
+  // 放左下角 —— 右下角是「最新资讯」浮层（fixed / max-height:60vh），叠过去会被它盖住。
+  function initBackToTop() {
+    const btn = document.createElement("button");
+    btn.id = "back-to-top";
+    btn.type = "button";
+    btn.setAttribute("aria-label", "返回顶部");
+    btn.innerHTML = '<span class="ar">▲</span><span>返回顶部</span>';
+    btn.addEventListener("click", () => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) { window.scrollTo(0, 0); return; }
+      const y0 = window.scrollY;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      // 兜底：后台标签页/不支持平滑滚动的环境里 smooth 不会推进 →
+      // 600ms 后若位置没动就直接跳，保证按钮永远真的能用（本项目已踩过 rAF 挂起的坑）。
+      setTimeout(() => {
+        if (window.scrollY >= y0 && window.scrollY > 0) window.scrollTo(0, 0);
+        sync();   // 显式收尾：不依赖 scroll 事件（部分环境不回抛），确保按钮在顶部消失
+      }, 600);
+    });
+    document.body.appendChild(btn);
+    // 节流用「时间戳」而不是 rAF：rAF 在后台/隐藏页面会被挂起，
+    // 那样按钮会在用户明明滚动了的情况下永远不出现（本项目已踩过 rAF 挂起的坑）。
+    let lastRun = 0, trail = 0;
+    const sync = () => { btn.classList.toggle("on", window.scrollY > window.innerHeight * 0.8); };
+    window.addEventListener("scroll", () => {
+      const now = performance.now();
+      if (now - lastRun < 100) {
+        // 尾沿：节流会吃掉「最后一次」滚动事件（例如点回顶后停在顶端），
+        // 不补这一下按钮会在顶部残留不消失。
+        clearTimeout(trail); trail = setTimeout(sync, 110);
+        return;
+      }
+      lastRun = now; sync();
+    }, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+  }
   </script>
 </body>
 </html>

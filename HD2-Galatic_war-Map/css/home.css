@@ -639,6 +639,20 @@
     /* ============================================================
        悬浮资讯窗
        ============================================================ */
+    /* 返回顶部（2026-09-15）：固定左下角 —— 右下角被「最新资讯」浮层占用（fixed/60vh），
+       叠在那边会被展开的资讯面板盖住。滚动超过一屏才出现。 */
+    #back-to-top {
+      position: fixed; left: 18px; bottom: 18px; z-index: 41;
+      display: none; align-items: center; gap: 6px;
+      padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: .78rem; letter-spacing: .06em;
+      color: var(--yellow); background: var(--panel);
+      border: 1px solid var(--brass); border-radius: 0;
+    }
+    #back-to-top.on { display: flex; }
+    #back-to-top:hover { background: #1A1200; color: #FFD24A; border-color: var(--yellow); }
+    #back-to-top .ar { font-size: .9rem; line-height: 1; }
+
     .news-float {
       position: fixed;
       right: 18px;
