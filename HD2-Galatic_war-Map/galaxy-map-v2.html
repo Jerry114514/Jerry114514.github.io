@@ -964,7 +964,7 @@ async function boot() {
     "Idun": "Eaton",          // ATRAMA/MAW/MYRADESH/WRAITH → 伊顿（旧值指向 Ipotus 是错的）
     "Iptus": "Ipodus",        // IRIDICA/KRAKABOS/PRIMORDIA/PROVIDENCE/RATCH/VALGAARD → 伊普都斯（旧值 Ipotus 拼写不符）
   };
-  const SECTOR_CN_FALLBACK = { "TBD": "待定" };   // starmap 未收录的名称直译
+  const SECTOR_CN_FALLBACK = { "TBD": "不分区" };   // starmap 未收录的星区（TBD 占位）→「不分区」
   try {
     const star = await (await fetch("./tables/starmap.json?t=" + Date.now(), { cache: "no-store" })).json();
     for (const sysn of (star.systems || [])) {
