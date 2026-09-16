@@ -910,6 +910,7 @@ let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
 let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（取自 starmap.json，唯一权威源）
+let UNLISTED_IDX = new Set();                  // 未分区星球的 index（不显示在星图上，见构造 GeoJSON 处）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
 const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
@@ -979,13 +980,21 @@ async function boot() {
     for (const [en, v] of Object.entries(star.planets || {})) {
       if (v && v.system) SEC_BY_PLANET[String(en).toUpperCase()] = v.system;
     }
+    // 未分区星球（starmap 无星区、或星区是 TBD 占位，如 NEW INSIGHT / WAYWARD）：
+    // 统一登记，稍后**从星图上完全剔除**（其坐标是 (0,0) 哨兵值，会把图标叠在银河中心）。
+    UNLISTED_IDX.clear();
+    for (const p of (data.planets || [])) {
+      const s = SEC_BY_PLANET[String(p.name || "").toUpperCase()];
+      if (!s || s.toUpperCase() === "TBD") UNLISTED_IDX.add(p.index);
+    }
     for (const [off, canonical] of Object.entries(SECTOR_ALIASES)) {
       if (!SEC_CN[off.toUpperCase()] && SEC_CN[canonical.toUpperCase()]) SEC_CN[off.toUpperCase()] = SEC_CN[canonical.toUpperCase()];
     }
   } catch (_) { /* 中文映射缺失不影响运行 */ }
   DATA = data;
   WP = wpRaw.waypoints || wpRaw;
-  (data.planets || []).forEach(p => { BYIDX[p.index] = p; });
+  // 未分区的星球也不进 BYIDX —— 否则检索框（#q）与 focusPlanet 仍会把它翻出来、飞到银河中心
+  (data.planets || []).forEach(p => { if (!UNLISTED_IDX.has(p.index)) BYIDX[p.index] = p; });
 
   // ---- 星区索引（供左上角星区卡：总解放度 / 占领方 / 交战中阵营） ----
   {
@@ -1053,10 +1062,12 @@ async function boot() {
   // 早前用 `pos.x || pos.y` 过滤把超级地球一起丢掉了（正是"星图中心缺星球"的原因）。
   // 改为只保留落在星图有效范围内的坐标：NEW INSIGHT / WAYWARD 是未启用占位星球，
   // 坐标为哨兵值 (0,0)，靠索引名单剔除，避免与超级地球重叠。
+  // 未分区的星球不上图：UNLISTED_IDX（starmap 无星区/TBD，用户要求「未分区不显示在地图上」）
+  // 并上历史哨兵名单（防止对照表变动后漏网），两者取并集。
   const SENTINEL_IDX = new Set([264, 265]);   // NEW INSIGHT / WAYWARD
   const planets = (data.planets || []).filter(p => {
     const pos = p.position || {};
-    if (SENTINEL_IDX.has(p.index)) return false;
+    if (SENTINEL_IDX.has(p.index) || UNLISTED_IDX.has(p.index)) return false;
     return Number.isFinite(pos.x) && Number.isFinite(pos.y);
   });
   const fc = (feats) => ({ type: "FeatureCollection", features: feats });
