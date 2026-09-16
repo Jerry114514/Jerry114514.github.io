@@ -7,9 +7,9 @@
    ── z 层级表 ──：悬浮 40 < 导航 50 < 遮罩 100 < 弹层 999，用变量勿拍数字 */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@font-face { font-family: "ZZZ-thick"; src: url("../fonts/ZZZ-thick.ttf") format("truetype"); }
-@font-face { font-family: 'ChuangKeTi'; src: url("../fonts/ChuangKeTieJinGangTi-2.otf") format('opentype'); }
-@font-face { font-family: 'SourceHanSans'; src: url("../fonts/SourceHanSansCN-Medium.otf") format('opentype'); }
+@font-face { font-family: "ZZZ-thick"; src: url("../../../fonts/ZZZ-thick.ttf") format("truetype"); }
+@font-face { font-family: 'ChuangKeTi'; src: url("../../../fonts/ChuangKeTieJinGangTi-2.otf") format('opentype'); }
+@font-face { font-family: 'SourceHanSans'; src: url("../../../fonts/SourceHanSansCN-Medium.otf") format('opentype'); }
 html, body { height: 100%; font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); }
 body { display: flex; flex-direction: column; }
 .wiki-header .back:hover { color: var(--yellow); border-color: var(--yellow); }

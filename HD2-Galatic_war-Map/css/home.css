@@ -1,9 +1,9 @@
 /* HD2 主站样式（2026-09 自 index.html 内嵌 <style> 整体抽取）
    改动会波及主站全部模块，谨慎编辑；设计变量在 tokens.css */
 
-@font-face { font-family: "ChuangKeTi"; src: url("../ChuangKeTieJinGangTi-2.otf") format("opentype"); font-display: swap; }
-    @font-face { font-family: "SourceHanSans"; src: url("../SourceHanSansCN-Medium.otf") format("opentype"); font-display: swap; }
-@font-face { font-family: "ZZZ-thick"; src: url("../ZZZ-thick.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "ChuangKeTi"; src: url("../../fonts/ChuangKeTieJinGangTi-2.otf") format("opentype"); font-display: swap; }
+    @font-face { font-family: "SourceHanSans"; src: url("../../fonts/SourceHanSansCN-Medium.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "ZZZ-thick"; src: url("../../fonts/ZZZ-thick.ttf") format("truetype"); font-display: swap; }
     /* ============================================================
        主题变量
        ============================================================ */
