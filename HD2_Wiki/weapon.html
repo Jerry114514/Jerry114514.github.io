@@ -53,13 +53,10 @@
     .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
 
 
-    .stats-table { width: 100%; border-collapse: collapse; }
-
-    .stats-table tr { border-bottom: 1px solid var(--border); }
-
-    .stats-table td { padding: 8px 10px; font-size: 0.85rem; }
-
-    .stats-table td:first-child { color: var(--text-mute); width: 40%; }
+    /* 「属性 / 数值」键值表：表头斜纹 + 琥珀粗体、行细线分隔、偶数行压深、
+       横向滚动壳 —— 全部复用 hud-skin.css 第⑦节的 .stats-table / .table-wrap，
+       本页只保留列宽与「值」列取色（键列为 --text-mute 由公共层给）。 */
+    .stats-table td:first-child { width: 40%; }
 
     .stats-table td:last-child { color: var(--text); }
 
@@ -313,19 +310,21 @@
       if (s === "∞") return "∞";
       return dsTranslate(s);
     }
-    // 分组网格（属性名+属性值成对，4列）
+    // 分组键值表（属性名 → 属性值，逐行两列；与伤害机制页的表格同款表头/行线）
     function dsGrid(obj, label) {
       if (!obj) return "";
       var keys = Object.keys(obj);
       if (!keys.length) return "";
-      var cells = keys.map(function(k) {
+      var rows = keys.map(function(k) {
         var v = dsVal(obj[k]);
         if (v === "") return "";
         var lbl = DS_LABELS[k] || k;
-        return '<div class="ds-cell"><span class="ds-k">' + esc(lbl) + '</span><span class="ds-v">' + esc(v) + '</span></div>';
+        return '<tr><td>' + esc(lbl) + '</td><td>' + esc(v) + '</td></tr>';
       }).filter(Boolean);
-      if (!cells.length) return "";
-      return '<div class="ds-grid">' + cells.join("") + '</div>';
+      if (!rows.length) return "";
+      return '<div class="table-wrap"><table class="stats-table">' +
+        '<tr><th>属性</th><th>数值</th></tr>' + rows.join("") +
+        '</table></div>';
     }
     function renderDetailedStats(w) {
       var ds = w.detailed_stats;

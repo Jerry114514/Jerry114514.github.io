@@ -289,7 +289,7 @@ warbond   = item.warbond_zh || item.warbond
 - `rows` 元素**恒为 3 个**（第 6 节表格结构不变），引用只能走本字段，**禁止**往 `rows[i]` 追加第 4 个元素（会破坏第 6 节的列数判定）。
 - 键是奖励英文名，若日后重抓导致奖励文案变动，须同步改键名。
 
-> 顶层 `total` 必须等于 `warbonds` 数组长度。图标为 `./assets/warbonds/<wiki File 名>.png`（本站下载，不热链）。
+> 顶层 `total` 必须等于 `warbonds` 数组长度。图标为 `./assets/warbonds/<wiki File 名>.webp`（本站下载，不热链；原 PNG 母版保留在同目录，仅为备份）。
 
 ### 7.3 `weapons.json`
 

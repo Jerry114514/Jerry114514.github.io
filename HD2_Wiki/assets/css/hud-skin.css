@@ -127,7 +127,12 @@ button#calcBtn:hover, .toc-toggle:hover {
 .wiki-search input { background: none; border: none; color: var(--text); outline: none; }
 .input-group label, .input-group .hint, .calc-desc { color: var(--text-mute); font-size: 0.74rem; }
 
-/* ════════════════ ⑦ 表格（表头硬线 + 行细线） ════════════════ */
+/* ════════════════ ⑦ 表格（表头硬线 + 行细线） ════════════════
+   `.info-table` / `.part-table` / `.stats-table` / `.section table` 是同一个「表格家族」：
+   表头 = 琥珀斜纹底 + 琥珀粗体；数据行 = 深色 + 细横线分隔 + 偶数行压深。
+   详情页（weapon / stratagem / enemy）一律复用这四个 class，不要另写表头样式。
+   唯一入口是下面的 `.table-wrap` 横向滚动壳（各页同名 class 已存在，此处补公共定义）。 */
+.table-wrap { position: relative; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .info-table, .part-table, .stats-table, .section table { border-collapse: collapse; width: 100%; }
 .info-table th, .part-table th, .stats-table th, .section th {
   background: var(--stripe);
@@ -136,6 +141,7 @@ button#calcBtn:hover, .toc-toggle:hover {
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-align: left;
   padding: 6px 9px;
 }
 .info-table td, .part-table td, .stats-table td, .section td {
@@ -146,7 +152,8 @@ button#calcBtn:hover, .toc-toggle:hover {
 }
 .info-table td:first-child, .part-table td:first-child,
 .stats-table td:first-child, .section td:first-child { color: var(--text-mute); }
-.info-table tr:nth-child(even) td, .stats-table tr:nth-child(even) td,
+.info-table tr:nth-child(even) td, .part-table tr:nth-child(even) td,
+.stats-table tr:nth-child(even) td,
 .section tr:nth-child(even) td { background: #0D0D0D; }
 .table-wrap::after { background: linear-gradient(90deg, transparent, var(--panel)) !important; }
 

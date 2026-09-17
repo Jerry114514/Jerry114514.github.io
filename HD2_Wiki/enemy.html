@@ -54,8 +54,8 @@
 
     .info-table { width: 100%; border-collapse: collapse; }
 
-    .info-table tr { border-bottom: 1px solid var(--border); }
-
+    /* 行分隔线统一由 hud-skin.css 的 .info-table td { border-bottom: var(--line-2) } 提供，
+       这里不再对 <tr> 另设边框（避免 collapse 后取到更深的 --border，与伤害页行线不一致）。 */
     .info-table td { padding: 8px 10px; font-size: 0.85rem; }
 
     .info-table td:first-child { color: var(--text-mute); width: 35%; }
@@ -68,8 +68,13 @@
     .table-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 24px; pointer-events: none;
       background: linear-gradient(90deg, transparent, rgba(11,14,20,.85)); }
     .scroll-hint { font-size: .68rem; color: var(--text-mute); font-weight: 400; margin-left: 8px; }
-    .part-table th:first-child, .part-table td:first-child { position: sticky; left: 0; background: #131826; z-index: 1;
-      box-shadow: 2px 0 4px rgba(0,0,0,.3); }
+    .part-table th:first-child, .part-table td:first-child { position: sticky; left: 0; z-index: 1;
+      border-right: 1px solid var(--line-2); }
+    /* 冻结首列必须自带不透明底色（否则横滚时下面的单元格会透出来）。
+       表头沿用表格家族的表头斜纹（--stripe），数据格用面板底色，
+       偶数行交给 hud-skin.css 的 .part-table tr:nth-child(even) 统一压深 —— 不再写死旧调色板的 #131826。 */
+    .part-table th:first-child { background: var(--stripe), var(--panel); }
+    .part-table td:first-child { background: var(--panel); }
     .info-side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; align-self: start; }
     .sum-head { display: flex; align-items: center; gap: 12px; }
     .sum-head img { width: 56px; height: 56px; object-fit: contain; }
@@ -241,12 +246,13 @@
           '<div class="card" id="sec-appearance"><h2>📷 外观</h2><div class="img-big">' + (e.image ?
             '<img src="' + esc(e.image) + '" alt="' + esc(e.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=placeholder>🐛</div>\'">' :
             '<div class="placeholder">🐛</div>') + '</div></div>' +
-          '<div class="card" id="sec-info"><h2>📊 基础信息</h2><table class="info-table">' +
+          '<div class="card" id="sec-info"><h2>📊 基础信息</h2><div class="table-wrap"><table class="info-table">' +
+            '<tr><th>属性</th><th>数值</th></tr>' +
             row("阵营", fcn) + row("分类", e.category_zh || e.category) +
             row("总生命值", e.health_total) + row("伤害", e.damage_zh || e.damage) +
             row("伤害类型", e.damage_type_zh || e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier_zh || e.fire_damage_multiplier) +
             row("踉跄阈值", e.stagger_threshold_zh || e.stagger_threshold) + row("最低难度", e.minimum_difficulty_zh || e.minimum_difficulty) +
-          '</table></div>' +
+          '</table></div></div>' +
           partsHtml +
         '</div>' +
         sideHtml;

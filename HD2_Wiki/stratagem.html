@@ -67,6 +67,11 @@
 
     .stat-item .v { color: var(--text); }
 
+    /* 「属性 / 数值」键值表：表头斜纹 + 琥珀粗体、行细线分隔、偶数行压深、
+       横向滚动壳 —— 全部复用 hud-skin.css 第⑦节的 .stats-table / .table-wrap，
+       本页只补「值」列取色（键列为 --text-mute 由公共层给）。 */
+    .stats-table td:last-child { color: var(--text); }
+
 
     .tag { padding: 2px 10px; border-radius: 10px; font-size: 12px; }
 
@@ -256,10 +261,12 @@
           '</div>' +
           '<div class="card">' +
             '<h2>📊 详细属性</h2>' +
-            '<div class="stat-grid">' + (statItems.length && statItems[0][1] != null ?
+            (statItems.length && statItems[0][1] != null ?
+              '<div class="table-wrap"><table class="stats-table"><tr><th>属性</th><th>数值</th></tr>' +
               statItems.map(function(x) {
-                return '<div class="stat-item"><span class="k">' + x[2] + ' ' + esc(x[0]) + '</span><span class="v">' + (x[1] == null ? "—" : x[1]) + '</span></div>';
-              }).join("") : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') + '</div>' +
+                return '<tr><td>' + x[2] + ' ' + esc(x[0]) + '</td><td>' + (x[1] == null ? "—" : x[1]) + '</td></tr>';
+              }).join("") + '</table></div>'
+              : '<p style="font-size:0.85rem;color:var(--text-dim)">—</p>') +
           '</div>' +
           renderDetailedStats(s) +
         '</div>' +
@@ -324,14 +331,16 @@
       if (!obj) return "";
       var keys = Object.keys(obj);
       if (!keys.length) return "";
-      var cells = keys.map(function(k) {
+      var rows = keys.map(function(k) {
         var v = dsVal(obj[k]);
         if (v === "") return "";
         var lbl = DS_LABELS[k] || k;
-        return '<div class="ds-cell"><span class="ds-k">' + esc(lbl) + '</span><span class="ds-v">' + esc(v) + '</span></div>';
+        return '<tr><td>' + esc(lbl) + '</td><td>' + esc(v) + '</td></tr>';
       }).filter(Boolean);
-      if (!cells.length) return "";
-      return '<div class="ds-grid">' + cells.join("") + '</div>';
+      if (!rows.length) return "";
+      return '<div class="table-wrap"><table class="stats-table">' +
+        '<tr><th>属性</th><th>数值</th></tr>' + rows.join("") +
+        '</table></div>';
     }
     function renderDetailedStats(s) {
       var ds = s.detailed_stats;
