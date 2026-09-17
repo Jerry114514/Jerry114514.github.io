@@ -324,6 +324,16 @@ warbond   = item.warbond_zh || item.warbond
 **覆盖 `<id>_zh.json`（中文）**：`title_zh`、`description_zh`、`sections_zh[]`。
 `sections_zh[]` 元素字段（`title_zh` / `paragraphs_zh` / `content_zh` / `tables_zh` / `figures_zh` / `subsections_zh` / `id` / `target_id`）与合并规则见 **第 5.2 节**。
 
+**已登记的数据集（2026-09-18）**
+
+| `id` | 主干来源（wiki.gg） | 覆盖文件 | 说明 |
+| --- | --- | --- | --- |
+| `damage` | 《Damage》 | `damage_zh.json` | — |
+| `difficulty` | 《Difficulty》 | `difficulty_zh.json` | — |
+| `galactic_war` | 《[Second Galactic War Mechanics](https://helldivers.wiki.gg/wiki/Second_Galactic_War_Mechanics)》 | `galactic_war_zh.json` | **只放机制**。中文正文（机制速览 / 机制详解 5 子节 / 影响度补充 / FAQ / 参考资料）全部在覆盖文件里，主干**不含英文散文**（`content: ""`），只保留小节骨架 + 锚点 id 权威 + `toc`；该 wiki 页的英文原文本次未抓取落库，见 §9 第 13 条 |
+| `galactic_war_history` | 《[Galactic War](https://helldivers.wiki.gg/wiki/Galactic_War)》 | `galactic_war_history_zh.json` | 剧情 / 时间线页，由 `galactic_war` 拆分而来（§9 第 13 条）。主干保留全部英文剧情（Overview / 第一次银河战争 / 大民主化时代 / 第二次银河战争 24 个月度子节 / References，346 KB）；覆盖文件只有已译的 4 节 + 25 个子节 |
+| `status_effects` | 《Status Effects》 | `status_effects_zh.json` | — |
+
 ### 7.8 `loadout.json`
 
 顶层 `types{}`（`类型名 → { dim4: 第四维名称 }`）；`stratagems[]` 元素：`id`、`name`、`type`、`stats[4]`（number 数组，四维评分）、`bonus`、`subtag[]`、`icon`。
@@ -359,11 +369,12 @@ warbond   = item.warbond_zh || item.warbond
 | `enemies.json` | `fatal` / `is_weak_point` 混用布尔与字符串 | 布尔 | 前端两者都判 |
 | `factions.json` | `updated_at` 为 `YYYY-MM-DD` | 秒级 ISO8601 | 未迁移 |
 | `mechanics/difficulty.json` 等 | `content` / `content_zh` 内嵌原始 HTML 片段（`<ul>`/`<br>`/`<strong>`） | — | 长文正文允许内嵌 HTML，属于登记在案的例外（`mechanics/*.json` 与 `mechanics/*_zh.json` 均适用） |
-| `mechanics/*_zh.json`（2026-09 实测，v1.4 已部分迁移） | **小节层级与主干不一致，且没有 `id` 声明**，只能按序号配对：`damage` 主干 `Damage Calculation` 下 16 节 / 中文 18 节（中文多「拆毁值与结构」「其他结构」、缺 ExDR）；`status_effects` 主干 11 节 / 中文 10 节（缺 `Change History`）；`galactic_war` 主干 5 节 / 中文 6 节且结构完全不同 | 每个覆盖小节写 `id`（= 主干 `id`），层级与主干对齐 | **`status_effects_zh.json` / `galactic_war_zh.json` 已于 2026-09-17 逐节补写 `id` / `target_id`**（`galactic_war` 的 24 个月度子节亦全部显式列名，防止「只译其中几个月」时序号回退错位）；`damage_zh.json` / `difficulty_zh.json` 未迁移。`galactic_war` 另有**主题错配**：主干是该 wiki 的《Galactic War》剧情/时间线页，中文覆盖来自《Second Galactic War Mechanics》机制页，二者内容不同源，仅靠序号对齐仍会让「机制速览」等标题挂上剧情正文（见 §9 第 10 条） |
+| `mechanics/*_zh.json`（2026-09 实测，v1.4 已部分迁移） | **小节层级与主干不一致，且没有 `id` 声明**，只能按序号配对：`damage` 主干 `Damage Calculation` 下 16 节 / 中文 18 节（中文多「拆毁值与结构」「其他结构」、缺 ExDR）；`status_effects` 主干 11 节 / 中文 10 节（缺 `Change History`）；`galactic_war` 主干 5 节 / 中文 6 节且结构完全不同 | 每个覆盖小节写 `id`（= 主干 `id`），层级与主干对齐 | **`status_effects_zh.json` / `galactic_war_zh.json` 已于 2026-09-17 逐节补写 `id` / `target_id`**（`galactic_war` 的 24 个月度子节亦全部显式列名，防止「只译其中几个月」时序号回退错位）；`damage_zh.json` / `difficulty_zh.json` 未迁移。`galactic_war` 另有**主题错配**：主干是该 wiki 的《Galactic War》剧情/时间线页，中文覆盖来自《Second Galactic War Mechanics》机制页，二者内容不同源，仅靠序号对齐仍会让「机制速览」等标题挂上剧情正文（见 §9 第 10 条）。**2026-09-18 已解决**：`galactic_war` 拆成「机制」（`galactic_war`）+「剧情」（`galactic_war_history`）两页，两侧覆盖小节全部显式写 `id`，序号配对规则在这两个数据集上已无实际作用（见 §9 第 13 条） |
 | `mechanics/*_zh.json`（2026-09 实测；v1.4 更新） | `tables_zh` / `paragraphs_zh` **尚未被任何覆盖文件使用**（4 个文件只有 `title_zh` / `content_zh` / `subsections_zh`） | 表格与图片默认沿用主干 | 已支持（第 5.2.2 节）。**2026-09-17 起 `figures_zh` 已投入实战**：`status_effects_zh.json`（`Fire` 节丢弃 1 个「实为散文的图片块」）与 `galactic_war_zh.json`（`Overview` 外的 7 个已译节共丢弃 16 个）。丢弃真图片以外的散文块后，若该节还有**真图片**要保留，做法是把它以简化 `<img>` 写回 `content_zh`（不再依赖主干 `figures_zh` 透传），见 §9 第 11 条。`tables_zh` / `paragraphs_zh` 仍未使用 |
 | `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 站内相对路径 `./assets/mechanics/<页 id>/<文件名>`（第 9 节第 6 条） | **4 个主干文件已全部迁移**（2026-09-17）：`damage.json` 45 处 / 36 文件、`difficulty.json` 33 处 / 16 文件、`status_effects.json` 48 处 / 13 文件、`galactic_war.json` 276 处 / 64 文件（其中 39 处是 `/images/thumb/…` 缩略图，见第 9 节第 6 条）。4 个文件的 `/images/` 残留均为 **0** |
 | `mechanics/damage.json` 的 `Other Structures` 表（2026-09-17 补抓） | 官方渲染页该表在 Structure / AV 两列带 `/wiki/…` 内链与 188×221 的模板图标（`<span class="Templateicons">`） | 站内不存在 `/wiki/…` 路由，且 `mechanic.html` 没有 wiki 的 `Templateicons` 缩放规则，图标会按 188×221 原始尺寸撑高表格行 | 该表只保留**文本数据**（表头 + 20 行 × 5 列），不写内链与图标；其余 6 张表沿用主干既有写法（含内链与图标），其尺寸问题已由第 9 节第 7 条的 CSS 规则解决 |
 | `mechanics/galactic_war.json` 的 `References` 小节（2026-09-17 实测） | `content` 的 `<div>` 与 `</div>` 数量为 182 : 183 —— 结尾在 MediaWiki 注释之后多一个**孤立 `</div>`**（抓取时丢掉了对应的开标签） | `content` 内的 HTML 片段必须标签配平 | **已修（2026-09-17）**：删掉那一个孤立 `</div>`，现为 365 : 365 平衡。附带效果：该节原本还会因「注释残文 + 孤立 `</div>`」合成一段 12 字符的假散文，从而多渲染一个正文 21 字符的**垃圾「英文原文」折叠块**；配平后垃圾折叠块一并消失（该页 `details.mg-ref` 4 → 3，减掉的正是这一个垃圾块）。后果见第 9 节第 8 条 |
+| `mechanics/status_effects.json` 的 `Change_History` 小节（2026-09-18 实测） | `content` 的 `<div>` / `</div>` 为 156 : 157，末尾同样是「MediaWiki 注释 + 孤立 `</div>`」；后果不是垃圾折叠块（该节未译、不产生 `trunkRefHtml`），而是**该节最后 2 个 `Armor_AP2/AP4_Icon.png`（188×221）被挤出 `.section`**，落到 `.main-content` 下，于是既躲开表格图标规则、也躲开正文图标规则，按原始 188×221 渲染（见第 9 节第 12 条） | 标签配平 | **已修（2026-09-18）**：删掉末尾孤立 `</div>`（`api-parse\n -->\n</div>` → `api-parse\n -->\n`），现为 156 : 156；两图回到 `.section` 内，渲染 16–18 × 21 px。`damage.json` 的 `References`（119:120）与 `difficulty.json` 的 `Mission_Difficulty_Changes`（119:120）**同样不平衡但本次未改**：实测两者渲染后没有任何节点逃出 `.section`（`details.mg-ref` 仍在节内、`.main-content` 无逃逸子节点），浏览器错误恢复已兜住，属「已知待清理」而非缺陷 |
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
 
 ---
@@ -403,7 +414,33 @@ warbond   = item.warbond_zh || item.warbond
 8. **`galactic_war.json` 的孤立 `</div>` 会破坏页面布局（2026-09-17 登记，同日已修）**：`References` 小节 `content` 结尾曾多一个 `</div>`（见第 8 节）。`renderSection` 用字符串拼接 + `innerHTML` 注入，多余的一个 `</div>` 会提前闭合 `.main-content`，使**最后一个小节变成 `.layout`（flex）的第三个子项**，`.main-content` 被 `flex: 1 1 0%` 挤到 **73 px 宽**（该逃逸小节自身 787 px）。**修法采用「改数据」而非「改引擎」**（避免影响其它页）：删掉 `galactic_war.json` 里那个孤立 `</div>`。实测改前 → 改后：`.main-content` **73 px → 880 px**，`.layout` 子项 **3 个 → 2 个**（`toc-sidebar:260` + `main-content:880`），页面小节数 37、TOC 37、表格 1、图片块 132 均不变，`<details class="mg-ref">` 4 → 3（减掉的是上面 §8 所述那个 21 字符垃圾块）。
 9. **「注释残文 + 孤立闭合标签」会伪造出一段散文（2026-09-17 登记）**：`splitContent`/`topNodes` 只把 `<!-- … -->` 当注释剥掉，标签配平失败时落在容器外的裸文本（如 `-->` 与 `</div>`）会被当成**顶级文本节点**收进 `prose`，于是「中文覆盖 + 空正文」的小节也会渲染出一个内容无意义的「📄 英文原文」折叠块。因此**修 HTML 配平时要顺带核对 `<details class="mg-ref">` 的数量变化**，数量减少不必然是信息丢失，需逐块确认内容是否为垃圾。
 10. **`galactic_war` 主干与中文覆盖不同源（2026-09-17 登记）**：主干 `galactic_war.json` 抓自 wiki.gg 的《Galactic War》页（`source` 为 `…/wiki/Galactic_War`），内容是**剧情与逐月时间线**；`galactic_war_zh.json` 的中文散文则来自《Second Galactic War Mechanics》**机制页**（解放/防御战役、抵抗度、影响度等）。二者**没有一一对应的小节**，当前靠序号配对已使「机制速览」「机制详解」等机制类标题挂在剧情小节上。本次处理**只做「译入 + 去重 + `fully_translated`」，不重排标题与配对**（重排会改动 TOC 锚点与标题，超出「不加信息量、不减信息量」的范围）。后续若要彻底解决，需在覆盖文件里改中文标题使其与主干小节同名，或把机制内容拆成独立页。
-11. **保留真图片、丢弃伪图片块的做法（2026-09-17 登记）**：`figures_zh` 是**整节名单**，给 `[]` 会把该节所有图片块（含真图片）一起丢掉。当一节既有「实为散文的图片块」又有真图片时，做法是：① 把散文译入 `content_zh`；② 用 `figures_zh: []` 丢弃整节图片块；③ 把要保留的**真图片**以简化 `<img>` 直接写进 `content_zh`（`sanitize` 允许 `div`/`img`/`style`/`width`/`height`/`alt`，`class` 会被改写成 `mg-raw`）。本次 `galactic_war` 的 `The_First_Galactic_War`、`The_Great_Democratization`、`2184 年 2 月/3 月/4 月` 共 6 处按此处理；被丢掉的 wiki `/wiki/File:…` 外链本来在静态站上就不存在，不构成信息损失。
+11. **保留真图片、丢弃伪图片块的做法（2026-09-17 登记）**：`figures_zh` 是**整节名单**，给 `[]` 会把该节所有图片块（含真图片）一起丢掉。当一节既有「实为散文的图片块」又有真图片时，做法是：① 把散文译入 `content_zh`；② 用 `figures_zh: []` 丢弃整节图片块；③ 把要保留的**真图片**以简化 `<img>` 直接写进 `content_zh`（`sanitize` 允许 `div`/`img`/`style`/`width`/`height`/`alt`，`class` 会被改写成 `mg-raw`）。本次 `galactic_war` 的 `The_First_Galactic_War`、`The_Great_Democratization`、`2184 年 2 月/3 月/4 月` 共 6 处按此处理；被丢掉的 wiki `/wiki/File:…` 外链本来在静态站上就不存在，不构成信息损失。**2026-09-18 拆分后这 6 处随节迁到 `galactic_war_history_zh.json`，`figures_zh: []` 与 `fully_translated: true` 原样保留**（判定跟着节走，见第 13 条）。
+
+12. **图片尺寸通用规则（2026-09-18 登记并实施）**：修的是「同一页里图片忽大忽小」。审计口径 = `mechanic.html` 的 4 个机制页 + `boosters` / `booster` / `warbonds` / `warbond` / `weapons` / `weapon` / `stratagems` / `stratagem` / `enemies` / `enemy` / `wiki` / `loadout` / `missions`，逐页实测渲染后的 `getBoundingClientRect()`（1280 与 375 两档）。
+    - **失衡清单（改前）**：`id=difficulty` 15 张 —— `Medal.svg` / `Requisition_Slip.svg` / `XP.svg`（原始 `width`/`height` = 512×716 / 512×571 / 512×282）按**原始文件尺寸**杵在正文里（正文 `.section img` 当时只有 `max-width:100%`，512 < 容器宽 880 所以完全不缩），另有 6 张 512×512 阵营图标；`id=galactic_war` 151 张 —— 135 张阵营/部委图标（`width="512"`，自然尺寸仅 150×150）渲染成 512×512、16 张 `Super_Earth_Icon.svg`（`width="1024"`）渲染成 880×880；`id=status_effects` 2 张 —— `Armor_AP2/AP4_Icon.png` 188×221（成因是 §8 那条 `</div>` 配平，图被挤出 `.section`）。其余页面 0 失衡。
+    - **规则（唯一入口 `assets/css/hud-skin.css` 第⑮节，不逐图写死尺寸）**：
+      ```css
+      /* ① 正文配图：不撑破容器 + 高度上限 28em（≈392px @14px）+ 保长宽比 */
+      .section img { max-width: 100%; max-height: 28em; height: auto; }
+      /* ② wiki 模板图标：按「原始 width 属性」分档还原为 1.5em 行内尺寸（同 §9 第 7 条表格规则） */
+      .section img[width="188"], .section img[width="512"], .section img[width="1024"] {
+        width: auto; height: 1.5em; max-height: 1.5em; max-width: 3em;
+      }
+      ```
+      `width="34"`（难度图）、`width="320"`（内容缩略图）等**不在分档内**，保持原尺寸；表格内的同名图标仍由 `mechanic.html` 的 `.mg-table-wrap` 规则接管（选择器更具体，实测不变）。③ 卡片 / 缩略图各页早已是「固定容器 + `object-fit: contain`」（`.weapon-icon img` / `.enemy-card-image img` / `.strat-ic` / `.booster-icon img` / `.detail-icon img` / `.wb-cover img` / `.part-img img`），实测 0 失衡，**不重复定义**，避免两套规则互相压。
+    - **为什么写在 `hud-skin.css`**：它最后加载（能压住页面级写法），一次覆盖全部 12 页；同时把 16 个页面的 `hud-skin.css?v=20260913e` 统一改成 `?v=20260918a` 做缓存击穿（页面内联样式不受影响，`mechanic.html` 的表格图标规则仍在页内）。
+    - **实测改前 → 改后**：difficulty 512×716 → 15×21、512×571 → 18×21、512×282 → 37×21、512×512 → 21×21；galactic_war（现为 `galactic_war_history`）512×512 → 21×21、1024×1024 → 21×21，而 320×320 的边疆图、256×360 的阵营图、250×305 的兵种图**尺寸不变**；status_effects 188×221 → 18×21。全部页面失衡 0、破图 0、console error 0、375 px 横向溢出 0、表格图标仍在 16–34 px。
+    - **刻意不做**：不给卡片家族另写尺寸（各自已正确）；不把 320 px 级正文配图压小（`enemy` 详情页封面 1440×1080 仍随容器渲染 400×300、375 px 下 291×218，属「大图」设计意图）；不给 `damage.json` / `difficulty.json` 的两处孤立 `</div>` 做数据手术（实测无节点逃出 `.section`，见 §8）。
+
+13. **`galactic_war` 拆分为「机制」+「剧情」两页（2026-09-18 登记并实施）**：落地第 10 条遗留的「把机制内容拆成独立页」。
+    - **做法**：`galactic_war_history.json` = 改名前 `galactic_war.json` 的**字节级副本**（`copy` 后只用 `edit` 改了 `id` / `title` / `title_en` / `description` / `updated_at`，`sections` / `toc` / `source` 一个字节没动）；`galactic_war_history_zh.json` = `galactic_war_zh.json` 的副本，删掉机制内容后只留剧情节；机制侧两个文件重写（`galactic_war.json` 为新骨架，`galactic_war_zh.json` 只留机制）。
+    - **迁到 `galactic_war_history` 的（主干 id 原样保留）**：`Overview`（概述·「关于银河战争这一叙事框架」部分）/ `The_First_Galactic_War`（第一次银河战争·背景）+ `Fate_of_the_Illuminate`（光能族的结局）/ `The_Great_Democratization`（大民主化时代）/ `The_Second_Galactic_War`（时间线与开战经过）+ `Summary_of_Notable_Events`（重大事件摘要）/ `February_2184` … `December_2185` 共 23 个月度子节 / `References`（英文参考来源与 Navbox，61 KB）。
+    - **留在 `galactic_war` 的（锚点 id 重新命名，旧 id 属于剧情页且在本仓库无任何站内链接指向）**：`Overview` / `Mechanics_Overview`（机制速览）/ `Mechanics_Detail`（机制详解）+ `Galaxy_Map` / `Campaign` / `Planet_Health` / `Decay_Rate` / `Player_Impact` / `Impact_Supplement`（任务影响度补充）/ `FAQ`（常见误解）/ `Sources`（参考资料）。
+    - **机制页主干只留骨架**：`galactic_war.json` 的 `content` 全为 `""`（《Second Galactic War Mechanics》页的英文原文本次未抓取落库），中文正文全部来自覆盖文件，故该页 `details.mg-ref` = 0 —— 这是「本来就没有英文可折」，不是折叠块误留。**该写法只对本数据集成立**，其余 `mechanics/*.json` 仍以主干英文为权威。
+    - **信息不丢的核对方法（可复现）**：① 对拆分前记录的 10 个 `content_zh` 长度（361 / 1167 / 782 / 1760 / 1750 / 777 / 1521 / 2552 / 392 / 243，合计 11305）逐节核对「机制侧 + 剧情侧 == 原值」，10/10 相等、总计 11305 == 11305；② 历史主干与原主干除 5 个文档级字段外字节相同（副本 + `edit` 精确替换，未触碰 `sections`）；③ 渲染级：9 条剧情锚点短语在历史页命中、机制页命中数全为 0，机制页 7 条机制标记（机制速览 / 影响度计算公式 / 常见误解 FAQ / 消耗战役 / 围魏救赵 …）在历史页命中数全为 0。
+    - **实测**：机制页 11 小节 / TOC 11 / 唯一 id 11 / 表格 1 / 图 1 / `details` 0 / console 0；历史页 31 小节 / TOC 31 / 唯一 id 31 / `details` 0 / 图 251 / 破图 0 / console 0；两页 `zhOnly` 警告均为 0。
+    - **入口**：`data/wiki/zh/mechanics/index.json` 加 `galactic_war_history` 卡片（并把 `galactic_war` 的 `title_en`/`description` 改成强调机制），`data/wiki/zh/blocks/navigation.json` 的「游戏机制」`count` 4 → 5 并补描述（§7.10 要求 `count` 与目标页条目数一致）。
+    - **未随之处理**：历史页 20 个未译月份与 `References` 仍显示英文标题与英文正文（`title_zh` 缺失时的既有回退行为，见 §5.2.3）。补中文标题等于新增翻译，超出「拆分」范围，故本次不动。
 
 
 ---
@@ -421,4 +458,6 @@ warbond   = item.warbond_zh || item.warbond
 7. 新增字段已在本文件第 7 节登记。
 8. 目录页 20/25/89/95… 等卡片数与 `blocks/navigation.json` 的 `count`、以及与数据集 `total` 一致，无外站引用。
 9. **`mechanics/` 合并自检（2026-09-17 新增）**：打开 4 个机制页，确认 ① console 无 error；② 每页的小节数 == TOC 项数 == 唯一 `<div class="section">` id 数；③ 无重复 id、无 `_` 占位 id；④ 表格数 == 主干 `<table>` 数（除非覆盖提供了 `tables_zh`）；⑤ 覆盖文件里出现但主干没有的中文小节在 console 有 `zhOnly` 警告（有警告时应回到覆盖文件补 `id`）；⑥ 每个页面 `img` 全部返回 200、破图 0，且表格内图标渲染尺寸在 16–34 px 之间（规则见第 9 节第 7 条；`.mg-media` 正文图不受该规则影响，应保持原始显示尺寸）。
+10. **`mechanics/` 页面拆分自检（2026-09-18 新增，`galactic_war` 拆分后共 5 个机制页）**：`mechanic.html?id=galactic_war` 与 `?id=galactic_war_history` 两页都要过：① console 无 error、无 `zhOnly` 警告；② 小节数 == TOC 项数 == 唯一 id 数，且 **TOC 标题与正文小节一一对应**（不再出现「机制速览」挂剧情正文）；③ 拆分后两页 `content_zh` 之和 == 拆分前该节的 `content_zh`（逐节核对长度，并用首尾边界串确认切点位置）；④ 剧情节的 `figures_zh: []` / `fully_translated: true` 原样保留（「丢弃伪图片块」的判定跟着节走）；⑤ 机制页不出现任何剧情标记短语、历史页不出现任何机制标记短语。
+11. **图片尺寸自检（2026-09-18 新增）**：对上述各页在 1280 与 375 两档实测 `offsetWidth/offsetHeight` 与 `naturalWidth/naturalHeight`：① 页内 `img` 无 `h > 400px`；② 无「渲染宽 > 自然宽 × 1.25 且 > 80px」的放大（§9 第 12 条的 1.5em 模板图标分档除外）；③ 长宽比与 `naturalWidth/naturalHeight` 偏差 < 3%（`object-fit: contain` 的卡片图按容器盒计，不算变形；**判长宽比必须用未取整的 `getBoundingClientRect()`** —— 18.484×20.625 取整成 18×21 会产生 4% 的假偏差）；④ 表格内图标仍在 16–34 px；⑤ 破图 0、`documentElement.scrollWidth == clientWidth`（375 px 无横向溢出）；⑥ 正文配图尺寸与改前一致（除被修正的失衡项）。
 

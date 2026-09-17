@@ -86,7 +86,11 @@ html { scroll-behavior: smooth; }
          · 难度图的 34×16（wiki 上就是普通 <img>，无任何缩放规则）
          · 状态效果页的 20×20
        最后一条 max-* 是保险：将来若出现别的原始尺寸图标，也不会超过 3em 撑高表格行。
-       作用域限定在 .mg-table-wrap 内 —— 正文配图与 .mg-media / <figure> 里的图片不受影响。 */
+       作用域限定在 .mg-table-wrap 内 —— 正文配图与 .mg-media / <figure> 里的图片不受影响。
+       ※ 表格**外**（正文散文 / .mg-media）的同类模板图标由
+         `assets/css/hud-skin.css` 第⑮节按同一「原始 width 属性」分档还原
+         （2026-09-18 新增：此前 512×716 的难度图标会按原始尺寸杵在正文里）。
+       ※ 正文配图的高度上限（max-height: 28em）同样在 hud-skin.css 第⑮节，不在本页。 */
     .section .mg-table-wrap img { max-width: 3em; max-height: 3em; }
     .section .mg-table-wrap img[width="188"] { width: 1.27em; height: 1.5em; }
     .section .mg-table-wrap img[width="512"] { width: auto; height: 1.5em; }
@@ -168,7 +172,7 @@ html { scroll-behavior: smooth; }
       .toc-sidebar.open { display: block; position: fixed; top: 60px; left: 10px; right: 10px; width: auto; z-index: 100; max-height: 80vh; }
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260918a">
 </head>
 <body>
   <header class="wiki-header">

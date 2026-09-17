@@ -5,6 +5,7 @@
    与主站 `HD2-Galatic_war-Map/css/hud-skin.css` 同源同规则，只是选择器换成 wiki 侧。
    12 个页面共 357 条页面级选择器，本层按**家族**统一覆盖，不逐条重写。
    ⚠ 第①节用 !important 一次性压制历史写法；新增组件请直接写规范样式，不要依赖它。
+   ⚠ 第⑮节（图片尺寸通用规则）是 wiki 侧专属的新增块，主站副本没有，见 SCHEMA.md §9 第 12 条。
    ============================================================ */
 
 /* ════════════════ ① 反模式清零 ════════════════ */
@@ -324,4 +325,37 @@ button#calcBtn:hover, .toc-toggle:hover {
   .section h2 { font-size: 1rem; }
   .section p, .section li { font-size: 0.84rem; }
   .nav-grid, .wiki-grid, .weapon-grid, .strat-grid, .enemy-grid { gap: 8px; }
+}
+
+/* ════════════════ ⑮ 图片尺寸通用规则 ════════════════
+   2026-09-18 新增（SCHEMA.md §9 第 12 条）。修的是「同一页里图片忽大忽小」：
+   实测 `mechanic.html?id=difficulty` 里 512×716 / 512×571 / 512×282 的模板图标
+   按**原始文件尺寸**渲染（正文里杵着 512 px 大的图标），`id=galactic_war` 里
+   135 张阵营图标渲染成 512×512、16 张渲染成 880×880。
+
+   规则三条（全部用通用选择器，不逐图写死尺寸）：
+   ① 正文配图（`.section` 内的内容图）：宽度不撑破容器，高度上限 28em（≈392px @14px），
+      `height: auto` 保证长宽比不被压扁。**不做一刀切压小**：320×320 的边疆图、
+      256×360 的阵营图等本来就在 28em 以内，尺寸完全不受影响。
+   ② wiki 模板图标（原始文件尺寸 width=188/512/1024，来自 wiki 的 `.Templateicons` /
+      `.faction-icon` / `Currencyicons` 模板容器）：合并引擎把容器 class 改写成 `mg-raw`，
+      缩放规则丢失，这里按「原始 width 属性」分档还原。wiki 侧的真值就是
+      `.Templateicons img { width: 1.27em; height: 1.5em }` / `.faction-icon img { height: 1.5em }`，
+      统一取「高 1.5em、宽按比例」；`max-width: 3em` 是兜底，防将来出现极宽比例的图标。
+      注意 `width="34"`（难度图）、`width="320"`（内容缩略图）**不在**分档内，保持原尺寸。
+      表格内的同名图标仍由 `mechanic.html` 的 `.mg-table-wrap` 规则接管（选择器更具体）。
+   ③ 卡片 / 缩略图（列表页）：各页早已统一用「固定容器 + `object-fit: contain`」
+      （`.weapon-icon img` / `.enemy-card-image img` / `.strat-ic` / `.booster-icon img` /
+      `.detail-icon img` / `.wb-cover img` / `.part-img img` …），实测 0 失衡，
+      因此**不重复定义**，避免两套规则互相压。新增卡片组件请照此写法。 */
+.section img {
+  max-width: 100%;
+  max-height: 28em;
+  height: auto;
+}
+.section img[width="188"], .section img[width="512"], .section img[width="1024"] {
+  width: auto;
+  height: 1.5em;
+  max-height: 1.5em;
+  max-width: 3em;
 }
