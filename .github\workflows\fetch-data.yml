@@ -1,0 +1,80 @@
+name: Fetch HD2 Data
+
+on:
+  # 触发方式（2026-09 二次调整）：
+  #   主力 = 下面的原生 schedule，每 5 分钟。实测这组 schedule 稳定按点触发
+  #          （近 10 次全部成功，延迟约 4 分钟），比另开定时工作流可靠得多。
+  #   备用 = Cloudflare Worker 外部 dispatch（helldivers2-gitpage-dispatch），
+  #          它的 cron 触发器配好后会再叠一层；重复触发无害（脚本幂等，无变化不提交）。
+  #   已废弃 = 本机 cron（必须一直开着电脑）。
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:   # 支持手动触发
+  repository_dispatch:
+    types: [fetch-now]  # 支持外部调用触发（如翻译推送后）
+
+permissions:
+  contents: write
+  actions: write     # 末尾清理 Pages 部署 artifact 需要
+
+# 5 分钟一次时防止上一次没跑完就叠加（单次约 25 秒，正常不会撞，接口变慢时兜住）
+concurrency:
+  group: fetch-data
+  cancel-in-progress: false
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Run data fetcher
+        run: python scripts/fetch_site_data.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit and push
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2-Galatic_war-Map/data.json
+          git add HD2-Galatic_war-Map/data/history/player_distribution.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          else
+            echo "数据无变化，跳过提交"
+          fi
+
+      # 为什么清在这里、而不是另开一个 cleanup-artifacts.yml：
+      # 另一个工作流用的是 GitHub 原生 schedule，实测新增的定时工作流可能长时间不被触发
+      # （部署后 20+ 分钟 0 次运行），而本工作流的 schedule 稳定按点跑 —— 挂这里最可靠。
+      # 背景：每次推送都会触发 Pages 重建并产出 1 个 github-pages artifact（≈整站体积 50 MB），
+      # GitHub Free 的 Actions 存储上限是 500 MB，不限时清理必然会撞上限。
+      # 只删 10 分钟以前的，避免删掉正在部署中的 artifact。
+      - name: 清理旧的 Pages artifact
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${{ github.repository }}"
+          cutoff=$(date -u -d '10 minutes ago' +%s)
+          gh api --paginate "repos/$repo/actions/artifacts?per_page=100" \
+            --jq '.artifacts[] | "\(.id)\t\(.created_at)"' |
+          while IFS=$'\t' read -r id created; do
+            [ -z "$id" ] && continue
+            ts=$(date -u -d "$created" +%s)
+            if [ "$ts" -lt "$cutoff" ]; then
+              gh api -X DELETE "repos/$repo/actions/artifacts/$id" >/dev/null && echo "删除 $id ($created)"
+            fi
+          done
+          echo "---- 清理后 ----"
+          gh api "repos/$repo/actions/artifacts" \
+            --jq '"剩余 \(.total_count) 个 / \(([.artifacts[].size_in_bytes] | add // 0) / 1048576 | floor) MB"'
