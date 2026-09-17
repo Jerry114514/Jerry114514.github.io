@@ -179,12 +179,12 @@ warbond   = item.warbond_zh || item.warbond
 | 字段名 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `type` | `"Standard"` \| `"Premium"` \| `"Legendary"` | 是 | 债券类别。**保留英文原文**（机器字段），中文由前端映射（标准／高级／传奇） |
-| `price` | number | 是 | 解锁价格（超级点数）。标准债券为 `0` |
-| `price_zh` | string | 是 | 价格展示文案。标准债券 `免费`；其余 `超级点数 ×1000` / `×1500` |
+| `price` | number | 是 | 解锁价格（超级货币）。标准债券为 `0` |
+| `price_zh` | string | 是 | 价格展示文案。标准债券 `免费`；其余 `超级货币 ×1000` / `×1500` |
 | `release_date` | string | 是 | 发行日期，`YYYY-MM-DD`。**本数据集特例**：条目级日期字段在此登记后允许使用（第 4 节第 5 条的例外），值一律取自 wiki.gg 各债券页面 infobox 的 `date` |
 | `pages` | number | 是 | 债券总页数 |
-| `credit_claim` | number | 是 | 债券内含的超级点数总额；`0` 表示确认无 |
-| `credit_claim_zh` | string | 是 | 上者的展示文案（`无` / `超级点数 ×300`） |
+| `credit_claim` | number | 是 | 债券内含的超级货币总额；`0` 表示确认无 |
+| `credit_claim_zh` | string | 是 | 上者的展示文案（`无` / `超级货币 ×300`） |
 | `name_zh_tbd` | boolean | 是 | **译名待定标记**。`true` = 站内与官方中文均无既有译法，`name` 保留英文。前端据此渲染「译名待定」徽章。**2026-09-17 补译 9 条后，25 条全部为 `false`** |
 | `intro_zh` | string | 是 | 中文简介（详情页标题卡；总览页仅用于搜索匹配，不再直接展示） |
 | `overview_zh` | string | 是 | 中文概述（详情页「📖 简介」卡片）。含页数与勋章价格区间 |
