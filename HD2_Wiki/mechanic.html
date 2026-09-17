@@ -282,7 +282,62 @@ html { scroll-behavior: smooth; }
 
       // 银河冲击计算器
       if (id === "galactic_war") { initCalculator(); }
+
+      // 锚点定位：正文是 JS 渲染的，浏览器自带的 #hash 滚动在渲染前就失败了，
+      // 这里在 render 之后补一次（否则 `#February_2184` 这类深链只能落到页首）
+      scrollToHash();
+
+      // 旧锚点别名（2026-09-18）：galactic_war 拆页后，指向剧情节的旧书签要能继续用
+      legacyAnchorRedirect(id);
     }
+
+    function scrollToHash() {
+      var hash = decodeURIComponent(String(location.hash || "").replace(/^#/, ""));
+      if (!hash) return;
+      var el = document.getElementById(hash);
+      if (el) el.scrollIntoView();
+    }
+
+    /* ------------------------------------------------------------------
+       旧锚点别名（2026-09-18）
+       ------------------------------------------------------------------
+       背景：`galactic_war` 于 2026-09-18 拆成「机制」+「历史」两页，剧情/时间线小节
+       （The_First_Galactic_War / The_Great_Democratization / The_Second_Galactic_War /
+        Summary_of_Notable_Events / 各月度小节 / References）整体迁到
+       `mechanic.html?id=galactic_war_history`，id 原样保留。
+
+       因此形如 `mechanic.html?id=galactic_war#The_First_Galactic_War` 的旧链接在本页
+       找不到锚点。做法：本页 hash 若不是本页小节 id，就去查一次历史页主干（
+       galactic_war_history.json）的 toc —— 命中就把浏览器原地替换到历史页同一锚点。
+
+       为什么不用「在数据里加 31 个隐藏别名小节」：
+         · 覆盖文件里出现而主干没有的小节会被合并引擎当作 zhOnly 追加到页尾，并产生
+           console `zhOnly` 警告（SCHEMA §5.2.3 要求为 0）；
+         · 主干小节会生成 TOC 条目与 `.section` 外壳（有内边距），做不到「0 高度、不
+           影响排版」，TOC 会从 11 项涨到 42 项；
+         · 本方案数据驱动、无硬编码 id 清单，历史页 toc 变化时自动跟随。
+       失败（离线 / 404）时静默 no-op，只影响旧书签，不影响本页正常浏览。 */
+    var LEGACY_ANCHOR_SOURCE = "galactic_war";
+    var LEGACY_ANCHOR_TARGET = "galactic_war_history";
+
+    function legacyAnchorRedirect(pageId) {
+      if (pageId !== LEGACY_ANCHOR_SOURCE) return;
+      var hash = decodeURIComponent(String(location.hash || "").replace(/^#/, ""));
+      if (!hash) return;
+      if (document.getElementById(hash)) return;   // 是本页自己的锚点，交给浏览器
+      fetchJson("./data/wiki/zh/mechanics/" + LEGACY_ANCHOR_TARGET + ".json").then(function (trunk) {
+        var toc = (trunk && trunk.toc) || [];
+        var hit = null;
+        for (var i = 0; i < toc.length; i++) { if (toc[i] && toc[i].id === hash) { hit = toc[i]; break; } }
+        if (!hit) return;
+        console.log("[Mechanic] 旧锚点 " + hash + " 已迁至 " + LEGACY_ANCHOR_TARGET + "，正在跳转");
+        location.replace("./mechanic.html?id=" + LEGACY_ANCHOR_TARGET + "#" + encodeURIComponent(hash));
+      });
+    }
+
+    window.addEventListener("hashchange", function () {
+      legacyAnchorRedirect(WikiRouter.param("id") || "");
+    });
 
     function collectIds(s) {
       var out = [s.id];
