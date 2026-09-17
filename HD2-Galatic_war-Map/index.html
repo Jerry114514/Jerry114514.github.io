@@ -1423,7 +1423,9 @@ function renderPlayers(data) {
       ? (function () {
           const pinfo = (data.planets && !data.planets.__err) ? data.planets.find(p => p.index === dss.planetIndex) : null;
           const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: "星球#" + dss.planetIndex };
-          return (nm.cn || nm.en) + (pinfo && pinfo.sector ? " · " + sectorCn(pinfo.sector) : "");
+          // 右上角原本只写「名字 · 星区」，看着像一串无名文字、缺少引导；
+          // 改为「当前停靠：名字·星区」（分隔点也去掉两侧空格，更紧凑）
+          return "当前停靠：" + (nm.cn || nm.en) + (pinfo && pinfo.sector ? "·" + sectorCn(pinfo.sector) : "");
         })()
       : "未停靠";
 
