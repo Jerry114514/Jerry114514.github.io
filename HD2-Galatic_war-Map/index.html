@@ -1709,7 +1709,7 @@ function renderPlayers(data) {
   let PC_BIOME_FALLBACK = null;
   // 图标缓存版本：assets/ 下图标内容改动后必须 +1
   // （下面的 fetch 用 force-cache，不换 URL 的话旧图标会被浏览器钉在缓存里 —— 改了也看不到）
-  const PC_ICON_VER = "6";
+  const PC_ICON_VER = "7";
   // 图标内联缓存（同 MapLibre 那套：同源取文本再内联，才能被 currentColor 着色）
   const PC_SVG = {};
   async function preloadPlanetIcons() {
