@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>强化资源图鉴 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 强化资源图鉴 - Boosters · 战争债券解锁 · 小队增益 · 每场任务最多同时生效 4 个" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <style>
+/* 页面专属变量（核心 10 变量见 assets/css/wiki-base.css） */
+    :root { --wb-free: #FFB000; }
+
+
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
+    .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+
+
+    /* 简介（译自 helldivers.wiki.gg/wiki/Boosters） */
+    .booster-intro { width: 100%; max-width: 1200px; margin: 0 auto; padding: 18px 20px 0; }
+
+    .booster-intro .box { background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--yellow); padding: 12px 16px; }
+
+    .booster-intro h2 { font-size: 0.95rem; color: var(--yellow); margin-bottom: 6px; letter-spacing: 0.04em; }
+
+    .booster-intro p { font-size: 0.83rem; color: var(--text-dim); line-height: 1.75; }
+
+    .booster-intro .src { font-size: 0.7rem; color: var(--text-mute); }
+
+    .booster-intro .src a { color: var(--text-dim); text-decoration: none; }
+
+    .booster-intro .src a:hover { color: var(--yellow); }
+
+
+    .booster-grid { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; width: 100%; }
+
+    .booster-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px 14px 20px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+
+    .booster-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,0.15); }
+
+    .booster-card .wb-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; }
+
+    .booster-icon { width: 62px; height: 62px; flex: none; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
+
+    .booster-icon img { max-width: 54px; max-height: 54px; object-fit: contain; }
+
+    .booster-icon .ph { font-size: 2rem; color: var(--text-mute); }
+
+    .booster-body { flex: 1; min-width: 0; }
+
+    .booster-body .name { font-size: 0.98rem; color: var(--text); margin-bottom: 2px; }
+
+    .booster-body .name-en { font-size: 0.72rem; font-weight: 400; color: var(--text-mute); margin-left: 6px; }
+
+    .booster-body .desc { font-size: 0.79rem; color: var(--text-dim); line-height: 1.65; margin-top: 5px; }
+
+    .booster-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 9px; }
+
+    .booster-meta .wb { padding: 2px 7px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; background: var(--panel-2); border: 1px solid var(--line-2); border-left: 3px solid currentColor; color: var(--brass); }
+
+    .booster-meta .wb .wb-en { margin-left: 5px; font-weight: 400; letter-spacing: 0; color: var(--text-mute); }
+
+    .booster-meta .price { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-mute); }
+
+    .booster-meta .price b { color: var(--yellow); font-weight: 700; font-size: 0.84rem; }
+
+    .booster-meta .price.tbd b { font-size: 0.72rem; color: var(--text-mute); }
+
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; grid-column: 1 / -1; }
+
+
+    @media (max-width: 768px) {
+      .booster-intro { padding: 14px 12px 0; }
+      .booster-grid { grid-template-columns: 1fr; padding: 12px 12px 32px; gap: 10px; }
+      .booster-card { padding: 12px 12px 12px 16px; gap: 10px; }
+      .booster-icon { width: 52px; height: 52px; }
+      .booster-icon img { max-width: 46px; max-height: 46px; }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🧬 强化资源图鉴</h1>
+    <p>共 <span id="total-count">20</span> 种强化资源（Boosters）· 战争债券解锁 · 每场任务最多同时生效 4 个</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <section class="booster-intro">
+    <div class="box">
+      <h2>强化资源 / Boosters</h2>
+      <p>强化资源通过战争债券解锁，是出击前可加入装备配置的增益效果，可为小队提供额外的生命、体力或战场战术优势。每名绝地潜兵可各带一个强化资源，一场任务最多同时生效四个不同的强化资源。</p>
+      <p class="src">资料源自 <a href="https://helldivers.wiki.gg/wiki/Boosters" target="_blank" rel="noopener">helldivers.wiki.gg · Boosters</a> · 译名以本站既有译法为准</p>
+    </div>
+  </section>
+
+  <div class="wiki-toolbar">
+    <div class="filter-bar" id="filter-bar">
+      <button class="active" data-cat="all" onclick="setCat('all')">全部 20</button>
+      <button data-cat="survive" onclick="setCat('survive')">生存强化 7</button>
+      <button data-cat="hellpod" onclick="setCat('hellpod')">地狱舱 4</button>
+      <button data-cat="reinforce" onclick="setCat('reinforce')">增援 2</button>
+      <button data-cat="support" onclick="setCat('support')">战场支援 5</button>
+      <button data-cat="sample" onclick="setCat('sample')">样本 2</button>
+    </div>
+    <span class="wt-divider"></span>
+    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索强化资源名称…（支持中文/英文）" oninput="filterBoosters()"></label>
+    <span class="wt-count" id="result-count">20 / 20</span>
+  </div>
+
+  <div class="booster-grid" id="booster-grid">
+
+    <article class="booster-card" data-cat="hellpod">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Hellpod_Space_Optimization_Booster_Icon.svg" alt="地狱舱空间优化 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">地狱舱空间优化<span class="name-en">Hellpod Space Optimization</span></h3>
+        <p class="desc">绝地潜兵钻出地狱舱时，弹药、手榴弹与兴奋剂均为满配。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>15</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Vitality_Enhancement_Booster_Icon.svg" alt="生命力强化 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">生命力强化<span class="name-en">Vitality Enhancement</span></h3>
+        <p class="desc">为所有绝地潜兵提供来自任何伤害来源的少量伤害减免。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>20</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="support">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/UAV_Recon_Booster_Booster_Icon.svg" alt="无人机侦察强化 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">无人机侦察强化<span class="name-en">UAV Recon Booster</span></h3>
+        <p class="desc">提升所有绝地潜兵的有效雷达范围。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>40</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Stamina_Enhancement_Booster_Icon.svg" alt="体力强化 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">体力强化<span class="name-en">Stamina Enhancement</span></h3>
+        <p class="desc">提升所有绝地潜兵的体力上限与体力恢复速度。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>75</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Muscle_Enhancement_Booster_Icon.svg" alt="肌肉强化 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">肌肉强化<span class="name-en">Muscle Enhancement</span></h3>
+        <p class="desc">让绝地潜兵能够轻松穿越复杂地形。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>70</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="reinforce">
+      <div class="wb-bar" style="background:#FFB000"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Increased_Reinforcement_Budget_Booster_Icon.svg" alt="增援预算提升 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">增援预算提升<span class="name-en">Increased Reinforcement Budget</span></h3>
+        <p class="desc">增加可用的增援次数。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FFB000">绝地潜兵总动员<span class="wb-en">Helldivers Mobilize</span></span>
+          <span class="price">勋章 ×<b>150</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="reinforce">
+      <div class="wb-bar" style="background:#D6806D"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Flexible_Reinforcement_Budget_Booster_Icon.svg" alt="灵活增援预算 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">灵活增援预算<span class="name-en">Flexible Reinforcement Budget</span></h3>
+        <p class="desc">增援次数耗尽后，缩短新一批增援发放的等待时间。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#D6806D">钢铁老兵<span class="wb-en">Steeled Veterans</span></span>
+          <span class="price">勋章 ×<b>75</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="support">
+      <div class="wb-bar" style="background:#5BA3D0"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Localization_Confusion_Booster_Icon.svg" alt="定位干扰 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">定位干扰<span class="name-en">Localization Confusion</span></h3>
+        <p class="desc">延长两次敌人遭遇之间的间隔时间。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#5BA3D0">尖端前沿<span class="wb-en">Cutting Edge</span></span>
+          <span class="price">勋章 ×<b>18</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="support">
+      <div class="wb-bar" style="background:#E74C3C"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Expert_Extraction_Pilot_Booster_Icon.svg" alt="资深撤离飞行员 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">资深撤离飞行员<span class="name-en">Expert Extraction Pilot</span></h3>
+        <p class="desc">缩短撤离穿梭舰抵达撤离信标所需的时间。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#E74C3C">民主爆破<span class="wb-en">Democratic Detonation</span></span>
+          <span class="price">勋章 ×<b>55</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#7FD4E8"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Motivational_Shocks_Booster_Icon.svg" alt="激励电击 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">激励电击<span class="name-en">Motivational Shocks</span></h3>
+        <p class="desc">让所有绝地潜兵在被酸液等攻击减速后更快恢复。无法减轻“范围效果”的影响，例如电磁打击。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#7FD4E8">极地爱国者<span class="wb-en">Polar Patriots</span></span>
+          <span class="price">勋章 ×<b>15</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#2ECC71"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Experimental_Infusion_Booster_Icon.svg" alt="实验性输液 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">实验性输液<span class="name-en">Experimental Infusion</span></h3>
+        <p class="desc">兴奋剂在恢复生命值之外，还会暂时提升移动速度与伤害减免。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#2ECC71">毒蛇突击队<span class="wb-en">Viper Commandos</span></span>
+          <span class="price">勋章 ×<b>80</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="hellpod">
+      <div class="wb-bar" style="background:#FF6B4A"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Firebomb_Hellpods_Booster_Icon.svg" alt="燃烧地狱舱 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">燃烧地狱舱<span class="name-en">Firebomb Hellpods</span></h3>
+        <p class="desc">为所有地狱舱填充易爆燃烧剂，撞击时引爆，点燃落点附近的所有单位。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#FF6B4A">自由之焰<span class="wb-en">Freedom's Flame</span></span>
+          <span class="price">勋章 ×<b>60</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#CF64F8"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Dead_Sprint_Booster_Icon.svg" alt="死亡冲刺 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">死亡冲刺<span class="name-en">Dead Sprint</span></h3>
+        <p class="desc">让绝地潜兵在体力耗尽后仍能继续冲刺，但改为消耗生命值。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#CF64F8">真理执行者<span class="wb-en">Truth Enforcers</span></span>
+          <span class="price">勋章 ×<b>35</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="support">
+      <div class="wb-bar" style="background:#9AA5B1"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Armed_Resupply_Pods_Booster_Icon.svg" alt="武装补给舱 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">武装补给舱<span class="name-en">Armed Resupply Pods</span></h3>
+        <p class="desc">为所有补给舱加装一挺改装版 AR-23 解放者，使其兼具自动炮塔的用途。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#9AA5B1">都市传说<span class="wb-en">Urban Legends</span></span>
+          <span class="price">勋章 ×<b>55</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="sample">
+      <div class="wb-bar" style="background:#F5C518"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Sample_Extricator_Booster_Icon.svg" alt="样本提取器 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">样本提取器<span class="name-en">Sample Extricator</span></h3>
+        <p class="desc">大型敌人死亡时有几率掉落样本。每场任务最多触发 10 次掉落。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#F5C518">边缘正义<span class="wb-en">Borderline Justice</span></span>
+          <span class="price">勋章 ×<b>65</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="sample">
+      <div class="wb-bar" style="background:#C8862A"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Sample_Scanner_Booster_Icon.svg" alt="样本扫描仪 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">样本扫描仪<span class="name-en">Sample Scanner</span></h3>
+        <p class="desc">样本扫描仪让你在拾取样本时有 15% 的几率获得双倍样本。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#C8862A">仪式大师<span class="wb-en">Masters of Ceremony</span></span>
+          <span class="price">勋章 ×<b>65</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="hellpod">
+      <div class="wb-bar" style="background:#4C8DFF"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Stun_Pods_Booster_Icon.svg" alt="眩晕地狱舱 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">眩晕地狱舱<span class="name-en">Stun Pods</span></h3>
+        <p class="desc">地狱舱接触地面时会外露线路放电，眩晕落点附近的所有单位。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#4C8DFF">法律之力<span class="wb-en">Force of Law</span></span>
+          <span class="price">勋章 ×<b>55</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="hellpod">
+      <div class="wb-bar" style="background:#6B7280"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Concealed_Insertion_Booster_Icon.svg" alt="隐蔽投放 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">隐蔽投放<span class="name-en">Concealed Insertion</span></h3>
+        <p class="desc">为地狱舱配备撞击后释放烟幕的装置，掩护绝地潜兵的部署。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#6B7280">涂黑军团<span class="wb-en">Redacted Regiment</span></span>
+          <span class="price">勋章 ×<b>40</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="survive">
+      <div class="wb-bar" style="background:#B8C4D0"></div>
+      <div class="booster-icon"><img src="./assets/boosters/Integrated_Extinguishers_Booster_Icon.svg" alt="集成式灭火器 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">集成式灭火器<span class="name-en">Integrated Extinguishers</span></h3>
+        <p class="desc">缩短绝地潜兵身上的火焰自动熄灭所需的时间，使其不再需要靠扑倒或卧倒来灭火。（官方 wiki 尚未公布具体数值）</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#B8C4D0">铁甲民主<span class="wb-en">Ironclad Democracy</span></span>
+          <span class="price tbd">勋章 <b>暂未公布</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="booster-card" data-cat="support">
+      <div class="wb-bar" style="background:#B8C4D0"></div>
+      <!-- 图标说明：官方 wiki 上 Surplus_EAT_Allocation_Booster_Icon.svg 是坏链（404），
+           此处改用同目录下的 .png 版本（源：https://helldivers.wiki.gg/images/Surplus_EAT_Allocation_Booster_Icon.png） -->
+      <div class="booster-icon"><img src="./assets/boosters/Surplus_EAT_Allocation_Booster_Icon.png" alt="额外 EAT 配给 图标" loading="lazy"></div>
+      <div class="booster-body">
+        <h3 class="name">额外 EAT 配给<span class="name-en">Surplus EAT Allocation</span></h3>
+        <p class="desc">每场任务额外提供两次 EAT-17 一次性反坦克支援武器的免费使用次数，共 4 具发射器，每名绝地潜兵一具。</p>
+        <div class="booster-meta">
+          <span class="wb" style="color:#B8C4D0">铁甲民主<span class="wb-en">Ironclad Democracy</span></span>
+          <span class="price tbd">勋章 <b>暂未公布</b></span>
+        </div>
+      </div>
+    </article>
+
+    <div class="empty" id="empty-tip" hidden>没有匹配的强化资源</div>
+  </div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+    var curCat = "all";
+
+    function setCat(cat) {
+      curCat = cat;
+      var btns = document.querySelectorAll("#filter-bar button");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle("active", btns[i].getAttribute("data-cat") === cat);
+      }
+      filterBoosters();
+    }
+
+    function filterBoosters() {
+      var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
+      var cards = document.querySelectorAll(".booster-card");
+      var shown = 0;
+      for (var i = 0; i < cards.length; i++) {
+        var c = cards[i];
+        var okCat = curCat === "all" || c.getAttribute("data-cat") === curCat;
+        var okQ = !q || c.textContent.toLowerCase().indexOf(q) >= 0;
+        var show = okCat && okQ;
+        c.style.display = show ? "" : "none";
+        if (show) shown++;
+      }
+      var rc = document.getElementById("result-count");
+      if (rc) rc.textContent = shown + " / " + cards.length;
+      var tip = document.getElementById("empty-tip");
+      if (tip) tip.hidden = shown !== 0;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var tc = document.getElementById("total-count");
+      var n = document.querySelectorAll(".booster-card").length;
+      if (tc && n) tc.textContent = n;
+      filterBoosters();
+    });
+  </script>
+</body>
+</html>
