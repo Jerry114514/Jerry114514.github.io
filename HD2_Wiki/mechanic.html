@@ -76,6 +76,21 @@ html { scroll-behavior: smooth; }
     .section .mg-table-wrap table { width: 100%; min-width: 560px; margin: 0; }
     .section .mg-table-title { font-size: 0.85rem; color: var(--text); font-weight: 600; margin-bottom: 6px; }
     .section .mg-table-note { font-size: 0.78rem; color: var(--text-mute); margin-top: 6px; line-height: 1.6; }
+    /* ===== 表格内的 wiki 模板图标（对应 wiki 的 .Templateicons / .faction-icon）=====
+       主干 HTML 上的 width/height 是图片「原始文件尺寸」（188×221 护甲/状态图标、
+       512×512 阵营图标），wiki 侧靠模板容器的 CSS 缩放：
+         .Templateicons img { width: 1.27em; height: 1.5em; }
+         .faction-icon  img { width: auto; height: 1.5em; }
+       合并引擎会把原 class 统一改写成 mg-raw，class 已丢失，因此这里按「原始文件尺寸」
+       这个特征还原。已经由 wiki 写死正确显示尺寸的图标不受影响：
+         · 难度图的 34×16（wiki 上就是普通 <img>，无任何缩放规则）
+         · 状态效果页的 20×20
+       最后一条 max-* 是保险：将来若出现别的原始尺寸图标，也不会超过 3em 撑高表格行。
+       作用域限定在 .mg-table-wrap 内 —— 正文配图与 .mg-media / <figure> 里的图片不受影响。 */
+    .section .mg-table-wrap img { max-width: 3em; max-height: 3em; }
+    .section .mg-table-wrap img[width="188"] { width: 1.27em; height: 1.5em; }
+    .section .mg-table-wrap img[width="512"] { width: auto; height: 1.5em; }
+
     .section .mg-media { margin: 14px 0; max-width: 100%; overflow-x: auto; }
     .section .mg-media img { max-width: 100%; height: auto; }
     .section .mg-media figure { margin: 0; }

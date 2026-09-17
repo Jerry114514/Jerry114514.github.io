@@ -348,8 +348,9 @@ warbond   = item.warbond_zh || item.warbond
 | `mechanics/difficulty.json` 等 | `content` / `content_zh` 内嵌原始 HTML 片段（`<ul>`/`<br>`/`<strong>`） | — | 长文正文允许内嵌 HTML，属于登记在案的例外（`mechanics/*.json` 与 `mechanics/*_zh.json` 均适用） |
 | `mechanics/*_zh.json`（2026-09 实测） | **小节层级与主干不一致，且没有 `id` 声明**，只能按序号配对：`damage` 主干 `Damage Calculation` 下 16 节 / 中文 18 节（中文多「拆毁值与结构」「其他结构」、缺 ExDR）；`status_effects` 主干 11 节 / 中文 10 节（缺 `Change History`）；`galactic_war` 主干 5 节 / 中文 6 节且结构完全不同 | 每个覆盖小节写 `id`（= 主干 `id`），层级与主干对齐 | 未迁移。当前前端按第 5.2.4 节的序号规则配对，多出的中文小节挂到父节末尾；`galactic_war_zh.json` 的 4 节会因此变成页面末尾的独立小节 |
 | `mechanics/*_zh.json`（2026-09 实测） | `tables_zh` / `figures_zh` / `paragraphs_zh` **尚未被任何现有覆盖文件使用**（4 个文件只有 `title_zh` / `content_zh` / `subsections_zh`） | 表格与图片默认沿用主干 | 已支持（第 5.2.2 节），暂无数据 |
-| `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 站内相对路径 `./assets/mechanics/<页 id>/<文件名>`（第 9 节第 6 条） | **`damage.json` 已迁移**（45 处图标下载到 `HD2_Wiki/assets/mechanics/damage/`，改写为站内相对路径）；`difficulty.json`（33 处）、`status_effects.json`（48 处）、`galactic_war.json`（276 处）**未迁移**，仍会破图 |
-| `mechanics/damage.json` 的 `Other Structures` 表（2026-09-17 补抓） | 官方渲染页该表在 Structure / AV 两列带 `/wiki/…` 内链与 188×221 的模板图标（`<span class="Templateicons">`） | 站内不存在 `/wiki/…` 路由，且 `mechanic.html` 没有 wiki 的 `Templateicons` 缩放规则，图标会按 188×221 原始尺寸撑高表格行 | 该表只保留**文本数据**（表头 + 20 行 × 5 列），不写内链与图标；其余 6 张表沿用主干既有写法（含内链与图标），其尺寸问题见第 9 节第 7 条 |
+| `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 站内相对路径 `./assets/mechanics/<页 id>/<文件名>`（第 9 节第 6 条） | **4 个主干文件已全部迁移**（2026-09-17）：`damage.json` 45 处 / 36 文件、`difficulty.json` 33 处 / 16 文件、`status_effects.json` 48 处 / 13 文件、`galactic_war.json` 276 处 / 64 文件（其中 39 处是 `/images/thumb/…` 缩略图，见第 9 节第 6 条）。4 个文件的 `/images/` 残留均为 **0** |
+| `mechanics/damage.json` 的 `Other Structures` 表（2026-09-17 补抓） | 官方渲染页该表在 Structure / AV 两列带 `/wiki/…` 内链与 188×221 的模板图标（`<span class="Templateicons">`） | 站内不存在 `/wiki/…` 路由，且 `mechanic.html` 没有 wiki 的 `Templateicons` 缩放规则，图标会按 188×221 原始尺寸撑高表格行 | 该表只保留**文本数据**（表头 + 20 行 × 5 列），不写内链与图标；其余 6 张表沿用主干既有写法（含内链与图标），其尺寸问题已由第 9 节第 7 条的 CSS 规则解决 |
+| `mechanics/galactic_war.json` 的 `References` 小节（2026-09-17 实测） | `content` 的 `<div>` 与 `</div>` 数量为 182 : 183 —— 结尾在 MediaWiki 注释之后多一个**孤立 `</div>`**（抓取时丢掉了对应的开标签） | `content` 内的 HTML 片段必须标签配平 | **未修**（本次未动无关数据）。后果见第 9 节第 8 条 |
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
 
 ---
@@ -366,8 +367,24 @@ warbond   = item.warbond_zh || item.warbond
 6. **机制页主干图片一律本地化（2026-09-17 登记，方案 1）**：`mechanics/<id>.json` 主干 `content` 内的 `<img src="/images/<文件名>?<hash>">` 一律下载到 `HD2_Wiki/assets/mechanics/<id>/<文件名>`（丢掉 `?hash`），并把 `src` 改写为**相对 HTML 页所在目录**的 `./assets/mechanics/<id>/<文件名>`。
    - **不采用**「统一改写为 `https://helldivers.wiki.gg/images/…` 外链」的方案：本站其它图标（`boosters` / `warbonds` / `armor` 等）都是站内文件（第 1 节），外链会让机制页离线不可看、依赖第三方可用性与限流，并与全站约定不一致。
    - 下载必须**串行 + 间隔**（wiki.gg 会 429），并逐个校验：文件 >200 B 且魔数/内容为真实图片（PNG `89504e47…`、SVG 含 `<svg`），不是 HTML 错误体。
-   - 已迁移：`damage.json`（45 处引用 / 36 个文件，2026-09-17）。未迁移：`difficulty.json`、`status_effects.json`、`galactic_war.json`（见第 8 节）。
-7. **机制页表格里的 wiki 模板图标按原始尺寸渲染（2026-09-17 登记，未解决）**：主干表格里 `<img width="188" height="221">` 是 wiki 模板图标的**原始文件尺寸**，wiki 侧由 `Templateicons` CSS 缩到约 1.5em；`mechanic.html` 没有该规则（只有 `.section img { max-width: 100% }`），因此图标按 188×221 显示，`AP & AV` 等表会被撑到 1,300 px 以上宽、每行 220 px 高（在 `.mg-table-wrap` 内横向滚动，不影响页面级溢出）。canonical 修法是给 `mechanic.html` 加一条 `.section .mg-table-wrap img { width: 1.5em; height: auto; }`；**本次未改任何 HTML/CSS**，仅在 `damage.json` 新增的 `Other Structures` 表里不写图标以规避。
+   - **两种 URL 形态的落地规则**（2026-09-17 补记，`galactic_war.json` 首次遇到）：
+     - `/images/<文件名>?<hash>` → 本地 `HD2_Wiki/assets/mechanics/<页 id>/<文件名>`
+     - `/images/thumb/<文件名>/<宽>px-<文件名>?<hash>`（缩略图）→ 下载**缩略图本身**，本地文件名为末段 `<宽>px-<文件名>`（与 `<文件名>` 不冲突，且保留 wiki 指定的显示宽度），即 `./assets/mechanics/<页 id>/<宽>px-<文件名>`
+     - 文件名含 `%27` 等百分号转义时：**磁盘上存解码后的真实文件名，`src` 里保留原百分号写法**（`320px-Angel%27s_Venture_Fracturing.gif` → 文件 `320px-Angel's_Venture_Fracturing.gif`），静态服务器与 GitHub Pages 都会先解码再找文件。
+   - 已迁移（2026-09-17）：`damage.json`（45 处引用 / 36 文件）、`difficulty.json`（33 / 16）、`status_effects.json`（48 / 13）、`galactic_war.json`（276 / 64，含 39 个 thumb）。4 个文件改写后 `/images/` 残留均为 0，`assets/mechanics/` 下共 129 个文件，逐个校验通过（无 HTML 错误体、无 <200 B）。
+7. **机制页表格里的 wiki 模板图标尺寸（2026-09-17 登记并已解决）**：主干表格里 `<img width="188" height="221">` 是 wiki 模板图标的**原始文件尺寸**（status_effects 还有 512×512 的阵营图标），wiki 侧靠模板容器的 CSS 缩放。实测 wiki.gg 的规则是：
+   - `.Templateicons img { width: 1.27em; height: 1.5em; }` → 188×221 的图标渲染为 18×21（字体 14px）
+   - `.faction-icon img { width: auto; height: 1.5em; }` → 512×512 的阵营图标
+   - **难度图的图标例外**：`Difficulty` 页上的 `34×16` 图标是**普通 `<img>`，没有任何缩放规则**，wiki 上就按 34×16 显示（该页 `.Templateicons` 数量为 0）；status_effects 的 `20×20` 同理。
+   合并引擎会把原 class 统一改写为 `mg-raw`，class 已丢失，无法用 `.Templateicons img` 选择器；因此 2026-09-17 在 `mechanic.html` 按「原始文件尺寸」这一特征还原（**不能**用 `width: 1.5em` 一刀切：那会把难度图本来正确的 34×16 又缩成 17×8）：
+   ```css
+   .section .mg-table-wrap img { max-width: 3em; max-height: 3em; }
+   .section .mg-table-wrap img[width="188"] { width: 1.27em; height: 1.5em; }
+   .section .mg-table-wrap img[width="512"] { width: auto; height: 1.5em; }
+   ```
+   作用域限定 `.mg-table-wrap`，正文配图与 `.mg-media` / `<figure>` 里的图片不受影响（实测 damage 的 `.mg-media` 仍为 188×221、galactic_war 的 276 张正文图仍为 25–320 px）。实测改前 → 改后：damage 行高 258 → 186 px、status_effects 行高 239 → 38 px、难度图保持 34×16、galactic_war 表内无图标（不变）；4 个页面破图 0、console error 0。
+8. **`galactic_war.json` 的孤立 `</div>` 会破坏页面布局（2026-09-17 登记，未修）**：`References` 小节 `content` 结尾多一个 `</div>`（见第 8 节）。`renderSection` 用字符串拼接 + `innerHTML` 注入，多余的一个 `</div>` 会提前闭合 `.main-content`，使**最后一个小节变成 `.layout`（flex）的第三个子项**，`.main-content` 被 `flex: 1 1 0%` 挤到 **73 px 宽**（该逃逸小节自身 787 px）。后果：galactic_war 的正文被压成窄条、其 `.mg-table-wrap` 只有 73 px 宽（表 560 px 在内部横向滚动）。与图片本地化、第 7 条 CSS 均无关（两者都不产生 div 标签）。修法二选一：删掉 `galactic_war.json` 里那个孤立 `</div>`，或让 `renderSection` / 合并引擎对不平衡 HTML 做配平。
+
 
 ---
 
@@ -383,5 +400,5 @@ warbond   = item.warbond_zh || item.warbond
 6. `_zh` 字段与主字段结构一致。
 7. 新增字段已在本文件第 7 节登记。
 8. 目录页 20/25/89/95… 等卡片数与 `blocks/navigation.json` 的 `count`、以及与数据集 `total` 一致，无外站引用。
-9. **`mechanics/` 合并自检（2026-09-17 新增）**：打开 4 个机制页，确认 ① console 无 error；② 每页的小节数 == TOC 项数 == 唯一 `<div class="section">` id 数；③ 无重复 id、无 `_` 占位 id；④ 表格数 == 主干 `<table>` 数（除非覆盖提供了 `tables_zh`）；⑤ 覆盖文件里出现但主干没有的中文小节在 console 有 `zhOnly` 警告（有警告时应回到覆盖文件补 `id`）。
+9. **`mechanics/` 合并自检（2026-09-17 新增）**：打开 4 个机制页，确认 ① console 无 error；② 每页的小节数 == TOC 项数 == 唯一 `<div class="section">` id 数；③ 无重复 id、无 `_` 占位 id；④ 表格数 == 主干 `<table>` 数（除非覆盖提供了 `tables_zh`）；⑤ 覆盖文件里出现但主干没有的中文小节在 console 有 `zhOnly` 警告（有警告时应回到覆盖文件补 `id`）；⑥ 每个页面 `img` 全部返回 200、破图 0，且表格内图标渲染尺寸在 16–34 px 之间（规则见第 9 节第 7 条；`.mg-media` 正文图不受该规则影响，应保持原始显示尺寸）。
 
