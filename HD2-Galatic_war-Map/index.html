@@ -1272,14 +1272,15 @@ function renderPlayers(data) {
 
     // ============ 精确数据渲染（companion tacticalActions） ============
     const tacActions = (dss && dss.tacticalActions) || [];
-    // DSS 战术行动图标（wiki.gg Democracy Space Station 页；加载失败回退 emoji）
+    // 2026-09 切换至本地：wiki.gg 上的 SVG 依赖 currentColor 但主页 .ico 没设 color，
+    // 全部退化为黑色；本地 SVG 内部已硬编 color:#f5c518，可控且零外部依赖。
     const DSS_ICONS = {
-      "Eagle Storm": "https://helldivers.wiki.gg/images/DSS_Eagle_Icon.svg",
-      "Orbital Block": "https://helldivers.wiki.gg/images/DSS_Orbital_Blockade_Icon.svg",
-      "Heavy Ordnance Distribution": "https://helldivers.wiki.gg/images/DSS_Heavy_Ordnance_Distribution_Icon.svg",
-      "Planetary Bombardment": "https://helldivers.wiki.gg/images/DSS_Planetary_Bombardment_Icon.svg",
-      "Eagle Block": "https://helldivers.wiki.gg/images/DSS_Eagle_Icon.svg",
-      "Operational Support": "https://helldivers.wiki.gg/images/DSS_Icon.svg",
+      "Eagle Storm": "./assets/effect-icons/dss_eagle_storm.svg",
+      "Orbital Block": "./assets/effect-icons/dss_orbital_blockade.svg",
+      "Heavy Ordnance Distribution": "./assets/effect-icons/dss_heavy_ordnance.svg",
+      "Planetary Bombardment": "./assets/effect-icons/dss_planetary_bombardment.svg",
+      "Eagle Block": "./assets/effect-icons/dss_eagle_block.svg",      // 飞机+六边形星球（2026-09 拆分独立文件）
+      "Operational Support": "./assets/effect-icons/dss_fallback.svg",  // 兜底
     };
     const dssIconOf = (key) => {
       for (const k of Object.keys(DSS_ICONS)) {
@@ -1708,7 +1709,7 @@ function renderPlayers(data) {
   let PC_BIOME_FALLBACK = null;
   // 图标缓存版本：assets/ 下图标内容改动后必须 +1
   // （下面的 fetch 用 force-cache，不换 URL 的话旧图标会被浏览器钉在缓存里 —— 改了也看不到）
-  const PC_ICON_VER = "4";
+  const PC_ICON_VER = "6";
   // 图标内联缓存（同 MapLibre 那套：同源取文本再内联，才能被 currentColor 着色）
   const PC_SVG = {};
   async function preloadPlanetIcons() {
