@@ -3,44 +3,135 @@
   "description_zh": "硬直、火焰、毒气、眩晕、酸液等效果详解",
   "sections_zh": [
     {
+      "id": "Stagger_and_Ragdoll",
       "title_zh": "硬直与布娃娃",
-      "content_zh": "硬直（Stagger）是角色受到攻击时产生的短暂无法行动状态。布娃娃（Ragdoll）是更严重的硬直效果，角色会被击飞并失去控制，直到落地。\n\n硬直等级：\n<ul>\n<li>轻微硬直：短暂停顿，不影响动作。</li>\n<li>中等硬直：打断当前动作，角色后退。</li>\n<li>严重硬直：角色大幅后退，可能倒地。</li>\n<li>布娃娃：角色被击飞，完全失去控制。</li>\n</ul>\n\n不同武器和攻击有不同硬直力。高硬直力可以打断敌人的攻击，甚至阻止其行动。某些重型敌人对硬直有抗性甚至免疫。"
+      "fully_translated": true,
+      "content_zh": "<p>硬直（Stagger）的表现从轻微踉跄一直到整个人被掀翻在地不等，被掀翻的状态即布娃娃（Ragdoll）。当一次伤害附带的<strong>硬直力（Stagger Force）</strong>达到敌人的硬直阈值时，造成伤害或承受伤害的一方就会陷入硬直。阈值越高，硬直效果越强，例如可以彻底打断动作动画。与其他状态效果不同，<strong>硬直力不会在多次攻击中累积</strong>，每次攻击都单独判定。</p>",
+      "subsections_zh": [
+        {
+          "id": "Enemies",
+          "title_zh": "敌人",
+          "fully_translated": true,
+          "content_zh": "<ul><li>硬直会把敌人向后推开，通常还会打断其移动；推开距离随硬直力增加。</li><li>大多数敌人都带有可被足够硬直力打断的能力，例如某些攻击动作与呼叫增援。</li><li>敌人页面上列出的硬直阈值，指的就是能造成「打断型硬直」所需的数值。</li><li>打断不同敌人所需的硬直力差异极大：最弱的食腐虫只要 1，而顽固的肉瘤体高达 45。</li><li>发射多枚弹丸的武器（如 SG-8 制裁者）会让<strong>每一枚弹丸都附加完整硬直力</strong>，因此只命中一发弹丸也能把敌人打出硬直。</li></ul>"
+        },
+        {
+          "id": "Stagger_Force_vs._Enemies",
+          "title_zh": "硬直力与敌人阈值对照"
+        },
+        {
+          "id": "Helldivers",
+          "title_zh": "绝地潜兵"
+        }
+      ]
     },
     {
+      "id": "Acid_Splash",
       "title_zh": "酸液飞溅",
-      "content_zh": "酸液效果（Acid Splash）由某些终结族敌人（如吐酸虫）的攻击造成。酸液对目标造成持续伤害，同时降低目标的护甲等级。\n\n效果：\n<ul>\n<li>持续伤害：酸液在数秒内持续造成伤害。</li>\n<li>减甲效果：降低目标护甲等级，使其更容易受到后续伤害。</li>\n<li>叠加：多次酸液攻击可以叠加效果，增加伤害和持续时间。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<ul><li>被酸液覆盖的目标会被<strong>减速</strong>，并可能额外受到持续伤害。该效果持续 4 秒。</li><li>可由以下终结族敌人造成：吐酸虫、猎手、吐酸武斗虫、胆汁喷涌虫、抚育喷涌者、孢子强袭虫、吐酸泰坦、虫雷、掠食追猎虫，以及全部孢裂虫株（Spore Burst Strain）终结族。</li></ul>"
     },
     {
+      "id": "Bleed",
       "title_zh": "流血",
-      "content_zh": "流血效果（Bleed）由某些武器和攻击造成，对目标造成随时间推移的持续伤害。\n\n效果：\n<ul>\n<li>持续伤害：在流血持续时间内，目标每 0.5 秒受到一次伤害。</li>\n<li>无法自然恢复：流血状态下，生命值自然恢复被抑制。</li>\n<li>叠加：多次流血攻击可以叠加，造成更高的每秒伤害。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>流血（Bleed）只会施加在绝地潜兵身上，来源有三：胸部受伤、接触尖刺植物（Spike Plant）、接触铁丝网（Barbed Wire）。这三种来源算作<strong>三个互相独立的效果</strong>，可以同时存在。流血会造成持续伤害。</p><p>下表中「流血」是胸部受伤造成的效果，「荆棘丛（Thornbush）」与「铁丝网（Barbwire）」分别是前两种环境来源的效果。</p>"
     },
     {
+      "id": "Fire",
       "title_zh": "火焰",
-      "content_zh": "火焰效果（Fire）由火焰喷射器、燃烧手榴弹、轨道凝固汽油弹等造成。火焰是最常见的持续伤害效果之一。\n\n效果：\n<ul>\n<li>持续伤害：火焰在目标身上持续燃烧，每秒造成伤害。</li>\n<li>火焰蔓延：火焰可以传播到附近的易燃目标。</li>\n<li>恐慌：某些敌人被点燃后会进入恐慌状态，乱跑并失去攻击能力。</li>\n<li>无视护甲：火焰伤害直接作用于生命值，不受护甲减免。</li>\n<li>持续时间：火焰持续 4-8 秒，取决于来源。</li>\n</ul>"
+      "fully_translated": true,
+      "figures_zh": [],
+      "content_zh": "<ul><li>火焰可由绝大多数火焰类武器与战略配备施加。</li></ul><p><strong>值得注意的火焰威胁</strong></p><p><strong>环境危险</strong></p><ul><li>爆炸桶</li><li>火焰龙卷</li><li>火山植物</li></ul><p><strong>敌人</strong></p><ul><li>部分机器人单位：炽灼巨型者、炽灼部队、炽灼劫掠者、燃烧机枪蹂躏者、炽灼蹂躏者、炽灼火箭蹂躏者、巨型炙炎者</li><li>终结族：蟑龙</li><li>光能族：激光武器、猎杀器、凝视者</li></ul><p><strong>绝地潜兵一侧</strong></p><ul><li>主武器：AR-2 野狼、SMG/FLAM-34 司炉者（Stoker）、FLAM-66 火炬手、LAS-5 长柄镰、LAS-17 双刃镰刀（过热时）、SG-225IE 高燃破裂者、SG-451 野炊</li><li>副武器：LAS-7 匕首、P-72 迅击</li><li>投掷物：G-10 燃烧弹、G-13 燃烧冲击弹、G-142 烟花术</li><li>支援武器：FLAM-40 火焰喷射器、B/FLAM-80 焚燃者、LAS-98 激光大炮、EAT-700 一次性凝固汽油弹</li><li>战略配备：火焰喷射哨戒炮、激光哨戒炮、飞鹰凝固汽油弹空袭、轨道凝固汽油弹火力网、AX-FLAM75 热狗、AX-LAS5 漫游车、MD-14 燃烧地雷</li></ul><p>火焰伤害为 <strong>AP4 重甲穿透</strong>，未修正的持续时间为 <strong>3 秒</strong>（数值见下表）。</p><p>许多单位对元素伤害有单独的倍率，火焰也不例外。例如胆汁喷涌虫承受标准火焰伤害，而穿刺虫承受 <strong>1.7 倍</strong>火焰伤害。</p>"
     },
     {
+      "id": "Fire_Panic",
       "title_zh": "火焰恐慌",
-      "content_zh": "火焰恐慌（Fire Panic）是被点燃的敌人触发的 AI 行为变化。\n\n效果：\n<ul>\n<li>敌人停止攻击，四处乱跑。</li>\n<li>敌人无法瞄准或使用武器。</li>\n<li>恐慌持续 2-4 秒，或直到火焰熄灭。</li>\n<li>对某些敌人无效（如机器人、光能族）。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>火焰恐慌（Fire Panic）是与毒气混乱类似的症状：被火焰<strong>直接命中</strong>的敌人会随机移动、随机攻击。只有直接喷射火焰的武器才能施加此效果，例如 FLAM-40 火焰喷射器、B/FLAM-80 焚燃者、火焰喷射哨戒炮、FLAM-66 火炬手，以及唯一的 40-K 热熔枪。<strong>重型／巨型敌人免疫此效果。</strong></p>"
     },
     {
+      "id": "Flamer_Slowed",
       "title_zh": "火焰减速",
-      "content_zh": "火焰减速（Flamer Slowed）是被火焰喷射器命中的敌人受到的移动速度降低效果。\n\n效果：\n<ul>\n<li>移动速度降低 50%。</li>\n<li>持续至火焰效果结束或目标离开火焰区域。</li>\n<li>对冲锋型敌人尤其有效，可以显著降低其威胁。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>被火焰<strong>直接命中</strong>的敌人会被减速。只有直接喷射火焰的武器才能施加此效果，例如 FLAM-40 火焰喷射器、B/FLAM-80 焚燃者、火焰喷射哨戒炮、FLAM-66 火炬手，以及唯一的 40-K 热熔枪。<strong>重型／巨型敌人免疫此效果。</strong></p>"
     },
     {
+      "id": "Burning_Heavy",
       "title_zh": "重度燃烧",
-      "content_zh": "重度燃烧（Burning Heavy）是强化的火焰效果，由某些特殊武器（如焚燃者）造成。\n\n效果：\n<ul>\n<li>更高的每秒伤害。</li>\n<li>更长的持续时间（8-12 秒）。</li>\n<li>更容易触发火焰恐慌。</li>\n<li>对重甲单位也能造成有效伤害。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>重度燃烧（Burning Heavy）是飞鹰凝固汽油弹空袭与轨道凝固汽油弹火力网造成的额外火焰 DPS；用 EAT-700 一次性凝固汽油弹射击敌人同样会触发。它的伤害显著高于普通燃烧，但施加到敌人或绝地潜兵身上后<strong>只持续 1 秒</strong>（数值见下表）。</p>"
     },
     {
+      "id": "Gas",
       "title_zh": "毒气",
-      "content_zh": "毒气效果（Gas）由毒气手榴弹、轨道毒气攻击、毒气地雷等造成。\n\n效果：\n<ul>\n<li>持续伤害：毒气云中的目标持续受到伤害。</li>\n<li>视野干扰：毒气云内的目标视野受限。</li>\n<li>混乱：某些敌人吸入毒气后会进入混乱状态，攻击附近的所有目标（包括友军）。</li>\n<li>区域效果：毒气在固定区域持续存在 10-15 秒。</li>\n<li>无视护甲：毒气伤害直接作用于生命值。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>被毒气影响的敌人与绝地潜兵会受到持续伤害，且该伤害<strong>只作用于主体生命池（Main）</strong>；毒气云内的一切单位同时会获得毒气混乱状态效果。如果受影响单位当时已经处于攻击动作中（例如正在追击绝地潜兵的监察者），混乱效果的生效会被<strong>延迟</strong>。</p>",
+      "subsections_zh": [
+        {
+          "id": "Gas_Mk1",
+          "title_zh": "毒气 Mk1",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：6 秒。</li><li>施加来源：A/GM-17 瓦斯迫击哨戒炮、MD-8 毒气地雷、G-4 毒气榴弹、轨道毒气攻击、S-11 矛枪、P-35 思想改造。</li></ul>"
+        },
+        {
+          "id": "Gas_Mk2",
+          "title_zh": "毒气 Mk2"
+        }
+      ]
     },
     {
+      "id": "Gas_Confusion",
       "title_zh": "毒气混乱",
-      "content_zh": "毒气混乱（Gas Confusion）是敌人吸入毒气后触发的特殊 AI 状态。\n\n效果：\n<ul>\n<li>敌人攻击最近的任何目标，包括友军。</li>\n<li>混乱持续 5-10 秒，取决于毒气来源。</li>\n<li>对终结族特别有效，因为它们密集成群，混乱效果可以造成大量友军伤害。</li>\n<li>机器人受毒气混乱影响较小。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>被毒气影响后，敌人与绝地潜兵会进入混乱状态：绝地潜兵的视野受到干扰，敌人则会朝随机方向移动与攻击，通常是<strong>远离绝地潜兵</strong>的方向。所有受毒气影响的单位还会被<strong>减速 25%</strong>。</p>",
+      "subsections_zh": [
+        {
+          "id": "Gas_Confusion_Mk1",
+          "title_zh": "毒气混乱 Mk1",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：5 秒。</li><li>施加来源：A/GM-17 瓦斯迫击哨戒炮、MD-8 毒气地雷、G-4 毒气榴弹、轨道毒气攻击、S-11 矛枪、P-35 思想改造。</li></ul>"
+        },
+        {
+          "id": "Gas_Confusion_Mk2",
+          "title_zh": "毒气混乱 Mk2"
+        }
+      ]
     },
     {
+      "id": "Stun",
       "title_zh": "眩晕",
-      "content_zh": "眩晕效果（Stun）由电磁冲击波攻击、眩晕手榴弹、特斯拉塔等造成。眩晕可以使目标完全无法行动。\n\n眩晕等级：\n<ul>\n<li>1 级：轻微眩晕，目标短暂停顿。</li>\n<li>2 级：中等眩晕，目标无法行动 2 秒。</li>\n<li>3 级：重度眩晕，目标无法行动 4 秒。</li>\n<li>4 级：电磁眩晕（EMS），目标完全无法行动，且无法使用任何能力，持续 6 秒。</li>\n</ul>\n\n眩晕效果对大部分敌人有效，但某些大型敌人（如坦克、移动工厂）有抗性。\n\n电磁（EMS）效果：\n<ul>\n<li>电磁冲击波攻击造成的眩晕对机械单位特别有效。</li>\n<li>可以瘫痪机器人单位的武器系统。</li>\n<li>对光能族的护盾有额外效果。</li>\n</ul>"
+      "fully_translated": true,
+      "content_zh": "<p>被眩晕攻击命中的敌人在短时间内无法移动或攻击；绝地潜兵被眩晕时则会<strong>大幅减速</strong>。眩晕按强度分四档，各档的持续时间与施加来源见下。</p>",
+      "subsections_zh": [
+        {
+          "id": "Stun_1_.5BSmall.5D",
+          "title_zh": "眩晕 1 级（小型）",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：1.5 秒。</li><li>施加来源：ARC-12 雷霆、ARC-3 电弧发射器、特斯拉塔、AX/ARC-3「护卫犬」K-9、G-31 电弧手榴弹、GL-52 缓和使者、CQC-9 除叶工具。</li></ul>"
+        },
+        {
+          "id": "Stun_2_.5BMedium.5D",
+          "title_zh": "眩晕 2 级（中型）",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：3 秒。</li><li>施加来源：A/M-23 电磁冲击波迫击哨戒炮、SMG-72 暴击斗士、AR-32 安抚者。</li></ul>"
+        },
+        {
+          "id": "Stun_3_.5BLarge.5D",
+          "title_zh": "眩晕 3 级（大型）",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：5 秒。</li><li>施加来源：G-23 眩晕榴弹、G-109 海胆、SG-20 止息、CQC-19 眩晕长矛、CQC-30 眩晕警棍、CQC-1 唯一真棋。</li></ul>"
+        },
+        {
+          "id": "Stun_4_.5BMassive.5D",
+          "title_zh": "眩晕 4 级（巨型）",
+          "fully_translated": true,
+          "content_zh": "<ul><li>持续时间：10 秒。</li><li>施加来源：眩晕喷射仓（Stun Pods）强化资源。</li></ul>"
+        },
+        {
+          "id": "EMS_Stun",
+          "title_zh": "电磁眩晕（EMS）"
+        }
+      ]
     }
   ]
 }
