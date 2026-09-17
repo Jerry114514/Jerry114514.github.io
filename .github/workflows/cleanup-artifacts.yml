@@ -1,0 +1,61 @@
+name: Cleanup Artifacts
+
+# ============================================================================
+# 为什么需要这个：GitHub Pages 每次重建都会产出 1 个 github-pages artifact，
+# 体积≈整个站点（当前 50.5 MB），而 GitHub Free 的 Actions 存储上限是 500 MB。
+# 数据每 5 分钟提交一次 → 每小时 12 个 → 峰值会轻松冲爆额度，导致后续部署失败。
+#
+# 清理频率必须按「提交频率 × 单次 artifact 体积」定，稳态峰值≈
+#     (清理间隔 / 提交间隔) × 单次体积
+#   当前：5 分钟提交、50.5 MB/个
+#     清 20 分钟 → (20/5)=4 个 ≈ 200 MB   ✅ 安全（本文件默认值）
+#     清 3 小时  → (180/5)=36 个 ≈ 1.8 GB ❌ 必然爆
+#
+# 【什么时候可以把它改成 3 小时】把数据移出 Pages 仓库之后（见 README 优化方案 Stage 2）：
+# 数据提交不再触发 Pages 重建，页面上只有代码改动才会重建，那时候 3 小时绰绰有余 ——
+# 届时把下面的 cron 改成 '0 */3 * * *' 即可。
+# ============================================================================
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'   # 完成 Stage 2 后可放宽到 '0 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write   # 删除 artifact 需要
+
+concurrency:
+  group: cleanup-artifacts
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete artifacts older than 10 minutes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${{ github.repository }}"
+          cutoff=$(date -u -d '10 minutes ago' +%s)
+
+          echo "== 清理前 =="
+          gh api "repos/$repo/actions/artifacts" \
+            --jq '"共 \(.total_count) 个，合计 \(([.artifacts[].size_in_bytes] | add // 0) / 1048576 | floor) MB"'
+
+          # 只删 10 分钟以前的：正在部署中的 artifact 绝不能被删
+          gh api --paginate "repos/$repo/actions/artifacts?per_page=100" \
+            --jq '.artifacts[] | "\(.id)\t\(.created_at)\t\(.size_in_bytes)"' |
+          while IFS=$'\t' read -r id created size; do
+            [ -z "$id" ] && continue
+            ts=$(date -u -d "$created" +%s)
+            if [ "$ts" -lt "$cutoff" ]; then
+              gh api -X DELETE "repos/$repo/actions/artifacts/$id" >/dev/null
+              echo "  删除 $id  ($(( size / 1048576 )) MB, $created)"
+            fi
+          done
+
+          echo "== 清理后 =="
+          gh api "repos/$repo/actions/artifacts" \
+            --jq '"共 \(.total_count) 个，合计 \(([.artifacts[].size_in_bytes] | add // 0) / 1048576 | floor) MB"'

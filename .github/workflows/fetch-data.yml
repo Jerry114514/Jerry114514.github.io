@@ -1,16 +1,23 @@
 name: Fetch HD2 Data
 
 on:
-  # GitHub Actions schedule 有 15-30 分钟延迟且密集 cron 会被丢弃（实测 3 组 cron 大量跳过）
-  # 本地 cron 每 15 分钟 dispatch 为主力；这里保留 1 组 15 分钟 cron 作补充（双保险）
+  # 触发方式（2026-09 调整）：5 分钟的主力定时改由 Cloudflare Worker 从外部 dispatch
+  # （原「本机 cron 每 15 分钟 dispatch」方案已废弃 —— 那个必须一直开着电脑）。
+  # GitHub 原生 schedule 在密集 cron 下实测被大量丢弃/延迟，所以这里只留一组
+  # 错开分钟的兜底：:07 :22 :37 :52，与 Worker 的 :00 :05 :10 不撞车。
   schedule:
-    - cron: '0,15,30,45 * * * *'
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:   # 支持手动触发
   repository_dispatch:
     types: [fetch-now]  # 支持外部调用触发（如翻译推送后）
 
 permissions:
   contents: write
+
+# 5 分钟一次时防止上一次没跑完就叠加（单次约 25 秒，正常不会撞，接口变慢时兜住）
+concurrency:
+  group: fetch-data
+  cancel-in-progress: false
 
 jobs:
   fetch-data:
