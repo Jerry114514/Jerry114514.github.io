@@ -48,15 +48,41 @@
     .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
 
 
-    .stats-table { width: 100%; border-collapse: collapse; }
 
-    .stats-table tr { border-bottom: 1px solid var(--border); }
+    /* ── 数值表（schema: boosters[].tables[]）—— 宽表横向滚动，不撑破布局 ── */
+    .tbl-block { margin-bottom: 16px; }
 
-    .stats-table td { padding: 8px 10px; font-size: 0.85rem; }
+    .tbl-block:last-child { margin-bottom: 0; }
 
-    .stats-table td:first-child { color: var(--text-mute); width: 40%; }
+    .tbl-title { font-size: 0.86rem; color: var(--text); font-weight: 600; margin-bottom: 6px; }
 
-    .stats-table td:last-child { color: var(--text); }
+    .tbl-title .tbl-en { font-size: 0.7rem; color: var(--text-mute); font-weight: 400; margin-left: 6px; }
+
+    .tbl-note { font-size: 0.72rem; color: var(--text-mute); line-height: 1.65; margin-bottom: 6px; }
+
+    .table-wrap { position: relative; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .table-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 24px; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(11,14,20,0.85)); }
+
+    .scroll-hint { font-size: 0.68rem; color: var(--text-mute); font-weight: 400; margin-left: 8px; }
+
+    .data-table { border-collapse: collapse; width: 100%; }
+
+    .data-table th { background: var(--stripe); border: 1px solid #33270A; color: var(--yellow);
+      font-size: 0.72rem; letter-spacing: 0.08em; padding: 6px 9px; text-align: left; white-space: nowrap; }
+
+    .data-table th.tbl-cap { text-transform: uppercase; }
+
+    .data-table td { border-bottom: 1px solid var(--line-2); padding: 6px 9px; color: var(--text-dim);
+      font-size: 0.8rem; white-space: nowrap; }
+
+    .data-table td.k { color: var(--text-mute); }
+
+    .data-table tbody tr:nth-child(even) td { background: #0D0D0D; }
+
+    .data-table tbody tr.group td { background: var(--stripe-warn); color: var(--yellow);
+      font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em; }
 
 
     .variant-card { display: block; padding: 12px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 8px; }
@@ -98,45 +124,9 @@
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
+    .main-content { min-width: 0; }
 
-    .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }
-
-    .ds-cell { display: flex; flex-direction: column; padding: 6px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
-
-    .ds-k { font-size: 12px; color: var(--text-mute); margin-bottom: 2px; }
-
-    .ds-v { font-size: 13px; color: var(--text); font-family: 'Consolas','Menlo',monospace; }
-
-    .ds-attack { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-
-    .ds-attack:last-child { margin-bottom: 0; }
-
-    .ds-attack-head { font-size: 14px; color: var(--text); font-weight: 600; margin-bottom: 8px; }
-
-    .ds-status { border-left: 3px solid var(--amber); }
-
-    .ds-type { font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-left: 6px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
-
-    .ds-type-proj { background: rgba(59,130,246,0.2); color: var(--blue); }
-
-    .ds-type-exp { background: rgba(239,68,68,0.2); color: var(--red); }
-
-    .ds-type-fire { background: rgba(245,158,11,0.2); color: var(--amber); }
-
-    .ds-type-spray { background: rgba(16,185,129,0.2); color: #10b981; }
-
-    .ds-type-beam { background: rgba(139,92,246,0.2); color: #8b5cf6; }
-
-    .ds-type-arc { background: rgba(139,92,246,0.2); color: #a78bfa; }
-
-    .ds-type-dmg { background: rgba(239,68,68,0.2); color: var(--red); }
-
-    .ds-type-melee { background: rgba(239,68,68,0.2); color: var(--red); }
-
-    @media (max-width: 1023px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
-
-    @media (max-width: 767px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
-
+    .main-content > .card { min-width: 0; }
 
     @media (max-width: 900px) {
       .detail-layout { grid-template-columns: 1fr; }
@@ -164,14 +154,16 @@
     var ALL_BOOSTERS = [];
 
     async function loadDetail() {
-      var raw = WikiRouter.param("id") || WikiRouter.param("b");
+      // canonical URL：booster.html?id=<snake_case>（与 weapon.html / enemy.html 一致）
+      // 只认 ?id=，不再兼容 ?b= 与连字符写法
+      var raw = WikiRouter.param("id");
       var layout = document.getElementById("detail-layout");
       try {
         var r = await fetch("./data/wiki/zh/boosters.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
         ALL_BOOSTERS = d.boosters || [];
-        var id = normalizeId(raw);
+        var id = raw ? String(raw).trim() : "";
         var b = ALL_BOOSTERS.find(function(x) { return x.id === id; });
         if (!b) {
           layout.innerHTML = '<div class="empty">未找到该强化资源' +
@@ -187,22 +179,13 @@
       }
     }
 
-    function normalizeId(v) {
-      if (!v) return "";
-      var s = String(v).trim().toLowerCase();
-      if (ALL_BOOSTERS.some(function(x) { return x.id === s; })) return s;
-      var alt = s.replace(/-/g, "_");
-      if (ALL_BOOSTERS.some(function(x) { return x.id === alt; })) return alt;
-      return s;
-    }
-
     function renderDetail(b) {
       var layout = document.getElementById("detail-layout");
 
       document.getElementById("breadcrumb").innerHTML =
         '← <a href="boosters.html">强化资源</a> › ' + esc(b.warbond_zh || b.warbond || "") + ' › ' + esc(b.name);
 
-      var pageZh = b.warbond_page ? "第 " + b.warbond_page + " 页" : "待公布";
+      var pageZh = b.warbond_page ? "第 " + b.warbond_page + " 页" : "待发布";
       var unlockLine = "⭐ 战争债券：" + (b.warbond_zh || b.warbond || "—") + " · " + (b.price_zh || "—");
 
       var siblings = ALL_BOOSTERS.filter(function(x) {
@@ -233,7 +216,7 @@
           '<ol class="tips-list">' + items + '</ol></div>';
       }).join("");
 
-      var statsHtml = renderStats(b);
+      var tablesHtml = renderTables(b);
 
       layout.innerHTML =
         '<div class="main-content">' +
@@ -246,7 +229,7 @@
             (b.description ? '<div class="lore">' + esc(b.description) + '</div>' : '') +
           '</div>' +
           (b.overview_zh ? '<div class="card"><h2>📖 简介</h2><div class="desc">' + esc(b.overview_zh) + '</div></div>' : '') +
-          statsHtml +
+          tablesHtml +
           sectionsHtml +
           relatedHtml +
           '<div class="card">' +
@@ -255,7 +238,7 @@
               '<div class="v-name">◀ 返回强化资源</div>' +
               '<div class="v-desc">强化资源图鉴 · 共 ' + ALL_BOOSTERS.length + ' 种</div></a>' +
             (b.source_url ? '<a class="variant-card" href="' + esc(b.source_url) + '" target="_blank" rel="noopener noreferrer">' +
-              '<div class="v-name">来源：官方 wiki ↗</div>' +
+              '<div class="v-name">来源：wiki.gg ↗</div>' +
               '<div class="v-desc">' + esc(b.name_en) + ' - Helldivers Wiki</div></a>' : '') +
           '</div>' +
         '</div>' +
@@ -274,43 +257,53 @@
         '</div>';
     }
 
-    function renderStats(b) {
-      var list = b.stats || [];
+    /* ── 数值表渲染：结构见 data/wiki/zh/SCHEMA.md 第 7.1 节 tables[] ──
+       headers.length >= 2 → 真列头；=== 1 → 跨列表题条；=== 0 → 无表头
+       rows 中列数不足的行 = 分组标题行（wiki 的 colspan 分组 th），整行渲染 ── */
+    function renderTables(b) {
+      var list = b.tables || [];
       if (!list.length) return "";
-      var blocks = list.map(function(blk) {
-        var head = '<div class="ds-attack-head">' + statIcon(blk.type) + ' ' + esc(blk.name || "数据") + typeTag(blk.type) + '</div>';
-        var body = "";
-        if (blk.note) body += '<div class="ds-k">' + esc(blk.note) + '</div>';
-        if (blk.headers && blk.headers.length) {
-          body += '<table class="stats-table"><tr>' +
-            blk.headers.map(function(h) { return '<td><b>' + esc(h) + '</b></td>'; }).join("") + '</tr>' +
-            (blk.rows || []).map(function(r) {
-              return '<tr>' + r.map(function(c) { return '<td>' + esc(c) + '</td>'; }).join("") + '</tr>';
-            }).join("") + '</table>';
-        } else {
-          (blk.groups || []).forEach(function(g) {
-            var rows = (g.rows || []).filter(function(r) { return r && r.length === 2 && r[1] !== "" && r[1] != null; });
-            if (!rows.length) return;
-            if (g.label) body += '<div class="ds-k">' + esc(g.label) + '</div>';
-            body += '<div class="ds-grid">' + rows.map(function(r) {
-              return '<div class="ds-cell"><span class="ds-k">' + esc(r[0]) + '</span><span class="ds-v">' + esc(r[1]) + '</span></div>';
-            }).join("") + '</div>';
-          });
+      var blocks = list.map(function(tbl) {
+        var headers = tbl.headers || [];
+        var rows = tbl.rows || [];
+        var n = headers.length;
+        var span = Math.max(n, spanCols(rows));
+
+        var html = '<div class="tbl-block">';
+        if (tbl.title) {
+          html += '<div class="tbl-title">' + esc(tbl.title) +
+            (tbl.title_en && tbl.title_en !== tbl.title ? '<span class="tbl-en">' + esc(tbl.title_en) + '</span>' : '') +
+            '</div>';
         }
-        return '<div class="ds-attack">' + head + body + '</div>';
+        if (tbl.note) html += '<div class="tbl-note">' + esc(tbl.note) + '</div>';
+
+        html += '<div class="table-wrap"><table class="data-table">';
+        if (n >= 2) {
+          html += '<thead><tr>' + headers.map(function(h) { return '<th>' + esc(h) + '</th>'; }).join("") + '</tr></thead>';
+        } else if (n === 1) {
+          html += '<thead><tr><th class="tbl-cap" colspan="' + span + '">' + esc(headers[0]) + '</th></tr></thead>';
+        }
+        html += '<tbody>';
+        rows.forEach(function(r) {
+          var cells = r || [];
+          if (cells.length < span) {
+            html += '<tr class="group"><td colspan="' + span + '">' + esc(cells.join(" ")) + '</td></tr>';
+          } else {
+            html += '<tr>' + cells.map(function(c, i) {
+              return '<td' + (i === 0 ? ' class="k"' : '') + '>' + esc(c) + '</td>';
+            }).join("") + '</tr>';
+          }
+        });
+        html += '</tbody></table></div></div>';
+        return html;
       }).join("");
-      return '<div class="card"><h2>⚙️ 详细数据</h2>' + blocks + '</div>';
+      return '<div class="card"><h2>📊 数值数据<span class="scroll-hint">宽表可横向滚动 →</span></h2>' + blocks + '</div>';
     }
 
-    function statIcon(t) {
-      return t === "explosion" ? "💥" : t === "weapon" ? "🔫" : t === "projectile" ? "🎯" : "📈";
-    }
-
-    function typeTag(t) {
-      if (t === "explosion") return '<span class="ds-type ds-type-exp">爆炸</span>';
-      if (t === "weapon") return '<span class="ds-type">武器</span>';
-      if (t === "projectile") return '<span class="ds-type ds-type-proj">弹丸</span>';
-      return "";
+    function spanCols(rows) {
+      var m = 1;
+      (rows || []).forEach(function(r) { if (r && r.length > m) m = r.length; });
+      return m;
     }
 
     function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null ? "—" : v) + '</span></div>'; }

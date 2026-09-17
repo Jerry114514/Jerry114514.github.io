@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-17T19:24:00Z",
-  "source": "Helldivers Wiki.gg",
+  "updated_at": "2026-09-17T11:39:33Z",
+  "source": "wiki.gg",
   "total": 20,
   "boosters": [
     {
@@ -32,7 +32,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Hellpod_Space_Optimization"
     },
@@ -73,7 +73,83 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [
+        {
+          "title": "伤害修正系数（Factors）",
+          "title_en": "Factors",
+          "note": "每项修正按部位/来源分别列出，数值为承伤系数：系数越高，该部位受到的伤害越大（头部的 150% 即为爆头加成）。",
+          "headers": ["修正项", "系数"],
+          "rows": [
+            ["头部", "150%"],
+            ["胸部", "100%"],
+            ["腿部", "85%"],
+            ["手臂", "85%"],
+            ["爆炸", "50%"],
+            ["固守（Fortified）", "50%"],
+            ["生命力强化", "90%"]
+          ]
+        },
+        {
+          "title": "护甲值修正系数（Armor Rating Factors）",
+          "title_en": "Armor Rating Factors",
+          "note": "护甲值越高，修正系数越低，受到的伤害越少。",
+          "headers": ["护甲值", "系数"],
+          "rows": [
+            ["50", "125%"],
+            ["64", "118%"],
+            ["70", "115%"],
+            ["75", "112.5%"],
+            ["79", "110.5%"],
+            ["100", "100%"],
+            ["125", "87.5%"],
+            ["129", "85.5%"],
+            ["150", "75%"],
+            ["175", "70%"],
+            ["180", "69%"],
+            ["200", "65%"]
+          ]
+        },
+        {
+          "title": "完整护甲表（Full Armor Table）",
+          "title_en": "Full Armor Table",
+          "note": "未装备「生命力强化」时，各护甲值对应的分部位承伤系数与等效生命值。",
+          "headers": ["护甲值", "头部", "胸部", "腿部", "手臂", "爆炸", "固守", "等效生命值"],
+          "rows": [
+            ["50", "150%", "125%", "106.25%", "106.25%", "62.5%", "31.25%", "100"],
+            ["64", "150%", "118%", "100.3%", "100.3%", "59%", "29.5%", "105.93"],
+            ["70", "150%", "115%", "97.75%", "97.75%", "57.5%", "28.75%", "108.7"],
+            ["75", "150%", "112.5%", "95.63%", "95.63%", "56.25%", "28.13%", "111.11"],
+            ["79", "150%", "110.5%", "93.93%", "93.93%", "55.25%", "27.63%", "113.12"],
+            ["100", "150%", "100%", "85%", "85%", "50%", "25%", "125"],
+            ["125", "131.25%", "87.5%", "74.38%", "74.38%", "43.75%", "21.88%", "142.86"],
+            ["129", "128.25%", "85.5%", "72.68%", "72.68%", "42.75%", "21.38%", "146.2"],
+            ["150", "112.5%", "75%", "63.75%", "63.75%", "37.5%", "18.75%", "166.67"],
+            ["175", "105%", "70%", "59.5%", "59.5%", "35%", "17.5%", "178.57"],
+            ["180", "103.5%", "69%", "58.65%", "58.65%", "34.5%", "17.25%", "181.16"],
+            ["200", "97.5%", "65%", "55.25%", "55.25%", "32.5%", "16.25%", "192.31"]
+          ]
+        },
+        {
+          "title": "装备生命力强化后（With Vitality Booster）",
+          "title_en": "With Vitality Booster",
+          "note": "装备「生命力强化」后，各护甲值对应的分部位承伤系数与等效生命值。",
+          "headers": ["护甲值", "头部", "胸部", "腿部", "手臂", "爆炸", "固守", "等效生命值"],
+          "rows": [
+            ["50", "135%", "112.5%", "95.63%", "95.63%", "56.25%", "28.13%", "111.11"],
+            ["64", "135%", "106.2%", "90.27%", "90.27%", "53.1%", "26.55%", "117.7"],
+            ["70", "135%", "103.5%", "87.98%", "87.98%", "51.75%", "25.88%", "120.77"],
+            ["75", "135%", "101.25%", "86.06%", "86.06%", "50.63%", "25.31%", "123.46"],
+            ["79", "135%", "99.45%", "84.53%", "84.53%", "49.73%", "24.86%", "125.69"],
+            ["100", "135%", "90%", "76.5%", "76.5%", "45%", "22.5%", "138.89"],
+            ["125", "118.13%", "78.75%", "66.94%", "66.94%", "39.38%", "19.69%", "158.73"],
+            ["129", "115.43%", "76.95%", "65.41%", "65.41%", "38.48%", "19.24%", "162.44"],
+            ["150", "101.25%", "67.5%", "57.38%", "57.38%", "33.75%", "16.88%", "185.19"],
+            ["175", "94.5%", "63%", "53.55%", "53.55%", "31.5%", "15.75%", "198.41"],
+            ["180", "93.15%", "62.1%", "52.79%", "52.79%", "31.05%", "15.53%", "201.29"],
+            ["200", "87.75%", "58.5%", "49.73%", "49.73%", "29.25%", "14.63%", "213.68"]
+          ]
+        }
+      ],
       "related": ["dead_sprint"],
       "source_url": "https://helldivers.wiki.gg/wiki/Vitality_Enhancement"
     },
@@ -108,7 +184,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/UAV_Recon_Booster"
     },
@@ -144,21 +220,35 @@
           ]
         }
       ],
-      "stats": [
+      "tables": [
         {
-          "name": "体力恢复与护甲值",
-          "name_en": "Stamina Regen",
-          "type": "table",
+          "title": "基础体力恢复（Base Values）",
+          "title_en": "Base Values",
           "note": "体力恢复基于护甲值的原始数值计算，不计入「额外填充」等护甲被动。",
-          "headers": ["护甲值", "基础体力恢复", "装备后体力恢复"],
+          "headers": ["护甲值", "体力恢复"],
           "rows": [
-            ["50", "125", "175"],
-            ["64", "118", "165.2"],
-            ["70", "115", "161"],
-            ["79", "111", "155.4"],
-            ["100", "100", "140"],
-            ["129", "71", "99.4"],
-            ["150", "50", "70"]
+            ["50", "125"],
+            ["64", "118"],
+            ["70", "115"],
+            ["79", "111"],
+            ["100", "100"],
+            ["129", "71"],
+            ["150", "50"]
+          ]
+        },
+        {
+          "title": "装备耐力增强后（With Stamina Enhancement）",
+          "title_en": "With Stamina Enhancement",
+          "note": null,
+          "headers": ["护甲值", "体力恢复"],
+          "rows": [
+            ["50", "175"],
+            ["64", "165.2"],
+            ["70", "161"],
+            ["79", "155.4"],
+            ["100", "140"],
+            ["129", "99.4"],
+            ["150", "70"]
           ]
         }
       ],
@@ -205,7 +295,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["stamina_enhancement"],
       "source_url": "https://helldivers.wiki.gg/wiki/Muscle_Enhancement"
     },
@@ -238,7 +328,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["flexible_reinforcement_budget"],
       "source_url": "https://helldivers.wiki.gg/wiki/Increased_Reinforcement_Budget"
     },
@@ -271,7 +361,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["increased_reinforcement_budget"],
       "source_url": "https://helldivers.wiki.gg/wiki/Flexible_Reinforcement_Budget"
     },
@@ -307,7 +397,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Localization_Confusion"
     },
@@ -340,7 +430,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Expert_Extraction_Pilot"
     },
@@ -374,7 +464,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Motivational_Shocks"
     },
@@ -402,7 +492,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Experimental_Infusion"
     },
@@ -436,28 +526,32 @@
           ]
         }
       ],
-      "stats": [
+      "tables": [
         {
-          "name": "爆炸 · 火焰喷射仓撞击",
-          "name_en": "Explosion HellpodImpact FieryDrop",
-          "type": "explosion",
-          "groups": [
-            {
-              "label": "范围效果",
-              "rows": [["内圈半径", "2 m"], ["外圈半径", "4 m"], ["冲击波半径", "4 m"]]
-            },
-            {
-              "label": "伤害",
-              "rows": [["伤害元素", "火焰"], ["内圈伤害", "200 火焰"], ["内圈耐久伤害", "200 火焰"], ["外圈伤害", "199 - 0"], ["外圈耐久伤害", "199 - 0"]]
-            },
-            {
-              "label": "穿透",
-              "rows": [["直射穿透", "反坦克 VI"]]
-            },
-            {
-              "label": "范围效果附加",
-              "rows": [["状态", "着火"], ["状态强度", "20"], ["拆毁值", "40"], ["踉跄力", "15"], ["推力", "20"]]
-            }
+          "title": "详细数据 · 火焰喷射仓撞击",
+          "title_en": "HellpodImpact Fiery Drop",
+          "note": "对应 wiki.gg 的 Detailed Statistics 表；单格行为分组标题（原表为跨列 th）。",
+          "headers": ["火焰喷射仓撞击"],
+          "rows": [
+            ["范围效果"],
+            ["内圈半径", "2 m"],
+            ["外圈半径", "4 m"],
+            ["冲击波半径", "4 m"],
+            ["伤害"],
+            ["伤害元素", "火焰"],
+            ["内圈伤害", "200 火焰"],
+            ["内圈耐久伤害", "200 火焰"],
+            ["外圈伤害", "199 - 0"],
+            ["外圈耐久伤害", "199 - 0"],
+            ["穿透"],
+            ["直射穿透", "反坦克 VI"],
+            ["范围效果附加"],
+            ["状态", "着火"],
+            ["状态", "着火"],
+            ["状态强度", "20"],
+            ["拆毁值", "40"],
+            ["踉跄力", "15"],
+            ["推力", "20"]
           ]
         }
       ],
@@ -497,7 +591,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["vitality_enhancement"],
       "source_url": "https://helldivers.wiki.gg/wiki/Dead_Sprint"
     },
@@ -523,39 +617,41 @@
           ]
         }
       ],
-      "stats": [
+      "tables": [
         {
-          "name": "AR-23 解放者（补给舱炮塔）",
-          "name_en": "AR-23 Liberator Resupply Pod",
-          "type": "weapon",
-          "groups": [
-            {
-              "label": "武器",
-              "rows": [["射速", "640 发／分"], ["弹匣容量", "140"]]
-            }
+          "title": "AR-23 解放者（补给舱炮塔）",
+          "title_en": "AR-23 Liberator Resupply Pod",
+          "note": "对应 wiki.gg 的 Detailed Statistics 表；单格行为分组标题（原表为跨列 th）。",
+          "headers": ["AR-23 解放者（补给舱炮塔）"],
+          "rows": [
+            ["射速", "640 发／分"],
+            ["弹匣容量", "140"]
           ]
         },
         {
-          "name": "5.5×50mm 步枪穿甲弹",
-          "name_en": "Rifle 5.5x50mm Penetrator",
-          "type": "projectile",
-          "groups": [
-            {
-              "label": "弹丸",
-              "rows": [["弹体质量", "4.5 g"], ["初速度", "1000 m/s"], ["阻力系数", "30%"], ["重力系数", "100%"], ["穿透减速", "25%"]]
-            },
-            {
-              "label": "伤害",
-              "rows": [["标准伤害", "65"], ["耐久伤害", "15"]]
-            },
-            {
-              "label": "穿透",
-              "rows": [["直射穿透", "中甲"], ["小角度穿透", "中甲"], ["大角度穿透", "中甲"], ["极端穿透", "无护甲"]]
-            },
-            {
-              "label": "特殊效果",
-              "rows": [["拆毁值", "10"], ["踉跄力", "10"], ["推力", "10"]]
-            }
+          "title": "5.5×50mm 步枪穿甲弹",
+          "title_en": "Rifle 5.5x50mm Penetrator",
+          "note": null,
+          "headers": ["5.5×50mm 步枪穿甲弹"],
+          "rows": [
+            ["弹丸"],
+            ["弹体质量", "4.5 g"],
+            ["初速度", "1000 m/s"],
+            ["阻力系数", "30%"],
+            ["重力系数", "100%"],
+            ["穿透减速", "25%"],
+            ["伤害"],
+            ["标准伤害", "65 伤害"],
+            ["耐久伤害", "15 伤害"],
+            ["穿透"],
+            ["直射穿透", "中甲"],
+            ["小角度穿透", "中甲"],
+            ["大角度穿透", "中甲"],
+            ["极端穿透", "无护甲"],
+            ["特殊效果"],
+            ["拆毁值", "10"],
+            ["踉跄力", "10"],
+            ["推力", "10"]
           ]
         }
       ],
@@ -589,7 +685,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["sample_scanner"],
       "source_url": "https://helldivers.wiki.gg/wiki/Sample_Extricator"
     },
@@ -617,7 +713,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": ["sample_extricator"],
       "source_url": "https://helldivers.wiki.gg/wiki/Sample_Scanner"
     },
@@ -643,28 +739,32 @@
           ]
         }
       ],
-      "stats": [
+      "tables": [
         {
-          "name": "爆炸 · 喷射仓眩晕",
-          "name_en": "Explosion Hellpod Stun",
-          "type": "explosion",
-          "groups": [
-            {
-              "label": "范围效果",
-              "rows": [["内圈半径", "2 m"], ["外圈半径", "4 m"], ["冲击波半径", "4 m"]]
-            },
-            {
-              "label": "伤害",
-              "rows": [["伤害元素", "电弧"], ["内圈伤害", "50 电弧"], ["内圈耐久伤害", "50 电弧"], ["外圈伤害", "49 - 0"], ["外圈耐久伤害", "49 - 0"]]
-            },
-            {
-              "label": "穿透",
-              "rows": [["直射穿透", "反坦克 VI"]]
-            },
-            {
-              "label": "范围效果附加",
-              "rows": [["状态", "重度眩晕"], ["状态强度", "100"], ["拆毁值", "40"], ["踉跄力", "50"], ["推力", "0"]]
-            }
+          "title": "详细数据 · 喷射仓眩晕",
+          "title_en": "Explosion Hellpod Stun",
+          "note": "对应 wiki.gg 的 Detailed Statistics 表；单格行为分组标题（原表为跨列 th）。原表 AoE Effect 分组下确有两条相同的 Status / Stun Massive，此处照录。",
+          "headers": ["喷射仓眩晕"],
+          "rows": [
+            ["范围效果"],
+            ["内圈半径", "2 m"],
+            ["外圈半径", "4 m"],
+            ["冲击波半径", "4 m"],
+            ["伤害"],
+            ["伤害元素", "电弧"],
+            ["内圈伤害", "50 电弧"],
+            ["内圈耐久伤害", "50 电弧"],
+            ["外圈伤害", "49 - 0"],
+            ["外圈耐久伤害", "49 - 0"],
+            ["穿透"],
+            ["直射穿透", "反坦克 VI"],
+            ["范围效果附加"],
+            ["状态", "重度眩晕"],
+            ["状态", "重度眩晕"],
+            ["状态强度", "100"],
+            ["拆毁值", "40"],
+            ["踉跄力", "50"],
+            ["推力", "0"]
           ]
         }
       ],
@@ -702,7 +802,7 @@
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Concealed_Insertion"
     },
@@ -716,7 +816,7 @@
       "warbond_page": null,
       "warbond_color": "#B8C4D0",
       "price": null,
-      "price_zh": "待公布",
+      "price_zh": "待发布",
       "description": "For the Helldivers who like to play with fire, we have the Integrated Extinguishers Booster which reduces the time to extinguish flames if you accidentally set your teammates ablaze.",
       "description_zh": "缩短绝地潜兵身上的火焰自动熄灭所需的时间，使其不再需要靠扑倒或卧倒来灭火。",
       "overview_zh": "装备后，任意小队成员着火时的灭火时间都会缩短。",
@@ -737,11 +837,11 @@
         {
           "title": "📌 备注",
           "items": [
-            "官方 wiki 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待公布」。"
+            "wiki.gg 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待发布」。"
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Integrated_Extinguishers"
     },
@@ -755,7 +855,7 @@
       "warbond_page": null,
       "warbond_color": "#B8C4D0",
       "price": null,
-      "price_zh": "待公布",
+      "price_zh": "待发布",
       "description": "Enjoy two free uses of the Expendable Anti-Tank (EAT) Stratagem per mission; that’s enough to grant a full squad one single-use rocket launcher each.",
       "description_zh": "每场任务额外提供两次 EAT-17 一次性反坦克支援武器的免费使用次数，共 4 具发射器，每名绝地潜兵一具。",
       "overview_zh": "装备后，小队每场任务额外获得 2 次 EAT-17 一次性反坦克支援武器的免费使用次数。",
@@ -769,11 +869,11 @@
         {
           "title": "📌 备注",
           "items": [
-            "官方 wiki 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待公布」。"
+            "wiki.gg 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待发布」。"
           ]
         }
       ],
-      "stats": [],
+      "tables": [],
       "related": [],
       "source_url": "https://helldivers.wiki.gg/wiki/Surplus_EAT_Allocation"
     }
