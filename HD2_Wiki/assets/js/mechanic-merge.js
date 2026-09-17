@@ -16,11 +16,15 @@
  *           content_zh（HTML 片段，覆盖主干散文；优先级高于 paragraphs_zh）
  *           tables_zh[]（覆盖该小节的表格；缺省则保留主干表格）
  *           figures_zh[]（覆盖该小节的图片；缺省则保留主干图片）
+ *           fully_translated（可选布尔：true = 中文已完整覆盖本节英文散文，
+ *                             前端不再渲染该小节的「📄 英文原文」<details> 兜底块；
+ *                             缺省 / false 行为不变，仍保留折叠块。见 SCHEMA.md §5.2.2）
  *           subsections_zh[]（与主干 subsections 按同规则递归合并）
  *
  * 合并优先级与回退：
  *   标题     override.title_zh        > trunk.title
  *   散文     override.content_zh      > override.paragraphs_zh > trunk.content(散文部分)
+ *   英文兜底  override.fully_translated === true → 不渲染；否则主干英文散文折进 <details>
  *   表格     override.tables_zh       > trunk.content 内的 <table>（缺省保留，不丢）
  *   图片     override.figures_zh      > trunk.content 内的 <figure>（缺省保留，不丢）
  *   小节     override 按 target_id/id → 主干 id → 标题 → 同层序号 匹配；
@@ -382,7 +386,7 @@ var MechanicMerge = (function () {
   function build(trunk, override, opts) {
     opts = opts || {};
     var zh = isObj(override) ? override : {};
-    var stats = { tables: 0, figures: 0, proseZh: 0, proseTrunk: 0, zhOnly: [], warnings: [] };
+    var stats = { tables: 0, figures: 0, proseZh: 0, proseTrunk: 0, zhOnly: [], warnings: [], fullyTranslated: 0 };
     var zhSections = arr(zh.sections_zh) || [];
     var trunkList = arr(trunk.sections) || [];
 
@@ -408,13 +412,19 @@ var MechanicMerge = (function () {
       var zhInline = hasProseOverride ? extractTables(zhProse) : null;
       if (zhInline) zhProse = zhInline.rest;
 
+      // 该小节是否已由覆盖方声明「整节翻译完成」（见 SCHEMA.md §5.2.2）
+      var fullyTranslated = z.fully_translated === true;
+
       var contentHtml, proseSource, trunkRefHtml = "";
       if (hasProseOverride) {
         contentHtml = zhProse;
         proseSource = "zh";
         // 英文原文兜底：中文散文覆盖时，把该小节「本节自有」的英文散文档折进 <details>，
-        // 保证信息量不因覆盖而消失（表格/图片不在这里重复，它们仍渲染在正文里）
-        if (isTrunk && split.prose.length) trunkRefHtml = split.prose.join("");
+        // 保证信息量不因覆盖而消失（表格/图片不在这里重复，它们仍渲染在正文里）。
+        // 覆盖方写了 fully_translated: true（= 中文已完整覆盖本节英文散文）时不再渲染该兜底块；
+        // 未写该字段的小节行为完全不变，仍保留 <details> 兜底。
+        if (isTrunk && split.prose.length && !fullyTranslated) trunkRefHtml = split.prose.join("");
+        if (fullyTranslated) stats.fullyTranslated += 1;
       } else if (isTrunk) {
         contentHtml = split.prose.join("");
         proseSource = split.prose.length ? "trunk" : "none";

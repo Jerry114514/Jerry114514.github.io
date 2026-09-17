@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.3 · 2026-09-17（v1.3 在 §5.2.2 登记 `fully_translated` 字段：整节翻译完成后不再渲染「📄 英文原文」`<details>` 兜底块；并同步修订 §5.2.3 与 §9 第 5 条）
 > 版本：v1.2 · 2026-09-17（v1.2 登记 §1 图片路径约定、§8 两行新不一致、§9 第 6/7 条：机制页主干图片本地化方案与表格模板图标尺寸问题）
 > 版本：v1.1 · 2026-09-17（v1.1 修订 §5.2：`mechanics/` 从「整篇覆盖」改为「小节级合并」，并重写锚点 id 规则）
 > 适用范围：`HD2_Wiki/data/wiki/zh/` 及其子目录（`blocks/`、`mechanics/`、`fetch_reports/`）下的全部 JSON 数据文件。
@@ -119,7 +120,18 @@ warbond   = item.warbond_zh || item.warbond
 | `tables_zh` | array | 否 | 覆盖该小节的表格。元素为第 6 节表格结构 `{ title, headers, rows, note }`，或 `{ html: "<table>…</table>" }` |
 | `figures_zh` | array | 否 | 覆盖该小节的图片。元素为 `{ html }` 或 `{ src, alt, caption_zh }` |
 | `id` / `target_id` | string | 否 | **显式声明本文对应主干的哪个小节**（值为主干 `id`）。强烈建议逐节书写，这是唯一无歧义的对齐方式 |
+| `fully_translated` | boolean | 否 | **整节翻译完成标记**。`true` = 该小节主干的**英文散文**已被中文完整覆盖，前端**不再**渲染该小节的「📄 英文原文」`<details>` 兜底块；**缺省 / `false` = 行为不变**，仍按 §5.2.3 保留折叠块。语义边界见下 |
 | `subsections_zh` | array | 否 | 子节，元素同本表，可递归 |
+
+**`fully_translated` 语义边界（2026-09-17 登记）**：
+
+1. 它声明的只是**散文**（`content` 里的 `<p>` / `<ul>` / `<ol>` / 模板 `msgbox` 文字等）已被中文覆盖，**不包括**表格与图片——这两类本来就由 §5.2.3 无条件保留，与是否 `fully_translated` 无关。
+2. 它只是**前端渲染开关**，不改变任何合并优先级：`content_zh` / `paragraphs_zh` 仍然照常覆盖主干散文；未被覆盖（本节没有 `content_zh` / `paragraphs_zh`）时该字段**不产生任何效果**（本来也不会渲染 `trunkRefHtml`）。
+3. **必须逐节书写于「覆盖文件」一侧**，且必须是 JSON 布尔 `true`（不是 `"true"`）。主干（`<id>.json`）里不出现该字段。
+4. **只做减法、不做加法**：它为 `true` 时唯一的效果是不渲染折叠块；渲染折叠块与否则完全由它决定，不参与锚点 id、配对、表格/图片保留的任何逻辑。
+5. 使用它的前提是**「主干该节英文散文的全部事实点都已在中文正文里有对应表述」**，写之前必须逐条核对；漏译的内容在标记后将不再出现在页面上。因此它是「译完之后的完工标记」，不是「正在翻译」的开关。
+6. 判定为**不适合译入正文**的内容（英文外部引用、`msgbox` 模板维护提示、wiki 导航模板 Navbox 等）不构成「未覆盖」的反例：只要它们是**该节主干散文的全部残留**，仍可标记为 `true`，但必须在对应数据集的说明或提交说明里逐条写明被舍弃的是什么、为什么。若该节还残留**正文级事实**未译，则**不得**标记。
+7. **`fully_translated` 管不到「图片块」**（2026-09-17 实测补记）：合并引擎把「含 `<img>` 的 `<p>` / `<div>`」整体归入**图片块**（§5.2.3「小节图片」行），图片块**永远渲染在正文里**，不进 `<details>`。因此当主干把**英文散文**放在带行内图标的 `<p>`（如 `Armor_AP4_Icon.png` 夹在句子里）或带图标的 `msgbox` 里时，这段英文既不进折叠块、也不受 `fully_translated` 约束，`fully_translated: true` 后仍会**留在正文**，与新的中文正文形成「同一件事说两遍」。实测 `damage.json` 有 4 处（`Explosion_Damage` / `Examples_of_Damage_to_a_Durable_Part` / `Squishy_Enemy_Parts` / `Status_Strength_.26_Thresholds`）。**处理办法（不改引擎，避免影响其它页）**：在覆盖小节写 `figures_zh: []`（= 该节确认无图片），丢弃这几个「实为散文的图片块」；前提是这些图标承载的语义（如「轻甲穿透 AP2」「无护甲 AV0」）已在中文正文里用文字写出。判定方法与 `fully_translated` 一样：图标的语义必须有中文对应表述。
 
 #### 5.2.3 合并优先级与回退规则
 
@@ -128,7 +140,7 @@ warbond   = item.warbond_zh || item.warbond
 | 文档标题 | `_zh.title_zh` → 主干 `title` → 主干 `title_en` | — |
 | 文档简介 | `_zh.description_zh` → 主干 `description` | — |
 | 小节标题 | 覆盖 `title_zh` → 主干 `title` | 未覆盖则显示英文标题 |
-| 小节散文 | 覆盖 `content_zh` → 覆盖 `paragraphs_zh` → 主干 `content` 的散文块 | 覆盖生效时，主干英文散文**不丢弃**，折进该小节的「📄 英文原文」`<details>` 内 |
+| 小节散文 | 覆盖 `content_zh` → 覆盖 `paragraphs_zh` → 主干 `content` 的散文块 | 覆盖生效时，主干英文散文**不丢弃**，折进该小节的「📄 英文原文」`<details>` 内；**但覆盖小节写了 `fully_translated: true` 时不再渲染该 `<details>`**（见 §5.2.2） |
 | 小节表格 | 覆盖 `tables_zh` → 主干 `content` 内的 `<table>`（含被 `<div>` 包裹的） | **未覆盖必定保留主干表格**；宽表渲染在横向滚动容器内 |
 | 小节图片 | 覆盖 `figures_zh` → 主干 `content` 内的 `<figure>` / 含图容器 | **未覆盖必定保留主干图片** |
 | 小节结构 | 主干 `subsections` 为骨架；覆盖多出的 `subsections_zh` 追加为其父节末尾的子节 | 主干有、覆盖没有的小节 → 整节保持英文主干内容（含表格/图片） |
@@ -364,6 +376,8 @@ warbond   = item.warbond_zh || item.warbond
    - **唯一例外（2026-09-17 登记）**：wiki 模板渲染出的**完全相同的重复行**（已确认为模板 bug，非数据）允许删除，删除后 `tables[].note` 中不留「原页面此行重复」一类说明。已按此修订 `boosters.json` 的 `stun_pods`、`firebomb_hellpods` 各 1 行 `Status`。
 4. **数据缺失用 `null`/空数组表达**，不用「暂无」「待补充」等文案占位（`price_zh` 的 `待发布` 是展示文案字段，不是数据字段）。
 5. **中文化不得减少信息量（2026-09-17 登记）**：`_zh` 覆盖只允许替换**散文**；主干的表格与图片一律保留（覆盖未提供 `tables_zh` / `figures_zh` 时）。覆盖生效的英文散文不删除，由前端折进该小节的「📄 英文原文」`<details>`。校验时对主干每个 `content` 抽 20 字符滑窗，必须 100% 出现在合并结果里。
+   - **例外（2026-09-17 登记，v1.3）**：覆盖小节显式写了 `fully_translated: true`（= 该节英文散文已逐条核对并完整译入中文正文）时，前端**不再渲染**该节的 `<details>` 兜底块（见 §5.2.2）。此时上面那条「20 字符滑窗必须 100% 命中」的校验**改为**：主干该节散文的**事实点**必须逐条能在中文正文中找到对应表述（不再要求英文字面出现）。判定为不适合译入正文的残留（英文外部引用、`msgbox` 维护提示、Navbox 导航模板）应在提交说明里逐条列出。
+   - 实测存档（2026-09-17，仅 `damage` 页）：`damage_zh.json` 27 个小节中 26 个标记 `fully_translated: true`，`References` 节刻意不标记（英文引用 + Navbox 保留兜底），页面 `<details class="mg-ref">` 由 27 个降为 1 个；表格仍 7 张、锚点 27/27 唯一、console error 0、375 px 无横向溢出。
 6. **机制页主干图片一律本地化（2026-09-17 登记，方案 1）**：`mechanics/<id>.json` 主干 `content` 内的 `<img src="/images/<文件名>?<hash>">` 一律下载到 `HD2_Wiki/assets/mechanics/<id>/<文件名>`（丢掉 `?hash`），并把 `src` 改写为**相对 HTML 页所在目录**的 `./assets/mechanics/<id>/<文件名>`。
    - **不采用**「统一改写为 `https://helldivers.wiki.gg/images/…` 外链」的方案：本站其它图标（`boosters` / `warbonds` / `armor` 等）都是站内文件（第 1 节），外链会让机制页离线不可看、依赖第三方可用性与限流，并与全站约定不一致。
    - 下载必须**串行 + 间隔**（wiki.gg 会 429），并逐个校验：文件 >200 B 且魔数/内容为真实图片（PNG `89504e47…`、SVG 含 `<svg`），不是 HTML 错误体。
