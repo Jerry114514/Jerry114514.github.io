@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -43,6 +43,10 @@
     .detail-icon .ph { font-size: 3rem; color: var(--text-mute); }
 
     .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
+
+    .title-block .unlock a { color: var(--blue); text-decoration: none; }
+
+    .title-block .unlock a:hover { color: var(--yellow); text-decoration: underline; }
 
     .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
@@ -163,6 +167,27 @@
   <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
+
+    /* 所属战争债券反查：由 warbonds.json 的 reward_refs 建 武器 id → 债券 的映射（拿不到就不显示） */
+    var WB_MAP = {};
+
+    async function loadWarbondMap() {
+      try {
+        var r = await fetch("./data/wiki/zh/warbonds.json");
+        if (!r.ok) return;
+        var d = await r.json();
+        (d.warbonds || []).forEach(function(w) {
+          var refs = w.reward_refs || {};
+          (w.tables || []).forEach(function(t) {
+            (t.rows || []).forEach(function(row) {
+              var ref = refs[row[0]];
+              if (ref && ref.kind === "weapon") WB_MAP[ref.id] = { wid: w.id, name: w.name, page: t.title };
+            });
+          });
+        });
+      } catch (e) { /* 忽略 */ }
+    }
+
     async function loadDetail() {
       var id = WikiRouter.param("id");
       var layout = document.getElementById("detail-layout");
@@ -177,6 +202,7 @@
         } catch (_) { /* 忽略：术语表缺失时回退原值 */ }
         var w = (d.weapons || []).find(function(x) { return x.id === id; });
         if (!w) { layout.innerHTML = '<div class="empty">未找到该武器</div>'; return; }
+        await loadWarbondMap();
         renderDetail(w);
       } catch(e) {
         console.error("[Weapon] 加载失败:", e);
@@ -202,6 +228,9 @@
           '<div class="v-unlock">🔓 ' + esc(v.unlock || "") + '</div></a>';
       }).join("") || '<div class="empty" style="padding:12px;">暂无变体</div>';
       var tips = (w.tips || []).map(function(t, i) { return '<li>' + esc(t) + '</li>'; }).join("") || '<li>暂无使用策略</li>';
+      var wb = WB_MAP[w.id];
+      var wbLine = wb ? '<div class="unlock">🎖️ 所属战争债券：<a href="warbond.html?id=' + encodeURIComponent(wb.wid) + '">' + esc(wb.name) + '</a>' +
+        (wb.page ? ' <span style="color:var(--text-mute);font-size:0.78rem;">' + esc(wb.page) + '</span>' : '') + '</div>' : '';
 
       layout.innerHTML =
         '<div class="main-content">' +
@@ -210,6 +239,7 @@
             '<div class="name">' + esc(w.name) + '</div>' +
             '<div class="name-en">' + esc(w.name_en) + '</div>' +
             '<div class="unlock">⭐ ' + esc(w.unlock_zh || w.unlock || "") + '</div>' +
+            wbLine +
             '<div class="desc">' + esc(w.description_zh || w.description || "") + '</div>' +
             (w.lore ? '<div class="lore">' + esc(w.lore) + '</div>' : '') +
           '</div>' +

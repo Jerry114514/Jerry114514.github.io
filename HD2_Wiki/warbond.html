@@ -104,6 +104,14 @@
     .data-table tbody tr.group td { background: var(--stripe-warn); color: var(--yellow);
       font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em; }
 
+    /* 逐页奖励里可跳站内详情页的条目（继承站点链接配色） */
+    .rw-link { color: var(--blue); text-decoration: none; border-bottom: 1px dotted var(--line-2); }
+
+    .rw-link:hover { color: var(--yellow); border-bottom-color: var(--yellow); }
+
+    .rw-link .rw-en { display: block; font-size: 0.66rem; color: var(--text-mute); border: none; }
+
+
     .reward-legend { font-size: 0.72rem; color: var(--text-mute); line-height: 1.7; margin-top: 8px; }
 
 
@@ -164,6 +172,8 @@
   <script>
     "use strict";
     var ALL_WARBONDS = [];
+    var REWARD_REFS = {};                                   /* 当前债券的 reward_refs（奖励英文名 → 站内引用） */
+    var REF_NAMES = { weapon: {}, stratagem: {} };           /* 站内既有中文译名：id → name */
 
     var TYPE_ZH = { "Standard": "标准", "Premium": "高级", "Legendary": "传奇" };
 
@@ -173,6 +183,31 @@
       if (t === "Standard") return "tag tag-std";
       if (t === "Legendary") return "tag tag-leg";
       return "tag tag-prem";
+    }
+
+    /* 站内既有中文译名（weapons.json / stratagems_full.json 的 name），只取本页需要的一侧；
+       带默认缓存（不加 ?t=），失败时静默回退为纯文本，不阻塞页面 */
+    async function loadRefNames(w) {
+      var refs = w.reward_refs || {};
+      var need = { weapon: false, stratagem: false };
+      Object.keys(refs).forEach(function(k) {
+        var r = refs[k];
+        if (r && need[r.kind] === false) need[r.kind] = true;
+      });
+      var jobs = [];
+      if (need.weapon) {
+        jobs.push(fetch("./data/wiki/zh/weapons.json")
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) { ((d && d.weapons) || []).forEach(function(x) { REF_NAMES.weapon[x.id] = x.name; }); })
+          .catch(function() {}));
+      }
+      if (need.stratagem) {
+        jobs.push(fetch("./data/wiki/zh/stratagems_full.json")
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) { ((d && d.stratagems) || []).forEach(function(x) { REF_NAMES.stratagem[x.id] = x.name; }); })
+          .catch(function() {}));
+      }
+      if (jobs.length) await Promise.all(jobs);
     }
 
     async function loadDetail() {
@@ -191,6 +226,7 @@
             '<br><br><a class="variant-card" style="max-width:320px;margin:0 auto;" href="warbonds.html">◀ 返回战争债券</a></div>';
           return;
         }
+        await loadRefNames(w);
         renderDetail(w);
       } catch (e) {
         console.error("[Warbond] 加载失败:", e);
@@ -201,6 +237,7 @@
 
     function renderDetail(w) {
       var layout = document.getElementById("detail-layout");
+      REWARD_REFS = w.reward_refs || {};
       var unreleased = w.release_status === "unreleased";
       var badge = unreleased ? '<span class="released-badge">未发布</span>' : "";
       var tbd = w.name_zh_tbd ? '<span class="tbd-badge">译名待定</span>' : "";
@@ -236,7 +273,8 @@
             html += '<tr class="group"><td colspan="' + span + '">' + esc(cells.join(" ")) + '</td></tr>';
           } else {
             html += '<tr>' + cells.map(function(c, i) {
-              return '<td' + (i === 0 ? ' class="k"' : '') + '>' + esc(c) + '</td>';
+              if (i === 0) return '<td class="k">' + rewardCell(c) + '</td>';
+              return '<td>' + esc(c) + '</td>';
             }).join("") + '</tr>';
           }
         });
@@ -245,7 +283,8 @@
       }).join("");
       var tablesHtml = tableBlocks
         ? '<div class="card"><h2>📊 逐页奖励<span class="scroll-hint">宽表可横向滚动 →</span></h2>' + tableBlocks +
-          '<div class="reward-legend">价格列取自 wiki.gg 渲染页；表内显示「—」表示该页未标注单个奖励的勋章价格（本站不推算）。</div></div>'
+          '<div class="reward-legend">价格列取自 wiki.gg 渲染页；表内显示「—」表示该页未标注单个奖励的勋章价格（本站不推算）。<br>' +
+          '奖励名带下划线的是站内已有独立页面的武器／战略配备，点击可跳转对应详情页；小字为该条在 wiki.gg 的原文奖励名。</div></div>'
         : "";
 
       var otherCards = other.slice(0, 8).map(function(o) {
@@ -278,7 +317,7 @@
               '<div class="v-desc">战争债券总览 · 共 ' + ALL_WARBONDS.length + ' 个</div></a>' +
             '<a class="variant-card" href="warbonds.html#' + encodeURIComponent(w.id) + '">' +
               '<div class="v-name">🔖 在总览页中定位本债券</div>' +
-              '<div class="v-desc">打开总览页并切换到该选项卡</div></a>' +
+              '<div class="v-desc">打开总览页并定位到该债券卡片</div></a>' +
             (w.source_url ? '<a class="variant-card" href="' + esc(w.source_url) + '" target="_blank" rel="noopener noreferrer">' +
               '<div class="v-name">来源：wiki.gg ↗</div>' +
               '<div class="v-desc">' + esc(w.name_en) + ' - Helldivers Wiki</div></a>' : '') +
@@ -305,6 +344,17 @@
       var m = 1;
       (rows || []).forEach(function(r) { if (r && r.length > m) m = r.length; });
       return m;
+    }
+
+    /* 奖励名 → 站内条目：命中 reward_refs 的渲染成 weapon.html / stratagem.html 链接，
+       链接文字用站内既有中文译名（解析不到时回退原文奖励名）；未命中的保持纯文本 */
+    function rewardCell(name) {
+      var ref = REWARD_REFS[name];
+      var page = ref ? (ref.kind === "weapon" ? "weapon.html?id=" : (ref.kind === "stratagem" ? "stratagem.html?id=" : "")) : "";
+      if (!page) return esc(name);
+      var zh = (REF_NAMES[ref.kind] || {})[ref.id];
+      return '<a class="rw-link" href="' + page + encodeURIComponent(ref.id) + '" title="' + esc(name) + '">' +
+        esc(zh || name) + (zh ? '<span class="rw-en">' + esc(name) + '</span>' : '') + '</a>';
     }
 
     /* 破图兜底：把 <img> 换成同尺寸的占位符，避免出现死图 */

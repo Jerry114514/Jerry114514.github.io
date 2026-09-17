@@ -185,10 +185,11 @@ warbond   = item.warbond_zh || item.warbond
 | `pages` | number | 是 | 债券总页数 |
 | `credit_claim` | number | 是 | 债券内含的超级点数总额；`0` 表示确认无 |
 | `credit_claim_zh` | string | 是 | 上者的展示文案（`无` / `超级点数 ×300`） |
-| `name_zh_tbd` | boolean | 是 | **译名待定标记**。`true` = 站内与官方中文均无既有译法，`name` 保留英文。前端据此渲染「译名待定」徽章 |
-| `intro_zh` | string | 是 | 中文简介（详情页标题卡与总览页选项卡正文） |
+| `name_zh_tbd` | boolean | 是 | **译名待定标记**。`true` = 站内与官方中文均无既有译法，`name` 保留英文。前端据此渲染「译名待定」徽章。**2026-09-17 补译 9 条后，25 条全部为 `false`** |
+| `intro_zh` | string | 是 | 中文简介（详情页标题卡；总览页仅用于搜索匹配，不再直接展示） |
 | `overview_zh` | string | 是 | 中文概述（详情页「📖 简介」卡片）。含页数与勋章价格区间 |
 | `tables` | array | 是 | **逐页奖励表**：一个元素 = 债券的一页。结构见下 |
+| `reward_refs` | object | 否 | **奖励 → 站内条目引用表**（2026-09-17 登记）。键 = `tables[].rows[i][0]`，值 = `{ kind, id }`；只登记能唯一匹配上 `weapons.json` / `stratagems_full.json` 的奖励。结构见下 |
 
 **`tables[]` 元素结构**：沿用第 6 节的表格结构（`title` / `title_en` / `note` / `headers` / `rows`），并约定：
 
@@ -201,6 +202,20 @@ warbond   = item.warbond_zh || item.warbond
 | 单价缺失 | wiki 页面未印出单个奖励的勋章价格时写 `"—"`，**不推算、不补算**。目前仅 `Ironclad_Democracy_Premium_Warbond` 等 4 个使用手工 wikitable 的债券页面如此 |
 | 奖励类型 | 4 个使用 wikitable 的债券页带 Type 列，直接照录；其余 21 个使用 `{{Acquisitions Page}}` 网格模板、**渲染页无 Type 列**，类型由奖励渲染图文件名推断（`… Primary Render` → 主武器 等），推断规则与回退桶在抓取报告中登记 |
 | 行序 | 网格模板按渲染页的 `grid-row` / `grid-column` 还原为阅读顺序；wikitable 保持原表行序 |
+
+**`reward_refs` 结构（2026-09-17 登记）**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| 键 | string | — | 奖励英文名，必须与 `tables[].rows[i][0]` **逐字一致**（不做归一化，按原文匹配） |
+| `kind` | `"weapon"` \| `"stratagem"` | 是 | 目标数据集：`weapons.json` / `stratagems_full.json` |
+| `id` | string | 是 | 目标条目的 `id`；前端拼成 `weapon.html?id=<id>` / `stratagem.html?id=<id>` |
+
+- **匹配规则（按序，命中即止）**：① 奖励英文名与站内 `name_en` 精确相同；② 去掉标点/空格、转小写后与 `name_en` 相同；③ 同样归一化后与站内 `name`（中文）相同；④ 归一化后一方完整包含另一方、且候选唯一（当前仅 4 条：`Directional Shield`、`Flame Sentry`、`Anti-Tank Emplacement`、`Portable Hellbomb`）。
+- **匹配不上一律不登记**（保持纯文本），不猜、不造 `id`。跨数据集同时命中（歧义）也不登记。
+- 「中文译名一律不冗余写进本文件」：前端在 `warbond.html` 实时从 `weapons.json` / `stratagems_full.json` 的 `name` 解析，保证译名单一来源；解析不到时回退显示原文奖励名。
+- `rows` 元素**恒为 3 个**（第 6 节表格结构不变），引用只能走本字段，**禁止**往 `rows[i]` 追加第 4 个元素（会破坏第 6 节的列数判定）。
+- 键是奖励英文名，若日后重抓导致奖励文案变动，须同步改键名。
 
 > 顶层 `total` 必须等于 `warbonds` 数组长度。图标为 `./assets/warbonds/<wiki File 名>.png`（本站下载，不热链）。
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -45,6 +45,10 @@
     .detail-icon .ph { font-size: 3rem; color: var(--text-mute); }
 
     .title-block .meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px; }
+
+    .title-block .meta a { color: var(--blue); text-decoration: none; }
+
+    .title-block .meta a:hover { color: var(--yellow); text-decoration: underline; }
 
     .title-block .desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
@@ -163,6 +167,27 @@
   <script src="./assets/js/wiki-router.js"></script>
   <script>
     "use strict";
+
+    /* 所属战争债券反查：由 warbonds.json 的 reward_refs 建 战略配备 id → 债券 的映射（拿不到就不显示） */
+    var WB_MAP = {};
+
+    async function loadWarbondMap() {
+      try {
+        var r = await fetch("./data/wiki/zh/warbonds.json");
+        if (!r.ok) return;
+        var d = await r.json();
+        (d.warbonds || []).forEach(function(w) {
+          var refs = w.reward_refs || {};
+          (w.tables || []).forEach(function(t) {
+            (t.rows || []).forEach(function(row) {
+              var ref = refs[row[0]];
+              if (ref && ref.kind === "stratagem") WB_MAP[ref.id] = { wid: w.id, name: w.name, page: t.title };
+            });
+          });
+        });
+      } catch (e) { /* 忽略 */ }
+    }
+
     var ARROW = {
       "U": '<img src="assets/arrows/up.svg" alt="↑" class="arrow-icon">',
       "D": '<img src="assets/arrows/down.svg" alt="↓" class="arrow-icon">',
@@ -192,6 +217,7 @@
         } catch (_) { /* 忽略：术语表缺失时回退原值 */ }
         var s = (d.stratagems || []).find(function(x) { return x.id === id; });
         if (!s) { layout.innerHTML = '<div class="empty">未找到该战略配备</div>'; return; }
+        await loadWarbondMap();
         renderDetail(s);
       } catch(e) {
         console.error("[Strat] 加载失败:", e);
@@ -211,6 +237,9 @@
       var statItems = [
         ["伤害", sf[0], "⚔️"], ["射速", sf[1], "🎯"], ["实用性", sf[2], "🛠️"], ["机动性", sf[3], "🏃"]
       ];
+      var wb = WB_MAP[s.id];
+      var wbLine = wb ? '<div class="meta">🎖️ 所属战争债券：<a href="warbond.html?id=' + encodeURIComponent(wb.wid) + '">' + esc(wb.name) + '</a>' +
+        (wb.page ? ' <span style="color:var(--text-mute);font-size:0.78rem;">' + esc(wb.page) + '</span>' : '') + '</div>' : '';
 
       layout.innerHTML =
         '<div class="main-content">' +
@@ -222,6 +251,7 @@
             '<div class="meta"><span class="tag ' + tagOf(catLabel) + '">' + esc(catLabel) + '</span>' +
               (s.source ? '<span>📦 ' + esc(dsTranslate(s.source)) + '</span>' : '') + '</div>' +
             '<div class="meta">呼叫代码：' + renderCode(code) + '</div>' +
+            wbLine +
             (s.description ? '<div class="desc">' + esc(s.description_zh || s.description) + '</div>' : '') +
           '</div>' +
           '<div class="card">' +

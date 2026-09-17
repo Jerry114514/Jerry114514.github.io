@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>战争债券总览 - 绝地潜兵2 中文维基</title>
-  <meta name="description" content="绝地潜兵2 战争债券总览 - Warbonds · 标准 / 高级 / 传奇 三类债券 · 逐个债券的逐页奖励一览" />
+  <meta name="description" content="绝地潜兵2 战争债券总览 - Warbonds · 标准 / 高级 / 传奇 三类债券封面一览 · 点击封面进入各债券逐页奖励" />
   <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
   <style>
     .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
@@ -27,120 +27,81 @@
     .wb-intro .src { font-size: 0.7rem; color: var(--text-mute); }
 
 
+    /* 筛选条计数（复用 wiki-base.css 的 .wiki-toolbar .filter-bar 键帽按钮） */
+    .filter-bar button .c { font-family: var(--font-mono); font-size: 0.72rem; margin-left: 5px; color: var(--text-mute); }
+
+    .filter-bar button.active .c { color: #000; }
+
+
     .wb-shell { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; width: 100%; }
 
-    /* ── 选项卡条：复用 wiki-base 的 .filter-bar 键帽按钮样式 ── */
-    .wb-tabbar { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0 14px; }
+    /* ── 分组：一个小标题 + 封面大图卡片网格（对齐 wiki List of Warbonds 的信息序） ── */
+    .wb-group { margin-bottom: 26px; }
 
-    .wb-tab { padding: 6px 12px; border: 1px solid var(--line-2); border-top: 2px solid var(--brass);
-      background: var(--panel-2); color: var(--text-dim); font-size: 0.78rem; cursor: pointer;
-      font-weight: 700; letter-spacing: .04em; font-family: inherit; }
+    .wb-group:last-of-type { margin-bottom: 0; }
 
-    .wb-tab:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+    .wb-group-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+      font-size: 1rem; color: var(--yellow); padding: 8px 12px;
+      background: var(--stripe); border: 1px solid var(--border); border-left: 4px solid var(--brass); }
 
-    .wb-tab[aria-selected="true"] { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
+    .wb-group-title .gt-en { font-size: 0.72rem; font-weight: 400; color: var(--text-mute); letter-spacing: 0.08em; }
 
-    .wb-tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+    .wb-group-title .gt-count { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); font-weight: 400; }
 
-    .wb-tab .t-dot { display: inline-block; width: 6px; height: 6px; margin-right: 6px; vertical-align: middle; }
+    .wb-grid { display: grid; width: 100%; margin-top: 12px; gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 
-    .wb-tab[aria-selected="true"] .t-dot { background: #000 !important; }
+    .wb-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      text-decoration: none; color: inherit; transition: transform 0.2s ease, border-color 0.2s ease; }
 
+    .wb-card:hover { transform: translateY(-4px); border-color: var(--yellow); }
 
-    .wb-panel { background: var(--bg-card); border: 1px solid var(--border); padding: 18px 20px; }
+    .wb-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-    .wb-panel:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .wb-cover { display: flex; align-items: center; justify-content: center; width: 100%;
+      aspect-ratio: 2 / 1; padding: 6px; background: rgba(255,255,255,0.04); border-bottom: 1px solid var(--border); }
 
-    .wb-head { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+    .wb-cover img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-    .wb-cover { flex: none; width: 210px; max-width: 100%; display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--line-2); padding: 8px; }
+    .wb-cover .ph { font-size: 2.4rem; color: var(--text-mute); }
 
-    .wb-cover img { max-width: 100%; max-height: 130px; object-fit: contain; }
+    .wb-body { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 10px 12px; text-align: center; }
 
-    .wb-cover .ph { font-size: 2.6rem; color: var(--text-mute); }
+    .wb-name { font-size: 0.92rem; color: var(--text); font-weight: 600; line-height: 1.35; }
 
-    .wb-head-main { flex: 1; min-width: 240px; }
+    .wb-card:hover .wb-name { color: var(--yellow); }
 
-    .wb-head-main .w-name { font-size: 1.3rem; color: var(--text); }
+    .wb-en { font-size: 0.7rem; color: var(--text-mute); line-height: 1.35; }
 
-    .wb-head-main .w-name-en { font-size: 0.85rem; color: var(--text-mute); margin: 2px 0 8px; }
+    .wb-meta { margin-top: 4px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); }
 
-    .wb-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-
-    .wb-tags .tag { display: inline-block; }
-
-    .wb-tags .tag-std { background: var(--yellow); color: #000; border-color: var(--yellow); }
-
-    .wb-tags .tag-prem { background: var(--blue); color: #fff; border-color: var(--blue); }
-
-    .wb-tags .tag-leg { background: var(--stripe); border-color: var(--brass); color: var(--yellow); }
-
-    .wb-tags .tag-unrel { background: var(--stripe-warn); border-color: var(--warn); color: #FFB59E; }
-
-    .wb-tags .tag-tbd { background: transparent; border-color: var(--line-2); color: var(--text-mute); }
-
-    .wb-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.75; }
-
-    .wb-meta { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 12px; }
-
-    .wb-meta .m { border: 1px solid var(--border); border-left: 3px solid var(--brass); background: var(--panel-2); padding: 7px 10px; }
-
-    .wb-meta .m .k { display: block; font-size: 0.66rem; color: var(--text-mute); letter-spacing: .06em; }
-
-    .wb-meta .m .v { display: block; font-size: 0.85rem; color: var(--text); margin-top: 2px; }
-
-    .wb-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-
-    .wb-actions a { display: inline-block; padding: 7px 14px; border: 1px solid var(--line-2); border-top: 2px solid var(--brass);
-      background: var(--panel-2); color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; letter-spacing: .05em; }
-
-    .wb-actions a:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
-
-    .wb-actions a.primary { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
-
-    .wb-actions a.primary:hover { background: var(--yellow-2); color: #000; }
-
-
-    .wb-pages { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-
-    .wb-page { border: 1px solid var(--border); background: var(--panel-2); }
-
-    .wb-page h4 { font-size: 0.78rem; color: var(--yellow); padding: 7px 10px; border-bottom: 1px solid var(--border);
-      letter-spacing: .06em; background: var(--stripe); }
-
-    .wb-page ul { padding: 8px 10px; }
-
-    .wb-page li { font-size: 0.76rem; color: var(--text-dim); line-height: 1.7; display: flex; justify-content: space-between; gap: 8px; }
-
-    .wb-page li .it { min-width: 0; }
-
-    .wb-page li .tp { color: var(--text-mute); font-size: 0.68rem; }
-
-    .wb-page li .ct { color: var(--yellow); font-family: var(--font-mono); font-size: 0.72rem; white-space: nowrap; }
-
-    .wb-page li .ct.tbd { color: var(--text-mute); }
+    /* 从详情页「在总览页中定位本债券」跳转进来的高亮 */
+    .wb-card.is-target { border-color: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow); }
 
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
 
     @media (max-width: 768px) {
+      .wiki-header { padding: 26px 14px 16px; }
       .wb-intro { padding: 14px 12px 0; }
       .wb-shell { padding: 12px 12px 32px; }
-      .wb-panel { padding: 14px 12px; }
-      .wb-pages { grid-template-columns: 1fr; }
-      .wb-tabbar { gap: 5px; }
-      .wb-tab { padding: 5px 9px; font-size: 0.72rem; }
-      .wb-cover { width: 100%; }
+      .wb-group { margin-bottom: 20px; }
+      .wb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+      .wb-cover { padding: 4px; }
+      .wb-body { padding: 8px 7px 10px; }
+      .wb-name { font-size: 0.82rem; }
+      .wb-en { font-size: 0.64rem; }
+      .wb-meta { font-size: 0.62rem; }
     }
   </style>
   <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
 </head>
 <body>
   <header class="wiki-header">
-    <h1>🎖️ 战争债券总览</h1>
-    <p>共 <span id="total-count">25</span> 个战争债券（Warbonds）· 标准 / 高级 / 传奇 · 点击选项卡查看债券内容</p>
+    <h1>🎖️ 战争债券</h1>
+    <p>全部 <span id="total-count">25</span> 个战争债券，按发行时间排序</p>
     <a class="back" href="wiki.html">◀ 返回维基首页</a>
   </header>
 
@@ -148,12 +109,19 @@
     <div class="box">
       <h2>战争债券 / Warbonds</h2>
       <p>战争债券是《绝地潜兵2》的奖励轨道，在采购中心内使用勋章逐页解锁武器、战略配备、强化资源与外观。标准债券免费开放；高级债券与传奇债券分别需要 1,000 与 1,500 超级点数解锁。战争债券不会下架，可以按自己的节奏推进。</p>
-      <p class="src">资料整理自 wiki.gg 的 Warbonds 与各债券页面 · 译名以本站既有译法为准，无既有译法者保留英文并标注「译名待定」</p>
+      <p class="src">资料整理自 wiki.gg 的 Warbonds 与各债券页面 · 译名以本站既有译法为准 · 逐页奖励与武器／战略配备的站内链接见各债券详情页</p>
     </div>
   </section>
 
   <div class="wiki-toolbar">
-    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索战争债券名称或奖励…（支持中文/英文）" oninput="filterTabs()"></label>
+    <div class="filter-bar" id="type-filter" role="group" aria-label="按类型筛选战争债券">
+      <button type="button" class="active" data-type="all" aria-pressed="true">全部<span class="c" data-count="all">25</span></button>
+      <button type="button" data-type="Standard" aria-pressed="false">标准<span class="c" data-count="Standard">0</span></button>
+      <button type="button" data-type="Premium" aria-pressed="false">高级<span class="c" data-count="Premium">0</span></button>
+      <button type="button" data-type="Legendary" aria-pressed="false">传奇<span class="c" data-count="Legendary">0</span></button>
+    </div>
+    <span class="wt-divider"></span>
+    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索战争债券名称或奖励…（支持中文/英文）" oninput="applyFilter()"></label>
     <span class="wt-count" id="result-count">25 / 25</span>
   </div>
 
@@ -167,22 +135,48 @@
     "use strict";
 
     var WARBONDS = [];
+    var BY_ID = {};
     var TYPE_ZH = { "Standard": "标准", "Premium": "高级", "Legendary": "传奇" };
-    var activeId = null;
+    var TYPE_ORDER = ["Standard", "Premium", "Legendary"];
+    var activeType = "all";
+    var targetId = "";
 
     function typeLabel(t) { return TYPE_ZH[t] || t || "—"; }
 
-    function typeClass(t) {
+    function typeTagClass(t) {
       if (t === "Standard") return "tag tag-std";
       if (t === "Legendary") return "tag tag-leg";
       return "tag tag-prem";
     }
 
+    /* 分组小标题左侧色条（与详情页徽章同色系） */
+    function typeAccent(t) {
+      if (t === "Standard") return "var(--yellow)";
+      if (t === "Legendary") return "var(--brass)";
+      return "var(--blue)";
+    }
+
+    /* 破图兜底：把 <img> 换成同尺寸的占位符，避免出现死图 */
     function phIcon(img) {
       return '<span class="ph">' + (img.getAttribute("data-ph") || "🎖️") + '</span>';
     }
 
     function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    function byDate(a, b) {
+      var da = a.release_date || "9999-12-31", db = b.release_date || "9999-12-31";
+      if (da === db) return 0;
+      return da < db ? -1 : 1;
+    }
+
+    /* 搜索文本：名称 + 简介 + 逐页奖励名（含已加站内引用的奖励） */
+    function haystack(w) {
+      var parts = [w.name, w.name_en, w.intro_zh, w.overview_zh, w.price_zh];
+      (w.tables || []).forEach(function(t) {
+        (t.rows || []).forEach(function(r) { parts.push((r || []).join(" ")); });
+      });
+      return parts.join(" ").toLowerCase();
+    }
 
     async function loadAll() {
       var shell = document.getElementById("wb-shell");
@@ -190,159 +184,122 @@
         var r = await fetch("./data/wiki/zh/warbonds.json?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
-        WARBONDS = d.warbonds || [];
+        WARBONDS = (d.warbonds || []).slice().sort(byDate);
         if (!WARBONDS.length) throw new Error("空数据集");
+        WARBONDS.forEach(function(w) { BY_ID[w.id] = w; });
         render();
       } catch (e) {
         console.error("[Warbonds] 加载失败:", e);
         shell.innerHTML = '<div class="empty">⚠️ 战争债券数据加载失败<br><br>' +
-          '<a class="wb-actions" href="wiki.html" style="color:var(--yellow);">◀ 返回维基首页</a></div>';
+          '<a href="wiki.html" style="color:var(--yellow);">◀ 返回维基首页</a></div>';
         return;
       }
       var tc = document.getElementById("total-count");
       if (tc) tc.textContent = WARBONDS.length;
-      filterTabs();
+      applyHash();
+      applyFilter();
     }
 
     function render() {
       var shell = document.getElementById("wb-shell");
-      var hash = decodeURIComponent((location.hash || "").replace(/^#/, ""));
-      var initial = WARBONDS.some(function(w) { return w.id === hash; }) ? hash : WARBONDS[0].id;
-
-      var tabs = WARBONDS.map(function(w) {
-        var color = w.type === "Standard" ? "#FFB000" : (w.type === "Legendary" ? "#C8862A" : "#3B82F6");
-        return '<button class="wb-tab" role="tab" type="button" id="tab-' + esc(w.id) + '"' +
-          ' aria-selected="false" aria-controls="panel-' + esc(w.id) + '" tabindex="-1" data-id="' + esc(w.id) + '">' +
-          '<span class="t-dot" style="background:' + color + '"></span>' + esc(w.name) + '</button>';
-      }).join("");
-
-      var panels = WARBONDS.map(function(w) { return panelHtml(w); }).join("");
-
-      shell.innerHTML =
-        '<div class="wb-tabbar" role="tablist" aria-label="战争债券选项卡">' + tabs + '</div>' +
-        '<div id="wb-empty" class="empty" hidden>没有匹配的战争债券</div>' +
-        '<div id="wb-panels">' + panels + '</div>';
-
-      Array.prototype.forEach.call(shell.querySelectorAll(".wb-tab"), function(btn) {
-        btn.addEventListener("click", function() { selectTab(btn.getAttribute("data-id"), true); });
-        btn.addEventListener("keydown", onTabKey);
+      var counts = { all: WARBONDS.length, Standard: 0, Premium: 0, Legendary: 0 };
+      WARBONDS.forEach(function(w) { if (counts[w.type] != null) counts[w.type]++; });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function(el) {
+        var k = el.getAttribute("data-count");
+        if (counts[k] != null) el.textContent = counts[k];
       });
-      selectTab(initial, false);
+
+      var html = "";
+      TYPE_ORDER.forEach(function(t) {
+        var group = WARBONDS.filter(function(w) { return w.type === t; });
+        if (!group.length) return;
+        html += '<section class="wb-group" id="group-' + t.toLowerCase() + '" data-type="' + t + '">' +
+          '<h2 class="wb-group-title" style="border-left-color:' + typeAccent(t) + '">' +
+            '<span class="gt-zh">' + esc(typeLabel(t)) + '债券</span>' +
+            '<span class="gt-en">' + t + '</span>' +
+            '<span class="gt-count">' + group.length + ' 个</span>' +
+          '</h2>' +
+          '<div class="wb-grid">' + group.map(cardHtml).join("") + '</div>' +
+        '</section>';
+      });
+      shell.innerHTML = html + '<div id="wb-empty" class="empty" hidden>没有匹配的战争债券</div>';
     }
 
-    function onTabKey(ev) {
-      var keys = { ArrowRight: 1, ArrowLeft: -1, Home: "first", End: "last" };
-      if (!(ev.key in keys)) return;
-      ev.preventDefault();
-      var tabs = Array.prototype.slice.call(document.querySelectorAll(".wb-tab")).filter(function(b) { return b.style.display !== "none"; });
-      var cur = tabs.indexOf(ev.target);
-      var next;
-      if (keys[ev.key] === "first") next = 0;
-      else if (keys[ev.key] === "last") next = tabs.length - 1;
-      else next = (cur + keys[ev.key] + tabs.length) % tabs.length;
-      if (tabs[next]) { selectTab(tabs[next].getAttribute("data-id"), true); tabs[next].focus(); }
-    }
-
-    function selectTab(id, scroll) {
-      var w = WARBONDS.find(function(x) { return x.id === id; });
-      if (!w) return;
-      activeId = id;
-      Array.prototype.forEach.call(document.querySelectorAll(".wb-tab"), function(b) {
-        var on = b.getAttribute("data-id") === id;
-        b.setAttribute("aria-selected", on ? "true" : "false");
-        b.tabIndex = on ? 0 : -1;
-      });
-      Array.prototype.forEach.call(document.querySelectorAll(".wb-panel"), function(p) {
-        p.hidden = p.id !== ("panel-" + id);
-      });
-      if (history.replaceState) history.replaceState(null, "", "#" + id);
-      if (scroll) {
-        var bar = document.querySelector(".wb-tabbar");
-        if (bar && bar.scrollIntoView) bar.scrollIntoView({ block: "start", behavior: "smooth" });
-      }
-    }
-
-    function panelHtml(w) {
+    function cardHtml(w) {
       var unreleased = w.release_status === "unreleased";
-      var tags = ['<span class="' + typeClass(w.type) + '">' + esc(typeLabel(w.type)) + '债券</span>',
-                  '<span class="tag">' + esc(w.price_zh || "—") + '</span>',
-                  '<span class="tag">' + esc(w.release_date || "—") + ' 发行</span>'];
-      if (unreleased) tags.push('<span class="tag tag-unrel">未发布</span>');
-      if (w.name_zh_tbd) tags.push('<span class="tag tag-tbd">译名待定</span>');
-
-      var pages = (w.tables || []).map(function(tbl) {
-        var rows = (tbl.rows || []).map(function(r) {
-          var cost = r[2];
-          var isTbd = !cost || cost === "—";
-          return '<li><span class="it">' + esc(r[0]) + ' <span class="tp">' + esc(r[1]) + '</span></span>' +
-            '<span class="ct' + (isTbd ? ' tbd' : '') + '">' + (isTbd ? '—' : esc(cost)) + '</span></li>';
-        }).join("");
-        return '<div class="wb-page"><h4>' + esc(tbl.title) + ' · ' + (tbl.rows || []).length + ' 项</h4><ul>' + rows + '</ul></div>';
-      }).join("");
-
-      return '<div class="wb-panel" role="tabpanel" id="panel-' + esc(w.id) + '" aria-labelledby="tab-' + esc(w.id) + '" tabindex="0" hidden>' +
-        '<div class="wb-head">' +
-          '<div class="wb-cover">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + ' 封面" referrerpolicy="no-referrer" data-ph="🎖️" onerror="this.outerHTML=phIcon(this)">' : '<span class="ph">🎖️</span>') + '</div>' +
-          '<div class="wb-head-main">' +
-            '<div class="w-name">' + esc(w.name) + '</div>' +
-            '<div class="w-name-en">' + esc(w.name_en) + '</div>' +
-            '<div class="wb-tags">' + tags.join("") + '</div>' +
-            '<div class="wb-desc">' + esc(w.intro_zh || "") + '<br>' + esc(w.overview_zh || "") + '</div>' +
-            '<div class="wb-meta">' +
-              '<div class="m"><span class="k">价格</span><span class="v">' + esc(w.price_zh || "—") + '</span></div>' +
-              '<div class="m"><span class="k">发行日期</span><span class="v">' + esc(w.release_date || "—") + '</span></div>' +
-              '<div class="m"><span class="k">总页数</span><span class="v">' + esc(w.pages == null ? "—" : w.pages + " 页") + '</span></div>' +
-              '<div class="m"><span class="k">状态</span><span class="v">' + esc(unreleased ? "未发布" : "已发布") + '</span></div>' +
-            '</div>' +
-            '<div class="wb-actions">' +
-              '<a class="primary" href="warbond.html?id=' + encodeURIComponent(w.id) + '">查看详情 ▶</a>' +
-              (w.source_url ? '<a href="' + esc(w.source_url) + '" target="_blank" rel="noopener noreferrer">来源：wiki.gg ↗</a>' : '') +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="wb-pages">' + pages + '</div>' +
-      '</div>';
+      return '<a class="wb-card" data-id="' + esc(w.id) + '" data-type="' + esc(w.type) + '" ' +
+        'href="warbond.html?id=' + encodeURIComponent(w.id) + '">' +
+        '<span class="wb-cover">' +
+          (w.icon
+            ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name) + ' 封面" loading="lazy" decoding="async" ' +
+              'referrerpolicy="no-referrer" data-ph="🎖️" onerror="this.outerHTML=phIcon(this)">'
+            : '<span class="ph">🎖️</span>') +
+        '</span>' +
+        '<span class="wb-body">' +
+          '<span class="wb-name">' + esc(w.name) + '</span>' +
+          '<span class="wb-en">' + esc(w.name_en) + '</span>' +
+          '<span class="wb-meta">' + esc(w.release_date || "—") + ' · ' + esc(w.price_zh || "—") +
+            (unreleased ? ' · <span style="color:#FFB59E">未发布</span>' : '') + '</span>' +
+        '</span>' +
+      '</a>';
     }
 
-    function filterTabs() {
+    /* 深链：#<债券 id> 定位该债券（详情页「在总览页中定位本债券」用）；#group-<英文类型> 直接筛出该组 */
+    function applyHash() {
+      var h = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+      if (!h) return;
+      if (BY_ID[h]) {
+        targetId = h;
+        activeType = BY_ID[h].type;
+        return;
+      }
+      var t = TYPE_ORDER.filter(function(x) { return "group-" + x.toLowerCase() === h; })[0];
+      if (t) activeType = t;
+    }
+
+    function applyFilter() {
       var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
-      var tabs = Array.prototype.slice.call(document.querySelectorAll(".wb-tab"));
-      // 选项卡重绘后 aria-selected 会丢，先记下当前激活项
-      var curSel = document.querySelector('.wb-tab[aria-selected="true"]');
-      if (curSel) activeId = curSel.getAttribute("data-id");
+      var cards = document.querySelectorAll(".wb-card");
       var shown = 0;
-      tabs.forEach(function(b) {
-        var w = WARBONDS.find(function(x) { return x.id === b.getAttribute("data-id"); });
-        var hay = w ? (w.name + " " + w.name_en + " " + (w.intro_zh || "") + " " + (w.overview_zh || "") + " " +
-          (w.tables || []).map(function(t) { return (t.rows || []).map(function(r) { return r.join(" "); }).join(" "); }).join(" ")) : "";
-        var show = !q || hay.toLowerCase().indexOf(q) >= 0;
-        b.style.display = show ? "" : "none";
+      Array.prototype.forEach.call(cards, function(c) {
+        var w = BY_ID[c.getAttribute("data-id")];
+        var typeOk = activeType === "all" || c.getAttribute("data-type") === activeType;
+        var qOk = !q || (w ? haystack(w).indexOf(q) >= 0 : false);
+        var show = typeOk && qOk;
+        c.style.display = show ? "" : "none";
         if (show) shown++;
       });
-      var visible = tabs.filter(function(b) { return b.style.display !== "none"; });
-      var cur = visible.filter(function(b) { return b.getAttribute("data-id") === activeId; });
-      if (!cur.length && visible.length) {
-        selectTab(visible[0].getAttribute("data-id"), false);
-      } else if (cur.length) {
-        // 已选中的选项卡仍可见：重绘后把选中态与面板可见性补回来
-        selectTab(activeId, false);
-      }
-      // 搜索无结果时不能留下面板残留内容：把面板整体藏起来并给出空态
-      if (!visible.length) {
-        Array.prototype.forEach.call(document.querySelectorAll(".wb-panel"), function(p) { p.hidden = true; });
-      }
-      var emptyTip = document.getElementById("wb-empty");
-      if (emptyTip) emptyTip.hidden = visible.length !== 0;
-      var panelsWrap = document.getElementById("wb-panels");
-      if (panelsWrap) panelsWrap.hidden = visible.length === 0;
+      Array.prototype.forEach.call(document.querySelectorAll(".wb-group"), function(g) {
+        var any = Array.prototype.some.call(g.querySelectorAll(".wb-card"), function(c) { return c.style.display !== "none"; });
+        g.hidden = !any;
+      });
+      var empty = document.getElementById("wb-empty");
+      if (empty) empty.hidden = shown !== 0;
       var rc = document.getElementById("result-count");
-      if (rc) rc.textContent = shown + " / " + tabs.length;
+      if (rc) rc.textContent = shown + " / " + WARBONDS.length;
+      Array.prototype.forEach.call(document.querySelectorAll("#type-filter button"), function(b) {
+        var on = b.getAttribute("data-type") === activeType;
+        if (on) b.classList.add("active"); else b.classList.remove("active");
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      if (targetId) {
+        var card = document.querySelector('.wb-card[data-id="' + targetId + '"]');
+        if (card && card.style.display !== "none") {
+          card.classList.add("is-target");
+          if (card.scrollIntoView) card.scrollIntoView({ block: "center", behavior: "smooth" });
+        }
+        targetId = "";
+      }
     }
 
-    window.addEventListener("hashchange", function() {
-      var h = decodeURIComponent((location.hash || "").replace(/^#/, ""));
-      if (h && h !== activeId) selectTab(h, false);
+    Array.prototype.forEach.call(document.querySelectorAll("#type-filter button"), function(b) {
+      b.addEventListener("click", function() {
+        activeType = b.getAttribute("data-type");
+        applyFilter();
+      });
     });
+
+    window.addEventListener("hashchange", function() { applyHash(); applyFilter(); });
 
     document.addEventListener("DOMContentLoaded", loadAll);
   </script>
