@@ -121,6 +121,16 @@
 
     .mode-tag { padding: 3px 10px; border-radius: 12px; background: rgba(245,158,11,0.12); color: var(--yellow); font-size: 0.75rem; display: inline-block; margin: 2px; }
 
+    /* ── 未发布徽章（release_status === "unreleased"）──────────────
+       复用 hud-skin.css 的标签家族：方角 + 硬描边 + 等宽大写。
+       配色取站内既有 warn 语义（--warn / --stripe-warn），不自造风格。 ── */
+    .unreleased-badge { display: inline-block; vertical-align: middle; margin-left: 8px;
+      padding: 2px 7px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; background: var(--stripe-warn); border: 1px solid var(--warn);
+      color: #FFB59E; }
+
+    .side-card .field .v .unreleased-badge { margin-left: 6px; }
+
 
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
@@ -187,6 +197,9 @@
 
       var pageZh = b.warbond_page ? "第 " + b.warbond_page + " 页" : "待发布";
       var unlockLine = "⭐ 战争债券：" + (b.warbond_zh || b.warbond || "—") + " · " + (b.price_zh || "—");
+      // release_status 为可选字段，缺省（或 "released"）即视为已发布
+      var isUnreleased = b.release_status === "unreleased";
+      var badgeHtml = isUnreleased ? '<span class="unreleased-badge">未发布</span>' : "";
 
       var siblings = ALL_BOOSTERS.filter(function(x) {
         return x.warbond === b.warbond && x.id !== b.id;
@@ -222,7 +235,7 @@
         '<div class="main-content">' +
           '<div class="card title-block">' +
             '<div class="detail-icon">' + (b.icon ? '<img src="' + esc(b.icon) + '" alt="' + esc(b.name_en) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🧬</span>\'">' : '<span class="ph">🧬</span>') + '</div>' +
-            '<div class="name">' + esc(b.name) + '</div>' +
+            '<div class="name">' + esc(b.name) + badgeHtml + '</div>' +
             '<div class="name-en">' + esc(b.name_en) + '</div>' +
             '<div class="unlock">' + esc(unlockLine) + '</div>' +
             '<div class="desc">' + esc(b.description_zh || b.description || "") + '</div>' +
@@ -247,7 +260,7 @@
             '<h3>📦 强化资源信息</h3>' +
             field("所属债券", esc(b.warbond_zh || b.warbond || "—") + '<br><span style="color:var(--text-mute);font-size:0.75rem;">' + esc(b.warbond || "") + '</span>') +
             field("债券页数", pageZh) +
-            field("勋章价格", b.price_zh || "—") +
+            field("勋章价格", esc(b.price_zh || "—") + badgeHtml) +
             field("解锁方式", "战争债券解锁") +
           '</div>' +
           '<div class="side-card">' +

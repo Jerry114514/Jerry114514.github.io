@@ -12,7 +12,7 @@
 | 约定 | 规则 |
 | --- | --- |
 | 根目录 | `HD2_Wiki/data/wiki/zh/`（中文数据集） |
-| 数据集文件名 | 小写 snake_case：`weapons.json`、`enemies.json`、`stratagems_full.json`、`missions.json`、`boosters.json`、`loadout.json`、`factions.json`、`index.json`、`ds_terms.json` |
+| 数据集文件名 | 小写 snake_case：`weapons.json`、`enemies.json`、`stratagems_full.json`、`missions.json`、`boosters.json`、`warbonds.json`、`loadout.json`、`factions.json`、`index.json`、`ds_terms.json` |
 | 子目录 | `blocks/`（首页区块，一区块一文件）、`mechanics/`（游戏机制长文，一页一文件）、`fetch_reports/`（抓取中间产物，**不属于数据集**，schema 不约束） |
 | 中文覆盖文件 | `<同名主干文件去扩展名>_zh.json`，与主干文件同目录。见第 5 节 |
 | 条目 `id` | **小写 snake_case**，同一数据集内唯一，由英文名派生（`Hellpod Space Optimization` → `hellpod_space_optimization`，`AR-2 Coyote` → `ar_2_coyote`） |
@@ -39,6 +39,7 @@
 | `enemies.json` | `enemies` | 敌人条目 |
 | `stratagems_full.json` | `stratagems` | 战略配备条目 |
 | `boosters.json` | `boosters` | 强化资源条目 |
+| `warbonds.json` | `warbonds` | 战争债券条目 |
 | `loadout.json` | `stratagems` | 配装器条目（与 `stratagems_full.json` 同 `id` 空间） |
 | `missions.json` | `categories` → `categories[].tasks` | 两级：任务分类 → 任务 |
 | `mechanics/*.json` | `sections`（可选 `toc`） | 两级：小节 → 子小节 |
@@ -65,6 +66,7 @@
 | `unlock` / `unlock_zh` | string | 否 | 解锁条件原文 / 中文 |
 | `related` | string[] | 否 | 相关条目 `id` 列表（跨条目引用，前端负责解析成链接） |
 | `tags` / `traits` | string[] | 否 | 标签/特性，纯字符串数组 |
+| `release_status` | `"released"` \| `"unreleased"` | 否 | **发布状态**。语义：`"released"` = 游戏内已可获取；`"unreleased"` = 已公布但尚未开放获取（价格/页数等通常同期为 `null`）。**缺省视为 `"released"`**，故已发布条目不必书写该字段。取值为**枚举字符串**，不用布尔、不用 `null` 表达「未知」。前端在 `"unreleased"` 时渲染「未发布」徽章，`price` / `price_zh` 的展示不受影响 |
 
 ---
 
@@ -168,35 +170,69 @@ warbond   = item.warbond_zh || item.warbond
 
 > 分组合并（`rowspan`）在抓取阶段已展开为重复值，本 schema 不保留 `rowspan` 语义。
 
-### 7.2 `weapons.json`
+### 7.2 `warbonds.json`
+
+**公共字段**：`id`、`name`、`name_en`、`icon`、`release_status`（第 3 节）；`description` / `description_zh` **不使用**（本数据集用 `intro_zh` / `overview_zh`，见下）。
+
+**扩展字段**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `type` | `"Standard"` \| `"Premium"` \| `"Legendary"` | 是 | 债券类别。**保留英文原文**（机器字段），中文由前端映射（标准／高级／传奇） |
+| `price` | number | 是 | 解锁价格（超级点数）。标准债券为 `0` |
+| `price_zh` | string | 是 | 价格展示文案。标准债券 `免费`；其余 `超级点数 ×1000` / `×1500` |
+| `release_date` | string | 是 | 发行日期，`YYYY-MM-DD`。**本数据集特例**：条目级日期字段在此登记后允许使用（第 4 节第 5 条的例外），值一律取自 wiki.gg 各债券页面 infobox 的 `date` |
+| `pages` | number | 是 | 债券总页数 |
+| `credit_claim` | number | 是 | 债券内含的超级点数总额；`0` 表示确认无 |
+| `credit_claim_zh` | string | 是 | 上者的展示文案（`无` / `超级点数 ×300`） |
+| `name_zh_tbd` | boolean | 是 | **译名待定标记**。`true` = 站内与官方中文均无既有译法，`name` 保留英文。前端据此渲染「译名待定」徽章 |
+| `intro_zh` | string | 是 | 中文简介（详情页标题卡与总览页选项卡正文） |
+| `overview_zh` | string | 是 | 中文概述（详情页「📖 简介」卡片）。含页数与勋章价格区间 |
+| `tables` | array | 是 | **逐页奖励表**：一个元素 = 债券的一页。结构见下 |
+
+**`tables[]` 元素结构**：沿用第 6 节的表格结构（`title` / `title_en` / `note` / `headers` / `rows`），并约定：
+
+| 约定 | 说明 |
+| --- | --- |
+| 一页一表 | `tables` 的元素顺序 = 页码顺序（第 1 页在前）。元素个数 = `pages` |
+| `title` / `title_en` | `第 N 页` / `Page N` |
+| `headers` | 固定 `["奖励", "类型", "勋章价格"]`，长度 3 → 按第 6 节判定为真列头 |
+| `rows[i]` | `[奖励英文名, 奖励类型中文, 勋章价格数字字符串]` |
+| 单价缺失 | wiki 页面未印出单个奖励的勋章价格时写 `"—"`，**不推算、不补算**。目前仅 `Ironclad_Democracy_Premium_Warbond` 等 4 个使用手工 wikitable 的债券页面如此 |
+| 奖励类型 | 4 个使用 wikitable 的债券页带 Type 列，直接照录；其余 21 个使用 `{{Acquisitions Page}}` 网格模板、**渲染页无 Type 列**，类型由奖励渲染图文件名推断（`… Primary Render` → 主武器 等），推断规则与回退桶在抓取报告中登记 |
+| 行序 | 网格模板按渲染页的 `grid-row` / `grid-column` 还原为阅读顺序；wikitable 保持原表行序 |
+
+> 顶层 `total` 必须等于 `warbonds` 数组长度。图标为 `./assets/warbonds/<wiki File 名>.png`（本站下载，不热链）。
+
+### 7.3 `weapons.json`
 
 `category`、`subcategory`、`subcategory_name`、`stats_short{ damage, capacity, penetration }`、`stats_full{}`、`traits[]`、`unlock`、`lore`、`variants[]`、`tips[]`、`detailed_stats{}`。顶层另有 `categories{}`（分类元数据）。
 
-### 7.3 `enemies.json`
+### 7.4 `enemies.json`
 
 `name_zh`（**遗留反向命名**，见第 8 节）、`faction`、`faction_label`、`image`、`category`、`health_total`、`damage`、`damage_type`、`fire_damage_multiplier`、`stagger_threshold`、`minimum_difficulty`、`body_parts[]`（含 `part_id` / `armor_level` / `location` / `durable` / `percent_to_main` / `overflow_cap` / `constitution` / `fatal` / `is_weak_point` / `count` / `armor_level_zh` / `location_zh`）。
 
-### 7.4 `stratagems_full.json`
+### 7.5 `stratagems_full.json`
 
 `category`、`category_label`、`code`、`call_in_time`、`cooldown`、`uses`、`unlock`、`unlock_zh`、`image`、`icon`、`detailed_stats{}`（含 `attacks[]`）、`source_page`（**遗留字段名**，等价于公共 `source_url`）。
 
-### 7.5 `missions.json`
+### 7.6 `missions.json`
 
 顶层 `categories[]`；`tasks[]` 元素：`id`、`name`、`name_zh`、`icon`、`difficulty` / `difficulty_zh`、`faction`、`time_limit` / `time_limit_zh`、`steps[]` / `steps_zh[]`、`tactical_info` / `tactical_info_zh`。
 
-### 7.6 `mechanics/*.json`
+### 7.7 `mechanics/*.json`
 
 `id`、`title`、`title_en`、`description`、`sections[]`、`toc[]`（`{ level, id, title }`）。中文覆盖文件见第 5.2 节。
 
-### 7.7 `loadout.json`
+### 7.8 `loadout.json`
 
 顶层 `types{}`（`类型名 → { dim4: 第四维名称 }`）；`stratagems[]` 元素：`id`、`name`、`type`、`stats[4]`（number 数组，四维评分）、`bonus`、`subtag[]`、`icon`。
 
-### 7.8 `factions.json`
+### 7.9 `factions.json`
 
 顶层 `factions[]`：`id`、`name`、`name_zh`、`color`、`strains[]`（`{ name, name_zh, enemies[] }`）、`enemies[]`（id 列表）；另有单对象 `super_earth`（`{ name_zh, enemies[], color }`）。
 
-### 7.9 `index.json` / `blocks/*.json`
+### 7.10 `index.json` / `blocks/*.json`
 
 - `index.json`：`id`、`title`、`subtitle`、`blocks[]`（`{ id, type, priority }`）。
 - `blocks/*.json`：`id`、`type`（`blocks/*` 中 `type` 仅 `index.json` 的引用项使用，区块文件本身可省略）、`title`、`subtitle`、`content`、`buttons[]`（`{ text, link }`）、`updated_at`。
@@ -205,7 +241,7 @@ warbond   = item.warbond_zh || item.warbond
 - `blocks/beginners.json`：另用 `sections[]`（**与 `boosters.json` 的 `sections` 同构**：`{ title, items[] }`）。**无 `type` 字段**。
 - `blocks/navigation.json`：另用 `categories[]`（`{ name, icon, description, link, count }`）；`count` 必须与目标页实际条目数一致。
 
-### 7.10 `ds_terms.json`（特例）
+### 7.11 `ds_terms.json`（特例）
 
 平铺 `map<string, string>`：键为英文原文（含数值与单位，如 `0.349999994 sec`），值为统一译文（`0.349999994 秒`）。**无 `id`、无 `updated_at`**，不参与 `?id=` 路由，仅供文本替换。
 
@@ -231,7 +267,9 @@ warbond   = item.warbond_zh || item.warbond
 
 1. **英文正文长段落不落库**：只保留 `description`（游戏内短简介/英文首句）与 `description_zh`，不抓取 wiki 英文条目的整段正文。
 2. **数值以渲染页为准**：抓取必须基于**渲染后的页面 DOM**（`browser_open` + `browser_execute` 遍历），不得使用 `action=parse&prop=wikitext`——模板/Lua 生成的表格在 wikitext 里只剩占位符，会整表丢失。
-3. **`tables` 的一行一列都必须能回溯到渲染页**：不补算、不插值、不删除页面里真实存在的重复行。
+   - **例外（2026-09-17 登记，仅限 `warbonds.json`）**：`action=parse&prop=text` 返回的**渲染后 HTML** 与浏览器 DOM 等价，允许使用；但**禁止**用 `action=parse&prop=wikitext`。实测各债券页的 `{{Acquisitions Page}}` 网格在 wikitext 里只剩 `|N_cost =`（该值是**视觉排布序号**，不是勋章价格），照抄会写入错误数据；同一文件的 4 个手工 wikitable 债券（如 `Ironclad_Democracy_Premium_Warbond`）其 wikitable 行文完整，因此**同一数据集内两种来源并存，必须以渲染页为准**。
+3. **`tables` 的一行一列都必须能回溯到渲染页**：不补算、不插值。
+   - **唯一例外（2026-09-17 登记）**：wiki 模板渲染出的**完全相同的重复行**（已确认为模板 bug，非数据）允许删除，删除后 `tables[].note` 中不留「原页面此行重复」一类说明。已按此修订 `boosters.json` 的 `stun_pods`、`firebomb_hellpods` 各 1 行 `Status`。
 4. **数据缺失用 `null`/空数组表达**，不用「暂无」「待补充」等文案占位（`price_zh` 的 `待发布` 是展示文案字段，不是数据字段）。
 
 ---
@@ -247,4 +285,4 @@ warbond   = item.warbond_zh || item.warbond
 5. `source_url` / `source_page` 均为 `https://helldivers.wiki.gg/wiki/<英文名下划线>`。
 6. `_zh` 字段与主字段结构一致。
 7. 新增字段已在本文件第 7 节登记。
-8. 目录页 20/89/95… 等卡片数、内链数与 `total` 一致，无外站引用。
+8. 目录页 20/25/89/95… 等卡片数与 `blocks/navigation.json` 的 `count`、以及与数据集 `total` 一致，无外站引用。

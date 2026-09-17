@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战争债券详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 战争债券详情页" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <style>
+    :root { --amber: #f59e0b; --red: #ef4444; }
+
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
+    .breadcrumb { max-width: 1200px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+
+    .breadcrumb a:hover { color: var(--yellow); }
+
+
+    .detail-layout { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 70% 30%; gap: 20px; width: 100%; align-items: start; }
+
+
+    .main-content { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+    .main-content > .card { min-width: 0; }
+
+    .info-card { display: flex; flex-direction: column; gap: 16px; }
+
+    .info-card .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+    .info-card .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+
+    .title-block .name { font-size: 1.8rem; color: var(--text); }
+
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+
+    .detail-icon { display: flex; align-items: center; justify-content: center; height: 120px; margin: 0 auto 12px; }
+
+    .detail-icon img { max-height: 120px; max-width: 300px; object-fit: contain; }
+
+    .detail-icon .ph { font-size: 3rem; color: var(--text-mute); }
+
+    .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
+
+    .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
+    .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
+
+
+    .wb-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 8px; }
+
+    .wb-badges .tag { display: inline-block; }
+
+    .wb-badges .tag-std { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
+    .wb-badges .tag-prem { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .wb-badges .tag-leg { background: var(--stripe); border-color: var(--brass); color: var(--yellow); }
+
+    .released-badge { display: inline-block; vertical-align: middle;
+      padding: 2px 7px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; background: var(--stripe-warn); border: 1px solid var(--warn);
+      color: #FFB59E; }
+
+    .tbd-badge { display: inline-block; vertical-align: middle; margin-left: 6px;
+      padding: 2px 7px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      background: transparent; border: 1px solid var(--line-2); color: var(--text-mute); }
+
+
+    .tbl-block { margin-bottom: 18px; }
+
+    .tbl-block:last-child { margin-bottom: 0; }
+
+    .tbl-title { font-size: 0.86rem; color: var(--text); font-weight: 600; margin-bottom: 6px; }
+
+    .tbl-title .tbl-en { font-size: 0.7rem; color: var(--text-mute); font-weight: 400; margin-left: 6px; }
+
+    .tbl-note { font-size: 0.72rem; color: var(--text-mute); line-height: 1.65; margin-bottom: 6px; }
+
+    .table-wrap { position: relative; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .table-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 24px; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(11,14,20,0.85)); }
+
+    .scroll-hint { font-size: 0.68rem; color: var(--text-mute); font-weight: 400; margin-left: 8px; }
+
+    .data-table { border-collapse: collapse; width: 100%; }
+
+    .data-table th { background: var(--stripe); border: 1px solid #33270A; color: var(--yellow);
+      font-size: 0.72rem; letter-spacing: 0.08em; padding: 6px 9px; text-align: left; white-space: nowrap; }
+
+    .data-table th.tbl-cap { text-transform: uppercase; }
+
+    .data-table td { border-bottom: 1px solid var(--line-2); padding: 6px 9px; color: var(--text-dim);
+      font-size: 0.8rem; white-space: nowrap; }
+
+    .data-table td.k { color: var(--text-mute); }
+
+    .data-table tbody tr:nth-child(even) td { background: #0D0D0D; }
+
+    .data-table tbody tr.group td { background: var(--stripe-warn); color: var(--yellow);
+      font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em; }
+
+    .reward-legend { font-size: 0.72rem; color: var(--text-mute); line-height: 1.7; margin-top: 8px; }
+
+
+    .variant-card { display: block; padding: 12px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 8px; }
+
+    .variant-card:hover { border-color: var(--blue); background: rgba(59,130,246,0.08); }
+
+    .variant-card .v-name { font-size: 0.88rem; color: var(--text); font-weight: 600; }
+
+    .variant-card .v-desc { font-size: 0.78rem; color: var(--text-dim); margin: 4px 0; }
+
+    .variant-card .v-unlock { font-size: 0.75rem; color: var(--yellow); }
+
+
+    .tips-list { padding-left: 18px; }
+
+    .tips-list li { font-size: 0.85rem; color: var(--text-dim); line-height: 1.8; }
+
+
+    .info-side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; align-self: start; }
+
+    .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+    .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+
+    .side-card .field { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+
+    .side-card .field:last-child { border-bottom: none; }
+
+    .side-card .field .k { color: var(--text-mute); white-space: nowrap; }
+
+    .side-card .field .v { color: var(--text); text-align: right; }
+
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+    @media (max-width: 900px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .info-side { order: 2; position: static; }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="warbonds.html">战争债券</a></div>
+  </header>
+
+  <div class="detail-layout" id="detail-layout">
+    <div class="loading">正在加载战争债券数据…</div>
+  </div>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p>
+  </footer>
+
+  <script src="./assets/js/wiki-router.js"></script>
+  <script>
+    "use strict";
+    var ALL_WARBONDS = [];
+
+    var TYPE_ZH = { "Standard": "标准", "Premium": "高级", "Legendary": "传奇" };
+
+    function typeLabel(t) { return TYPE_ZH[t] || t || "—"; }
+
+    function typeClass(t) {
+      if (t === "Standard") return "tag tag-std";
+      if (t === "Legendary") return "tag tag-leg";
+      return "tag tag-prem";
+    }
+
+    async function loadDetail() {
+      var raw = WikiRouter.param("id");
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/warbonds.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        ALL_WARBONDS = d.warbonds || [];
+        var id = raw ? String(raw).trim() : "";
+        var w = ALL_WARBONDS.find(function(x) { return x.id === id; });
+        if (!w) {
+          layout.innerHTML = '<div class="empty">未找到该战争债券' +
+            (raw ? '（参数：' + esc(raw) + '）' : '（缺少 id 参数）') +
+            '<br><br><a class="variant-card" style="max-width:320px;margin:0 auto;" href="warbonds.html">◀ 返回战争债券</a></div>';
+          return;
+        }
+        renderDetail(w);
+      } catch (e) {
+        console.error("[Warbond] 加载失败:", e);
+        layout.innerHTML = '<div class="empty">⚠️ 战争债券数据加载失败<br><br>' +
+          '<a class="variant-card" style="max-width:320px;margin:0 auto;" href="warbonds.html">◀ 返回战争债券</a></div>';
+      }
+    }
+
+    function renderDetail(w) {
+      var layout = document.getElementById("detail-layout");
+      var unreleased = w.release_status === "unreleased";
+      var badge = unreleased ? '<span class="released-badge">未发布</span>' : "";
+      var tbd = w.name_zh_tbd ? '<span class="tbd-badge">译名待定</span>' : "";
+
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="warbonds.html">战争债券</a> › ' + esc(w.name);
+
+      var typeTag = '<span class="' + typeClass(w.type) + '">' + esc(typeLabel(w.type)) + '</span>';
+      var other = ALL_WARBONDS.filter(function(x) { return x.id !== w.id; });
+
+      var tableBlocks = (w.tables || []).map(function(tbl) {
+        var headers = tbl.headers || [];
+        var rows = tbl.rows || [];
+        var n = headers.length;
+        var span = Math.max(n, spanCols(rows));
+        var html = '<div class="tbl-block">';
+        if (tbl.title) {
+          html += '<div class="tbl-title">' + esc(tbl.title) +
+            (tbl.title_en && tbl.title_en !== tbl.title ? '<span class="tbl-en">' + esc(tbl.title_en) + '</span>' : '') +
+            '</div>';
+        }
+        if (tbl.note) html += '<div class="tbl-note">' + esc(tbl.note) + '</div>';
+        html += '<div class="table-wrap"><table class="data-table">';
+        if (n >= 2) {
+          html += '<thead><tr>' + headers.map(function(h) { return '<th>' + esc(h) + '</th>'; }).join("") + '</tr></thead>';
+        } else if (n === 1) {
+          html += '<thead><tr><th class="tbl-cap" colspan="' + span + '">' + esc(headers[0]) + '</th></tr></thead>';
+        }
+        html += '<tbody>';
+        rows.forEach(function(r) {
+          var cells = r || [];
+          if (cells.length < span) {
+            html += '<tr class="group"><td colspan="' + span + '">' + esc(cells.join(" ")) + '</td></tr>';
+          } else {
+            html += '<tr>' + cells.map(function(c, i) {
+              return '<td' + (i === 0 ? ' class="k"' : '') + '>' + esc(c) + '</td>';
+            }).join("") + '</tr>';
+          }
+        });
+        html += '</tbody></table></div></div>';
+        return html;
+      }).join("");
+      var tablesHtml = tableBlocks
+        ? '<div class="card"><h2>📊 逐页奖励<span class="scroll-hint">宽表可横向滚动 →</span></h2>' + tableBlocks +
+          '<div class="reward-legend">价格列取自 wiki.gg 渲染页；表内显示「—」表示该页未标注单个奖励的勋章价格（本站不推算）。</div></div>'
+        : "";
+
+      var otherCards = other.slice(0, 8).map(function(o) {
+        return '<a class="variant-card" href="warbond.html?id=' + encodeURIComponent(o.id) + '">' +
+          '<div class="v-name">' + esc(o.name) + (o.release_status === "unreleased" ? ' <span class="released-badge">未发布</span>' : '') + '</div>' +
+          '<div class="v-desc">' + esc(o.name_en) + '</div>' +
+          '<div class="v-unlock">' + esc(typeLabel(o.type)) + ' · ' + esc(o.price_zh || "—") + '</div></a>';
+      }).join("");
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="detail-icon">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + ' 封面" referrerpolicy="no-referrer" data-ph="🎖️" onerror="this.outerHTML=phIcon(this)">' : '<span class="ph">🎖️</span>') + '</div>' +
+            '<div class="name">' + esc(w.name) + badge + tbd + '</div>' +
+            '<div class="name-en">' + esc(w.name_en) + '</div>' +
+            '<div class="wb-badges">' + typeTag +
+              '<span class="tag">' + esc(w.price_zh || "—") + '</span>' +
+              '<span class="tag">' + esc(w.release_date || "—") + ' 发行</span>' +
+              '<span class="tag">共 ' + esc(w.pages == null ? "—" : w.pages) + ' 页</span>' +
+            '</div>' +
+            '<div class="unlock">🎖️ 战争债券：' + esc(typeLabel(w.type)) + '债券 · ' + esc(w.price_zh || "—") + '</div>' +
+            '<div class="desc">' + esc(w.intro_zh || "") + '</div>' +
+          '</div>' +
+          (w.overview_zh ? '<div class="card"><h2>📖 简介</h2><div class="desc">' + esc(w.overview_zh) + '</div></div>' : '') +
+          tablesHtml +
+          '<div class="card">' +
+            '<h2>🧭 导航与来源</h2>' +
+            '<a class="variant-card" href="warbonds.html">' +
+              '<div class="v-name">◀ 返回战争债券</div>' +
+              '<div class="v-desc">战争债券总览 · 共 ' + ALL_WARBONDS.length + ' 个</div></a>' +
+            '<a class="variant-card" href="warbonds.html#' + encodeURIComponent(w.id) + '">' +
+              '<div class="v-name">🔖 在总览页中定位本债券</div>' +
+              '<div class="v-desc">打开总览页并切换到该选项卡</div></a>' +
+            (w.source_url ? '<a class="variant-card" href="' + esc(w.source_url) + '" target="_blank" rel="noopener noreferrer">' +
+              '<div class="v-name">来源：wiki.gg ↗</div>' +
+              '<div class="v-desc">' + esc(w.name_en) + ' - Helldivers Wiki</div></a>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div class="info-side">' +
+          '<div class="side-card">' +
+            '<h3>🎖️ 战争债券信息</h3>' +
+            field("类型", esc(typeLabel(w.type))) +
+            field("价格", esc(w.price_zh || "—") + badge) +
+            field("发行日期", esc(w.release_date || "—")) +
+            field("总页数", esc(w.pages == null ? "—" : w.pages + " 页")) +
+            field("内含超级点数", esc(w.credit_claim_zh || "—")) +
+            field("状态", esc(unreleased ? "未发布" : "已发布")) +
+          '</div>' +
+          '<div class="side-card">' +
+            '<h3>🎖️ 其他战争债券</h3>' +
+            (otherCards || '<div class="empty" style="padding:12px;">暂无其他条目</div>') +
+          '</div>' +
+        '</div>';
+    }
+
+    function spanCols(rows) {
+      var m = 1;
+      (rows || []).forEach(function(r) { if (r && r.length > m) m = r.length; });
+      return m;
+    }
+
+    /* 破图兜底：把 <img> 换成同尺寸的占位符，避免出现死图 */
+    function phIcon(img) {
+      return '<span class="ph">' + (img.getAttribute("data-ph") || "🎖️") + '</span>';
+    }
+
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null ? "—" : v) + '</span></div>'; }
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>

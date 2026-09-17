@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战争债券总览 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 战争债券总览 - Warbonds · 标准 / 高级 / 传奇 三类债券 · 逐个债券的逐页奖励一览" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <style>
+    .wiki-header { text-align: center; padding: 32px 20px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
+    .wiki-header h1 { font-size: 1.6rem; color: var(--yellow); margin-bottom: 4px; }
+
+    .wiki-header p { color: var(--text-dim); font-size: 0.85rem; }
+
+    .wiki-header .back { display: inline-block; margin-top: 10px; color: var(--text-dim); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+
+
+    .wb-intro { width: 100%; max-width: 1200px; margin: 0 auto; padding: 18px 20px 0; }
+
+    .wb-intro .box { background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--yellow); padding: 12px 16px; }
+
+    .wb-intro h2 { font-size: 0.95rem; color: var(--yellow); margin-bottom: 6px; letter-spacing: 0.04em; }
+
+    .wb-intro p { font-size: 0.83rem; color: var(--text-dim); line-height: 1.75; }
+
+    .wb-intro .src { font-size: 0.7rem; color: var(--text-mute); }
+
+
+    .wb-shell { flex: 1; max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; width: 100%; }
+
+    /* ── 选项卡条：复用 wiki-base 的 .filter-bar 键帽按钮样式 ── */
+    .wb-tabbar { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0 14px; }
+
+    .wb-tab { padding: 6px 12px; border: 1px solid var(--line-2); border-top: 2px solid var(--brass);
+      background: var(--panel-2); color: var(--text-dim); font-size: 0.78rem; cursor: pointer;
+      font-weight: 700; letter-spacing: .04em; font-family: inherit; }
+
+    .wb-tab:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+
+    .wb-tab[aria-selected="true"] { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
+
+    .wb-tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+    .wb-tab .t-dot { display: inline-block; width: 6px; height: 6px; margin-right: 6px; vertical-align: middle; }
+
+    .wb-tab[aria-selected="true"] .t-dot { background: #000 !important; }
+
+
+    .wb-panel { background: var(--bg-card); border: 1px solid var(--border); padding: 18px 20px; }
+
+    .wb-panel:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .wb-head { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+
+    .wb-cover { flex: none; width: 210px; max-width: 100%; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--line-2); padding: 8px; }
+
+    .wb-cover img { max-width: 100%; max-height: 130px; object-fit: contain; }
+
+    .wb-cover .ph { font-size: 2.6rem; color: var(--text-mute); }
+
+    .wb-head-main { flex: 1; min-width: 240px; }
+
+    .wb-head-main .w-name { font-size: 1.3rem; color: var(--text); }
+
+    .wb-head-main .w-name-en { font-size: 0.85rem; color: var(--text-mute); margin: 2px 0 8px; }
+
+    .wb-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+    .wb-tags .tag { display: inline-block; }
+
+    .wb-tags .tag-std { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
+    .wb-tags .tag-prem { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .wb-tags .tag-leg { background: var(--stripe); border-color: var(--brass); color: var(--yellow); }
+
+    .wb-tags .tag-unrel { background: var(--stripe-warn); border-color: var(--warn); color: #FFB59E; }
+
+    .wb-tags .tag-tbd { background: transparent; border-color: var(--line-2); color: var(--text-mute); }
+
+    .wb-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.75; }
+
+    .wb-meta { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 12px; }
+
+    .wb-meta .m { border: 1px solid var(--border); border-left: 3px solid var(--brass); background: var(--panel-2); padding: 7px 10px; }
+
+    .wb-meta .m .k { display: block; font-size: 0.66rem; color: var(--text-mute); letter-spacing: .06em; }
+
+    .wb-meta .m .v { display: block; font-size: 0.85rem; color: var(--text); margin-top: 2px; }
+
+    .wb-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .wb-actions a { display: inline-block; padding: 7px 14px; border: 1px solid var(--line-2); border-top: 2px solid var(--brass);
+      background: var(--panel-2); color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; letter-spacing: .05em; }
+
+    .wb-actions a:hover { border-color: var(--yellow); border-top-color: var(--yellow); color: var(--yellow); background: #1A1200; }
+
+    .wb-actions a.primary { background: var(--yellow); color: #000; border-color: var(--yellow); border-top-color: #FFE0A0; }
+
+    .wb-actions a.primary:hover { background: var(--yellow-2); color: #000; }
+
+
+    .wb-pages { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+
+    .wb-page { border: 1px solid var(--border); background: var(--panel-2); }
+
+    .wb-page h4 { font-size: 0.78rem; color: var(--yellow); padding: 7px 10px; border-bottom: 1px solid var(--border);
+      letter-spacing: .06em; background: var(--stripe); }
+
+    .wb-page ul { padding: 8px 10px; }
+
+    .wb-page li { font-size: 0.76rem; color: var(--text-dim); line-height: 1.7; display: flex; justify-content: space-between; gap: 8px; }
+
+    .wb-page li .it { min-width: 0; }
+
+    .wb-page li .tp { color: var(--text-mute); font-size: 0.68rem; }
+
+    .wb-page li .ct { color: var(--yellow); font-family: var(--font-mono); font-size: 0.72rem; white-space: nowrap; }
+
+    .wb-page li .ct.tbd { color: var(--text-mute); }
+
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+
+    @media (max-width: 768px) {
+      .wb-intro { padding: 14px 12px 0; }
+      .wb-shell { padding: 12px 12px 32px; }
+      .wb-panel { padding: 14px 12px; }
+      .wb-pages { grid-template-columns: 1fr; }
+      .wb-tabbar { gap: 5px; }
+      .wb-tab { padding: 5px 9px; font-size: 0.72rem; }
+      .wb-cover { width: 100%; }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🎖️ 战争债券总览</h1>
+    <p>共 <span id="total-count">25</span> 个战争债券（Warbonds）· 标准 / 高级 / 传奇 · 点击选项卡查看债券内容</p>
+    <a class="back" href="wiki.html">◀ 返回维基首页</a>
+  </header>
+
+  <section class="wb-intro">
+    <div class="box">
+      <h2>战争债券 / Warbonds</h2>
+      <p>战争债券是《绝地潜兵2》的奖励轨道，在采购中心内使用勋章逐页解锁武器、战略配备、强化资源与外观。标准债券免费开放；高级债券与传奇债券分别需要 1,000 与 1,500 超级点数解锁。战争债券不会下架，可以按自己的节奏推进。</p>
+      <p class="src">资料整理自 wiki.gg 的 Warbonds 与各债券页面 · 译名以本站既有译法为准，无既有译法者保留英文并标注「译名待定」</p>
+    </div>
+  </section>
+
+  <div class="wiki-toolbar">
+    <label class="wt-search"><input type="text" id="search-input" placeholder="🔍 搜索战争债券名称或奖励…（支持中文/英文）" oninput="filterTabs()"></label>
+    <span class="wt-count" id="result-count">25 / 25</span>
+  </div>
+
+  <div class="wb-shell" id="wb-shell">
+    <div class="loading">正在加载战争债券数据…</div>
+  </div>
+
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+
+  <script>
+    "use strict";
+
+    var WARBONDS = [];
+    var TYPE_ZH = { "Standard": "标准", "Premium": "高级", "Legendary": "传奇" };
+    var activeId = null;
+
+    function typeLabel(t) { return TYPE_ZH[t] || t || "—"; }
+
+    function typeClass(t) {
+      if (t === "Standard") return "tag tag-std";
+      if (t === "Legendary") return "tag tag-leg";
+      return "tag tag-prem";
+    }
+
+    function phIcon(img) {
+      return '<span class="ph">' + (img.getAttribute("data-ph") || "🎖️") + '</span>';
+    }
+
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    async function loadAll() {
+      var shell = document.getElementById("wb-shell");
+      try {
+        var r = await fetch("./data/wiki/zh/warbonds.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        WARBONDS = d.warbonds || [];
+        if (!WARBONDS.length) throw new Error("空数据集");
+        render();
+      } catch (e) {
+        console.error("[Warbonds] 加载失败:", e);
+        shell.innerHTML = '<div class="empty">⚠️ 战争债券数据加载失败<br><br>' +
+          '<a class="wb-actions" href="wiki.html" style="color:var(--yellow);">◀ 返回维基首页</a></div>';
+        return;
+      }
+      var tc = document.getElementById("total-count");
+      if (tc) tc.textContent = WARBONDS.length;
+      filterTabs();
+    }
+
+    function render() {
+      var shell = document.getElementById("wb-shell");
+      var hash = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+      var initial = WARBONDS.some(function(w) { return w.id === hash; }) ? hash : WARBONDS[0].id;
+
+      var tabs = WARBONDS.map(function(w) {
+        var color = w.type === "Standard" ? "#FFB000" : (w.type === "Legendary" ? "#C8862A" : "#3B82F6");
+        return '<button class="wb-tab" role="tab" type="button" id="tab-' + esc(w.id) + '"' +
+          ' aria-selected="false" aria-controls="panel-' + esc(w.id) + '" tabindex="-1" data-id="' + esc(w.id) + '">' +
+          '<span class="t-dot" style="background:' + color + '"></span>' + esc(w.name) + '</button>';
+      }).join("");
+
+      var panels = WARBONDS.map(function(w) { return panelHtml(w); }).join("");
+
+      shell.innerHTML =
+        '<div class="wb-tabbar" role="tablist" aria-label="战争债券选项卡">' + tabs + '</div>' +
+        '<div id="wb-empty" class="empty" hidden>没有匹配的战争债券</div>' +
+        '<div id="wb-panels">' + panels + '</div>';
+
+      Array.prototype.forEach.call(shell.querySelectorAll(".wb-tab"), function(btn) {
+        btn.addEventListener("click", function() { selectTab(btn.getAttribute("data-id"), true); });
+        btn.addEventListener("keydown", onTabKey);
+      });
+      selectTab(initial, false);
+    }
+
+    function onTabKey(ev) {
+      var keys = { ArrowRight: 1, ArrowLeft: -1, Home: "first", End: "last" };
+      if (!(ev.key in keys)) return;
+      ev.preventDefault();
+      var tabs = Array.prototype.slice.call(document.querySelectorAll(".wb-tab")).filter(function(b) { return b.style.display !== "none"; });
+      var cur = tabs.indexOf(ev.target);
+      var next;
+      if (keys[ev.key] === "first") next = 0;
+      else if (keys[ev.key] === "last") next = tabs.length - 1;
+      else next = (cur + keys[ev.key] + tabs.length) % tabs.length;
+      if (tabs[next]) { selectTab(tabs[next].getAttribute("data-id"), true); tabs[next].focus(); }
+    }
+
+    function selectTab(id, scroll) {
+      var w = WARBONDS.find(function(x) { return x.id === id; });
+      if (!w) return;
+      activeId = id;
+      Array.prototype.forEach.call(document.querySelectorAll(".wb-tab"), function(b) {
+        var on = b.getAttribute("data-id") === id;
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll(".wb-panel"), function(p) {
+        p.hidden = p.id !== ("panel-" + id);
+      });
+      if (history.replaceState) history.replaceState(null, "", "#" + id);
+      if (scroll) {
+        var bar = document.querySelector(".wb-tabbar");
+        if (bar && bar.scrollIntoView) bar.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+    }
+
+    function panelHtml(w) {
+      var unreleased = w.release_status === "unreleased";
+      var tags = ['<span class="' + typeClass(w.type) + '">' + esc(typeLabel(w.type)) + '债券</span>',
+                  '<span class="tag">' + esc(w.price_zh || "—") + '</span>',
+                  '<span class="tag">' + esc(w.release_date || "—") + ' 发行</span>'];
+      if (unreleased) tags.push('<span class="tag tag-unrel">未发布</span>');
+      if (w.name_zh_tbd) tags.push('<span class="tag tag-tbd">译名待定</span>');
+
+      var pages = (w.tables || []).map(function(tbl) {
+        var rows = (tbl.rows || []).map(function(r) {
+          var cost = r[2];
+          var isTbd = !cost || cost === "—";
+          return '<li><span class="it">' + esc(r[0]) + ' <span class="tp">' + esc(r[1]) + '</span></span>' +
+            '<span class="ct' + (isTbd ? ' tbd' : '') + '">' + (isTbd ? '—' : esc(cost)) + '</span></li>';
+        }).join("");
+        return '<div class="wb-page"><h4>' + esc(tbl.title) + ' · ' + (tbl.rows || []).length + ' 项</h4><ul>' + rows + '</ul></div>';
+      }).join("");
+
+      return '<div class="wb-panel" role="tabpanel" id="panel-' + esc(w.id) + '" aria-labelledby="tab-' + esc(w.id) + '" tabindex="0" hidden>' +
+        '<div class="wb-head">' +
+          '<div class="wb-cover">' + (w.icon ? '<img src="' + esc(w.icon) + '" alt="' + esc(w.name_en) + ' 封面" referrerpolicy="no-referrer" data-ph="🎖️" onerror="this.outerHTML=phIcon(this)">' : '<span class="ph">🎖️</span>') + '</div>' +
+          '<div class="wb-head-main">' +
+            '<div class="w-name">' + esc(w.name) + '</div>' +
+            '<div class="w-name-en">' + esc(w.name_en) + '</div>' +
+            '<div class="wb-tags">' + tags.join("") + '</div>' +
+            '<div class="wb-desc">' + esc(w.intro_zh || "") + '<br>' + esc(w.overview_zh || "") + '</div>' +
+            '<div class="wb-meta">' +
+              '<div class="m"><span class="k">价格</span><span class="v">' + esc(w.price_zh || "—") + '</span></div>' +
+              '<div class="m"><span class="k">发行日期</span><span class="v">' + esc(w.release_date || "—") + '</span></div>' +
+              '<div class="m"><span class="k">总页数</span><span class="v">' + esc(w.pages == null ? "—" : w.pages + " 页") + '</span></div>' +
+              '<div class="m"><span class="k">状态</span><span class="v">' + esc(unreleased ? "未发布" : "已发布") + '</span></div>' +
+            '</div>' +
+            '<div class="wb-actions">' +
+              '<a class="primary" href="warbond.html?id=' + encodeURIComponent(w.id) + '">查看详情 ▶</a>' +
+              (w.source_url ? '<a href="' + esc(w.source_url) + '" target="_blank" rel="noopener noreferrer">来源：wiki.gg ↗</a>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="wb-pages">' + pages + '</div>' +
+      '</div>';
+    }
+
+    function filterTabs() {
+      var q = (document.getElementById("search-input").value || "").trim().toLowerCase();
+      var tabs = Array.prototype.slice.call(document.querySelectorAll(".wb-tab"));
+      // 选项卡重绘后 aria-selected 会丢，先记下当前激活项
+      var curSel = document.querySelector('.wb-tab[aria-selected="true"]');
+      if (curSel) activeId = curSel.getAttribute("data-id");
+      var shown = 0;
+      tabs.forEach(function(b) {
+        var w = WARBONDS.find(function(x) { return x.id === b.getAttribute("data-id"); });
+        var hay = w ? (w.name + " " + w.name_en + " " + (w.intro_zh || "") + " " + (w.overview_zh || "") + " " +
+          (w.tables || []).map(function(t) { return (t.rows || []).map(function(r) { return r.join(" "); }).join(" "); }).join(" ")) : "";
+        var show = !q || hay.toLowerCase().indexOf(q) >= 0;
+        b.style.display = show ? "" : "none";
+        if (show) shown++;
+      });
+      var visible = tabs.filter(function(b) { return b.style.display !== "none"; });
+      var cur = visible.filter(function(b) { return b.getAttribute("data-id") === activeId; });
+      if (!cur.length && visible.length) {
+        selectTab(visible[0].getAttribute("data-id"), false);
+      } else if (cur.length) {
+        // 已选中的选项卡仍可见：重绘后把选中态与面板可见性补回来
+        selectTab(activeId, false);
+      }
+      // 搜索无结果时不能留下面板残留内容：把面板整体藏起来并给出空态
+      if (!visible.length) {
+        Array.prototype.forEach.call(document.querySelectorAll(".wb-panel"), function(p) { p.hidden = true; });
+      }
+      var emptyTip = document.getElementById("wb-empty");
+      if (emptyTip) emptyTip.hidden = visible.length !== 0;
+      var panelsWrap = document.getElementById("wb-panels");
+      if (panelsWrap) panelsWrap.hidden = visible.length === 0;
+      var rc = document.getElementById("result-count");
+      if (rc) rc.textContent = shown + " / " + tabs.length;
+    }
+
+    window.addEventListener("hashchange", function() {
+      var h = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+      if (h && h !== activeId) selectTab(h, false);
+    });
+
+    document.addEventListener("DOMContentLoaded", loadAll);
+  </script>
+</body>
+</html>
