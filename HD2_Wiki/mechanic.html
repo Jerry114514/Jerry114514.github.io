@@ -71,6 +71,30 @@ html { scroll-behavior: smooth; }
 
     .section img { max-width: 100%; border-radius: 8px; }
 
+    /* ===== 英文主干 + 中文覆盖 合并产物 ===== */
+    .section .mg-table-wrap { position: relative; margin: 12px 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .section .mg-table-wrap table { width: 100%; min-width: 560px; margin: 0; }
+    .section .mg-table-title { font-size: 0.85rem; color: var(--text); font-weight: 600; margin-bottom: 6px; }
+    .section .mg-table-note { font-size: 0.78rem; color: var(--text-mute); margin-top: 6px; line-height: 1.6; }
+    .section .mg-media { margin: 14px 0; max-width: 100%; overflow-x: auto; }
+    .section .mg-media img { max-width: 100%; height: auto; }
+    .section .mg-media figure { margin: 0; }
+    .section .mg-media figcaption { font-size: 0.78rem; color: var(--text-mute); margin-top: 6px; }
+    .section p.mg-p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; margin: 8px 0; }
+
+    /* 长 URL / 长英文串不换行会把 375px 视口顶出横向滚动；表格单元格不加（避免列被压扁） */
+    .section p, .section li, .section blockquote, .section .mg-ref-body { overflow-wrap: anywhere; word-break: break-word; }
+
+    /* 英文原文兜底（中文覆盖了散文时折叠展示，保证信息量不丢） */
+    .section .mg-ref { margin: 12px 0; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02); }
+    .section .mg-ref > summary { cursor: pointer; padding: 8px 12px; font-size: 0.82rem; color: var(--text-mute); list-style: none; }
+    .section .mg-ref > summary::-webkit-details-marker { display: none; }
+    .section .mg-ref > summary:hover { color: var(--yellow); }
+    .section .mg-ref[open] > summary { border-bottom: 1px solid var(--border); }
+    .section .mg-ref-body { padding: 8px 12px 12px; font-size: 0.86rem; color: var(--text-dim); line-height: 1.75; }
+    .section .mg-ref-body p { margin: 6px 0; font-size: 0.86rem; }
+    .section .mg-ref-body ul, .section .mg-ref-body ol { margin: 6px 0 6px 20px; }
+
 
     /* ===== 银河冲击计算器 ===== */
     .calculator-container { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 24px 28px; margin: 32px 0; color: #e0e0e0; }
@@ -141,69 +165,61 @@ html { scroll-behavior: smooth; }
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
   <script src="./assets/js/wiki-router.js"></script>
+  <script src="./assets/js/mechanic-merge.js"></script>
   <script>
     "use strict";
+    var MG_STATS = null;
+
+    /* 并行取「英文主干」+「中文覆盖」两个文件：
+       主干提供小节结构 / 锚点 id / 表格 / 图片，覆盖文件只提供中文（散文、标题、可选表格）。
+       覆盖文件缺失或损坏时整篇回退主干，不影响渲染。 */
+    function fetchJson(url) {
+      return fetch(url + (url.indexOf("?") < 0 ? "?t=" + Date.now() : "&t=" + Date.now()), { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    }
+
+    /* 主干缺失时，用覆盖文件自建一个最小主干（不丢中文） */
+    function fallbackTrunk(override, id) {
+      var secs = (override && override.sections_zh) || [];
+      return {
+        id: id,
+        title: (override && override.title_zh) || id,
+        title_en: "",
+        description: (override && override.description_zh) || "",
+        sections: secs.map(function (s) { return { level: 2, id: s.id || s.target_id || "", title: s.title_zh || "", content: "", subsections: [] }; })
+      };
+    }
+
     async function load() {
       var id = WikiRouter.param("id") || "damage";
       var layout = document.getElementById("layout");
       try {
-        var r = await fetch("./data/wiki/zh/mechanics/" + id + "_zh.json?t=" + Date.now(), { cache: "no-store" });
-        if (!r.ok) {
-          r = await fetch("./data/wiki/zh/mechanics/" + id + ".json?t=" + Date.now(), { cache: "no-store" });
+        var base = "./data/wiki/zh/mechanics/" + encodeURIComponent(id);
+        var pair = await Promise.all([fetchJson(base + ".json"), fetchJson(base + "_zh.json")]);
+        var trunk = pair[0], override = pair[1];
+        if (!trunk) {
+          if (!override) throw new Error("HTTP 404");
+          trunk = fallbackTrunk(override, id);
         }
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        var d = await r.json();
-        render(d, id);
+        var page = MechanicMerge.build(trunk, override, { id: id });
+        MG_STATS = page.stats;
+        render(page, id);
       } catch(e) {
         console.error("[Mechanic] 加载失败:", e);
         layout.innerHTML = '<div class="loading">⚠️ 数据加载失败</div>';
       }
     }
 
-    function buildSections(secs) {
-      return secs.map(function(s) {
-        var out = { level: 2, id: s.title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_'), title: s.title_zh, content: s.content_zh || '' };
-        if (s.subsections_zh) {
-          out.subsections = s.subsections_zh.map(function(sub) {
-            var sub2 = { level: 3, id: sub.title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_'), title: sub.title_zh, content: sub.content_zh || '' };
-            if (sub.subsections_zh) {
-              sub2.subsections = sub.subsections_zh.map(function(s4) {
-                return { level: 4, id: s4.title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_'), title: s4.title_zh, content: s4.content_zh || '' };
-              });
-            }
-            return sub2;
-          });
-        }
-        return out;
-      });
-    }
-
-    function buildToc(secs) {
-      var toc = [];
-      secs.forEach(function(s) {
-        toc.push({ level: 2, id: s.title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_'), title: s.title_zh });
-        if (s.subsections_zh) {
-          s.subsections_zh.forEach(function(sub) {
-            toc.push({ level: 3, id: sub.title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_'), title: sub.title_zh });
-          });
-        }
-      });
-      return toc;
-    }
-
     function render(d, id) {
-      var d2 = d.sections_zh ? { title: d.title_zh, description: d.description_zh, sections: buildSections(d.sections_zh), toc: buildToc(d.sections_zh) } : d;
-      document.getElementById("breadcrumb").innerHTML = '← <a href="mechanics.html">游戏机制</a> › ' + esc(d2.title);
-      document.title = d2.title + " - 绝地潜兵2 中文维基";
+      document.getElementById("breadcrumb").innerHTML = '← <a href="mechanics.html">游戏机制</a> › ' + esc(d.title);
+      document.title = d.title + " - 绝地潜兵2 中文维基";
 
-      var tocItems = d2.toc.map(function(t) {
-        var cls = "toc-item toc-l" + t.level;
-        return '<a class="' + cls + '" href="#' + esc(t.id) + '">' + esc(t.title) + '</a>';
+      var tocItems = d.toc.map(function(t) {
+        return '<a class="toc-item toc-l' + t.level + '" href="#' + esc(t.id) + '">' + esc(t.title) + '</a>';
       }).join("");
 
-      var sectionsHtml = d2.sections.map(function(s) {
-        return renderSection(s);
-      }).join("");
+      var sectionsHtml = d.sections.map(function(s) { return renderSection(s); }).join("");
 
       layout.innerHTML =
         '<div class="toc-sidebar" id="toc-sidebar">' +
@@ -211,17 +227,34 @@ html { scroll-behavior: smooth; }
         '</div>' +
         '<div class="main-content">' +
           '<button class="toc-toggle" onclick="toggleToc()">📑 目录</button>' +
-          '<div class="card"><h1>' + esc(d2.title) + '</h1><div class="desc">' + esc(d2.description) + '</div></div>' +
+          '<div class="card"><h1>' + esc(d.title) + '</h1><div class="desc">' + esc(d.description) + '</div></div>' +
           sectionsHtml +
         '</div>';
+
+      // 锚点自检（控制台可查；正常情况下 duplicate / placeholder 恒为 0）
+      var ids = d.sections.reduce(function (acc, s) { return acc.concat(collectIds(s)); }, []);
+      var dups = ids.filter(function (v, i) { return ids.indexOf(v) !== i; });
+      var bad = ids.filter(function (v) { return !v || v === "_"; });
+      console.log("[Mechanic] " + id + " 小节=" + ids.length + " 唯一id=" + new Set(ids).size +
+        " 重复=" + dups.length + " 非法id=" + bad.length +
+        " 表格=" + countIn(layout, "table") + " 图=" + countIn(layout, "img") +
+        " 主干表格=" + MG_STATS.tables + " 主干图片块=" + MG_STATS.figures);
+      if (dups.length) console.warn("[Mechanic] 重复锚点 id:", dups);
+      if (bad.length) console.warn("[Mechanic] 非法锚点 id:", bad);
+      if (MG_STATS.zhOnly && MG_STATS.zhOnly.length) {
+        console.warn("[Mechanic] 下列中文小节在主干里没有对应小节，已追加到页尾（建议在覆盖文件中用 id 显式声明）:", MG_STATS.zhOnly);
+      }
+      if (MG_STATS.ambiguous && MG_STATS.ambiguous.length) {
+        console.warn("[Mechanic] 下列小节是按结构/序号配对的（主干标题与中文标题无法互译），请核对:", MG_STATS.ambiguous);
+      }
 
       // 滚动高亮
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
           if (e.isIntersecting) {
             document.querySelectorAll(".toc-item").forEach(function(a) { a.classList.remove("active"); });
-            var id = e.target.id;
-            var link = document.querySelector('.toc-item[href="#' + id + '"]');
+            var id2 = e.target.id;
+            var link = document.querySelector('.toc-item[href="#' + cssEsc(id2) + '"]');
             if (link) link.classList.add("active");
           }
         });
@@ -231,6 +264,14 @@ html { scroll-behavior: smooth; }
       // 银河冲击计算器
       if (id === "galactic_war") { initCalculator(); }
     }
+
+    function collectIds(s) {
+      var out = [s.id];
+      (s.subsections || []).forEach(function (sub) { out = out.concat(collectIds(sub)); });
+      return out;
+    }
+    function countIn(root, tag) { return root.querySelectorAll(tag).length; }
+    function cssEsc(s) { return String(s).replace(/["\\]/g, "\\$&"); }
 
     function initCalculator() {
       var calcDiv = document.getElementById("impact-calculator");
@@ -263,12 +304,19 @@ html { scroll-behavior: smooth; }
       return "var DIFFICULTY_MAX_OBJECTIVES={1:3,2:3,3:4,4:4,5:4,6:5,7:5,8:5,9:6,10:6};var DIFFICULTY_NAMES={1:'Trivial',2:'Easy',3:'Medium',4:'Challenging',5:'Hard',6:'Extreme',7:'Suicide Mission',8:'Impossible',9:'Helldive',10:'Super Helldive'};function compute(){var d=parseInt(document.getElementById('deaths').value)||0;var e=parseInt(document.getElementById('extracted').value)||0;var o=parseInt(document.getElementById('objectives').value)||0;var l=parseInt(document.getElementById('difficulty').value)||1;var m=parseFloat(document.getElementById('multiplier').value)||1.0;d=Math.max(0,d);e=Math.min(4,Math.max(0,e));o=Math.min(6,Math.max(0,o));l=Math.min(10,Math.max(1,l));m=Math.min(2,Math.max(0.5,m));var df=Math.min(1,d/10);var dp=0.2*df;var ef=1-(e/4);var ep=0.3*ef;var tp=dp+ep;var im=1-tp;var ti=o*im;var fi=ti*l*m;document.getElementById('deathPenalty').textContent='- '+(dp*100).toFixed(1)+'%';document.getElementById('extractPenalty').textContent='- '+(ep*100).toFixed(1)+'%';document.getElementById('totalPenalty').textContent=(tp*100).toFixed(1)+'%';document.getElementById('impact').textContent=ti.toFixed(2);document.getElementById('finalImpact').textContent=fi.toFixed(2);var txt='';if(fi<0.5)txt='贡献较低，尽量少死、全员撤离、多做支线！';else if(fi<2)txt='贡献一般，优化死亡和撤离表现能显著提升。';else if(fi<5)txt='贡献不错，继续保持！';else if(fi<10)txt='贡献很高，你是解放星球的栋梁！';else txt='⭐ 超级贡献！这一局打出了史诗级影响力！';var eq=fi/(10*1.0);var maxEq=6;if(eq>0.01){if(eq>=maxEq-0.01)txt+='（已达难度10下的满配水准）';else txt+='（等效于难度10下完成'+Math.min(eq,maxEq).toFixed(1)+'个目标）';}document.getElementById('interpretation').textContent=txt;}document.getElementById('calcBtn').addEventListener('click',compute);document.querySelectorAll('#calc-container input,#calc-container select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter')compute();});});compute();";
     }
 
+    /* 小节渲染：中文散文（若有）+ 主干/中文表格 + 主干/中文图片块 + 递归子节 */
     function renderSection(s) {
-      var html = '<div class="section" id="' + esc(s.id) + '">';
+      var html = '<div class="section sec-l' + s.level + '" id="' + esc(s.id) + '">';
       if (s.level === 2) html += '<h2>' + esc(s.title) + '</h2>';
       else if (s.level === 3) html += '<h3>' + esc(s.title) + '</h3>';
       else html += '<h4>' + esc(s.title) + '</h4>';
       html += cleanContent(s.content);
+      (s.figuresHtml || []).forEach(function(f) { html += f; });
+      (s.tablesHtml || []).forEach(function(t) { html += t; });
+      if (s.trunkRefHtml) {
+        html += '<details class="mg-ref"><summary>📄 英文原文（本页未译部分）</summary>' +
+                '<div class="mg-ref-body">' + cleanContent(s.trunkRefHtml) + '</div></details>';
+      }
       if (s.subsections) {
         s.subsections.forEach(function(sub) { html += renderSection(sub); });
       }

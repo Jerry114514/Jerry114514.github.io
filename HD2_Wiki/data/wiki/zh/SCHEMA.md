@@ -1,6 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
-> 版本：v1 · 2026-09-17
+> 版本：v1.1 · 2026-09-17（v1.1 修订 §5.2：`mechanics/` 从「整篇覆盖」改为「小节级合并」，并重写锚点 id 规则）
 > 适用范围：`HD2_Wiki/data/wiki/zh/` 及其子目录（`blocks/`、`mechanics/`、`fetch_reports/`）下的全部 JSON 数据文件。
 > 目的：把跨数据集已经事实存在的字段与约定写死，消除「同一语义多个字段名」「野生字段」的问题。
 > 强制程度：**本文件是唯一权威**。任何新增字段都必须先在本文件第 7 节登记，否则视为野生字段。
@@ -97,19 +97,74 @@ warbond   = item.warbond_zh || item.warbond
 - `_zh` 字段必须与主字段**同结构、同语义**。
 - 前端空值判定统一用 `|| `（对 `""`、`null`、`undefined` 一律回退），但 `0` 与 `false` 是合法值，取数时不要用 `||` 兜底数字（如 `price`）。
 
-### 5.2 整文档级覆盖（`mechanics/`）
+### 5.2 小节级合并（`mechanics/`）—— 2026-09 起的新模型
 
-`mechanics/<id>.json` 为英文正文，`mechanics/<id>_zh.json` 为中文覆盖文件：
+`mechanics/<id>.json` 为**英文主干**，`mechanics/<id>_zh.json` 为**中文覆盖文件**。二者在**小节级别**合并，而不是整篇二选一。
 
-| 覆盖文件字段 | 说明 |
-| --- | --- |
-| `title_zh` | 覆盖 `title` |
-| `description_zh` | 覆盖 `description` |
-| `sections_zh` | 覆盖 `sections`；元素为 `{ title_zh, content_zh, subsections_zh[] }`，可递归一层 |
+#### 5.2.1 两侧各提供什么
 
-- 存在 `sections_zh` 时**整篇以覆盖文件为准**，不回退混排；不存在时整篇用英文主干。
-- 覆盖文件的字段名**一律带 `_zh` 后缀**，不带后缀的字段在覆盖文件中无意义。
-- 覆盖文件的 `title_zh` 会按 `replace(/[\s\u4e00-\u9fff]+/g, '_')` 生成锚点 `id`，故 `sections_zh` 的顺序即页面目录顺序。
+| 来源 | 提供 | 说明 |
+| --- | --- | --- |
+| 主干 `<id>.json` | 文档级 `id` / `title` / `title_en` / `description` / `source`；小节级 `level` / `id` / `title` / `content`（内嵌 HTML）/ `subsections[]` | **锚点 id 的唯一权威**；表格（`<table>`）与图片（`<figure>` / 含 `<img>` 的容器）也只在主干里 |
+| 覆盖 `<id>_zh.json` | 文档级 `title_zh` / `description_zh`；小节级 `title_zh` / `paragraphs_zh[]` / `content_zh` / `tables_zh[]` / `figures_zh[]` / `subsections_zh[]` | 只提供中文；字段名一律带 `_zh` 后缀（`id` / `target_id` 例外，见 5.2.3） |
+
+#### 5.2.2 覆盖文件字段规范
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `title_zh` | string | 否 | 覆盖该小节标题 |
+| `paragraphs_zh` | string[] | 否 | 中文段落，逐段渲染为 `<p>`。**覆盖主干散文**，但不动主干表格/图片 |
+| `content_zh` | string | 否 | 中文正文 HTML 片段。优先级高于 `paragraphs_zh`；内嵌 `<a>` 会被降级为纯文本（中文页无对应目标） |
+| `tables_zh` | array | 否 | 覆盖该小节的表格。元素为第 6 节表格结构 `{ title, headers, rows, note }`，或 `{ html: "<table>…</table>" }` |
+| `figures_zh` | array | 否 | 覆盖该小节的图片。元素为 `{ html }` 或 `{ src, alt, caption_zh }` |
+| `id` / `target_id` | string | 否 | **显式声明本文对应主干的哪个小节**（值为主干 `id`）。强烈建议逐节书写，这是唯一无歧义的对齐方式 |
+| `subsections_zh` | array | 否 | 子节，元素同本表，可递归 |
+
+#### 5.2.3 合并优先级与回退规则
+
+| 内容 | 优先级（左高右低） | 回退行为 |
+| --- | --- | --- |
+| 文档标题 | `_zh.title_zh` → 主干 `title` → 主干 `title_en` | — |
+| 文档简介 | `_zh.description_zh` → 主干 `description` | — |
+| 小节标题 | 覆盖 `title_zh` → 主干 `title` | 未覆盖则显示英文标题 |
+| 小节散文 | 覆盖 `content_zh` → 覆盖 `paragraphs_zh` → 主干 `content` 的散文块 | 覆盖生效时，主干英文散文**不丢弃**，折进该小节的「📄 英文原文」`<details>` 内 |
+| 小节表格 | 覆盖 `tables_zh` → 主干 `content` 内的 `<table>`（含被 `<div>` 包裹的） | **未覆盖必定保留主干表格**；宽表渲染在横向滚动容器内 |
+| 小节图片 | 覆盖 `figures_zh` → 主干 `content` 内的 `<figure>` / 含图容器 | **未覆盖必定保留主干图片** |
+| 小节结构 | 主干 `subsections` 为骨架；覆盖多出的 `subsections_zh` 追加为其父节末尾的子节 | 主干有、覆盖没有的小节 → 整节保持英文主干内容（含表格/图片） |
+
+- 覆盖文件**缺失或 JSON 解析失败**时，整页回退为英文主干（不报错、不空白）。
+- 覆盖文件里出现但主干没有的小节，**一律不丢弃**：作为 L2 小节追加到页面末尾，并在 console 给出 `zhOnly` 警告，提示下一步用 `id` 显式声明。
+- 同一小节内的表格/图片按内容指纹去重（防止「容器 + 内层」重复渲染）；**不跨小节去重**（同类图标在不同小节重复出现是正常的）。
+
+#### 5.2.4 小节配对规则（无 `id` 时）
+
+1. 覆盖小节写了 `id` / `target_id` 且命中主干 `id` → 直接配对，忽略序号；
+2. 其余按**序号一一对应**，直到某一侧先耗尽；
+3. 多出的中文小节追加到父节末尾；主干多出的小节保持英文。
+
+> **为什么不自动做「编辑距离/diff 对齐」**：实测 `damage_zh.json` 的 `Damage Calculation` 下主干 16 节、中文 18 节（中文多出「拆毁值与结构」「其他结构」且缺 ExDR 一节）。「整体平移 2 位」与「按下标对齐」在纯字符串距离下几乎等价，而只有后者与数据书写顺序一致。自动平移会让中文散文整体错位贴到相邻小节上（标题与内容对不上），比「多出的两节挂到父节末尾」有害得多。**要消除歧义只能写 `id`。**
+
+#### 5.2.5 锚点（TOC）id 规则 —— 2026-09 修正
+
+1. 小节 id 取**主干 `id`**；覆盖小节没有对应主干时取覆盖的 `id` / `target_id` / `title_zh`；
+2. 经 `slugId()` 净化：保留 `[A-Za-z0-9._-]`，**中文与空白、标点一律替换为 `-`**（中文可正常作为锚点），折叠连续 `-`，去首尾 `-`，超长截断到 72 字符；
+3. 净化后为空或只剩 `_` → 按出现顺序生成 `s-1`、`s-2`…；
+4. 全页**去重**：重复的追加 `-2`、`-3`…；
+5. **禁止**出现 `_` 这种退化 id、**禁止**重复 id；TOC 的 `href="#<id>"` 与正文 `id="<id>"` 一一对应（由同一个合并结果生成，不会脱钩）。
+
+> **历史说明（变更原因，2026-09）**：旧规则用 `title_zh.replace(/[\s\u4e00-\u9fff]+/g, '_')` 生成 id，把**纯中文标题整体替换成 `_`**。实测 4 个机制页里 26 个小节中有 18 个 id 退化为 `_`，TOC 里所有纯中文项都指向 `#_`（点哪个都跳第一节），并产生重复 id。新规则按上面 1–5 执行。
+
+---
+
+## 5.3 旧规则（作废，仅留档）
+
+> 以下为 2026-09 之前 `SCHEMA.md` §5.2 的原文，**已作废，不要照此实现**：
+>
+> - 存在 `sections_zh` 时**整篇以覆盖文件为准，不回退混排**；不存在时整篇用英文主干。
+> - 覆盖文件的字段名一律带 `_zh` 后缀，不带后缀的字段在覆盖文件中无意义。
+> - 覆盖文件的 `title_zh` 会按 `replace(/[\s\u4e00-\u9fff]+/g, '_')` 生成锚点 `id`，故 `sections_zh` 的顺序即页面目录顺序。
+>
+> **作废原因（2026-09）**：「整篇以覆盖文件为准」导致 `mechanics/damage.json`（91 KB，含 6 张表）被 `damage_zh.json`（9 KB，只有散文）整段顶掉——伤害页实测**表格 0 张、图片 0 张、正文 2,605 字符**，而主干本有 6 张表。同时 `_` 锚点 id 使 TOC 全部失效（见 5.2.5 历史说明）。新模型改为**按小节合并 + 表格/图片优先保留**，并把锚点 id 改为稳定且唯一。
 
 ---
 
@@ -117,9 +172,11 @@ warbond   = item.warbond_zh || item.warbond
 
 | 结构名 | 形状 | 使用位置 |
 | --- | --- | --- |
-| 表格 | `{ headers: string[], rows: string[][] }`，可加 `title` / `title_en` / `note` | `boosters.json` 的 `tables` |
+| 表格 | `{ headers: string[], rows: string[][] }`，可加 `title` / `title_en` / `note` | `boosters.json` 的 `tables`；`mechanics/*_zh.json` 的 `tables_zh` |
 | 分节正文 | `{ title: string, items: string[] }` | `boosters.json` 的 `sections`；`blocks/beginners.json` 的 `sections` |
-| 长文小节 | `{ level: 2\|3\|4, id: string, title: string, content: string, subsections: [] }` | `mechanics/*.json` |
+| 长文小节（主干） | `{ level: 2\|3\|4, id: string, title: string, content: string, subsections: [] }` | `mechanics/*.json` |
+| 长文小节（中文覆盖） | `{ id?, target_id?, title_zh?, paragraphs_zh?, content_zh?, tables_zh?, figures_zh?, subsections_zh? }` | `mechanics/*_zh.json`，见第 5.2 节 |
+| 图片块（覆盖） | `{ html: string }` 或 `{ src, alt, caption_zh }` | `mechanics/*_zh.json` 的 `figures_zh` |
 | 部位 | `{ part_id, name, name_en, health, armor_level, location, ... }` | `enemies.json` 的 `body_parts` |
 | 攻击/弹丸 | `{ name, type, projectile{}, damage{}, penetration{}, special_effects{} }` | `*.detailed_stats.attacks` |
 | 变体 | `{ name, name_en, description, unlock }` | `weapons.json` 的 `variants` |
@@ -238,7 +295,20 @@ warbond   = item.warbond_zh || item.warbond
 
 ### 7.7 `mechanics/*.json`
 
-`id`、`title`、`title_en`、`description`、`sections[]`、`toc[]`（`{ level, id, title }`）。中文覆盖文件见第 5.2 节。
+**主干 `<id>.json`（英文）**：`id`、`title`、`title_en`、`description`、`sections[]`、`toc[]`（`{ level, id, title }`）、`updated_at`、`source`。
+
+`sections[]` 元素（**锚点 id 与表格/图片的唯一来源**）：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `level` | 2 \| 3 \| 4 | 是 | 渲染为 `<h2>` / `<h3>` / `<h4>` |
+| `id` | string | 是 | 锚点 id 权威值。允许 `[A-Za-z0-9._-]`（wiki 派生的 `Percent_.28.25.29_to_Main` 这类含 `.` 的也算合法） |
+| `title` | string | 是 | 英文标题 |
+| `content` | string | 是 | 小节自有正文（内嵌 HTML，含 `<table>` / `<figure>`）；子节正文在 `subsections` 里，不重复 |
+| `subsections` | array | 否 | 子节，元素同本表 |
+
+**覆盖 `<id>_zh.json`（中文）**：`title_zh`、`description_zh`、`sections_zh[]`。
+`sections_zh[]` 元素字段（`title_zh` / `paragraphs_zh` / `content_zh` / `tables_zh` / `figures_zh` / `subsections_zh` / `id` / `target_id`）与合并规则见 **第 5.2 节**。
 
 ### 7.8 `loadout.json`
 
@@ -275,6 +345,9 @@ warbond   = item.warbond_zh || item.warbond
 | `enemies.json` | `fatal` / `is_weak_point` 混用布尔与字符串 | 布尔 | 前端两者都判 |
 | `factions.json` | `updated_at` 为 `YYYY-MM-DD` | 秒级 ISO8601 | 未迁移 |
 | `mechanics/difficulty.json` 等 | `content` / `content_zh` 内嵌原始 HTML 片段（`<ul>`/`<br>`/`<strong>`） | — | 长文正文允许内嵌 HTML，属于登记在案的例外（`mechanics/*.json` 与 `mechanics/*_zh.json` 均适用） |
+| `mechanics/*_zh.json`（2026-09 实测） | **小节层级与主干不一致，且没有 `id` 声明**，只能按序号配对：`damage` 主干 `Damage Calculation` 下 16 节 / 中文 18 节（中文多「拆毁值与结构」「其他结构」、缺 ExDR）；`status_effects` 主干 11 节 / 中文 10 节（缺 `Change History`）；`galactic_war` 主干 5 节 / 中文 6 节且结构完全不同 | 每个覆盖小节写 `id`（= 主干 `id`），层级与主干对齐 | 未迁移。当前前端按第 5.2.4 节的序号规则配对，多出的中文小节挂到父节末尾；`galactic_war_zh.json` 的 4 节会因此变成页面末尾的独立小节 |
+| `mechanics/*_zh.json`（2026-09 实测） | `tables_zh` / `figures_zh` / `paragraphs_zh` **尚未被任何现有覆盖文件使用**（4 个文件只有 `title_zh` / `content_zh` / `subsections_zh`） | 表格与图片默认沿用主干 | 已支持（第 5.2.2 节），暂无数据 |
+| `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 全站相对路径或 wiki.gg 绝对 URL | 未迁移。主干图片在本地预览下必然破图（与合并逻辑无关）；下一步需下载或改写为 wiki.gg 绝对 URL |
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
 
 ---
@@ -287,6 +360,7 @@ warbond   = item.warbond_zh || item.warbond
 3. **`tables` 的一行一列都必须能回溯到渲染页**：不补算、不插值。
    - **唯一例外（2026-09-17 登记）**：wiki 模板渲染出的**完全相同的重复行**（已确认为模板 bug，非数据）允许删除，删除后 `tables[].note` 中不留「原页面此行重复」一类说明。已按此修订 `boosters.json` 的 `stun_pods`、`firebomb_hellpods` 各 1 行 `Status`。
 4. **数据缺失用 `null`/空数组表达**，不用「暂无」「待补充」等文案占位（`price_zh` 的 `待发布` 是展示文案字段，不是数据字段）。
+5. **中文化不得减少信息量（2026-09-17 登记）**：`_zh` 覆盖只允许替换**散文**；主干的表格与图片一律保留（覆盖未提供 `tables_zh` / `figures_zh` 时）。覆盖生效的英文散文不删除，由前端折进该小节的「📄 英文原文」`<details>`。校验时对主干每个 `content` 抽 20 字符滑窗，必须 100% 出现在合并结果里。
 
 ---
 
@@ -296,9 +370,11 @@ warbond   = item.warbond_zh || item.warbond
 
 1. JSON 可被 `[IO.File]::ReadAllText($p)` + `ConvertFrom-Json` 解析（**不要用 `Get-Content -Raw`**）。
 2. `total` == 主集合长度。
-3. 所有 `id` 满足 `^[a-z0-9_]+$` 且数据集内唯一。
+3. 所有 `id` 满足 `^[a-z0-9_]+$` 且数据集内唯一（`mechanics/*.json` 的 `id` 是 wiki 派生锚点，允许 `.` 与 `-`，见第 7.7 节）。
 4. 所有 `icon` 指向的文件真实存在（站内相对路径）。
 5. `source_url` / `source_page` 均为 `https://helldivers.wiki.gg/wiki/<英文名下划线>`。
 6. `_zh` 字段与主字段结构一致。
 7. 新增字段已在本文件第 7 节登记。
 8. 目录页 20/25/89/95… 等卡片数与 `blocks/navigation.json` 的 `count`、以及与数据集 `total` 一致，无外站引用。
+9. **`mechanics/` 合并自检（2026-09-17 新增）**：打开 4 个机制页，确认 ① console 无 error；② 每页的小节数 == TOC 项数 == 唯一 `<div class="section">` id 数；③ 无重复 id、无 `_` 占位 id；④ 表格数 == 主干 `<table>` 数（除非覆盖提供了 `tables_zh`）；⑤ 覆盖文件里出现但主干没有的中文小节在 console 有 `zhOnly` 警告（有警告时应回到覆盖文件补 `id`）。
+
