@@ -2734,7 +2734,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
           },
           y: {
             type: "linear", position: "left",
-            grace: "8%",    // 上下留白，极值不贴边
+            min: 0,         // 玩家数不可能为负：必须显式钉住下界（单靠 grace 会把轴拉到 -10000）
+            grace: "8%",    // 只留顶部余量，极值不贴边
             ticks: { color: C.mute, font: { size: 10, family: C.mono } },
             grid: { color: C.line }, border: { color: C.line },
             title: { display: true, text: "玩家数", color: C.brass, font: { size: 10, family: C.mono } }
