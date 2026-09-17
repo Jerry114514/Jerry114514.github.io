@@ -111,6 +111,12 @@
 
     .rw-link .rw-en { display: block; font-size: 0.66rem; color: var(--text-mute); border: none; }
 
+    /* 强化资源链接（复用 .rw-link 再叠加修饰类）：常驻黄字，与武器／战略配备的常态蓝字明确区分；
+       hover 时提亮为 --yellow-2 并点亮虚线下划线，字号／字重／内层 .rw-en 小字与 .rw-link 完全一致 */
+    .rw-link.rw-booster { color: var(--yellow); }
+
+    .rw-link.rw-booster:hover { color: var(--yellow-2); border-bottom-color: var(--yellow-2); }
+
 
     .reward-legend { font-size: 0.72rem; color: var(--text-mute); line-height: 1.7; margin-top: 8px; }
 
@@ -353,7 +359,8 @@
       return m;
     }
 
-    /* 奖励名 → 站内条目：命中 reward_refs 的渲染成 weapon.html / stratagem.html / booster.html 链接（同一 .rw-link 样式），
+    /* 奖励名 → 站内条目：命中 reward_refs 的渲染成 weapon.html / stratagem.html / booster.html 链接（基础样式 .rw-link），
+       其中强化资源额外叠加修饰类 .rw-booster（常驻黄字，与武器／战略配备的常态蓝字区分）；
        链接文字用站内既有中文译名（解析不到时回退原文奖励名）；未命中的保持纯文本 */
     function rewardCell(name) {
       var ref = REWARD_REFS[name];
@@ -365,7 +372,8 @@
       }
       if (!page) return esc(name);
       var zh = (REF_NAMES[ref.kind] || {})[ref.id];
-      return '<a class="rw-link" href="' + page + encodeURIComponent(ref.id) + '" title="' + esc(name) + '">' +
+      var cls = "rw-link" + (ref.kind === "booster" ? " rw-booster" : "");
+      return '<a class="' + cls + '" href="' + page + encodeURIComponent(ref.id) + '" title="' + esc(name) + '">' +
         esc(zh || name) + (zh ? '<span class="rw-en">' + esc(name) + '</span>' : '') + '</a>';
     }
 
