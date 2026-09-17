@@ -1,0 +1,781 @@
+{
+  "updated_at": "2026-09-17T19:24:00Z",
+  "source": "Helldivers Wiki.gg",
+  "total": 20,
+  "boosters": [
+    {
+      "id": "hellpod_space_optimization",
+      "name": "绝地喷射仓空间优化",
+      "name_en": "Hellpod Space Optimization",
+      "icon": "./assets/boosters/Hellpod_Space_Optimization_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 3,
+      "warbond_color": "#FFB000",
+      "price": 15,
+      "price_zh": "勋章 ×15",
+      "description": "Helldivers come out of the Hellpod fully stocked on Ammo, Grenades, and Stims.",
+      "description_zh": "绝地潜兵钻出绝地喷射仓时，弹药、手榴弹与兴奋剂均为满配。",
+      "overview_zh": "装备后，小队中所有绝地潜兵钻出绝地喷射仓时（无论是初始部署还是被增援），弹药、手榴弹与兴奋剂均为满配。实际携带上限取决于所装备的护甲，数量会有所不同。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "这是一个持续整场任务生效的效果：小队部署与增援时，主武器与副武器弹药、手榴弹、兴奋剂均以最大携带量出场。",
+            "医疗包、工程包等提升携带上限的护甲被动不会影响本强化资源，绝地潜兵始终获得其携带上限的 100%。"
+          ]
+        },
+        {
+          "title": "📌 备注",
+          "items": [
+            "它是目前唯一无需任何绝地潜兵装备即可生效的强化资源：当绝地潜兵与民主空间站位于同一星球、且「轨道封锁」战术行动处于激活状态时即可享受该效果。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Hellpod_Space_Optimization"
+    },
+    {
+      "id": "vitality_enhancement",
+      "name": "生命力强化",
+      "name_en": "Vitality Enhancement",
+      "icon": "./assets/boosters/Vitality_Enhancement_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 4,
+      "warbond_color": "#FFB000",
+      "price": 20,
+      "price_zh": "勋章 ×20",
+      "description": "Provides minor damage reduction from all sources for all Helldivers",
+      "description_zh": "为所有绝地潜兵提供来自任何伤害来源的少量伤害减免。",
+      "overview_zh": "装备后，所有绝地潜兵对伤害与肢体损伤的抗性都会提高。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "小队内所有绝地潜兵受到的伤害降低 10%，等效生命值更高，肢体受伤的概率也随之下降。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "适配所有任务类型：更强的抗打击能力让绝地潜兵能在火线上坚持更久，也减少了因肢体受伤而消耗的兴奋剂。",
+            "在需要小队原地固守的防御类任务中表现尤其好：机动受限意味着承受更多攻击，更高的生存能力同时降低了对补给箱的依赖。",
+            "与「死亡冲刺」搭配时，冲刺造成的生命值流失从约 3.6%／秒降至约 1%。",
+            "使用 LAS-17 双刃镰刀时，开火自伤会按固定数值减少；若再搭配「阻燃」护甲被动，热量达到 51% 之前几乎不会受到自伤。"
+          ]
+        },
+        {
+          "title": "📌 备注",
+          "items": [
+            "与「高级过滤」护甲被动和重甲（150 护甲值）叠加时，绝地潜兵几乎完全免疫残留毒气伤害。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["dead_sprint"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Vitality_Enhancement"
+    },
+    {
+      "id": "uav_recon_booster",
+      "name": "UAV侦察强化资源",
+      "name_en": "UAV Recon Booster",
+      "icon": "./assets/boosters/UAV_Recon_Booster_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 6,
+      "warbond_color": "#FFB000",
+      "price": 40,
+      "price_zh": "勋章 ×40",
+      "description": "Increases all Helldivers' effective radar range.",
+      "description_zh": "提升所有绝地潜兵的有效雷达范围。",
+      "overview_zh": "装备后，所有绝地潜兵的有效雷达范围提升，更便于侦察地形。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "雷达距离约提升 50%，微型地图上的扫描范围随之扩大，能更快发现巡逻中的敌人。",
+            "扫描结果不会共享给队友，因此仍需口头报点来协同。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "适合潜行打法，配合「侦察兵」护甲被动效果更佳（更难被发现，并可通过在地图上标记位置看到敌人所在）。",
+            "使用「侦察兵」或「不屈」护甲被动时，在地图上标记产生的雷达光点同样受本强化资源影响。",
+            "在带有「大气孢子」行动修正的任务中不会生效。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/UAV_Recon_Booster"
+    },
+    {
+      "id": "stamina_enhancement",
+      "name": "耐力增强",
+      "name_en": "Stamina Enhancement",
+      "icon": "./assets/boosters/Stamina_Enhancement_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 7,
+      "warbond_color": "#FFB000",
+      "price": 75,
+      "price_zh": "勋章 ×75",
+      "description": "Increases all Helldivers' stamina capacity and recovery.",
+      "description_zh": "提升所有绝地潜兵的体力上限与体力恢复速度。",
+      "overview_zh": "装备后，所有绝地潜兵的体力上限与体力恢复速度都会提升，可以冲刺更久、完成更耗费体力的动作。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "所有绝地潜兵的体力上限提升 22.5%，体力恢复速度提升 40%。",
+            "冲刺与绕行障碍时的机动性明显提升，长距离移动更快，有助于探图与完成目标。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "大地图跑图首选；在泥地、雪地、浅水等受限地形中，可再带一个「肌肉增强」以便通行。",
+            "「酷热」行星环境会把绝地潜兵的体力上限减半，携带本强化资源可以缓解这一影响。",
+            "在「闪电战：搜索与摧毁」这类时间紧张的任务中尤其有用：需要快速往返机器人前哨站、虫巢与光能族跃迁舰。",
+            "也可以用 LIFT-850 喷气背包或 TD-220 棱堡 MK XVI 等提升机动性的战略配备替代。"
+          ]
+        }
+      ],
+      "stats": [
+        {
+          "name": "体力恢复与护甲值",
+          "name_en": "Stamina Regen",
+          "type": "table",
+          "note": "体力恢复基于护甲值的原始数值计算，不计入「额外填充」等护甲被动。",
+          "headers": ["护甲值", "基础体力恢复", "装备后体力恢复"],
+          "rows": [
+            ["50", "125", "175"],
+            ["64", "118", "165.2"],
+            ["70", "115", "161"],
+            ["79", "111", "155.4"],
+            ["100", "100", "140"],
+            ["129", "71", "99.4"],
+            ["150", "50", "70"]
+          ]
+        }
+      ],
+      "related": ["muscle_enhancement"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Stamina_Enhancement"
+    },
+    {
+      "id": "muscle_enhancement",
+      "name": "肌肉增强",
+      "name_en": "Muscle Enhancement",
+      "icon": "./assets/boosters/Muscle_Enhancement_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 9,
+      "warbond_color": "#FFB000",
+      "price": 70,
+      "price_zh": "勋章 ×70",
+      "description": "Allows Helldivers to traverse difficult terrain with ease.",
+      "description_zh": "让绝地潜兵能够轻松穿越复杂地形。",
+      "overview_zh": "装备后，所有绝地潜兵在复杂地形与环境效果中移动得更快。",
+      "sections": [
+        {
+          "title": "✅ 可减免减速的场景",
+          "items": [
+            "沙尘暴、暴风雪",
+            "水面、积雪、泥地",
+            "植被",
+            "机器人铁丝网"
+          ]
+        },
+        {
+          "title": "🧪 酸液减速",
+          "items": [
+            "同时降低虫族酸液状态造成的减速强度，包括：酸液近战与远程攻击、部分虫族死亡时的酸液爆炸、触发虫雷引起的酸液爆炸。"
+          ]
+        },
+        {
+          "title": "🚫 不生效的场景",
+          "items": [
+            "沙地（无天气效果的地形）",
+            "斜坡（如山丘）",
+            "翻越／攀爬",
+            "地震"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["stamina_enhancement"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Muscle_Enhancement"
+    },
+    {
+      "id": "increased_reinforcement_budget",
+      "name": "提高增援预算",
+      "name_en": "Increased Reinforcement Budget",
+      "icon": "./assets/boosters/Increased_Reinforcement_Budget_Booster_Icon.svg",
+      "warbond": "Helldivers Mobilize",
+      "warbond_zh": "绝地潜兵总动员！",
+      "warbond_page": 10,
+      "warbond_color": "#FFB000",
+      "price": 150,
+      "price_zh": "勋章 ×150",
+      "description": "Increases the number of available reinforcements.",
+      "description_zh": "增加可用的增援次数。",
+      "overview_zh": "装备后，可用增援次数增加，能够以更高的频次呼叫增援。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "每名绝地潜兵使初始增援次数 +1；单人游玩时从 5 次提升到 6 次。"
+          ]
+        },
+        {
+          "title": "📌 功能说明",
+          "items": [
+            "当增援次数已经耗尽时，中途加入的玩家不会因此获得额外增援。",
+            "选择该强化资源的玩家掉线或被移出游戏后，其效果依然保留。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["flexible_reinforcement_budget"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Increased_Reinforcement_Budget"
+    },
+    {
+      "id": "flexible_reinforcement_budget",
+      "name": "灵活增援预算",
+      "name_en": "Flexible Reinforcement Budget",
+      "icon": "./assets/boosters/Flexible_Reinforcement_Budget_Booster_Icon.svg",
+      "warbond": "Steeled Veterans",
+      "warbond_zh": "铁血老兵",
+      "warbond_page": 3,
+      "warbond_color": "#D6806D",
+      "price": 75,
+      "price_zh": "勋章 ×75",
+      "description": "Reduce time until new reinforcements are granted once they've been depleted.",
+      "description_zh": "增援次数耗尽后，缩短新一批增援发放的等待时间。",
+      "overview_zh": "装备后，获得增援的计时会缩短；该效果仅在增援次数已经耗尽时激活。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "增援耗尽后的补充等待时间缩短 25%，即把 2:00 的增援冷却缩短到 1:30。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "满编小队中收益有限——理想情况下减员可由更多增援次数消化。",
+            "对单人潜兵有一定价值：单人总共只获得 5 次增援，而「提高增援预算」此时只能多给一次增援。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["increased_reinforcement_budget"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Flexible_Reinforcement_Budget"
+    },
+    {
+      "id": "localization_confusion",
+      "name": "定位混淆",
+      "name_en": "Localization Confusion",
+      "icon": "./assets/boosters/Localization_Confusion_Booster_Icon.svg",
+      "warbond": "Cutting Edge",
+      "warbond_zh": "遥遥领先",
+      "warbond_page": 1,
+      "warbond_color": "#5BA3D0",
+      "price": 18,
+      "price_zh": "勋章 ×18",
+      "description": "Increases the time between enemy encounters.",
+      "description_zh": "延长两次巡逻队刷新之间的间隔",
+      "overview_zh": "装备后，敌人遭遇／增援（虫族裂隙、机器人空投、光能族来袭飞船）之间的间隔会延长，为绝地潜兵争取更多反应时间。",
+      "sections": [
+        {
+          "title": "⚠️ 重要提示",
+          "items": [
+            "定位混淆不影响敌人的刷新机制，也不影响巡逻队的刷新频率。",
+            "它不会延迟遭遇事件发生后增援抵达的时间，也不会减少响应呼叫的增援数量。"
+          ]
+        },
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "「遭遇」即一次增援呼叫，形式为虫族裂隙、机器人空投或光能族来袭飞船。",
+            "遭遇触发后会启动一个内部计时器，视难度约为 2 至 5 分钟；必须走完该计时才能再次触发遭遇，且计时长度在整场任务中固定不变。",
+            "定位混淆把这一内部计时阈值提高约 15%。",
+            "举例：单人、难度 9 且未装备时，阈值约为 2 分 30 秒；装备后约为 2 分 52.5 秒，即延长约 22.5 秒。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Localization_Confusion"
+    },
+    {
+      "id": "expert_extraction_pilot",
+      "name": "专业撤离飞行员",
+      "name_en": "Expert Extraction Pilot",
+      "icon": "./assets/boosters/Expert_Extraction_Pilot_Booster_Icon.svg",
+      "warbond": "Democratic Detonation",
+      "warbond_zh": "民主爆破",
+      "warbond_page": 2,
+      "warbond_color": "#E74C3C",
+      "price": 55,
+      "price_zh": "勋章 ×55",
+      "description": "Lowers the time it takes for the extraction shuttle to reach the extraction beacon.",
+      "description_zh": "缩短撤离飞船抵达撤离信标所需的时间",
+      "overview_zh": "装备后撤离倒计时缩短，小队能更快撤离。对任务完成后立即呼叫并降落的撤离飞船无效。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "撤离飞船抵达撤离区的时间缩短 30%，即把 2:00 的呼叫时间降至 1:24。",
+            "若行动修正「复杂战略配备部署」生效，鹈鹕 1 号的抵达时间从 3:00 降至 2:06。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "挑战「360 秒内撤离！」成就时非常有用。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Expert_Extraction_Pilot"
+    },
+    {
+      "id": "motivational_shocks",
+      "name": "激励冲击",
+      "name_en": "Motivational Shocks",
+      "icon": "./assets/boosters/Motivational_Shocks_Booster_Icon.svg",
+      "warbond": "Polar Patriots",
+      "warbond_zh": "极地爱国者",
+      "warbond_page": 1,
+      "warbond_color": "#7FD4E8",
+      "price": 15,
+      "price_zh": "勋章 ×15",
+      "description": "Allows all Helldivers to recover faster after being slowed by an attack, such as acid. Does not mitigate “area effects,” such as EMS strikes.",
+      "description_zh": "让所有绝地潜兵在被酸液等攻击减速后更快恢复。无法减轻“范围效果”的影响，例如电磁打击。",
+      "overview_zh": "装备后，所有绝地潜兵在被某些攻击减速后能更快恢复。它能缓解大部分减速攻击，但并非全部。",
+      "sections": [
+        {
+          "title": "⏱️ 已知恢复时间",
+          "items": [
+            "G-23 眩晕手雷与 CQC-30 电击棍造成的「中度眩晕」约减少 2.5 秒；其余眩晕效果减半，但「轨道电磁打击」的云团除外。",
+            "地震造成的减速减少 25%，标准 10 秒减益降至 7.5 秒。",
+            "触发冰晶植物造成的减速减少 25%，标准约 5 秒减益降至约 3.77 秒。"
+          ]
+        },
+        {
+          "title": "🐞 已知问题",
+          "items": [
+            "目前该强化资源并不能让绝地潜兵更快地从酸液减速中恢复：无论是否携带，减速持续时间相同。据 Arrowhead 客服回复，这应属 Bug。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Motivational_Shocks"
+    },
+    {
+      "id": "experimental_infusion",
+      "name": "实验性注射剂",
+      "name_en": "Experimental Infusion",
+      "icon": "./assets/boosters/Experimental_Infusion_Booster_Icon.svg",
+      "warbond": "Viper Commandos",
+      "warbond_zh": "毒蛇突击兵",
+      "warbond_page": 3,
+      "warbond_color": "#2ECC71",
+      "price": 80,
+      "price_zh": "勋章 ×80",
+      "description": "In addition to restoring health, stims temporarily increase movement speed and damage reduction.",
+      "description_zh": "兴奋剂在恢复生命值之外，还会暂时提升移动速度与伤害减免。",
+      "overview_zh": "装备后，所有绝地潜兵使用的兴奋剂在原有作用之外，还会提升移动速度并降低所受伤害。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "兴奋剂额外提供 10% 移动速度与 10% 伤害抗性。",
+            "副作用：准星晃动增加 25%。",
+            "视觉表现不同且更强烈，包括绿色「兴奋剂雾气」以及部分颜色的饱和度提升。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Experimental_Infusion"
+    },
+    {
+      "id": "firebomb_hellpods",
+      "name": "火焰炸弹绝地喷射仓",
+      "name_en": "Firebomb Hellpods",
+      "icon": "./assets/boosters/Firebomb_Hellpods_Booster_Icon.svg",
+      "warbond": "Freedom's Flame",
+      "warbond_zh": "自由烈焰",
+      "warbond_page": 3,
+      "warbond_color": "#FF6B4A",
+      "price": 60,
+      "price_zh": "勋章 ×60",
+      "description": "Lines all Hellpods with volatile incendiaries that detonate upon impact, igniting any units in vicinity of the drop site.",
+      "description_zh": "为所有绝地喷射仓填充易爆燃烧剂，撞击时引爆，点燃落点附近的所有单位。",
+      "overview_zh": "装备后，所有绝地喷射仓（载人或无人）在撞击地面时引爆。由于其潜在伤害，请务必提前告知队友以减少误伤。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "命中地表时产生小型爆炸，同时造成爆炸伤害与燃烧伤害，落点附近的任何单位都会被点燃。",
+            "因为影响小队部署的每一个绝地喷射仓，请格外小心误伤与事故，开局全队整备时尤其如此。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "不建议在「撤离高价值资产」这类空间有限的小型任务区域使用：所有哨戒炮都通过绝地喷射仓部署，彼此靠近投放会互相摧毁。",
+            "装备后请通知队友，便于他们调整投掷位置，既能最大化杀伤也能避免误伤，呼叫支援类战略配备时尤其如此。"
+          ]
+        }
+      ],
+      "stats": [
+        {
+          "name": "爆炸 · 火焰喷射仓撞击",
+          "name_en": "Explosion HellpodImpact FieryDrop",
+          "type": "explosion",
+          "groups": [
+            {
+              "label": "范围效果",
+              "rows": [["内圈半径", "2 m"], ["外圈半径", "4 m"], ["冲击波半径", "4 m"]]
+            },
+            {
+              "label": "伤害",
+              "rows": [["伤害元素", "火焰"], ["内圈伤害", "200 火焰"], ["内圈耐久伤害", "200 火焰"], ["外圈伤害", "199 - 0"], ["外圈耐久伤害", "199 - 0"]]
+            },
+            {
+              "label": "穿透",
+              "rows": [["直射穿透", "反坦克 VI"]]
+            },
+            {
+              "label": "范围效果附加",
+              "rows": [["状态", "着火"], ["状态强度", "20"], ["拆毁值", "40"], ["踉跄力", "15"], ["推力", "20"]]
+            }
+          ]
+        }
+      ],
+      "related": ["stun_pods"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Firebomb_Hellpods"
+    },
+    {
+      "id": "dead_sprint",
+      "name": "死亡冲刺",
+      "name_en": "Dead Sprint",
+      "icon": "./assets/boosters/Dead_Sprint_Booster_Icon.svg",
+      "warbond": "Truth Enforcers",
+      "warbond_zh": "真理执行者",
+      "warbond_page": 1,
+      "warbond_color": "#CF64F8",
+      "price": 35,
+      "price_zh": "勋章 ×35",
+      "description": "Allows Helldivers to keep sprinting even when they are out of stamina, draining their health instead.",
+      "description_zh": "让绝地潜兵在体力耗尽后仍能继续冲刺，但改为消耗生命值。",
+      "overview_zh": "装备后，所有绝地潜兵在体力耗尽后仍可继续冲刺，代价是消耗生命值。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "让绝地潜兵无需使用兴奋剂、也不必中断冲刺来恢复体力，就能跨越更长的距离。",
+            "非战斗场景下省时省兴奋剂：可以一路掉血冲刺，抵达目标后再补一针。",
+            "战斗中可以不停顿地风筝敌人，只要生命值允许——相当于用少量掉血换取敌人的攻击落空。"
+          ]
+        },
+        {
+          "title": "📊 数值细节",
+          "items": [
+            "冲刺时每秒约消耗 3.6% 生命值；搭配「生命力强化」时约为 1%／秒。",
+            "体力耗尽后可连续冲刺约 25 秒，生命值降至 5% 时停止。",
+            "生命值低于 5% 时不会触发；即使生命值降到 1 也不会致死。",
+            "搭配「生命力强化」时，体力耗尽后的总冲刺时间可达约 142 秒。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["vitality_enhancement"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Dead_Sprint"
+    },
+    {
+      "id": "armed_resupply_pods",
+      "name": "武装重新补给舱",
+      "name_en": "Armed Resupply Pods",
+      "icon": "./assets/boosters/Armed_Resupply_Pods_Booster_Icon.svg",
+      "warbond": "Urban Legends",
+      "warbond_zh": "都市传奇",
+      "warbond_page": 2,
+      "warbond_color": "#9AA5B1",
+      "price": 55,
+      "price_zh": "勋章 ×55",
+      "description": "Mounts a modified AR-23 Liberator to all resupply pods, allowing them to double as automatic turrets.",
+      "description_zh": "为所有补给舱加装一挺改装版 AR-23 解放者，使其兼具自动炮塔的用途。",
+      "overview_zh": "装备后，所有补给舱都会加装一挺自动化定制 AR-23P 解放者穿甲步枪，直到子弹打光或补给舱被摧毁。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "与哨戒炮类似，该炮塔会自动瞄准并射击 30 米内的任何非绝地潜兵敌对目标。"
+          ]
+        }
+      ],
+      "stats": [
+        {
+          "name": "AR-23 解放者（补给舱炮塔）",
+          "name_en": "AR-23 Liberator Resupply Pod",
+          "type": "weapon",
+          "groups": [
+            {
+              "label": "武器",
+              "rows": [["射速", "640 发／分"], ["弹匣容量", "140"]]
+            }
+          ]
+        },
+        {
+          "name": "5.5×50mm 步枪穿甲弹",
+          "name_en": "Rifle 5.5x50mm Penetrator",
+          "type": "projectile",
+          "groups": [
+            {
+              "label": "弹丸",
+              "rows": [["弹体质量", "4.5 g"], ["初速度", "1000 m/s"], ["阻力系数", "30%"], ["重力系数", "100%"], ["穿透减速", "25%"]]
+            },
+            {
+              "label": "伤害",
+              "rows": [["标准伤害", "65"], ["耐久伤害", "15"]]
+            },
+            {
+              "label": "穿透",
+              "rows": [["直射穿透", "中甲"], ["小角度穿透", "中甲"], ["大角度穿透", "中甲"], ["极端穿透", "无护甲"]]
+            },
+            {
+              "label": "特殊效果",
+              "rows": [["拆毁值", "10"], ["踉跄力", "10"], ["推力", "10"]]
+            }
+          ]
+        }
+      ],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Armed_Resupply_Pods"
+    },
+    {
+      "id": "sample_extricator",
+      "name": "样本拯救者",
+      "name_en": "Sample Extricator",
+      "icon": "./assets/boosters/Sample_Extricator_Booster_Icon.svg",
+      "warbond": "Borderline Justice",
+      "warbond_zh": "临界正义",
+      "warbond_page": 3,
+      "warbond_color": "#F5C518",
+      "price": 65,
+      "price_zh": "勋章 ×65",
+      "description": "Large enemies now have a chance of dropping Samples on death. Capped at 10 drops per mission.",
+      "description_zh": "大型敌人死亡时有几率掉落样本。每场任务最多触发 10 次掉落。",
+      "overview_zh": "装备后，所有大型敌人死亡时都有几率掉落普通样本。掉落数量不固定，但单场任务上限为 10 个。",
+      "sections": [
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "这是一个持续整场任务生效的效果，可让小队获得超过地图刷新上限的普通样本数量。",
+            "最适合「撤离高价值资产」「歼灭终结族虫群」「歼灭机器人部队」这类地图小、刷新点固定的任务，便于寻找样本，对需要刷样本升级超级驱逐舰的玩家很有帮助。",
+            "「撤离高价值资产」通常几乎不含样本（最多 2 个），多带出 10 个样本帮助很大；任务完成后检查防御门附近，往往几分钟就能找齐。",
+            "两种歼灭任务的样本本就不多，额外 10 个足以让总量翻倍，地图小也相对好找。",
+            "在大型敌人完全不刷新或数量极少的低难度下表现不佳。",
+            "对银河战争中的「样本类重要指令」很有帮助：额外 10 个普通样本意味着三轮任务组成的一次行动，可能产出相当于四轮任务的数量（增量随难度变化）。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["sample_scanner"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Sample_Extricator"
+    },
+    {
+      "id": "sample_scanner",
+      "name": "样本扫描仪",
+      "name_en": "Sample Scanner",
+      "icon": "./assets/boosters/Sample_Scanner_Booster_Icon.svg",
+      "warbond": "Masters of Ceremony",
+      "warbond_zh": "典礼官",
+      "warbond_page": 3,
+      "warbond_color": "#C8862A",
+      "price": 65,
+      "price_zh": "勋章 ×65",
+      "description": "The Sample scanner gives you a 15% chance to receive twice the Samples on sample pick up.",
+      "description_zh": "样本扫描仪让你在拾取样本时有 15% 的几率获得双倍样本。",
+      "overview_zh": "拾取样本时有 15% 的几率获得双倍样本，对所有稀有度的样本均生效。",
+      "sections": [
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "这是一个持续整场任务生效的效果，可让小队获得超过地图刷新上限的样本数量。",
+            "并非每次部署都有价值，例如「撤离高价值资产」本身不含样本；但对需要刷样本升级超级驱逐舰的玩家很有帮助。",
+            "对银河战争中的「样本类重要指令」很有帮助：额外 10 个样本意味着三轮任务组成的一次行动，可能产出相当于四轮任务的数量（增量随难度变化）。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": ["sample_extricator"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Sample_Scanner"
+    },
+    {
+      "id": "stun_pods",
+      "name": "眩晕喷射仓",
+      "name_en": "Stun Pods",
+      "icon": "./assets/boosters/Stun_Pods_Booster_Icon.svg",
+      "warbond": "Force of Law",
+      "warbond_zh": "法律铁腕",
+      "warbond_page": 2,
+      "warbond_color": "#4C8DFF",
+      "price": 55,
+      "price_zh": "勋章 ×55",
+      "description": "Exposes Hellpod wiring upon surface contact, stunning any units in the vicinity of the drop site.",
+      "description_zh": "绝地喷射仓接触地面时会外露线路放电，眩晕落点附近的所有单位。",
+      "overview_zh": "装备后，所有绝地喷射仓（载人或无人）在撞击地面时会眩晕附近的敌人。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "命中地表时产生小型爆炸，使落点附近的任何单位陷入眩晕。"
+          ]
+        }
+      ],
+      "stats": [
+        {
+          "name": "爆炸 · 喷射仓眩晕",
+          "name_en": "Explosion Hellpod Stun",
+          "type": "explosion",
+          "groups": [
+            {
+              "label": "范围效果",
+              "rows": [["内圈半径", "2 m"], ["外圈半径", "4 m"], ["冲击波半径", "4 m"]]
+            },
+            {
+              "label": "伤害",
+              "rows": [["伤害元素", "电弧"], ["内圈伤害", "50 电弧"], ["内圈耐久伤害", "50 电弧"], ["外圈伤害", "49 - 0"], ["外圈耐久伤害", "49 - 0"]]
+            },
+            {
+              "label": "穿透",
+              "rows": [["直射穿透", "反坦克 VI"]]
+            },
+            {
+              "label": "范围效果附加",
+              "rows": [["状态", "重度眩晕"], ["状态强度", "100"], ["拆毁值", "40"], ["踉跄力", "50"], ["推力", "0"]]
+            }
+          ]
+        }
+      ],
+      "related": ["firebomb_hellpods"],
+      "source_url": "https://helldivers.wiki.gg/wiki/Stun_Pods"
+    },
+    {
+      "id": "concealed_insertion",
+      "name": "隐蔽上阵",
+      "name_en": "Concealed Insertion",
+      "icon": "./assets/boosters/Concealed_Insertion_Booster_Icon.svg",
+      "warbond": "Redacted Regiment",
+      "warbond_zh": "绝密军团",
+      "warbond_page": 3,
+      "warbond_color": "#6B7280",
+      "price": 40,
+      "price_zh": "勋章 ×40",
+      "description": "Equips Hellpods to deploy smokescreens on impact, obscuring Helldiver deployment.",
+      "description_zh": "为绝地喷射仓配备撞击后释放烟幕的装置，掩护绝地潜兵的部署。",
+      "overview_zh": "装备后，绝地喷射仓在撞击时释放烟幕。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "所有绝地喷射仓（载人或无人）在撞击时释放一小团烟幕，遮挡落点周围区域，掩护绝地潜兵与装备。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "玩家处于烟幕中时，敌人只有距离 10 米以内（最小视距）才能发现。",
+            "烟幕对所有绝地喷射仓生效，在敌人附近增援时尤其有用，可以争取在被发现前脱身。",
+            "烟幕还能掩护绝地潜兵执行某些任务类战略配备，例如启动 NUX-223 地狱火炸弹、拾取补给、向超级地球旗帜敬礼。",
+            "主要目标完成后立即呼叫的撤离信标也会被烟幕暂时遮蔽。附近敌人会被任何战略配备吸引，因此拾取支援武器时的隐蔽同样有用。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Concealed_Insertion"
+    },
+    {
+      "id": "integrated_extinguishers",
+      "name": "集成灭火器",
+      "name_en": "Integrated Extinguishers",
+      "icon": "./assets/boosters/Integrated_Extinguishers_Booster_Icon.svg",
+      "warbond": "Ironclad Democracy",
+      "warbond_zh": "民主铁壁",
+      "warbond_page": null,
+      "warbond_color": "#B8C4D0",
+      "price": null,
+      "price_zh": "待公布",
+      "description": "For the Helldivers who like to play with fire, we have the Integrated Extinguishers Booster which reduces the time to extinguish flames if you accidentally set your teammates ablaze.",
+      "description_zh": "缩短绝地潜兵身上的火焰自动熄灭所需的时间，使其不再需要靠扑倒或卧倒来灭火。",
+      "overview_zh": "装备后，任意小队成员着火时的灭火时间都会缩短。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "缩短绝地潜兵身上火焰自动熄灭所需的时间，使其不再需要靠扑倒或卧倒来给自己灭火。"
+          ]
+        },
+        {
+          "title": "💡 战术信息",
+          "items": [
+            "虽然扑倒可以立刻灭火，但不扑倒时绝地潜兵仍会持续着火一段时间；装备本强化资源后该时间会缩短（官方页面尚未给出具体秒数）。",
+            "在保持战场感知的前提下，本强化资源能减轻明火带来的伤害；视敌人、武器与环境不同，这份额外防护可以提升绝地潜兵的战场存活率。"
+          ]
+        },
+        {
+          "title": "📌 备注",
+          "items": [
+            "官方 wiki 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待公布」。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Integrated_Extinguishers"
+    },
+    {
+      "id": "surplus_eat_allocation",
+      "name": "额外一次性反坦克火箭筒强化资源",
+      "name_en": "Surplus EAT Allocation",
+      "icon": "./assets/boosters/Surplus_EAT_Allocation_Booster_Icon.png",
+      "warbond": "Ironclad Democracy",
+      "warbond_zh": "民主铁壁",
+      "warbond_page": null,
+      "warbond_color": "#B8C4D0",
+      "price": null,
+      "price_zh": "待公布",
+      "description": "Enjoy two free uses of the Expendable Anti-Tank (EAT) Stratagem per mission; that’s enough to grant a full squad one single-use rocket launcher each.",
+      "description_zh": "每场任务额外提供两次 EAT-17 一次性反坦克支援武器的免费使用次数，共 4 具发射器，每名绝地潜兵一具。",
+      "overview_zh": "装备后，小队每场任务额外获得 2 次 EAT-17 一次性反坦克支援武器的免费使用次数。",
+      "sections": [
+        {
+          "title": "⚙️ 具体效果",
+          "items": [
+            "每场任务提供两次免费的 EAT-17 一次性反坦克支援武器使用次数，共 4 具发射器，每名绝地潜兵一具。"
+          ]
+        },
+        {
+          "title": "📌 备注",
+          "items": [
+            "官方 wiki 将其标记为「制作中／即将推出」，战争债券页数与勋章价格尚未公布，故本站价格记为「待公布」。"
+          ]
+        }
+      ],
+      "stats": [],
+      "related": [],
+      "source_url": "https://helldivers.wiki.gg/wiki/Surplus_EAT_Allocation"
+    }
+  ]
+}

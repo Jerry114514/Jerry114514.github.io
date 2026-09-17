@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>强化资源详情 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 强化资源详情页" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <style>
+    :root { --amber: #f59e0b; --red: #ef4444; }
+
+
+    .wiki-header { padding: 24px 20px 16px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+
+    .breadcrumb { max-width: 1200px; margin: 0 auto; font-size: 0.8rem; color: var(--text-mute); }
+
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+
+    .breadcrumb a:hover { color: var(--yellow); }
+
+
+    .detail-layout { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 70% 30%; gap: 20px; width: 100%; align-items: start; }
+
+
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+
+    .info-card { display: flex; flex-direction: column; gap: 16px; }
+
+    .info-card .card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+    .info-card .card h2 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+
+
+    .title-block .name { font-size: 1.8rem; color: var(--text); }
+
+    .title-block .name-en { font-size: 1rem; color: var(--text-mute); margin: 2px 0 8px; }
+
+    .detail-icon { display: flex; align-items: center; justify-content: center; height: 100px; margin: 0 auto 12px; }
+
+    .detail-icon img { max-height: 100px; max-width: 180px; object-fit: contain; }
+
+    .detail-icon .ph { font-size: 3rem; color: var(--text-mute); }
+
+    .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
+
+    .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
+    .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
+
+
+    .stats-table { width: 100%; border-collapse: collapse; }
+
+    .stats-table tr { border-bottom: 1px solid var(--border); }
+
+    .stats-table td { padding: 8px 10px; font-size: 0.85rem; }
+
+    .stats-table td:first-child { color: var(--text-mute); width: 40%; }
+
+    .stats-table td:last-child { color: var(--text); }
+
+
+    .variant-card { display: block; padding: 12px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 8px; }
+
+    .variant-card:hover { border-color: var(--blue); background: rgba(59,130,246,0.08); }
+
+    .variant-card .v-name { font-size: 0.88rem; color: var(--text); font-weight: 600; }
+
+    .variant-card .v-desc { font-size: 0.78rem; color: var(--text-dim); margin: 4px 0; }
+
+    .variant-card .v-unlock { font-size: 0.75rem; color: var(--yellow); }
+
+
+    .tips-list { padding-left: 18px; }
+
+    .tips-list li { font-size: 0.85rem; color: var(--text-dim); line-height: 1.8; }
+
+
+    .info-side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; align-self: start; }
+
+    .side-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+    .side-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; }
+
+    .side-card .field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+
+    .side-card .field:last-child { border-bottom: none; }
+
+    .side-card .field .k { color: var(--text-mute); }
+
+    .side-card .field .v { color: var(--text); }
+
+    .traits { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .trait { padding: 3px 10px; border-radius: 12px; background: rgba(59,130,246,0.12); color: var(--blue); font-size: 0.75rem; }
+
+    .mode-tag { padding: 3px 10px; border-radius: 12px; background: rgba(245,158,11,0.12); color: var(--yellow); font-size: 0.75rem; display: inline-block; margin: 2px; }
+
+
+    .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
+
+
+    .ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 8px; margin: 8px 0; }
+
+    .ds-cell { display: flex; flex-direction: column; padding: 6px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
+
+    .ds-k { font-size: 12px; color: var(--text-mute); margin-bottom: 2px; }
+
+    .ds-v { font-size: 13px; color: var(--text); font-family: 'Consolas','Menlo',monospace; }
+
+    .ds-attack { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+
+    .ds-attack:last-child { margin-bottom: 0; }
+
+    .ds-attack-head { font-size: 14px; color: var(--text); font-weight: 600; margin-bottom: 8px; }
+
+    .ds-status { border-left: 3px solid var(--amber); }
+
+    .ds-type { font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-left: 6px; background: rgba(255,255,255,0.08); color: var(--text-dim); }
+
+    .ds-type-proj { background: rgba(59,130,246,0.2); color: var(--blue); }
+
+    .ds-type-exp { background: rgba(239,68,68,0.2); color: var(--red); }
+
+    .ds-type-fire { background: rgba(245,158,11,0.2); color: var(--amber); }
+
+    .ds-type-spray { background: rgba(16,185,129,0.2); color: #10b981; }
+
+    .ds-type-beam { background: rgba(139,92,246,0.2); color: #8b5cf6; }
+
+    .ds-type-arc { background: rgba(139,92,246,0.2); color: #a78bfa; }
+
+    .ds-type-dmg { background: rgba(239,68,68,0.2); color: var(--red); }
+
+    .ds-type-melee { background: rgba(239,68,68,0.2); color: var(--red); }
+
+    @media (max-width: 1023px) { .ds-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    @media (max-width: 767px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
+
+
+    @media (max-width: 900px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .info-side { order: 2; }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260913e">
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="boosters.html">强化资源</a></div>
+  </header>
+
+  <div class="detail-layout" id="detail-layout">
+    <div class="loading">正在加载强化资源数据…</div>
+  </div>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p>
+  </footer>
+
+  <script src="./assets/js/wiki-router.js"></script>
+  <script>
+    "use strict";
+    var ALL_BOOSTERS = [];
+
+    async function loadDetail() {
+      var raw = WikiRouter.param("id") || WikiRouter.param("b");
+      var layout = document.getElementById("detail-layout");
+      try {
+        var r = await fetch("./data/wiki/zh/boosters.json?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var d = await r.json();
+        ALL_BOOSTERS = d.boosters || [];
+        var id = normalizeId(raw);
+        var b = ALL_BOOSTERS.find(function(x) { return x.id === id; });
+        if (!b) {
+          layout.innerHTML = '<div class="empty">未找到该强化资源' +
+            (raw ? '（参数：' + esc(raw) + '）' : '（缺少 id 参数）') +
+            '<br><br><a class="variant-card" style="max-width:320px;margin:0 auto;" href="boosters.html">◀ 返回强化资源图鉴</a></div>';
+          return;
+        }
+        renderDetail(b);
+      } catch(e) {
+        console.error("[Booster] 加载失败:", e);
+        layout.innerHTML = '<div class="empty">⚠️ 强化资源数据加载失败<br><br>' +
+          '<a class="variant-card" style="max-width:320px;margin:0 auto;" href="boosters.html">◀ 返回强化资源图鉴</a></div>';
+      }
+    }
+
+    function normalizeId(v) {
+      if (!v) return "";
+      var s = String(v).trim().toLowerCase();
+      if (ALL_BOOSTERS.some(function(x) { return x.id === s; })) return s;
+      var alt = s.replace(/-/g, "_");
+      if (ALL_BOOSTERS.some(function(x) { return x.id === alt; })) return alt;
+      return s;
+    }
+
+    function renderDetail(b) {
+      var layout = document.getElementById("detail-layout");
+
+      document.getElementById("breadcrumb").innerHTML =
+        '← <a href="boosters.html">强化资源</a> › ' + esc(b.warbond_zh || b.warbond || "") + ' › ' + esc(b.name);
+
+      var pageZh = b.warbond_page ? "第 " + b.warbond_page + " 页" : "待公布";
+      var unlockLine = "⭐ 战争债券：" + (b.warbond_zh || b.warbond || "—") + " · " + (b.price_zh || "—");
+
+      var siblings = ALL_BOOSTERS.filter(function(x) {
+        return x.warbond === b.warbond && x.id !== b.id;
+      });
+      var siblingsHtml = siblings.map(function(s) {
+        return '<a class="variant-card" href="booster.html?id=' + encodeURIComponent(s.id) + '">' +
+          '<div class="v-name">' + esc(s.name) + '</div>' +
+          '<div class="v-desc">' + esc(s.name_en) + '</div>' +
+          '<div class="v-unlock">' + esc(s.price_zh || "—") + '</div></a>';
+      }).join("");
+
+      var related = (b.related || []).map(function(rid) {
+        return ALL_BOOSTERS.find(function(x) { return x.id === rid; });
+      }).filter(Boolean);
+      var relatedHtml = related.length ? '<div class="card"><h2>🔗 相关强化资源</h2>' +
+        related.map(function(rb) {
+          return '<a class="variant-card" href="booster.html?id=' + encodeURIComponent(rb.id) + '">' +
+            '<div class="v-name">' + esc(rb.name) + ' →</div>' +
+            '<div class="v-desc">' + esc(rb.description_zh || rb.description || "") + '</div>' +
+            '<div class="v-unlock">' + esc(rb.warbond_zh || rb.warbond || "") + '</div></a>';
+        }).join("") + '</div>' : "";
+
+      var sectionsHtml = (b.sections || []).map(function(sec) {
+        var items = (sec.items || []).map(function(t) { return '<li>' + esc(t) + '</li>'; }).join("");
+        if (!items) return "";
+        return '<div class="card"><h2>' + esc(sec.title || "说明") + '</h2>' +
+          '<ol class="tips-list">' + items + '</ol></div>';
+      }).join("");
+
+      var statsHtml = renderStats(b);
+
+      layout.innerHTML =
+        '<div class="main-content">' +
+          '<div class="card title-block">' +
+            '<div class="detail-icon">' + (b.icon ? '<img src="' + esc(b.icon) + '" alt="' + esc(b.name_en) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=ph>🧬</span>\'">' : '<span class="ph">🧬</span>') + '</div>' +
+            '<div class="name">' + esc(b.name) + '</div>' +
+            '<div class="name-en">' + esc(b.name_en) + '</div>' +
+            '<div class="unlock">' + esc(unlockLine) + '</div>' +
+            '<div class="desc">' + esc(b.description_zh || b.description || "") + '</div>' +
+            (b.description ? '<div class="lore">' + esc(b.description) + '</div>' : '') +
+          '</div>' +
+          (b.overview_zh ? '<div class="card"><h2>📖 简介</h2><div class="desc">' + esc(b.overview_zh) + '</div></div>' : '') +
+          statsHtml +
+          sectionsHtml +
+          relatedHtml +
+          '<div class="card">' +
+            '<h2>🧭 导航与来源</h2>' +
+            '<a class="variant-card" href="boosters.html">' +
+              '<div class="v-name">◀ 返回强化资源</div>' +
+              '<div class="v-desc">强化资源图鉴 · 共 ' + ALL_BOOSTERS.length + ' 种</div></a>' +
+            (b.source_url ? '<a class="variant-card" href="' + esc(b.source_url) + '" target="_blank" rel="noopener noreferrer">' +
+              '<div class="v-name">来源：官方 wiki ↗</div>' +
+              '<div class="v-desc">' + esc(b.name_en) + ' - Helldivers Wiki</div></a>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div class="info-side">' +
+          '<div class="side-card">' +
+            '<h3>📦 强化资源信息</h3>' +
+            field("所属债券", esc(b.warbond_zh || b.warbond || "—") + '<br><span style="color:var(--text-mute);font-size:0.75rem;">' + esc(b.warbond || "") + '</span>') +
+            field("债券页数", pageZh) +
+            field("勋章价格", b.price_zh || "—") +
+            field("解锁方式", "战争债券解锁") +
+          '</div>' +
+          '<div class="side-card">' +
+            '<h3>💠 同债券强化资源</h3>' +
+            (siblingsHtml || '<div class="empty" style="padding:12px;">暂无同债券条目</div>') +
+          '</div>' +
+        '</div>';
+    }
+
+    function renderStats(b) {
+      var list = b.stats || [];
+      if (!list.length) return "";
+      var blocks = list.map(function(blk) {
+        var head = '<div class="ds-attack-head">' + statIcon(blk.type) + ' ' + esc(blk.name || "数据") + typeTag(blk.type) + '</div>';
+        var body = "";
+        if (blk.note) body += '<div class="ds-k">' + esc(blk.note) + '</div>';
+        if (blk.headers && blk.headers.length) {
+          body += '<table class="stats-table"><tr>' +
+            blk.headers.map(function(h) { return '<td><b>' + esc(h) + '</b></td>'; }).join("") + '</tr>' +
+            (blk.rows || []).map(function(r) {
+              return '<tr>' + r.map(function(c) { return '<td>' + esc(c) + '</td>'; }).join("") + '</tr>';
+            }).join("") + '</table>';
+        } else {
+          (blk.groups || []).forEach(function(g) {
+            var rows = (g.rows || []).filter(function(r) { return r && r.length === 2 && r[1] !== "" && r[1] != null; });
+            if (!rows.length) return;
+            if (g.label) body += '<div class="ds-k">' + esc(g.label) + '</div>';
+            body += '<div class="ds-grid">' + rows.map(function(r) {
+              return '<div class="ds-cell"><span class="ds-k">' + esc(r[0]) + '</span><span class="ds-v">' + esc(r[1]) + '</span></div>';
+            }).join("") + '</div>';
+          });
+        }
+        return '<div class="ds-attack">' + head + body + '</div>';
+      }).join("");
+      return '<div class="card"><h2>⚙️ 详细数据</h2>' + blocks + '</div>';
+    }
+
+    function statIcon(t) {
+      return t === "explosion" ? "💥" : t === "weapon" ? "🔫" : t === "projectile" ? "🎯" : "📈";
+    }
+
+    function typeTag(t) {
+      if (t === "explosion") return '<span class="ds-type ds-type-exp">爆炸</span>';
+      if (t === "weapon") return '<span class="ds-type">武器</span>';
+      if (t === "projectile") return '<span class="ds-type ds-type-proj">弹丸</span>';
+      return "";
+    }
+
+    function field(k, v) { return '<div class="field"><span class="k">' + esc(k) + '</span><span class="v">' + (v == null ? "—" : v) + '</span></div>'; }
+    function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>
