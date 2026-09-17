@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.2 · 2026-09-17（v1.2 登记 §1 图片路径约定、§8 两行新不一致、§9 第 6/7 条：机制页主干图片本地化方案与表格模板图标尺寸问题）
 > 版本：v1.1 · 2026-09-17（v1.1 修订 §5.2：`mechanics/` 从「整篇覆盖」改为「小节级合并」，并重写锚点 id 规则）
 > 适用范围：`HD2_Wiki/data/wiki/zh/` 及其子目录（`blocks/`、`mechanics/`、`fetch_reports/`）下的全部 JSON 数据文件。
 > 目的：把跨数据集已经事实存在的字段与约定写死，消除「同一语义多个字段名」「野生字段」的问题。
@@ -17,7 +18,7 @@
 | 中文覆盖文件 | `<同名主干文件去扩展名>_zh.json`，与主干文件同目录。见第 5 节 |
 | 条目 `id` | **小写 snake_case**，同一数据集内唯一，由英文名派生（`Hellpod Space Optimization` → `hellpod_space_optimization`，`AR-2 Coyote` → `ar_2_coyote`） |
 | 详情页 URL | `xxx.html?id=<id>`。`id` 一律 snake_case，不接受连字符与 `?b=` 等别名 |
-| 图标/图片路径 | `icon` 用站内相对路径（相对 HTML 页所在目录，形如 `./assets/<数据集>/<文件名>.svg`）；`image` 用 wiki.gg 绝对 URL |
+| 图标/图片路径 | `icon` 用站内相对路径（相对 HTML 页所在目录，形如 `./assets/<数据集>/<文件名>.svg`）；`image` 用 wiki.gg 绝对 URL。**`mechanics/*.json` 主干 `content` 内的 `<img>` 也一律用站内相对路径**（形如 `./assets/mechanics/<页 id>/<文件名>`，见第 9 节第 6 条） |
 | 编码 | UTF-8 无 BOM。校验时用 `[IO.File]::ReadAllText()`，**不要**用 `Get-Content -Raw`（会乱码） |
 
 ---
@@ -347,7 +348,8 @@ warbond   = item.warbond_zh || item.warbond
 | `mechanics/difficulty.json` 等 | `content` / `content_zh` 内嵌原始 HTML 片段（`<ul>`/`<br>`/`<strong>`） | — | 长文正文允许内嵌 HTML，属于登记在案的例外（`mechanics/*.json` 与 `mechanics/*_zh.json` 均适用） |
 | `mechanics/*_zh.json`（2026-09 实测） | **小节层级与主干不一致，且没有 `id` 声明**，只能按序号配对：`damage` 主干 `Damage Calculation` 下 16 节 / 中文 18 节（中文多「拆毁值与结构」「其他结构」、缺 ExDR）；`status_effects` 主干 11 节 / 中文 10 节（缺 `Change History`）；`galactic_war` 主干 5 节 / 中文 6 节且结构完全不同 | 每个覆盖小节写 `id`（= 主干 `id`），层级与主干对齐 | 未迁移。当前前端按第 5.2.4 节的序号规则配对，多出的中文小节挂到父节末尾；`galactic_war_zh.json` 的 4 节会因此变成页面末尾的独立小节 |
 | `mechanics/*_zh.json`（2026-09 实测） | `tables_zh` / `figures_zh` / `paragraphs_zh` **尚未被任何现有覆盖文件使用**（4 个文件只有 `title_zh` / `content_zh` / `subsections_zh`） | 表格与图片默认沿用主干 | 已支持（第 5.2.2 节），暂无数据 |
-| `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 全站相对路径或 wiki.gg 绝对 URL | 未迁移。主干图片在本地预览下必然破图（与合并逻辑无关）；下一步需下载或改写为 wiki.gg 绝对 URL |
+| `mechanics/*.json`（主干，2026-09 实测） | `content` 内的 `<img src="/images/…">` 是**站点根相对路径**，本地静态站没有这些文件 | 站内相对路径 `./assets/mechanics/<页 id>/<文件名>`（第 9 节第 6 条） | **`damage.json` 已迁移**（45 处图标下载到 `HD2_Wiki/assets/mechanics/damage/`，改写为站内相对路径）；`difficulty.json`（33 处）、`status_effects.json`（48 处）、`galactic_war.json`（276 处）**未迁移**，仍会破图 |
+| `mechanics/damage.json` 的 `Other Structures` 表（2026-09-17 补抓） | 官方渲染页该表在 Structure / AV 两列带 `/wiki/…` 内链与 188×221 的模板图标（`<span class="Templateicons">`） | 站内不存在 `/wiki/…` 路由，且 `mechanic.html` 没有 wiki 的 `Templateicons` 缩放规则，图标会按 188×221 原始尺寸撑高表格行 | 该表只保留**文本数据**（表头 + 20 行 × 5 列），不写内链与图标；其余 6 张表沿用主干既有写法（含内链与图标），其尺寸问题见第 9 节第 7 条 |
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
 
 ---
@@ -361,6 +363,11 @@ warbond   = item.warbond_zh || item.warbond
    - **唯一例外（2026-09-17 登记）**：wiki 模板渲染出的**完全相同的重复行**（已确认为模板 bug，非数据）允许删除，删除后 `tables[].note` 中不留「原页面此行重复」一类说明。已按此修订 `boosters.json` 的 `stun_pods`、`firebomb_hellpods` 各 1 行 `Status`。
 4. **数据缺失用 `null`/空数组表达**，不用「暂无」「待补充」等文案占位（`price_zh` 的 `待发布` 是展示文案字段，不是数据字段）。
 5. **中文化不得减少信息量（2026-09-17 登记）**：`_zh` 覆盖只允许替换**散文**；主干的表格与图片一律保留（覆盖未提供 `tables_zh` / `figures_zh` 时）。覆盖生效的英文散文不删除，由前端折进该小节的「📄 英文原文」`<details>`。校验时对主干每个 `content` 抽 20 字符滑窗，必须 100% 出现在合并结果里。
+6. **机制页主干图片一律本地化（2026-09-17 登记，方案 1）**：`mechanics/<id>.json` 主干 `content` 内的 `<img src="/images/<文件名>?<hash>">` 一律下载到 `HD2_Wiki/assets/mechanics/<id>/<文件名>`（丢掉 `?hash`），并把 `src` 改写为**相对 HTML 页所在目录**的 `./assets/mechanics/<id>/<文件名>`。
+   - **不采用**「统一改写为 `https://helldivers.wiki.gg/images/…` 外链」的方案：本站其它图标（`boosters` / `warbonds` / `armor` 等）都是站内文件（第 1 节），外链会让机制页离线不可看、依赖第三方可用性与限流，并与全站约定不一致。
+   - 下载必须**串行 + 间隔**（wiki.gg 会 429），并逐个校验：文件 >200 B 且魔数/内容为真实图片（PNG `89504e47…`、SVG 含 `<svg`），不是 HTML 错误体。
+   - 已迁移：`damage.json`（45 处引用 / 36 个文件，2026-09-17）。未迁移：`difficulty.json`、`status_effects.json`、`galactic_war.json`（见第 8 节）。
+7. **机制页表格里的 wiki 模板图标按原始尺寸渲染（2026-09-17 登记，未解决）**：主干表格里 `<img width="188" height="221">` 是 wiki 模板图标的**原始文件尺寸**，wiki 侧由 `Templateicons` CSS 缩到约 1.5em；`mechanic.html` 没有该规则（只有 `.section img { max-width: 100% }`），因此图标按 188×221 显示，`AP & AV` 等表会被撑到 1,300 px 以上宽、每行 220 px 高（在 `.mg-table-wrap` 内横向滚动，不影响页面级溢出）。canonical 修法是给 `mechanic.html` 加一条 `.section .mg-table-wrap img { width: 1.5em; height: auto; }`；**本次未改任何 HTML/CSS**，仅在 `damage.json` 新增的 `Other Structures` 表里不写图标以规避。
 
 ---
 
