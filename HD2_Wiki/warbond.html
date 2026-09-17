@@ -173,7 +173,7 @@
     "use strict";
     var ALL_WARBONDS = [];
     var REWARD_REFS = {};                                   /* 当前债券的 reward_refs（奖励英文名 → 站内引用） */
-    var REF_NAMES = { weapon: {}, stratagem: {} };           /* 站内既有中文译名：id → name */
+    var REF_NAMES = { weapon: {}, stratagem: {}, booster: {} };  /* 站内既有中文译名：id → name */
 
     var TYPE_ZH = { "Standard": "标准", "Premium": "高级", "Legendary": "传奇" };
 
@@ -185,11 +185,11 @@
       return "tag tag-prem";
     }
 
-    /* 站内既有中文译名（weapons.json / stratagems_full.json 的 name），只取本页需要的一侧；
+    /* 站内既有中文译名（weapons.json / stratagems_full.json / boosters.json 的 name），只取本页需要的一侧；
        带默认缓存（不加 ?t=），失败时静默回退为纯文本，不阻塞页面 */
     async function loadRefNames(w) {
       var refs = w.reward_refs || {};
-      var need = { weapon: false, stratagem: false };
+      var need = { weapon: false, stratagem: false, booster: false };
       Object.keys(refs).forEach(function(k) {
         var r = refs[k];
         if (r && need[r.kind] === false) need[r.kind] = true;
@@ -205,6 +205,13 @@
         jobs.push(fetch("./data/wiki/zh/stratagems_full.json")
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(d) { ((d && d.stratagems) || []).forEach(function(x) { REF_NAMES.stratagem[x.id] = x.name; }); })
+          .catch(function() {}));
+      }
+      if (need.booster) {
+        /* 强化资源：拉取失败被 catch 吞掉，REF_NAMES.booster 保持为空 → 回退原文奖励名，不影响整页 */
+        jobs.push(fetch("./data/wiki/zh/boosters.json")
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) { ((d && d.boosters) || []).forEach(function(x) { REF_NAMES.booster[x.id] = x.name; }); })
           .catch(function() {}));
       }
       if (jobs.length) await Promise.all(jobs);
@@ -284,7 +291,7 @@
       var tablesHtml = tableBlocks
         ? '<div class="card"><h2>📊 逐页奖励<span class="scroll-hint">宽表可横向滚动 →</span></h2>' + tableBlocks +
           '<div class="reward-legend">价格列取自 wiki.gg 渲染页；表内显示「—」表示该页未标注单个奖励的勋章价格（本站不推算）。<br>' +
-          '奖励名带下划线的是站内已有独立页面的武器／战略配备，点击可跳转对应详情页；小字为该条在 wiki.gg 的原文奖励名。</div></div>'
+          '奖励名带下划线的是站内已有独立页面的武器／战略配备／强化资源，点击可跳转对应详情页；小字为该条在 wiki.gg 的原文奖励名。</div></div>'
         : "";
 
       var otherCards = other.slice(0, 8).map(function(o) {
@@ -346,11 +353,16 @@
       return m;
     }
 
-    /* 奖励名 → 站内条目：命中 reward_refs 的渲染成 weapon.html / stratagem.html 链接，
+    /* 奖励名 → 站内条目：命中 reward_refs 的渲染成 weapon.html / stratagem.html / booster.html 链接（同一 .rw-link 样式），
        链接文字用站内既有中文译名（解析不到时回退原文奖励名）；未命中的保持纯文本 */
     function rewardCell(name) {
       var ref = REWARD_REFS[name];
-      var page = ref ? (ref.kind === "weapon" ? "weapon.html?id=" : (ref.kind === "stratagem" ? "stratagem.html?id=" : "")) : "";
+      var page = "";
+      if (ref) {
+        if (ref.kind === "weapon") page = "weapon.html?id=";
+        else if (ref.kind === "stratagem") page = "stratagem.html?id=";
+        else if (ref.kind === "booster") page = "booster.html?id=";
+      }
       if (!page) return esc(name);
       var zh = (REF_NAMES[ref.kind] || {})[ref.id];
       return '<a class="rw-link" href="' + page + encodeURIComponent(ref.id) + '" title="' + esc(name) + '">' +

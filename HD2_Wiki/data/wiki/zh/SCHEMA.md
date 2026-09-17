@@ -189,7 +189,7 @@ warbond   = item.warbond_zh || item.warbond
 | `intro_zh` | string | 是 | 中文简介（详情页标题卡；总览页仅用于搜索匹配，不再直接展示） |
 | `overview_zh` | string | 是 | 中文概述（详情页「📖 简介」卡片）。含页数与勋章价格区间 |
 | `tables` | array | 是 | **逐页奖励表**：一个元素 = 债券的一页。结构见下 |
-| `reward_refs` | object | 否 | **奖励 → 站内条目引用表**（2026-09-17 登记）。键 = `tables[].rows[i][0]`，值 = `{ kind, id }`；只登记能唯一匹配上 `weapons.json` / `stratagems_full.json` 的奖励。结构见下 |
+| `reward_refs` | object | 否 | **奖励 → 站内条目引用表**（2026-09-17 登记；同日扩展 `booster`）。键 = `tables[].rows[i][0]`，值 = `{ kind, id }`；只登记能唯一匹配上 `weapons.json` / `stratagems_full.json` / `boosters.json` 的奖励。结构见下 |
 
 **`tables[]` 元素结构**：沿用第 6 节的表格结构（`title` / `title_en` / `note` / `headers` / `rows`），并约定：
 
@@ -203,17 +203,18 @@ warbond   = item.warbond_zh || item.warbond
 | 奖励类型 | 4 个使用 wikitable 的债券页带 Type 列，直接照录；其余 21 个使用 `{{Acquisitions Page}}` 网格模板、**渲染页无 Type 列**，类型由奖励渲染图文件名推断（`… Primary Render` → 主武器 等），推断规则与回退桶在抓取报告中登记 |
 | 行序 | 网格模板按渲染页的 `grid-row` / `grid-column` 还原为阅读顺序；wikitable 保持原表行序 |
 
-**`reward_refs` 结构（2026-09-17 登记）**：
+**`reward_refs` 结构（2026-09-17 登记；`kind` 取值 2026-09-17 扩展 `booster`）**：
 
 | 字段名 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | 键 | string | — | 奖励英文名，必须与 `tables[].rows[i][0]` **逐字一致**（不做归一化，按原文匹配） |
-| `kind` | `"weapon"` \| `"stratagem"` | 是 | 目标数据集：`weapons.json` / `stratagems_full.json` |
-| `id` | string | 是 | 目标条目的 `id`；前端拼成 `weapon.html?id=<id>` / `stratagem.html?id=<id>` |
+| `kind` | `"weapon"` \| `"stratagem"` \| `"booster"` | 是 | 目标数据集：`weapons.json` / `stratagems_full.json` / `boosters.json` |
+| `id` | string | 是 | 目标条目的 `id`；前端拼成 `weapon.html?id=<id>` / `stratagem.html?id=<id>` / `booster.html?id=<id>` |
 
+- **`kind: "booster"`**：仅用于 `tables[].rows[i][1] === "强化资源"` 的行，`id` 指向 `boosters.json` 的条目，链接目标为 `booster.html?id=<id>`，链接中文名实时取自 `boosters.json` 的 `name`。登记方式为该行英文名与 `boosters.json` 的 `name_en` **精确相同**（当前 25 个债券中共 20 条强化资源行，20 条全部命中）。
 - **匹配规则（按序，命中即止）**：① 奖励英文名与站内 `name_en` 精确相同；② 去掉标点/空格、转小写后与 `name_en` 相同；③ 同样归一化后与站内 `name`（中文）相同；④ 归一化后一方完整包含另一方、且候选唯一（当前仅 4 条：`Directional Shield`、`Flame Sentry`、`Anti-Tank Emplacement`、`Portable Hellbomb`）。
 - **匹配不上一律不登记**（保持纯文本），不猜、不造 `id`。跨数据集同时命中（歧义）也不登记。
-- 「中文译名一律不冗余写进本文件」：前端在 `warbond.html` 实时从 `weapons.json` / `stratagems_full.json` 的 `name` 解析，保证译名单一来源；解析不到时回退显示原文奖励名。
+- 「中文译名一律不冗余写进本文件」：前端在 `warbond.html` 实时从 `weapons.json` / `stratagems_full.json` / `boosters.json` 的 `name` 解析，保证译名单一来源；解析不到时回退显示原文奖励名。
 - `rows` 元素**恒为 3 个**（第 6 节表格结构不变），引用只能走本字段，**禁止**往 `rows[i]` 追加第 4 个元素（会破坏第 6 节的列数判定）。
 - 键是奖励英文名，若日后重抓导致奖励文案变动，须同步改键名。
 

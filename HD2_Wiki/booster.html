@@ -43,6 +43,10 @@
 
     .title-block .unlock { font-size: 0.8rem; color: var(--yellow); }
 
+    .title-block .unlock a { color: var(--blue); text-decoration: none; }
+
+    .title-block .unlock a:hover { color: var(--yellow); text-decoration: underline; }
+
     .title-block .desc { margin-top: 10px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
     .title-block .lore { margin-top: 6px; font-size: 0.8rem; color: var(--text-mute); line-height: 1.6; font-style: italic; }
@@ -163,6 +167,26 @@
     "use strict";
     var ALL_BOOSTERS = [];
 
+    /* 所属战争债券反查：由 warbonds.json 的 reward_refs 建 强化资源 id → 债券 的映射（拿不到就不显示） */
+    var WB_MAP = {};
+
+    async function loadWarbondMap() {
+      try {
+        var r = await fetch("./data/wiki/zh/warbonds.json");
+        if (!r.ok) return;
+        var d = await r.json();
+        (d.warbonds || []).forEach(function(w) {
+          var refs = w.reward_refs || {};
+          (w.tables || []).forEach(function(t) {
+            (t.rows || []).forEach(function(row) {
+              var ref = refs[row[0]];
+              if (ref && ref.kind === "booster") WB_MAP[ref.id] = { wid: w.id, name: w.name, page: t.title };
+            });
+          });
+        });
+      } catch (e) { /* 忽略：反查失败不影响详情页 */ }
+    }
+
     async function loadDetail() {
       // canonical URL：booster.html?id=<snake_case>（与 weapon.html / enemy.html 一致）
       // 只认 ?id=，不再兼容 ?b= 与连字符写法
@@ -181,6 +205,7 @@
             '<br><br><a class="variant-card" style="max-width:320px;margin:0 auto;" href="boosters.html">◀ 返回强化资源图鉴</a></div>';
           return;
         }
+        await loadWarbondMap();
         renderDetail(b);
       } catch(e) {
         console.error("[Booster] 加载失败:", e);
@@ -197,6 +222,9 @@
 
       var pageZh = b.warbond_page ? "第 " + b.warbond_page + " 页" : "待发布";
       var unlockLine = "⭐ 战争债券：" + (b.warbond_zh || b.warbond || "—") + " · " + (b.price_zh || "—");
+      var wb = WB_MAP[b.id];
+      var wbLine = wb ? '<div class="unlock">🎖️ 所属战争债券：<a href="warbond.html?id=' + encodeURIComponent(wb.wid) + '">' + esc(wb.name) + '</a>' +
+        (wb.page ? ' <span style="color:var(--text-mute);font-size:0.78rem;">' + esc(wb.page) + '</span>' : '') + '</div>' : '';
       // release_status 为可选字段，缺省（或 "released"）即视为已发布
       var isUnreleased = b.release_status === "unreleased";
       var badgeHtml = isUnreleased ? '<span class="unreleased-badge">未发布</span>' : "";
@@ -238,6 +266,7 @@
             '<div class="name">' + esc(b.name) + badgeHtml + '</div>' +
             '<div class="name-en">' + esc(b.name_en) + '</div>' +
             '<div class="unlock">' + esc(unlockLine) + '</div>' +
+            wbLine +
             '<div class="desc">' + esc(b.description_zh || b.description || "") + '</div>' +
             (b.description ? '<div class="lore">' + esc(b.description) + '</div>' : '') +
           '</div>' +
