@@ -1,7 +1,7 @@
 {
-    "updated_at":  "2026-09-18T00:00:00Z",
+    "updated_at":  "2026-09-19T00:00:00Z",
     "source":  "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径",
-    "total":  1671,
+    "total":  1677,
     "terms":  [
                   {
                       "en":  "% To Main",
@@ -2104,6 +2104,12 @@
                       "note":  "行星"
                   },
                   {
+                      "en":  "Acclimated",
+                      "zh":  "适应",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
+                  },
+                  {
                       "en":  "ACHERNAR SECUNDUS",
                       "zh":  "水委一次星",
                       "source":  "starmap.json",
@@ -2163,6 +2169,12 @@
                       "zh":  "弧矢七",
                       "source":  "starmap.json",
                       "note":  "行星"
+                  },
+                  {
+                      "en":  "Advanced Filtration",
+                      "zh":  "高级过滤",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
                   },
                   {
                       "en":  "AESIR PASS",
@@ -3397,15 +3409,29 @@
                   },
                   {
                       "en":  "Collect Gloom Spore Readings",
-                      "zh":  "收集灰霾孢子读数",
+                      "zh":  "收集阴霾孢子读数",
                       "source":  "missions.json",
-                      "note":  "任务 · Terminid Specific"
+                      "note":  "任务 · Terminid Specific",
+                      "rejected":  [
+                                       {
+                                           "zh":  "收集灰霾孢子读数",
+                                           "source":  "本站旧稿（missions.json）",
+                                           "tier":  "旧术语表"
+                                       }
+                                   ]
                   },
                   {
                       "en":  "Collect Gloom-Infused Oil",
-                      "zh":  "收集灰霾浸润石油",
+                      "zh":  "收集阴霾浸润石油",
                       "source":  "missions.json",
-                      "note":  "任务 · Terminid Specific"
+                      "note":  "任务 · Terminid Specific",
+                      "rejected":  [
+                                       {
+                                           "zh":  "收集灰霾浸润石油",
+                                           "source":  "本站旧稿（missions.json）",
+                                           "tier":  "旧术语表"
+                                       }
+                                   ]
                   },
                   {
                       "en":  "Collect Meteorological Data",
@@ -3729,7 +3755,14 @@
                       "en":  "Demolition Force",
                       "zh":  "拆毁值",
                       "source":  "术语对照表_送审.md",
-                      "note":  "旧送审术语表"
+                      "note":  "旧送审术语表；2026-09-19 用户裁定「拆毁值」，全仓「拆毁力」已归零",
+                      "rejected":  [
+                                       {
+                                           "zh":  "拆毁力",
+                                           "source":  "本站旧稿（mechanics/damage_zh.json、missions.json、fetch_reports/*）",
+                                           "tier":  "旧术语表"
+                                       }
+                                   ]
                   },
                   {
                       "en":  "DENEB SECUNDUS",
@@ -3755,6 +3788,12 @@
                       "zh":  "部署暗流体",
                       "source":  "missions.json",
                       "note":  "任务 · Terminid Specific"
+                  },
+                  {
+                      "en":  "Desert Stormer",
+                      "zh":  "沙漠风暴",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
                   },
                   {
                       "en":  "Destroy Command Bunkers",
@@ -4091,6 +4130,12 @@
                       "zh":  "昂宿一湾",
                       "source":  "starmap.json",
                       "note":  "行星"
+                  },
+                  {
+                      "en":  "Electrical Conduit",
+                      "zh":  "电流导管",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
                   },
                   {
                       "en":  "Element-710",
@@ -4688,6 +4733,12 @@
                       "note":  "行星"
                   },
                   {
+                      "en":  "Fortified",
+                      "zh":  "固守",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；此前仅 mechanics/damage_zh.json 正文使用「固守」，本轮一并回填术语表"
+                  },
+                  {
                       "en":  "Forward-Middle Fins (2)",
                       "zh":  "前-中部鳍 (2)",
                       "source":  "术语对照表_部位.md",
@@ -5224,6 +5275,11 @@
                                        {
                                            "zh":  "幽暗",
                                            "source":  "本站旧稿（galactic_war_history_zh.json）",
+                                           "tier":  "旧术语表"
+                                       },
+                                       {
+                                           "zh":  "灰霾",
+                                           "source":  "本站旧稿（missions.json「收集灰霾孢子读数/收集灰霾浸润石油」、difficulty_zh.json）",
                                            "tier":  "旧术语表"
                                        }
                                    ]
@@ -5800,6 +5856,12 @@
                       "zh":  "潜入光能族巢穴",
                       "source":  "missions.json",
                       "note":  "任务 · Illuminate Specific"
+                  },
+                  {
+                      "en":  "Inflammable",
+                      "zh":  "阻燃",
+                      "source":  "本次补译（2026-09-19）",
+                      "note":  "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
                   },
                   {
                       "en":  "INGMAR",
@@ -8967,13 +9029,27 @@
                       "en":  "Stagger Force",
                       "zh":  "踉跄力",
                       "source":  "术语对照表_送审.md",
-                      "note":  "旧送审术语表"
+                      "note":  "旧送审术语表；2026-09-19 全仓「硬直力」统一为本词",
+                      "rejected":  [
+                                       {
+                                           "zh":  "硬直力",
+                                           "source":  "本站旧稿（mechanics/status_effects_zh.json、damage_zh.json）",
+                                           "tier":  "旧术语表"
+                                       }
+                                   ]
                   },
                   {
                       "en":  "Stagger Threshold",
                       "zh":  "踉跄阈值",
                       "source":  "术语对照表_敌人_送审.md",
-                      "note":  "旧送审术语表（敌人）"
+                      "note":  "旧送审术语表（敌人）；2026-09-19 全仓「硬直阈值」统一为本词",
+                      "rejected":  [
+                                       {
+                                           "zh":  "硬直阈值",
+                                           "source":  "本站旧稿（mechanics/status_effects_zh.json）",
+                                           "tier":  "旧术语表"
+                                       }
+                                   ]
                   },
                   {
                       "en":  "Stalker",

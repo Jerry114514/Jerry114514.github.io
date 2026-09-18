@@ -32,6 +32,12 @@
  *
  * 锚点 id 规则：主干 id（净化为 [A-Za-z0-9._-]，唯一化）> 覆盖 id > s-<序号>
  *              严禁出现下划线占位 id、严禁重复。
+ *
+ * 内链改写（2026-09-19）：主干与覆盖两侧的 `<a href="/wiki/…">`（wiki 站内相对路径，
+ *   本站没有 /wiki 路由 → 全部 404）由 fixLinks 统一改写为站内页 / wiki.gg 外链 /
+ *   纯文本，表见 assets/js/wiki-link-map.js；统计数在 page.stats.links。
+ * 覆盖方换行（2026-09-19）：content_zh 里的 `\n` 按「分段」语义渲染（纯文本逐行成
+ *   <p>；含标签者只认空行分段），避免整节挤成一整段。
  * ==========================================================================*/
 var MechanicMerge = (function () {
   var ALLOWED_TAGS = {
@@ -46,6 +52,7 @@ var MechanicMerge = (function () {
   var MEDIA_CLASS = "mg-media";
   var TABLE_CLASS = "mg-table";
   var FIGURE_LABEL = "\u56fe ";
+  var LINK_BASE_DEFAULT = "https://helldivers.wiki.gg/wiki/";
 
   /* ---------------------------------------------------------------- 基础工具 */
 
@@ -63,6 +70,72 @@ var MechanicMerge = (function () {
       .replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"')
       .replace(/[_\uFF08\uFF09()\[\]\u3010\u3011:：,，.。!！?？'"\u2014\u2013-]/g, "")
       .replace(/\s+/g, "").toLowerCase();
+  }
+
+  /* ------------------------------------------------- /wiki/ 内链改写（C 项修复）
+     正文/表格 HTML 直接复用 helldivers.wiki.gg 的抓取结果，里面每个锚点都是 wiki 站内
+     相对路径 `/wiki/<PageName>`。本站没有 /wiki 路由，线上会解析成
+     https://jerry114514.github.io/wiki/… → 全线 404（本地则是 http://host/wiki/…）。
+     这里按 assets/js/wiki-link-map.js 的表做一次改写（主干散文 / 主干表格 /
+     中文表格 / 图片块 / 英文兜底块 一视同仁）：
+       ① 站内映射      → 站内详情页（weapon|stratagem|enemy|booster|warbond|mission
+                         .html?id=<snake_case> / mechanic.html?id=…#锚点，锚点已换算成站内小节 id）
+       ② textOnly 列表 → 拆掉 <a>，只留可见文字（站内与 wiki.gg 都没有该页面时）
+       ③ 其余          → https://helldivers.wiki.gg/wiki/<PageName>（保留可见文字，补 target/rel）
+     表未加载时退化为「全部按 ③」，链接依然可用（不再 404），不阻断渲染。 */
+  function linkMap() {
+    return (typeof window !== "undefined" && window.WIKI_LINK_MAP) ? window.WIKI_LINK_MAP : null;
+  }
+
+  /* HTML 实体多重转义还原（数据里有 &amp; / &amp;amp; / &amp;amp;amp; 三种写法） */
+  function decEntDeep(s) {
+    var out = String(s === undefined || s === null ? "" : s);
+    for (var i = 0; i < 3; i++) {
+      var t = out.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+                 .replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      if (t === out) break;
+      out = t;
+    }
+    return out;
+  }
+
+  function stripRelTarget(attrs) {
+    return String(attrs || "").replace(/\s+(?:target|rel)="[^"]*"/gi, "");
+  }
+
+  /* 去掉 wiki 的「页面不存在，点此编辑」查询串（?action=edit&redlink=1） */
+  function stripEditQuery(t) {
+    var q = t.indexOf("?");
+    if (q < 0 || !/^\?action=edit/.test(t.slice(q))) return t;
+    var h = t.indexOf("#", q);
+    return t.slice(0, q) + (h >= 0 ? t.slice(h) : "");
+  }
+
+  function fixLinks(html, stats) {
+    var s = String(html === undefined || html === null ? "" : html);
+    if (s.indexOf("/wiki/") < 0) return s;
+    var map = linkMap();
+    var site = (map && map.site) || {};
+    var textOnly = (map && map.textOnly) || [];
+    var base = (map && map.externalBase) || LINK_BASE_DEFAULT;
+    return s.replace(/<a\b([^>]*?)\shref="\/wiki\/([^"]*)"([^>]*)>([\s\S]*?)<\/a>/gi,
+      function (all, pre, raw, post, inner) {
+        var target = decEntDeep(raw);
+        if (!target) return all;                                  // 空目标：原样保留，不乱猜
+        if (stats && stats.links) stats.links.total += 1;
+        var dest = site[target];
+        if (dest) {
+          if (stats && stats.links) stats.links.site += 1;
+          return "<a" + stripRelTarget(pre) + ' href="' + esc(dest) + '"' + stripRelTarget(post) + ">" + inner + "</a>";
+        }
+        if (textOnly.indexOf(target) >= 0) {
+          if (stats && stats.links) stats.links.textOnly += 1;
+          return inner;                                           // ② 降级为纯文本
+        }
+        if (stats && stats.links) stats.links.external += 1;
+        return "<a" + stripRelTarget(pre) + ' href="' + esc(base + stripEditQuery(target)) +
+          '" target="_blank" rel="noopener noreferrer"' + stripRelTarget(post) + ">" + inner + "</a>";
+      });
   }
 
   /* 锚点 id 净化：保留 ASCII 字母数字与 . _ -，其余（中文/空白/标点）→ '-'；折叠；去首尾 '-' */
@@ -386,7 +459,8 @@ var MechanicMerge = (function () {
   function build(trunk, override, opts) {
     opts = opts || {};
     var zh = isObj(override) ? override : {};
-    var stats = { tables: 0, figures: 0, proseZh: 0, proseTrunk: 0, zhOnly: [], warnings: [], fullyTranslated: 0 };
+    var stats = { tables: 0, figures: 0, proseZh: 0, proseTrunk: 0, zhOnly: [], warnings: [], fullyTranslated: 0,
+                  links: { total: 0, site: 0, external: 0, textOnly: 0 } };
     var zhSections = arr(zh.sections_zh) || [];
     var trunkList = arr(trunk.sections) || [];
 
@@ -570,6 +644,18 @@ var MechanicMerge = (function () {
     merged = merged.concat(appended);
     merged = merged.filter(function (n) { return n && (n.title || n.content || n.tablesHtml.length || n.figuresHtml.length || (n.subsections && n.subsections.length)); });
 
+    /* /wiki/ 内链改写（C 项）：主干散文、主干/中文表格、图片块、英文兜底块统一过一遍，
+       主干与中文覆盖两处同时生效（渲染层单一入口，避免两处数据各自为政）。 */
+    (function fixTree(list) {
+      list.forEach(function (n) {
+        n.content = fixLinks(n.content, stats);
+        n.trunkRefHtml = fixLinks(n.trunkRefHtml, stats);
+        n.tablesHtml = (n.tablesHtml || []).map(function (h) { return fixLinks(h, stats); });
+        n.figuresHtml = (n.figuresHtml || []).map(function (h) { return fixLinks(h, stats); });
+        if (n.subsections && n.subsections.length) fixTree(n.subsections);
+      });
+    })(merged);
+
     var page = {
       id: trunk.id || opts.id || "",
       title: zh.title_zh || trunk.title || trunk.title_en || opts.id || "",
@@ -613,11 +699,33 @@ var MechanicMerge = (function () {
     return toc;
   }
 
-  /* 覆盖方散文：content_zh > paragraphs_zh > null（无覆盖） */
+  /* 纯文本 → 逐行分段（数据里的 \n 是「分段」语义；这些串的 \n 全部落在句末，
+     没有句中软换行，见 SCHEMA/审计记录） */
+  function textToParagraphs(txt) {
+    var lines = String(txt).split(/\r?\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+    return lines.map(function (x) { return '<p class="mg-p">' + esc(x) + "</p>"; }).join("");
+  }
+
+  /* 含标签的 content_zh：只把「两侧都是正文、中间带空行」的换行升级为段落边界；
+     紧贴标签的换行（</li>\n<li>、HTML 源码缩进）一律不动 —— 那些是格式缩进。 */
+  function blankLineBreaks(html) {
+    return String(html).replace(/([^\s>])\s*\n\s*\n\s*([^\s<])/g, '$1</p><p class="mg-p">$2');
+  }
+
+  /* 覆盖方散文：content_zh > paragraphs_zh > null（无覆盖）
+     content_zh 里作者用 \n 分段，但 HTML 会把 \n 折叠成空格，整节于是挤成一整段
+     （2026-09-19 修）。分两种情形处理，避免误伤：整串不含标签 → 按行分段；
+     含标签 → 只认空行分段。 */
   function proseFromOverride(z) {
     if (!isObj(z)) return null;
     if (typeof z.content_zh === "string" && z.content_zh.trim() !== "") {
-      return linkText(sanitize(z.content_zh));
+      var raw = z.content_zh;
+      if (!/<[a-zA-Z\/]/.test(raw)) {
+        return raw.split(/\r?\n/).length > 1 ? textToParagraphs(raw) : linkText(sanitize(raw));
+      }
+      // 顺序要紧：先 sanitize（它会把任何 class 统一改写成 mg-raw），再插段落边界，
+      // 否则新生成的 <p class="mg-p"> 会被改写成 mg-raw、丢掉段落样式。
+      return linkText(blankLineBreaks(sanitize(raw)));
     }
     var ps = arr(z.paragraphs_zh);
     if (ps && ps.length) {

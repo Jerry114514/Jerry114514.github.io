@@ -184,6 +184,7 @@ html { scroll-behavior: smooth; }
   <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
 
   <script src="./assets/js/wiki-router.js"></script>
+  <script src="./assets/js/wiki-link-map.js"></script>
   <script src="./assets/js/mechanic-merge.js"></script>
   <script>
     "use strict";
@@ -258,6 +259,14 @@ html { scroll-behavior: smooth; }
         " 重复=" + dups.length + " 非法id=" + bad.length +
         " 表格=" + countIn(layout, "table") + " 图=" + countIn(layout, "img") +
         " 主干表格=" + MG_STATS.tables + " 主干图片块=" + MG_STATS.figures);
+      // 内链改写自检：site=站内页 / external=wiki.gg 外链 / textOnly=降级纯文本；
+      // 页面里残留的 a[href^="/wiki/"] 必须为 0（否则说明有漏网的 /wiki/ 内链）
+      if (MG_STATS.links) {
+        console.log("[Mechanic] 内链改写 total=" + MG_STATS.links.total +
+          " 站内=" + MG_STATS.links.site + " 外链=" + MG_STATS.links.external +
+          " 降级纯文本=" + MG_STATS.links.textOnly +
+          " 残留/wiki/=" + layout.querySelectorAll('a[href^="/wiki/"], a[href*="/wiki/"]:not([href^="https://"])').length);
+      }
       if (dups.length) console.warn("[Mechanic] 重复锚点 id:", dups);
       if (bad.length) console.warn("[Mechanic] 非法锚点 id:", bad);
       if (MG_STATS.zhOnly && MG_STATS.zhOnly.length) {
