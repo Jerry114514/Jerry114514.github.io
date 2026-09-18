@@ -15,7 +15,7 @@
 |---|---|---|---|
 | **`HD2-Galatic_war-Map/`** | HD2 主站 | `index.html` | [主站 · 实时战况数据面板](https://jerry114514.github.io/HD2-Galatic_war-Map/) |
 |  |  | `galaxy-map-v2.html` | [银河战争态势图](https://jerry114514.github.io/HD2-Galatic_war-Map/galaxy-map-v2.html) |
-| **`HD2_Wiki/`** | HD2 图鉴站 | `wiki.html` | [图鉴首页](https://jerry114514.github.io/HD2_Wiki/) |
+| **`HD2_Wiki/`** | HD2 图鉴站 | `wiki.html` | [图鉴首页](https://jerry114514.github.io/HD2_Wiki/wiki.html) |
 | `bf1-webtool/` | 战地 1 工具 | `index.html` | [bf1-webtool](https://jerry114514.github.io/bf1-webtool/) |
 | `bf1-web-wiki/` | 战地 1 Wiki | `index.html` | [bf1-web-wiki](https://jerry114514.github.io/bf1-web-wiki/) |
 | 根目录 | 个人主页 | `index.html` | [Jerry's HomePage](https://jerry114514.github.io/) |
@@ -39,18 +39,19 @@
 - 节点-连线形式可视化 270+ 星球
 - 阵营色、星区背景、攻击路径、流动动画
 - 缩放 / 平移 / 悬停 / 点击跳转
-- **附带 22 个本地 SVG 图标**（势力变种 + DSS 战术行动），无外部依赖
+- **附带 25 个本地图标**（19 个 SVG + 6 个 PNG，另有 1 个 `.psd` 母版，位于 `assets/effect-icons/`）；星图两版实际引用其中 20 个（18 SVG + 2 PNG）。全部本地同源缓存，无外部依赖
 
 ### 图鉴站
 
-按板块分：
+按板块分（共 8 类，与图鉴站首页导航一致）：
 - **武器图鉴**：主武器 / 副武器 / 投掷物
-- **战略配备图鉴**：轨道 / 飞鹰 / 支援武器 / 背包 / 可部署物 / 载具
+- **战略配备图鉴**：轨道 / 飞鹰 / 支援武器 / 背包 / 可部署物 / 载具 / 任务
 - **敌人图鉴**：终结族 / 机器人 / 光能族（含变种）
 - **任务图鉴**：主要目标 / 阵营特殊任务 / 战术目标
-- **机制页**：伤害 / 难度 / 银河战争 / 状态效果（4 个子机制页）
+- **机制页**：伤害 / 难度 / 状态效果 / 银河战争机制 / 银河战争历史（5 个子机制页）
 - **强化资源**：20 项
 - **战争债券**：25 个，含逐债券奖励详情
+- **战术搭配器**：随机配装 / 四维评分 / 加权评级
 
 数据 schema 详见 `HD2_Wiki/data/wiki/zh/SCHEMA.md`（**改图鉴站数据前必读**）。
 
@@ -97,6 +98,8 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 | `fetch_site_data.py` | 主站数据抓取（被 fetch-data.yml 调用） |
 | `merge_translations.py` | 翻译条目合并（`name_zh` 回退机制） |
 | `cloudflare_dispatcher.js` | Cloudflare Worker 边缘调度（若启用） |
+
+> `scripts/archive/` 下另有 22 个历史脚本（早期抓取/整理工具，已归档、不再被 CI 调用；其相对路径假设「在仓库根目录执行」，仅供查阅）。
 
 ---
 

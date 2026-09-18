@@ -1,0 +1,43 @@
+# robots.txt — https://jerry114514.github.io/
+# 站点：个人主页 +《绝地潜兵 2》玩家社区站（HD2 主站 / 星图 / 中文图鉴）+ 战地 1 工具集
+# 说明：本文件只管「爬虫抓不抓」，不影响页面自身 fetch 任何资源。
+
+User-agent: *
+Allow: /
+
+# —— CI 与脚本：不是页面，抓了没有意义 ——
+Disallow: /.github/
+Disallow: /scripts/
+
+# —— 字体母版：单份 3–8 MB，仅由 CSS @font-face 引用 ——
+Disallow: /fonts/
+Disallow: /HD2_Wiki/assets/fonts/
+Disallow: /HD2-Galatic_war-Map/ChuangKeTieJinGangTi-2.otf
+Disallow: /HD2-Galatic_war-Map/SourceHanSansCN-Medium.otf
+Disallow: /HD2-Galatic_war-Map/ZZZ-thick.ttf
+
+# —— 首页背景视频（11.9 MB）——
+Disallow: /night.mp4
+
+# —— HD2 数据目录 ——
+# 说明（重要取舍）：HD2_Wiki/data/ 下**全部**是图鉴页运行时 fetch 的接口数据
+# （weapons / enemies / stratagems_full / missions / boosters / warbonds /
+#   factions / mechanics/*.json / blocks/*.json 等，共 51 个文件 ≈ 3 MB）。
+# 若整目录 Disallow，Search Console 会把这些 URL 报成「已被 robots.txt 屏蔽」
+# （robots 只约束爬虫，不影响页面自身 fetch，功能没问题，但覆盖率报告会全是噪声），
+# 因此这里反过来做：**目录作兜底屏蔽 + 用更长的 Allow 放行运行时数据目录**，
+# 再把里面「非页面所需」的部分单独、更精确地屏蔽掉。
+Disallow: /HD2_Wiki/data/
+
+# 页面运行时真正会 fetch 的数据目录（长匹配优先 → 放行）
+Allow: /HD2_Wiki/data/wiki/zh/
+
+# 上述目录里页面用不到的部分（更长的规则 → 覆盖上面的 Allow）
+Disallow: /HD2_Wiki/data/wiki/zh/fetch_reports/
+Disallow: /HD2_Wiki/data/wiki/zh/stratagems_fetch_report.json
+
+# —— 设计原型 / 静态稿：无对外入口，不参与索引 ——
+Disallow: /HD2_Wiki/proto/
+Disallow: /HD2-Galatic_war-Map/_card_demo.html
+
+Sitemap: https://jerry114514.github.io/sitemap.xml
