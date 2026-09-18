@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.5 · 2026-09-18（v1.5 新增 §7.12 术语表 `terms.json`（1,671 条）并登记其字段与来源优先级；新增 §9 第 15–17 条：A 项译名口径 `Gloom = 阴霾` / `Automaton = 机器人`、全站异写统一、「galactic_war_history」`References` 节 Navbox 中文化与 13 个图标本站化）
 > 版本：v1.4 · 2026-09-17（v1.4 修订 §8/§9：`galactic_war.json` 孤立 `</div>` 已修（正文 73 px → 880 px）、四个机制页主干表格图标尺寸已解决后的复核、`galactic_war_zh.json` / `status_effects_zh.json` 已改为逐节显式 `id`、`figures_zh` 首次投入实战；并新登记 §9 第 9/10/11 条）
 > 版本：v1.3 · 2026-09-17（v1.3 在 §5.2.2 登记 `fully_translated` 字段：整节翻译完成后不再渲染「📄 英文原文」`<details>` 兜底块；并同步修订 §5.2.3 与 §9 第 5 条）
 > 版本：v1.2 · 2026-09-17（v1.2 登记 §1 图片路径约定、§8 两行新不一致、§9 第 6/7 条：机制页主干图片本地化方案与表格模板图标尺寸问题）
@@ -15,7 +16,7 @@
 | 约定 | 规则 |
 | --- | --- |
 | 根目录 | `HD2_Wiki/data/wiki/zh/`（中文数据集） |
-| 数据集文件名 | 小写 snake_case：`weapons.json`、`enemies.json`、`stratagems_full.json`、`missions.json`、`boosters.json`、`warbonds.json`、`loadout.json`、`factions.json`、`index.json`、`ds_terms.json` |
+| 数据集文件名 | 小写 snake_case：`weapons.json`、`enemies.json`、`stratagems_full.json`、`missions.json`、`boosters.json`、`warbonds.json`、`loadout.json`、`factions.json`、`index.json`、`ds_terms.json`、`terms.json` |
 | 子目录 | `blocks/`（首页区块，一区块一文件）、`mechanics/`（游戏机制长文，一页一文件）、`fetch_reports/`（抓取中间产物，**不属于数据集**，schema 不约束） |
 | 中文覆盖文件 | `<同名主干文件去扩展名>_zh.json`，与主干文件同目录。见第 5 节 |
 | 条目 `id` | **小写 snake_case**，同一数据集内唯一，由英文名派生（`Hellpod Space Optimization` → `hellpod_space_optimization`，`AR-2 Coyote` → `ar_2_coyote`） |
@@ -50,6 +51,7 @@
 | `index.json` | `blocks` | 首页区块引用（`id` + `type` + `priority`） |
 | `blocks/*.json` | — | 单区块对象，无主集合 |
 | `ds_terms.json` | — | 平铺 `英文原文 → 中文译文` 映射（特例，见第 7 节） |
+| `terms.json` | `terms` | **术语表**：`{ en, zh, source, note, ambiguous?, rejected? }`，见第 7.12 节。不参与 `?id=` 路由，是「翻译前先查」的查阅型数据 |
 
 ---
 
@@ -355,6 +357,41 @@ warbond   = item.warbond_zh || item.warbond
 
 平铺 `map<string, string>`：键为英文原文（含数值与单位，如 `0.349999994 sec`），值为统一译文（`0.349999994 秒`）。**无 `id`、无 `updated_at`**，不参与 `?id=` 路由，仅供文本替换。
 
+### 7.12 `terms.json`（术语表 · 2026-09-18 登记）
+
+**用途（强制）**：**以后翻译新页面 / 新增或修订任何数据集的 `name` / `title` / 正文专名之前，先查这张表**。表中已有的，一律照用其 `zh`，不得另起译法；表中没有的才新拟，并在 `note` 里记下依据，随后回填本表。
+
+**顶层字段**：`updated_at`（第 2 节）、`source`（合并来源说明）、`total`（**必须等于 `terms` 数组长度**）、`terms`（主集合）。
+
+**`terms[]` 元素结构**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `en` | string | 是 | 英文原文。**大小写敏感**；仅大小写不同但译名相同的写法已合并进同一 entry，并在 `note` 的「大小写变体」里列出 |
+| `zh` | string | 是 | 中文译名（= 裁定结果） |
+| `source` | string | 是 | **获胜来源**，取值见下方优先级表 |
+| `note` | string | 否 | 角色说明 / 裁定依据 / 被淘汰写法 / 语境歧义 / 同形异义 |
+| `ambiguous` | boolean | 否 | **语境歧义条目**：`zh` 只是该词的首选写法，另一种写法取决于语境（如 `light` 作护甲等级是「轻甲」、作重量级是「轻型」），**不得机械套用**；歧义说明在 `note` |
+| `rejected` | array | 否 | **被淘汰写法**，元素 `{ zh, source, tier }`。存在该字段即表示「同一英文曾有多于一种写法且已裁定」 |
+
+**来源与优先级（`zh` 取值口径，高者胜）**：
+
+| 级别 | 来源 | 说明 |
+| --- | --- | --- |
+| 0 | `口径（…）` | 本项目已确认的口径：用户给定口径（A 项）、星图 canonical 的推论、站内既有已确认译法 |
+| 1 | `starmap.json`、`index.html#BUILTIN_PLANET_CN` | 星区名 / 行星名 canonical |
+| 2 | `hd2_variables.json`、`HD2行动变量对照表.md` | 行动变量（游戏数据侧）名称 |
+| 3 | `weapons.json` / `enemies.json` / `stratagems_full.json` / `boosters.json` / `warbonds.json` / `missions.json` / `factions.json` / `ds_terms.json` | 站内数据集条目名 |
+| 4 | `术语对照表_送审.md` / `术语对照表_敌人_送审.md` / `术语对照表_部位.md` | 早期送审术语表 |
+
+冲突处理：**A 项口径 > starmap / 官方数据 > 其它**；胜出者写入 `zh` 与 `source`，被淘汰写法进 `rejected`（或在该词属「语境歧义」时并入 `note` + `ambiguous: true`）。
+
+**边界（2026-09-18 登记）**：
+
+1. 本表**只统一译名口径，不改变各数据集 `name` / `name_zh` 的权威性**：同一英文在两个数据集里各自是条目名（如 `SEAF Artillery` 在 `stratagems_full.json` 作「超级地球武装部队大炮」、在 `missions.json` 作「SEAF 火炮」）时，标 `ambiguous: true` 并同时记录两种口径，**不强行改名**。
+2. `ds_terms.json` 的键含大量数值 + 单位字符串（`0.349999994 sec`），属「文本替换表」而非术语，仍按第 3 级来源并入（便于统一「100 Ballistic → 100 弹道」这类展示值）。
+3. 本表是**查阅型数据**，前端不加载、不渲染；读取方式与其它数据集一致（`[IO.File]::ReadAllText()` + `ConvertFrom-Json`）。
+
 ---
 
 ## 8. 已登记的历史不一致（未对齐，禁止照抄进新数据）
@@ -447,14 +484,40 @@ warbond   = item.warbond_zh || item.warbond
     - **`fully_translated` 数量**：**28**。主干 31 节中有 3 节 `content` 为空字符串（`Fate_of_the_Illuminate`、`Battle_for_Super_Earth`、`December_2185`，英文 0 字符），没有散文可覆盖，**刻意不打标**（该标记的作用是「不再渲染英文折叠块」，空节本来就不渲染，打标是空操作，打了反而像「假装完成」）；这 3 节只补了 `title_zh`（`光能族的结局` / `超级地球之战` / `2185 年 12 月`），其中 `Battle_for_Super_Earth` 作为 `subsections_zh` 挂在 `May_2185` 下（主干里它是 `May_2185` 的 L4 子节）。
     - **文件规模**：`galactic_war_history_zh.json` **21,348 → 139,631 字节**；`content_zh` 合计 65,945 字符；覆盖主干英文 347 KB 中的散文部分。
     - **`figures_zh: []` 逐节沿用**：中文正文用简化 `<div style="width:Wpx;margin:12px 0;"><img …><div style="font-size:0.85em…">图注</div></div>` 内联保留**真缩略图**（各月度卷首「银河边疆」图等），行内阵营/POI 小图标（`faction-icon` / `POIicons`）随语义已由文字承载而丢弃。实测该页 `.mg-media` **251 → 0**、`img` **40 张全部 200、破图 0**（40 = 主干 `<div class="thumb">` 的真图总数，与 `check` 脚本的图片检查项数一致）。这是第 11 条做法的规模化沿用，不是图片丢失。
-    - **`References` 节的处理（专项）**：① `<ol class="references">` 的 **71 条 `<li>`** 全部译入（含 `cite&#95;note-N` / `cite_ref-N` 回链结构、`8.0/8.1` 双角标），引文与「发布于 / 访问于」信息译中文；② **58 个外部 URL 一字未改地以纯文本写进正文**（`中文可见文字（https://…）`）——因为 §5.2.3 的合并会把 `<a>` 降级为纯文本、href 会丢，URL 必须落在文本里才留得住；③ 补丁号 `1.001.100` 原样保留；④ **Navbox（`div.ranger-navbox`，28 KB，含 13 个部委图标）与末尾两块 HTML 注释整块丢弃**，依据是 §5.2.2 第 6 条「wiki 导航模板属不适合译入正文的残留」；⑤ 因此整节通用核对会显示 19 个「链接实体缺失 / 7 个数字缺失」，全部落在被丢弃的 Navbox 区间内——**只对 `<ol>` 区间核对时是 36/36 数字、58/58 URL、5/5 术语表实体全中**。
+    - **`References` 节的处理（专项）**：① `<ol class="references">` 的 **71 条 `<li>`** 全部译入（含 `cite&#95;note-N` / `cite_ref-N` 回链结构、`8.0/8.1` 双角标），引文与「发布于 / 访问于」信息译中文；② **58 个外部 URL 一字未改地以纯文本写进正文**（`中文可见文字（https://…）`）——因为 §5.2.3 的合并会把 `<a>` 降级为纯文本、href 会丢，URL 必须落在文本里才留得住；③ 补丁号 `1.001.100` 原样保留；④ **Navbox（`div.ranger-navbox`，28 KB，含 13 个部委图标）与末尾两块 HTML 注释整块丢弃**，依据是 §5.2.2 第 6 条「wiki 导航模板属不适合译入正文的残留」（**2026-09-18 已撤销：Navbox 改为中文化后写进 `content_zh`，见第 17 条；`figures_zh: []` 仍保留，用于丢弃主干那份英文 Navbox**）；⑤ 因此整节通用核对会显示 19 个「链接实体缺失 / 7 个数字缺失」，全部落在被丢弃的 Navbox 区间内——**只对 `<ol>` 区间核对时是 36/36 数字、58/58 URL、5/5 术语表实体全中**。
     - **信息不丢核对（可复现）**：对每节主干散文抽**数字 token**（`\d[\d,\.]*`）与**可见链接文字中有术语表对应项者**，逐条在中文 `content_zh` 里查：31 个主干小节（`References` 计入）合计 **数字 189 项 / 术语表链接实体 710 项 / 图片 40 项**。分项结果：**链接实体缺失 19、图片缺失 0、数字「缺失」35**。逐条复核后：链接实体 19 项与数字 7 项**全部落在 `References` 被刻意丢弃的 Navbox 区间**（该节 `<ol>` 区间单独核对为 数字 36/36、外部 URL 58/58、术语表实体 5/5，全中）；其余 28 项数字「缺失」是**单位换算或中文数词**（`2 billion → 20 亿`、`100 million → 1 亿`、`1.5 billion → 15 亿`、`20 million → 2000 万`、`all 3 factions → 三个阵营`、`For 100 years → 一个世纪`），量值一致。**实缺 0**。数字核对脚本对 `N million → XX 万 / 亿` 这类换算不做自动放行，故这些换算一律以「缺失」报出、再由人工逐条判定（这正是 35 这个数字的由来）。（检查脚本同时做「连续 4 个以上纯 ASCII 单词」的未译串启发式，仅命中刻意保留的英文片名/机构名。）
-    - **术语口径（本次新增登记）**：`Gloom → 幽暗`（地图变量表作「阴影迷雾」，本页统一「幽暗」）；`Deep Mantle Forge Complex → 深地幔锻造综合体`（`ds_terms` 既有）；星区名一律取 `HD2-Galatic_war-Map/tables/starmap.json` 的 `name_en → name`：`Jin Xi → 锦栖星区`、`Falstaff → 法尔斯塔夫星区`、`Mirin → 米琳星区`、`Farsight → 法尔赛特星区`（**不要**用「金羲/福斯塔夫/米林/远见」）；`Gambit → 围魏救赵（Gambit）`（与机制页一致）。术语表查询用 `HD2-Galatic_war-Map/tables/starmap.json` + `hd2_variables.json` + `HD2行动变量对照表.md` + 站内 `weapons/enemies/stratagems_full/missions/ds_terms.json` 合成（1,375 条），本次为一次性过程产物、未落库。
+    - **术语口径（2026-09-18 修订，见第 15/16 条）**：`Gloom / The Gloom → 阴霾`（**用户给定口径**；地图变量表另有写法，本页统一「阴霾」）；`Automaton / Automatons → 机器人`（用户给定口径；旧稿的三种异写一律作废，**字面见 `terms.json` 的 `rejected` 字段**）；`Deep Mantle Forge Complex → 深地幔锻造综合体`（`ds_terms` 既有）；星区名一律取 `HD2-Galatic_war-Map/tables/starmap.json` 的 `name_en → name`：`Jin Xi → 锦栖星区`、`Falstaff → 法尔斯塔夫星区`、`Mirin → 米琳星区`、`Farsight → 法尔赛特星区`、`Talus / Talos → 塔洛斯星区`（**不要**保留英文 `Talus 星区`，也不要用「金羲/福斯塔夫/米林/远见」）；`Gambit → 围魏救赵（Gambit）`（与机制页一致）。术语表查询用 `HD2-Galatic_war-Map/tables/starmap.json` + `hd2_variables.json` + `HD2行动变量对照表.md` + 站内 `weapons/enemies/stratagems_full/missions/ds_terms.json` 合成（1,375 条），本次为一次性过程产物、未落库。**（2026-09-18：该过程产物已重建并落库为 `terms.json`，1,671 条，见第 16 条）**
     - **旧锚点别名（用户要求「留」）**：拆页后 `mechanic.html?id=galactic_war#The_First_Galactic_War` 这类旧书签失效。做法选了**引擎侧数据驱动跳转**而不是「在数据里加 31 个隐藏别名小节」，理由：① 覆盖文件里主干没有的小节会被 §5.2.3 当作 `zhOnly` 追加到页尾并产生 console 警告（自检要求 0）；② 主干小节必然生成 TOC 条目与带内边距的 `.section` 外壳，做不到「0 高度、不影响排版」，TOC 会从 11 项涨到 42 项。实现：`mechanic.html` 新增 `legacyAnchorRedirect(pageId)` —— 仅当 `id === "galactic_war"` 且 `location.hash` **不是本页已有小节 id** 时，取一次历史页主干的 `toc`，命中即 `location.replace("./mechanic.html?id=galactic_war_history#<hash>")`；另加 `hashchange` 监听，并补 `scrollToHash()`（正文是 JS 渲染的，浏览器自带的 hash 滚动发生在渲染之前，深链此前只能落到页首）。失败（404/离线）静默 no-op。**未改任何 JSON 数据**。
     - **实测（1280 档 + 375 px 档）**：历史页 小节 31 / TOC 31 / 唯一 id 31 / 重复 0 / `_` 占位 0 / `<details class="mg-ref">` **0** / 表格 0 / `img` 40 破图 0 / `documentElement.scrollWidth == clientWidth`（1376=1376；375 档 iframe 实测 367=367、溢出元素 0）/ **console error 0、warning 0、`zhOnly` 0**（在页内二次调用 `load()` 并钩住 `console.error/warn/onerror` 采集）。TOC 标题与正文小节标题 **31/31 一一对应**。
     - **旧链接实测**：`?id=galactic_war#The_First_Galactic_War` → `?id=galactic_war_history#The_First_Galactic_War`（h1=银河战争历史，31 节）；`#May_2184`、`#References`、`#March_2185` 同样跳转并**已滚到目标节**（`scrollY≈18271`、目标节 `rect.top≈107`）；**本页合法锚点 `#FAQ` 不跳转**（仍为机制页 11 节）；不存在的 `#NoSuchAnchor_zzz` 也不跳转（留在机制页）；页内改 hash（不刷新）经 `hashchange` 同样生效。
     - **回归**：`?id=galactic_war` 11 节 / TOC 11 / 表格 1 / 图 1 / details 0 / 计算器在位；`?id=damage` 27 节 / TOC 27 / 表格 7 / details 1 / 图 35 破图 0；`mechanics.html` 5 张卡片（含 `galactic_war_history`）破图 0。三页 `scrollWidth == clientWidth`。
     - **仓库内无任何站内链接指向这 31 个旧锚点**（全仓 grep 仅命中本条注释），别名只为站外/浏览器书签服务。
+
+15. **A 项译名口径（2026-09-18 登记并全站执行）**：
+    - **`Gloom` / `The Gloom` → 阴霾**（同一事物）：`galactic_war_history_zh.json` 的 **47 处**旧译法全部改为「阴霾」；`SCHEMA.md` 自身第 14 条的旧口径记录 **2 处**同步改写。派生口径：`Dense Gloom → 浓阴霾`、`Gloom Border → 阴霾边界`。
+    - **`Automaton` / `Automatons` → 机器人**：`galactic_war_history_zh.json` 里 **141 处**旧译法（同一阵营名的三种异写，129 + 11 + 1）全部改为「机器人」。注意 `Cyborgs → 生化人` 是**另一阵营**（第一次银河战争的生化人）；`机械种族` / `半机械人` 等描述性说法不属阵营名，均保留。
+    - **被淘汰的写法一律只记在 `terms.json` 的 `rejected` / `note` 字段**（见第 7.12 节与第 16 条），本文件**不复述其字面**——这样「全站 grep 旧写法 = 0 处」这条自检才能机械执行。淘汰来源分三类：本站旧稿（`galactic_war_history_zh.json` 的 A 项实施前版本）、`HD2-Galatic_war-Map/tables/hd2_variables.json`（该目录本次不改，仅登记）、`HD2-Galatic_war-Map/tables/effect_id_cn.json`。
+    - **全站复验（2026-09-18）**：`HD2_Wiki/` 内除 `terms.json` 的 `rejected` 审计字段外，A 项涉及的全部旧写法均为 **0 处**；渲染页面 grep 同样为 0。
+
+16. **术语表落库 `terms.json`（2026-09-18 登记并执行）**：字段与来源优先级见第 7.12 节。
+    - **条目数**：1,671。**来源分布（按获胜来源计）**：`ds_terms.json` 526、`starmap.json` 320、`术语对照表_部位.md` 192、`stratagems_full.json` 108、`missions.json` 96、`weapons.json` 89、`enemies.json` 84、`术语对照表_送审.md` 82、`hd2_variables.json` 78、`术语对照表_敌人_送审.md` 28、`warbonds.json` 25、`boosters.json` 20、`HD2行动变量对照表.md` 7、`factions.json` 3、口径类 13（`口径（A 项）` 5 / `口径（星图 canonical）` 4 / `口径（A 项派生）` 2 / `口径（站内已确认）` 2）。
+    - **合并口径**：先按 5 级来源收集候选，再逐 `en` 取最高级为 `zh`，其余写入 `rejected`；纯语境差异（伤害类型名、`Projectile`、`Tail`、`SEAF Artillery` 等）标 `ambiguous: true` 并把两种写法都写进 `note`，不记为淘汰。
+    - **裁定为冲突并把被淘汰写法写进 `rejected` 的条目（7 条）**：`Gloom` / `The Gloom` / `Dense Gloom` / `Gloom Border`（A 项口径，淘汰本站旧稿的写法与 `hd2_variables.json` 的写法）、`Automaton` / `Automatons`（A 项口径，淘汰本站旧稿的三种异写）、`Status → 状态`（淘汰「状态效果（独立区块）」）。**被淘汰的字面写法不在本文件复述**，需要回溯时 `grep` `terms.json` 的 `rejected` 字段即可。
+    - **裁定为语境歧义、不淘汰的条目（16 条）**：`light` / `medium` / `heavy` / `Very Light`（护甲等级 vs 重量级）、`Acid` / `Arc` / `Ballistic` / `Fire` / `Gas` / `Standard` / `Projectile`（伤害类型名独立出现 vs 表格内「X伤害」；`Standard` 另需与 damage 页的「标准伤害」区分）、`Tail`（尾巴 / 尾部）、`SEAF Artillery`（战略配备名 vs 任务目标名）等，均标 `ambiguous: true` 并把两种写法都写进 `note`。
+    - **用法**：翻译新页面 / 新数据前**先查本表**（第 7.12 节）。
+
+17. **「`galactic_war_history`」`References` 节 Navbox 中文化与图标本站化（2026-09-18 登记并执行）**：撤销第 14 条第 ④ 项「Navbox 整块丢弃」的处理。
+    - **落地方式**：Navbox 的中文版**写进 `galactic_war_history_zh.json` → `References.content_zh` 的 `<ol class="references">` 之后**（合并引擎对 `content_zh` 只做 `sanitize` + 内链降级，整块 HTML 原样保留），`figures_zh: []` 与 `fully_translated: true` **保持不变**（主干那份英文 Navbox 仍作为「图片块」被丢弃，避免英文版重复渲染）。
+    - **为什么不用 `figures_zh` 透传**：主干把整个 `div.ranger-navbox` 归入图片块（含 `<img>`），透传会连同英文分组标题一起渲染；改成中文正文片段最直接，且不影响其它页。
+    - **翻译范围**：原模板 **151 个 `<a>` / 132 个不同可见链接文字 / 13 个分组行**；除「View or edit this template」（纯外站模板维护链接，按站点惯例保留原文）外，**131 个链接文字全部译中文**，另译 4 个纯文字分组标题（`The Wars` / `Enemy Specific Lore` / `Misc` / `Implied Ministries`）。原模板的 `<a href="/wiki/…">` 在站内没有对应路由（第 5.2.2 节会把 `<a>` 降级为纯文本），因此中文版**只保留文字、不保留跳转**，并在末尾加一行说明。
+    - **图标**：模板内的 13 个 `<img>`（11 个唯一文件：7 个部委 + `Automaton` / `Illuminate` / `Terminid` / `Super_Earth`）下载到 **`HD2_Wiki/assets/mechanics/galactic_war_history/`**（新目录，与主干原来用的 `assets/mechanics/galactic_war/` 分开），站内相对路径引用；下载**串行 + 1.2 s 间隔 + 最多 3 次重试**（wiki.gg 会 429），逐个校验为真实 SVG（> 200 B 且含 `<svg`）。实测 11/11 一次成功、失败 0、破图 0。
+    - **HTML 写法约束（供后续复用）**：`sanitize()` 会把所有 `class` 改写成 `mg-raw`、丢掉原有 ranger 布局类，因此中文 Navbox **只用行内 `style` 排版**，并**全部使用单引号属性**（避免在 JSON 字符串里转义 `"`）；图标统一 `width='18' height='18' style='vertical-align:-0.25em;'`，正好躲开 `.section img[width="512"|"1024"]` 的 1.5em 分档规则，按 18×18 显示。
+
+18. **C 项全站异写统一（2026-09-18 登记并执行）**：以 `terms.json` 为准，对 `HD2_Wiki/` 做「同一英文多个中文写法」全量扫描。
+    - **扫描口径**：① 对 `terms.json` 里每个带 `rejected` 的条目，把被淘汰写法在全站文本中定位计数；② 对已点名的四组与高风险同实体异写做定向 grep。
+    - **实际改动（全部落在 `galactic_war_history_zh.json`，合计 29 处）**：`Meridia` 的行文异写统一为星图 canonical「默里迪亚」**3 处**；`Talus 星区` → `塔洛斯星区` **2 处**；`OUTPOST ALPHA` 的站内行文统一为官方行动变量定名「阿尔法前哨」**9 处**；`HIVE WORLD` 同理统一为「巢穴世界」**9 处**；`Element-710` → `E-710` **3 处**；`Termicide` 的「终结杀虫剂」→「终结剂」**3 处**。
+    - **扫描到、但裁定不改的**：`Remembrance`（超级地球「超级城市」名；星图与站内数据集均无中文，按 C 项规则**保留英文**，共 3 处）；`Enuliale`（行星名，`starmap.json` 与 `BUILTIN_PLANET_CN` 的 `cn` 均为空串，**保留英文**）；`肉瘤体 / 肉团群`（「肉团群」全站 0 处，canonical = `enemies.json` 的「肉瘤体」）；`孢裂武斗虫 / 孢裂战士`（「孢裂战士」全站 0 处，canonical = `enemies.json` 的「孢裂武斗虫」）；`地狱舱 / 绝地喷射仓`（前者只出现在 `fetch_reports/` 中间产物里，不是页面内容，且该目录 schema 不约束，本次不改，canonical 取 `boosters.json` 的「绝地喷射仓」）。
+    - **复验（2026-09-18）**：上述被改写掉的旧写法，在 `HD2_Wiki/` 的**数据与页面**（`SCHEMA.md` 与 `terms.json` 的审计字段除外）中均为 **0 处**。
 
 
 ---
@@ -474,4 +537,6 @@ warbond   = item.warbond_zh || item.warbond
 9. **`mechanics/` 合并自检（2026-09-17 新增）**：打开 4 个机制页，确认 ① console 无 error；② 每页的小节数 == TOC 项数 == 唯一 `<div class="section">` id 数；③ 无重复 id、无 `_` 占位 id；④ 表格数 == 主干 `<table>` 数（除非覆盖提供了 `tables_zh`）；⑤ 覆盖文件里出现但主干没有的中文小节在 console 有 `zhOnly` 警告（有警告时应回到覆盖文件补 `id`）；⑥ 每个页面 `img` 全部返回 200、破图 0，且表格内图标渲染尺寸在 16–34 px 之间（规则见第 9 节第 7 条；`.mg-media` 正文图不受该规则影响，应保持原始显示尺寸）。
 10. **`mechanics/` 页面拆分自检（2026-09-18 新增，`galactic_war` 拆分后共 5 个机制页）**：`mechanic.html?id=galactic_war` 与 `?id=galactic_war_history` 两页都要过：① console 无 error、无 `zhOnly` 警告；② 小节数 == TOC 项数 == 唯一 id 数，且 **TOC 标题与正文小节一一对应**（不再出现「机制速览」挂剧情正文）；③ 拆分后两页 `content_zh` 之和 == 拆分前该节的 `content_zh`（逐节核对长度，并用首尾边界串确认切点位置）；④ 剧情节的 `figures_zh: []` / `fully_translated: true` 原样保留（「丢弃伪图片块」的判定跟着节走）；⑤ 机制页不出现任何剧情标记短语、历史页不出现任何机制标记短语。
 11. **图片尺寸自检（2026-09-18 新增）**：对上述各页在 1280 与 375 两档实测 `offsetWidth/offsetHeight` 与 `naturalWidth/naturalHeight`：① 页内 `img` 无 `h > 400px`；② 无「渲染宽 > 自然宽 × 1.25 且 > 80px」的放大（§9 第 12 条的 1.5em 模板图标分档除外）；③ 长宽比与 `naturalWidth/naturalHeight` 偏差 < 3%（`object-fit: contain` 的卡片图按容器盒计，不算变形；**判长宽比必须用未取整的 `getBoundingClientRect()`** —— 18.484×20.625 取整成 18×21 会产生 4% 的假偏差）；④ 表格内图标仍在 16–34 px；⑤ 破图 0、`documentElement.scrollWidth == clientWidth`（375 px 无横向溢出）；⑥ 正文配图尺寸与改前一致（除被修正的失衡项）。
+12. **术语表自检（2026-09-18 新增）**：① `terms.json` 能被 `ConvertFrom-Json` 解析、UTF-8 无 BOM、LF 换行；② `total` == `terms` 长度；③ 每个元素的 `en` / `zh` / `source` 非空；④ `rejected` 元素的 `zh` 不得与同元素 `zh` 相同；⑤ 抽查 `Gloom` / `Automaton` 确为「阴霾 / 机器人」；⑥ 全站 grep A 项旧写法（`terms.json` 的 `rejected` 字段除外）**均为 0 处**。
+13. **Navbox 自检（2026-09-18 新增，`mechanic.html?id=galactic_war_history`）**：① `References` 节出现中文 Navbox（`.section` 内 `img[width="18"]` 计 13 个）；② 图标 13/13 全部 200、破图 0；③ console error / warning / `zhOnly` 均为 0；④ 375 px 无横向溢出；⑤ `details.mg-ref` 仍为 0（`fully_translated` 未被破坏）。
 
