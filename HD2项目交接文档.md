@@ -1,6 +1,6 @@
 # HD2 主站项目交接文档
 
-> 生成时间：2026-09-13 ｜ **最近更新：2026-09-17**（本次会话：图鉴站三个新模块 · 机制页通用脚手架 · CI 配额治理 · 星图/主站若干修复）
+> 生成时间：2026-09-13 ｜ **最近更新：2026-09-18**（本次会话：图鉴站三个新模块 · 机制页通用脚手架与内容重构 · 银河战争拆页并全额汉化 · 术语表落库 · 债券封面 WebP · CI 配额治理 · 星图/主站若干修复）
 > 适用范围：`E:\GitLoadWareHouse\Jerry114514.github.io`（下称"本仓库"）
 > 本文档为**本地交接文档**，已在 `.gitignore` 中，不随仓库同步。
 > 阅读顺序建议：第 1 节 → 第 3 节 → **第 11 节（铁律，最容易踩坑）** → 第 16 节（已知缺口）→ 第 17 节（下一步）
@@ -18,7 +18,8 @@
 | `HD2_Wiki/*` | 图鉴站（敌人/武器/战备/强化资源/战争债券/机制页） | `https://jerry114514.github.io/HD2_Wiki/` |
 | `HD2_Wiki/boosters.html` · `booster.html` | **强化资源**图鉴（20 项；总览 + 详情模板） | `…/HD2_Wiki/boosters.html` |
 | `HD2_Wiki/warbonds.html` · `warbond.html` | **战争债券**（25 个；分组封面网格 + 每债券逐页奖励） | `…/HD2_Wiki/warbonds.html` |
-| `HD2_Wiki/mechanics.html` · `mechanic.html` | **机制页**（4 个：`?id=damage｜difficulty｜status_effects｜galactic_war`） | `…/HD2_Wiki/mechanic.html?id=damage` |
+| `HD2_Wiki/mechanics.html` · `mechanic.html` | **机制页**（5 个：`?id=damage｜difficulty｜status_effects｜galactic_war｜galactic_war_history`） | `…/HD2_Wiki/mechanic.html?id=damage` |
+| `…/?id=galactic_war` · `…/?id=galactic_war_history` | **银河战争机制**（规则）与**银河战争历史**（剧情/逐月时间线，已全额汉化） | `…/HD2_Wiki/mechanic.html?id=galactic_war_history` |
 
 图鉴站三个模块（强化资源 / 战争债券 / 机制页）都走同一套约定：**数据 JSON + 通用模板 + 运行时渲染**，图标一律本地化（零热链）。新增/修改内容前请先读 `HD2_Wiki/data/wiki/zh/SCHEMA.md`（**已跟踪**，是数据字段的唯一权威）。
 
@@ -250,7 +251,7 @@ fetchAll() → preloadPlanetIcons() → buildDssEffectMap()
 | 同上 | `stratagems.html` / `stratagem.html` | 同上 | `stratagems_full.json` |
 | 同上 | `boosters.html` / `booster.html` | 同上 | `boosters.json` |
 | 同上 | `warbonds.html` / `warbond.html` | 同上 | `warbonds.json` |
-| 机制页 | `mechanics.html` / `mechanic.html` | `?id=damage｜difficulty｜status_effects｜galactic_war` | `mechanics/<id>.json` + `<id>_zh.json` |
+| 机制页 | `mechanics.html` / `mechanic.html` | `?id=damage｜difficulty｜status_effects｜galactic_war｜galactic_war_history`（**5 个**） | `mechanics/<id>.json` + `<id>_zh.json` |
 
 三条**必须知道**的约定：
 
@@ -291,6 +292,30 @@ fetchAll() → preloadPlanetIcons() → buildDssEffectMap()
 **踩坑提醒**：中文覆盖的小节**尽量写显式 `id`**（= 主干 id）。否则只能按序号 1:1 配对，
 一旦两边小节数不等（少一节/多一节）就会**整体错位**——历史上出现过"点 ExVM 锚点却显示 ExDR 内容"。
 `galactic_war_zh.json` 已改为逐节显式 `id` 并把 24 个月度子节 id 列全。
+
+**页面的拆分与旧锚点（2026-09-18）**：`galactic_war` 曾把两类内容混在一页 —— **机制**（源自中文覆盖的《Second Galactic War Mechanics》）
+与**剧情/时间线**（源自英文主干的《Galactic War》页），**两者没有一一对应的小节**，序号配对把「机制速览」这类机制标题挂到了剧情小节上。
+已拆成两页：
+
+- `galactic_war`（**银河战争机制**）—— 只留机制小节（机制速览/机制详解/银河地图/战役/行星生命值/抵抗度/玩家影响/**任务影响度补充**/FAQ/参考资料）
+- **`galactic_war_history`（银河战争历史）**—— 剧情与逐月时间线（`February_2184` … `December_2185`），并已**全额汉化（31/31 节，21 KB → 140 KB）**
+
+**旧锚点由引擎侧自动兜住**：`mechanic.html` 的 `legacyAnchorRedirect()` 仅在「小节的 id 是 `galactic_war` 且该 hash 不是本页合法锚点」时，
+查一次历史页 `toc`，命中就 `location.replace()` 到历史页对应锚点（另有 `hashchange` 监听）。
+顺带修掉一个既有问题：**深链此前只能落到页首** —— 正文是 JS 渲染的，浏览器的 hash 滚动发生在渲染之前，现由 `scrollToHash()` 在渲染后补滚。
+
+**图片尺寸的统一规则**（`hud-skin.css` 第⑮节）：正文配图 `max-width:100%` + `max-height:28em`（保长宽比）；
+**模板图标按原始 `width` 属性分档**（188 / 512 / 1024 → `height:1.5em`）。**不要一刀切** ——
+`width="34"`（难度页图标）、`width="320"`（内容缩略图）、256×360 阵营图等本就是正常尺寸，压小反而失真。
+据此本轮清掉 **168 张失衡图**（历史页高度 127,637 → **44,801 px**）。
+
+**表格风格的唯一基准**（`hud-skin.css` 第⑦节，即用户给的截图样式）：表头 `background: var(--stripe)`（45° 琥珀斜纹）
++ `color: var(--yellow)` 粗体 + `#33270A` 描边；数据行偶数行 `#0D0D0D` 斑马纹；宽表包 `.table-wrap` 横滚。
+`weapon.html` / `stratagem.html` 原本**根本没有 `<table>`**（「详细数据」是 `.ds-grid` 卡片网格），2026-09-18 已改造成真表格以统一观感；
+`enemy.html` 补上了斑马纹并修掉冻结列的旧调色板。
+
+**翻译新内容前先查术语表**：`data/wiki/zh/terms.json`（**1,671 条**，结构见 `SCHEMA.md` §7.12）—— 内含 5 级来源优先级、
+淘汰写法（`rejected`）与语境歧义标记（`ambiguous`）。**别再临时合成术语表**，也别自行生造译名。
 
 ---
 
@@ -554,6 +579,15 @@ fetchAll() → preloadPlanetIcons() → buildDssEffectMap()
    CSS 里的 `url(` 全部变成另一种拼写，整页样式失效）。JSON 一律用 `ConvertFrom-Json` 过一遍。
    > 自检脚本建议统计那两种拼写的出现次数；本文档为避免自我误报，不在正文里写出它们。
 
+15. **自检要按扩展名分派**：`.json` → `ConvertFrom-Json`；`.js` → `node --check`；`.md` / `.html` / `.css` → **不做 JSON 解析**。
+    > 这条是血泪：本轮**三次**把 `SCHEMA.md` 当 JSON 解析，脚本在 `$ErrorActionPreference='Stop'` 下**中止在推送之前**
+    > （无副作用，但白跑一轮）；也**两次把坏文件写盘并推上线** —— 一次是 `ConvertTo-Json` 把单元素数组序列化成对象、
+    > 导致 GitHub 静默忽略 `tree` 字段（"空推"）；一次是插入锚点写错、把内容插进了 JSON 开头（线上坏过一回，靠回滚 + 重做修复）。
+    > 因此顺序必须是：**改动 → 按扩展名校验 → 通过才写盘 → 再推送**（一句话纪律：**先校验后写盘**）。
+16. **插入类改动必须先校验锚点**：`IndexOf` 找出的位置**先判断 ≥ 0**，否则 -1 会让插入点算到文件开头。
+    还要注意 JSON 的**紧凑写法**：`"id":"x"` 与 `"id": "x"` 是不同字符串，锚点必须照文件实际格式写。
+17. **推送前先拉一次远端同路径内容做比对**，确认差异只来自本次改动再提交（本轮曾检出另一个 agent 并发编辑 `index.html`）。
+
 ### 11.2 环境限制
 
 - **本机 hosts 屏蔽了大量域名**（`C:\Windows\System32\drivers\etc\hosts`，`#S302` 标记），
@@ -620,7 +654,9 @@ fetchAll() → preloadPlanetIcons() → buildDssEffectMap()
   实测单次 25.8s / 11.8s → 合计 **≈226 分钟/月**（占 11%），随后把 Actions 重新启用。
 - 顺带：`push_to_page.yml` 最后会 `repository_dispatch: fetch-now` 触发站点抓数据 → 降频也一并减少了站点侧运行。
 
-**③ Cloudflare Worker（冗余触发，可选）**
+**③ Cloudflare Worker（冗余触发，已上线并验证）**
+- **现状**：`GET …/workers/scripts/helldivers2-gitpage-dispatch/schedules` 读回 **`*/5 * * * *`**，cron 已生效；
+  但沙箱**无法访问 `*.workers.dev`**（见 §11.2），所以 HTTP 入口只能靠用户打开或看 GitHub 运行记录来验证。
 - Worker 名 `helldivers2-gitpage-dispatch`，`*/5` cron 从外部调 GitHub `workflow_dispatch`；
   脚本源码在 `scripts/cloudflare_dispatcher.js`（含完整部署步骤）。
 - **令牌权限坑（重要）**：**账号级 `cfat_` 令牌传脚本、写 secret 都可以，但管不了 cron**
@@ -755,6 +791,13 @@ for (let i = 0; i < 20; i++) {
   **机制页通用脚手架**（`mechanic-merge.js`，4 个机制页共用）—— 详见 §16
 - ✅ 机制页内容：`damage` 页完成事实纠错 + 内容补全 + 英文译入（表格 0→7、英文折叠块 27→1）；
   `status_effects` 英文译入（折叠块 10→0，并纠正多处编造内容）；`galactic_war` 修掉破坏布局的多余 `</div>`（正文 73px→880px）、处理前 8 节
+- ✅ 机制页结构：**拆出「银河战争历史」新页**（`galactic_war_history`）并**全额汉化 31/31 节**；机制页只留规则；两页误配对消除；旧锚点自动跳转 + 深链补滚
+- ✅ 机制页图片：失衡 **168 张清零**（统一规则见 §6.4），历史页高度 127,637 → 44,801 px
+- ✅ 表格风格：武器/战略页的「详细数据」由卡片网格**改造成真表格**，与机制页共用一个基准（`hud-skin.css` 第⑦节）
+- ✅ 图鉴站：债券总览改为 **wiki 式分组封面网格 + 类型筛选键帽**；25 个债券中文名补齐；逐页奖励 **122 条 `reward_refs`** 链到站内详情页（含强化资源的**常驻黄字**样式）
+- ✅ 债券封面转 **WebP**（4,655 KB → **414 KB**，-91%；原 PNG 暂留待确认）
+- ✅ **术语表落库** `data/wiki/zh/terms.json`（1,671 条）；口径修正 `Gloom=阴霾`、`Automaton=机器人`；统一 29 处冲突写法
+- ✅ `References` Navbox 中文化（131 条链接 + 11 个图标本地化）
 - ✅ CI/配额：抓取频率 15 → **5 分钟**；**artifact 自动清理**（挂进 fetch 工作流）；私密翻译仓库降频后重新启用；Cloudflare Worker 冗余触发 —— 详见 §11.4
 - ✅ 主站趋势图：只渲染**最近 24 小时** + **双轴自适应**（此前把 20 天历史全铺在横轴上，最新数据被压成一条缝；
   影响力系数轴写死 `max:0.025` 而实际最高 3.257% → 顶出界被切；玩家数轴加 `grace` 后被拉到 **-10000** → 已显式 `min:0`）
@@ -822,6 +865,9 @@ for (let i = 0; i < 20; i++) {
 | 英文 | 统一中文 | 备注 |
 |---|---|---|
 | Super Credits | **超级货币** | 曾写"超级点数"，已全站替换（144 处） |
+| **`Gloom` / `The Gloom`** | **阴霾** | 2026-09-18 用户口径。**注意**：本轮中途曾统一为"幽暗"，`hd2_variables` 里还写"阴影迷雾" —— 均已淘汰（记入 `terms.json` 的 `rejected`） |
+| **`Automaton` / `Automatons`** | **机器人** | 2026-09-18 统一，**141 处异写归零**（旧稿曾用"自动机 / 机械军团 / 机械体"）。注意 `Cyborgs` 是**另一个阵营**（生化人），不要混 |
+| **`Dense Gloom` / `Gloom Border`** | 浓阴霾 / 阴霾边界 | 同 `Gloom` 口径 |
 | Hellpod | **绝地喷射仓** | 曾写"地狱舱"，`missions.json` 已统一 |
 | Fortified | **固守** | **暂译**：站内/官方中文均找不到对应译名，正文保留英文括注 |
 | Warbond / Medal | **战争债券 / 勋章** | |
@@ -833,6 +879,9 @@ for (let i = 0; i < 20; i++) {
 | Durability / ExDR / ExVM | 耐久度 / 爆炸伤害抗性 / 爆炸验证模式 | ExVM 取值 **All / Outer Radius / None**（不是 0/1） |
 | Stim / Sample / Extraction | 兴奋剂 / 样本 / 撤离 | |
 | Booster | **强化资源** | 模块名；`boosters.html` |
+
+> **术语表已落库**：`data/wiki/zh/terms.json`（**1,671 条**，5 级来源优先级，结构与用法见 `SCHEMA.md` §7.12）。
+> **翻译新页面/新数据前先查这张表**；被淘汰的写法在 `rejected` 字段里可回溯，语境歧义（如 `light/medium/heavy` 既可指护甲等级也可指重量级）标 `ambiguous`，**不可机械套用**。
 
 ### 15.2 数据字段术语（图鉴站）
 
@@ -863,7 +912,10 @@ for (let i = 0; i < 20; i++) {
 
 ### 16.2 战争债券（`warbonds.html` · `warbond.html`）
 
-- 数据 `data/wiki/zh/warbonds.json`（**25 个**：标准 1 / 高级 21 / 传奇 3），封面 `assets/warbonds/`（25，约 **4.6 MB**）
+- 数据 `data/wiki/zh/warbonds.json`（**25 个**：标准 1 / 高级 21 / 传奇 3），封面 `assets/warbonds/`
+- **封面已转 WebP（2026-09-18）**：25 张 `4,655 KB → 414 KB（-91%）`，质量 85；做法是**浏览器 canvas 转码**
+  （本机无 ImageMagick/cwebp/sharp），逐张校验 `RIFF....WEBP` 头 + 尺寸与原图一致 + PSNR 42.6–49.8 dB。
+  **原 PNG 暂时保留**（占 4.6 MB）以便回滚 —— 确认 WebP 无问题后删掉 PNG，`assets/warbonds/` 就从 5,069 KB 降到 414 KB。
 - 总览页 = **wiki 式分组封面网格**（标题「全部 N 个战争债券，按发行时间排序」+ 标准/高级/传奇分组，卡片=封面大图+中文名+日期价格）
   ＋一条 `全部/标准/高级/传奇` 筛选键帽；分组标题兼作锚点（`#group-premium`），债券深链 `warbonds.html#<id>`
 - 详情页 = 名称(中英)/封面/类型/价格/发行日期/总页数/概述 + **逐页奖励表**（含站内链接）+ 底部「◀ 返回」「来源：wiki.gg ↗」
@@ -875,15 +927,26 @@ for (let i = 0; i < 20; i++) {
   - 强化资源：`.rw-link.rw-booster` → **常驻黄字**（`var(--yellow)`）+ hover 提亮
 - 反向链接：`weapon.html` / `stratagem.html` / `booster.html` 详情节有「🎖️ 所属战争债券：<中文名> 第 N 页」
 - 译名：14 个来自用户抄录的游戏内官方译名（**逐字照抄，勿自行重译**），另 9 个 2026-09-17 补（变量控制/尘卷风/蟒蛇突击兵/破围先锋/堑壕之师/外骨骼机甲专家/**民主光环驰援部队**/正义复仇者/卡斯特兰信条）
+- **`Chemical Agents` = 化学专家**（PlayStation 官方简中口径，2026-09-18 确认）。注意：上一轮本文档曾写"`boosters.json` 里 8 处仍是旧译『化学代理人』"，**该说法是错的** ——
+  实测全站只有 `warbonds.json` 的 `intro_zh` 一句**引述旧译名的元描述**里有 1 处（已改写，因为它直替会变成"本站此前写作「化学专家」"的自相矛盾句）。
+  另外 `warbonds.json` 里还有 **9 个债券的中文名**由用户从游戏内抄录补齐（见上一条）。
+- 总览页的**筛选键帽是后来加的**：用户先要"选项卡"、后要 wiki 布局，最终实现 = 分组封面网格（主布局）+ 一条 `全部/标准/高级/传奇` 键帽（筛选）＋分组标题兼作锚点（`#group-premium`），两个要求都不落空
 
-### 16.3 机制页（`mechanics.html` · `mechanic.html`，4 个）
+### 16.3 机制页（`mechanics.html` · `mechanic.html`，**5 个**）
 
 | 页 `?id=` | 进度 | 英文折叠块 | 备注 |
 |---|---|---|---|
 | `damage` | ✅ 事实纠错（14 处 P0）+ 内容补全 + 英文译入去重 | 27 → **1** | 表格 **0 → 7**、45 张图标本地化；仅 `References` 保留英文 |
-| `status_effects` | ✅ 英文译入 + 按主干纠正多处**编造内容** | 10 → **0** | `Change History`（英文更新日志）**未译** |
-| `difficulty` | ⏳ 未处理 | **2** | 两个折叠块待译 |
-| `galactic_war` | 🔶 部分完成（**8/28 节**） | 4 → **0** | 剩 20 个月度小节未译（约 11 万字符） |
+| `status_effects` | ✅ 英文译入 + 按主干纠正多处**编造内容** | 10 → **0** | `Change History`（15,274 字符英文更新日志）**未译** |
+| `difficulty` | ⏳ 未处理 | **2** | 两个折叠块待译（规模最小，适合先收尾） |
+| `galactic_war` | ✅ **已拆页**，只留机制 | 0 | 主干 `content` 全为空串（《Second Galactic War Mechanics》原文从未抓取落库），中文正文全在覆盖文件里 |
+| **`galactic_war_history`** | ✅ **全额汉化 31/31 节** | **0** | 21 KB → **140 KB**；剧情 + 逐月时间线（`February_2184` … `December_2185`）+ `References` Navbox 中文化 |
+
+**拆页前后的关键数字**：`galactic_war` 主干 346,889 → 2,890 B（纯机制骨架）、中文 31,556 → 11,232 B；
+历史页主干 346,987 B、中文 139,631 B（中文正文合计 65,945 字符）。**信息不丢核对**：拆分时按 `content_zh` 长度守恒逐节核对（10/10 相等、总计 11305 == 11305）；
+翻译后按「数字 token + 术语链接实体」核对（数字 189 / 实体 710 / 图片 40，**实缺 0**；自动比对报的"缺 35 个数字"全是单位换算如 `2 billion → 20 亿`）。
+
+**为什么金额/数字核对要人工过一遍**：自动比对会把「20 亿」这类**换算后的中文数词**判成"数字丢失"，也会把 `References` 里刻意丢弃的 Navbox 区间算进去 —— 报"缺失"时必须逐条复核再下结论。
 
 `damage` 页 C1 纠错清单（**这些错误曾长期误导玩家，改动时别再退回去**）：穿透三档应为 **AP>AV 100% / AP=AV 65% / AP<AV 0（跳弹）**；
 护甲 **13 档**（不是 10 级）；穿透按入射角 **4 档**（不是"角度越陡穿甲越强"）；「护甲伤害修正」讲的是**玩家护甲**（不是"不同伤害类型对护甲修正"）；
@@ -893,23 +956,22 @@ ExVM 取值 **All/Outer Radius/None**（不是 0/1）；爆炸**无视耐久度*
 
 ### 16.4 已知问题 / 缺口（接手先看这里）
 
-1. **`galactic_war` 剩 20 个月度小节未译**（`May_2184` … `December_2185`，约 11 万字符 ≈ 2 万词）
-2. **⚠ `galactic_war` 主干与中文覆盖「不同源」**：主干抓的是 wiki 的《Galactic War》**剧情/时间线**页
-   （`source = …/wiki/Galactic_War`），而中文覆盖来自《Second Galactic War Mechanics》**机制**页 →
-   序号配对把「机制速览 / 机制详解 / 任务影响度补充」这类**机制标题挂到了剧情小节**上。
-   现状：两段用加粗小标题分隔并排。**彻底理清必须改中文标题或拆页 → 会动 TOC 锚点**，需用户拍板（已登记 SCHEMA §9）。
-3. `status_effects` 的 `Change History`（15,274 字符英文更新日志）未译 —— 它是外部版本记录，译者判断"不宜并进正文"
-4. `difficulty` 页还有 **2 个**英文折叠块
-5. **化学债券译名可能仍不一致**：`warbonds.json` 用「**化学专家**」（PlayStation 官方简中），而 `boosters.json` 里 8 处仍是旧译「**化学代理人**」→ **待核对统一**
-6. `HD2_Galatic_war-Map`（主站/星图）与 `HD2_Wiki`（图鉴站）之间仍有译名分歧的隐患：图鉴站已统一「绝地喷射仓」，
-   但主站/星图侧若还有"地狱舱/绝地喷射仓"混用需一并核对
-7. 主干表格里的 `/wiki/…` 内链在静态站是**死链**（未处理；本站无 `/wiki/` 路由）
-8. 模板图标按原始尺寸显示的两处（**用户已决定不缩**）：`difficulty` 正文 23 张、`damage` `.mg-media` 4 张
-9. `galactic_war` 主干里 **132 个**被误判为"图片块"的英文散文块（已处理 16 个；其余随月度小节一起等翻译）
+1. ~~`galactic_war` 剩 20 个月度小节未译~~ → **已解决**：拆到 `galactic_war_history` 并全额汉化（31/31 节）
+2. ~~主干与中文覆盖「不同源」导致机制标题挂在剧情小节上~~ → **已解决**：拆页后两页各自 TOC 与正文一一对应（机制 11 节 / 历史 31 节）
+3. `status_effects` 的 `Change History`（15,274 字符英文更新日志）**未译** —— 它是外部版本记录，译者判断"不宜并进正文"
+4. `difficulty` 页还有 **2 个**英文折叠块（规模最小，优先收尾）
+5. **`Enuliale`（行星）与 `Remembrance`（超级城市）站内无中文** —— `starmap.json` 与 `BUILTIN_PLANET_CN` 的 `cn` 是**空串**，译文里按规则保留英文（各 3 处）。补齐属于"数据补齐"而非翻译，需用户给口径
+6. **两处裁定待用户确认**：`前哨阿尔法 → 阿尔法前哨`、`虫巢世界 → 巢穴世界`（各 9 处）—— 按"官方行动变量 > 既有译文"机械执行的结果，会让剧情页与地图子系统对齐
+7. **`damage.json`、`difficulty.json` 里各有一个未处理的孤立 `</div>`**（`galactic_war` 与 `status_effects` 的已删）。
+   实测浏览器错误恢复已兜住（**无节点逃逸**），但建议后续一并清理
+8. 主干表格里的 `/wiki/…` 内链在静态站是**死链**（本站无 `/wiki/` 路由，未处理）
+9. 模板图标按原始尺寸显示的两处（**用户已决定不缩**）：`difficulty` 正文 23 张、`damage` `.mg-media` 4 张
 10. 主干散文自身矛盾（写 `AV 0–10`，同节表格却是 13 档 AV-1…AV11）—— 已登记 SCHEMA §8，未改主干
-11. `missions.json` 的「地狱舱」→「绝地喷射仓」已统一（7 处，2026-09-17）
-12. 主站 `index.html` 曾被**另一个 agent** 并发编辑（2026-09-17 11:34 改写 `DSS_ICONS`/`PC_ICON_VER`）→
-    **接手时先确认没有别的自动化在同时改这个文件**，否则会互相覆盖
+11. **历史页体量**：251 张图 / 44,801 px 高（数据本身如此）。是否把 24 个月度小节改成 `<details>` 折叠或按月分页 —— 需改引擎，待定
+12. **`warbonds.json` 是单行压缩格式**（56 KB / 1 行），与"2 空格缩进"约定不符；格式化会产生约 9 万字符 diff，用户已明确**忽略**
+13. 原债券封面 PNG（4.6 MB）**保留中**，等确认 WebP 无问题后删除
+14. 主站 `index.html` 曾被**另一个 agent** 并发编辑（2026-09-17 11:34 改写 `DSS_ICONS`/`PC_ICON_VER`）→
+    **接手时先确认没有别的自动化在同时改这个文件**，否则会互相覆盖（推送前拉远端比对，见 §11.1 第 17 条）
 
 ---
 
@@ -917,12 +979,17 @@ ExVM 取值 **All/Outer Radius/None**（不是 0/1）；爆炸**无视耐久度*
 
 | 优先级 | 事项 | 为什么是这个顺序 |
 |---|---|---|
-| **P0** | 统一化学债券译名：`boosters.json` 8 处「化学代理人」→「**化学专家**」 | 已知错误且**成本极低**（一次替换 + 一次推送）；不修就会在两个模块间露出不一致 |
-| **P1** | 补齐小规模未译：`difficulty`（2 节）+ `status_effects` 的 `Change History` | 规模可控、一次性收尾；做完 3 个机制页就整齐了 |
-| **P1** | `galactic_war` 剩余 **20 个月度小节**分批翻译（建议 **5 个月/批，每批一次推送**） | 工作量最大（≈11 万字符）；分批可避免"一次改太多导致坏文件被推上线"，也便于逐批验收 |
-| **P2** | 拍板 `galactic_war` 的「**主干与中文覆盖不同源**」问题（改中文标题 / 拆页 / 保持现状） | 只有用户能决定；且它会**动 TOC 锚点**，属于结构性改动，必须先定方向再动 |
-| **P2** | 清理主干表格里的 `/wiki/…` 死链（改成站内链接或去掉） | 影响体验但不影响正确性；需要先定"映射到哪个站内页"的规则 |
-| **P3** | `assets/warbonds/` 4.6 MB 封面转 **WebP**（可省约 70%） | 纯优化：能同时减小每个 Pages artifact（当前站约 60 MB，单 artifact 峰值 ~250 MB / 上限 500 MB） |
+| **P0** | 让用户拍板两处裁定：`前哨阿尔法→阿尔法前哨`、`虫巢世界→巢穴世界`（各 9 处） | 改动已落地、**一步可回退**；只有用户能决定"页面行文"与"地图子系统口径"哪个优先 —— 属于"需要拍板"，先问清再动别的 |
+| **P1** | `difficulty` 页 2 个英文折叠块译入去重（照 `damage`/`status_effects` 的做法） | 规模最小、方法已验证，做完 5 个机制页就整齐了 |
+| **P1** | `status_effects` 的 `Change History` 是否译（15,274 字符英文更新日志） | 需先定"版本更新记录要不要进站内正文"的口径；定了就能一次做完 |
+| **P2** | 清理 `damage.json` / `difficulty.json` 各一个孤立 `</div>` | 目前浏览器错误恢复兜住了（无节点逃逸），但属于**布局级隐患**，动数据前建议先备份 |
+| **P2** | 补 `Enuliale` / `Remembrance` 的中文（星图 `cn` 为空串） | 属**数据补齐**：要动 `starmap.json`/`BUILTIN_PLANET_CN`，得先给译名口径 |
+| **P2** | 历史页体量（251 图 / 44,801 px）是否折叠或按月分页 | 需改 `mechanic-merge.js`/`mechanic.html`（引擎行为变更），影响面比内容改动大 |
+| **P3** | 删除原债券封面 PNG（省 4.6 MB） | 纯优化，**前提是用户已确认 WebP 显示无问题**（一眼可判） |
+| **P3** | 主干表格里的 `/wiki/…` 死链处理；`galactic_war.json` 补抓英文原文（现为纯骨架） | 都不影响正确性；后者要重新抓 wiki 页并决定 `fully_translated` 是否保留 |
 
-> 排序逻辑：**P0 = 已知错误 + 改动成本几乎为零**（先做，立刻消除不一致）；**P1 = 内容完整性且规模可控**（做一件少一件）；
-> **P2 = 需要用户决策或会动锚点的结构性改动**（不能由执行者单方面定）；**P3 = 优化项**（不影响正确性，可随时做）。
+> 排序逻辑：**P0 = 只有用户能拍板的已知分歧**（先问清，避免下游返工）；**P1 = 方法已验证、规模可控的内容收尾**（做一件少一件）；
+> **P2 = 结构性改动或数据补齐**（会动锚点/引擎/数据文件，需要先定方向）；**P3 = 纯优化**（不影响正确性，可随时做）。
+>
+> **已从清单移除（本轮完成）**：化学债券译名核对（实测那条待办本身是错的）、`galactic_war` 拆页与全额汉化、
+> 债券封面转 WebP（现已完成，只剩"删不删原 PNG"）、`Gloom`/`Automaton` 口径统一、术语表落库、Navbox 中文化。
