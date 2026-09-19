@@ -392,6 +392,37 @@ warbond   = item.warbond_zh || item.warbond
 2. `ds_terms.json` 的键含大量数值 + 单位字符串（`0.349999994 sec`），属「文本替换表」而非术语，仍按第 3 级来源并入（便于统一「100 Ballistic → 100 弹道」这类展示值）。
 3. 本表是**查阅型数据**，前端不加载、不渲染；读取方式与其它数据集一致（`[IO.File]::ReadAllText()` + `ConvertFrom-Json`）。
 
+### 7.13 `HD2-Galatic_war-Map/data/campaign_zh.json`（进行中的战役中文化层 · 2026-09-20 登记）
+
+> 本文件**不在 `HD2_Wiki/data/wiki/zh/` 目录下**，而是主站 `HD2-Galatic_war-Map/data/` 的数据文件。因第 7 节是「扩展字段登记表」的统一入口，故在此登记，避免出现未登记的数据文件。
+
+**用途（强制）**：主站「进行中的战役」模块（`HD2-Galatic_war-Map/index.html` → `#block-campaign`）的**中文化层**。英文原文由 `scripts/fetch_site_data.py::build_active_campaign()` 从 `https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live` 的 `episodes` / `episodesStatus` 抓取；本文件按上游 **id32** 覆盖中文，**缺失的 id32 一律回退英文原文，绝不阻断渲染**。
+
+**顶层字段**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `_meta` | object | 是 | `desc` / `source` / `terminology` / `note` / `updated_at`（说明性元数据，前端不读） |
+| `status` | object | 是 | 阶段状态口径：键为上游 status 码（`"0"` 进行中 / `"2"` 成功 / `"3"` 失败），值 `{ key, cn }`；`key` 同时用作前端 CSS 类后缀（`.camp-phase.is-{key}`） |
+| `reward_types` | object | 是 | 奖励口径：键为上游 `mixId` 字符串，值 `{ en, cn, icon }`；`icon` 取 `medal`（战争债券勋章）或 `cape`（披风），决定前端内联 SVG 图形 |
+| `episodes` | object | 是 | 主集合：键为**战役 id32 字符串**，值 `{ title, description?, phases? }` |
+| `factions` | object | 是 | 阵营口径：键为上游 `race` 码字符串（`"1"` 人类 / `"2"` 终结族 / `"3"` 机器人 / `"4"` 光能族），值 `{ en, cn, cls }`，`cls` 用作横幅渐变类名 `.camp-banner.is-{cls}` |
+
+**`episodes.<id32>` 结构**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `title` | string | 是 | 战役名中文 |
+| `description` | string | 否 | 情报简介中文（多段用 `\n\n` 分隔） |
+| `phases` | object | 否 | 键为**阶段 id32 字符串**，值 `{ title?, briefing? }`；`title` 为阶段名中文，`briefing` 为简报中文（多段 `\n\n`） |
+
+**取值与回退约定**：
+
+1. 译名前**先查 `terms.json`**（第 7.12 节）照用其 `zh`；本文件已采用 `Cyborgs→生化人`、`Automaton→机器人`、`Helldivers→绝地潜兵`、`Super Earth→超级地球`、`Stratagem→战略配备`、`Quarter-term elections→季度选举`（与 `data/translated/TransNews.json` 既有译法一致）。
+2. 中英并陈由前端负责（中文为主、英文折叠/小字对照），本文件**只存中文**，不重复存英文原文。
+3. 上游新增战役/阶段后，本文件未同步不会报错——对应字段为空串，前端直接显示英文原文。
+4. 读取方式：`fetch_site_data.py::_load_campaign_zh()`（`json.load` + 异常吞掉）；前端**不直接加载本文件**，只读 `data.json → active_campaign`（已合并中英）。
+
 ---
 
 ## 8. 已登记的历史不一致（未对齐，禁止照抄进新数据）

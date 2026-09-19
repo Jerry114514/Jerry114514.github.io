@@ -12,6 +12,7 @@ published=ISO 时间、planet 含 name/currentOwner/maxHealth 等）：
 """
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -545,8 +546,160 @@ def fetch_companion():
             "war_stats": _clean_war_stats(obj.get("warStats")),
             "planet_events": ws.get("planetEvents") or [],
             "planet_attacks": ws.get("planetAttacks") or [],
+            # 「进行中的战役」原始素材：episodes 为战役（含三阶段/奖励/简报），
+            # episodesStatus 给出每个战役当前推进到哪一阶段（2026-09-20 新增）
+            "episodes": obj.get("episodes") or [],
+            "episodesStatus": obj.get("episodesStatus") or [],
             "_clientTimeMs": obj.get("clientTime") or (int(time.time()) * 1000),
             "_currentWarTime": (obj.get("warStatus") or {}).get("time") or 0}
+
+
+# ---------------- 「进行中的战役」源 ----------------
+# 上游：companion live API 的 episodes / episodesStatus（helldiverscompanion.com/#overview
+# 的 ACTIVE CAMPAIGN 区块用的就是这两个字段）。
+# 中文层：HD2-Galatic_war-Map/data/campaign_zh.json（按 id32 覆盖，缺失回退英文）。
+CAMPAIGN_ZH_PATH = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map", "data", "campaign_zh.json"))
+
+_TAG_RE = re.compile(r"<[^>]*>")
+_PHASE_STATUS_FALLBACK = {0: ("in_progress", "进行中"), 2: ("success", "成功"), 3: ("failure", "失败")}
+_RACE_FALLBACK = {1: ("Humans", "超级地球"), 2: ("Terminids", "终结族"),
+                  3: ("Automaton", "机器人"), 4: ("Illuminate", "光能族")}
+
+
+def _plain(text):
+    """剥离 <i=1> 之类富文本标记与首尾空白（上游剧情文本内嵌强调标记）。"""
+    if not isinstance(text, str):
+        return ""
+    return _TAG_RE.sub("", text.replace("\r\n", "\n")).strip()
+
+
+def _load_campaign_zh():
+    """读中文化层；缺失/损坏时返回空字典（全英文兜底，绝不抛错）。"""
+    try:
+        with open(CAMPAIGN_ZH_PATH, encoding="utf-8") as f:
+            obj = json.load(f)
+        if isinstance(obj, dict):
+            return obj
+    except Exception as e:
+        print(f"  [CAMPAIGN] 中文化层读取失败（按英文渲染）: {e}")
+    return {}
+
+
+def _reward_of(entry, zh):
+    """{mixId, amount} -> 带中英文名/图标类型的奖励对象。"""
+    if not isinstance(entry, dict):
+        return None
+    mix = str(entry.get("mixId") or "")
+    meta = (zh.get("reward_types") or {}).get(mix) or {}
+    is_medal = mix == "897894480"
+    return {
+        "mix_id": entry.get("mixId"),
+        "amount": entry.get("amount"),
+        "name": meta.get("en") or ("WARBOND MEDAL" if is_medal else "REWARD"),
+        "name_cn": meta.get("cn") or "",
+        "icon": meta.get("icon") or ("medal" if is_medal else "reward"),
+    }
+
+
+def build_active_campaign(companion, zh=None):
+    """从 companion live API 组装「进行中的战役」。拿不到时返回 None（调用方保留旧值）。
+
+    - 战役：优先 status==0（进行中）；没有则退回 startWarTime 最新的一场
+    - 当前阶段：episodesStatus.latestPhaseId32 命中优先，否则最后一个 status==0 的阶段
+    - 阶段状态：0=进行中（黄）/ 2=成功（绿）/ 3=失败（红），与 companion 站点一致
+    """
+    if not companion:
+        return None
+    raw_eps = [e for e in (companion.get("episodes") or []) if isinstance(e, dict) and e.get("title")]
+    if not raw_eps:
+        return None
+
+    zh = zh if isinstance(zh, dict) else {}
+    zh_eps = zh.get("episodes") or {}
+    zh_status = zh.get("status") or {}
+    zh_fac = zh.get("factions") or {}
+
+    running = [e for e in raw_eps if e.get("status") == 0]
+    pool = running or raw_eps
+    ep = sorted(pool, key=lambda e: e.get("startWarTime") or 0)[-1]
+
+    latest_phase = None
+    for s in (companion.get("episodesStatus") or []):
+        if isinstance(s, dict) and s.get("episodeId32") == ep.get("id32"):
+            latest_phase = s.get("latestPhaseId32")
+            break
+
+    zh_ep = zh_eps.get(str(ep.get("id32"))) or {}
+    zh_phases = zh_ep.get("phases") or {}
+
+    phases = []
+    for p in (ep.get("phases") or []):
+        if not isinstance(p, dict) or not p.get("introTitle"):
+            continue
+        st = p.get("status")
+        sm = zh_status.get(str(st)) or {}
+        fb_key, fb_cn = _PHASE_STATUS_FALLBACK.get(st, ("unknown", "未知"))
+        key = sm.get("key") or fb_key
+        zph = zh_phases.get(str(p.get("id32"))) or {}
+        phases.append({
+            "id": p.get("id32"),
+            "title": _plain(p.get("introTitle")),
+            "title_cn": zph.get("title") or "",
+            "briefing": _plain(p.get("introMessage")),
+            "briefing_cn": zph.get("briefing") or "",
+            "outcome": _plain(p.get("outroTitle")),
+            "status": st,
+            "status_key": key,
+            "status_cn": sm.get("cn") or fb_cn,
+            "reward": _reward_of((p.get("rewards") or [None])[0], zh),
+        })
+    if not phases:
+        return None
+
+    cur_idx = None
+    if latest_phase is not None:
+        for i, ph in enumerate(phases):
+            if ph["id"] == latest_phase:
+                cur_idx = i
+                break
+    if cur_idx is None:
+        pending = [i for i, ph in enumerate(phases) if ph["status"] == 0]
+        cur_idx = pending[-1] if pending else len(phases) - 1
+    cur = phases[cur_idx]
+
+    race = ep.get("race")
+    fb_race_en, fb_race_cn = _RACE_FALLBACK.get(race, ("", ""))
+    race_name = (zh_fac.get(str(race)) or {}).get("en") or fb_race_en
+    race_cn = (zh_fac.get(str(race)) or {}).get("cn") or fb_race_cn
+
+    return {
+        "available": True,
+        "id": ep.get("id32"),
+        "title": _plain(ep.get("title")),
+        "title_cn": zh_ep.get("title") or "",
+        "label": "ACTIVE CAMPAIGN",
+        "label_cn": "进行中的战役",
+        "description": _plain(ep.get("description") or ep.get("introMessage")),
+        "description_cn": zh_ep.get("description") or "",
+        "race": race,
+        "race_name": race_name,
+        "race_cn": race_cn,
+        "status": ep.get("status"),
+        "phase_count": len(phases),
+        "current_phase_index": cur_idx,
+        "current_phase_id": cur.get("id"),
+        "phases": phases,
+        "briefing": cur.get("briefing") or "",
+        "briefing_cn": cur.get("briefing_cn") or "",
+        "reward": _reward_of((ep.get("rewards") or [None])[0], zh),
+        # 上游只给 bannerImageId32，没有可公开访问的横幅图 URL（已实测多种常规路径均 404），
+        # 前端按 race 用阵营渐变占位；若日后有图，把 URL 填到这里即可，前端自动优先用图。
+        "banner_image_id": ep.get("bannerImageId32"),
+        "banner_image": None,
+        "source": "helldiverscompanion.com live API · episodes",
+        "computed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
 
 
 # ---------------- helldivers2.dev 源 ----------------
@@ -915,6 +1068,19 @@ def main():
     except Exception as e:
         print(f"  [HISTORY] 失败: {e}")
 
+    # 「进行中的战役」：companion episodes（status==0 那场）+ HD2-Galatic_war-Map/data/campaign_zh.json
+    try:
+        camp = build_active_campaign(companion, _load_campaign_zh())
+        if camp:
+            cur = camp["phases"][camp["current_phase_index"]]
+            result["active_campaign"] = camp
+            print(f"  [CAMPAIGN] {camp['title']} · 阶段 {camp['current_phase_index'] + 1}/{camp['phase_count']}"
+                  f"「{cur['title']}」({cur['status_cn']}) · 奖励 {camp['reward']['name'] if camp['reward'] else '—'}")
+        else:
+            print("  [CAMPAIGN] 本次拿不到战役数据（保留 data.json 旧值）")
+    except Exception as e:
+        print(f"  [CAMPAIGN] 组装失败（保留 data.json 旧值）: {e}")
+
     # 解耦：翻译字段（news/major_order）由 HD2Web-Trans 单一写入，此处保留旧值不被覆盖
     try:
         if os.path.exists(out_path):
@@ -923,6 +1089,10 @@ def main():
             for k in ("news", "major_order", "strategic"):
                 if k in old:
                     result[k] = old[k]
+            # 战役：本次没拿到就沿用旧值；拿到了以新值（上面已写入 result）为准
+            if "active_campaign" not in result and "active_campaign" in old:
+                result["active_campaign"] = old["active_campaign"]
+                print("  [CAMPAIGN] 沿用上次成功抓取的战役数据")
     except Exception:
         pass
 

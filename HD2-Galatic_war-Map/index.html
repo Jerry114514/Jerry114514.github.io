@@ -107,6 +107,20 @@
     </section>
 
     <!-- ============================================================
+         区块1b：进行中的战役（重要指令正下方）
+         参考 helldiverscompanion.com/#overview 的 ACTIVE CAMPAIGN 区块
+         数据：data.json → active_campaign
+               由 scripts/fetch_site_data.py 抓 companion live API 的 episodes 组装，
+               中文层为 HD2-Galatic_war-Map/data/campaign_zh.json（缺失自动回退英文）
+         标题放在卡片内部（与 DSS 区块同一规范），故不设 .block-head
+         ============================================================ -->
+    <section class="block" id="block-campaign">
+      <div id="campaign-content">
+        <div class="loading">正在接收战役情报…</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
          DSS 民主空间站（重要指令下方）
          ============================================================ -->
     <!-- ============================================================
@@ -568,6 +582,7 @@
       major_order: data.major_order || {},
       personal_order: data.personal_order || null,
       news:        data.news || [],
+      active_campaign: data.active_campaign || null,   // 进行中的战役（fetch_site_data.py 抓 companion episodes）
       starMap,
       variables,
       effectMap,
@@ -1089,6 +1104,150 @@ function renderPlayers(data) {
     } else {
       expireEl.innerHTML = "";
     }
+  }
+
+  /* ==============================================================
+     渲染：进行中的战役（重要指令正下方）
+     --------------------------------------------------------------
+     数据：data.json → active_campaign
+       { title/title_cn, description/description_cn, race_name/race_cn,
+         phase_count, current_phase_index, phases[{ title/title_cn,
+         briefing/briefing_cn, status_key, status_cn, reward }],
+         reward, banner_image_id, banner_image }
+     上游：helldiverscompanion.com live API 的 episodes（无 CORS，故由 Actions 侧
+           fetch_site_data.py 落盘）；中文来自 data/campaign_zh.json，缺失回退英文。
+     ============================================================== */
+  const CAMP_FACTION_CLS = { Automaton: "auto", Terminids: "term", Illuminate: "illu", Humans: "hum" };
+  const CAMP_STATUS_CN = { in_progress: "进行中", success: "成功", failure: "失败" };
+  const CAMP_STATUS_EN = { in_progress: "IN PROGRESS", success: "SUCCESS", failure: "FAILURE" };
+
+  // 奖励图标：内联 SVG（不依赖外部文件，永不破图）
+  function campRewardIcon(kind) {
+    if (kind === "medal") {
+      return `<svg class="camp-rw-svg" viewBox="0 0 24 24" aria-hidden="true">`
+        + `<path d="M8 2h3l1 6-2 1-2-7z" fill="currentColor" opacity=".75"/>`
+        + `<path d="M16 2h-3l-1 6 2 1 2-7z" fill="currentColor" opacity=".45"/>`
+        + `<circle cx="12" cy="15" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/>`
+        + `<path d="M12 11.4l1.15 2.33 2.57.37-1.86 1.81.44 2.56L12 17.26l-2.3 1.21.44-2.56-1.86-1.81 2.57-.37z" fill="currentColor"/>`
+        + `</svg>`;
+    }
+    // cape（披风）：肩扣 + 垂坠布料
+    return `<svg class="camp-rw-svg" viewBox="0 0 24 24" aria-hidden="true">`
+      + `<path d="M6 4h12l-1.2 3.2V21l-4.8-2.6L7.2 21V7.2z" fill="currentColor" opacity=".9"/>`
+      + `<path d="M9 4.6h6l-.6 1.6H9.6z" fill="#000" opacity=".35"/>`
+      + `<rect x="5" y="2.6" width="14" height="2.1" rx="1" fill="currentColor"/>`
+      + `</svg>`;
+  }
+
+  function campRewardBlock(rw, label) {
+    if (!rw) return "";
+    const kind = rw.icon === "medal" ? "medal" : "cape";
+    const name = rw.name_cn || rw.name || (kind === "medal" ? "战争债券勋章" : "披风");
+    const en = rw.name_cn && rw.name ? `<span class="camp-rw-en">${esc(rw.name)}</span>` : "";
+    const amt = (typeof rw.amount === "number" && rw.amount > 0)
+      ? `<span class="camp-rw-amt">×${esc(rw.amount)}</span>` : "";
+    return `<div class="camp-reward camp-reward-${kind}">
+      <div class="camp-rw-label">${esc(label || "奖励")}</div>
+      <div class="camp-rw-body">
+        <span class="camp-rw-icon">${campRewardIcon(kind)}</span>
+        <span class="camp-rw-name">${esc(name)}${en}${amt}</span>
+      </div>
+    </div>`;
+  }
+
+  function renderCampaign(data) {
+    const root = $("campaign-content");
+    if (!root) return;
+    const c = data.active_campaign;
+    if (!c || c.available === false || !c.title) {
+      root.innerHTML = `<div class="card"><div class="empty">🛰️ 暂未收到进行中的战役情报。</div></div>`;
+      return;
+    }
+
+    const titleCn = c.title_cn || c.title;
+    const titleEn = c.title_cn ? c.title : "";
+    const facCls = CAMP_FACTION_CLS[c.race_name] || "unknown";
+    const curIdx = (typeof c.current_phase_index === "number") ? c.current_phase_index : 0;
+
+    // 横幅：上游给了可用图片 URL 就用图，否则用阵营渐变占位（上游只给 bannerImageId32，无可公开访问的图）
+    const bannerImg = c.banner_image
+      ? ` style="background-image:url('${esc(c.banner_image)}')"` : "";
+    const banner = `<div class="camp-banner is-${facCls}${c.banner_image ? " has-img" : ""}"${bannerImg}>
+        <div class="camp-banner-scrim"></div>
+        <div class="camp-banner-text">
+          <div class="camp-banner-kicker">进行中的战役<span class="camp-kicker-en">ACTIVE CAMPAIGN</span></div>
+          <h3 class="camp-banner-title">${esc(titleCn)}${titleEn ? `<span class="camp-banner-en">${esc(titleEn)}</span>` : ""}</h3>
+          <div class="camp-banner-fac">${esc(c.race_cn || c.race_name || "")}${c.race_cn && c.race_name ? `<span class="camp-fac-en">${esc(c.race_name)}</span>` : ""}</div>
+        </div>
+      </div>`;
+
+    // 情报简介：中文在前，英文原文折叠展示（站点为中文站，英文仅作原文对照）
+    const intel = c.description_cn || c.description || "";
+    const intelEn = (c.description_cn && c.description && c.description !== c.description_cn)
+      ? `<details class="camp-en"><summary>英文原文</summary><p>${richText(c.description)}</p></details>` : "";
+
+    // 三个阶段：名称 + 状态（失败红 / 成功绿 / 进行中黄），点击切换简报
+    const phases = (c.phases || []).map((p, i) => {
+      const st = p.status_key || "unknown";
+      const stCn = p.status_cn || CAMP_STATUS_CN[st] || "未知";
+      const stEn = CAMP_STATUS_EN[st] || "";
+      const pTitle = p.title_cn || p.title;
+      const pEn = p.title_cn && p.title ? `<span class="camp-phase-en">${esc(p.title)}</span>` : "";
+      return `<button type="button" class="camp-phase is-${st}${i === curIdx ? " is-current" : ""}"
+          data-phase="${i}" aria-pressed="${i === curIdx ? "true" : "false"}">
+          <span class="camp-phase-idx">阶段 ${i + 1}</span>
+          <span class="camp-phase-name">${esc(pTitle)}${pEn}</span>
+          <span class="camp-phase-status">${esc(stCn)}${stEn ? `<span class="camp-st-en">${esc(stEn)}</span>` : ""}</span>
+        </button>`;
+    }).join("");
+
+    const cur = (c.phases || [])[curIdx] || {};
+    const briefRaw = (cur.briefing_cn || cur.briefing || "").trim();
+    const paras = briefRaw ? briefRaw.split(/\n{2,}/) : [];
+    const briefingHtml = paras.length
+      ? paras.map(t => `<p>${richText(t)}</p>`).join("")
+      : `<p class="camp-empty">（该阶段暂无简报）</p>`;
+
+    root.innerHTML = `
+      <div class="card camp-card">
+        ${banner}
+        <div class="camp-body">
+          ${intel ? `<p class="camp-intel">${richText(intel)}</p>` : ""}
+          ${intelEn}
+          ${campRewardBlock(c.reward, "战役奖励")}
+          <div class="camp-phases" role="group" aria-label="战役阶段">${phases}</div>
+          <div class="camp-briefing">
+            <div class="camp-sub">简报</div>
+            <div class="camp-briefing-body">${briefingHtml}</div>
+          </div>
+          <div class="camp-phase-reward-slot">${campRewardBlock(cur.reward, "阶段奖励")}</div>
+        </div>
+      </div>`;
+
+    // 阶段点击：只换简报与阶段奖励，不重排整块（避免闪烁）
+    const phaseEls = Array.from(root.querySelectorAll(".camp-phase"));
+    const briefBox = root.querySelector(".camp-briefing-body");
+    const rwSlot = root.querySelector(".camp-phase-reward-slot");
+    phaseEls.forEach(el => {
+      el.addEventListener("click", () => {
+        const i = parseInt(el.getAttribute("data-phase"), 10);
+        const p = (c.phases || [])[i];
+        if (!p) return;
+        phaseEls.forEach(x => {
+          const on = x === el;
+          x.classList.toggle("is-current", on);
+          x.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        const raw = (p.briefing_cn || p.briefing || "").trim();
+        const ps = raw ? raw.split(/\n{2,}/) : [];
+        if (briefBox) {
+          briefBox.innerHTML = ps.length
+            ? ps.map(t => `<p>${richText(t)}</p>`).join("")
+            : `<p class="camp-empty">（该阶段暂无简报）</p>`;
+        }
+        if (rwSlot) rwSlot.innerHTML = campRewardBlock(p.reward, "阶段奖励");
+      });
+    });
   }
 
   /* ==============================================================
@@ -2546,6 +2705,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
+      renderCampaign(data);   // 进行中的战役（重要指令正下方）
       renderPlayers(data);
       renderImpact(data);
       renderDss(data);
