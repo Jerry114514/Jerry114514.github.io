@@ -45,6 +45,9 @@ jobs:
           git config user.email "69064950+Jerry114514@users.noreply.github.com"
           git add HD2-Galatic_war-Map/data.json
           git add HD2-Galatic_war-Map/data/history/player_distribution.json
+          # 新战役横幅（scripts/fetch_site_data.py 落盘的 assets/campaign/banner_*.webp）
+          # 必须一起提交，否则 data.json 里的 banner_image_local 在线上会 404
+          git add HD2-Galatic_war-Map/assets/campaign
           if ! git diff --cached --quiet; then
             git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"
             git push

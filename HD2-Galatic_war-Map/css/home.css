@@ -1504,6 +1504,17 @@
     .camp-banner.is-illu { background-image: linear-gradient(135deg, #1E0F26 0%, #55236B 50%, #8A3AA8 100%); }
     .camp-banner.is-hum  { background-image: linear-gradient(135deg, #0C1723 0%, #21456A 50%, #356F9B 100%); }
     .camp-banner.has-img { background-image: none; }
+    /* 横幅位图（本地 assets/campaign/ 优先，其次上游 companion /news/*.webp）；
+       图片由 JS 挂 error 降级链，加载失败会自动摘掉并露出上面的阵营渐变 */
+    .camp-banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
     .camp-banner::after {
       content: "";
       position: absolute;
@@ -1630,6 +1641,10 @@
     }
     .camp-reward-cape .camp-rw-icon { color: var(--brass); }
     .camp-rw-svg { width: 100%; height: 100%; display: block; }
+    /* 本地奖励图标（assets/campaign/reward_*.svg，来自 companion 内联 SVG 的矢量路径） */
+    .camp-rw-img { width: 100%; height: 100%; display: block; object-fit: contain; }
+    /* 真图标的细节比内联兜底多，给稍大的方框（companion 站点本身也是 48px 框内 30~46px 图标） */
+    .camp-rw-icon-img { width: 26px; height: 26px; flex: 0 0 26px; }
     .camp-rw-name {
       font-size: .88rem;
       color: var(--text);

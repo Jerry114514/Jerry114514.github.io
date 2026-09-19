@@ -1112,8 +1112,13 @@ function renderPlayers(data) {
      数据：data.json → active_campaign
        { title/title_cn, description/description_cn, race_name/race_cn,
          phase_count, current_phase_index, phases[{ title/title_cn,
-         briefing/briefing_cn, status_key, status_cn, reward }],
-         reward, banner_image_id, banner_image }
+         briefing/briefing_cn, status_key, status_cn, reward,
+         intro_image_id/intro_image(阶段插画，暂未展示) }],
+         reward[{ name/name_cn, amount, icon, icon_img }],
+         banner_image_id, banner_image_path, banner_image, banner_image_local }
+      图片：横幅位图取 banner_image_local（assets/campaign/，本地化）→ banner_image
+            （上游 /news/<name>.webp）→ 阵营渐变；奖励图标取 reward.icon_img
+            （assets/campaign/reward_*.svg）→ 内联 SVG。两级都有降级，不留破图。
      上游：helldiverscompanion.com live API 的 episodes（无 CORS，故由 Actions 侧
            fetch_site_data.py 落盘）；中文来自 data/campaign_zh.json，缺失回退英文。
      ============================================================== */
@@ -1121,8 +1126,23 @@ function renderPlayers(data) {
   const CAMP_STATUS_CN = { in_progress: "进行中", success: "成功", failure: "失败" };
   const CAMP_STATUS_EN = { in_progress: "IN PROGRESS", success: "SUCCESS", failure: "FAILURE" };
 
-  // 奖励图标：内联 SVG（不依赖外部文件，永不破图）
-  function campRewardIcon(kind) {
+  // 奖励图标：优先用数据里的本地图标文件（campaign_zh.json → reward_types[].img →
+  // fetch_site_data.py 落进 data.json 的 reward.icon_img），没有才用内联 SVG 兜底。
+  // 本地图标的来源：companion 奖励图标是内联 SVG（bundle 内嵌压缩图标库，站点无位图 URL），
+  // 已把矢量路径原样落到 assets/campaign/reward_{cape,medal}.svg，详见 campaign_zh.json._assets。
+  function campRewardIcon(kind, img) {
+    if (img) {
+      // 图标加载失败（文件缺失/被清理）→ 退回内联 SVG，不留破图
+      // 不用 loading="lazy"：懒加载会让视口外的图标推迟请求，404 迟迟不触发、回退也跟着延后
+      return `<img class="camp-rw-img" src="${esc(img)}" alt="" decoding="async"
+        referrerpolicy="no-referrer" data-kind="${esc(kind)}"
+        onerror="this.onerror=null;this.outerHTML=window.__campRewardSvg(this.getAttribute('data-kind'))">`;
+    }
+    return window.__campRewardSvg(kind);
+  }
+
+  // 内联 SVG 兜底（不依赖任何外部文件，永不破图）
+  window.__campRewardSvg = function (kind) {
     if (kind === "medal") {
       return `<svg class="camp-rw-svg" viewBox="0 0 24 24" aria-hidden="true">`
         + `<path d="M8 2h3l1 6-2 1-2-7z" fill="currentColor" opacity=".75"/>`
@@ -1137,7 +1157,7 @@ function renderPlayers(data) {
       + `<path d="M9 4.6h6l-.6 1.6H9.6z" fill="#000" opacity=".35"/>`
       + `<rect x="5" y="2.6" width="14" height="2.1" rx="1" fill="currentColor"/>`
       + `</svg>`;
-  }
+  };
 
   function campRewardBlock(rw, label) {
     if (!rw) return "";
@@ -1149,7 +1169,7 @@ function renderPlayers(data) {
     return `<div class="camp-reward camp-reward-${kind}">
       <div class="camp-rw-label">${esc(label || "奖励")}</div>
       <div class="camp-rw-body">
-        <span class="camp-rw-icon">${campRewardIcon(kind)}</span>
+        <span class="camp-rw-icon${rw.icon_img ? " camp-rw-icon-img" : ""}">${campRewardIcon(kind, rw.icon_img)}</span>
         <span class="camp-rw-name">${esc(name)}${en}${amt}</span>
       </div>
     </div>`;
@@ -1169,10 +1189,14 @@ function renderPlayers(data) {
     const facCls = CAMP_FACTION_CLS[c.race_name] || "unknown";
     const curIdx = (typeof c.current_phase_index === "number") ? c.current_phase_index : 0;
 
-    // 横幅：上游给了可用图片 URL 就用图，否则用阵营渐变占位（上游只给 bannerImageId32，无可公开访问的图）
-    const bannerImg = c.banner_image
-      ? ` style="background-image:url('${esc(c.banner_image)}')"` : "";
-    const banner = `<div class="camp-banner is-${facCls}${c.banner_image ? " has-img" : ""}"${bannerImg}>
+    // 横幅三级回退：本地 assets/campaign/banner_*.webp（fetch_site_data.py 按
+    // bannerImageId32 从 companion /news/<name>.webp 下载）→ 上游位图 → 阵营渐变（CSS .is-*）。
+    // 上游图是真实 WebP 位图（700×340，无需鉴权），不是猜出来的路径：id32→文件名 表在
+    // companion 前端 chunk 里（nd = {frv4: L1("frv4", 2434584678), ...}）。
+    const bannerSrcs = [c.banner_image_local, c.banner_image].filter(Boolean);
+    const banner = `<div class="camp-banner is-${facCls}${bannerSrcs.length ? " has-img" : ""}">
+        ${bannerSrcs.length ? `<img class="camp-banner-img" src="${esc(bannerSrcs[0])}" alt=""
+            decoding="async" referrerpolicy="no-referrer">` : ""}
         <div class="camp-banner-scrim"></div>
         <div class="camp-banner-text">
           <div class="camp-banner-kicker">进行中的战役<span class="camp-kicker-en">ACTIVE CAMPAIGN</span></div>
@@ -1223,6 +1247,19 @@ function renderPlayers(data) {
           <div class="camp-phase-reward-slot">${campRewardBlock(cur.reward, "阶段奖励")}</div>
         </div>
       </div>`;
+
+    // 横幅降级链：本地文件 404 → 换上上游 URL → 都不行就摘掉 <img>，露出阵营渐变（不留破图）
+    const bImg = root.querySelector(".camp-banner-img");
+    if (bImg) {
+      const chain = bannerSrcs.slice(1);
+      bImg.addEventListener("error", () => {
+        const next = chain.shift();
+        if (next) { bImg.src = next; return; }
+        const bn = bImg.closest(".camp-banner");
+        bImg.remove();
+        if (bn) bn.classList.remove("has-img");
+      });
+    }
 
     // 阶段点击：只换简报与阶段奖励，不重排整块（避免闪烁）
     const phaseEls = Array.from(root.querySelectorAll(".camp-phase"));

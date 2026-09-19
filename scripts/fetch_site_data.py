@@ -587,7 +587,13 @@ def _load_campaign_zh():
 
 
 def _reward_of(entry, zh):
-    """{mixId, amount} -> 带中英文名/图标类型的奖励对象。"""
+    """{mixId, amount} -> 带中英文名/图标类型的奖励对象。
+
+    icon_img：中文化层给的**本地**图标路径（assets/campaign/reward_*.svg）。
+    来源说明（2026-09 实测）：companion 的奖励图标不是位图，而是前端 bundle 内嵌的
+    压缩图标库，运行时渲染成内联 <svg viewBox="0 0 1000 1000">；站点无图标位图可下载，
+    故把该内联 SVG 的矢量路径原样落成本地文件（见 data/campaign_zh.json 的 _assets）。
+    """
     if not isinstance(entry, dict):
         return None
     mix = str(entry.get("mixId") or "")
@@ -599,7 +605,172 @@ def _reward_of(entry, zh):
         "name": meta.get("en") or ("WARBOND MEDAL" if is_medal else "REWARD"),
         "name_cn": meta.get("cn") or "",
         "icon": meta.get("icon") or ("medal" if is_medal else "reward"),
+        "icon_img": meta.get("img") or "",
     }
+
+
+# ---------------- 战役横幅位图（companion /news/*.webp） ----------------
+# 观察到的真实来源（2026-09，浏览器实测 https://helldiverscompanion.com/#overview）：
+#   前端 chunk /_app/immutable/chunks/BHaiyHk-.js 内有
+#     jn = e => `/news/${e}`;  L1 = (e,t) => ({path: jn(`${e}.webp`), wh:[700,340], id:t});
+#     const nd = { frv4: L1("frv4", 2434584678), ... }   // 图标/媒体 id32 -> 文件名 表
+#     Episode.get imgPath() { return Jz(this.imgId32, this.description) }
+#     function Jz(e,t,...){ const n = rq(e); return n && n.path ? n.path : Vve(t,...) }
+#   → episodes[i].bannerImageId32 就是这张表的 key，图片是
+#     https://helldiverscompanion.com/news/<name>.webp（真实 WebP 位图，700x340，无需鉴权、
+#     无防盗链，普通 <img> 即可加载）。上一轮猜的 banners/ media/ episodes/ get-media/{id}
+#     都不存在，真正的目录是 /news/，且文件名不含 id。
+EPISODE_BANNERS = {
+    2778882223: "spores3",
+    3308135205: "_01",
+    3666514729: "spores6",
+    38259617: "_04",
+    1952482038: "illuminate10",
+    2264673665: "bot_incincorps1",
+    2530725422: "jet_brigade1",
+    1349763257: "dss1",
+    4024343520: "dss_airfield1",
+    902643576: "dss_preserve1",
+    470094048: "science1",
+    1198839326: "dss_logistics1",
+    3849380460: "dss_construction1",
+    2400860295: "dss_construction2",
+    3477535960: "dss_construction3",
+    3057205290: "dss_forge1",
+    2550271868: "dss_powerplant1",
+    1224667321: "invasion1",
+    3250458894: "victory4",
+    2999528160: "black_hole2",
+    314671852: "black_hole3",
+    3024757915: "celebrate1",
+    3196897494: "voteless2",
+    588255265: "terminid7",
+    730080255: "failure2",
+    2014380623: "automaton5",
+    3875001043: "failure1",
+    437626041: "terminid8",
+    4051409761: "galaxy4",
+    698792826: "terminid6",
+    3243691207: "_08",
+    3321013810: "frv2",
+    2434584678: "frv4",
+    2065591116: "victory5",
+    2191545679: "seaf2",
+    2700419116: "city2",
+    2661455078: "_13",
+    392750462: "_15",
+    2123263516: "_16",
+    1022346996: "_17",
+    1518478703: "illuminate8",
+    449184453: "colony6",
+    237605203: "automaton6",
+    3723673498: "automaton7",
+    2035168874: "illuminate11",
+    2293052143: "auto_industry2",
+    1995161973: "sacrifice7",
+    12654750: "cyberstan_battle2",
+    2034038928: "cyberstan_battle3",
+    3788957615: "cyberstan_battle6",
+    1116085162: "cyberstan_battle7",
+    3331885362: "cyborgs10",
+    2276764853: "terminid9",
+    3449236101: "illuminate9",
+    2641230219: "seaf7",
+    2277640158: "colony1",
+    3101181502: "eagle3",
+    3671491677: "automaton11",
+    4096660593: "hiveworld6",
+    2570040395: "voteless3",
+    631742485: "voteless1",
+    3987638634: "spores7",
+    1877161200: "tcsplus1",
+    414672191: "tcsplus2",
+    3196750041: "tcsplus3",
+    234544790: "tcsplus4",
+    3679443502: "ass_ball1",
+    3830242320: "_burning1",
+    3715374339: "tcsplus5",
+    389427183: "tcsplus6",
+    4011611607: "ill_rift6",
+    2359781831: "ill_rift1",
+    1446086358: "ill_rift2",
+    2005640682: "victory6",
+    1683375211: "tcsplus7",
+    1005171692: "sporeburst5",
+}
+
+CAMPAIGN_BANNER_BASE = "https://helldiverscompanion.com/news"
+CAMPAIGN_ASSET_SUBDIR = "assets/campaign"
+CAMPAIGN_ASSET_DIR = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map",
+    "assets", "campaign"))
+
+# 位图魔数（校验下载结果真的是图片，防 Cloudflare 拦截页/HTML 错误页落盘）
+_IMG_MAGIC = ((b"\x89PNG\r\n\x1a\n", "png"), (b"RIFF", "webp"),
+              (b"\xff\xd8\xff", "jpeg"), (b"GIF8", "gif"), (b"<svg", "svg"), (b"<?xml", "svg"))
+
+
+def _image_kind(blob):
+    for magic, kind in _IMG_MAGIC:
+        if blob.startswith(magic):
+            return kind
+    return ""
+
+
+def campaign_banner_of(media_id):
+    """media id32 -> {"name","path","url"}；未收录返回 None（前端回退阵营渐变）。"""
+    try:
+        name = EPISODE_BANNERS.get(int(media_id))
+    except (TypeError, ValueError):
+        return None
+    if not name:
+        return None
+    return {"name": name, "path": f"/news/{name}.webp", "url": f"{CAMPAIGN_BANNER_BASE}/{name}.webp"}
+
+
+def download_campaign_banner(banner, retries=3, delay=2.0, timeout=25):
+    """把横幅位图本地化到 assets/campaign/banner_<name>.webp，返回可写进 data.json 的
+    相对路径；失败返回 None（前端自动回退上游 URL，再回退阵营渐变，绝不留破图）。
+
+    为什么本地化：companion 走 Cloudflare 会限流，站内既有的星球图标/环境图/英雄图也
+    一律本地化。串行 + 间隔 + 重试 + 魔数校验，避免半个 HTML 拦截页被当成图片。
+    """
+    if not banner:
+        return None
+    name = banner["name"]
+    fname = f"banner_{name}.webp"
+    rel = f"{CAMPAIGN_ASSET_SUBDIR}/{fname}"
+    dest = os.path.join(CAMPAIGN_ASSET_DIR, fname)
+    try:
+        if os.path.exists(dest):
+            with open(dest, "rb") as f:
+                if _image_kind(f.read(16)):
+                    return rel
+    except Exception:
+        pass
+    req = urllib.request.Request(banner["url"], headers={
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "image/avif,image/webp,image/*,*/*;q=0.8",
+        "Referer": "https://helldiverscompanion.com/",
+    })
+    for attempt in range(1, retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                blob = resp.read()
+            kind = _image_kind(blob)
+            if not kind or len(blob) < 1024:
+                raise ValueError(f"非图片响应（{len(blob)} 字节, magic={blob[:8]!r}）")
+            os.makedirs(CAMPAIGN_ASSET_DIR, exist_ok=True)
+            with open(dest, "wb") as f:
+                f.write(blob)
+            print(f"  [OK] 战役横幅本地化 {rel}（{kind}, {len(blob)} 字节）")
+            return rel
+        except Exception as e:
+            print(f"  [WARN] 战役横幅下载 {attempt}/{retries} 失败: {type(e).__name__}: {e}")
+            if attempt < retries:
+                time.sleep(delay * attempt)     # 串行 + 递增间隔，别把上游打限流
+    print(f"  [FAIL] 战役横幅本地化失败（前端将回退上游 {banner['url']} → 阵营渐变）")
+    return None
 
 
 def build_active_campaign(companion, zh=None):
@@ -642,6 +813,7 @@ def build_active_campaign(companion, zh=None):
         fb_key, fb_cn = _PHASE_STATUS_FALLBACK.get(st, ("unknown", "未知"))
         key = sm.get("key") or fb_key
         zph = zh_phases.get(str(p.get("id32"))) or {}
+        p_img = campaign_banner_of(p.get("introMediaId32"))
         phases.append({
             "id": p.get("id32"),
             "title": _plain(p.get("introTitle")),
@@ -653,6 +825,10 @@ def build_active_campaign(companion, zh=None):
             "status_key": key,
             "status_cn": sm.get("cn") or fb_cn,
             "reward": _reward_of((p.get("rewards") or [None])[0], zh),
+            # 阶段插画（introMediaId32 与横幅同一张 id32->/news/*.webp 表）：
+            # 只解析出上游 URL 供后续使用，本次不下载、前端暂不展示（无本地文件则不外链）。
+            "intro_image_id": p.get("introMediaId32"),
+            "intro_image": (p_img or {}).get("url"),
         })
     if not phases:
         return None
@@ -672,6 +848,10 @@ def build_active_campaign(companion, zh=None):
     fb_race_en, fb_race_cn = _RACE_FALLBACK.get(race, ("", ""))
     race_name = (zh_fac.get(str(race)) or {}).get("en") or fb_race_en
     race_cn = (zh_fac.get(str(race)) or {}).get("cn") or fb_race_cn
+
+    # 横幅：bannerImageId32 -> companion 图标表 -> /news/<name>.webp，并本地化到 assets/campaign/
+    banner = campaign_banner_of(ep.get("bannerImageId32"))
+    banner_local = download_campaign_banner(banner)
 
     return {
         "available": True,
@@ -693,10 +873,13 @@ def build_active_campaign(companion, zh=None):
         "briefing": cur.get("briefing") or "",
         "briefing_cn": cur.get("briefing_cn") or "",
         "reward": _reward_of((ep.get("rewards") or [None])[0], zh),
-        # 上游只给 bannerImageId32，没有可公开访问的横幅图 URL（已实测多种常规路径均 404），
-        # 前端按 race 用阵营渐变占位；若日后有图，把 URL 填到这里即可，前端自动优先用图。
+        # 横幅三级回退：banner_image_local（本地 assets/campaign/）→ banner_image（上游
+        # /news/*.webp）→ 阵营渐变（前端无图时自动降级，不留破图）。
         "banner_image_id": ep.get("bannerImageId32"),
-        "banner_image": None,
+        "banner_image": (banner or {}).get("url"),
+        "banner_image_path": (banner or {}).get("path"),
+        # data.json 与 index.html 同在 HD2-Galatic_war-Map/ 下，故用 "./assets/..." 相对路径
+        "banner_image_local": ("./" + banner_local) if banner_local else None,
         "source": "helldiverscompanion.com live API · episodes",
         "computed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
