@@ -65,27 +65,172 @@
 
 ### 方式 A：在 GitHub 网页上直接改（推荐，最快）
 
-1. 在仓库里找到要改的 JSON 文件（例如
-   [`HD2_Wiki/data/wiki/zh/terms.json`](HD2_Wiki/data/wiki/zh/terms.json)）。
-2. 点右上角的**铅笔图标**（Edit this file）。
-3. 修改内容。因为文件已经是多行可读格式，你会看到类似这样的结构
-   （下面是 [`terms.json`](HD2_Wiki/data/wiki/zh/terms.json) 里**真实存在**的一条）：
-   ```json
-   {
-     "en": "AC-8 Autocannon",
-     "zh": "AC-8 机炮",
-     "source": "stratagems_full.json",
-     "note": "战略配备"
-   }
-   ```
-4. 拉到页面底部，在 **Commit changes** 里：
-   - 填一句说明（例如 `terms: 修正 AC-8 Autocannon 译名`）；
-   - 选 **“Create a new branch for this commit and start a pull request”**；
-   - 点 **Propose changes**。
-5. 然后按提示 **Create pull request**。CI 会自动跑数据校验，结果出现在 PR 页面底部。
+> **🚀 5 步速查卡（TL;DR）**
+>
+> 1. 在 GitHub 上**打开要改的 JSON 文件** → 点右上角的**铅笔图标** ✏️（Edit this file）。
+> 2. **改那几行**（文件已经是多行可读格式）→ 只改你要改的，别顺手重排格式。
+> 3. 页面底部 **Commit changes**：写一句说明 → **必须选「Create a new branch for this commit
+>    and start a pull request」** → 点 **Propose changes**。
+> 4. 新页面上把**标题**改成一句话，**描述**照模板写清「改了什么 / 为什么 / 依据」→ 点
+>    **Create pull request**。
+> 5. 等 **Checks 变绿**（显示 **0 是正常的**，刷新等一下）；红了就点 **Details** 看
+>    **Job Summary**，改完提交到**同一个分支**；绿了等维护者点 **Merge pull request**。
+
+下面是**细到「点哪个按钮」**的完整教程。第一次提 PR 照着走一遍就行。
+
+#### A-1 · 打开要改的文件
+
+- 网址规律：`https://github.com/Jerry114514/Jerry114514.github.io/blob/main/<文件路径>`
+- 常用入口（直接点，或把网址里的路径换掉）：
+  - 术语表：[`HD2_Wiki/data/wiki/zh/terms.json`](HD2_Wiki/data/wiki/zh/terms.json)
+  - 强化资源：[`HD2_Wiki/data/wiki/zh/boosters.json`](HD2_Wiki/data/wiki/zh/boosters.json)
+  - 武器：[`HD2_Wiki/data/wiki/zh/weapons.json`](HD2_Wiki/data/wiki/zh/weapons.json)
+  - 战役中文化：[`HD2-Galatic_war-Map/data/campaign_zh.json`](HD2-Galatic_war-Map/data/campaign_zh.json)
+- 不想记路径就从[仓库首页](https://github.com/Jerry114514/Jerry114514.github.io)一层层点目录进
+  （`HD2_Wiki` → `data` → `wiki` → `zh` → 目标文件）。
+- 打开后是**只读浏览**状态；右上角那排图标里的**铅笔** ✏️（鼠标悬停显示 **Edit this file**）
+  就是入口，点它进入网页编辑器。
+
+#### A-2 · 改内容
+
+- 你会看到**多行可读**的 JSON（2026-09 起已统一为 2 空格缩进），一个字段一行，不再是一整行挤在一起。
+  下面是 [`terms.json`](HD2_Wiki/data/wiki/zh/terms.json) 里**真实存在**的一条：
+  ```json
+  {
+    "en": "AC-8 Autocannon",
+    "zh": "AC-8 机炮",
+    "source": "stratagems_full.json",
+    "note": "战略配备"
+  }
+  ```
+- **只改你要改的那几行**（一般就是改 `zh` 的值、补一条新条目、改一个数字）。
+  顺手重排格式、整段复制覆盖，会让 diff 变得很大、审核和回滚都变麻烦。
+- 三条最容易踩的坑（详见 **§3.1**）：文字必须用**半角**双引号 `"`；**最后一项后面不能有逗号**；
+  `{ }` `[ ]` 必须成对。
+- ⚠️ 别动**顶层 `total`**（除非你**新增**了条目：那就必须 +1，见 §3.6）。
+
+#### A-3 · 提交对话框（最关键的一步，别选错）
+
+拉到页面**最底部**的 **Commit changes** 区域：
+
+- **上面一行：commit message（提交说明）**
+  - 建议格式：`<数据集>: <做了什么>`（冒号中英文都行，同一人保持一致即可）
+  - 真实示例：`terms: 修正 AC-8 Autocannon 译名`、`boosters: 新增 Integrated Extinguishers`
+- **下面两个单选框（重点）**
+  - ✅ **Create a new branch for this commit and start a pull request** ← **选这个**
+  - ❌ ~~Commit directly to the `main` branch~~ ← **不要选这个**
+  - **为什么**：直接提交到 `main` 会**绕过 PR 与 CI 校验** —— 数据一旦写坏会直接上线
+    （那一页数据全都加载不出来），也没有任何人工审核的机会；后面的
+    「Checks 红了怎么改」「维护者合并」整套流程全都用不上。
+- 然后点 **Propose changes**。
+
+#### A-4 · 分支名怎么起
+
+选完上一项，GitHub 会展开一个**分支名输入框**，默认值是 `你的用户名-patch-1`。
+
+- **直接用默认值是可以的** —— 维护者不会因为这个拒绝。
+- 想更清楚就改成有意义的名字，建议格式：`<数据集>-<做什么>-<可选编号>`，**全小写 + 连字符 `-`**：
+  - `terms-ac8-translation`
+  - `boosters-add-integrated-extinguishers`
+  - `weapons-fix-ar2-id`
+- 规则：不能有**空格**、不能有**中文**（GitHub 会直接拒绝）；同一仓库里不能和已有分支重名
+  （重名报错就加个 `-2` 或换个名字）。
+- 改好分支名后点 **Propose changes**，进入 PR 页面。
+
+#### A-5 · 填写 PR 页面
+
+- **标题**：默认就是刚才那句 commit message，**建议改成一句话说清改了什么**，例如
+  `修正 AC-8 Autocannon 的中文译名（机炮 → 自动加农炮）`。
+- **描述**：把下面这段**整块复制**进去，删掉用不上的行、把 `__…__` 换成实际内容：
+
+  ```markdown
+  ## 改了什么
+  - `HD2_Wiki/data/wiki/zh/terms.json`：AC-8 Autocannon 的 `zh` 由「AC-8 机炮」改为「AC-8 自动加农炮」
+  - __涉及多个文件就一行一个__
+
+  ## 为什么
+  - 游戏内简中实际显示为「AC-8 自动加农炮」，原译名与游戏内不一致。
+
+  ## 依据
+  - 游戏内截图：__链接或说明__
+  - 出处 / 社区讨论帖：__链接__
+
+  ## 自查
+  - [ ] 只改了需要改的地方，没有重排格式、没有动其它条目
+  - [ ] 文字都用半角双引号，没有中文引号「」“”
+  - [ ] 新增条目时同步改了顶层 total
+  ```
+
+- **base 分支**：页面顶部显示 `base: main ← compare: <你的分支>`，**base 必须是 `main`**。
+- 往下是**文件清单与 diff**，先扫一眼确认只改了该改的行，再点绿色的
+  **Create pull request**。
+  （想先存着、之后再请人看，可以点旁边的 **Create draft pull request**；草稿状态 CI 一样会跑，
+  准备好后点 **Ready for review**。）
 
 > 提交 PR 后请在描述里写清**依据**（出处链接 / 游戏内截图 / 社区讨论帖），
 > 纯凭印象的改动维护者可能会先搁置。
+
+#### A-6 · 等 CI：Checks 会从 0 → 运行中 → 绿/红
+
+- PR 页面**底部**有 **Checks** 区域（标题下方的小圆点也反映同一个状态）。
+- 正常的状态变化：**Checks 显示 0** → 出现一条 `Validate Data`（校验 wiki / 星图数据）带黄色转圈
+  → 变成 ✅ 绿 或 ❌ 红。
+- ⚠️ **「Checks 显示 0」是正常的**：刚点完 Create pull request 时 GitHub 常常还没把检查挂上去，
+  **等几秒到几十秒、刷新一下页面就会出现**。不要因为看到 0 就以为「校验不会跑了」，
+  更不要为此关掉重开一个 PR。
+  > 顺带说明：以前工作流在 `pull_request` 上带 `paths:` 过滤，只改**页面**（例如
+  > `HD2_Wiki/warbonds.html`）的 PR 根本不会创建这个检查；一旦分支保护把
+  > `validate-data` 设成「必需检查」，这类 PR 就会**永远等一个不会出现的检查**。
+  > 2026-09 已修正为 **`pull_request` 无条件运行**。
+- 同一个 PR 里连续提交多次时，**旧的那次运行会被自动取消**，只保留最新一次。
+
+#### A-7 · 绿了之后
+
+- ✅ 绿只代表「语法、必填字段、取值都合规」，**还要等维护者审核**。
+- 维护者可能要一会儿（忙起来甚至几天）才处理 —— 这是业余维护的项目，**不用重新开 PR**。
+  确实想提醒就在 PR 里礼貌回一句（例如补一张截图），别重复开 PR。
+- 审核通过后，维护者会点 **Merge pull request** → **Confirm merge**；随后 GitHub 会提示
+  **Delete branch**，删不删都不影响结果。
+- 合并进 `main` 后站点会自动重新部署，几分钟后线上页面就是新数据了。
+
+#### A-8 · 红了怎么办（改到绿为止）
+
+1. 在 PR 底部点 **Checks**。
+2. 点 `Validate Data` / `校验 wiki / 星图数据` 那一行右侧的 **Details**。
+3. 打开的页面里读 **📋 HD2 数据校验报告**（就是 **Job Summary**）：
+   - 它**只列「必须修的问题」**，每条形如 `文件:行号 [字段] 原因 → 建议`；
+   - **几百条【已登记的历史例外（基线）】不会灌进来**，所以报告很短，看完就知道该改哪里
+     （读法见 **§6**）。
+   - 还想看完整日志，就在左侧步骤列表里展开 **运行数据校验器** 那一步。
+4. 回到 PR 的 **Files changed** 页签 → 找到那个文件 → 点右上角的**铅笔** ✏️
+   （或文件右上角的 `…` → **Edit file**）→ **改同一个文件**。
+5. 这次提交时选 **Commit directly to the `<你的分支>` branch** ——
+   **不要**再选「Create a new branch…」，那会开出第二个 PR，事情就乱了 → 点 **Commit changes**。
+6. PR 会**自动更新**（新提交追加到同一个 PR），CI 会**自动重跑**。反复「看报告 → 改 → 提交」
+   直到变绿即可。
+7. 完全看不懂报错：把 Summary 里的原文**原样贴**进 PR 评论，加一句「这里我不确定」，
+   维护者会接手。**千万不要**为了让 CI 变绿去删数据、或者改 `total` 去将就 —— 那比报错更糟。
+
+#### A-9 · 没有仓库写权限的人（外部署名投稿）
+
+- **不用先自己 fork**：直接按上面做就行。点铅笔、点 **Propose changes** 时，GitHub 会
+  **自动在你名下 fork 一份**，把提交写到你自己 fork 的同名分支里。
+- 提交 PR 时页面顶部一般已经自动选对：`base repository: Jerry114514/Jerry114514.github.io`，
+  `base: main`。若显示的是你自己的仓库，手动把 base 改成上面这个再点 **Create pull request**。
+- 之后的流程**完全相同**：CI 一样跑、报告一样看、红了改完提交到**同一个分支**
+  （分支在你的 fork 里，但 PR 会自动更新）。
+- fork 落后于上游不用管：PR 的 diff 是按分支比较的，维护者合并时以官方仓库为准。
+
+#### A-10 · 常见问题
+
+| 现象 / 问题 | 怎么办 |
+|---|---|
+| **`Checks` 一直是 0** | 正常：刚开 PR 时检查还没挂上去，等 10–60 秒后**刷新页面**。若 5 分钟后仍是 0，在 PR 里 @ 维护者 —— 那是工作流没触发（需要修 CI），不是你的操作问题。 |
+| **提示分支冲突 / `This branch has conflicts`** | 不用自己解决：在 PR 里说一句，维护者会用 **Update branch** 或重新基于 `main` 处理。冲突通常来自别人先改了同一个文件。 |
+| **改错了想撤回** | 还没合并：在 **Files changed** 里改回来，提交到**同一个分支**即可。已经合并：**新开一个 PR** 改回去（保留历史，不要强推覆盖）。 |
+| **PR 开了但维护者一直没回** | 正常，业余维护有延迟。可以在 PR 里补一句说明（例如「这个译名有游戏内截图佐证」）礼貌提醒；**不要**关闭重开、不要重复开 PR。 |
+| **能不能一次改多个文件？** | 可以：在同一个分支上连续编辑多个文件，改动会累积进同一个 PR。但**建议一个 PR 只做一件事**（一个译名 / 一个条目），混着改会让审核与回滚都变麻烦。 |
+| **能不能直接「Commit directly to main」？** | ❌ 不能。那条路绕过 PR 与 CI，坏数据会直接上线导致页面白屏。一律走 **§A-3** 里的「Create a new branch…and start a pull request」。 |
 
 ### 方式 B：开 Issue 用表单（不想碰 JSON 就走这条）
 
@@ -614,7 +759,10 @@
   （`REQUIRED_TOP` / `REQUIRED_ITEMS` / `NESTED_REQUIRED` / `ID_SETS` /
   `MECH_COVERAGE` / `KNOWN` 等登记表）
 - Schema 文档：`HD2_Wiki/data/wiki/zh/SCHEMA.md`
-- CI 触发路径：`.github/workflows/validate-data.yml` 的 `paths:`
+- CI 触发：`.github/workflows/validate-data.yml`
+  （⚠️ `pull_request` **无条件**跑、**没有** `paths:` —— 分支保护把这个 check 设成必需项，
+  被 `paths:` 过滤掉的非数据 PR 会永远等一个不会出现的检查；`push` 才按 `paths:` 过滤，
+  只在数据真变了时跑）
 
 只改数据不改校验器 → 新字段无人检查（**绿着但坏了**）；
 只改校验器不改 SCHEMA → 投稿者不知道要写什么。

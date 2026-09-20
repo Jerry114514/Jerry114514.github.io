@@ -5,6 +5,16 @@ name: Validate Data
 # 干什么：对社区可编辑的 JSON 数据集跑 scripts/validate_wiki_data.py，
 #         任何一条检查项失败 → 非零退出 → 本 job 变红，PR 合不进去。
 #
+# ⚠️ 为什么 pull_request 上**不能**加 paths: 过滤（2026-09 修正，勿回退）
+#    main 的分支保护要求「Require status checks → 校验 wiki / 星图数据」。
+#    GitHub 的规则是：被 paths: 过滤掉的 workflow **根本不会为这个 PR 创建**
+#    check，于是那个 check 永远停在 Pending/Expected —— 一个只改了
+#    HD2_Wiki/warbonds.html 这类**页面**（而非数据）的 PR 会**永远等一个不会出现
+#    的检查，永远合不进去**（真的发生过：只改 warbonds.html 的 PR 一次校验都没跑）。
+#    所以 pull_request 必须**无条件**运行；省额度靠下面的 push 过滤就够了。
+#    push 保留 paths:（只有数据真变了才跑，main 上的日常 push 不浪费额度），
+#    workflow_dispatch 保持手动可用。
+#
 # ⚠️ 维护者注意：**加了新数据字段 / 新数据集时，要同步更新校验器**
 #    （scripts/validate_wiki_data.py 的 REQUIRED_TOP / REQUIRED_ITEMS /
 #      NESTED_REQUIRED / ID_SETS / MECH_COVERAGE / KNOWN 等登记表，
@@ -15,17 +25,14 @@ name: Validate Data
 # =============================================================================
 
 on:
+  # ⚠️ 故意**不加** paths: —— 分支保护把这个 check 设成必需项，
+  #    一旦被 paths 过滤掉就永远不会出现在 PR 上，非数据 PR 直接死锁。
+  #    详见文件顶部「为什么 pull_request 上不能加 paths: 过滤」。
   pull_request:
-    paths:
-      - 'HD2_Wiki/data/**'
-      - 'HD2-Galatic_war-Map/tables/**'
-      - 'HD2-Galatic_war-Map/data/campaign_zh.json'
-      - 'HD2-Galatic_war-Map/banner.json'
-      - 'scripts/validate_wiki_data.py'
-      # 本工作流自身的改动也顺带验一遍（避免改了 CI 却没人跑）
-      - '.github/workflows/validate-data.yml'
   push:
     branches: [main]
+    # push 只在数据（或本 workflow）真变了才跑，省额度；
+    # 这里加 paths 是安全的：main 上的 push 不受「必需 check」约束。
     paths:
       - 'HD2_Wiki/data/**'
       - 'HD2-Galatic_war-Map/tables/**'
