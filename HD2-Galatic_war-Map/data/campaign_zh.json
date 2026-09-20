@@ -1,75 +1,218 @@
 {
- "_meta": {
-  "desc": "「进行中的战役」中文化层。英文原文来自 helldiverscompanion.com live API 的 episodes 字段（由 scripts/fetch_site_data.py 抓取并合并本文件）；本文件按上游 id32 覆盖中文，缺失的 id32 一律回退英文原文，绝不阻断渲染。",
-  "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live",
-  "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
-  "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。",
-  "updated_at": "2026-09-20"
- },
- "_assets": {
-  "desc": "战役奖励图标（本地文件）。companion 的奖励图标不是位图，而是前端 bundle 内嵌的压缩图标库，运行时渲染成内联 <svg viewBox=\"0 0 1000 1000\">；站点上没有任何图标位图 URL。下面两个文件即该内联 SVG 的矢量路径本地化副本（d / fill 原样），由浏览器实测提取，非截图切割。",
-  "campaign/reward_cape.svg": {
-   "from": "https://helldiverscompanion.com/#overview 战役奖励图标（内联 SVG）",
-   "icon_key": "currency.item_cape2",
-   "ic_build": "currency.item_cape2|#FBFAF5|0.8|0,-3",
-   "note": "白披风剪影；cape 类 mixId 全部复用同一图标"
+  "_meta": {
+    "desc": "「进行中的战役」中文化层。英文原文来自 helldiverscompanion.com live API 的 episodes 字段（由 scripts/fetch_site_data.py 抓取并合并本文件）；本文件按上游 id32 覆盖中文，缺失的 id32 一律回退英文原文，绝不阻断渲染。",
+    "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live",
+    "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
+    "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。",
+    "updated_at": "2026-09-20"
   },
-  "campaign/reward_medal.svg": {
-   "from": "https://helldiverscompanion.com/#overview 阶段奖励图标（内联 SVG）",
-   "icon_key": "currency.medal",
-   "ic_build": "currency.medal|#ccc566|&040303a3|0.8|0,2",
-   "note": "金色骷髅勋章：icBack 底板 + icPath 骷髅徽章两层路径"
-  },
-  "campaign/banner_*.webp": {
-   "from": "https://helldiverscompanion.com/news/<name>.webp（位图 700x340，公开无鉴权）",
-   "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
-  }
- },
- "status": {
-  "0": { "key": "in_progress", "cn": "进行中" },
-  "2": { "key": "success", "cn": "成功" },
-  "3": { "key": "failure", "cn": "失败" }
- },
- "reward_types": {
-  "897894480": { "en": "WARBOND MEDAL", "cn": "战争债券勋章", "icon": "medal", "img": "./assets/campaign/reward_medal.svg" },
-  "3890208935": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "2768520552": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "2232169940": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "1407130184": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "3421347422": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "2547900634": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" },
-  "2961949068": { "en": "CAPE", "cn": "披风", "icon": "cape", "img": "./assets/campaign/reward_cape.svg" }
- },
- "episodes": {
-  "2704421460": {
-   "title": "燎原选举",
-   "description": "令人不安的情报显示，生化人正策划协同行动，意图破坏即将到来的季度选举。绝地潜兵奉命出动，确保本次选举管理高效而公正。",
-   "phases": {
-    "968949516": {
-     "title": "先制网络防御",
-     "briefing": "定于两周后开始的季度选举恐将陷入危机。截获的生化人通讯表明，敌方正策划一场协同的秘密行动，意图阻碍选举管理。公正而自由的选举管理是联邦的基石，也是公民珍视的传统。\n\n真理部报告指出，生化人意图发动网络攻击，篡改那套让公民最充分表达选举意愿的算法。据信攻击将源自查巴尔 VII 与藏尼亚主星上的超大型工厂。绝地潜兵奉命立即解放这两颗星球。"
+  "_assets": {
+    "desc": "战役奖励图标（本地文件）。companion 的奖励图标不是位图，而是前端 bundle 内嵌的压缩图标库，运行时渲染成内联 <svg viewBox=\"0 0 1000 1000\">；站点上没有任何图标位图 URL。下面两个文件即该内联 SVG 的矢量路径本地化副本（d / fill 原样），由浏览器实测提取，非截图切割。",
+    "campaign/reward_cape.svg": {
+      "from": "https://helldiverscompanion.com/#overview 战役奖励图标（内联 SVG）",
+      "icon_key": "currency.item_cape2",
+      "ic_build": "currency.item_cape2|#FBFAF5|0.8|0,-3",
+      "note": "白披风剪影；cape 类 mixId 全部复用同一图标"
     },
-    "2979183684": {
-     "title": "冒牌者清剿",
-     "briefing": "已发现生化人一项更为可憎的阴谋：他们意图操纵即将到来的季度选举。现有证据表明，敌人正试图制造外观与言谈举止都酷似人类的机器人。这些仿生人将伪装成超级地球公民，渗透投票中心，投下选票。\n\n这项计划骇人而卑劣，恰恰印证生化人的心智已从人类本源扭曲到了何种地步。绝不能让他们得逞。绝地潜兵奉命立即部署，消灭 2 亿（200,000,000）名机器人步兵，耗尽其后备渗透单位。"
+    "campaign/reward_medal.svg": {
+      "from": "https://helldiverscompanion.com/#overview 阶段奖励图标（内联 SVG）",
+      "icon_key": "currency.medal",
+      "ic_build": "currency.medal|#ccc566|&040303a3|0.8|0,2",
+      "note": "金色骷髅勋章：icBack 底板 + icPath 骷髅徽章两层路径"
     },
-    "806233317": {
-     "title": "选举再筑防",
-     "briefing": "生化人破坏季度选举的阴谋层出不穷，公民对选票能否得到有效管理的信心已严重受损。公民必须绝对信任：经算法推演认定，选举结果准确代表了他们的意志。\n\n选举安全专家小组给出结论后，超级地球政府已通过一部全面的《超级安全选举法》。法案削减不必要的监督环节，减少参与民主管理的人员，选举流程从此远不易受到敌方干预。法案还拨出新的军费，用于维护选举安全。\n\n绝地潜兵的军械库已获得多项战略配备增强，奉命维护选举安全——以任何必要手段。"
+    "campaign/banner_*.webp": {
+      "from": "https://helldiverscompanion.com/news/<name>.webp（位图 700x340，公开无鉴权）",
+      "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
     }
-   }
   },
-  "1277775876": { "title": "雷霆人口普查", "phases": { "3204084693": { "title": "遏制" }, "3961652096": { "title": "物资获取" }, "2950822329": { "title": "遣返" } } },
-  "1914091347": { "title": "天穹之墙", "phases": { "1354339125": { "title": "部署" }, "2529088249": { "title": "采购" }, "1820503184": { "title": "遏制" } } },
-  "895752282": { "title": "闪电拦截", "phases": { "1574828959": { "title": "快速反应" }, "933811290": { "title": "三角定位" }, "2022887652": { "title": "强制除役" } } },
-  "780106966": { "title": "永久封锁", "phases": { "2659147910": { "title": "壁垒延伸" }, "3453702288": { "title": "真理执行" }, "493560652": { "title": "最终封锁线" } } },
-  "1575806997": { "title": "虚空穿刺者", "phases": { "2804846030": { "title": "虚空穿刺" }, "3979642198": { "title": "推进" }, "434236": { "title": "消解" } } },
-  "2305014953": { "title": "反异议铁锤", "phases": { "1808142188": { "title": "追缉异议分子" }, "3038612729": { "title": "拘捕公民" }, "1622985592": { "title": "屏障强化" } } }
- },
- "factions": {
-  "1": { "en": "Humans", "cn": "超级地球", "cls": "hum" },
-  "2": { "en": "Terminids", "cn": "终结族", "cls": "term" },
-  "3": { "en": "Automaton", "cn": "机器人", "cls": "auto" },
-  "4": { "en": "Illuminate", "cn": "光能者", "cls": "illu" }
- }
+  "status": {
+    "0": {
+      "key": "in_progress",
+      "cn": "进行中"
+    },
+    "2": {
+      "key": "success",
+      "cn": "成功"
+    },
+    "3": {
+      "key": "failure",
+      "cn": "失败"
+    }
+  },
+  "reward_types": {
+    "897894480": {
+      "en": "WARBOND MEDAL",
+      "cn": "战争债券勋章",
+      "icon": "medal",
+      "img": "./assets/campaign/reward_medal.svg"
+    },
+    "3890208935": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "2768520552": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "2232169940": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "1407130184": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "3421347422": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "2547900634": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "2961949068": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    }
+  },
+  "episodes": {
+    "2704421460": {
+      "title": "燎原选举",
+      "description": "令人不安的情报显示，生化人正策划协同行动，意图破坏即将到来的季度选举。绝地潜兵奉命出动，确保本次选举管理高效而公正。",
+      "phases": {
+        "968949516": {
+          "title": "先制网络防御",
+          "briefing": "定于两周后开始的季度选举恐将陷入危机。截获的生化人通讯表明，敌方正策划一场协同的秘密行动，意图阻碍选举管理。公正而自由的选举管理是联邦的基石，也是公民珍视的传统。\n\n真理部报告指出，生化人意图发动网络攻击，篡改那套让公民最充分表达选举意愿的算法。据信攻击将源自查巴尔 VII 与藏尼亚主星上的超大型工厂。绝地潜兵奉命立即解放这两颗星球。"
+        },
+        "2979183684": {
+          "title": "冒牌者清剿",
+          "briefing": "已发现生化人一项更为可憎的阴谋：他们意图操纵即将到来的季度选举。现有证据表明，敌人正试图制造外观与言谈举止都酷似人类的机器人。这些仿生人将伪装成超级地球公民，渗透投票中心，投下选票。\n\n这项计划骇人而卑劣，恰恰印证生化人的心智已从人类本源扭曲到了何种地步。绝不能让他们得逞。绝地潜兵奉命立即部署，消灭 2 亿（200,000,000）名机器人步兵，耗尽其后备渗透单位。"
+        },
+        "806233317": {
+          "title": "选举再筑防",
+          "briefing": "生化人破坏季度选举的阴谋层出不穷，公民对选票能否得到有效管理的信心已严重受损。公民必须绝对信任：经算法推演认定，选举结果准确代表了他们的意志。\n\n选举安全专家小组给出结论后，超级地球政府已通过一部全面的《超级安全选举法》。法案削减不必要的监督环节，减少参与民主管理的人员，选举流程从此远不易受到敌方干预。法案还拨出新的军费，用于维护选举安全。\n\n绝地潜兵的军械库已获得多项战略配备增强，奉命维护选举安全——以任何必要手段。"
+        }
+      }
+    },
+    "1277775876": {
+      "title": "雷霆人口普查",
+      "phases": {
+        "3204084693": {
+          "title": "遏制"
+        },
+        "3961652096": {
+          "title": "物资获取"
+        },
+        "2950822329": {
+          "title": "遣返"
+        }
+      }
+    },
+    "1914091347": {
+      "title": "天穹之墙",
+      "phases": {
+        "1354339125": {
+          "title": "部署"
+        },
+        "2529088249": {
+          "title": "采购"
+        },
+        "1820503184": {
+          "title": "遏制"
+        }
+      }
+    },
+    "895752282": {
+      "title": "闪电拦截",
+      "phases": {
+        "1574828959": {
+          "title": "快速反应"
+        },
+        "933811290": {
+          "title": "三角定位"
+        },
+        "2022887652": {
+          "title": "强制除役"
+        }
+      }
+    },
+    "780106966": {
+      "title": "永久封锁",
+      "phases": {
+        "2659147910": {
+          "title": "壁垒延伸"
+        },
+        "3453702288": {
+          "title": "真理执行"
+        },
+        "493560652": {
+          "title": "最终封锁线"
+        }
+      }
+    },
+    "1575806997": {
+      "title": "虚空穿刺者",
+      "phases": {
+        "2804846030": {
+          "title": "虚空穿刺"
+        },
+        "3979642198": {
+          "title": "推进"
+        },
+        "434236": {
+          "title": "消解"
+        }
+      }
+    },
+    "2305014953": {
+      "title": "反异议铁锤",
+      "phases": {
+        "1808142188": {
+          "title": "追缉异议分子"
+        },
+        "3038612729": {
+          "title": "拘捕公民"
+        },
+        "1622985592": {
+          "title": "屏障强化"
+        }
+      }
+    }
+  },
+  "factions": {
+    "1": {
+      "en": "Humans",
+      "cn": "超级地球",
+      "cls": "hum"
+    },
+    "2": {
+      "en": "Terminids",
+      "cn": "终结族",
+      "cls": "term"
+    },
+    "3": {
+      "en": "Automaton",
+      "cn": "机器人",
+      "cls": "auto"
+    },
+    "4": {
+      "en": "Illuminate",
+      "cn": "光能者",
+      "cls": "illu"
+    }
+  }
 }
