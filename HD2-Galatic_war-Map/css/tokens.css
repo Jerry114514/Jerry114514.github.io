@@ -80,8 +80,8 @@
       --c-terminids-d:#C29B13;   /* 终结族 深 */
       --c-automaton:  #D6806D;   /* 机器人（红粉） */
       --c-automaton-d:#A36153;   /* 机器人 深 */
-      --c-illuminate: #CF64F8;   /* 光能族（紫） */
-      --c-illuminate-d:#8F45AB;  /* 光能族 深 */
+      --c-illuminate: #CF64F8;   /* 光能者（紫） */
+      --c-illuminate-d:#8F45AB;  /* 光能者 深 */
       --c-unknown:    #6B7280;
       --c-mo:         #FF8C00;   /* MO 目标 橙 */
 
@@ -89,7 +89,7 @@
          卡片描边/进度条/词条标题统一取 --fc（卡内局部变量，由 .f-xxx 类切换） */
       --c-faction-auto:  #E74C3C;  --c-faction-auto-d:  #7A1F0E;   /* 机器人 */
       --c-faction-term:  #F5C518;  --c-faction-term-d:  #5C4A0A;   /* 终结族 */
-      --c-faction-illu:  #CF64F8;  --c-faction-illu-d:  #4A1F5C;   /* 光能族 */
+      --c-faction-illu:  #CF64F8;  --c-faction-illu-d:  #4A1F5C;   /* 光能者 */
       --c-faction-hum:   #5BA3D0;  --c-faction-hum-d:   #1F3A52;   /* 超级地球 */
 
       /* ---- 抵抗强度色阶（2026-09-13 用户给定阈值）----

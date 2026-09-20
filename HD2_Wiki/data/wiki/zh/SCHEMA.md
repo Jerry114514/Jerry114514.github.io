@@ -406,7 +406,7 @@ warbond   = item.warbond_zh || item.warbond
 | `status` | object | 是 | 阶段状态口径：键为上游 status 码（`"0"` 进行中 / `"2"` 成功 / `"3"` 失败），值 `{ key, cn }`；`key` 同时用作前端 CSS 类后缀（`.camp-phase.is-{key}`） |
 | `reward_types` | object | 是 | 奖励口径：键为上游 `mixId` 字符串，值 `{ en, cn, icon }`；`icon` 取 `medal`（战争债券勋章）或 `cape`（披风），决定前端内联 SVG 图形 |
 | `episodes` | object | 是 | 主集合：键为**战役 id32 字符串**，值 `{ title, description?, phases? }` |
-| `factions` | object | 是 | 阵营口径：键为上游 `race` 码字符串（`"1"` 人类 / `"2"` 终结族 / `"3"` 机器人 / `"4"` 光能族），值 `{ en, cn, cls }`，`cls` 用作横幅渐变类名 `.camp-banner.is-{cls}` |
+| `factions` | object | 是 | 阵营口径：键为上游 `race` 码字符串（`"1"` 人类 / `"2"` 终结族 / `"3"` 机器人 / `"4"` 光能者），值 `{ en, cn, cls }`，`cls` 用作横幅渐变类名 `.camp-banner.is-{cls}` |
 
 **`episodes.<id32>` 结构**：
 
@@ -502,7 +502,7 @@ warbond   = item.warbond_zh || item.warbond
 
 13. **`galactic_war` 拆分为「机制」+「剧情」两页（2026-09-18 登记并实施）**：落地第 10 条遗留的「把机制内容拆成独立页」。
     - **做法**：`galactic_war_history.json` = 改名前 `galactic_war.json` 的**字节级副本**（`copy` 后只用 `edit` 改了 `id` / `title` / `title_en` / `description` / `updated_at`，`sections` / `toc` / `source` 一个字节没动）；`galactic_war_history_zh.json` = `galactic_war_zh.json` 的副本，删掉机制内容后只留剧情节；机制侧两个文件重写（`galactic_war.json` 为新骨架，`galactic_war_zh.json` 只留机制）。
-    - **迁到 `galactic_war_history` 的（主干 id 原样保留）**：`Overview`（概述·「关于银河战争这一叙事框架」部分）/ `The_First_Galactic_War`（第一次银河战争·背景）+ `Fate_of_the_Illuminate`（光能族的结局）/ `The_Great_Democratization`（大民主化时代）/ `The_Second_Galactic_War`（时间线与开战经过）+ `Summary_of_Notable_Events`（重大事件摘要）/ `February_2184` … `December_2185` 共 23 个月度子节 / `References`（英文参考来源与 Navbox，61 KB）。
+    - **迁到 `galactic_war_history` 的（主干 id 原样保留）**：`Overview`（概述·「关于银河战争这一叙事框架」部分）/ `The_First_Galactic_War`（第一次银河战争·背景）+ `Fate_of_the_Illuminate`（光能者的结局）/ `The_Great_Democratization`（大民主化时代）/ `The_Second_Galactic_War`（时间线与开战经过）+ `Summary_of_Notable_Events`（重大事件摘要）/ `February_2184` … `December_2185` 共 23 个月度子节 / `References`（英文参考来源与 Navbox，61 KB）。
     - **留在 `galactic_war` 的（锚点 id 重新命名，旧 id 属于剧情页且在本仓库无任何站内链接指向）**：`Overview` / `Mechanics_Overview`（机制速览）/ `Mechanics_Detail`（机制详解）+ `Galaxy_Map` / `Campaign` / `Planet_Health` / `Decay_Rate` / `Player_Impact` / `Impact_Supplement`（任务影响度补充）/ `FAQ`（常见误解）/ `Sources`（参考资料）。
     - **机制页主干只留骨架**：`galactic_war.json` 的 `content` 全为 `""`（《Second Galactic War Mechanics》页的英文原文本次未抓取落库），中文正文全部来自覆盖文件，故该页 `details.mg-ref` = 0 —— 这是「本来就没有英文可折」，不是折叠块误留。**该写法只对本数据集成立**，其余 `mechanics/*.json` 仍以主干英文为权威。
     - **信息不丢的核对方法（可复现）**：① 对拆分前记录的 10 个 `content_zh` 长度（361 / 1167 / 782 / 1760 / 1750 / 777 / 1521 / 2552 / 392 / 243，合计 11305）逐节核对「机制侧 + 剧情侧 == 原值」，10/10 相等、总计 11305 == 11305；② 历史主干与原主干除 5 个文档级字段外字节相同（副本 + `edit` 精确替换，未触碰 `sections`）；③ 渲染级：9 条剧情锚点短语在历史页命中、机制页命中数全为 0，机制页 7 条机制标记（机制速览 / 影响度计算公式 / 常见误解 FAQ / 消耗战役 / 围魏救赵 …）在历史页命中数全为 0。
@@ -512,7 +512,7 @@ warbond   = item.warbond_zh || item.warbond
 
 14. **`galactic_war_history` 全额汉化 + `galactic_war` 旧锚点别名（2026-09-18 登记并实施）**：
     - **任务面**：把第 13 条遗留的「历史页 20 个月度小节 + `References` 仍为英文」补完，使该页 **31 个主干小节全部为中文**（`title_zh` 31/31）。
-    - **`fully_translated` 数量**：**28**。主干 31 节中有 3 节 `content` 为空字符串（`Fate_of_the_Illuminate`、`Battle_for_Super_Earth`、`December_2185`，英文 0 字符），没有散文可覆盖，**刻意不打标**（该标记的作用是「不再渲染英文折叠块」，空节本来就不渲染，打标是空操作，打了反而像「假装完成」）；这 3 节只补了 `title_zh`（`光能族的结局` / `超级地球之战` / `2185 年 12 月`），其中 `Battle_for_Super_Earth` 作为 `subsections_zh` 挂在 `May_2185` 下（主干里它是 `May_2185` 的 L4 子节）。
+    - **`fully_translated` 数量**：**28**。主干 31 节中有 3 节 `content` 为空字符串（`Fate_of_the_Illuminate`、`Battle_for_Super_Earth`、`December_2185`，英文 0 字符），没有散文可覆盖，**刻意不打标**（该标记的作用是「不再渲染英文折叠块」，空节本来就不渲染，打标是空操作，打了反而像「假装完成」）；这 3 节只补了 `title_zh`（`光能者的结局` / `超级地球之战` / `2185 年 12 月`），其中 `Battle_for_Super_Earth` 作为 `subsections_zh` 挂在 `May_2185` 下（主干里它是 `May_2185` 的 L4 子节）。
     - **文件规模**：`galactic_war_history_zh.json` **21,348 → 139,631 字节**；`content_zh` 合计 65,945 字符；覆盖主干英文 347 KB 中的散文部分。
     - **`figures_zh: []` 逐节沿用**：中文正文用简化 `<div style="width:Wpx;margin:12px 0;"><img …><div style="font-size:0.85em…">图注</div></div>` 内联保留**真缩略图**（各月度卷首「银河边疆」图等），行内阵营/POI 小图标（`faction-icon` / `POIicons`）随语义已由文字承载而丢弃。实测该页 `.mg-media` **251 → 0**、`img` **40 张全部 200、破图 0**（40 = 主干 `<div class="thumb">` 的真图总数，与 `check` 脚本的图片检查项数一致）。这是第 11 条做法的规模化沿用，不是图片丢失。
     - **`References` 节的处理（专项）**：① `<ol class="references">` 的 **71 条 `<li>`** 全部译入（含 `cite&#95;note-N` / `cite_ref-N` 回链结构、`8.0/8.1` 双角标），引文与「发布于 / 访问于」信息译中文；② **58 个外部 URL 一字未改地以纯文本写进正文**（`中文可见文字（https://…）`）——因为 §5.2.3 的合并会把 `<a>` 降级为纯文本、href 会丢，URL 必须落在文本里才留得住；③ 补丁号 `1.001.100` 原样保留；④ **Navbox（`div.ranger-navbox`，28 KB，含 13 个部委图标）与末尾两块 HTML 注释整块丢弃**，依据是 §5.2.2 第 6 条「wiki 导航模板属不适合译入正文的残留」（**2026-09-18 已撤销：Navbox 改为中文化后写进 `content_zh`，见第 17 条；`figures_zh: []` 仍保留，用于丢弃主干那份英文 Navbox**）；⑤ 因此整节通用核对会显示 19 个「链接实体缺失 / 7 个数字缺失」，全部落在被丢弃的 Navbox 区间内——**只对 `<ol>` 区间核对时是 36/36 数字、58/58 URL、5/5 术语表实体全中**。

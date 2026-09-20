@@ -117,7 +117,7 @@
   function param(n) { return new URLSearchParams(location.search).get(n); }
 
   var PART_HEADS = ["部位", "图片", "生命值", "护甲等级", "位置", "持久", "主部位占比", "溢出上限", "体质", "致命", "弱点"];
-  var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能族", super_earth: "超级地球" };
+  var FACTION_CN = { terminids: "终结族", automatons: "机器人", illuminate: "光能者", super_earth: "超级地球" };
   function fcn(e) { return FACTION_CN[e.faction] || e.faction_label || e.faction; }
 
   // 部位表与生产 enemy.html 同款翻译兜底链（armor_level_zh / location_zh 优先）

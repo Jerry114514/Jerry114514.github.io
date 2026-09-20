@@ -14,10 +14,10 @@
    ============================================================ */
 window.Tactical = (function () {
   const FACTION_CN = {
-    Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能族",
+    Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者",
     Super_Earth: "超级地球", "Super Earth": "超级地球",
   };
-  const OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能族" };
+  const OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
 
   function computeFor(index, ctx) {
     const { planets, campaigns, waypoints, nameOf, sectorCnOf } = ctx;

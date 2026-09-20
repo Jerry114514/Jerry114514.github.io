@@ -26,7 +26,7 @@
 | 超级地球 (Humans) | `#3b82f6` | 蓝色 |
 | 机器人 (Automatons) | `#ef4444` | 红色 |
 | 终结族 (Terminids) | `#f59e0b` | 金色/橙色 |
-| 光能族 (Illuminate) | `#8b5cf6` | 紫色 |
+| 光能者 (Illuminate) | `#8b5cf6` | 紫色 |
 
 ### 1.3 状态颜色
 
@@ -107,7 +107,7 @@
 |--------|------|------|
 | 终结族 (Terminids) | `#f59e0b` | 橙色 |
 | 机器人 (Automaton) | `#ef4444` | 红色 |
-| 光能族 (Illuminate) | `#8b5cf6` | 紫色 |
+| 光能者 (Illuminate) | `#8b5cf6` | 紫色 |
 | 超级地球 (Humans) | `#3b82f6` | 蓝色（解放战） |
 
 ### 3.2 线宽规则

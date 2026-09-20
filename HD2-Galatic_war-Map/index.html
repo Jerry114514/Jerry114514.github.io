@@ -322,7 +322,7 @@
     "Humans":     "超级地球",
     "Terminids":  "终结族",
     "Automaton":  "机器人",
-    "Illuminate": "光能族"
+    "Illuminate": "光能者"
   };
   const FACTION_ORDER = ["Humans", "Terminids", "Automaton", "Illuminate"];
 
@@ -877,7 +877,7 @@ function renderPlayers(data) {
       { key: "humans",     label: "超级地球", color: "var(--c-humans)" },
       { key: "terminids",  label: "终结族",   color: "var(--c-terminids)" },
       { key: "automatons", label: "机器人",   color: "var(--c-automaton)" },
-      { key: "illuminate", label: "光能族",   color: "var(--c-illuminate)" },
+      { key: "illuminate", label: "光能者",   color: "var(--c-illuminate)" },
     ];
     const total = pd.total || 1;
     const segs = items.map(it => {
@@ -2344,7 +2344,7 @@ function renderPlayers(data) {
     const events = data.planet_events || [];
     if (!events.length) { block.style.display = "none"; return; }
     block.style.display = "";
-    const RACE = { Automaton: "机器人", Illuminate: "光能族", Terminids: "终结族" };
+    const RACE = { Automaton: "机器人", Illuminate: "光能者", Terminids: "终结族" };
     const html = events.map(ev => {
       const p = (data.planets || []).find(x => x.index === ev.planetIndex) || { index: ev.planetIndex, name: "PLANET_" + ev.planetIndex };
       const nm = planetName(p, data.starMap);
@@ -2929,7 +2929,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
           mkLine("超级地球", humans, C.hum, "y"),
           mkLine("终结族", terminids, C.term, "y"),
           mkLine("机器人", automatons, C.auto, "y"),
-          mkLine("光能族", illuminate, C.illu, "y"),
+          mkLine("光能者", illuminate, C.illu, "y"),
           mkLine("影响力系数", impact, C.text, "y1", [5, 5]),
         ]
       },

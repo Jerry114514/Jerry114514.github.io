@@ -19,7 +19,7 @@ const DATA_LAYER = (() => {
     Humans: "超级地球",
     Automatons: "机器人",
     Terminids: "终结族",
-    Illuminate: "光能族",
+    Illuminate: "光能者",
   };
 
   // 寂域星区名（英文/中文）
