@@ -28,7 +28,7 @@
     --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);
     --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;
     --yellow:#f5c518; --blue:#3b82f6;
-    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
+    --c-humans:#ffe800; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
     --radius:12px; --radius-s:8px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -449,7 +449,7 @@
       <div><i style="background:var(--c-automaton)"></i>机器人</div>
       <div><i style="background:var(--c-illuminate)"></i>光能者</div>
       <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
-      <div><span class="ln" style="border-image:linear-gradient(90deg,#3b82f6,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
+      <div><span class="ln" style="border-image:linear-gradient(90deg,#ffe800,#f59e0b) 1"></span>我方黄 → 敌方阵营色</div>
       <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
     </div>
     <div class="muted" id="srcnote"></div>
@@ -466,7 +466,9 @@
 const $ = (id) => document.getElementById(id);
 const SVGNS = "http://www.w3.org/2000/svg";
 
-const OWNER_COLOR = { Humans:"#5BA3D0", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
+// 阵营代表色（超级地球 2026-09 起 = #ffe800，与 assets/faction-icons/humans.svg 的黄骷髅
+// 及 HD2_Wiki/data/wiki/zh/factions.json 的 super_earth.color 三者同值；其余三方不动）
+const OWNER_COLOR = { Humans:"#ffe800", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
 const OWN_CN     = { Humans:"超级地球", Terminids:"终结族", Automaton:"机器人", Illuminate:"光能者" };
 const FACTION_KEYS = ["Humans","Terminids","Automaton","Illuminate"];
 
@@ -507,8 +509,9 @@ const STRAIN_WIKI_ID = {
   Mindless_Masses:"mindless_masses", Appropriators:"appropriators",
   Vote_Snatchers:"vote_snatchers", Invasion_Fleet:"invasion_fleet",
 };
-// 阵营代表色（与 HD2_Wiki/data/wiki/zh/factions.json 的 color 一致）
-const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#5BA3D0" };
+// 阵营代表色（与 HD2_Wiki/data/wiki/zh/factions.json 的 color 一致：
+// super_earth #ffe800 / terminids #f59e0b / automatons #ef4444 / illuminate #AA44FF）
+const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#ffe800" };
 // 返回 { url, kind, color, badge, text }
 function wikiLinkFor(p) {
   const owner = p.currentOwner || "";
@@ -809,7 +812,7 @@ const EFFECT_ICON = {
 };
 // 图标着色（仅 SVG 生效；PNG 自带配色）
 const EFFECT_COLOR = {
-  "seaf.svg":"#5BA3D0",
+  "seaf.svg":"#ffe800",
   "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D", "cyborgs.svg":"#D6806D",
   "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
   "dragonroach.svg":"#F5C518",
@@ -1118,8 +1121,10 @@ async function boot() {
   // 补给线：**全部** waypoint 边都要画（实测共 299 条：我方↔我方 215、敌方↔敌方 67、
   // 跨阵营 57）。上一版误把「非跨阵营」的线全部丢弃，导致星图几乎看不到连线。
   //   · 同阵营线：用该阵营代表色的暗色实线
-  //   · 跨阵营线：额外叠加一层「我方蓝 → 阵营代表色」渐变（见 supply-grad-* 图层）
-  const SUPPLY_FACTION_COLOR = { Humans:"#3b82f6", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
+  //   · 跨阵营线：额外叠加一层「我方（超级地球）色 → 阵营代表色」渐变（见 supply-grad-* 图层）
+  // 2026-09：超级地球改动为 #ffe800 后，这里的「我方端点」同步由蓝改黄
+  // （SUPPLY_FACTION_COLOR.Humans 原为 #3b82f6，与 OWNER_COLOR/FACTION_COLOR 的 #5BA3D0 本就不一致）。
+  const SUPPLY_FACTION_COLOR = { Humans:"#ffe800", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
   const supplyFC = fc((() => {
     const out = [];
     for (const k of Object.keys(WP)) {
@@ -1127,7 +1132,7 @@ async function boot() {
       for (const to of (WP[k] || [])) {
         const b = posOf(+to); if (!b) continue;
         const oA = ownerOf(+k) || "None", oB = ownerOf(+to) || "None";
-        // 跨阵营渐变以「我方那一端」为蓝色起点；其余取任一端阵营色
+        // 跨阵营渐变以「我方那一端」为我方色（#ffe800）起点；其余取任一端阵营色
         let grad = null;
         if (oA === "Humans" && oB !== "Humans") grad = oB;
         else if (oB === "Humans" && oA !== "Humans") grad = oA;
@@ -1141,7 +1146,7 @@ async function boot() {
             // cross: 跨阵营线标记（用于渐变层 + 实线是否加深）
             cross: grad ? 1 : 0,
             grad: grad || oA,               // 渐变终点阵营（非跨阵营时为自身阵营）
-            humanEnd: humanEnd ? 1 : 0,     // 1 表示 from 端为我方（蓝起点）
+            humanEnd: humanEnd ? 1 : 0,     // 1 表示 from 端为我方（我方色起点）
             color: SUPPLY_FACTION_COLOR[grad || oA] || "#64748b",
           },
         });
@@ -1151,9 +1156,9 @@ async function boot() {
   })());
 
   // 跨阵营渐变图层：line-gradient 不是 data-driven，故按「阵营 × 我方端点」显式生成 6 条。
-  // humanEnd=1 → from 端是我方（蓝在 0%）；humanEnd=0 → to 端是我方（蓝在 100%）。
+  // humanEnd=1 → from 端是我方（我方色在 0%）；humanEnd=0 → to 端是我方（我方色在 100%）。
   const GRAD_HEX = { Terminids:"245,158,11", Automaton:"239,68,68", Illuminate:"170,68,255" };
-  const BLUE_C = "rgba(59,130,246,.95)";
+  const BLUE_C = "rgba(255,232,0,.95)";   // 我方（超级地球）= #ffe800
   const SUPPLY_GRAD_LAYERS = [];
   for (const [fac, rgb] of Object.entries(GRAD_HEX)) {
     for (const humanEnd of [1, 0]) {
@@ -2002,8 +2007,18 @@ function bindUI(data, planets) {
   /* ---- 左上角星区卡：星区名 / 占领方 / 总解放度 / 阵营图标 ---- */
   let secToken = 0;
   function hideSectorCard() { secToken++; $("sector-card").classList.remove("on"); }
+  // ⚠ 2026-09 修复「星区卡 22 个星区全都不显示」：
+  //   SECTOR_IDX 的键取自 starmap.json 的**中文**星区名（SEC_BY_PLANET → v.system），
+  //   而悬停/点击传进来的是 feature 的**英文** p.sector（如 "Barnard"），
+  //   于是 SECTOR_IDX[sector] 恒为 undefined → 直接 hideSectorCard() 返回。
+  //   中文名走既有映射表 SEC_CN（英文→中文，含 SECTOR_ALIASES 别名桥接，见 boot() 段）。
+  //   只有 starmap 未收录、SECTOR_IDX 以英文名兜底建键的极少数星球才走第一个分支。
+  function sectorEntryOf(sector) {
+    if (sector == null) return null;
+    return SECTOR_IDX[sector] || SECTOR_IDX[SEC_CN[String(sector).toUpperCase()]] || null;
+  }
   async function showSectorCard(sector) {
-    const s = SECTOR_IDX[sector];
+    const s = sectorEntryOf(sector);
     if (!s) { hideSectorCard(); return; }
     const my = ++secToken, el = $("sector-card");
     const dominant = s.owner || "Humans";
