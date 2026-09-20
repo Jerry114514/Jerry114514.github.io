@@ -1,0 +1,86 @@
+name: 图片补充
+description: 提供缺失或更清晰的图标 / 截图 / 配图。也欢迎直接提 PR，见 CONTRIBUTING.md。
+title: "[图片] "
+labels:
+  - 数据补充
+  - 图片
+body:
+  - type: markdown
+    attributes:
+      value: |
+        图片请**优先直接拖进下面的输入框上传为附件**，比外链可靠得多
+        （外站链接会失效，站内也不允许热链）。
+
+        > 💡 **想自己动手传？** 图片放到 `HD2_Wiki/assets/<数据集>/` 下，
+        > 然后在对应 JSON 里用**站内相对路径**引用，例如
+        > `"icon": "./assets/boosters/xxx.svg"`，提 PR 时把图片一起提交。
+        > 详见 [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)。
+        > **不想碰 JSON 就继续填下面的表单。**
+
+  - type: input
+    id: target
+    attributes:
+      label: 对象
+      description: 这张图是给哪个条目的？写「类型 + 名称」，例如「强化资源 · 地狱舱空间优化」。
+      placeholder: 例如：战略配备 · 鹰式 500kg 炸弹
+    validations:
+      required: true
+
+  - type: dropdown
+    id: usage
+    attributes:
+      label: 用途
+      description: 这张图要放在哪里？
+      options:
+        - 条目标题旁的图标（icon）
+        - 条目详情页的配图 / 截图
+        - 战争债券封面
+        - 机制页正文插图
+        - 首页 / 星图横幅
+        - 替换现有但不清晰 / 过时的图
+        - 其他（请在补充说明里写明）
+    validations:
+      required: true
+
+  - type: textarea
+    id: image
+    attributes:
+      label: 图片链接或附件
+      description: |
+        **直接把图片文件拖到本框内**即可上传为附件（推荐）。
+        如果有现成的外链，也可以贴在这里（维护者会下载到站内再引用）。
+      placeholder: 把图片拖到这里，或粘贴 https://... 链接
+    validations:
+      required: true
+
+  - type: input
+    id: file_name
+    attributes:
+      label: 建议文件名
+      description: 如果知道的话（可选）。站内文件名一般与英文原名一致。
+      placeholder: 例如：Eagle_500kg_Bomb_Stratagem_Icon.svg
+    validations:
+      required: false
+
+  - type: textarea
+    id: license
+    attributes:
+      label: 授权说明
+      description: |
+        这张图的来源和授权情况。**这一项很重要**——请说明它是否可以自由使用。
+      placeholder: |
+        例如：
+        - 我自己截的游戏截图，允许本站使用
+        - 来自 helldivers.wiki.gg（CC BY-SA），原页面：https://...
+        - 官方宣传素材
+        - 不确定，请维护者判断
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充说明
+      description: 还有别的想说的？例如「现有图标有白边」「这张是 4K 的，可裁」。
+    validations:
+      required: false

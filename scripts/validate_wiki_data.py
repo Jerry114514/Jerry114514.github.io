@@ -37,6 +37,44 @@ HD2 中文维基 · 数据校验器（独立可复用）
     0 = 全部通过（含仅有基线项）
     1 = 存在校验失败
     2 = 用法 / 环境错误（例如目录不存在）
+
+作用域（重要）
+--------------
+`HD2_Wiki/data/wiki/zh/**` 是 SCHEMA.md 管辖的**社区可编辑数据集**，规则最严。
+`HD2-Galatic_war-Map/tables/**` 是**星图引擎自己的镜像表**（上游抓取），不属于
+SCHEMA 管辖：顶层允许数组，`icon` 允许 wiki.gg 绝对 URL。详见下方
+`TOP_MAY_BE_ARRAY` / `is_wiki_data()` 处的注释。
+
+修订记录：首轮自测暴露的 5 个缺陷（2026-09）
+--------------------------------------------
+本文件第一版**从未跑过坏样本**，真数据全绿并不代表它有效。造坏样本自测后发现：
+
+1. **`Finding.render()` 在报错时崩溃**（最严重）：一半调用点传的是路径**元组**，
+   而 `render()` 用 `" [%s]" % self.path` 格式化 —— 元组被当成参数列表，
+   抛 `TypeError: not all arguments converted during string formatting`。
+   后果：真数据全绿（没有 error 要渲染），但**一旦发现问题就崩掉、产不出报告**，
+   CI 只会看到一个语焉不详的非零退出码。
+   → 修：`Finding.__init__` 统一把元组路径过 `jp()`。
+2. **跨盘 `os.path.relpath` 崩溃**：`--root` 与 `--wiki-web-root` 不在同一盘符
+   （Windows：C: vs E:）时抛 `ValueError`，报告生成阶段整个挂掉。
+   → 修：新增 `safe_relpath()`，跨盘退化为绝对路径。
+3. **跨文件引用按文件名排序边读边查 → 整类静默跳过**：`warbonds.json` 排在
+   `weapons.json` **之前**，于是 `kind="weapon"` 的 `reward_refs` 永远拿不到
+   `weapons.json` 的 id 集合，**整类引用从不校验**（写坏也不报错）。
+   → 修：`check_wiki_files()` / `check_map_files()` 改为两遍扫描
+   （先全部读取解析，再统一检查）。
+4. **`ID.UNIQUE` 基线被绕过**：`check_ids_for` / `check_mission_task_dups` 直接调
+   `rep.add()`，没走基线感知的 `self.add()`，于是 SCHEMA §2.1/§7.6 已登记的
+   missions 8 处跨分类重复被当成 8 条错误（真数据被误判为红）。
+   另外 `check_id_sets()` 在 `main()` 里晚于 `flush_aggregates()` 调用，
+   id 类基线永远结算不到。→ 修：统一走 `self.add()`，并把 `check_id_sets()`
+   移进 `run()` 的 `flush_aggregates()` 之前。
+5. **作用域越界导致 90 条误报**：把 SCHEMA 的「顶层必须是对象」「icon 必须站内
+   相对路径」套到了 `HD2-Galatic_war-Map/tables/stratagems.json`（顶层是 89 项
+   数组、icon 全为 wiki.gg 绝对 URL）上。→ 修：见「作用域」。
+
+自测方式（改本文件后请照做）：把数据复制到临时目录 → 逐例改坏 → 断言
+**非零退出**且报错文案命中；纯跑真数据全绿**不能**证明校验器有效。
 """
 
 from __future__ import annotations
@@ -70,12 +108,12 @@ CHECKS = [
     ("SCHEMA.ZHPAIR", "X 与 X_zh 成对出现时 JSON 类型一致（SCHEMA §5.1）"),
     ("SCHEMA.DATE", "updated_at 为 ISO8601（YYYY-MM-DD 或秒级 UTC）"),
     ("MECH.TRUNK", "mechanics 主干：sections 展平数 == toc 数、小节 id 唯一、level ∈ {2,3,4}"),
-    ("MECH.PAIRING", "mechanics 覆盖：每个中文小节都有显式 id/target_id 且能命中主干"),
+    ("MECH.PAIRING", "mechanics 覆盖：每个中文小节都有显式 id/target_id、能命中主干、同文件内声明唯一"),
     ("MECH.EXTRA", "mechanics 覆盖：不得出现主干没有的小节（zhOnly 会挂到页尾）"),
     ("REF.REWARD_REFS", "warbonds.reward_refs 的 kind/id 必须存在于目标数据集，键必须逐字等于奖励名"),
     ("REF.FACTION", "factions.enemies 必须存在于 enemies.json"),
     ("REF.TERMS", "terms.json：en 唯一、en/zh/source 非空、rejected[].zh != zh"),
-    ("IMG.EXISTS", "icon/image/img/src 指向的站内相对路径必须真实存在；禁止站内图片热链"),
+    ("IMG.EXISTS", "icon/image/img/src 必须是非空、真实存在的站内相对路径（wiki 数据另禁热链）"),
     ("LINK.EXISTS", "blocks/index 的 .html 链接目标必须真实存在"),
 ]
 
@@ -123,6 +161,34 @@ WIKI_URL_RE = re.compile(r"^https://helldivers\.wiki\.gg/wiki/")
 
 Z = "HD2_Wiki/data/wiki/zh/"
 M = "HD2-Galatic_war-Map/"
+
+# ---------------------------------------------------------------------------
+# 作用域：哪些规则管哪些文件
+# ---------------------------------------------------------------------------
+# `HD2_Wiki/data/wiki/zh/**` 是 SCHEMA.md 管辖的**社区可编辑数据集**，规则最严
+# （icon 必须站内相对路径、顶层必须是对象……）。
+#
+# `HD2-Galatic_war-Map/tables/**` 是**星图引擎自己的镜像表**（上游 game data /
+# wiki.gg 抓取，见 .github/workflows/sync-tables.yml），不属于 SCHEMA 管辖：
+#   * 顶层允许是数组（实测 `tables/stratagems.json` 就是 89 项的数组）；
+#   * `icon` 允许是 wiki.gg 绝对 URL（实测 `tables/stratagems.json` 89 处全为绝对 URL，
+#     与同一目录的 `strat_icons.json` 的值形态一致）。
+# 对这些文件只做「JSON 语法 / 编码 / 结构」校验，不做 SCHEMA 的站内路径与热链规则——
+# 否则真数据会被判红（2026-09 实测：曾误报 90 条）。
+#
+# `M/data/campaign_zh.json` 与 `M/banner.json` 是**人工维护**的中文化层，仍按对象校验。
+
+# 顶层允许是数组的前缀（星图镜像表）
+TOP_MAY_BE_ARRAY = (M + "tables/",)
+
+
+def is_wiki_data(relpath):
+    """该文件是否受 SCHEMA.md 管辖（决定是否启用站内路径 / 热链规则）。"""
+    return relpath.startswith(Z)
+
+
+def top_may_be_array(relpath):
+    return relpath.startswith(TOP_MAY_BE_ARRAY)
 
 # 顶层必填字段
 REQUIRED_TOP = {
@@ -238,7 +304,13 @@ class Finding(object):
         self.check = check
         self.severity = severity          # error | baseline | info
         self.file = file
-        self.path = path
+        # 调用方有两种写法：走 Validator.add() 的传的是 jp() 之后的字符串，
+        # 直接走 Report.add() 的传的是路径元组（如 ("weapons", 5, "id")）。
+        # 这里统一成字符串 —— 否则 render() 里的 " %s" % tuple 会在**报错时**
+        # 抛 TypeError 让校验器整个崩掉（2026-09 自测发现：19 条错误路径全部崩）。
+        if isinstance(path, (tuple, list)):
+            path = jp(tuple(path))
+        self.path = path or ""
         self.what = what
         self.fix = fix
         self.line = line
@@ -457,6 +529,17 @@ def walk_strings(obj, path=()):
         yield path, obj
 
 
+def safe_relpath(path, root):
+    """os.path.relpath 的 Windows 跨盘安全版（E: 与 C: 之间会抛 ValueError）。
+
+    报告里只想显示一个短路径；跨盘时退化为绝对路径也比整个校验器崩掉强。
+    """
+    try:
+        return os.path.relpath(path, root)
+    except ValueError:
+        return path
+
+
 def jp(path):
     """JSON 指针风格的可读路径。"""
     out = "$"
@@ -495,7 +578,7 @@ class Validator(object):
     # ---- 基础设施 ---------------------------------------------------------
 
     def rel(self, abspath, base):
-        return os.path.relpath(abspath, self.o.root).replace("\\", "/")
+        return safe_relpath(abspath, self.o.root).replace("\\", "/")
 
     def read(self, relpath):
         """读取并缓存；返回 (text, ok)。"""
@@ -591,6 +674,10 @@ class Validator(object):
         self.check_wiki_files()
         self.check_map_files()
         self.check_mechanics()
+        # 必须在 flush_aggregates 之前：id 类检查也会命中 KNOWN 基线，
+        # 若放在 main() 里晚于 flush_aggregates()，基线计数永远不会被结算
+        #（2026-09 修正：曾因此把 missions.json 已登记的 8 处跨分类重复报成错误）。
+        self.check_id_sets()
         self.flush_aggregates()
 
     def wiki_json_files(self):
@@ -618,8 +705,16 @@ class Validator(object):
         return sorted(set(out))
 
     def check_wiki_files(self):
-        for relpath in self.wiki_json_files():
+        files = self.wiki_json_files()
+        # 第一遍：全部读取 + 解析。跨文件引用（warbonds.reward_refs → weapons/
+        # stratagems_full/boosters、factions.enemies → enemies）必须能拿到**所有**
+        # 解析结果；若边读边查，"warbonds.json" 排在 "weapons.json" 之前，目标数据集
+        # 尚未解析，于是 kind="weapon" 的 reward_refs **整类静默跳过不校验**
+        #（2026-09 自测发现：故意写坏 reward_refs 的 weapon id，校验器仍然全绿）。
+        for relpath in files:
             self.read(relpath)
+        # 第二遍：检查
+        for relpath in files:
             if relpath not in self.parsed_ok:
                 continue
             self.check_top(relpath)
@@ -633,8 +728,10 @@ class Validator(object):
             self.check_links(relpath, self.o.wiki_web_root)
 
     def check_map_files(self):
-        for relpath in self.map_json_files():
+        files = self.map_json_files()
+        for relpath in files:
             self.read(relpath)
+        for relpath in files:
             if relpath not in self.parsed_ok:
                 continue
             self.check_top(relpath)
@@ -647,8 +744,18 @@ class Validator(object):
     def check_top(self, relpath):
         obj = self.values[relpath]
         if not isinstance(obj, dict):
-            self.rep.add("SCHEMA.TOP", relpath, "",
-                         "顶层必须是 JSON 对象（{...}）", "用 { } 包住最外层")
+            if isinstance(obj, list) and top_may_be_array(relpath):
+                # 星图镜像表（tables/*.json）顶层就是数组，合法
+                return
+            if isinstance(obj, list):
+                self.rep.add("SCHEMA.TOP", relpath, "",
+                             "顶层必须是 JSON 对象（{...}），当前是数组（[...]，%d 项）"
+                             % len(obj),
+                             "按 SCHEMA.md §2 用 { } 包住最外层，主集合放在具名键下")
+            else:
+                self.rep.add("SCHEMA.TOP", relpath, "",
+                             "顶层必须是 JSON 对象（{...}），当前是 %s" % type(obj).__name__,
+                             "用 { } 包住最外层（SCHEMA §2）")
             return
         for k in REQUIRED_TOP.get(relpath, []):
             if k not in obj:
@@ -727,9 +834,6 @@ class Validator(object):
 
     # --- id 相关 ---
 
-    def check_ids(self):
-        pass  # 占位，具体见 check_ids_for
-
     def check_ids_for(self, relpath, path, label):
         obj = self.values[relpath]
         items = dig(obj, path)
@@ -741,18 +845,18 @@ class Validator(object):
                 continue
             v = it.get("id")
             if not isinstance(v, str) or not v:
-                self.rep.add("ID.FORMAT", relpath, path + (i,),
-                             "%s 第 %d 项的 id 缺失或不是字符串（%r）" % (label, i, v),
-                             "每个条目必须有 string 类型的 id，小写 snake_case，例如 ar_2_coyote")
+                self.add("ID.FORMAT", relpath, path + (i,),
+                         "%s 第 %d 项的 id 缺失或不是字符串（%r）" % (label, i, v),
+                         "每个条目必须有 string 类型的 id，小写 snake_case，例如 ar_2_coyote")
                 continue
             if not SNAKE_RE.match(v):
-                self.rep.add("ID.FORMAT", relpath, path + (i, "id"),
-                             "%s 的 id %r 不是小写 snake_case" % (label, v),
-                             "只允许小写字母、数字、下划线：把连字符改成下划线、去掉大写与空格")
+                self.add("ID.FORMAT", relpath, path + (i, "id"),
+                         "%s 的 id %r 不是小写 snake_case" % (label, v),
+                         "只允许小写字母、数字、下划线：把连字符改成下划线、去掉大写与空格")
             if v in seen:
-                self.rep.add("ID.UNIQUE", relpath, path + (i, "id"),
-                             "%s 内 id %r 重复（第 %d 项与第 %d 项）" % (label, v, seen[v], i),
-                             "同一数据集内 id 必须唯一：改掉其中一个，或确认是否重复粘贴")
+                self.add("ID.UNIQUE", relpath, path + (i, "id"),
+                         "%s 内 id %r 重复（第 %d 项与第 %d 项）" % (label, v, seen[v], i),
+                         "同一数据集内 id 必须唯一：改掉其中一个，或确认是否重复粘贴")
             else:
                 seen[v] = i
 
@@ -778,9 +882,9 @@ class Validator(object):
             lo = {x.get("id") for x in self.values[rel_l].get("stratagems", []) if isinstance(x, dict)}
             sf = {x.get("id") for x in self.values[rel_s].get("stratagems", []) if isinstance(x, dict)}
             for missing in sorted(lo - sf):
-                self.rep.add("ID.SPACE", rel_l, ("stratagems",),
-                             "loadout 的 id %r 在 stratagems_full.json 中不存在" % missing,
-                             "两个文件共用同一 id 空间（SCHEMA §2.1）：先在 stratagems_full.json 建条目")
+                self.add("ID.SPACE", rel_l, ("stratagems",),
+                         "loadout 的 id %r 在 stratagems_full.json 中不存在" % missing,
+                         "两个文件共用同一 id 空间（SCHEMA §2.1）：先在 stratagems_full.json 建条目")
         # 跨数据集重名（提示级）
         spaces = {}
         for relpath, path, label in ID_SETS:
@@ -813,10 +917,10 @@ class Validator(object):
                     byid[t["id"]].append(c.get("id"))
         for tid, cats in sorted(byid.items()):
             if len(cats) > 1:
-                self.rep.add("ID.UNIQUE", rel, ("categories",),
-                             "任务 id %r 同时出现在分类 %s 下" % (tid, cats),
-                             "mission.html 按 id 查任务时只保留最后一个命中；"
-                             "若确为「同一任务挂多个分类」，请在 KNOWN 表登记，否则请改名")
+                self.add("ID.UNIQUE", rel, ("categories",),
+                         "任务 id %r 同时出现在分类 %s 下" % (tid, cats),
+                         "mission.html 按 id 查任务时只保留最后一个命中；"
+                         "若确为「同一任务挂多个分类」，请在 KNOWN 表登记，否则请改名")
 
     # --- terms ---
 
@@ -1059,12 +1163,21 @@ class Validator(object):
                 if not os.path.exists(target):
                     self.rep.add("IMG.EXISTS", relpath, path,
                                  "<img src=%r> 指向的文件不存在（解析到 %s）"
-                                 % (src, os.path.relpath(target, self.o.root)),
+                                 % (src, safe_relpath(target, self.o.root)),
                                  "把图片放进站内并改成正确的相对路径，不要热链外站")
 
     def path_value(self, relpath, path, field, v, web_root, resolve):
+        # 空值：既不是相对路径也不是枚举，一定会渲染成破图，必须报错
+        if not v.strip():
+            self.rep.add("IMG.EXISTS", relpath, path,
+                         "%s 是空字符串" % field,
+                         "填站内相对路径 ./assets/<数据集>/<文件名>；"
+                         "确实没有图片就删掉该字段（不要留 \"\"）")
+            return
+        # 站内路径 / 热链规则只约束 SCHEMA 管辖的 wiki 数据
+        enforce_local = is_wiki_data(relpath)
         if not is_local_path(v):
-            if field in ICON_MUST_BE_LOCAL:
+            if field in ICON_MUST_BE_LOCAL and enforce_local:
                 self.add("IMG.HOTLINK", relpath, path,
                          "%s 用了外站绝对 URL（%s…）" % (field, v[:60]),
                          "icon 必须用站内相对路径 ./assets/...（SCHEMA §1）；"
@@ -1083,7 +1196,7 @@ class Validator(object):
                 return
             if not re.search(r"[A-Za-z0-9]", v):
                 return                       # emoji / 图形字符
-            if field in ICON_MUST_BE_LOCAL:
+            if field in ICON_MUST_BE_LOCAL and enforce_local:
                 self.rep.add("IMG.EXISTS", relpath, path,
                              "%s = %r 既不是站内相对路径也不是允许的枚举值" % (field, v),
                              "emoji 可直接用；图片请写 ./assets/<数据集>/<文件名>")
@@ -1094,7 +1207,7 @@ class Validator(object):
         if not os.path.exists(target):
             self.rep.add("IMG.EXISTS", relpath, path,
                          "%s = %r 指向的文件不存在（解析到 %s）"
-                         % (field, v, os.path.relpath(target, self.o.root)),
+                         % (field, v, safe_relpath(target, self.o.root)),
                          "确认文件已随 PR 提交，路径大小写与文件名逐字一致；"
                          "文件名含空格/撇号时 src 里保留百分号写法，磁盘上存解码后的真名")
 
@@ -1125,7 +1238,7 @@ class Validator(object):
         if not os.path.exists(target):
             self.rep.add("LINK.EXISTS", relpath, path,
                          "链接 %r 指向的页面不存在（解析到 %s）"
-                         % (v, os.path.relpath(target, self.o.root)),
+                         % (v, safe_relpath(target, self.o.root)),
                          "改成站内真实存在的 .html 文件名")
 
     # --- mechanics ---
@@ -1191,6 +1304,31 @@ class Validator(object):
                 continue
             trunk_ids = set(ids)
             self.check_coverage(zh_rel, zh_secs, ("sections_zh",), trunk_ids, trunk_id)
+            self.check_coverage_id_dups(zh_rel, zh_secs, ("sections_zh",), trunk_id)
+
+    def check_coverage_id_dups(self, zh_rel, secs, path, trunk_id):
+        """同一个覆盖文件里两节声明了同一个主干 id → 后者静默顶掉前者，必须报错。"""
+        seen = {}
+
+        def rec(ss, p):
+            for i, s in enumerate(ss):
+                if not isinstance(s, dict):
+                    continue
+                want = s.get("target_id") or s.get("id")
+                if isinstance(want, str) and want:
+                    if want in seen:
+                        self.rep.add(
+                            "MECH.PAIRING", zh_rel, p + (i, "id"),
+                            "覆盖文件里 %r 被声明了两次（本处与 %s）——"
+                            "后一节会在合并时静默顶掉前一节"
+                            % (want, ".".join(str(x) for x in seen[want])),
+                            "一个主干小节只能覆盖一次；把重复的那节改成它真正对应的主干 id，"
+                            "或删掉多余的一节")
+                    else:
+                        seen[want] = p + (i, "id")
+                if isinstance(s.get("subsections_zh"), list):
+                    rec(s["subsections_zh"], p + (i, "subsections_zh"))
+        rec(secs, path)
 
     def flatten(self, secs, path, acc):
         for i, s in enumerate(secs):
@@ -1294,6 +1432,13 @@ class Validator(object):
             if key in self.baseline_hits:
                 self.add_agg(check, relpath,
                              "存在已登记的历史例外", "见 KNOWN 表")
+            else:
+                # 一条都没命中 = 要么问题已修完（该删基线），要么基线的路径/校验项写错了
+                # （打错字会让整条规则静默失效）。两种都需要人来处理，故显式提示。
+                self.rep.add_info(
+                    check, relpath,
+                    "KNOWN 基线登记了「%s」但本次 0 命中：如果问题已修完请删掉这条基线；"
+                    "如果只是路径/校验项写错，基线等于没生效" % KNOWN[key][1])
         # href 指向 /wiki/... 的聚合提示
         for relpath in (MECH_DIR + "galactic_war_history.json",):
             if relpath not in self.parsed_ok:
@@ -1429,7 +1574,6 @@ def main(argv=None):
     rep = Report()
     v = Validator(o, rep)
     v.run()
-    v.check_id_sets()
 
     text = build_report(rep, o.strict)
     sys.stdout.write(text + "\n")

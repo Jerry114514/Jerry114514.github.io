@@ -1,0 +1,119 @@
+name: Validate Data
+
+# 数据校验（社区投稿的守门人）
+# =============================================================================
+# 干什么：对社区可编辑的 JSON 数据集跑 scripts/validate_wiki_data.py，
+#         任何一条检查项失败 → 非零退出 → 本 job 变红，PR 合不进去。
+#
+# ⚠️ 维护者注意：**加了新数据字段 / 新数据集时，要同步更新校验器**
+#    （scripts/validate_wiki_data.py 的 REQUIRED_TOP / REQUIRED_ITEMS /
+#      NESTED_REQUIRED / ID_SETS / MECH_COVERAGE / KNOWN 等登记表，
+#      以及 HD2_Wiki/data/wiki/zh/SCHEMA.md）。
+#    只改数据不改校验器 → 新字段无人检查（绿着但坏了）；
+#    只改校验器不改 SCHEMA → 投稿者不知道要写什么。
+#    校验器自带的检查项清单：python scripts/validate_wiki_data.py --list-checks
+# =============================================================================
+
+on:
+  pull_request:
+    paths:
+      - 'HD2_Wiki/data/**'
+      - 'HD2-Galatic_war-Map/tables/**'
+      - 'HD2-Galatic_war-Map/data/campaign_zh.json'
+      - 'HD2-Galatic_war-Map/banner.json'
+      - 'scripts/validate_wiki_data.py'
+      # 本工作流自身的改动也顺带验一遍（避免改了 CI 却没人跑）
+      - '.github/workflows/validate-data.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'HD2_Wiki/data/**'
+      - 'HD2-Galatic_war-Map/tables/**'
+      - 'HD2-Galatic_war-Map/data/campaign_zh.json'
+      - 'HD2-Galatic_war-Map/banner.json'
+      - 'scripts/validate_wiki_data.py'
+      - '.github/workflows/validate-data.yml'
+  workflow_dispatch:      # 支持手动触发
+
+# 只读：校验器不写任何文件（--report 只写 runner 上的临时文件）
+permissions:
+  contents: read
+
+# 同一个 PR（或同一个分支）只保留最新一次运行，旧的直接取消
+concurrency:
+  group: validate-data-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: 校验 wiki / 星图数据
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      # 校验器只用标准库（零依赖），所以不需要 pip install
+      - name: 运行数据校验器
+        id: validate
+        shell: bash
+        run: |
+          # 必须显式关掉 -e：否则校验器一失败本步骤就中断，$? 与报告都拿不到
+          #（GitHub 的 shell: bash 默认带 -e -o pipefail）
+          set +e
+          python scripts/validate_wiki_data.py --report validate_report.txt
+          code=$?
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "校验器退出码：${code}（0=通过，1=有失败项，2=用法/环境错误）"
+          exit 0
+
+      # 把结果写进 Job Summary，PR 作者在 Checks 页面直接能读到该改哪里
+      - name: 写 Job Summary
+        if: always()
+        shell: bash
+        run: |
+          # summary 只是给人看的，任何一段出问题都不该让这一步变红（真正的红由最后一步决定）
+          set +e
+          set +o pipefail
+
+          {
+            echo "## 📋 HD2 数据校验报告"
+            echo ""
+            if [ "${{ steps.validate.outputs.exit_code }}" = "0" ]; then
+              echo "✅ **通过** —— 所有检查项均为绿。"
+            else
+              echo "❌ **失败**（退出码 \`${{ steps.validate.outputs.exit_code }}\`）"
+              echo ""
+              echo "对照下面的报错改数据即可；格式是「文件 → 路径 → 原因 → 建议修法」。"
+              echo "看不懂 JSON 也没关系，可以在 PR 里留言让维护者接手。"
+            fi
+            echo ""
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -f validate_report.txt ]; then
+            {
+              echo '```'
+              # 只摘「必须修的问题」段：基线项有数百条，灌进 summary 会淹没真正要改的
+              awk '/^【必须修的问题】/{f=1} /^【已登记的历史例外/{f=0} f' validate_report.txt \
+                | head -n 150
+              echo '```'
+              echo ""
+              grep -E '错误合计|结果：' validate_report.txt
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "> ⚠️ 校验器没有产出报告（可能自身崩溃或 Python 环境异常），请查看本步骤日志。" \
+              >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit 0
+
+      - name: 校验失败 → 让 job 变红
+        if: always() && steps.validate.outputs.exit_code != '0'
+        shell: bash
+        run: |
+          echo "::error title=数据校验未通过::scripts/validate_wiki_data.py 退出码 ${{ steps.validate.outputs.exit_code }}。详情见本 job 的 Summary。"
+          exit 1

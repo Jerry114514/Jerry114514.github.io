@@ -1,0 +1,82 @@
+name: 缺失条目
+description: 站点上少了某个武器 / 战略配备 / 敌人 / 任务 / 强化资源 / 战争债券 / 机制。也欢迎直接提 PR，见 CONTRIBUTING.md。
+title: "[缺失条目] "
+labels:
+  - 数据补充
+body:
+  - type: markdown
+    attributes:
+      value: |
+        发现站点上少了东西？填一下类型和名称就行，剩下交给维护者。
+
+        > 💡 **想自己动手加？** 各数据集文件位置见
+        > [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)
+        > 的「数据在哪」一节，改完直接提 PR 即可。
+        > **不想碰 JSON 就继续填下面的表单。**
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 条目类型
+      description: 缺失的是哪一类内容？决定要加进哪个数据文件。
+      options:
+        - 武器
+        - 战略配备
+        - 敌人
+        - 任务
+        - 强化资源
+        - 战争债券
+        - 机制
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: 名称
+      description: 英文原名（如果有官方中文/社区译名也一并写上）。
+      placeholder: 例如：MG-206 Heavy Machine Gun（重型机枪）
+    validations:
+      required: true
+
+  - type: input
+    id: source_url
+    attributes:
+      label: 来源链接
+      description: 能证明该条目存在的页面链接（wiki.gg 条目页、官方公告、游戏内截图链接等）。
+      placeholder: https://helldivers.wiki.gg/wiki/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: key_data
+    attributes:
+      label: 关键数据
+      description: |
+        你知道的数值/属性，有多少写多少。**不确定的项留空即可，不要猜**——
+        宁可缺数据，也不要写入错误数值。格式随意，一段话也行。
+      placeholder: |
+        例如（武器）：
+        - 分类：支援武器
+        - 伤害：100
+        - 弹药：2 个弹匣 / 每匣 100 发
+        - 解锁：战争债券「XXX」第 3 页，20 勋章
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充说明
+      description: 还有别的想说的？例如「顺带说一下它的图标长这样」「机制页缺的是哪一节」。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 提交前确认
+      description: 勾选后才能提交，避免重复劳动。
+      options:
+        - label: 我确认这个条目目前站点上确实没有（已用名称搜过站点）。
+          required: true

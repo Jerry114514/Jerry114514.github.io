@@ -1,0 +1,88 @@
+name: 译名纠错
+description: 某个词条的中文翻译不准确 / 不符合社区习惯。也欢迎直接提 PR，见 CONTRIBUTING.md。
+title: "[译名] "
+labels:
+  - 数据修正
+  - 翻译
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢帮忙校对译名！请把「英文原名」和「你建议的中文」都写清楚。
+
+        > 💡 **想自己动手改？** 译名的唯一真相源是
+        > [`HD2_Wiki/data/wiki/zh/terms.json`](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/terms.json)，
+        > 可以在网页上点铅笔直接编辑并提 PR，流程见
+        > [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)。
+        > **不想碰 JSON 就继续填下面的表单即可**，维护者会代为修改。
+
+  - type: input
+    id: en_name
+    attributes:
+      label: 英文原名
+      description: 游戏内或 wiki 上的英文写法，请逐字准确（大小写、空格、标点都要对）。
+      placeholder: 例如：Autocannon
+    validations:
+      required: true
+
+  - type: input
+    id: current_zh
+    attributes:
+      label: 当前中文
+      description: 现在站点上显示的中文译名。如果该条目目前还没有中文（显示英文），就填「无」。
+      placeholder: 例如：自动加农炮
+    validations:
+      required: true
+
+  - type: input
+    id: suggested_zh
+    attributes:
+      label: 建议中文
+      description: 你认为更准确的译法。如果只是「应该没有译名」，可填「保留英文」。
+      placeholder: 例如：机炮
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 出处证据
+      description: 为什么这么译？越具体越好（社区通用叫法、游戏内文本、官方中文、讨论帖链接等）。
+      placeholder: |
+        例如：
+        - 游戏内中文客户端显示为「机炮」
+        - B 站/贴吧社区普遍叫「机炮」，搜「自动加农炮」几乎没有结果
+        - 参考链接：https://...
+    validations:
+      required: true
+
+  - type: input
+    id: pages
+    attributes:
+      label: 涉及页面
+      description: 这个问题在站点的哪些页面能看到？有多个就都写上。
+      placeholder: 例如：武器图鉴-支援武器页、机制页-伤害
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: 影响范围
+      description: 这个译名波及面有多大？帮助我们判断优先级。
+      options:
+        - 单一条目
+        - 同一类别下的多个条目
+        - 全站术语（多个页面都在用）
+        - 不确定
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 提交前确认
+      description: 勾选后才能提交，避免重复劳动。
+      options:
+        - label: 我已经在 `terms.json` 里搜过这个英文原名，确认这不是已有的约定译法（或说明为什么应该改掉它）。
+          required: true

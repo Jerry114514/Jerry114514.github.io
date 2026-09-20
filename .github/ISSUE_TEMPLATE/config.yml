@@ -1,0 +1,19 @@
+# Issue 模板选择器的配置
+# 文档：https://docs.github.com/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+
+# 允许开空白 Issue：上面的表单是给「说不清该选哪个」的人兜底的，
+# 不要因为表单存在就堵死自由格式的反馈。
+blank_issues_enabled: true
+
+contact_links:
+  - name: 📖 贡献指南（数据怎么改、CI 红了怎么办）
+    url: https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md
+    about: 想自己动手改数据？先看这里——网页上点铅笔就能提 PR，不用装任何工具。
+
+  - name: 📐 数据 Schema（字段规范，技术向）
+    url: https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/SCHEMA.md
+    about: 各数据集有哪些字段、_zh 覆盖怎么配对、术语表规则，都在这里。
+
+  - name: 💬 B 站私信反馈
+    url: https://space.bilibili.com/57439297
+    about: 不想用 GitHub？也可以通过 B 站私信反馈问题。
