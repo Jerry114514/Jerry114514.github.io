@@ -1,5 +1,5 @@
 name: 图片补充
-description: 提供缺失或更清晰的图标 / 截图 / 配图。也欢迎直接提 PR，见 CONTRIBUTING.md。
+description: 提供缺失或更清晰的图标 / 截图 / 配图。也欢迎直接提 PR，见站内投稿指南 https://jerry114514.github.io/HD2_Wiki/contributing.html。
 title: "[图片] "
 labels:
   - 数据补充
@@ -14,10 +14,11 @@ body:
         > 💡 **想自己动手传？** 图片放到 `HD2_Wiki/assets/<数据集>/` 下，
         > 然后在对应 JSON 里用**站内相对路径**引用，例如
         > `"icon": "./assets/boosters/xxx.svg"`，提 PR 时把图片一起提交。
-        > 详见 [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)。
+        > 详见 [投稿指南（站内页）](https://jerry114514.github.io/HD2_Wiki/contributing.html)。
         > **不想碰 JSON 就继续填下面的表单。**
         > 想自己动手的话，数据格式只有 6 条规则并附了可复制的填空模板，
-        > 见 CONTRIBUTING.md 的「📝 极简 JSON 科普」一节。
+        > 见
+        > [投稿指南 · §3 📝 极简 JSON 科普](https://jerry114514.github.io/HD2_Wiki/contributing.html#3-📝-极简-json-科普没有编程经验也能看懂)。
 
   - type: input
     id: target

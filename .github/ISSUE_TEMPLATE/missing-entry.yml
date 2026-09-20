@@ -1,5 +1,5 @@
 name: 缺失条目
-description: 站点上少了某个武器 / 战略配备 / 敌人 / 任务 / 强化资源 / 战争债券 / 机制。也欢迎直接提 PR，见 CONTRIBUTING.md。
+description: 站点上少了某个武器 / 战略配备 / 敌人 / 任务 / 强化资源 / 战争债券 / 机制。也欢迎直接提 PR，见站内投稿指南 https://jerry114514.github.io/HD2_Wiki/contributing.html。
 title: "[缺失条目] "
 labels:
   - 数据补充
@@ -10,11 +10,12 @@ body:
         发现站点上少了东西？填一下类型和名称就行，剩下交给维护者。
 
         > 💡 **想自己动手加？** 各数据集文件位置见
-        > [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)
-        > 的「数据在哪」一节，改完直接提 PR 即可。
+        > [投稿指南（站内页）· §1 数据在哪](https://jerry114514.github.io/HD2_Wiki/contributing.html#1-数据在哪)，
+        > 改完直接提 PR 即可。
         > **不想碰 JSON 就继续填下面的表单。**
         > 想自己动手的话，数据格式只有 6 条规则并附了可复制的填空模板，
-        > 见 CONTRIBUTING.md 的「📝 极简 JSON 科普」一节。
+        > 见
+        > [投稿指南 · §3 📝 极简 JSON 科普](https://jerry114514.github.io/HD2_Wiki/contributing.html#3-📝-极简-json-科普没有编程经验也能看懂)。
 
   - type: dropdown
     id: kind

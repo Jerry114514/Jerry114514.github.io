@@ -1,5 +1,5 @@
 name: 译名纠错
-description: 某个词条的中文翻译不准确 / 不符合社区习惯。也欢迎直接提 PR，见 CONTRIBUTING.md。
+description: 某个词条的中文翻译不准确 / 不符合社区习惯。也欢迎直接提 PR，见站内投稿指南 https://jerry114514.github.io/HD2_Wiki/contributing.html。
 title: "[译名] "
 labels:
   - 数据修正
@@ -13,10 +13,11 @@ body:
         > 💡 **想自己动手改？** 译名的唯一真相源是
         > [`HD2_Wiki/data/wiki/zh/terms.json`](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/terms.json)，
         > 可以在网页上点铅笔直接编辑并提 PR，流程见
-        > [CONTRIBUTING.md](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md)。
+        > [投稿指南（站内页）](https://jerry114514.github.io/HD2_Wiki/contributing.html)。
         > **不想碰 JSON 就继续填下面的表单即可**，维护者会代为修改。
         > 想自己动手的话，数据格式只有 6 条规则（最容易踩的是「文字必须用半角双引号包住」），
-        > 并附了可直接复制的填空模板，见 CONTRIBUTING.md 的「📝 极简 JSON 科普」一节。
+        > 并附了可直接复制的填空模板，见
+        > [投稿指南 · §3 📝 极简 JSON 科普](https://jerry114514.github.io/HD2_Wiki/contributing.html#3-📝-极简-json-科普没有编程经验也能看懂)。
 
   - type: input
     id: en_name

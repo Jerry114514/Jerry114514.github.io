@@ -15,7 +15,10 @@
         仓库内相对路径（如 `HD2_Wiki/data/wiki/zh/boosters.json`）改写成
         `https://github.com/.../blob/main/...`（目录用 tree），
         避免在站点上 404；已在 routes 里登记的路径改指站内页面。
-     ④ 用 h2/h3 生成目录（桌面吸顶右栏 / ≤1024px 吸顶抽屉）+ 滚动高亮。
+     ④ 用 h2/h3 生成目录（桌面吸顶右栏 / ≤1024px 吸顶抽屉）+ 阅读高亮：
+        IntersectionObserver 为主路径、scroll 监听为兜底，两条路都汇进同一个
+        幂等的重算入口，所以不依赖 scroll 事件是否真的下发；自动化验证可以
+        直接调用 window.__docTocSync() 重算、window.__docTocStats() 读计数。
 
    依赖：./vendor/marked.min.js（marked v15.0.7，UMD，暴露 window.marked）
    页面通过 `window.DOC_PAGE` 传入配置，见两个 HTML 页的 <script>。
@@ -35,6 +38,8 @@
   var tocList = document.getElementById("doc-toc-list");
   var tocToggle = document.getElementById("doc-toc-toggle");
   var fetchedEl = document.getElementById("doc-fetched");
+
+  var tocCtl = null;            // initToc() 返回的控制器（重算 + 深链对齐）
 
   if (!article) return;
 
@@ -174,11 +179,21 @@
     return true;
   }
 
+  /* 阅读线：标题顶边越过它就算「当前小节」（移动端吸顶目录条约 56px，留余量）。
+     阈值只在这里定义一次，IO 的 rootMargin 与几何判定共用它。 */
+  var READ_LINE = 96;
+  var THROTTLE = 100;           // 节流窗口（ms），IO 与 scroll 兜底共用
+
   function initToc() {
+    var activeIndex = -1;
+    var pinIndex = -1;          // 显式导航（点目录 / 深链）钉住的小节
+    var stats = { syncs: 0, paints: 0, ioCalls: 0, scrollCalls: 0, io: false };
+
     if (tocToggle) {
       tocToggle.addEventListener("click", function () {
         var open = tocBox.classList.toggle("open");
         tocToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        schedule("toggle");             // 抽屉开合会改变可视区，重算一次
       });
     }
     if (tocList) {
@@ -188,10 +203,9 @@
           node = node.parentNode;
         }
         if (node && node !== tocList) {
-          Array.prototype.forEach.call(tocList.querySelectorAll(".toc-item"), function (x) {
-            x.classList.remove("active");
-          });
-          node.classList.add("active");
+          /* 走 align() 而不是直接改 class：内部 activeIndex 与 DOM 永远一致，
+             后面任何一次重算都不会因为「状态相同」而漏掉高亮。 */
+          align(node.getAttribute("data-target"));
         }
         if (tocBox.classList.contains("open")) {
           tocBox.classList.remove("open");
@@ -206,42 +220,136 @@
       var el = document.getElementById(a.getAttribute("data-target"));
       if (el) marks.push({ el: el, a: a });
     });
-    if (!marks.length) return;
+    if (!marks.length) return null;
 
-    var lastRun = 0;
-    var tail = null;
-
-    function update() {
-      var best = marks[0];
-      for (var i = 0; i < marks.length; i++) {
-        if (marks[i].el.getBoundingClientRect().top <= 96) best = marks[i];
-        else break;
-      }
-      links.forEach(function (a) { a.classList.remove("active"); });
-      best.a.classList.add("active");
+    function docHeight() {
+      var d = document.documentElement;
+      var b = document.body;
+      return Math.max(d.scrollHeight, b ? b.scrollHeight : 0);
     }
 
-    /* 时间戳节流 + 尾调用：不用 requestAnimationFrame ——
-       后台标签页里 rAF 完全不触发，会把「pending」状态永久卡住。 */
-    function onScroll() {
+    function activeId() {
+      return (activeIndex >= 0 && marks[activeIndex])
+        ? marks[activeIndex].a.getAttribute("data-target") : "";
+    }
+
+    /* 几何判定：最后一个顶边越过阅读线的标题就是「当前小节」。
+       两条附加规则：
+         · 已经滚到页面底部时直接取最后一节 —— 否则很短的小节永远高亮不到；
+         · 若刚做过显式导航（点目录 / 深链），且那一节还在阅读区里，就以它为准：
+           否则「跳到 §2」会在下一帧被改成 §2 下面的第一个子小节（视觉上像
+           高亮自己跳走了）。用户一旦把它滚出阅读区，几何判定自动接管。 */
+    function computeIndex() {
+      var idx = 0;
+      for (var i = 0; i < marks.length; i++) {
+        if (marks[i].el.getBoundingClientRect().top <= READ_LINE) idx = i;
+        else break;
+      }
+      var bottom = (window.pageYOffset || document.documentElement.scrollTop || 0) +
+                   (window.innerHeight || document.documentElement.clientHeight || 0);
+      if (marks.length > 1 && bottom >= docHeight() - 2) {
+        pinIndex = -1;
+        return marks.length - 1;
+      }
+      if (pinIndex >= 0 && marks[pinIndex]) {
+        var pr = marks[pinIndex].el.getBoundingClientRect();
+        if (pr.top <= READ_LINE && pr.bottom > -160) return pinIndex;
+        pinIndex = -1;
+      }
+      return idx;
+    }
+
+    /* 全文件唯一改高亮 DOM 的地方：状态没变就直接返回。
+       IO 与 scroll 兜底因此天然幂等 —— 不会重复高亮、不会互相打架。 */
+    function paint(idx) {
+      if (idx === activeIndex) return false;
+      activeIndex = idx;
+      stats.paints++;
+      links.forEach(function (a) { a.classList.remove("active"); });
+      if (marks[idx]) marks[idx].a.classList.add("active");
+      return true;
+    }
+
+    /* 立即重算：初始化、显式调用、hash 对齐都用它 */
+    function sync(reason) {
+      stats.syncs++;
+      paint(computeIndex());
+      return activeId();
+    }
+
+    /* 节流 + 尾调用：不用 requestAnimationFrame ——
+       后台标签页里 rAF 完全不触发，会把「pending」状态永久卡住。
+       IO 与 scroll 兜底共用一个调度器，所以两者绝不会重复处理。 */
+    var lastRun = 0;
+    var tail = null;
+    function schedule(reason) {
       var now = Date.now();
-      var wait = 100 - (now - lastRun);
+      var wait = THROTTLE - (now - lastRun);
       if (wait <= 0) {
         lastRun = now;
         if (tail) { clearTimeout(tail); tail = null; }
-        update();
+        sync(reason);
         return;
       }
       if (tail) return;
       tail = setTimeout(function () {
         tail = null;
         lastRun = Date.now();
-        update();
+        sync(reason + ":tail");
       }, wait);
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
+    /* 深链 / 点目录：按 id 对齐到指定小节（并钉住它，见 computeIndex）；
+       找不到对应目录项（h4、或未被收录的标题）时返回 false，
+       由调用方退化为几何重算。 */
+    function align(id) {
+      for (var i = 0; i < marks.length; i++) {
+        if (marks[i].el.id === id) { pinIndex = i; paint(i); return true; }
+      }
+      return false;
+    }
+
+    /* 主路径（IntersectionObserver）：把观察区域的顶边内缩到阅读线，
+       任何标题「越过 / 回到」阅读线都会回调一次 → 触发重算。
+       注意判定仍由 computeIndex() 统一给出 —— IO 只负责「什么时候重算」，
+       不负责「谁高亮」，所以 IO 与兜底永远不会得出两个不同的当前小节。 */
+    if (typeof window.IntersectionObserver === "function") {
+      stats.io = true;
+      var io = new window.IntersectionObserver(function () {
+        stats.ioCalls++;
+        schedule("io");
+      }, { root: null, rootMargin: "-" + READ_LINE + "px 0px 0px 0px", threshold: 0 });
+      marks.forEach(function (m) { io.observe(m.el); });
+    }
+
+    /* 兜底（scroll）：IO 不触发 / 被禁用时，滚动照样能高亮。
+       与 IO 走同一个节流调度器，所以不会重复处理。 */
+    window.addEventListener("scroll", function () {
+      stats.scrollCalls++;
+      schedule("scroll");
+    }, { passive: true });
+    window.addEventListener("resize", function () { schedule("resize"); }, { passive: true });
+
+    /* 显式重算入口：脚本、调试、自动化验证可以直接调用 ——
+       不依赖 scroll 事件是否真的下发（无头 / 共享浏览器里常常不下发）。 */
+    window.__docTocSync = function () { return sync("manual"); };
+    window.__docTocStats = function () {
+      return {
+        syncs: stats.syncs,
+        paints: stats.paints,
+        ioCalls: stats.ioCalls,
+        scrollCalls: stats.scrollCalls,
+        io: stats.io,
+        index: activeIndex,
+        activeId: activeId(),
+        total: marks.length,
+        activeCount: document.querySelectorAll(".toc-item.active").length
+      };
+    };
+
+    sync("init");
+
+    return { sync: sync, align: align, stats: function () { return window.__docTocStats(); } };
   }
 
   /* 正文是渲染完成后才出现的，浏览器处理 URL 片段时锚点还不存在，
@@ -255,10 +363,10 @@
     if (!el) el = document.getElementById(raw);
     if (!el) return;
     el.scrollIntoView();
-    if (!tocList) return;
-    Array.prototype.forEach.call(tocList.querySelectorAll(".toc-item"), function (a) {
-      a.classList.toggle("active", a.getAttribute("data-target") === el.id);
-    });
+    if (!tocCtl) return;
+    /* 深链的语义是「我就要这一节」，所以先按 id 对齐高亮；
+       找不到对应目录项时（h4 等未被收录的标题）退化为几何重算。 */
+    if (!tocCtl.align(el.id)) tocCtl.sync("hash");
   }
 
   /* ── 降级提示（不写 console） ─────────────────────────────── */
@@ -297,7 +405,7 @@
     wrapTables(article);
     rewriteLinks(article);
 
-    if (buildToc(items)) initToc();
+    if (buildToc(items)) tocCtl = initToc();
     applyHash();
     window.addEventListener("hashchange", applyHash);
     if (fetchedEl) fetchedEl.textContent = "· 本次读取 " + nowLabel();
