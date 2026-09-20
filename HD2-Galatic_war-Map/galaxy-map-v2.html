@@ -698,16 +698,27 @@ function planetIconFile(name) {
 
 /* ------------------------------------------------------ 阵营图标（SVG） ---- */
 // 取自 helldivers.wiki.gg 的 Faction Icons，本地同源缓存（assets/faction-icons/）。
-// 原 SVG 无 fill 属性（默认黑），内联进 DOM 后由 CSS 按阵营色着色，故不用 <img>。
+// ⚠ 2026-09 修复「预览面板阵营图标是纯黑剪影」：
+//   SVG 若**完全没有 fill**，其 fill 的初始值是 `black`（**不是** currentColor），
+//   所以父级 .ficon{color:…} 根本管不到 path —— 四个图标全渲染成黑剪影。
+//   现由四个 SVG 自带 **fill="…" 表现属性**（非行内 style）着色：
+//     · 表现属性优先级低于任何 CSS 规则 → 主页 index.html 的
+//       `.planet-card .pc-ficon path{fill:var(--fc)}` 仍按卡片阵营色覆盖，主页不受影响；
+//     · 星图这里没有 fill 规则 → 用 SVG 自带的阵营色；
+//     · 且 <img src> 加载方式下也是正确颜色（<img> 无法继承 currentColor，只能靠自带 fill）。
 const FACTION_ICON_FILE = { Automaton:"automatons.svg", Terminids:"terminids.svg",
                             Illuminate:"illuminate.svg", Humans:"humans.svg" };
+// 图标缓存版本：assets/faction-icons/ 内容改动后必须 +1
+// （fetch 用 force-cache，不换 URL 的话旧图标会被浏览器钉在缓存里 —— 改了也看不到，
+//  与 index.html 的 PC_ICON_VER 同一个道理）
+const FACTION_ICON_VER = "2";
 const __ficit = {};
 async function factionIconSVG(owner) {
   const f = FACTION_ICON_FILE[owner];
   if (!f) return null;
   if (__ficit[owner] !== undefined) return __ficit[owner];
   try {
-    const r = await fetch("./assets/faction-icons/" + f, { cache: "force-cache" });
+    const r = await fetch("./assets/faction-icons/" + f + "?v=" + FACTION_ICON_VER, { cache: "force-cache" });
     if (!r.ok) throw new Error("HTTP " + r.status);
     let svg = (await r.text()).replace(/<\?xml[^>]*\?>/i, "").replace(/<!DOCTYPE[^>]*>/i, "").trim();
     svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "")                    // 纵深防御
