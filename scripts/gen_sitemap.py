@@ -20,8 +20,11 @@ URL，并保证重复执行不会累积、不会重复。
 
 约定
 ----
-* 手工维护的 <url>（站点根 / HD2 主站 / 7 个目录页 / bf1 工具页等）原样保留，
-  脚本只负责 BEGIN/END 注释标记之间的详情页区块；
+* 手工维护的 <url>（站点根 / HD2 主站 / 7 个目录页 / 长文档页 / bf1 工具页等）
+  原样保留，脚本只负责 BEGIN/END 注释标记之间的详情页区块；
+  注意这份「手工清单」在 sitemap.xml 里，**不在本脚本里** —— 本脚本对
+  BEGIN 之前的内容一个字节都不改。新增手工页请直接编辑 sitemap.xml，
+  若是长文档页再登记到下面的 DOC_PAGES 以便核对；
 * lastmod 取「对应数据文件」的 mtime（本地日期）——机制页取该页自己的
   `<id>.json` / `<id>_zh.json`；
 * changefreq 一律 monthly、priority 一律 0.5：详情页内容随游戏版本更新，
@@ -50,6 +53,22 @@ END = "  <!-- END HD2_Wiki 详情页 -->"
 
 CHANGEFREQ = "monthly"
 PRIORITY = "0.5"
+
+
+# ---------------------------------------------------------------------------
+# 长文档页（站内页 ←→ 仓库 .md 源文件成对出现）—— 2026-09-20 新增
+#
+# contributing.html / schema.html 的正文由浏览器运行时 fetch 同源的 .md 渲染，
+# 正文不落库、HTML 里没有内容，所以「改了 .md 不用重新生成 sitemap」。
+# 它们的 <url> 落在 BEGIN/END 之外的手工维护区（本脚本不生成），
+# 这里登记一份清单，每次运行时核对「页面在 sitemap 里 + 源 .md 存在」，
+# 漏了就打印 ⚠ 提示，但**不改变退出码**、也不动 sitemap 的手工区。
+# 新增同类页面时：① 编辑 sitemap.xml 手工区；② 在此追加一行。
+# ---------------------------------------------------------------------------
+DOC_PAGES = [
+    (BASE + "contributing.html", "CONTRIBUTING.md"),
+    (BASE + "schema.html", "HD2_Wiki/data/wiki/zh/SCHEMA.md"),
+]
 
 
 def read_json(path: Path):
@@ -204,6 +223,29 @@ def rebuild(text: str, block: str) -> tuple[str, int]:
     return new_text, new_text.count("<url>")
 
 
+def check_doc_pages(sitemap_text: str) -> int:
+    """核对长文档页：<url> 在 sitemap 的手工区、且源 .md 文件真实存在。
+
+    只打印，不改退出码 —— 本脚本不负责生成手工区，发现缺失时提示人来补。
+    """
+    print("长文档页（站内页 ←→ 仓库 .md）：")
+    missing = 0
+    for url, md in DOC_PAGES:
+        in_map = url in sitemap_text
+        md_path = ROOT / md
+        md_ok = md_path.exists()
+        if not (in_map and md_ok):
+            missing += 1
+        print("  %s %-22s 源 .md：%s%s"
+              % ("OK" if (in_map and md_ok) else "⚠ 缺",
+                 url[len("https://jerry114514.github.io/"):],
+                 md,
+                 "" if md_ok else "（源文件不存在）"))
+    if missing:
+        print("  ⚠ %d 条未对齐：请把缺的 <url> 补进 sitemap.xml 的手工维护区" % missing)
+    return missing
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="重新生成 sitemap.xml 的详情页区块")
     parser.add_argument("--check", action="store_true", help="只打印统计，不写文件")
@@ -223,6 +265,8 @@ def main() -> int:
         for group in factory():
             print("  %-28s %4d 条  lastmod=%s"
                   % (group["tpl"], len(group["items"]), group["items"][0][2]))
+
+    check_doc_pages(text)
 
     if args.check:
         print("--check：未写入文件")

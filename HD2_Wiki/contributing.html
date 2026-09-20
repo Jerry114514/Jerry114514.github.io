@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投稿指南 · 绝地潜兵2 中文维基（HD2 数据贡献 / JSON 入门）</title>
+  <meta name="description" content="绝地潜兵2 中文维基投稿指南：数据文件在哪、怎么在 GitHub 网页上改 JSON 提 PR、JSON 的 6 条核心规则与 4 个可复制的填空模板、CI 报错怎么读。面向没有编程经验的社区投稿者，正文与仓库内 CONTRIBUTING.md 同源。">
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <link rel="stylesheet" href="./assets/css/doc-page.css?v=20260920a">
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260918a">
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>📖 投稿指南</h1>
+    <p>HD2 中文维基 / 星图数据 · 数据在哪 · 怎么提 PR · 📝 极简 JSON 科普 · CI 报错怎么读</p>
+    <div class="nav-links">
+      <a href="./wiki.html">◀ 图鉴首页</a>
+      <a href="./schema.html">📐 数据契约 Schema</a>
+      <a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md">在 GitHub 上查看原文</a>
+    </div>
+  </header>
+
+  <p class="doc-meta">
+    本页正文由浏览器实时读取仓库内的 <code>CONTRIBUTING.md</code> 渲染，<strong>唯一真相源是仓库里的 .md</strong>，页面不会与仓库脱节<span id="doc-fetched"></span>。文中的仓库相对路径已改写为 GitHub 绝对地址，外站链接在新标签打开。
+  </p>
+
+  <div class="doc-meta">
+    <noscript>
+      <p class="doc-note">本页正文由 JavaScript 在浏览器里读取仓库内的 CONTRIBUTING.md 渲染。当前浏览器禁用了 JavaScript，请直接查看 <a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md">GitHub 上的原文</a>。</p>
+    </noscript>
+  </div>
+
+  <main class="doc-layout">
+    <article class="section doc-body" id="doc-body">
+      <p class="loading">正在读取 CONTRIBUTING.md …</p>
+    </article>
+
+    <aside class="toc-sidebar doc-toc" id="doc-toc" hidden>
+      <button type="button" class="toc-toggle" id="doc-toc-toggle" aria-expanded="false" aria-controls="doc-toc-list">☰ 本页目录</button>
+      <div class="toc-title">本页目录</div>
+      <nav class="toc-list" id="doc-toc-list" aria-label="本页目录"></nav>
+    </aside>
+  </main>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 社区驱动 · 非官方数据源</p>
+    <p style="margin-top:4px">
+      <a href="./wiki.html">图鉴首页</a> ·
+      <a href="./schema.html">数据契约 Schema</a> ·
+      <a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md">CONTRIBUTING.md（GitHub 原文）</a>
+    </p>
+  </footer>
+
+  <script src="./assets/js/vendor/marked.min.js"></script>
+  <script>
+    window.DOC_PAGE = {
+      source: "../CONTRIBUTING.md",
+      sourceLabel: "CONTRIBUTING.md",
+      sourceDir: "",
+      githubUrl: "https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md",
+      routes: {
+        "CONTRIBUTING.md": "contributing.html",
+        "HD2_Wiki/data/wiki/zh/SCHEMA.md": "schema.html"
+      }
+    };
+  </script>
+  <script src="./assets/js/doc-render.js"></script>
+</body>
+</html>

@@ -5,14 +5,23 @@
 # 不要因为表单存在就堵死自由格式的反馈。
 blank_issues_enabled: true
 
+# 排序即优先级（自上而下）：
+#   ① 站内网页（jerry114514.github.io）排前面 —— GitHub 本体在国内访问不稳定，
+#      而 GitHub Pages 稳定，且站内页手机可读、不用登录；
+#   ② GitHub 原文排后面 —— 只在需要 diff / blame / 离线保存时才用；
+#      两份站内页的正文是浏览器实时读取仓库里的 .md 渲染的，与原文同源、不会漂移。
 contact_links:
-  - name: 📖 贡献指南（数据怎么改、CI 红了怎么办）
-    url: https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md
-    about: 想自己动手改数据？先看这里——「§2 怎么改 · 方式 A」是细到「点哪个按钮」的提 PR 完整教程（5 步速查卡、commit 与分支名怎么起、PR 描述模板、Checks 显示 0 是正常的、CI 红了怎么改），网页上点铅笔就能提，不用装任何工具；数据格式只有 6 条规则，见其中的「📝 极简 JSON 科普」与 4 个可复制的填空模板。
+  - name: 📖 贡献指南 · 站内网页（数据怎么改、CI 红了怎么办）
+    url: https://jerry114514.github.io/HD2_Wiki/contributing.html
+    about: 国内访问更稳、手机也能看。想自己动手改数据？先看这里——「§2 怎么改 · 方式 A」是细到「点哪个按钮」的提 PR 完整教程（5 步速查卡、commit 与分支名怎么起、PR 描述模板、Checks 显示 0 是正常的、CI 红了怎么改），网页上点铅笔就能提，不用装任何工具；数据格式只有 6 条规则，见其中的「📝 极简 JSON 科普」与 4 个可复制的填空模板。
 
-  - name: 📐 数据 Schema（字段规范，技术向）
-    url: https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/SCHEMA.md
-    about: 各数据集有哪些字段、_zh 覆盖怎么配对、术语表规则，都在这里。
+  - name: 📐 数据 Schema · 站内网页（字段规范，技术向）
+    url: https://jerry114514.github.io/HD2_Wiki/schema.html
+    about: 各数据集有哪些字段、_zh 覆盖怎么配对、术语表规则，都在这里。国内访问更稳、手机也能看。
+
+  - name: 📄 两份文档的 GitHub 原文（CONTRIBUTING.md / SCHEMA.md）
+    url: https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md
+    about: 上面两个站内网页的正文就是从这里实时读取渲染的，内容一致；需要 diff / blame / 离线保存时用这条。SCHEMA.md 原文 https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/SCHEMA.md
 
   - name: 💬 B 站私信反馈
     url: https://space.bilibili.com/57439297

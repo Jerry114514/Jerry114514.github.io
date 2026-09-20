@@ -16,6 +16,8 @@
 | **`HD2-Galatic_war-Map/`** | HD2 主站 | `index.html` | [主站 · 实时战况数据面板](https://jerry114514.github.io/HD2-Galatic_war-Map/) |
 |  |  | `galaxy-map-v2.html` | [银河战争态势图](https://jerry114514.github.io/HD2-Galatic_war-Map/galaxy-map-v2.html) |
 | **`HD2_Wiki/`** | HD2 图鉴站 | `wiki.html` | [图鉴首页](https://jerry114514.github.io/HD2_Wiki/wiki.html) |
+|  |  | `contributing.html` | [投稿指南（站内网页）](https://jerry114514.github.io/HD2_Wiki/contributing.html) |
+|  |  | `schema.html` | [数据契约 Schema（站内网页）](https://jerry114514.github.io/HD2_Wiki/schema.html) |
 | `bf1-webtool/` | 战地 1 工具 | `index.html` | [bf1-webtool](https://jerry114514.github.io/bf1-webtool/) |
 | `bf1-web-wiki/` | 战地 1 Wiki | `index.html` | [bf1-web-wiki](https://jerry114514.github.io/bf1-web-wiki/) |
 | 根目录 | 个人主页 | `index.html` | [Jerry's HomePage](https://jerry114514.github.io/) |
@@ -38,16 +40,18 @@
 | **① 改 JSON 提 PR** | 愿意自己动手的投稿者 | 在 GitHub 网页打开目标 JSON → 点**铅笔图标** → 选「Create a new branch … and start a pull request」 |
 | **② 开 Issue 用表单** | 完全不想碰 JSON 的玩家 | [新建 Issue](https://github.com/Jerry114514/Jerry114514.github.io/issues/new/choose) 选表单：**译名纠错 / 缺失条目 / 数值修正 / 图片补充** |
 
-流程细节、报错怎么读，见 **[CONTRIBUTING.md](CONTRIBUTING.md)**。
+流程细节、报错怎么读，见 **[投稿指南（站内网页）](https://jerry114514.github.io/HD2_Wiki/contributing.html)**
+—— 国内访问比 GitHub 稳，手机也能看；需要 diff / blame 时再看仓库原文
+[`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
-**第一次提 PR？** CONTRIBUTING.md 的 [§2「怎么改」方式 A](CONTRIBUTING.md#2-怎么改)
+**第一次提 PR？** 投稿指南的 [§2「怎么改」方式 A](https://jerry114514.github.io/HD2_Wiki/contributing.html#2-怎么改)
 是一份「细到点哪个按钮」的完整教程：5 步速查卡 → 改文件 → 提交对话框该选哪一项 → PR 标题与描述模板
 （可复制）→ 等 CI（**Checks 显示 0 是正常的**）→ 红了怎么改 → 常见问题表。
 
 > **数据格式很简单**：数据文件就是「用固定格式记笔记」，一共只有 **6 条规则**
 > （最容易踩的是「**文字必须用半角双引号包住**」—— 中文引号 `「」` `“”` 会让整个文件坏掉），
 > 并附了 **4 个可直接复制的填空模板**（译名 / 强化资源 / 武器 / 任务）。
-> 想自己动手改数据，先看 CONTRIBUTING.md 的 **「📝 极简 JSON 科普」** 一节即可；
+> 想自己动手改数据，先看投稿指南的 **「📝 极简 JSON 科普」** 一节即可；
 > 不想碰 JSON 也可以直接填 Issue 表单，维护者会代为修改。
 
 ### 自动校验：不通过合不进去
@@ -105,7 +109,8 @@ id 规范、必填字段、`_zh` 显式 `id` 配对、图标死链、引用完�
 - **战争债券**：25 个，含逐债券奖励详情
 - **战术搭配器**：随机配装 / 四维评分 / 加权评级
 
-数据 schema 详见 `HD2_Wiki/data/wiki/zh/SCHEMA.md`（**改图鉴站数据前必读**）。
+数据 schema 详见 **[数据契约 Schema（站内网页）](https://jerry114514.github.io/HD2_Wiki/schema.html)**，
+仓库原文为 `HD2_Wiki/data/wiki/zh/SCHEMA.md`（**改图鉴站数据前必读**）。
 
 ---
 
@@ -170,8 +175,12 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 
 - **B 站**：欢迎在 [哔哩哔哩个人主页](https://space.bilibili.com/57439297) 反馈
 - **GitHub Issue**：本仓允许通过 Issue 提交更新或作为讨论区，也可直接用[投稿表单](https://github.com/Jerry114514/Jerry114514.github.io/issues/new/choose)（译名纠错 / 缺失条目 / 数值修正 / 图片补充）
-- **GitHub PR**：**现在欢迎 PR** —— 只要 `validate-data` 校验通过即可合并，流程见 [CONTRIBUTING.md](CONTRIBUTING.md)；改动较大时建议先开 Issue 对齐
-- **数据上游**：图鉴站数据 schema 与翻译以 `HD2_Wiki/data/wiki/zh/SCHEMA.md` 为权威源
+- **GitHub PR**：**现在欢迎 PR** —— 只要 `validate-data` 校验通过即可合并，流程见
+  [投稿指南（站内网页）](https://jerry114514.github.io/HD2_Wiki/contributing.html)
+  （仓库原文 [`CONTRIBUTING.md`](CONTRIBUTING.md)）；改动较大时建议先开 Issue 对齐
+- **数据上游**：图鉴站数据 schema 与翻译以
+  [数据契约 Schema（站内网页）](https://jerry114514.github.io/HD2_Wiki/schema.html)
+  与 `HD2_Wiki/data/wiki/zh/SCHEMA.md` 为权威源
 
 ---
 

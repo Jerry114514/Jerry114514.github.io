@@ -130,6 +130,14 @@
     .features-list li { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
 
 
+    /* 板块维护：GitHub 原文 / 仓库的次要链接（主按钮走站内页面） */
+    .gh-note { margin-top: 10px; font-size: 0.78rem; color: var(--text-mute); }
+
+    .gh-note a { color: var(--yellow); text-decoration: none; }
+
+    .gh-note a:hover { text-decoration: underline; }
+
+
 
 
     /* Loading */
@@ -191,9 +199,10 @@
         <li><strong>中文小节写清对应关系</strong>：机制页的中文小节要标明它对应英文原版的哪一节，否则中文正文会整体错位。</li>
         <li><strong>不要动自动生成的文件</strong>：<code>data.json</code>、<code>data/history/*</code>、<code>TransNews.json</code> 由机器人每 5 分钟覆盖，手改会被冲掉。</li>
       </ul>
-      <p>完整流程与常见错误清单见投稿指南；仓库内的数据每 5 分钟自动更新一次，刷新页面即可看到最新战况。</p>
-      <a class="btn" href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md">📖 投稿指南 CONTRIBUTING.md</a>
-      <a class="btn" href="https://github.com/Jerry114514/Jerry114514.github.io">GitHub 仓库</a>
+      <p>完整流程与常见错误清单见<a href="./contributing.html">投稿指南</a>，字段规范与 <code>_zh</code> 覆盖规则见<a href="./schema.html">数据契约 Schema</a>；仓库内的数据每 5 分钟自动更新一次，刷新页面即可看到最新战况。</p>
+      <a class="btn" href="./contributing.html">📖 投稿指南</a>
+      <a class="btn" href="./schema.html">📐 数据契约 Schema</a>
+      <p class="gh-note">在 GitHub 上查看原文：<a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> · <a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/SCHEMA.md">SCHEMA.md</a> · <a href="https://github.com/Jerry114514/Jerry114514.github.io">GitHub 仓库</a></p>
     </div>
   </div>
 

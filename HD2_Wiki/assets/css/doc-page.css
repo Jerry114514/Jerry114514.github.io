@@ -1,0 +1,287 @@
+/* ============================================================
+   HD2 中文维基 · 长文档页排版层
+   使用页面：contributing.html（CONTRIBUTING.md）/ schema.html（SCHEMA.md）
+   ------------------------------------------------------------
+   加载顺序：wiki-base.css → doc-page.css → hud-skin.css（最后，按站点约定）
+   本文件只补三样东西，正文排版一律复用 hud-skin.css 第 ⑦ / ⑪ 节的
+   `.section` 家族（h2/h3/h4、p、li、code、pre、blockquote、table），
+   不另起一套视觉语言：
+     ① 目录 + 正文的两栏布局，以及目录组件（复用 `.toc-sidebar` / `.toc-item`）；
+     ② `.section` 家族没覆盖到的「markdown 长文档」细节 ——
+        列表缩进（wiki-base 的 `* { padding: 0 }` 把 ul/ol 缩进清零了）、
+        段落间距、表格外框与窄屏横滚壳、代码块可读性、标题锚点偏移；
+     ③ ≤1024px 把目录收成吸顶抽屉。
+   因本文件在 hud-skin.css 之前加载，同权重规则会被后者压过，
+   故所有覆盖都写成 `.doc-body.section …`（0,2,0 + 元素）以保证生效。
+   ============================================================ */
+
+/* ── ① 两栏布局 ────────────────────────────────────────────── */
+
+.doc-layout {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 20px 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 236px;
+  gap: 20px;
+  align-items: start;
+}
+
+.doc-body { max-width: 880px; min-width: 0; }
+
+/* ── ② 正文：markdown 长文档细节 ───────────────────────────── */
+
+.doc-body.section h1 {
+  font-size: 1.5rem;
+  color: var(--yellow);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  margin: 0 0 16px;
+  padding-left: 10px;
+  border-left: 4px solid var(--yellow);
+}
+
+.doc-body.section h2,
+.doc-body.section h3,
+.doc-body.section h4 { scroll-margin-top: 16px; line-height: 1.4; }
+
+.doc-body.section h2 {
+  margin: 26px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.doc-body.section p {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.doc-body.section li {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin: 2px 0;
+}
+
+/* wiki-base 的 `* { margin: 0; padding: 0 }` 会清掉列表缩进，
+   标记符号会跑到内容盒之外 —— 窄屏上正是这一处会顶出横向滚动条 */
+.doc-body.section ul,
+.doc-body.section ol {
+  margin: 6px 0 12px;
+  padding-left: 1.6em;
+}
+
+.doc-body.section ul ul,
+.doc-body.section ul ol,
+.doc-body.section ol ul,
+.doc-body.section ol ol { margin: 2px 0 2px; }
+
+.doc-body.section li > p { margin: 0 0 6px; }
+
+/* GFM 任务列表（CONTRIBUTING.md 里有 3 条） */
+.doc-body.section li.task-list-item { list-style: none; margin-left: -1.3em; }
+.doc-body.section input[type="checkbox"] {
+  width: 13px; height: 13px; margin-right: 6px;
+  vertical-align: -1px; accent-color: var(--yellow);
+}
+
+.doc-body.section a {
+  color: var(--yellow);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.doc-body.section a:hover { border-bottom-color: var(--yellow); }
+.doc-body.section a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 0.8em;
+  color: var(--text-mute);
+  border: none;
+}
+
+.doc-body.section hr {
+  border: 0;
+  border-top: 1px solid var(--line-2);
+  margin: 22px 0;
+}
+
+.doc-body.section blockquote {
+  margin: 10px 0 14px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+.doc-body.section blockquote p { margin: 0 0 8px; font-size: 0.88rem; }
+.doc-body.section blockquote > :last-child { margin-bottom: 0; }
+.doc-body.section blockquote blockquote { margin: 8px 0; }
+
+/* 行内代码：长 URL / 长路径是本文档的常态，必须允许在词内断行，
+   否则 375px 上会顶出横向滚动条 */
+.doc-body.section code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 代码块：JSON 片段需要能横向滚动 + 行高可读（`.section pre` 已有 overflow-x） */
+.doc-body.section pre {
+  margin: 10px 0 16px;
+  padding: 12px 14px;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+.doc-body.section pre code { overflow-wrap: normal; }
+
+/* ── ③ 表格：外框 + 窄屏横滚壳（hud-skin 的 `.table-wrap` 是站点唯一入口） ── */
+
+.doc-body.section .table-wrap { margin: 10px 0 16px; }
+
+.doc-body.section .table-wrap > table {
+  border: 1px solid var(--line-2);
+  margin: 0;
+}
+
+.doc-body.section .table-wrap > table th,
+.doc-body.section .table-wrap > table td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  vertical-align: top;
+}
+
+/* 列数 ≥4 的表（SCHEMA.md 里最多 6 列）在窄屏改为横向滚动，
+   免得每格只剩五六个字、整张表拉成几十行 */
+@media (max-width: 768px) {
+  .doc-body.section .table-wrap > table.doc-table-wide { min-width: 34em; }
+}
+
+/* ── ④ 标题锚点（可分享） ──────────────────────────────────── */
+
+.doc-body.section .doc-anchor {
+  margin-left: 8px;
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.doc-body.section h2:hover .doc-anchor,
+.doc-body.section h3:hover .doc-anchor,
+.doc-body.section h4:hover .doc-anchor,
+.doc-body.section .doc-anchor:focus { opacity: 1; }
+@media (hover: none) {
+  .doc-body.section .doc-anchor { opacity: 0.5; }
+}
+
+/* ── ⑤ 目录组件（复用 hud-skin 的 .toc-sidebar / .toc-title / .toc-item） ── */
+
+.doc-toc {
+  position: sticky;
+  top: 12px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.doc-toc .toc-list { display: flex; flex-direction: column; }
+
+.doc-toc .toc-item {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.doc-toc .toc-item.lv3 {
+  padding-left: 20px;
+  font-size: 0.72rem;
+  color: var(--text-mute);
+}
+.doc-toc .toc-item.lv3:hover { color: var(--text); }
+
+.doc-toc .toc-toggle {
+  display: none;
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+/* ── ⑥ 页头说明条 / 加载与失败态 ───────────────────────────── */
+
+.doc-meta {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 20px 0;
+  color: var(--text-mute);
+  font-size: 0.76rem;
+  line-height: 1.7;
+}
+.doc-meta code {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  color: var(--yellow);
+  font-family: var(--font-mono);
+  padding: 1px 5px;
+  font-size: 0.76rem;
+}
+.doc-meta a { color: var(--text-dim); }
+.doc-meta a:hover { color: var(--yellow); }
+
+.doc-note {
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--warn);
+  color: #FFB59E;
+  padding: 10px 12px;
+  margin: 0 0 16px;
+  font-size: 0.84rem;
+  line-height: 1.75;
+}
+.doc-note a { color: var(--yellow); }
+
+.doc-body.section .loading { padding: 40px 0; }
+
+/* ── ⑦ ≤1024px：目录收成吸顶抽屉 ──────────────────────────── */
+
+@media (max-width: 1024px) {
+  .doc-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 12px 44px;
+  }
+  .doc-body { max-width: none; }
+
+  .doc-toc {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    order: -1;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    background: var(--bg-deep);
+    border: none;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .doc-toc .toc-title { display: none; }
+  .doc-toc .toc-toggle { display: block; border: none; border-left: 3px solid var(--brass); }
+  .doc-toc .toc-list { display: none; }
+  .doc-toc.open .toc-list {
+    display: flex;
+    max-height: 58vh;
+    overflow-y: auto;
+    padding: 6px 0 8px;
+    border-top: 1px solid var(--line-2);
+  }
+
+  .doc-meta { padding: 10px 12px 0; }
+
+  /* 吸顶的目录条会盖住锚点目标，锚点跳转留出它的高度 */
+  .doc-body.section h1,
+  .doc-body.section h2,
+  .doc-body.section h3,
+  .doc-body.section h4 { scroll-margin-top: 56px; }
+}
