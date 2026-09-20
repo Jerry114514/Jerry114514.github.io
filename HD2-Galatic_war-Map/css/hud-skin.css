@@ -149,8 +149,8 @@ button, input, select, textarea, optgroup { font-family: inherit; }
   color: var(--yellow);
 }
 .nav-cta:hover { background: var(--yellow); color: #000; }
+/* 顶栏信息栏：2026-09 起只含「更新于」时间戳（轮播已移除，.banner-item 规则同步删除） */
 .topnav-meta { font-size: 11.5px; color: var(--text-mute); font-family: var(--font-mono); }
-.banner-item { color: var(--text-dim); font-size: 12px; }
 
 /* 状态灯：方块（圆点在小尺寸下不像 HUD 仪表） */
 .pulse-dot {
@@ -609,7 +609,8 @@ footer {
   .hero h1 { font-size: 1.5rem; letter-spacing: .04em; }
   .hero-sub { margin-left: 16px; font-size: 12px; }
   .topnav-inner { height: 48px; }
-  .topnav-meta { display: none; }
+  /* 顶栏信息栏在窄屏保留（原来 display:none 会把「更新于」时间戳一起藏掉） */
+  .topnav-meta { font-size: 10.5px; }
   .block-title { font-size: 12.5px; }
   main.container > .block > .block-head { padding: 5px 8px; }
   main.container > .block > .block-head .block-title { font-size: 13px; }

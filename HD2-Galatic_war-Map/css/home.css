@@ -143,32 +143,8 @@
       50%      { opacity: 0.4; }
     }
 
-    /* 顶部轮播 */
-    .banner-wrap {
-      position: relative;
-      overflow: hidden;
-      max-width: 420px;
-      /* 高度由首行内容撑开（与 JS 像素滚动对齐，避免 em 误差错位） */
-      display: inline-flex;
-      align-items: center;
-      vertical-align: middle;
-    }
-    .banner-track {
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.5s ease;
-      will-change: transform;
-    }
-    .banner-item {
-      height: 1.2em;
-      line-height: 1.2em;
-      white-space: nowrap;
-      color: var(--text-dim);
-    }
-    .banner-item .pulse-dot {
-      margin-left: 4px;
-      vertical-align: middle;
-    }
+    /* 顶栏轮播（.banner-wrap / .banner-track / .banner-item）已于 2026-09 移除：
+       顶部信息栏只保留右侧「更新于 HH:MM:SS」，对应的 JS 轮播定时器同步删除 */
 
     /* 星球详情展开区 */
     .planet-detail {
@@ -1048,7 +1024,9 @@
       .topnav-inner { gap: 8px; }
       .brand-title { font-size: 0.9rem; }
       .nav-cta { padding: 6px 10px; font-size: 0.78rem; }
-      .topnav-meta { display: none; }
+      /* 顶栏信息栏（只含「更新于」时间戳）在窄屏保留可见：
+         2026-09 前这里是 display:none，连带把时间戳一起藏掉，用户以为「加载不出来」 */
+      .topnav-meta { font-size: 0.68rem; }
       .footer-grid { grid-template-columns: 1fr; gap: 20px; }
       .news-float {
         right: 10px;

@@ -6,10 +6,10 @@
   <title>绝地潜兵2 · 中文实时战况数据面板</title>
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260913i">
-  <link rel="stylesheet" href="./css/home.css?v=20260913i">
+    <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
+  <link rel="stylesheet" href="./css/home.css?v=20260920a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
-  <link rel="stylesheet" href="./css/hud-skin.css?v=20260913i">
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -55,10 +55,6 @@
         <span class="brand-title">真理部</span>
       </div>
       <div class="topnav-meta">
-        <span class="banner-wrap">
-          <span class="banner-track" id="banner-track"><!-- 轮播项由 JS 注入 --></span>
-        </span>
-        <span>·</span>
         <span id="last-update">尚未更新</span>
       </div>
       <a class="nav-cta" href="https://github.com/Jerry114514/HD2-Bot-Release" target="_blank" rel="noopener">
@@ -301,7 +297,6 @@
       const m = Math.floor(Date.now() / 300_000);  // 每 5 分钟一个值
       return `./data.json?t=${m}`;
     },
-    BANNER_URL: "./banner.json",      // 顶部轮播列表（可维护）
     REFRESH_MS: 60_000,             // 60s 自动刷新（读本地 data.json）
     STALE_AFTER_MS: 360_000,        // 6 分钟无数据视为失联（数据每 5 分钟更新）
     NEWS_COUNT: 20,                 // 资讯列表显示条数
@@ -2662,77 +2657,28 @@ function renderPlayers(data) {
   /* ==============================================================
      顶部状态栏
      ============================================================== */
-  // 顶部轮播状态
   let currentEffectMap = {};       // 效果 ID -> 中文（星球行动变量）
 let currentEffectDetailMap = {};  // 效果 ID -> 英文名+描述（词条详情）
 let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，词条详情中文优先）
   let currentData = null;         // 最新数据（详情卡片用）
 
-  let bannerItems = [];           // banner.json 配置
-  let bannerDisplayItems = [];   // 实际显示的轮播项（过滤 players 后）
-  let bannerPlayerCount = 0;     // 当前玩家数
-  let bannerTimer = null;
-  let bannerIdx = 0;
+  // 2026-09：顶部轮播（banner.json + setInterval 垂直切换）已整体移除，
+  // 顶栏只保留「更新于 HH:MM:SS」（由 renderTopbar 写 #last-update）。
+  // 玩家数仍在独立的 .player-line 行显示，沿用同一份 war.statistics.playerCount。
+  let lastPlayerCount = null;     // 上次渲染的玩家数（用于判断是否需要重绘）
 
-  // 加载轮播配置（banner.json）
-  async function loadBanner() {
-    try {
-      const d = await HD2Source.jsonSoft(CONFIG.BANNER_URL);
-      if (d && Array.isArray(d.items)) bannerItems = d.items;
-    } catch (_) { /* ignore */ }
-    renderBanner();
-    startBanner();
-  }
-
-  // 获取单个轮播项的实际像素高度（避免 em 近似误差导致错位）
-  function bannerItemHeight() {
-    const first = document.querySelector(".banner-track .banner-item");
-    return first ? first.offsetHeight : 14;
-  }
-
-  // 渲染轮播轨道（统一用 bannerDisplayItems，渲染与轮播共用，避免错位/空项）
-  function renderBanner() {
-    const track = $("banner-track");
-    if (!track) return;
-    bannerDisplayItems = bannerItems.length
-      ? bannerItems.filter(it => it.type !== "players")
-      : [];
-    if (bannerDisplayItems.length === 0) {
-      bannerDisplayItems = [{ text: "📡 数据每 5 分钟更新一次" }];
-    }
-    track.innerHTML = bannerDisplayItems.map((it, i) => {
-      return `<span class="banner-item" data-idx="${i}">${esc(it.text || "")}</span>`;
-    }).join("");
-    // 重置轮播索引（防止显示项数量变化后错位）
-    bannerIdx = 0;
-    track.style.transform = "translateY(0px)";
-  }
-
-  function updateBannerPlayer() {
+  function updatePlayerCount() {
     const el = $("player-count");
-    if (el) el.textContent = fmt(bannerPlayerCount);
-  }
-
-  // 轮播切换（垂直滚动，基于显示项数组）
-  function startBanner() {
-    if (bannerTimer) clearInterval(bannerTimer);
-    if (bannerDisplayItems.length <= 1) return;
-    const track = $("banner-track");
-    if (!track) return;
-    const step = bannerItemHeight();
-    bannerTimer = setInterval(() => {
-      bannerIdx = (bannerIdx + 1) % bannerDisplayItems.length;
-      track.style.transform = `translateY(-${bannerIdx * step}px)`;
-    }, 4000);
+    if (el) el.textContent = fmt(lastPlayerCount);
   }
 
   function renderTopbar(data) {
     const war = data.war;
     if (war && !war.__err) {
       const pc = (war.statistics && war.statistics.playerCount) || 0;
-      if (pc !== bannerPlayerCount) {
-        bannerPlayerCount = pc;
-        updateBannerPlayer();
+      if (pc !== lastPlayerCount) {
+        lastPlayerCount = pc;
+        updatePlayerCount();
       }
     }
     const t = data.fetchedAt ? new Date(data.fetchedAt) : new Date();
@@ -2978,7 +2924,6 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
 
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
-    loadBanner();
     startCountdownEngine();   // 全局单例：所有 data-cd 节点由它每秒推进
     window.addEventListener("resize", layoutPlanetGrids);
     refresh();

@@ -24,6 +24,48 @@
 
 ---
 
+## 🛠️ 维护与投稿
+
+**数据在哪**：社区可编辑的数据全是**纯文本 JSON**，集中在
+[`HD2_Wiki/data/wiki/zh/*.json`](HD2_Wiki/data/wiki/zh/)（星图侧另有
+`HD2-Galatic_war-Map/data/campaign_zh.json`、`banner.json`）。
+2026-09 起所有 JSON 已统一为 2 空格缩进的多行格式，**可以直接在 GitHub 网页上阅读和编辑**。
+
+### 怎么投稿
+
+| 方式 | 适合谁 | 怎么做 |
+|---|---|---|
+| **① 改 JSON 提 PR** | 愿意自己动手的投稿者 | 在 GitHub 网页打开目标 JSON → 点**铅笔图标** → 选「Create a new branch … and start a pull request」 |
+| **② 开 Issue 用表单** | 完全不想碰 JSON 的玩家 | [新建 Issue](https://github.com/Jerry114514/Jerry114514.github.io/issues/new/choose) 选表单：**译名纠错 / 缺失条目 / 数值修正 / 图片补充** |
+
+流程细节、报错怎么读，见 **[CONTRIBUTING.md](CONTRIBUTING.md)**。
+
+### 自动校验：不通过合不进去
+
+任何改动数据文件的 PR 都会自动跑 **`validate-data`**（`scripts/validate_wiki_data.py`，**19 项检查**：
+id 规范、必填字段、`_zh` 显式 `id` 配对、图标死链、引用完整性……）。
+失败时 PR 变红，错误摘要直接写进 Job Summary（`文件 → 字段 → 原因 → 建议修法`）——**校验不过就合不进去**。
+
+### 四条硬规则
+
+1. **术语以 [`terms.json`](HD2_Wiki/data/wiki/zh/terms.json) 为唯一真相源** —— 新增译名前先搜一遍，要改就改它本身。
+2. **`mechanics/*_zh.json` 的每个小节必须写显式 `id`** —— 只靠数组序号配对会让中文正文整体错位。
+3. **图标用站内相对路径**（`./assets/...`）—— 不要热链外站图片。
+4. **不要动 CI 自动生成的文件** —— `data.json`、`data/history/*`、`data/translated/TransNews.json`，手改会被下一次自动运行冲掉。
+
+### 自动化一览
+
+| Workflow | 触发 | 职责 |
+|---|---|---|
+| `fetch-data.yml` | 每 5 分钟 | 抓取实时战况 → 自动 commit `data.json` 等，并清理旧 Pages artifact |
+| `validate-data.yml` | PR（改动数据文件时） | 跑 19 项数据校验，失败让 PR 变红 |
+| `cleanup-artifacts.yml` | 原生 schedule | artifact 清理的备用定时（主力已挂在 fetch-data 里） |
+| 私密仓的新闻翻译流水线 | 每 15 分钟 | 翻译上游新闻，把译好的 `TransNews.json` 推回本仓 |
+
+> **数据更新频率：每 5 分钟**（GitHub Actions 自动抓取）。页面上的「更新于 HH:MM:SS」即最近一次抓取时间。
+
+---
+
 ## 🎯 HD2 板块速览
 
 ### 主站 · 实时战况数据面板（"真理部"）
@@ -83,19 +125,21 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 
 ## 🤖 CI / 自动化
 
-`.github/workflows/` 下三个 workflow：
+`.github/workflows/` 下四个 workflow：
 
 | Workflow | 触发 | 职责 |
 |---|---|---|
 | `fetch-data.yml` | 每 5 分钟 | 抓取 HD2 实时战况 → 自动 commit `data.json` + 末尾清理旧 Pages artifact |
+| `validate-data.yml` | PR / push（改动数据文件时） | 数据校验闸门（19 项），失败变红、摘要写 Job Summary |
 | `sync-tables.yml` | 每日 | 从上游同步对照表（星图、机制页） |
 | `cleanup-artifacts.yml` | 原生 schedule | artifact 清理的"备用"定时（常不被触发；主力已在 fetch-data 里挂） |
 
-`scripts/` 下三个辅助脚本：
+`scripts/` 下四个辅助脚本：
 
 | 脚本 | 用途 |
 |---|---|
 | `fetch_site_data.py` | 主站数据抓取（被 fetch-data.yml 调用） |
+| `validate_wiki_data.py` | 数据校验器（被 validate-data.yml 调用，PR 守门人） |
 | `merge_translations.py` | 翻译条目合并（`name_zh` 回退机制） |
 | `cloudflare_dispatcher.js` | Cloudflare Worker 边缘调度（若启用） |
 
@@ -115,7 +159,8 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 ## 🤝 贡献与反馈
 
 - **B 站**：欢迎在 [哔哩哔哩个人主页](https://space.bilibili.com/57439297) 反馈
-- **GitHub Issue**：本仓允许通过 Issue 提交更新或作为讨论区，但不接受未经沟通的 PR
+- **GitHub Issue**：本仓允许通过 Issue 提交更新或作为讨论区，也可直接用[投稿表单](https://github.com/Jerry114514/Jerry114514.github.io/issues/new/choose)（译名纠错 / 缺失条目 / 数值修正 / 图片补充）
+- **GitHub PR**：**现在欢迎 PR** —— 只要 `validate-data` 校验通过即可合并，流程见 [CONTRIBUTING.md](CONTRIBUTING.md)；改动较大时建议先开 Issue 对齐
 - **数据上游**：图鉴站数据 schema 与翻译以 `HD2_Wiki/data/wiki/zh/SCHEMA.md` 为权威源
 
 ---
