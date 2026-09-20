@@ -2608,10 +2608,30 @@ function renderPlayers(data) {
   /* ==============================================================
      渲染：悬浮资讯
      ============================================================== */
+  /* 资讯去重（只作用于渲染层）
+     上游偶发「同一段文本在 1 分钟内推送两次」：如 3929/3930、3932/3933 的 message 逐字相同，
+     只有 id / published 不同。列表按时间倒序，故保留首次出现（最新）那条。
+     注意：必须先 dedupe 再 slice，否则重复项会占掉名额，可见条数变少。
+     原始数据（data.news / data.dispatches）一律不动，不影响流水线契约。 */
+  function dedupeNews(list) {
+    if (!Array.isArray(list)) return [];
+    const seen = new Set();
+    const out = [];
+    for (const d of list) {
+      const key = String((d && (d.original || d.message)) || "").replace(/\s+/g, " ").trim();
+      if (key) {
+        if (seen.has(key)) continue;
+        seen.add(key);
+      }
+      out.push(d);
+    }
+    return out;
+  }
+
   function renderNews(data) {
     const body = $("news-float-body");
     // 优先中文翻译（data.news，最新 5 条）；无则降级英文 dispatches
-    const transList = (data.news || []).slice(0, 5);
+    const transList = dedupeNews(data.news || []).slice(0, 5);
     const fallbackErr = data.dispatches && data.dispatches.__err;
     if (transList.length === 0 && fallbackErr) {
       body.innerHTML = `<div class="error" style="margin:10px;">无法获取资讯：${esc(data.dispatches.__err)}</div>`;
@@ -2626,7 +2646,7 @@ function renderPlayers(data) {
       `).join("");
       return;
     }
-    const list = (data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);
+    const list = dedupeNews(data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);
     if (list.length === 0) {
       body.innerHTML = `<div class="empty" style="padding: 24px 0;">暂无新资讯</div>`;
       return;
