@@ -1,0 +1,20 @@
+# CODEOWNERS —— 谁负责哪些路径
+# 作用：这些路径被改动时，PR 会自动请求对应的人 review（不会漏看）
+# 生效前提：分支保护里勾选 "Require review from Code Owners"
+# 语法：<路径模式> <@用户名 或 邮箱>
+
+# 默认：仓库所有改动都由维护者过目
+*                                   @Jerry114514
+
+# 图鉴站数据（社区最常投稿的地方）
+/HD2_Wiki/data/                     @Jerry114514
+/HD2_Wiki/data/wiki/zh/terms.json   @Jerry114514
+
+# 星图数据与自动抓取配置
+/HD2-Galatic_war-Map/tables/        @Jerry114514
+/HD2-Galatic_war-Map/data/          @Jerry114514
+
+# 数据契约与校验闸门（改这些等同于改规则，必须由维护者确认）
+/HD2_Wiki/data/wiki/zh/SCHEMA.md    @Jerry114514
+/scripts/validate_wiki_data.py      @Jerry114514
+/.github/                           @Jerry114514
