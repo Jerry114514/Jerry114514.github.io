@@ -117,6 +117,30 @@
     .enemy-variant:hover { color: var(--yellow); border-color: var(--yellow); }
 
 
+    /* 一图流攻略图（`guides` 字段，SCHEMA §7.4.1）：纵向堆叠 + 宽度自适应 + 点击原图放大。
+       一图流是 2560×1440 的文字密集大图，纵向铺满内容列才看得清小字，
+       所以不做横向滚动、不做缩略图墙；懒加载交给 <img loading="lazy">。 */
+    .guide-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .guide-item { margin: 0; border: 1px solid var(--line-2); background: var(--panel-2); }
+
+    .guide-link { display: block; line-height: 0; }
+
+    .guide-link img { display: block; width: 100%; height: auto; }
+
+    .guide-link:hover img { outline: 2px solid var(--yellow); outline-offset: -2px; }
+
+    .guide-cap { padding: 8px 10px; border-top: 1px solid var(--line-2); }
+
+    .guide-title { display: block; color: var(--text); font-size: 0.86rem; font-family: "ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif; }
+
+    .guide-line { display: block; color: var(--text-mute); font-size: 0.74rem; margin-top: 3px; }
+
+    .guide-src { color: var(--yellow); text-decoration: none; }
+
+    .guide-src:hover { color: var(--yellow-2); }
+
+
     .loading, .empty { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
 
 
@@ -181,6 +205,23 @@
             '<td>' + (wp ? '<span class="wp-tag">⭐</span>' : '') + '</td></tr>';
         }).join("") + '</table></div></div>' : '';
 
+      // 一图流攻略图：没有 guides 字段的敌人**整块不渲染**（SCHEMA §7.4.1）
+      var guides = (e.guides instanceof Array ? e.guides : []).filter(function(g) { return g && g.src; });
+      var guidesHtml = guides.length ? '<div class="card" id="sec-guides"><h2>📊 一图流<span class="scroll-hint">点击图片放大 →</span></h2><div class="guide-list">' +
+        guides.map(function(g) {
+          return '<figure class="guide-item">' +
+            '<a class="guide-link" href="' + esc(g.src) + '" target="_blank" rel="noopener">' +
+              '<img src="' + esc(g.src) + '" alt="' + esc(g.title || '一图流攻略图') + '" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
+            '</a>' +
+            '<figcaption class="guide-cap">' +
+              (g.title ? '<span class="guide-title">' + esc(g.title) + '</span>' : '') +
+              (g.author ? '<span class="guide-line">作者：' + esc(g.author) + '</span>' : '') +
+              (g.note ? '<span class="guide-line">' + esc(g.note) + '</span>' : '') +
+              (g.source_url ? '<span class="guide-line"><a class="guide-src" href="' + esc(g.source_url) + '" target="_blank" rel="noopener" title="' + esc(g.source_url) + '">原图来源 ↗</a></span>' : '') +
+            '</figcaption>' +
+          '</figure>';
+        }).join("") + '</div></div>' : '';
+
       // 变种导航（siblings 去重：不再重复列出基础种自身）
       var variantNav = "";
       var baseUnit = e.base_unit || e.name;
@@ -221,6 +262,7 @@
             '<li><a href="#sec-appearance">外观</a></li>' +
             '<li><a href="#sec-info">基础信息</a></li>' +
             (parts.length ? '<li><a href="#sec-parts">部位数据（' + parts.length + ' 个部位）</a></li>' : '') +
+            (guides.length ? '<li><a href="#sec-guides">一图流（' + guides.length + ' 张）</a></li>' : '') +
             (variantNav ? '<li><a href="#sec-variants">变种</a></li>' : '') +
           '</ul></div>' +
           '<div class="card"><h2>🔗 同阵营敌人</h2>' +
@@ -253,6 +295,7 @@
             row("伤害类型", e.damage_type_zh || e.damage_type) + row("火焰伤害倍率", e.fire_damage_multiplier_zh || e.fire_damage_multiplier) +
             row("踉跄阈值", e.stagger_threshold_zh || e.stagger_threshold) + row("最低难度", e.minimum_difficulty_zh || e.minimum_difficulty) +
           '</table></div></div>' +
+          guidesHtml +
           partsHtml +
         '</div>' +
         sideHtml;

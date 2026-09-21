@@ -114,6 +114,7 @@ CHECKS = [
     ("REF.FACTION", "factions.enemies 必须存在于 enemies.json"),
     ("REF.TERMS", "terms.json：en 唯一、en/zh/source 非空、rejected[].zh != zh"),
     ("IMG.EXISTS", "icon/image/img/src 必须是非空、真实存在的站内相对路径（wiki 数据另禁热链）"),
+    ("GUIDES.FIELDS", "enemies.guides[]（一图流）必填字段、src 前缀、source_url 必须是外站 http(s)"),
     ("LINK.EXISTS", "blocks/index 的 .html 链接目标必须真实存在"),
 ]
 
@@ -161,6 +162,15 @@ WIKI_URL_RE = re.compile(r"^https://helldivers\.wiki\.gg/wiki/")
 
 Z = "HD2_Wiki/data/wiki/zh/"
 M = "HD2-Galatic_war-Map/"
+
+# enemies.json 的 guides[]（一图流攻略图，SCHEMA §7.4.1，2026-09-21 登记）
+# 注意：`src` 已经在 PATH_FIELDS 里，所以**图片文件是否存在**由 IMG.EXISTS 负责；
+# GUIDES.FIELDS 补的是 IMG.EXISTS 管不到的部分（必填字段、站内前缀、外站 source_url 白名单）。
+GUIDES_FILE = Z + "enemies.json"
+GUIDES_SRC_PREFIX = "./assets/enemy-guides/"
+GUIDES_REQUIRED = ("src", "title", "author", "source_url")
+GUIDES_OPTIONAL = ("note",)
+
 
 # ---------------------------------------------------------------------------
 # 作用域：哪些规则管哪些文件
@@ -725,6 +735,7 @@ class Validator(object):
             self.check_factions(relpath)
             self.check_promoted_types(relpath)
             self.check_paths(relpath, self.o.wiki_web_root)
+            self.check_guides(relpath)
             self.check_links(relpath, self.o.wiki_web_root)
 
     def check_map_files(self):
@@ -1210,6 +1221,83 @@ class Validator(object):
                          % (field, v, safe_relpath(target, self.o.root)),
                          "确认文件已随 PR 提交，路径大小写与文件名逐字一致；"
                          "文件名含空格/撇号时 src 里保留百分号写法，磁盘上存解码后的真名")
+
+    # --- 一图流攻略图（enemies.guides，SCHEMA §7.4.1） ---
+
+    def check_guides(self, relpath):
+        """enemies.json 的 guides[] 结构检查（2026-09-21 新增）。
+
+        `src` 已在 PATH_FIELDS 里，所以**图片文件是否存在**由 IMG.EXISTS 负责；
+        这里补的是它覆盖不到的三件事：
+          ① 必填字段齐备（缺 src = 页面破图，缺 title = 图没有标题）；
+          ② src 必须是 ./assets/enemy-guides/ 下的**站内相对路径**
+             —— 外站 URL 会被 IMG.EXISTS 静默放过（path_value 只对
+             ICON_MUST_BE_LOCAL 里的 icon 报热链），必须在这里拦住；
+          ③ source_url **本来就该是外站**（原图出处），只校验它是 http(s) 绝对 URL，
+             绝不套用 icon 的站内规则（否则会误伤）。
+        """
+        if relpath != GUIDES_FILE:
+            return
+        obj = self.values[relpath]
+        for i, e in enumerate(obj.get("enemies", [])):
+            if not isinstance(e, dict) or "guides" not in e:
+                continue
+            label = e.get("id") or e.get("name") or i
+            path = ("enemies", i, "guides")
+            guides = e.get("guides")
+            if not isinstance(guides, list):
+                self.rep.add("GUIDES.FIELDS", relpath, path,
+                             "%s 的 guides 不是数组（当前 %s）"
+                             % (label, type(guides).__name__),
+                             "按 SCHEMA §7.4.1 写成 [{ src, title, author, source_url, note }]")
+                continue
+            if not guides:
+                self.rep.add("GUIDES.FIELDS", relpath, path,
+                             "%s 的 guides 是空数组" % label,
+                             "没有一图流就删掉整个字段 —— 空数组在数据里表达不了「有/没有」"
+                             "两种状态，前端按「有该字段」判定")
+            for j, g in enumerate(guides):
+                gp = path + (j,)
+                if not isinstance(g, dict):
+                    self.rep.add("GUIDES.FIELDS", relpath, gp,
+                                 "%s 的第 %d 个 guide 不是对象" % (label, j),
+                                 "用 { ... } 书写")
+                    continue
+                for f in GUIDES_REQUIRED:
+                    if f not in g:
+                        self.rep.add("GUIDES.FIELDS", relpath, gp,
+                                     "%s 的第 %d 个 guide 缺少必填字段 %r" % (label, j, f),
+                                     "按 SCHEMA §7.4.1 补齐 %s"
+                                     "（author 图上没署名就写空串 \"\"，不许编造）" % f)
+                for f in GUIDES_REQUIRED + GUIDES_OPTIONAL:
+                    if f in g and not isinstance(g[f], str):
+                        self.rep.add("GUIDES.FIELDS", relpath, gp + (f,),
+                                     "%s 必须是字符串（当前 %s）" % (f, type(g[f]).__name__),
+                                     "按 SCHEMA §7.4.1 统一用字符串")
+                src = g.get("src")
+                if isinstance(src, str) and src and not src.startswith(GUIDES_SRC_PREFIX):
+                    self.rep.add("GUIDES.FIELDS", relpath, gp + ("src",),
+                                 "src = %r 不是 %s 下的站内相对路径" % (src[:60], GUIDES_SRC_PREFIX),
+                                 "一图流必须先本地化：存成 %s<敌人 id>_<序号>.webp 再用相对路径引用，"
+                                 "禁止热链外站（SCHEMA §1 / §7.4.1）" % GUIDES_SRC_PREFIX)
+                s = g.get("source_url")
+                if isinstance(s, str) and s and not s.startswith(("http://", "https://")):
+                    self.rep.add("GUIDES.FIELDS", relpath, gp + ("source_url",),
+                                 "source_url = %r 不是 http(s) 绝对 URL" % s[:60],
+                                 "source_url 是原图出处，必须是外站绝对 URL（本字段不适用站内规则）")
+                t = g.get("title")
+                if isinstance(t, str) and not t.strip():
+                    self.rep.add("GUIDES.FIELDS", relpath, gp + ("title",),
+                                 "%s 的第 %d 个 guide 的 title 是空字符串" % (label, j),
+                                 "写「<站内敌人中文名> 一图流」")
+                a, n = g.get("author"), g.get("note")
+                if isinstance(a, str) and not a.strip() \
+                        and not (isinstance(n, str) and n.strip()):
+                    self.rep.add("GUIDES.FIELDS", relpath, gp + ("note",),
+                                 "%s 的第 %d 个 guide 既没有署名（author 为空串）也没有 note"
+                                 % (label, j),
+                                 "署名不可省：author 照抄图上作者名；确实查不到就在 note 里写明"
+                                 "「已获作者授权转载（作者署名待补）」")
 
     def check_links(self, relpath, web_root):
         obj = self.values[relpath]

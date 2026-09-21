@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.6 · 2026-09-21（v1.6 在 §7.4 登记 `enemies.json` 的 `guides[]` 一图流攻略图字段（含 `src` / `title` / `author` / `source_url` / `note`），配套新增 §9 第 19 条（图片一律站内 WebP、`source_url` 只做出处不做出图、无署名必须写进 `note`）与 §10 第 14 条自检；校验器新增 `GUIDES.FIELDS` 检查项）
 > 版本：v1.5 · 2026-09-18（v1.5 新增 §7.12 术语表 `terms.json`（1,671 条）并登记其字段与来源优先级；新增 §9 第 15–17 条：A 项译名口径 `Gloom = 阴霾` / `Automaton = 机器人`、全站异写统一、「galactic_war_history」`References` 节 Navbox 中文化与 13 个图标本站化）
 > 版本：v1.4 · 2026-09-17（v1.4 修订 §8/§9：`galactic_war.json` 孤立 `</div>` 已修（正文 73 px → 880 px）、四个机制页主干表格图标尺寸已解决后的复核、`galactic_war_zh.json` / `status_effects_zh.json` 已改为逐节显式 `id`、`figures_zh` 首次投入实战；并新登记 §9 第 9/10/11 条）
 > 版本：v1.3 · 2026-09-17（v1.3 在 §5.2.2 登记 `fully_translated` 字段：整节翻译完成后不再渲染「📄 英文原文」`<details>` 兜底块；并同步修订 §5.2.3 与 §9 第 5 条）
@@ -301,6 +302,39 @@ warbond   = item.warbond_zh || item.warbond
 
 `name_zh`（**遗留反向命名**，见第 8 节）、`faction`、`faction_label`、`image`、`category`、`health_total`、`damage`、`damage_type`、`fire_damage_multiplier`、`stagger_threshold`、`minimum_difficulty`、`body_parts[]`（含 `part_id` / `armor_level` / `location` / `durable` / `percent_to_main` / `overflow_cap` / `constitution` / `fatal` / `is_weak_point` / `count` / `armor_level_zh` / `location_zh`）。
 
+#### 7.4.1 `guides[]` —— 一图流攻略图（v1.6 · 2026-09-21 登记）
+
+**可选字段**（缺失 = 该敌人没有一图流，前端整块不渲染）。语义：**社区作者制作的、已获授权转载的**单张「一图流」攻略图（大图 + 文字表格，非官方素材）。元素按数组顺序纵向堆叠。
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `src` | string | 是 | **站内相对路径**，固定形如 `./assets/enemy-guides/<敌人 id>_<序号>.webp`。文件名 = 敌人 `id` + 序号（`spore_burst_bile_titan_1.webp`）。**禁止外站 URL**（校验项 `IMG.EXISTS` 会报缺失，`GUIDES.FIELDS` 会报非法前缀） |
+| `title` | string | 是 | 图的中文标题。写法「<站内 canonical 敌人名> 一图流」，如 `孢裂泰坦 一图流`。**以站内 `name_zh` 为准**，作者图上的写法与站内不一致时按站内写，差异在提交说明里记录 |
+| `author` | string | 是 | 图的作者 / UP 主名（**优先照抄图上署名**）。图上没有署名、用户也没提供时写 **空串 `""`**，**不得编造**；前端空串即不渲染署名行。此时 `note` 必须写明署名待补 |
+| `source_url` | string | 是 | **原图出处**（B 站 CDN 等**外站绝对 URL**）。本字段是 `enemies.json` 里唯一允许写外站图片 URL 的字段，校验器**不**对它套 `icon` 的站内规则；前端渲染为「原图来源 ↗」 |
+| `note` | string | 否 | 授权与署名说明，如 `已获作者授权转载（作者署名待补）` |
+
+示例：
+
+```json
+"guides": [
+  {
+    "src": "./assets/enemy-guides/spore_burst_bile_titan_1.webp",
+    "title": "孢裂泰坦 一图流",
+    "author": "",
+    "source_url": "https://i0.hdslb.com/bfs/new_dyn/8caf5464774df773209e87448c06e64923458920.png",
+    "note": "已获作者授权转载（作者署名待补）"
+  }
+]
+```
+
+约定：
+
+1. **只有 `src` 参与渲染**：`source_url` 是**出处**（可回溯、可核对），**不得**直接当图片地址渲染 —— 外站有防盗链/限流，且与第 1 节「图片一律站内」冲突。
+2. 图片入库前一律转 WebP（第 9 节第 19 条），目录 `HD2_Wiki/assets/enemy-guides/`，**原图 PNG 不入库**。
+3. 一图流是**文字密集图**：有损压缩会把小字压糊，`quality` 从 **0.9** 起试；优先「降分辨率上限」而不是继续降质量。
+4. 署名不可省：`author` 非空时前端必须显示；`author` 为空串时 `note` 必须写明「署名待补」。
+
 ### 7.5 `stratagems_full.json`
 
 `category`、`category_label`、`code`、`call_in_time`、`cooldown`、`uses`、`unlock`、`unlock_zh`、`image`、`icon`、`detailed_stats{}`（含 `attacks[]`）、`source_page`（**遗留字段名**，等价于公共 `source_url`）。
@@ -550,6 +584,13 @@ warbond   = item.warbond_zh || item.warbond
     - **扫描到、但裁定不改的**：`Remembrance`（超级地球「超级城市」名；星图与站内数据集均无中文，按 C 项规则**保留英文**，共 3 处）；`Enuliale`（行星名，`starmap.json` 与 `BUILTIN_PLANET_CN` 的 `cn` 均为空串，**保留英文**）；`肉瘤体 / 肉团群`（「肉团群」全站 0 处，canonical = `enemies.json` 的「肉瘤体」）；`孢裂武斗虫 / 孢裂战士`（「孢裂战士」全站 0 处，canonical = `enemies.json` 的「孢裂武斗虫」）；`地狱舱 / 绝地喷射仓`（前者只出现在 `fetch_reports/` 中间产物里，不是页面内容，且该目录 schema 不约束，本次不改，canonical 取 `boosters.json` 的「绝地喷射仓」）。
     - **复验（2026-09-18）**：上述被改写掉的旧写法，在 `HD2_Wiki/` 的**数据与页面**（`SCHEMA.md` 与 `terms.json` 的审计字段除外）中均为 **0 处**。
 
+19. **一图流攻略图落库口径（2026-09-21 登记并实施；字段规范见第 7.4.1 节）**：`enemies.json` 新增**可选**字段 `guides[]`，承载社区作者制作的「一图流」攻略图（大图 + 文字表格，**非官方素材**）。四条口径不得擅自更改：
+    - **图片一律站内 WebP**（与第 1 节「图片一律站内」一致）：原图先从 B 站 CDN 下载到 `%TEMP%` 作母版，用浏览器 `canvas` 的 `toDataURL("image/webp", q)` 转码，**只把 WebP 放进** `HD2_Wiki/assets/enemy-guides/<敌人 id>_<序号>.webp`；**原图 PNG 不入库**（仓库里不出现 3 MB 级 PNG 母版）。
+    - **`source_url` 只做出处、不做出图**：它是原图的**外站绝对 URL**（B 站 CDN），前端只渲染成「原图来源 ↗」链接。**不得**把它直接当 `<img src>` —— 外站有防盗链/限流，会渲染成破图，且违反第 1 节。
+    - **署名不可省**：`author` 优先照抄图上署名；图上确实没有署名时写**空串 `""`（严禁编造）**，并**必须**在 `note` 写明「已获作者授权转载（作者署名待补）」。前端 `author` 为空串即不渲染署名行。
+    - **转码质量取舍（2026-09-21 实测）**：4 张母版均为 2560×1440 PNG（3.3–3.6 MB）。以 `spore_burst_bile_titan` 母版做的 `canvas` WebP 质量分档实测：q=0.8 → 502 336 B（全图 PSNR 36.51 dB）、q=0.85 → 585 516 B（37.17 dB）、**q=0.9 → 718 808 B（37.71 dB）**、q=0.92 → 796 698 B（37.89 dB）、q=0.95 → 957 558 B（38.20 dB）、q=1.0 → 2 371 376 B（视觉无损）。**取 q=0.9**（即第 7.4.1 节约定 3 的起点），且实测「文字密集区 2 倍最近邻放大」主观无糊化；**不降分辨率** —— 一图流的小字只有原分辨率才看得清。
+    - **文字密集图的验收方式**：不能只看体积，必须**目视比对同一处小字区域**（部位表表头 + 表体正文，2–3 倍最近邻放大，图上下并排）；以「字可辨、笔画不粘连」为准，而不是以 PSNR 数值为准。
+
 
 ---
 
@@ -570,4 +611,5 @@ warbond   = item.warbond_zh || item.warbond
 11. **图片尺寸自检（2026-09-18 新增）**：对上述各页在 1280 与 375 两档实测 `offsetWidth/offsetHeight` 与 `naturalWidth/naturalHeight`：① 页内 `img` 无 `h > 400px`；② 无「渲染宽 > 自然宽 × 1.25 且 > 80px」的放大（§9 第 12 条的 1.5em 模板图标分档除外）；③ 长宽比与 `naturalWidth/naturalHeight` 偏差 < 3%（`object-fit: contain` 的卡片图按容器盒计，不算变形；**判长宽比必须用未取整的 `getBoundingClientRect()`** —— 18.484×20.625 取整成 18×21 会产生 4% 的假偏差）；④ 表格内图标仍在 16–34 px；⑤ 破图 0、`documentElement.scrollWidth == clientWidth`（375 px 无横向溢出）；⑥ 正文配图尺寸与改前一致（除被修正的失衡项）。
 12. **术语表自检（2026-09-18 新增）**：① `terms.json` 能被 `ConvertFrom-Json` 解析、UTF-8 无 BOM、LF 换行；② `total` == `terms` 长度；③ 每个元素的 `en` / `zh` / `source` 非空；④ `rejected` 元素的 `zh` 不得与同元素 `zh` 相同；⑤ 抽查 `Gloom` / `Automaton` 确为「阴霾 / 机器人」；⑥ 全站 grep A 项旧写法（`terms.json` 的 `rejected` 字段除外）**均为 0 处**。
 13. **Navbox 自检（2026-09-18 新增，`mechanic.html?id=galactic_war_history`）**：① `References` 节出现中文 Navbox（`.section` 内 `img[width="18"]` 计 13 个）；② 图标 13/13 全部 200、破图 0；③ console error / warning / `zhOnly` 均为 0；④ 375 px 无横向溢出；⑤ `details.mg-ref` 仍为 0（`fully_translated` 未被破坏）。
+14. **一图流自检（2026-09-21 新增，`enemy.html?id=<有 guides 的敌人>`）**：① 有 `guides` 的敌人页正常渲染一图流区块（标题「📊 一图流」+ 图 + 标题行 + 署名/授权行 + 「原图来源 ↗」），`img` 全部 200、**破图 0**；② **没有 `guides` 的敌人页整块不渲染**（抽查 `?id=bile_spewer`、`?id=hunter` 等：DOM 里既无 `#sec-guides`，右栏「本页导航」也没有「一图流」项），且这些页本身正常；③ 点击图片**新开**原图（`target="_blank"` + `rel="noopener"`），链接指向**站内** `./assets/enemy-guides/*.webp` 而不是外站；④ **懒加载生效**：滚动到该区块**之前** `img.complete === false`（`loading="lazy"` + `decoding="async"`），滚到后变 `true`；⑤ console error 0、375 px 无横向溢出（`documentElement.scrollWidth == clientWidth`）；⑥ `scripts/validate_wiki_data.py` 退出码 0 —— `GUIDES.FIELDS` 无新增报错，`IMG.EXISTS` 覆盖 `guides[].src` 的**站内存在性**，而 **`source_url` 不当死链报**（它是唯一允许外站 URL 的字段，见第 7.4.1 节）。**校验器有效性靠坏样本断言**：把 `enemies.json` 复制到临时目录后逐例改坏（`src` 指向不存在的文件 / `src` 写成外站 URL / 删 `title` / 删 `author` 且清空 `note` / `source_url` 写成相对路径），必须逐个得到**非零退出码**且报错文案命中 `IMG.EXISTS` / `GUIDES.FIELDS`；纯跑真数据全绿**不能**证明该检查项有效。
 
