@@ -73,10 +73,11 @@
       --z-overlay: 100;
       --z-modal:  999;
 
-      /* 阵营色（2026-09 用户决策：超级地球统一为阵营图标黄骷髅同色 #ffe800；
+      /* 阵营色（2026-09 用户决策修订：主页层「超级地球」回退为蓝 #5BA3D0 —— 亮黄在星球卡上
+         识别度偏低；星图层（map-hud.css / galaxy-map-v2.html 内联）仍保留黄色，互不影响。
          其余三阵营色保留不动，辨识度优先） */
-      --c-humans:     #ffe800;   /* 超级地球（黄） */
-      --c-humans-d:   #6B6000;   /* 超级地球 深（当前无调用点，仅保持与亮色同色系） */
+      --c-humans:     #5BA3D0;   /* 超级地球（蓝，主页层） */
+      --c-humans-d:   #2A3948;   /* 超级地球 深（主页层） */
       --c-terminids:  #F5C518;   /* 终结族（黄） */
       --c-terminids-d:#C29B13;   /* 终结族 深 */
       --c-automaton:  #D6806D;   /* 机器人（红粉） */
@@ -91,7 +92,7 @@
       --c-faction-auto:  #E74C3C;  --c-faction-auto-d:  #7A1F0E;   /* 机器人 */
       --c-faction-term:  #F5C518;  --c-faction-term-d:  #5C4A0A;   /* 终结族 */
       --c-faction-illu:  #CF64F8;  --c-faction-illu-d:  #4A1F5C;   /* 光能者 */
-      --c-faction-hum:   #ffe800;  --c-faction-hum-d:   #6B6000;   /* 超级地球（黄） */
+      --c-faction-hum:   #5BA3D0;  --c-faction-hum-d:   #1F3A52;   /* 超级地球（蓝，主页卡片层） */
 
       /* ---- 抵抗强度色阶（2026-09-13 用户给定阈值）----
          低 ≤1.99% / 中 2–2.99% / 高 3–3.99% / 极高 ≥4%
