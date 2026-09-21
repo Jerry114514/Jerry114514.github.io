@@ -209,15 +209,27 @@
       var guides = (e.guides instanceof Array ? e.guides : []).filter(function(g) { return g && g.src; });
       var guidesHtml = guides.length ? '<div class="card" id="sec-guides"><h2>📊 一图流<span class="scroll-hint">点击图片放大 →</span></h2><div class="guide-list">' +
         guides.map(function(g) {
+          var credit = [];
+          if (g.author) {
+            credit.push('图表作者：' + (g.author_url
+              ? '<a class="guide-src" href="' + esc(g.author_url) + '" target="_blank" rel="noopener noreferrer">' + esc(g.author) + '（B站）</a>'
+              : esc(g.author)));
+          }
+          if (g.source_title) {
+            credit.push('来源：' + (g.source_url
+              ? '<a class="guide-src" href="' + esc(g.source_url) + '" target="_blank" rel="noopener noreferrer">《' + esc(g.source_title) + '》</a>'
+              : '《' + esc(g.source_title) + '》'));
+          } else if (g.source_url) {
+            credit.push('来源：<a class="guide-src" href="' + esc(g.source_url) + '" target="_blank" rel="noopener noreferrer">' + esc(g.source_url) + '</a>');
+          }
+          if (g.note) { credit.push(esc(g.note)); }
           return '<figure class="guide-item">' +
             '<a class="guide-link" href="' + esc(g.src) + '" target="_blank" rel="noopener">' +
               '<img src="' + esc(g.src) + '" alt="' + esc(g.title || '一图流攻略图') + '" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
             '</a>' +
             '<figcaption class="guide-cap">' +
               (g.title ? '<span class="guide-title">' + esc(g.title) + '</span>' : '') +
-              (g.author ? '<span class="guide-line">作者：' + esc(g.author) + '</span>' : '') +
-              (g.note ? '<span class="guide-line">' + esc(g.note) + '</span>' : '') +
-              (g.source_url ? '<span class="guide-line"><a class="guide-src" href="' + esc(g.source_url) + '" target="_blank" rel="noopener" title="' + esc(g.source_url) + '">原图来源 ↗</a></span>' : '') +
+              (credit.length ? '<span class="guide-line">' + credit.join(' · ') + '</span>' : '') +
             '</figcaption>' +
           '</figure>';
         }).join("") + '</div></div>' : '';

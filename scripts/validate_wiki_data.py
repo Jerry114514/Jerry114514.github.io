@@ -166,10 +166,13 @@ M = "HD2-Galatic_war-Map/"
 # enemies.json 的 guides[]（一图流攻略图，SCHEMA §7.4.1，2026-09-21 登记）
 # 注意：`src` 已经在 PATH_FIELDS 里，所以**图片文件是否存在**由 IMG.EXISTS 负责；
 # GUIDES.FIELDS 补的是 IMG.EXISTS 管不到的部分（必填字段、站内前缀、外站 source_url 白名单）。
+# `source_url` / `author_url` 都是**外站页面 URL**（视频页 / 作者主页），键名既不在
+# PATH_FIELDS（不做站内存在性检查）也不在 ICON_MUST_BE_LOCAL（不判热链），
+# 所以天然不会被 IMG.EXISTS / IMG.HOTLINK 判成死链 —— 无需额外豁免，只做字符串类型检查。
 GUIDES_FILE = Z + "enemies.json"
 GUIDES_SRC_PREFIX = "./assets/enemy-guides/"
 GUIDES_REQUIRED = ("src", "title", "author", "source_url")
-GUIDES_OPTIONAL = ("note",)
+GUIDES_OPTIONAL = ("note", "author_url", "source_title")
 
 
 # ---------------------------------------------------------------------------
@@ -1234,7 +1237,9 @@ class Validator(object):
              —— 外站 URL 会被 IMG.EXISTS 静默放过（path_value 只对
              ICON_MUST_BE_LOCAL 里的 icon 报热链），必须在这里拦住；
           ③ source_url **本来就该是外站**（原图出处），只校验它是 http(s) 绝对 URL，
-             绝不套用 icon 的站内规则（否则会误伤）。
+             绝不套用 icon 的站内规则（否则会误伤）；
+          ④ `author_url` / `source_title` 是**可选**字段（作者主页、出处标题），
+             `author_url` 同为外站页面 URL，同样只做字符串类型检查、**不做站内存在性检查**。
         """
         if relpath != GUIDES_FILE:
             return
@@ -1249,7 +1254,8 @@ class Validator(object):
                 self.rep.add("GUIDES.FIELDS", relpath, path,
                              "%s 的 guides 不是数组（当前 %s）"
                              % (label, type(guides).__name__),
-                             "按 SCHEMA §7.4.1 写成 [{ src, title, author, source_url, note }]")
+                             "按 SCHEMA §7.4.1 写成 [{ src, title, author, source_url, note }]，"
+                             "可选 author_url / source_title")
                 continue
             if not guides:
                 self.rep.add("GUIDES.FIELDS", relpath, path,

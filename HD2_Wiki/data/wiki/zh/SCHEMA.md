@@ -311,7 +311,9 @@ warbond   = item.warbond_zh || item.warbond
 | `src` | string | 是 | **站内相对路径**，固定形如 `./assets/enemy-guides/<敌人 id>_<序号>.webp`。文件名 = 敌人 `id` + 序号（`spore_burst_bile_titan_1.webp`）。**禁止外站 URL**（校验项 `IMG.EXISTS` 会报缺失，`GUIDES.FIELDS` 会报非法前缀） |
 | `title` | string | 是 | 图的中文标题。写法「<站内 canonical 敌人名> 一图流」，如 `孢裂泰坦 一图流`。**以站内 `name_zh` 为准**，作者图上的写法与站内不一致时按站内写，差异在提交说明里记录 |
 | `author` | string | 是 | 图的作者 / UP 主名（**优先照抄图上署名**）。图上没有署名、用户也没提供时写 **空串 `""`**，**不得编造**；前端空串即不渲染署名行。此时 `note` 必须写明署名待补 |
-| `source_url` | string | 是 | **原图出处**（B 站 CDN 等**外站绝对 URL**）。本字段是 `enemies.json` 里唯一允许写外站图片 URL 的字段，校验器**不**对它套 `icon` 的站内规则；前端渲染为「原图来源 ↗」 |
+| `author_url` | string | 否 | `author` 的作者主页（B 站空间等**外站绝对 URL**）。**有则前端把 `author` 渲染成可点链接（新窗口打开），无则退化为纯文本**；不参与站内图片存在性校验 |
+| `source_url` | string | 是 | **原件出处**（B 站视频页、原图 CDN 等**外站绝对 URL**）。本字段是 `enemies.json` 里唯一允许写外站图片 URL 的字段，校验器**不**对它套 `icon` 的站内规则；前端渲染为署名行里的「来源」链接 |
+| `source_title` | string | 否 | `source_url` 的出处标题（如 B 站视频标题 `潜兵虫九门：孢裂变种`）。**有则前端按「来源：《标题》」渲染，无则退回 `source_url` 原文**；`source_url` 为空时整项省略 |
 | `note` | string | 否 | 授权与署名说明，如 `已获作者授权转载（作者署名待补）` |
 
 示例：
@@ -321,9 +323,11 @@ warbond   = item.warbond_zh || item.warbond
   {
     "src": "./assets/enemy-guides/spore_burst_bile_titan_1.webp",
     "title": "孢裂泰坦 一图流",
-    "author": "",
-    "source_url": "https://i0.hdslb.com/bfs/new_dyn/8caf5464774df773209e87448c06e64923458920.png",
-    "note": "已获作者授权转载（作者署名待补）"
+    "author": "Nemo龙井",
+    "author_url": "https://space.bilibili.com/23458920",
+    "source_url": "https://www.bilibili.com/video/BV1EFeb6vESh",
+    "source_title": "潜兵虫九门：孢裂变种",
+    "note": "已获作者授权转载"
   }
 ]
 ```
@@ -611,5 +615,5 @@ warbond   = item.warbond_zh || item.warbond
 11. **图片尺寸自检（2026-09-18 新增）**：对上述各页在 1280 与 375 两档实测 `offsetWidth/offsetHeight` 与 `naturalWidth/naturalHeight`：① 页内 `img` 无 `h > 400px`；② 无「渲染宽 > 自然宽 × 1.25 且 > 80px」的放大（§9 第 12 条的 1.5em 模板图标分档除外）；③ 长宽比与 `naturalWidth/naturalHeight` 偏差 < 3%（`object-fit: contain` 的卡片图按容器盒计，不算变形；**判长宽比必须用未取整的 `getBoundingClientRect()`** —— 18.484×20.625 取整成 18×21 会产生 4% 的假偏差）；④ 表格内图标仍在 16–34 px；⑤ 破图 0、`documentElement.scrollWidth == clientWidth`（375 px 无横向溢出）；⑥ 正文配图尺寸与改前一致（除被修正的失衡项）。
 12. **术语表自检（2026-09-18 新增）**：① `terms.json` 能被 `ConvertFrom-Json` 解析、UTF-8 无 BOM、LF 换行；② `total` == `terms` 长度；③ 每个元素的 `en` / `zh` / `source` 非空；④ `rejected` 元素的 `zh` 不得与同元素 `zh` 相同；⑤ 抽查 `Gloom` / `Automaton` 确为「阴霾 / 机器人」；⑥ 全站 grep A 项旧写法（`terms.json` 的 `rejected` 字段除外）**均为 0 处**。
 13. **Navbox 自检（2026-09-18 新增，`mechanic.html?id=galactic_war_history`）**：① `References` 节出现中文 Navbox（`.section` 内 `img[width="18"]` 计 13 个）；② 图标 13/13 全部 200、破图 0；③ console error / warning / `zhOnly` 均为 0；④ 375 px 无横向溢出；⑤ `details.mg-ref` 仍为 0（`fully_translated` 未被破坏）。
-14. **一图流自检（2026-09-21 新增，`enemy.html?id=<有 guides 的敌人>`）**：① 有 `guides` 的敌人页正常渲染一图流区块（标题「📊 一图流」+ 图 + 标题行 + 署名/授权行 + 「原图来源 ↗」），`img` 全部 200、**破图 0**；② **没有 `guides` 的敌人页整块不渲染**（抽查 `?id=bile_spewer`、`?id=hunter` 等：DOM 里既无 `#sec-guides`，右栏「本页导航」也没有「一图流」项），且这些页本身正常；③ 点击图片**新开**原图（`target="_blank"` + `rel="noopener"`），链接指向**站内** `./assets/enemy-guides/*.webp` 而不是外站；④ **懒加载生效**：滚动到该区块**之前** `img.complete === false`（`loading="lazy"` + `decoding="async"`），滚到后变 `true`；⑤ console error 0、375 px 无横向溢出（`documentElement.scrollWidth == clientWidth`）；⑥ `scripts/validate_wiki_data.py` 退出码 0 —— `GUIDES.FIELDS` 无新增报错，`IMG.EXISTS` 覆盖 `guides[].src` 的**站内存在性**，而 **`source_url` 不当死链报**（它是唯一允许外站 URL 的字段，见第 7.4.1 节）。**校验器有效性靠坏样本断言**：把 `enemies.json` 复制到临时目录后逐例改坏（`src` 指向不存在的文件 / `src` 写成外站 URL / 删 `title` / 删 `author` 且清空 `note` / `source_url` 写成相对路径），必须逐个得到**非零退出码**且报错文案命中 `IMG.EXISTS` / `GUIDES.FIELDS`；纯跑真数据全绿**不能**证明该检查项有效。
+14. **一图流自检（2026-09-21 新增，`enemy.html?id=<有 guides 的敌人>`）**：① 有 `guides` 的敌人页正常渲染一图流区块（标题「📊 一图流」+ 图 + 标题行 + 署名行 `图表作者：<author>（B站） · 来源：《<source_title>》 · <note>`，作者/来源有对应 URL 时为可点外链），`img` 全部 200、**破图 0**；② **没有 `guides` 的敌人页整块不渲染**（抽查 `?id=bile_spewer`、`?id=hunter` 等：DOM 里既无 `#sec-guides`，右栏「本页导航」也没有「一图流」项），且这些页本身正常；③ 点击图片**新开**原图（`target="_blank"` + `rel="noopener"`），链接指向**站内** `./assets/enemy-guides/*.webp` 而不是外站；④ **懒加载生效**：滚动到该区块**之前** `img.complete === false`（`loading="lazy"` + `decoding="async"`），滚到后变 `true`；⑤ console error 0、375 px 无横向溢出（`documentElement.scrollWidth == clientWidth`）；⑥ `scripts/validate_wiki_data.py` 退出码 0 —— `GUIDES.FIELDS` 无新增报错，`IMG.EXISTS` 覆盖 `guides[].src` 的**站内存在性**，而 **`source_url` / `author_url` 不当死链报**（它们是允许写外站 URL 的字段，键名不在 `PATH_FIELDS` / `ICON_MUST_BE_LOCAL` 里，见第 7.4.1 节）。**校验器有效性靠坏样本断言**：把 `enemies.json` 复制到临时目录后逐例改坏（`src` 指向不存在的文件 / `src` 写成外站 URL / 删 `title` / 删 `author` 且清空 `note` / `source_url` 写成相对路径），必须逐个得到**非零退出码**且报错文案命中 `IMG.EXISTS` / `GUIDES.FIELDS`；纯跑真数据全绿**不能**证明该检查项有效。
 
