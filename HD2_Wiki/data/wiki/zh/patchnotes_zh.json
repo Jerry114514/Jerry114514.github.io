@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-22T13:00:00Z",
+  "updated_at": "2026-09-22T12:20:15Z",
   "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。未列出的版本回退显示英文主干。更新名用官方中文译名（自由入寂 / 铁腕威压，已登记于 terms.json），由脚本从主干 title 替换而来、版本号后缀原样保留。",
   "versions_zh": [
     {
@@ -256,8 +256,36 @@
     },
     {
       "id": "1.007.002",
-      "title_zh": "自由入寂：7.0.2",
-      "fully_translated": false
+      "fully_translated": true,
+      "mt": true,
+      "sections_zh": [
+        {
+          "id": "overview",
+          "heading_zh": "概述",
+          "items_zh": [
+            "绝地潜兵们，注意，",
+            "由于 SEAF 与绝地潜兵部队在 Seasse 的共同努力，寂域被暂时刺穿。这为超级地球争取到了宝贵的时间，用以调整并收紧其技术系统，以在银河战争中持续取得成功。",
+            "继续潜兵，民主在等待！"
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading_zh": "修复",
+          "items_zh": [
+            "崩溃修复",
+            "修复了浏览载具自定义菜单时可能发生的崩溃",
+            "修复了动态分辨率缩放导致的崩溃",
+            "修复了若干导致每日消息期间崩溃的问题"
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading_zh": "已知问题",
+          "items_zh": [
+            "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues"
+          ]
+        }
+      ]
     },
     {
       "id": "1.007.001",
