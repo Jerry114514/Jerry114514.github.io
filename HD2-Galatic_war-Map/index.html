@@ -7,7 +7,7 @@
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260921a">
+  <link rel="stylesheet" href="./css/home.css?v=20260922a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -1448,9 +1448,14 @@ function renderPlayers(data) {
       return ids.length > 0 && !ids.includes(1238);
     });
 
-    // 无状态：顶部红底通知
+    // 离线（未停靠）提示：不再挂在区块顶部，而是放进下部面板的遮罩正中央。
+    // 2026-09-22 按用户反馈改版：① 变成「红头 + 正文」两块的大尺寸面板（对齐游戏内「目前无法使用」）；
+    // ② 背景改**不透明** —— 原来用的是 45° 透明斜纹，后面的正文会从条纹缝里透出来，看着像文字重叠。
     const notice = !dss
-      ? `<div class="dss-notice"><b>DSS OFFLINE</b> 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>`
+      ? `<div class="dss-notice">
+          <div class="dss-notice-hd">目前无法使用</div>
+          <div class="dss-notice-bd"><b>DSS OFFLINE</b> 民主空间站当前未停靠任何星球（可能正在移动或检修中）。</div>
+        </div>`
       : "";
 
     // warTime → 剩余毫秒（时间基准由 refresh() 里的 setTimeBase 统一维护，各处不再各算一遍）
