@@ -1,0 +1,69 @@
+name: Upstream Watch
+
+# L2 上游变更侦测（**只读**）—— 每天一次，回答两个问题：
+#   ① 我们跟踪的上游页面（wiki-link-map.js 里映射到站内页的那些）最近被改过哪些？
+#   ② 最新几版公告提到的实体，有哪些站内还没有？
+#
+# 为什么需要它：图鉴数据集是**手工抓的定点快照**（2026-08 那批），上游一改就悄悄过期。
+#   2026-09-22 首跑就抓到实例：站内 stratagems_full.json 的
+#   orbital_precision_strike.cooldown 仍是 "90s"，而 7.1.0 公告明确写了 90 → 80，
+#   且上游同日 11:49 就更新了该页。这类过期只能靠"盯着上游"发现，人肉定期比对本不现实。
+#
+# 本工作流**只出报告、不改任何数据**（脚本只读），所以可以放心定时跑；
+# 报告以「一条常驻 issue」的形式维护（每次刷新它，不刷屏）。
+#
+# 与 L3/L4 的边界：本工作流说"**哪个条目上游改过了**"，但**不会**去改数据。
+# 数值字段的字段级 diff 与合并属 L3；散文/口径属 L4（永远人审）。
+
+on:
+  schedule:
+    - cron: '0 3 * * *'      # 每天 03:00 UTC（11:00 北京时间）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: upstream-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 侦测上游变更（只读）
+        id: scan
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          set -euo pipefail
+          python scripts/check_upstream_changes.py --days 1 --limit 3 --report upstream_report.md | tee scan.log
+          echo "changes=$(sed -n 's/^SECTION1_tracked_upstream_changes=//p' scan.log | tail -1)" >> "$GITHUB_OUTPUT"
+          echo "gaps=$(sed -n 's/^SECTION2_gap_candidates=//p' scan.log | tail -1)" >> "$GITHUB_OUTPUT"
+
+      - name: 有变更/缺口 → 刷新常驻 issue（无则跳过，不刷屏）
+        if: steps.scan.outputs.changes != '0' || steps.scan.outputs.gaps != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          n="$(gh issue list --state open --search '上游变更日报' --json number --jq '.[0].number // empty')"
+          if [ -n "$n" ]; then
+            gh issue edit "$n" --body-file upstream_report.md
+            echo "已刷新 issue #$n"
+          else
+            gh issue create --title "🔍 上游变更日报（自动刷新）" --body-file upstream_report.md
+          fi
+
+      - name: 无事可报
+        if: steps.scan.outputs.changes == '0' && steps.scan.outputs.gaps == '0'
+        run: echo "上游无改动且无缺口，跳过 issue"
