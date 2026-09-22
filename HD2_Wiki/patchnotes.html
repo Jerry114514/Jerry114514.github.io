@@ -28,6 +28,7 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
     .pn .l1 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .pn .ver { font-family: var(--font-mono, Consolas, monospace); font-size: 1.02rem; font-weight: 700; color: var(--yellow); letter-spacing: .04em; }
     .pn .name { font-size: 0.92rem; color: var(--text); }
+    .pn .name-en { font-size: 0.76rem; color: var(--text-mute); margin-top: 2px; }
     .pn .meta { margin-top: 6px; font-size: 0.78rem; color: var(--text-mute); display: flex; gap: 12px; flex-wrap: wrap; }
     .pn .meta b { color: var(--text-dim); font-weight: 400; }
     .pn .sections { margin-top: 8px; font-size: 0.76rem; color: var(--text-dim); line-height: 1.6; }
@@ -60,10 +61,16 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
       return fetch(url + (url.indexOf("?") < 0 ? "?t=" + Date.now() : "&t=" + Date.now()), { cache: "no-store" })
         .then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
     }
-    /* 更新名去掉尾部 ": 7.1.0" 作为分组键：同一资料片归到一组 */
-    function groupKey(title) {
-      var t = String(title || "").replace(/\s*:\s*[\d.]+\s*$/, "").trim();
-      return t || "其他";
+    /* 更新名去掉尾部 ": 7.1.0" 作为分组键：同一资料片归到一组。
+       中文译名（自由入寂 / 铁腕威压）由数据层给出，分组也用中文名。 */
+    function splitTitle(t) {
+      var m = String(t || "").match(/^(.*?)\s*[:：]\s*([\d.]+)\s*$/);
+      return m ? { name: m[1], ver: m[2] } : { name: String(t || ""), ver: "" };
+    }
+    function groupKey(enTitle, zhTitle) {
+      var src = zhTitle || enTitle;
+      var n = splitTitle(src).name.trim();
+      return n || "其他";
     }
     function zhOf(vid) {
       if (!ZH || !ZH.versions_zh) return null;
@@ -100,7 +107,9 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
       var vs = (DATA && DATA.versions) || [];
       var rows = vs.map(function(v) {
         var z = zhOf(v.id), c = countItems(v);
-        return { v: v, z: z, c: c, hay: (v.id + " " + v.title + " " + v.release_date + " " + flatText(v, z)).toLowerCase() };
+        var disp = (z && z.title_zh) || v.title;
+        return { v: v, z: z, c: c, disp: disp, en: v.title,
+                 hay: (v.id + " " + v.title + " " + (z && z.title_zh || "") + " " + v.release_date + " " + flatText(v, z)).toLowerCase() };
       });
       if (q) rows = rows.filter(function(r) { return r.hay.indexOf(q) >= 0; });
       var rc = document.getElementById("result-count");
@@ -110,7 +119,7 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
 
       var groups = [], gmap = {};
       rows.forEach(function(r) {
-        var k = groupKey(r.v.title);
+        var k = groupKey(r.en, r.z && r.z.title_zh);
         if (!gmap[k]) { gmap[k] = { key: k, rows: [] }; groups.push(gmap[k]); }
         gmap[k].rows.push(r);
       });
@@ -133,10 +142,11 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
             return '<a class="pn" href="patchnote.html?id=' + encodeURIComponent(v.id) + '">' + art +
               '<div class="body"><div class="l1">' +
                 '<span class="ver">' + esc(v.id) + '</span>' +
-                '<span class="name">' + esc(v.title) + '</span>' +
+                '<span class="name">' + esc(r.disp) + '</span>' +
                 (v.id === newest ? '<span class="badge new">最新</span>' : '') +
                 (z && z.fully_translated ? '<span class="badge zh">已汉化</span>' : '<span class="badge">英文</span>') +
               '</div>' +
+              (r.disp !== r.en ? '<div class="name-en">' + esc(r.en) + '</div>' : '') +
               '<div class="meta"><span><b>发布</b> ' + esc(v.release_date || "—") + '</span>' +
                 '<span><b>体积</b> ' + esc(v.size || "—") + '</span>' +
                 '<span><b>内容</b> ' + r.c.sections + ' 节 / ' + r.c.items + ' 条</span></div>' +

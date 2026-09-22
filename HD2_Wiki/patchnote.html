@@ -21,6 +21,7 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
     .pn-top .art { flex: 0 0 110px; width: 110px; height: 165px; background: var(--bg-mid); border: 1px solid var(--border); overflow: hidden; }
     .pn-top .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .pn-top h1 { margin: 0 0 4px; font-size: 1.5rem; color: var(--yellow); }
+    .pn-top .title-en { font-size: 0.82rem; color: var(--text-mute); margin-bottom: 6px; }
     .pn-top .verline { font-family: var(--font-mono, Consolas, monospace); color: var(--text-dim); font-size: 0.86rem; margin-bottom: 10px; }
     .fields { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.82rem; color: var(--text-mute); }
     .fields b { color: var(--text-dim); font-weight: 400; }
@@ -155,9 +156,11 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
       var z = zhVersion();
       var merged = merge(VER.sections, z && z.sections_zh);
       var toc = tocOf(merged);
+      // 更新名用官方中文译名（数据层给 title_zh），英文原名作副行对照
+      var dispTitle = (z && z.title_zh) || VER.title;
 
       document.getElementById("breadcrumb").innerHTML = '← <a href="patchnotes.html">更新公告</a> › ' + esc(VER.id);
-      document.title = VER.id + " " + VER.title + " - 绝地潜兵2 中文维基";
+      document.title = dispTitle + " - 绝地潜兵2 中文维基";
 
       var art = VER.image_local
         ? '<div class="art"><img src="' + esc(VER.image_local) + '" alt="" onerror="this.parentNode.style.display=\'none\'"></div>'
@@ -179,7 +182,8 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
       var html = '<div class="col-main">' +
         '<div class="card pn-top">' + art +
           '<div style="min-width:0;flex:1">' +
-            '<h1>' + esc(VER.title) + '</h1>' +
+            '<h1>' + esc(dispTitle) + '</h1>' +
+            (dispTitle !== VER.title ? '<div class="title-en">' + esc(VER.title) + '</div>' : '') +
             '<div class="verline">版本 ' + esc(VER.id) + (z && z.fully_translated ? ' <span class="badge zh">已汉化</span>' : ' <span class="badge">英文原文</span>') + '</div>' +
             '<div class="fields">' +
               '<span><b>发布日期</b> ' + esc(VER.release_date || "—") + (VER.release_time ? " · " + esc(VER.release_time) : "") + '</span>' +

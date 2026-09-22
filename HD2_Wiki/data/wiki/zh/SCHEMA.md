@@ -487,7 +487,7 @@ warbond   = item.warbond_zh || item.warbond
 | 字段 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `id` | string | 是 | **点分数字版本号**（`1.007.100`），来自上游页面标题，**不做改写**；详情页就是 `?id=1.007.100` |
-| `title` | string | 是 | 更新名（`Devoid of Liberty: 7.1.0`）。**官方专名，无官方中文译名时保留英文**（同 `Fortified` 先例） |
+| `title` | string | 是 | 更新名（`Devoid of Liberty: 7.1.0`）。主干**原样保留上游英文**；**中文用官方译名、写在覆盖层的 `title_zh`**（如 `自由入寂：7.1.0`）。译名的权威来源是 `terms.json`（`Devoid of Liberty = 自由入寂`、`Machinery of Oppression = 铁腕威压`，2026-09-22 登记为 `口径（A 项 · 官方译名）`）；确实没有官方译名时才保留英文（同 `Fortified` 先例，须在 `note` 注明"暂译"） |
 | `release_date` / `release_time` | string | 是 / 否 | 发布日期与时刻（UTC 原文） |
 | `size` | string | 否 | 更新体积原文（`2.5 GB`） |
 | `blog_url` | string | 否 | **官方公告外链**（Steam 新闻页）。有则页面给「官方公告 ↗」；缺（如 `1.006.204`）则只留维基来源 |
@@ -503,7 +503,9 @@ warbond   = item.warbond_zh || item.warbond
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| `versions_zh[]` | array | 每项 `id` 必须命中主干版本；`fully_translated: true` 表示整版汉化完成 |
+| `versions_zh[]` | array | 每项 `id` 必须命中主干版本 |
+| `title_zh` | string | 更新名的中文（**官方译名**，如 `自由入寂：7.1.0`）。**版本号后缀必须与主干 `title` 完全一致**（校验器 `PATCH.FIELDS` 强制）；由脚本按 `terms.json` 的映射从主干 `title` 替换生成，避免手抄错后缀 |
+| `fully_translated` | boolean | `true` = 该版正文已整版汉化（页面不再显示「尚未汉化」提示）。**只写 `title_zh` 不写正文时给 `false`** |
 | `sections_zh[]` | array | 每项 `id` **必须命中主干小节 id**；子节必须与主干**同序同集合** |
 | `items_zh[]` | string[] | **按主干条目索引一一对应**（本文件是全站唯一用索引配对的地方） |
 

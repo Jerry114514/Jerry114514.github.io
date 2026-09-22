@@ -1,9 +1,10 @@
 {
-  "updated_at": "2026-09-22T12:00:00Z",
-  "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。未列出的版本回退显示英文主干。更新名（如 Devoid of Liberty）为官方专名、无官方中文译名，按站内 Fortified 的先例保留英文。",
+  "updated_at": "2026-09-22T13:00:00Z",
+  "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。未列出的版本回退显示英文主干。更新名用官方中文译名（自由入寂 / 铁腕威压，已登记于 terms.json），由脚本从主干 title 替换而来、版本号后缀原样保留。",
   "versions_zh": [
     {
       "id": "1.007.100",
+      "title_zh": "自由入寂：7.1.0",
       "fully_translated": true,
       "sections_zh": [
         {
@@ -252,6 +253,51 @@
           ]
         }
       ]
+    },
+    {
+      "id": "1.007.002",
+      "title_zh": "自由入寂：7.0.2",
+      "fully_translated": false
+    },
+    {
+      "id": "1.007.001",
+      "title_zh": "自由入寂：7.0.1",
+      "fully_translated": false
+    },
+    {
+      "id": "1.007.000",
+      "title_zh": "自由入寂",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.301",
+      "title_zh": "铁腕威压：6.3.1",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.300",
+      "title_zh": "铁腕威压：6.3.0",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.251",
+      "title_zh": "铁腕威压：6.2.6",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.250",
+      "title_zh": "铁腕威压：6.2.5",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.204",
+      "title_zh": "铁腕威压：6.2.4",
+      "fully_translated": false
+    },
+    {
+      "id": "1.006.203",
+      "title_zh": "铁腕威压：6.2.3",
+      "fully_translated": false
     }
   ]
 }
