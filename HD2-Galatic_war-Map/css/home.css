@@ -1270,6 +1270,23 @@
     }
     .dss-notice b{color:#FF4D2E;font-family:var(--dss-mono);letter-spacing:.06em}
 
+    /* ---------- 未停靠（离线）：下部面板压暗 + 红条居中 ----------
+       2026-09-21 用户要求，参照游戏内「目前无法使用」的观感：
+       ① 深色遮罩只盖**下部面板**（.dss-grid），顶部标题/停靠位置保持原亮度；
+       ② 红条从区块顶部移到遮罩正中央。
+       遮罩 pointer-events:none —— 纯视觉层，不抢卡片点击（行动详情仍可展开）。 */
+    .dss-hud .dss-grid-wrap{position:relative}
+    .dss-hud .dss-offline-mask{
+      position:absolute;inset:0;z-index:5;
+      display:grid;place-items:center;padding:18px;
+      background:rgba(2,4,8,.62);
+      pointer-events:none;
+    }
+    .dss-hud .dss-offline-mask .dss-notice{
+      margin:0;width:100%;max-width:560px;
+      border-left-width:3px;
+    }
+
     /* ============================================================
        星球卡片体系（2026-09-13 主页改版）
        Diegetic Tactical HUD / Diesel Punk：零圆角 · 零阴影 · 阵营色主导 · 高信息密度

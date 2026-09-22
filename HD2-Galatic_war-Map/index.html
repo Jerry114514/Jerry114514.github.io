@@ -7,7 +7,7 @@
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260920a">
+  <link rel="stylesheet" href="./css/home.css?v=20260921a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -1652,14 +1652,19 @@ function renderPlayers(data) {
       ratio: "0%", countHtml: "", isActive: false, isCooldown: false,
     };
 
+    // 未停靠（离线）：不再把红条挂在区块**顶部**，改为把**下部面板**整体压暗，
+    // 并让红条居中浮在遮罩上 —— 复刻游戏内「目前无法使用」的观感（2026-09-21 用户要求）。
+    // 遮罩纯装饰（pointer-events:none），行动卡片仍可展开查看详情。
+    const offline = !dss;
+
     root.innerHTML = `
-      ${notice}
-      <div class="dss-hud dss-station">
+      <div class="dss-hud dss-station${offline ? " offline" : ""}">
         <header class="dss-top">
           <h3 class="dss-title">民主空间站 / DSS</h3>
           <span class="dss-loc">${esc(dss ? locText : "未停靠")}</span>
         </header>
         <div class="dss-div"></div>
+        <div class="dss-grid-wrap">
         <div class="dss-grid">
           <section class="dss-col-l">
             <div class="dss-sec"><h4>行动</h4><span class="n">${String(items.length).padStart(2, "0")}</span></div>
@@ -1688,6 +1693,8 @@ function renderPlayers(data) {
               <div class="dss-count" id="dss-count"${first.countHtml ? "" : ' style="display:none"'}>${first.countHtml || ""}</div>
             </div>
           </section>
+        </div>
+        ${notice ? `<div class="dss-offline-mask">${notice}</div>` : ""}
         </div>
       </div>
     `;
@@ -2079,11 +2086,15 @@ function renderPlayers(data) {
       : `<div class="pc-landmark pc-nobiome"></div>`;
 
     // ---- ③ 战役类型 + 星球名 ----
+    // 阵营归属=超级地球 且 已解放：**不再标注战役类型**（此时并没有「战役」在打，
+    // 写「解放战役」既不准也无意义）。只收起类型文字与其战役图标，星球名保留；
+    // ⚠ 只动这一处：biome 大图 / 归属 / 人数 / 进度 / 词条 / 防御战双轨一律不碰（§11.1-7 P0）。
+    const hideCampType = !isDefense && owner === "Humans" && isLiberated;
     const campIcon = pcIcon(isDefense ? PC_CAMPAIGN_ICON.defense : PC_CAMPAIGN_ICON.liberation, "pc-campic");
-    const head = `<div class="pc-head">
-      <span class="pc-campwrap">${campIcon}</span>
+    const head = `<div class="pc-head${hideCampType ? " no-camp" : ""}">
+      ${hideCampType ? "" : `<span class="pc-campwrap">${campIcon}</span>`}
       <span class="pc-headtxt">
-        <span class="pc-type">${esc(isDefense ? "防御战" : "解放战役")}</span>
+        ${hideCampType ? "" : `<span class="pc-type">${esc(isDefense ? "防御战" : "解放战役")}</span>`}
         <span class="pc-name${isDefense ? " def" : ""}">${esc(name.cn || name.en)}</span>
       </span>
     </div>`;
