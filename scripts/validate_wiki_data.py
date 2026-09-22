@@ -186,6 +186,8 @@ PATCH_ZH = Z + "patchnotes_zh.json"
 PATCH_VERSION_RE = re.compile(r"^\d+(\.\d+)+$")
 PATCH_ASSET_PREFIX = "./assets/patchnotes/"
 PATCH_SECTION_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
+# 更新名尾部的「: 7.1.0」/「：7.1.0」后缀（中英冒号都要认）
+PATCH_SUFFIX_RE = re.compile(r"[:：]\s*([\d.]+)\s*$")
 
 
 # ---------------------------------------------------------------------------
@@ -1423,6 +1425,27 @@ class Validator(object):
                              "只允许覆盖主干已有的版本；新增版本请先跑抓取器")
                 continue
             bsecs = {s.get("id"): s for s in by_id[vid].get("sections") or []}
+
+            # title_zh：官方中文更新名；版本号后缀必须与主干 title 一致（防手抄错）
+            tz = zv.get("title_zh")
+            if tz is not None:
+                if not isinstance(tz, str) or not tz.strip():
+                    self.rep.add("PATCH.FIELDS", PATCH_ZH, p + ("title_zh",),
+                                 "title_zh 不是非空字符串", "更新名中文；没有官方译名就省略该字段")
+                else:
+                    btitle = str(by_id[vid].get("title") or "")
+                    # ⚠ 必须用 search 而不是 match：模式是从冒号开始的「后缀」，
+                    #   而 match 锚定串首，会永远不命中 → 两边都 None → 静默通过
+                    #   （这正是 2026-09-22 坏样本测试抓出来的）。
+                    bsuf = PATCH_SUFFIX_RE.search(btitle)
+                    zsuf = PATCH_SUFFIX_RE.search(tz.strip())
+                    bver = bsuf.group(1) if bsuf else None
+                    zver = zsuf.group(1) if zsuf else None
+                    if bver != zver:
+                        self.rep.add("PATCH.FIELDS", PATCH_ZH, p + ("title_zh",),
+                                     "版本号后缀与主干不一致：主干 title=%r（后缀 %r）vs title_zh=%r（后缀 %r）"
+                                     % (btitle, bver, tz, zver),
+                                     "title_zh 只把更新名换成官方中文，版本号后缀必须逐字保留")
 
             def cmp(secs_zh, pool, path):
                 for j, s in enumerate(secs_zh or []):
