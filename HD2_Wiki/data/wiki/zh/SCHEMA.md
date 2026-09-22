@@ -506,6 +506,7 @@ warbond   = item.warbond_zh || item.warbond
 | `versions_zh[]` | array | 每项 `id` 必须命中主干版本 |
 | `title_zh` | string | 更新名的中文（**官方译名**，如 `自由入寂：7.1.0`）。**版本号后缀必须与主干 `title` 完全一致**（校验器 `PATCH.FIELDS` 强制）；由脚本按 `terms.json` 的映射从主干 `title` 替换生成，避免手抄错后缀 |
 | `fully_translated` | boolean | `true` = 该版正文已整版汉化（页面不再显示「尚未汉化」提示）。**只写 `title_zh` 不写正文时给 `false`** |
+| `mt` | boolean | 否。`true` = 该版正文是**机器翻译、尚未人工校对**（由私密仓 `HD2Web-Trans` 的 `translate_patchnotes.yml` 写入）。页面显示「机翻 · 待校对」并挂校对提示；**人工校对确认后由人删掉该字段**（删掉即视为已校对） |
 | `sections_zh[]` | array | 每项 `id` **必须命中主干小节 id**；子节必须与主干**同序同集合** |
 | `items_zh[]` | string[] | **按主干条目索引一一对应**（本文件是全站唯一用索引配对的地方） |
 

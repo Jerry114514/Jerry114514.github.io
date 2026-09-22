@@ -1426,6 +1426,13 @@ class Validator(object):
                 continue
             bsecs = {s.get("id"): s for s in by_id[vid].get("sections") or []}
 
+            # mt：机翻标记（私密仓 translate_patchnotes.yml 写入）；只校验类型，
+            # 「人删掉 mt = 已校对」是约定，不在这里强制
+            if "mt" in zv and not isinstance(zv.get("mt"), bool):
+                self.rep.add("PATCH.FIELDS", PATCH_ZH, p + ("mt",),
+                             "mt = %r 不是布尔值" % (zv.get("mt"),),
+                             "机翻标记只接受 true/false；人工校对完成后删掉该字段")
+
             # title_zh：官方中文更新名；版本号后缀必须与主干 title 一致（防手抄错）
             tz = zv.get("title_zh")
             if tz is not None:

@@ -34,6 +34,7 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
     .pn .sections { margin-top: 8px; font-size: 0.76rem; color: var(--text-dim); line-height: 1.6; }
     .badge { font-size: 0.68rem; padding: 1px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-mute); }
     .badge.zh { color: var(--yellow); border-color: #4A3B00; }
+    .badge.mt { color: #F59E0B; border-color: #5C4A0A; }
     .badge.new { color: #5DDB8E; border-color: #1E4A2E; }
     .loading, .empty { text-align: center; padding: 60px; color: var(--text-dim); }
     .src { margin-top: 18px; font-size: 0.76rem; color: var(--text-mute); text-align: center; line-height: 1.7; }
@@ -144,7 +145,9 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
                 '<span class="ver">' + esc(v.id) + '</span>' +
                 '<span class="name">' + esc(r.disp) + '</span>' +
                 (v.id === newest ? '<span class="badge new">最新</span>' : '') +
-                (z && z.fully_translated ? '<span class="badge zh">已汉化</span>' : '<span class="badge">英文</span>') +
+                (z && z.fully_translated
+                   ? (z.mt ? '<span class="badge mt">机翻待校</span>' : '<span class="badge zh">已汉化</span>')
+                   : '<span class="badge">英文</span>') +
               '</div>' +
               (r.disp !== r.en ? '<div class="name-en">' + esc(r.en) + '</div>' : '') +
               '<div class="meta"><span><b>发布</b> ' + esc(v.release_date || "—") + '</span>' +
