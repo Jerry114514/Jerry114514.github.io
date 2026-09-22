@@ -25,7 +25,7 @@
 
 | 文件 | 内容 | 大致条目数 |
 |---|---|---|
-| `weapons.json` | **武器**（主武器 / 副武器 / 投掷物）及其数值、特性、tips | 89 |
+| `weapons.json` | **武器**（主武器 / 副武器 / 投掷物）及其数值、特性、tips | 91 |
 | `stratagems_full.json` | **战略配备**（完整条目：呼叫代码、冷却、数值、详细面板） | 109 |
 | `loadout.json` | **配装视图**的战略配备精简列表（四维评分，给「配装」页用） | 89 |
 | `enemies.json` | **敌人**（阵营、血量、部位/弱点、攻击方式、出现难度） | 95 |
@@ -33,7 +33,7 @@
 | `boosters.json` | **强化资源**（Boosters：效果说明、所属债券、价格） | 20 |
 | `warbonds.json` | **战争债券**（Warbonds：逐页奖励表、价格、发布时间） | 25 |
 | `factions.json` | **阵营**（超级地球 + 三大敌对阵营的色彩与敌人清单） | 3 |
-| `terms.json` | **术语表** —— 全站译名的**唯一真相源**（见 §4） | 1677 |
+| `terms.json` | **术语表** —— 全站译名的**唯一真相源**（见 §4） | 1684 |
 | `mechanics/*.json` | **机制页英文主干**（damage / difficulty / galactic_war / galactic_war_history / status_effects） | 5 页 |
 | `mechanics/*_zh.json` | 机制页的**中文覆盖**（按小节覆盖中文标题与正文） | 5 页 |
 | `mechanics/index.json` | 机制页的目录卡片 | 5 |
@@ -491,7 +491,7 @@
 
 #### 3.6.3 加一件武器 —— `HD2_Wiki/data/wiki/zh/weapons.json`
 
-> 字段名与顺序**逐个核对过**：来自 `SCHEMA.md` §3 / §7.3 与文件里真实的 89 条（2026-09 实测）。
+> 字段名与顺序**逐个核对过**：来自 `SCHEMA.md` §3 / §7.3 与文件里真实的 91 条（2026-09-22 实测）。
 > 真实顺序是
 > `id → name → name_en → category → subcategory → subcategory_name → stats_short → stats_full → traits → unlock → description → lore → variants → tips → related → source_url → detailed_stats → icon`
 > （`icon` 在**末尾**，照抄现状即可，别自己去挪位置）。
@@ -523,9 +523,12 @@
 - **`traits`**：中文标签数组（如 `["燃烧弹", "中甲穿透"]`），没有就 `[]`。
 - **`unlock`**：解锁条件（字符串）。实测这个文件里**中英文都有**，照抄同债券其它条目的风格即可。
 - **`description` / `lore` / `variants` / `tips`**：都是必填字段。
-  实测 `description` 是英文简介（89 条里 88 条有内容）；`lore` 89 条**全是空字符串 `""`**；
-  `variants` 与 `tips` 89 条**全是空数组 `[]`**。照这个现状写即可，**不能删字段**。
-- **`related`**：⚠️ 实测 89 条**全部是空对象 `{}`**（不是数组！）。
+  实测 `description` 是英文简介（91 条里 90 条有内容）；`lore` 91 条**全是空字符串 `""`**；
+  `variants` 与 `tips` 91 条**全是空数组 `[]`**。照这个现状写即可，**不能删字段**。
+- **`description_zh` / `unlock_zh`**（**可选**，写在**末尾**、`icon` 之后）：中文覆盖。
+  `weapon.html` 按 `description_zh || description`、`unlock_zh || unlock` 取值 ——
+  想给英文原文留档就写这两个字段；**别把中文直接写进 `description` / `unlock`**（那会同时丢掉英文出处）。
+- **`related`**：⚠️ 实测 91 条**全部是空对象 `{}`**（不是数组！）。
   这是 `SCHEMA.md` §8 登记在案的历史不一致（canonical 是字符串数组，本文件未迁移）。
   **照抄 `{}` 即可，不要自作主张改成 `[]`** —— 否则你会变成全文件唯一一个异类。
 - **`detailed_stats`**：详细面板，形态很杂。实测有 12 条是空对象 `{}`，其余至少含 `"attacks"`。
@@ -533,9 +536,10 @@
   `type` 实测有 `projectile` / `explosion` / `status`。
   **最省事的做法：整段照抄一把同类武器的 `detailed_stats`，只改里面的数值。**
 - **`icon`**：⚠️ **必须用站内相对路径** `./assets/weapons/<文件名>.png`，图片随 PR 放进 `HD2_Wiki/assets/weapons/`。
-  **不要贴 wiki.gg 链接**：本文件现有 89 条**全部**是热链，那是登记在案的历史例外、**额度正好用满 89** ——
+  **不要贴 wiki.gg 链接**：本文件现有 91 条**全部**是热链，那是登记在案的历史例外、**额度正好用满 91**
+  （`scripts/validate_wiki_data.py` 的 `KNOWN` 基线与之同步）——
   你**新增**一条热链，`IMG.HOTLINK` 就会超过基线上限，CI 直接变红。
-- **别忘了**：顶层 `"total"` 要 **+1**（当前 89 → 90）。
+- **别忘了**：顶层 `"total"` 要 **+1**（当前 91 → 92）。
 - **容易错**：`id` 里用了连字符或大写（❌ `AR-2 Coyote` / ✅ `ar_2_coyote`）；
   `stats_short` / `stats_full` 漏项；`related` 被改成了 `[]`；`icon` 贴了外站链接；忘了改 `total`。
 

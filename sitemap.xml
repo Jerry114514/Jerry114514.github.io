@@ -127,7 +127,7 @@
     <priority>0.2</priority>
   </url>
   <!-- BEGIN HD2_Wiki 详情页（由 scripts/gen_sitemap.py 生成，请勿手工编辑） -->
-  <!-- 武器详情 · 89 条 · 数据：data/wiki/zh/weapons.json -->
+  <!-- 武器详情 · 91 条 · 数据：data/wiki/zh/weapons.json -->
   <url>
     <loc>https://jerry114514.github.io/HD2_Wiki/weapon.html?id=ar_2_coyote</loc>
     <lastmod>2026-09-20</lastmod>
@@ -173,6 +173,12 @@
   <url>
     <loc>https://jerry114514.github.io/HD2_Wiki/weapon.html?id=ar_61_tenderizer</loc>
     <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2_Wiki/weapon.html?id=ar_gl_21_one_two</loc>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -329,6 +335,12 @@
   <url>
     <loc>https://jerry114514.github.io/HD2_Wiki/weapon.html?id=g_142_pyrotech</loc>
     <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2_Wiki/weapon.html?id=g_40_k_melta_mine</loc>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
