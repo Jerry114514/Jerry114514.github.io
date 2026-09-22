@@ -1,11 +1,29 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Uphold election security by destroying all those who would threaten it.",
-  "translated": "维护选举安全：消灭一切胆敢威胁它的人。",
-  "translated_at": "2026-09-21T03:51:56Z"
+  "original": "Liberate the designated planets to secure territory for long-term construction of the TD-110 Maelstrom Tank.",
+  "translated": "解放指定星球，为 TD-110 漩涡坦克的长期建造夺取领土。",
+  "translated_at": "2026-09-22T14:56:14Z"
  },
  "items": [
+  {
+   "id": 3936,
+   "original": "NEW MAJOR ORDER\n\nEnemy aggression prevents the long-term construction of the new Maelstrom Tank, threatening our citizens' inherent right to self-defense. Liberate MARFARK and PHACT BAY immediately.",
+   "translated": "新重要指令\n\n敌军进犯，导致新型“漩涡”坦克无法长期投产，威胁我国公民与生俱来的自卫权。立刻解放玛尔法克与丈人一湾。",
+   "published_at": "2026-09-22T11:59:18Z",
+   "translated_at": "2026-09-22T13:10:57Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
+   "id": 3935,
+   "original": "STRATEGIC UPDATE\n\nMiscalibrations in the Democracy Space Station have required it to be taken temporarily offline in order to be resolved. The Ministry of Defense has shifted significant personnel to these fixes, making it a top priority. \n\nThose responsible for the mistakes will attend an intensive re-training seminar. If the issue persists, their families will also attend the seminar.",
+   "translated": "战略通报\n\n民主空间站出现校准偏差，须暂时下线以完成修复。国防部已调派大批人员投入此项工作，并将其列为最高优先级。\n\n对失误负有责任者，将参加强化再培训研讨班。若问题仍未解决，其家属也将一同参加研讨班。",
+   "published_at": "2026-09-22T09:09:46Z",
+   "translated_at": "2026-09-22T13:10:57Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3934,
    "original": "CAMPAIGN FAILURE\n\nCyborg interference has raised significant doubts in the veracity of the Quarter-Term Elections. As a result, a re-vote has been ordered, with enhanced election security measures to make interference impossible.\n\nSEAF Battalions have been recalled from the frontlines to secure voting sites.",
@@ -77,24 +95,6 @@
    "translated_at": "2026-09-19T19:29:19Z",
    "source": "dispatch",
    "engine": "manual-patch"
-  },
-  {
-   "id": 3926,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on BLISTICA with the Incendiary Mines Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨出的资金已获分配，将在未来24小时内以“燃烧地雷”战略配备支援绝地潜兵在布里斯提卡的行动。",
-   "published_at": "2026-09-17T16:04:28Z",
-   "translated_at": "2026-09-19T19:29:19Z",
-   "source": "dispatch",
-   "engine": "manual-patch"
-  },
-  {
-   "id": 3925,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on TERREK with the Anti-Personnel Mine Deployer Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨出的资金已获分配，将在未来24小时内以“反步兵地雷部署器”战略配备支援绝地潜兵在泰雷克的行动。",
-   "published_at": "2026-09-17T16:03:17Z",
-   "translated_at": "2026-09-19T19:29:19Z",
-   "source": "dispatch",
-   "engine": "manual-patch"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-22T07:26:11Z",
+  "computed_at": "2026-09-22T14:56:15Z",
   "planet_index": null
  }
 }
