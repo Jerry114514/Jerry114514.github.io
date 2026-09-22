@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.8 · 2026-09-22（v1.8 新增 §7.14 **更新公告** `patchnotes.json` / `patchnotes_zh.json` —— 全站第一个「主干由机器抓取」的数据集（`scripts/fetch_patchnotes.py` 走 helldivers.wiki.gg 的 MediaWiki API）；配套校验器新增 `PATCH.PAIRING` / `PATCH.FIELDS` / `PATCH.SECTION` 三项，其中 `PATCH.PAIRING` 是本站首次采用**索引配对**并强制「中文条目数 == 主干条目数」；页面 `patchnotes.html` + `patchnote.html` 与 `navigation.json` 第 9 项）
 > 版本：v1.7 · 2026-09-21（v1.7 **一图流 `guides[]` 批量落库**：新增 12 个单位 —— 移动工厂 / 悲怜体 / 粉碎者 / 惑乱者 / 激进先锋 / 噪轰引擎 / 掠食追猎虫 / 掠食追踪虫 / 突入者 / 御门者 / 证真者 / 猎杀器，全站由 **4 条（4 个敌人）扩至 16 条（16 个敌人）**；并把 12 张新母版在 **q=0.9** 下的复测结论补进 §7.4.1 约定 3 与 §9 第 19 条。字段与口径**无新增**，v1.7 只是把 v1.6 已登记契约的落地范围与实测基线上调）
 > 版本：v1.6 · 2026-09-21（v1.6 在 §7.4 登记 `enemies.json` 的 `guides[]` 一图流攻略图字段（含 `src` / `title` / `author` / `source_url` / `note`），配套新增 §9 第 19 条（图片一律站内 WebP、`source_url` 只做出处不做出图、无署名必须写进 `note`）与 §10 第 14 条自检；校验器新增 `GUIDES.FIELDS` 检查项）
 > 版本：v1.5 · 2026-09-18（v1.5 新增 §7.12 术语表 `terms.json`（1,671 条）并登记其字段与来源优先级；新增 §9 第 15–17 条：A 项译名口径 `Gloom = 阴霾` / `Automaton = 机器人`、全站异写统一、「galactic_war_history」`References` 节 Navbox 中文化与 13 个图标本站化）
@@ -463,6 +464,64 @@ warbond   = item.warbond_zh || item.warbond
 2. 中英并陈由前端负责（中文为主、英文折叠/小字对照），本文件**只存中文**，不重复存英文原文。
 3. 上游新增战役/阶段后，本文件未同步不会报错——对应字段为空串，前端直接显示英文原文。
 4. 读取方式：`fetch_site_data.py::_load_campaign_zh()`（`json.load` + 异常吞掉）；前端**不直接加载本文件**，只读 `data.json → active_campaign`（已合并中英）。
+
+---
+
+### 7.14 `patchnotes.json` / `patchnotes_zh.json`（更新公告 · 2026-09-22 登记）
+
+**这是全站唯一「主干由机器抓取」的数据集**：上游是 `helldivers.wiki.gg` 的
+`Category:Patch Notes`（一条一个版本页），抓取器 `scripts/fetch_patchnotes.py`。
+页面：列表 `patchnotes.html`、详情 `patchnote.html?id=<版本号>`。
+
+#### 主干 `patchnotes.json`
+
+| 字段 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `updated_at` | string | 是 | 抓取时刻（秒级 UTC） |
+| `source` | string | 是 | 索引页 URL（`…/wiki/Category:Patch_Notes`） |
+| `total` | number | 是 | `versions` 长度 |
+| `versions[]` | array | 是 | 按**版本号倒序**（最新在前） |
+
+`versions[]` 元素：
+
+| 字段 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `id` | string | 是 | **点分数字版本号**（`1.007.100`），来自上游页面标题，**不做改写**；详情页就是 `?id=1.007.100` |
+| `title` | string | 是 | 更新名（`Devoid of Liberty: 7.1.0`）。**官方专名，无官方中文译名时保留英文**（同 `Fortified` 先例） |
+| `release_date` / `release_time` | string | 是 / 否 | 发布日期与时刻（UTC 原文） |
+| `size` | string | 否 | 更新体积原文（`2.5 GB`） |
+| `blog_url` | string | 否 | **官方公告外链**（Steam 新闻页）。有则页面给「官方公告 ↗」；缺（如 `1.006.204`）则只留维基来源 |
+| `previous` / `next` | string\|null | 否 | 相邻版本号，用于「上一版/下一版」导航 |
+| `wiki_url` | string | 是 | 维基页面 URL（溯源） |
+| `cover_wiki` | string | 否 | 信息框封面在**维基上的文件名**（仅溯源）。⚠ **不能叫 `image`** —— 那个键在 `PATH_FIELDS` 里，会被 `IMG.EXISTS` 当成站内路径解析 |
+| `image_local` | string | 否 | 封面**站内 WebP 路径**（`./assets/patchnotes/<slug>.webp`）。渲染只用这个（零热链），由 `IMG.EXISTS` 检查存在性 |
+| `sections[]` | array | 是 | 嵌套小节，字段 `id` / `heading` / `level`(2–4) / `items[]` / `subsections[]` |
+
+`items[]` 元素：`kind`（`li` 列表项 / `p` 普通行）、`depth`（`li` 的缩进层级，0 起）、`text`（纯文本，已剥离 wikitext）、`links[]`（`{text, page}`，供前端改写成站内/外站链接）、`files[]`（正文内图片文件名，一般为空）。
+
+#### 中文覆盖 `patchnotes_zh.json`
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `versions_zh[]` | array | 每项 `id` 必须命中主干版本；`fully_translated: true` 表示整版汉化完成 |
+| `sections_zh[]` | array | 每项 `id` **必须命中主干小节 id**；子节必须与主干**同序同集合** |
+| `items_zh[]` | string[] | **按主干条目索引一一对应**（本文件是全站唯一用索引配对的地方） |
+
+**索引配对的硬规则**：主干小节有 N 条，`items_zh` 就**必须**是 N 条 —— 校验器 `PATCH.PAIRING` 强制相等，
+**不等即错**（而不是静默错位）。主干小节没有条目（纯容器节）时**可省略** `items_zh`。
+之所以敢用索引配对：条目顺序由上游维基固定、且抓取器不改写文本；一旦上游增删条目，
+长度检查会**立刻报错**，逼人重新对齐（§6.4 记过「序号配对错位」的事故）。
+
+**未覆盖的版本不报错**：前端对没有 `versions_zh` 条目的版本显示英文主干，并在页顶给「本页尚未汉化」提示 ——
+中文可以按版本增量补齐，**补译文不需要改代码**。
+
+**抓取器纪律**（`scripts/fetch_patchnotes.py`）：
+
+1. **只搬运、不改写**：不做机器改写 —— 本项目有过「没有上游依据的生成式改写」导致 14 处 P0 事实错误的先例。
+2. **id 全页去重**：上游 `Balancing` 与 `Balancing changes: …` 归一化后同名，会让锚点串位（§6.4 的坑），故加 `-2`/`-3`。
+3. **标题集合不稳定**：旧版带 emoji（`🌍 Overview`）、`Miscellaneous Fixes` 在 7.0.0 是二级标题 → 只做前缀归一化，
+   **不写死标题清单**，未知标题原样保留。
+4. **增量友好**：默认沿用本地已有版本（`--refresh` 强制重抓），输出按版本号倒序、字段稳定。
 
 ---
 
