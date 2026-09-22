@@ -30,6 +30,7 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
     .links a:hover { border-color: var(--yellow); color: var(--yellow); }
     .badge { font-size: 0.68rem; padding: 1px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-mute); }
     .badge.zh { color: var(--yellow); border-color: #4A3B00; }
+    .badge.mt { color: #F59E0B; border-color: #5C4A0A; }
 
     .notice { background: var(--stripe-warn, #2A1200); border: 1px solid #5A1F0A; border-left: 3px solid var(--warn, #FF4D2E); color: #FFB59E; padding: 10px 14px; font-size: 0.82rem; margin-bottom: 16px; line-height: 1.7; }
     .notice b { color: var(--warn, #FF4D2E); }
@@ -175,16 +176,24 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
         (older ? '<a class="next" href="patchnote.html?id=' + encodeURIComponent(older.id) + '">更早版本 ▶<br>' + esc(older.id) + ' ' + esc(older.title) + '</a>' : '<a class="next" style="visibility:hidden"></a>') +
         '</div>';
 
-      var warn = (z && z.fully_translated) ? "" :
-        '<div class="notice"><b>本页尚未汉化</b> —— 下方为维基英文原文。更新公告是上游文本的搬运，中文可按版本增量补齐；' +
-        '本页的 <code>?id=' + esc(VER.id) + '</code> 与英文主干已就位，补译文不需要改代码。</div>';
+      var warn = (z && z.fully_translated)
+        ? (z.mt
+            ? '<div class="notice"><b>本页为机器翻译，尚未人工校对</b> —— 术语与数字可能有误。' +
+              '校对完成后会去掉本提示（数据层删掉该版本的 <code>mt</code> 字段即可）。' +
+              '发现错误欢迎在仓库提 Issue。</div>'
+            : "")
+        : '<div class="notice"><b>本页尚未汉化</b> —— 下方为维基英文原文。更新公告是上游文本的搬运，中文可按版本增量补齐；' +
+          '本页的 <code>?id=' + esc(VER.id) + '</code> 与英文主干已就位，补译文不需要改代码。</div>';
 
       var html = '<div class="col-main">' +
         '<div class="card pn-top">' + art +
           '<div style="min-width:0;flex:1">' +
             '<h1>' + esc(dispTitle) + '</h1>' +
             (dispTitle !== VER.title ? '<div class="title-en">' + esc(VER.title) + '</div>' : '') +
-            '<div class="verline">版本 ' + esc(VER.id) + (z && z.fully_translated ? ' <span class="badge zh">已汉化</span>' : ' <span class="badge">英文原文</span>') + '</div>' +
+            '<div class="verline">版本 ' + esc(VER.id) +
+              (z && z.fully_translated
+                 ? (z.mt ? ' <span class="badge mt">机翻 · 待校对</span>' : ' <span class="badge zh">已汉化</span>')
+                 : ' <span class="badge">英文原文</span>') + '</div>' +
             '<div class="fields">' +
               '<span><b>发布日期</b> ' + esc(VER.release_date || "—") + (VER.release_time ? " · " + esc(VER.release_time) : "") + '</span>' +
               '<span><b>更新体积</b> ' + esc(VER.size || "—") + '</span>' +
