@@ -238,13 +238,15 @@ def main():
     a = ap.parse_args()
 
     out_path = os.path.join(a.root, "HD2_Wiki", "data", "wiki", "zh", "patchnotes.json")
-    old = {}
+    old, old_doc = {}, None
     if os.path.exists(out_path) and not a.refresh:
         try:
-            for v in json.load(io.open(out_path, encoding="utf-8"))["versions"]:
+            old_doc = json.load(io.open(out_path, encoding="utf-8"))
+            for v in old_doc["versions"]:
                 old[v["id"]] = v
         except Exception as e:
             print("!! 旧文件解析失败，将全量重抓: %s" % e)
+            old_doc = None
 
     d = api("action=query&list=categorymembers&cmtitle=Category%3APatch%20Notes&cmlimit=500&format=json")
     if "query" not in d:
@@ -273,12 +275,31 @@ def main():
         "total": len(versions),
         "versions": versions,
     }
+
+    # ---- 幂等：内容没变就**不写盘**（只 updated_at 变不算变）----
+    # 为什么必须这样：本脚本现在由 CI 定时跑（.github/workflows/fetch-patchnotes.yml），
+    # 若每次只把 updated_at 刷新一遍就提交，会变成「每 2 小时一次空提交 + 一次 Pages 重建」，
+    # 纯噪音（§11.3 的构建配额与 §11.1-8 的 diff 噪音都指向同一结论）。
+    def stable(d):
+        return json.dumps({k: v for k, v in d.items() if k != "updated_at"},
+                          ensure_ascii=False, sort_keys=True)
+
+    if old_doc is not None and stable(old_doc) == stable(doc):
+        doc["updated_at"] = old_doc.get("updated_at") or doc["updated_at"]
+        changed = False
+    else:
+        changed = True
+
     text = json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
     json.loads(text)                                     # 先校验后写盘（§11.1-13）
-    tmp = out_path + ".tmp"
-    with io.open(tmp, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(text)
-    os.replace(tmp, out_path)
+    if changed:
+        tmp = out_path + ".tmp"
+        with io.open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(text)
+        os.replace(tmp, out_path)
+    else:
+        # 仍按旧内容序列化一次，保证下面的字节数与报告一致
+        text = json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
 
     lines = ["上游 Category:Patch Notes 共 %d 个版本；本次收录 %d 个（最新在前）\n" % (len(titles), len(versions))]
     for s in stats:
@@ -289,7 +310,12 @@ def main():
         else:
             lines.append("%-12s 小节=%-3d 条目=%-4d warnings=%s" % (
                 s["version"], s["sections"], s["items"], s["warnings"] or "无"))
-    lines.append("\n写出 %s（%d B）" % (out_path, len(text.encode("utf-8"))))
+    lines.append("\n%s %s（%d B）" % ("写出" if changed else "内容无变化，未写盘：", out_path, len(text.encode("utf-8"))))
+
+    # 本次**新抓到**的版本（用于 CI 判断要不要开 issue 提醒翻译）
+    new_versions = [s["version"] for s in stats if not s.get("cached") and not s.get("error")]
+    lines.append("NEW_VERSIONS: %s" % ",".join(new_versions))     # 机器可读，勿删
+
     body = "\n".join(lines)
     print(body)
     if a.report:

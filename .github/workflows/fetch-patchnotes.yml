@@ -1,0 +1,92 @@
+name: Fetch Patch Notes
+
+# 更新公告（patch notes）自动接入
+# ---------------------------------------------------------------------------
+# 做什么：每 2 小时检查 helldivers.wiki.gg 的 Category:Patch Notes；
+#   ① 发现新版本 → 抓成英文主干写进 HD2_Wiki/data/wiki/zh/patchnotes.json
+#   ② 同步 sitemap 里的详情页（gen_sitemap.py 幂等，已有 URL 的 lastmod 不动）
+#   ③ **先过校验器再提交**（§11.1-13「先校验后写盘」在 CI 里的等价物）
+#   ④ 有新版本就开 issue 提醒「待翻译」
+#
+# 为什么是**独立工作流**而不是挂进 fetch-data.yml：
+#   挂进 fetch-data 延迟更低（那条 */5 的 schedule 实测最可靠），但 fetch-data 是
+#   **整站数据的主命脉**，改它一旦出错会连累 5 分钟一次的战况抓取。
+#   公告的内容类型（一个月变几次）不需要分钟级新鲜度，所以选独立工作流，爆炸半径仅限自己。
+#   ⚠ 已知代价（§11.4 记过）：**GitHub 会节流新增的定时工作流**，实测可能几小时才跑一次。
+#   若发现长期不触发，按交接文档 §11.4 的做法把它挂进 fetch-data.yml（那条 schedule 稳定）。
+#   手动兜底：本工作流支持 workflow_dispatch，也可在本机直接跑 scripts/fetch_patchnotes.py。
+#
+# 翻译是**人在环**的一步（交接文档 §19.8 的 L1/L4）：本工作流只搬英文主干，
+# 中文由人按小节 id 对齐写进 patchnotes_zh.json（校验器 PATCH.PAIRING 强制条目数相等）。
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:      # 支持手动触发（新版本上线后可立即拉一次）
+
+permissions:
+  contents: write         # 提交 patchnotes.json 与 sitemap.xml
+  issues: write           # 新版本入库后开 issue 提醒翻译
+
+concurrency:
+  group: fetch-patchnotes
+  cancel-in-progress: false
+
+jobs:
+  patch-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 抓取更新公告（上游无新版本则文件不动）
+        id: fetch
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          set -euo pipefail
+          out="$(python scripts/fetch_patchnotes.py --limit 10)"
+          echo "$out"
+          # 脚本末尾会打一行机器可读的 NEW_VERSIONS:（见 fetch_patchnotes.py）
+          new="$(printf '%s\n' "$out" | sed -n 's/^NEW_VERSIONS: //p' | tail -1)"
+          echo "new=$new" >> "$GITHUB_OUTPUT"
+
+      - name: 同步 sitemap 详情页
+        run: python scripts/gen_sitemap.py
+
+      - name: 数据校验（不通过就整体失败，因此不会提交）
+        run: python scripts/validate_wiki_data.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2_Wiki/data/wiki/zh/patchnotes.json sitemap.xml
+          if git diff --cached --quiet; then
+            echo "公告无变化，跳过提交"
+          else
+            git commit -m "data(公告): 自动接入更新公告 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          fi
+
+      - name: 有新版本 → 开 issue 提醒翻译
+        if: steps.fetch.outputs.new != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          vers="${{ steps.fetch.outputs.new }}"
+          first="$(printf '%s' "$vers" | cut -d, -f1)"
+          open_n="$(gh issue list --state open --search '更新公告待翻译' --json number --jq 'length')"
+          if [ "$open_n" != "0" ]; then
+            echo "已有未关闭的「待翻译」issue，跳过创建（避免刷屏）"
+            exit 0
+          fi
+          gh issue create \
+            --title "📢 更新公告待翻译：$vers" \
+            --body "$(printf '新版本公告已自动入库（英文主干）：**%s**\n\n- 数据：`HD2_Wiki/data/wiki/zh/patchnotes.json`\n- 页面：https://jerry114514.github.io/HD2_Wiki/patchnote.html?id=%s\n- 翻译：按小节 `id` 对齐写进 `HD2_Wiki/data/wiki/zh/patchnotes_zh.json`，**节内条目数必须与主干相等**（校验器 `PATCH.PAIRING` 强制）\n- 更新名先查 `data/wiki/zh/terms.json`（例：`Devoid of Liberty = 自由入寂`）\n- 译完把该版本的 `fully_translated` 置 true\n' "$vers" "$first")"
