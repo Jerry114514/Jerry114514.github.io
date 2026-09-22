@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-08-25T19:13:49Z",
+  "updated_at": "2026-09-22T13:08:17Z",
   "source": "Helldivers Wiki.gg",
-  "total": 89,
+  "total": 91,
   "categories": {
     "primary": {
       "name": "主武器",
       "name_en": "Primary Weapons",
-      "count": 49
+      "count": 50
     },
     "secondary": {
       "name": "副武器",
@@ -16,7 +16,7 @@
     "throwables": {
       "name": "投掷物",
       "name_en": "Throwables",
-      "count": 19
+      "count": 20
     },
     "support": {
       "name": "支援武器",
@@ -667,6 +667,146 @@
       },
       "icon": "https://helldivers.wiki.gg/images/thumb/AR-61_Tenderizer_Primary_Render.png/240px-AR-61_Tenderizer_Primary_Render.png",
       "description_zh": "所有计算应基于详细武器统计部分所列数值。"
+    },
+    {
+      "id": "ar_gl_21_one_two",
+      "name": "AR/GL-21 “幺二”",
+      "name_en": "AR/GL-21 One-Two",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 95.0,
+        "capacity": 40,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 95.0,
+        "damage_type": "Ballistic",
+        "capacity": 40,
+        "fire_rate": 650,
+        "recoil": 13.0,
+        "penetration": "light",
+        "reserve_ammo": 6,
+        "fire_modes": [
+          "全自动",
+          "半自动",
+          "三连发",
+          "40mm"
+        ],
+        "ergonomics": 30,
+        "reload_time": "3.33s (8mm) 2.5s(40mm)",
+        "dps": null
+      },
+      "traits": [
+        "轻甲穿透",
+        "爆炸"
+      ],
+      "unlock": "Python Commandos P1",
+      "description": "A combination assault rifle/grenade launcher. Versatile, but heavy to wield.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR/GL-21_One-Two",
+      "detailed_stats": {
+        "fire_rate": "650 rpm",
+        "recoil": "13.25",
+        "recoil_horizontal": "9",
+        "recoil_vertical": "17.5",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "30",
+        "capacity": "40",
+        "spare_magazines": "6",
+        "starting_magazines": "4",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "AR/GL-21 P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "11 g",
+              "initial_velocity": "920 m/s",
+              "drag_factor": "30%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "95 Ballistic",
+              "damage_durable": "24 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "12"
+            }
+          },
+          {
+            "name": "40mm HEAT GRENADE P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "50 g",
+              "initial_velocity": "100 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "40mm HEAT GRENADE_P_IE",
+              "explode_after": "40mm HEAT GRENADE_P_IE"
+            },
+            "damage": {
+              "damage_standard": "250 Ballistic",
+              "damage_durable": "250 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "30",
+              "stagger_force": "40",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "40mm HEAT GRENADE P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "400 Explosion",
+              "inner_durable": "400 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 399.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 399.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.25 m",
+              "radius_outer": "6.5 m",
+              "radius_shockwave": "8 m"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/AR-GL-21_One_Two_Primary_Render.png/240px-AR-GL-21_One_Two_Primary_Render.png",
+      "unlock_zh": "蟒蛇突击兵 第一章节",
+      "description_zh": "突击步枪与榴弹发射器的结合体。用途多样，但持握笨重。"
     },
     {
       "id": "arc_12_blitzer",
@@ -2338,6 +2478,98 @@
         }
       },
       "icon": "https://helldivers.wiki.gg/images/thumb/G-142_Pyrotech_Throwable_Render.png/240px-G-142_Pyrotech_Throwable_Render.png"
+    },
+    {
+      "id": "g_40_k_melta_mine",
+      "name": "G/40-K 热熔地雷",
+      "name_en": "G/40-K Melta Mine",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 2000.0,
+        "capacity": 4,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 2000.0,
+        "damage_type": "Explosion",
+        "capacity": 4,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "反坦克"
+      ],
+      "unlock": "Castellan’s Creed",
+      "description": "A powerful, single-use, proximity-detonated heat energy mine. During the Fall of Chara, it is said that enough Melta Mines were detonated to outshine the planet's sun.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "detailed_stats": {
+        "main_health": "150",
+        "main_armor": "Unarmored",
+        "attacks": [
+          {
+            "name": "G/40-K MELTA MINE E",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "2000 Explosion",
+              "inner_durable": "2000 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1999.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1999.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III"
+            },
+            "area_of_effect": {
+              "radius_inner": "2.5 m",
+              "radius_outer": "6 m",
+              "radius_shockwave": "15 m"
+            }
+          },
+          {
+            "name": "FLAMEWALL",
+            "type": "damage",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "600 Fire",
+              "damage_durable": "600 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank III",
+              "pen_slight_angle": "Anti-Tank III",
+              "pen_large_angle": "Anti-Tank III",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "40",
+              "push_force": "40"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/G-40-K_Melta_Mine_Throwable_Render.png/240px-G-40-K_Melta_Mine_Throwable_Render.png",
+      "unlock_zh": "卡斯特兰信条 第二章节",
+      "description_zh": "威力强大的单次使用近炸式热能地雷。据说 Chara 陷落时，引爆的热熔地雷之多，足以盖过那颗行星的太阳。"
     },
     {
       "id": "gp_20_ultimatum",

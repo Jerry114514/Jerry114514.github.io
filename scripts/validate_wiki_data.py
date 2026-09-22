@@ -130,7 +130,9 @@ CHECKS = [
 
 KNOWN = {
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/weapons.json"): (
-        89, "SCHEMA §8：weapons.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"),
+        91, "SCHEMA §8：weapons.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"
+            "（2026-09-22 补录 AR/GL-21 One-Two 与 G/40-K Melta Mine 两条后 89 → 91；"
+            "新条目沿用既有热链约定，本地化迁移时本条与 §8 一并撤掉）"),
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/stratagems_full.json"): (
         109, "SCHEMA §8：stratagems_full.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"),
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/loadout.json"): (

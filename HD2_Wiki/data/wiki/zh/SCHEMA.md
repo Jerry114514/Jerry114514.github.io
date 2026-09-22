@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.9 · 2026-09-22（v1.9 登记 §7.3 `weapons.json` 的两条**既有**中文覆盖字段 `unlock_zh` / `description_zh`（`weapon.html` 按 `X_zh || X` 取值，此前只在 41 条里野生存在、未登记），并写入三条实测陷阱：① 条目顺序 = `fetch_weapons.py` 的 `sort_key(name_en)` **全局排序**（不是按 `category` 分组）；② `detailed_stats` 顶层基础参数必须取「**本体**那张 `attack-data-table-weapon` 表」——带下挂武器的页面还有第二张同名表，机器抓取会把下挂的 `fire_rate`/`recoil`/`ergonomics`/`capacity` 覆盖上去；③ `stats_full.capacity`（infobox）与 `detailed_stats.capacity`（正文表）**允许不同**，两处上游数值本身就不一致。同日补录两条缺口 `AR/GL-21 One-Two`（`ar_gl_21_one_two`）与 `G/40-K Melta Mine`（`g_40_k_melta_mine`），`weapons.json` **89 → 91 条**，校验器 `IMG.HOTLINK` 基线同步 89 → 91）
 > 版本：v1.8 · 2026-09-22（v1.8 新增 §7.14 **更新公告** `patchnotes.json` / `patchnotes_zh.json` —— 全站第一个「主干由机器抓取」的数据集（`scripts/fetch_patchnotes.py` 走 helldivers.wiki.gg 的 MediaWiki API）；配套校验器新增 `PATCH.PAIRING` / `PATCH.FIELDS` / `PATCH.SECTION` 三项，其中 `PATCH.PAIRING` 是本站首次采用**索引配对**并强制「中文条目数 == 主干条目数」；页面 `patchnotes.html` + `patchnote.html` 与 `navigation.json` 第 9 项）
 > 版本：v1.7 · 2026-09-21（v1.7 **一图流 `guides[]` 批量落库**：新增 12 个单位 —— 移动工厂 / 悲怜体 / 粉碎者 / 惑乱者 / 激进先锋 / 噪轰引擎 / 掠食追猎虫 / 掠食追踪虫 / 突入者 / 御门者 / 证真者 / 猎杀器，全站由 **4 条（4 个敌人）扩至 16 条（16 个敌人）**；并把 12 张新母版在 **q=0.9** 下的复测结论补进 §7.4.1 约定 3 与 §9 第 19 条。字段与口径**无新增**，v1.7 只是把 v1.6 已登记契约的落地范围与实测基线上调）
 > 版本：v1.6 · 2026-09-21（v1.6 在 §7.4 登记 `enemies.json` 的 `guides[]` 一图流攻略图字段（含 `src` / `title` / `author` / `source_url` / `note`），配套新增 §9 第 19 条（图片一律站内 WebP、`source_url` 只做出处不做出图、无署名必须写进 `note`）与 §10 第 14 条自检；校验器新增 `GUIDES.FIELDS` 检查项）
@@ -300,6 +301,29 @@ warbond   = item.warbond_zh || item.warbond
 
 `category`、`subcategory`、`subcategory_name`、`stats_short{ damage, capacity, penetration }`、`stats_full{}`、`traits[]`、`unlock`、`lore`、`variants[]`、`tips[]`、`detailed_stats{}`。顶层另有 `categories{}`（分类元数据）。
 
+**中文覆盖（2026-09-22 登记；字段此前已在 41 条里野生存在）**：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `unlock_zh` | string | 否 | `unlock` 的中文覆盖。`weapon.html` 取 `unlock_zh \|\| unlock`；`unlock` 保留英文原文（如 `Python Commandos P1`） |
+| `description_zh` | string | 否 | `description` 的中文覆盖。`weapon.html` 取 `description_zh \|\| description` |
+
+> 两个 `*_zh` 字段写在条目**末尾**（`icon` 之后）。**不要把中文写进 `unlock` / `description` 覆盖原文** ——
+> 那会同时丢掉英文出处（本文件历史上两者都出现过，属 §8 登记在案的不一致）。
+
+**三条实测陷阱（2026-09-22 登记）**：
+
+1. **条目顺序是全局排序**：`scripts/archive/fetch_weapons.py` 按 `sort_key(name_en)`（`^([A-Z/]+)-?(\d+)` → `(前缀, 数字)`）
+   对**全部**武器排序后写入，**不是**按 `category` 分组（实测 89 条 0 处逆序）。新增条目要按同一键插入，
+   否则目录页顺序会突兀（`AR/GL-21 One-Two` 排在 `AR-61` 之后、`ARC-12` 之前；`G/40-K Melta Mine` 排在 `G-142` 之后、`GP-20` 之前）。
+2. **`detailed_stats` 顶层基础参数取「本体」那张表**：带下挂武器的页面里有两张 `attack-data-table-weapon` 表
+   （本体 + 下挂），旧抓取脚本会把**下挂**那张的 `fire_rate` / `recoil` / `recoil_horizontal` / `recoil_vertical` /
+   `spread` / `ergonomics` / `capacity` 覆盖到顶层 —— 于是 `AR/GL-21 One-Two` 会变成「900 rpm / 人体工学 95 / 容量 1」
+   （真值 650 rpm / 30 / 40）。抓取或手写时必须按本体表填；下挂子表的数值**当前 schema 无处安放**（登记为已知缺口）。
+3. **`stats_full.capacity` 与 `detailed_stats.capacity` 允许不同**：前者取自 infobox、后者取自正文表，上游两处本身就不一致
+   （`sg_20_halt` 8 / 16、`g_142_pyrotech` 6 / 2000 —— 后者是 wiki 自己把爆炸内径填进了 Capacity 行）。
+   **不要"顺手"把它们对齐**，那会与上游不一致（§9 第 20 条）。
+
 ### 7.4 `enemies.json`
 
 `name_zh`（**遗留反向命名**，见第 8 节）、`faction`、`faction_label`、`image`、`category`、`health_total`、`damage`、`damage_type`、`fire_damage_multiplier`、`stagger_threshold`、`minimum_difficulty`、`body_parts[]`（含 `part_id` / `armor_level` / `location` / `durable` / `percent_to_main` / `overflow_cap` / `constitution` / `fatal` / `is_weak_point` / `count` / `armor_level_zh` / `location_zh`）。
@@ -547,6 +571,7 @@ warbond   = item.warbond_zh || item.warbond
 | `mechanics/galactic_war.json` 的 `References` 小节（2026-09-17 实测） | `content` 的 `<div>` 与 `</div>` 数量为 182 : 183 —— 结尾在 MediaWiki 注释之后多一个**孤立 `</div>`**（抓取时丢掉了对应的开标签） | `content` 内的 HTML 片段必须标签配平 | **已修（2026-09-17）**：删掉那一个孤立 `</div>`，现为 365 : 365 平衡。附带效果：该节原本还会因「注释残文 + 孤立 `</div>`」合成一段 12 字符的假散文，从而多渲染一个正文 21 字符的**垃圾「英文原文」折叠块**；配平后垃圾折叠块一并消失（该页 `details.mg-ref` 4 → 3，减掉的正是这一个垃圾块）。后果见第 9 节第 8 条 |
 | `mechanics/status_effects.json` 的 `Change_History` 小节（2026-09-18 实测） | `content` 的 `<div>` / `</div>` 为 156 : 157，末尾同样是「MediaWiki 注释 + 孤立 `</div>`」；后果不是垃圾折叠块（该节未译、不产生 `trunkRefHtml`），而是**该节最后 2 个 `Armor_AP2/AP4_Icon.png`（188×221）被挤出 `.section`**，落到 `.main-content` 下，于是既躲开表格图标规则、也躲开正文图标规则，按原始 188×221 渲染（见第 9 节第 12 条） | 标签配平 | **已修（2026-09-18）**：删掉末尾孤立 `</div>`（`api-parse\n -->\n</div>` → `api-parse\n -->\n`），现为 156 : 156；两图回到 `.section` 内，渲染 16–18 × 21 px。`damage.json` 的 `References`（119:120）与 `difficulty.json` 的 `Mission_Difficulty_Changes`（119:120）**同样不平衡但本次未改**：实测两者渲染后没有任何节点逃出 `.section`（`details.mg-ref` 仍在节内、`.main-content` 无逃逸子节点），浏览器错误恢复已兜住，属「已知待清理」而非缺陷 |
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
+| `blocks/navigation.json` 的卡片 `count`（2026-09-22 实测，**线上一致**） | 与数据集 `total` 不一致：`武器` **45**（数据集实际 91）、`战略配备` **89**（实际 109）、`敌人` **65**（实际 95）；其余对得上（强化资源 20 / 战争债券 25 / 任务 105 / 游戏机制 5 / 更新公告 10） | 目录卡片计数应与对应数据集 `total` 一致（§2 的 `total` 约定、§10 第 8 条自检项） | **未处理**：语义待用户确认后再改（校验器当前**不**校验该字段，所以 CI 不会变红，属"绿着但不对"）。若要修，`敌人` 需先定口径 —— 算 95 条数据集条目，还是 `enemies.html` 实际渲染的非亚阵营页数 |
 
 ---
 
@@ -661,6 +686,12 @@ warbond   = item.warbond_zh || item.warbond
     - **文字密集图的验收方式**：不能只看体积，必须**目视比对同一处小字区域**（部位表表头 + 表体正文，2–3 倍最近邻放大，图上下并排）；以「字可辨、笔画不粘连」为准，而不是以 PSNR 数值为准。
     - **批量落库实测（2026-09-21 · v1.7，12 张新母版 2560×1440）**：q=0.9 → **539 680 – 726 164 B（0.51–0.69 MB）**、PSNR **36.04–37.39 dB**，合计 **7.81 MB**；与首批 4 张同档。验收按上一条（**自动定位最高细节区块 → 3 倍最近邻放大并排目视**）执行：对 PSNR 最低的一张（`predator_stalker`，36.04 dB）确认小字可辨。
       另记一条**反向纪律**：本次先按「质量优先」取了 **q=0.92**（单张 0.57–0.80 MB，12 张合计 **8.68 MB**），复核本节后**回退为 q=0.9** 重转 12 张（单张 0.51–0.69 MB，合计 **7.81 MB**，**−0.87 MB**；PSNR 仅降 **0.1–0.3 dB**）。**结论：q=0.9 是本项目的既定标准，不要按"质量优先"自行上调**；要提清晰度就提分辨率，不要提质量分。
+
+20. **`weapons.json` 补录两条缺口（2026-09-22 登记并实施）**：按交接文档 §19.10 的「明确下一步」补录 `AR/GL-21 One-Two`（`ar_gl_21_one_two`，主武器 · 突击步枪）与 `G/40-K Melta Mine`（`g_40_k_melta_mine`，投掷物），**89 → 91 条**（`primary` 49→50、`throwables` 19→20）。
+    - **根因（重要，别误记成"新条目"）**：`scripts/archive/fetch_weapons.py` 的抓取循环**跳过标题含 `/` 的页面**（`if ... or ("/" in title and not title.startswith("CQC")): continue`），而这两个型号恰好都带 `/` —— 也就是说它们是 **2026-08 首次抓取时就被静默过滤掉的**，不是后来新增的。同一条过滤规则还漏掉了 `AR-11 Arbitrator`、`SMG/FLAM-34 Stoker`、`P/40-K Bolt Pistol`、`R/40-K Hot-Shot Marksman Rifle`、`M6C/SOCOM Pistol`、`G/SH-39 Shield`、`GL-15 Evictor`、`LAS-12 Sai`、`P-34 Breacher`、`G-60 Anti-Tank Seeker`、`G-8 Immolation`、`CQC-73 Entrenchment Tool` 等（**待办，见交接文档**）。
+    - **同批打通的下游（四处，缺一处功能就是残的）**：`warbonds.json` 的 `reward_refs`（蟒蛇突击兵第 1 页 35 勋章 / 卡斯特兰信条第 2 页 50 勋章 → 奖励行变可点）、`wiki-link-map.js` 两条站内映射（同时让 L2 上游侦测开始跟踪这两页）、`sitemap.xml` 两个详情页、`terms.json` 名称登记（含公告用名 `G/40 Melta Mine` 的别名）。
+    - **三条字段陷阱**见第 7.3 节。其中第 ② 条（下挂子表覆盖本体表）是**静默错误**：真数据全绿、页面照常渲染，只有把 `detailed_stats.capacity` 与 `stats_full.capacity` 交叉核对、再回上游**逐表**比对才会暴露。**可复用探针**：对全库做「两处同名字段是否一致」的交叉核对，不一致的一律回上游看是**哪张表**再决定改不改 —— 本次靠它排除了 `sg_20_halt`（8 / 16）与 `g_142_pyrotech`（6 / 2000）：那两处是**上游自己写歪**（Pyrotech 被 wiki 把爆炸内径填进了 Capacity 行），**不是**我们的 bug，**不要"顺手"对齐**。
+    - 另记一条**当日未修**的既有偏差：`blocks/navigation.json` 的卡片计数与数据集 `total` 不一致（`武器` 45 / `战略配备` 89 / `敌人` 65），已登记在第 8 节末行。
 
 
 ---

@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-22T14:00:00Z",
+  "updated_at": "2026-09-22T13:08:17Z",
   "source": "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径",
-  "total": 1681,
+  "total": 1684,
   "terms": [
     {
       "en": "% To Main",
@@ -10206,13 +10206,31 @@
       "en": "AR/GL-21 One-Two",
       "zh": "AR/GL-21 “幺二”",
       "source": "口径（A 项 · 官方译名）",
-      "note": "主武器（战争债券「蟒蛇突击兵」第 1 页，35 勋章）；2026-09-22 用户给定官方译名。⚠ 该武器**尚未**进入 weapons.json（没有站内详情页），所以 warbonds.json 的逐页奖励表里它仍是英文、且不可点；补录武器后才谈得上链过去"
+      "note": "主武器（战争债券「蟒蛇突击兵」第 1 页，35 勋章）；2026-09-22 用户给定官方译名；同日已补录进 weapons.json（id `ar_gl_21_one_two`），债券逐页奖励表那一行与 7.1.0 公告标题现可链到站内详情页"
     },
     {
       "en": "One-Two",
       "zh": "“幺二”",
       "source": "口径（A 项 · 官方译名）",
       "note": "上一条的**短名**：正文/表格里省略型号时用（如 7.1.0 公告正文「更突出“幺二”与其他突击步枪的不同之处」）"
+    },
+    {
+      "en": "G/40-K Melta Mine",
+      "zh": "G/40-K 热熔地雷",
+      "source": "weapons.json",
+      "note": "武器 · 投掷物（战争债券「卡斯特兰信条」第 2 页，50 勋章）；2026-09-22 补录进 weapons.json（id `g_40_k_melta_mine`）"
+    },
+    {
+      "en": "Melta Mine",
+      "zh": "热熔地雷",
+      "source": "weapons.json",
+      "note": "上一条的**短名**：正文/表格里省略型号时用"
+    },
+    {
+      "en": "G/40 Melta Mine",
+      "zh": "G/40 热熔地雷",
+      "source": "口径（A 项 · 公告用名）",
+      "note": "7.1.0 公告用名（无 `-K`），与站内 `patchnotes_zh.json` 的写法一致；wiki 页名与站内 `name_en` 为 `G/40-K Melta Mine`，**同一投掷物**。跨库比对名字时两者都要认（handover §19.8 已记过这处不一致）"
     }
   ]
 }
