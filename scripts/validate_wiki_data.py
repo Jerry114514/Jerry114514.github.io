@@ -115,6 +115,9 @@ CHECKS = [
     ("REF.TERMS", "terms.json：en 唯一、en/zh/source 非空、rejected[].zh != zh"),
     ("IMG.EXISTS", "icon/image/img/src 必须是非空、真实存在的站内相对路径（wiki 数据另禁热链）"),
     ("GUIDES.FIELDS", "enemies.guides[]（一图流）必填字段、src 前缀、source_url 必须是外站 http(s)"),
+    ("PATCH.PAIRING", "patchnotes_zh 覆盖：小节 id 必须命中主干、子节同序、节内条目数必须相等（索引配对）"),
+    ("PATCH.FIELDS", "patchnotes 主干：版本 id 为点分数字、title/release_date 齐备、blog_url 为外站 http(s)"),
+    ("PATCH.SECTION", "patchnotes 主干：小节 id 合法且全页唯一（锚点不串位）"),
     ("LINK.EXISTS", "blocks/index 的 .html 链接目标必须真实存在"),
 ]
 
@@ -145,7 +148,7 @@ NON_PATH_ICON_ENUMS = {"medal", "cape"}
 # 禁止站内图片热链的字段：icon 必须站内相对路径（SCHEMA §1）
 ICON_MUST_BE_LOCAL = ("icon",)
 
-PATH_FIELDS = ("icon", "image", "img", "image_thumb", "src", "thumbnail", "cover")
+PATH_FIELDS = ("icon", "image", "img", "image_thumb", "src", "thumbnail", "cover", "image_local")
 LINK_FIELDS = ("link",)
 IMG_SRC_RE = re.compile(r"<img\b[^>]*?\bsrc\s*=\s*[\"']([^\"']+)[\"']", re.I | re.S)
 SCHEME_RE = re.compile(r"^(?:[a-zA-Z][a-zA-Z0-9+.\-]*:|//|#|data:|mailto:|javascript:)")
@@ -173,6 +176,16 @@ GUIDES_FILE = Z + "enemies.json"
 GUIDES_SRC_PREFIX = "./assets/enemy-guides/"
 GUIDES_REQUIRED = ("src", "title", "author", "source_url")
 GUIDES_OPTIONAL = ("note", "author_url", "source_title")
+
+# patchnotes.json / patchnotes_zh.json（更新公告，SCHEMA §7.13，2026-09-22 登记）
+# 主干是**机器抓取**的上游文本（scripts/fetch_patchnotes.py），中文覆盖按「小节 id」对齐、
+# 节内条目**按索引一一对应** —— 这是本项目头一次用索引配对，所以校验器**强制长度相等**：
+# 上游一改条目数就立刻报错，而不是静默错位（§6.4 有过「点 A 锚点显示 B 内容」的教训）。
+PATCH_TRUNK = Z + "patchnotes.json"
+PATCH_ZH = Z + "patchnotes_zh.json"
+PATCH_VERSION_RE = re.compile(r"^\d+(\.\d+)+$")
+PATCH_ASSET_PREFIX = "./assets/patchnotes/"
+PATCH_SECTION_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
 
 # ---------------------------------------------------------------------------
@@ -687,6 +700,7 @@ class Validator(object):
         self.check_wiki_files()
         self.check_map_files()
         self.check_mechanics()
+        self.check_patchnotes()
         # 必须在 flush_aggregates 之前：id 类检查也会命中 KNOWN 基线，
         # 若放在 main() 里晚于 flush_aggregates()，基线计数永远不会被结算
         #（2026-09 修正：曾因此把 missions.json 已登记的 8 处跨分类重复报成错误）。
@@ -1334,6 +1348,125 @@ class Validator(object):
                          "链接 %r 指向的页面不存在（解析到 %s）"
                          % (v, safe_relpath(target, self.o.root)),
                          "改成站内真实存在的 .html 文件名")
+
+    # --- 更新公告（patchnotes）---
+
+    def check_patchnotes(self):
+        if PATCH_TRUNK not in self.parsed_ok:
+            return
+        trunk = self.values[PATCH_TRUNK]
+        versions = trunk.get("versions")
+        if not isinstance(versions, list):
+            self.rep.add("PATCH.PAIRING", PATCH_TRUNK, ("versions",),
+                         "versions 不是数组", "见 SCHEMA §7.13")
+            return
+
+        seen_ver, trunk_ids = set(), set()
+        for i, v in enumerate(versions):
+            p = ("versions", i)
+            vid = v.get("id")
+            if not isinstance(vid, str) or not PATCH_VERSION_RE.match(vid):
+                self.rep.add("PATCH.PAIRING", PATCH_TRUNK, p + ("id",),
+                             "版本 id %r 不是点分数字（如 1.007.100）" % (vid,),
+                             "版本号直接取上游页面标题，不做改写")
+            if vid in seen_ver:
+                self.rep.add("PATCH.PAIRING", PATCH_TRUNK, p + ("id",),
+                             "版本 id %r 重复" % (vid,), "同一版本只能出现一次")
+            seen_ver.add(vid)
+            trunk_ids.add(vid)
+            for f in ("title", "release_date"):
+                if not isinstance(v.get(f), str) or not v.get(f).strip():
+                    self.rep.add("PATCH.FIELDS", PATCH_TRUNK, p + (f,),
+                                 "缺少 %s（上游信息框应恒有）" % f, "重跑 fetch_patchnotes.py")
+            bref = v.get("blog_url")
+            if bref is not None and (not isinstance(bref, str) or not bref.startswith("http")):
+                self.rep.add("PATCH.FIELDS", PATCH_TRUNK, p + ("blog_url",),
+                             "blog_url = %r 不是外站 http(s) URL" % (bref,),
+                             "官方公告链接必须是绝对 URL；没有就省略该字段")
+            # 小节 id 唯一（锚点不能撞）
+            flat, ids = [], []
+
+            def walk(secs, path):
+                for j, s in enumerate(secs or []):
+                    sid = s.get("id")
+                    ids.append(sid)
+                    flat.append((path + (j,), s))
+                    walk(s.get("subsections") or [], path + (j, "subsections"))
+            walk(v.get("sections") or [], p + ("sections",))
+            for k, sid in enumerate(ids):
+                if not isinstance(sid, str) or not PATCH_SECTION_ID_RE.match(sid):
+                    self.rep.add("PATCH.SECTION", PATCH_TRUNK, flat[k][0] + ("id",),
+                                 "小节 id %r 非法（只允许小写字母/数字/下划线/连字符）" % (sid,),
+                                 "由 fetch_patchnotes.py 的前缀归一化 + 全页去重生成")
+                if ids.count(sid) > 1:
+                    self.rep.add("PATCH.SECTION", PATCH_TRUNK, flat[k][0] + ("id",),
+                                 "小节 id %r 在全页重复" % (sid,),
+                                 "锚点会串位；抓取器有 -2/-3 去重，若出现说明被手工改过")
+                    break
+
+        # --- 中文覆盖 ---
+        if PATCH_ZH not in self.parsed_ok:
+            return
+        zh = self.values[PATCH_ZH]
+        zvers = zh.get("versions_zh")
+        if not isinstance(zvers, list):
+            self.rep.add("PATCH.PAIRING", PATCH_ZH, ("versions_zh",),
+                         "versions_zh 不是数组", "见 SCHEMA §7.13")
+            return
+        by_id = {v.get("id"): v for v in versions}
+        for i, zv in enumerate(zvers):
+            p = ("versions_zh", i)
+            vid = zv.get("id")
+            if vid not in by_id:
+                self.rep.add("PATCH.PAIRING", PATCH_ZH, p + ("id",),
+                             "覆盖里的版本 %r 在主干中不存在" % (vid,),
+                             "只允许覆盖主干已有的版本；新增版本请先跑抓取器")
+                continue
+            bsecs = {s.get("id"): s for s in by_id[vid].get("sections") or []}
+
+            def cmp(secs_zh, pool, path):
+                for j, s in enumerate(secs_zh or []):
+                    sp = path + (j,)
+                    sid = s.get("id")
+                    if sid not in pool:
+                        self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("id",),
+                                     "覆盖小节 id=%r 在主干中不存在" % (sid,),
+                                     "按主干小节 id 对齐（SCHEMA §7.13）")
+                        continue
+                    b = pool[sid]
+                    bitems = b.get("items") or []
+                    iz = s.get("items_zh")
+                    if not bitems:
+                        # 主干该小节没有条目（纯容器节，只有子节）：约定**可省略** items_zh
+                        if iz is not None and (not isinstance(iz, list) or len(iz) != 0):
+                            self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("items_zh",),
+                                         "主干该小节没有条目，但 items_zh 给了 %s" % (type(iz).__name__,),
+                                         "省略 items_zh，或给空数组 []")
+                    elif not isinstance(iz, list):
+                        self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("items_zh",),
+                                     "items_zh 不是数组（主干有 %d 条）" % len(bitems),
+                                     "按主干条目顺序逐条补译文")
+                    elif len(iz) != len(bitems):
+                        self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("items_zh",),
+                                     "条目数不等：主干 %d vs 中文 %d（索引配对会整体错位）"
+                                     % (len(bitems), len(iz)),
+                                     "按主干条目顺序逐条补译文；数量不等一律视为错误")
+                    else:
+                        for k, t in enumerate(iz):
+                            if not isinstance(t, str) or not t.strip():
+                                self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("items_zh", k),
+                                             "第 %d 条译文为空" % k, "补齐译文或先删掉该小节覆盖")
+                    bsubs = {x.get("id"): x for x in b.get("subsections") or []}
+                    if [x.get("id") for x in s.get("subsections_zh") or []] != \
+                       [x.get("id") for x in b.get("subsections") or []]:
+                        self.rep.add("PATCH.PAIRING", PATCH_ZH, sp + ("subsections_zh",),
+                                     "子节顺序/集合与主干不一致：主干 %s vs 覆盖 %s"
+                                     % ([x.get("id") for x in b.get("subsections") or []],
+                                        [x.get("id") for x in s.get("subsections_zh") or []]),
+                                     "子节必须与主干同序同集合")
+                    cmp(s.get("subsections_zh"), bsubs, sp + ("subsections_zh",))
+
+            cmp(zv.get("sections_zh"), bsecs, p + ("sections_zh",))
 
     # --- mechanics ---
 

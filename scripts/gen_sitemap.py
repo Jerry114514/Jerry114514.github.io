@@ -172,8 +172,25 @@ def mechanics_group():
              "items": items}]
 
 
+def patchnotes_group():
+    """更新公告详情页（?id=<版本号>）。
+
+    版本号含小数点、不是 snake_case，与其它数据集不同 —— 这里按上游原样编码，
+    页面侧用 WikiRouter.param("id") 读取（decodeURIComponent 由 URLSearchParams 负责）。
+    """
+    path = DATA / "patchnotes.json"
+    if not path.exists():
+        return []
+    versions = read_json(path).get("versions", [])
+    lm = mtime_date(path)
+    return [{"comment": "更新公告详情 · %d 条 · 数据：data/wiki/zh/patchnotes.json" % len(versions),
+             "tpl": "patchnote.html",
+             "items": [(v["id"], None, lm) for v in versions]}]
+
+
 GROUPS = [weapons_group, stratagems_group, enemies_group,
-          missions_group, boosters_group, warbonds_group, mechanics_group]
+          missions_group, boosters_group, warbonds_group, mechanics_group,
+          patchnotes_group]
 
 
 def build_block() -> tuple[str, int]:
@@ -201,11 +218,28 @@ def build_block() -> tuple[str, int]:
     return "\n".join(chunks), total
 
 
+def parse_lastmods(text: str) -> dict:
+    """抽出「已有 URL → 已登记的 lastmod」映射。"""
+    return {m.group(1).strip(): m.group(2).strip()
+            for m in re.finditer(r"<loc>(.*?)</loc>\s*<lastmod>(.*?)</lastmod>", text, re.S)}
+
+
 def rebuild(text: str, block: str) -> tuple[str, int]:
-    """把 block 插到 </urlset> 之前；已存在旧区块时先整体移除（幂等）。"""
+    """把 block 插到 </urlset> 之前；已存在旧区块时先整体移除（幂等）。
+
+    ⚠ **已有 URL 的 lastmod 一律沿用文件里已登记的值**
+    （2026-09-22 修）：本脚本原先用**文件 mtime** 算 lastmod，而 `git clone` / API 同步
+    都会把 mtime 刷成"现在"，于是**每次重跑都会把上百个 URL 的 lastmod 顶成当天** ——
+    真正要加的可能只有几条，diff 里却混进上百行噪音，掩盖真实改动（§11.1-8 同类问题）。
+    现在只给**新 URL** 用文件 mtime；老 URL 保持原值，重跑稳定、diff 干净。
+    代价：数据集内容变了但 URL 早已存在时，lastmod 不会自动前移 —— 对爬虫只是提示，
+    换来的是「可审阅的 diff」，这笔交易划算。
+    """
     close = text.rfind("</urlset>")
     if close < 0:
         raise SystemExit("sitemap.xml 里找不到 </urlset>")
+
+    old_lastmod = parse_lastmods(text)
 
     body, tail = text[:close], text[close:]
 
@@ -215,6 +249,13 @@ def rebuild(text: str, block: str) -> tuple[str, int]:
             raise SystemExit("sitemap.xml 里 BEGIN 标记没有对应的 END 标记，请先手工修复")
         body = head
     body = body.rstrip()
+
+    def keep_lastmod(m):
+        loc, lm = m.group(1).strip(), m.group(2).strip()
+        prev = old_lastmod.get(loc)
+        return "<loc>%s</loc>\n    <lastmod>%s</lastmod>" % (loc, prev or lm)
+
+    block = re.sub(r"<loc>(.*?)</loc>\s*<lastmod>(.*?)</lastmod>", keep_lastmod, block, flags=re.S)
 
     new_text = body + "\n" + block + "\n" + tail
     new_text = new_text.replace("\r\n", "\n")

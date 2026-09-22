@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>更新公告 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 更新公告详情 - 分节补丁说明、官方公告链接、上一版/下一版导航" />
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <style>
+body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+    .wiki-header { padding: 16px 20px; background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%); border-bottom: 1px solid var(--border); }
+    .breadcrumb { max-width: 1200px; margin: 0 auto; font-size: 0.85rem; color: var(--text-dim); }
+    .breadcrumb a { color: var(--text-dim); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--yellow); }
+
+    .layout { flex: 1; max-width: 1200px; margin: 0 auto; padding: 20px; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 18px; align-items: start; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .toc-sidebar { order: -1; } }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .pn-top { display: flex; gap: 16px; }
+    .pn-top .art { flex: 0 0 110px; width: 110px; height: 165px; background: var(--bg-mid); border: 1px solid var(--border); overflow: hidden; }
+    .pn-top .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pn-top h1 { margin: 0 0 4px; font-size: 1.5rem; color: var(--yellow); }
+    .pn-top .verline { font-family: var(--font-mono, Consolas, monospace); color: var(--text-dim); font-size: 0.86rem; margin-bottom: 10px; }
+    .fields { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.82rem; color: var(--text-mute); }
+    .fields b { color: var(--text-dim); font-weight: 400; }
+    .links { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .links a { font-size: 0.8rem; color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; }
+    .links a:hover { border-color: var(--yellow); color: var(--yellow); }
+    .badge { font-size: 0.68rem; padding: 1px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-mute); }
+    .badge.zh { color: var(--yellow); border-color: #4A3B00; }
+
+    .notice { background: var(--stripe-warn, #2A1200); border: 1px solid #5A1F0A; border-left: 3px solid var(--warn, #FF4D2E); color: #FFB59E; padding: 10px 14px; font-size: 0.82rem; margin-bottom: 16px; line-height: 1.7; }
+    .notice b { color: var(--warn, #FF4D2E); }
+
+    ul.pn-list { list-style: none; margin: 6px 0; padding-left: 0; }
+    ul.pn-list li { position: relative; padding-left: 16px; margin: 3px 0; font-size: 0.86rem; line-height: 1.75; color: var(--text-dim); }
+    ul.pn-list li::before { content: "•"; position: absolute; left: 3px; color: var(--text-mute); }
+    ul.pn-list li.d1 { padding-left: 32px; }
+    ul.pn-list li.d1::before { left: 19px; content: "–"; }
+    ul.pn-list li.d2 { padding-left: 48px; }
+    ul.pn-list li.d2::before { left: 35px; content: "·"; }
+    ul.pn-list li.plain::before { content: ""; }
+    ul.pn-list li.plain { padding-left: 0; color: var(--text); }
+    .section a, ul.pn-list a { color: var(--blue, #3B82F6); text-decoration: none; }
+    .section a:hover, ul.pn-list a:hover { color: var(--yellow); text-decoration: underline; }
+    .pn-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
+    .pn-nav a { flex: 1; font-size: 0.82rem; color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; }
+    .pn-nav a:hover { border-color: var(--yellow); color: var(--yellow); }
+    .pn-nav a.next { text-align: right; }
+    .loading, .empty { text-align: center; padding: 60px; color: var(--text-dim); }
+    .src { margin-top: 16px; font-size: 0.76rem; color: var(--text-mute); line-height: 1.7; }
+  </style>
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260918a">
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="breadcrumb" id="breadcrumb">← <a href="patchnotes.html">更新公告</a></div>
+  </header>
+  <div class="layout" id="layout"><div class="loading">正在加载…</div></div>
+  <footer class="wiki-footer"><p>绝地潜兵2 中文维基 · 社区驱动 · 数据仅供参考</p></footer>
+  <script src="./assets/js/wiki-router.js"></script>
+  <script src="./assets/js/wiki-link-map.js"></script>
+  <script>
+    "use strict";
+    var DATA = null, ZH = null, VER = null;
+
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+    function fetchJson(url) {
+      return fetch(url + (url.indexOf("?") < 0 ? "?t=" + Date.now() : "&t=" + Date.now()), { cache: "no-store" })
+        .then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+    }
+    function isVersion(s) { return /^[\d.]+$/.test(String(s || "")); }
+
+    /* 内链改写：优先站内详情页 → 本站版本页 → wiki.gg 外链（沿用 wiki-link-map 的既有优先级） */
+    function mapUrl(page) {
+      var map = (window.WIKI_LINK_MAP && window.WIKI_LINK_MAP.site) || {};
+      var key = String(page || "");
+      if (map[key]) return map[key];
+      var underscored = key.replace(/ /g, "_");
+      if (map[underscored]) return map[underscored];
+      if (isVersion(key) && DATA && DATA.versions.some(function(v) { return v.id === key; })) {
+        return "patchnote.html?id=" + encodeURIComponent(key);
+      }
+      if (window.WIKI_LINK_MAP && window.WIKI_LINK_MAP.externalBase) {
+        return window.WIKI_LINK_MAP.externalBase + encodeURIComponent(underscored);
+      }
+      return null;
+    }
+    /* 只在「恰好出现一次」时才链接，避免误改多处同名文本 */
+    function linkify(text, links) {
+      var html = esc(text);
+      (links || []).slice().sort(function(a, b) { return String(b.text).length - String(a.text).length; }).forEach(function(l) {
+        var t = esc(l.text);
+        if (!t) return;
+        var i = html.indexOf(t);
+        if (i < 0 || html.indexOf(t, i + t.length) >= 0) return;
+        var url = mapUrl(l.page);
+        if (!url) return;
+        var ext = /^https?:/i.test(url);
+        html = html.slice(0, i) + '<a href="' + esc(url) + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + t + '</a>' + html.slice(i + t.length);
+      });
+      return html;
+    }
+
+    function zhVersion() {
+      if (!ZH || !ZH.versions_zh) return null;
+      for (var i = 0; i < ZH.versions_zh.length; i++) if (ZH.versions_zh[i].id === VER.id) return ZH.versions_zh[i];
+      return null;
+    }
+    function merge(secs, zsecs) {
+      var zm = {};
+      (zsecs || []).forEach(function(x) { zm[x.id] = x; });
+      return (secs || []).map(function(s) {
+        var z = zm[s.id] || null;
+        return {
+          id: s.id, level: s.level,
+          heading: (z && z.heading_zh) || s.heading,
+          items: (s.items || []).map(function(it, i) {
+            var t = (z && z.items_zh && z.items_zh[i]) ? z.items_zh[i] : it.text;
+            return { kind: it.kind, depth: it.depth, html: linkify(t, it.links) };
+          }),
+          subsections: merge(s.subsections, z && z.subsections_zh)
+        };
+      });
+    }
+    function tocOf(secs, out) {
+      out = out || [];
+      (secs || []).forEach(function(s) {
+        if (s.level <= 3 && (s.items.length || s.subsections.length)) {
+          out.push({ id: s.id, level: s.level, heading: s.heading });
+        }
+        tocOf(s.subsections, out);
+      });
+      return out;
+    }
+    /* 同一小节内：kind=p 视为无项目符号的说明行；li 按 depth 缩进 */
+    function itemsHtml(items) {
+      if (!items.length) return "";
+      return '<ul class="pn-list">' + items.map(function(it) {
+        var cls = it.kind === "p" ? "plain" : (it.depth === 0 ? "" : "d" + Math.min(it.depth, 2));
+        return '<li class="' + cls + '">' + it.html + '</li>';
+      }).join("") + '</ul>';
+    }
+    function sectionsHtml(secs) {
+      return (secs || []).map(function(s) {
+        var tag = s.level <= 2 ? "h2" : (s.level === 3 ? "h3" : "h4");
+        return '<section class="section" id="' + esc(s.id) + '">' +
+          '<' + tag + '>' + esc(s.heading) + '</' + tag + '>' +
+          itemsHtml(s.items) + sectionsHtml(s.subsections) + '</section>';
+      }).join("");
+    }
+
+    function render() {
+      var z = zhVersion();
+      var merged = merge(VER.sections, z && z.sections_zh);
+      var toc = tocOf(merged);
+
+      document.getElementById("breadcrumb").innerHTML = '← <a href="patchnotes.html">更新公告</a> › ' + esc(VER.id);
+      document.title = VER.id + " " + VER.title + " - 绝地潜兵2 中文维基";
+
+      var art = VER.image_local
+        ? '<div class="art"><img src="' + esc(VER.image_local) + '" alt="" onerror="this.parentNode.style.display=\'none\'"></div>'
+        : "";
+      var idx = DATA.versions.map(function(v) { return v.id; });
+      var n = DATA.versions.length, pos = idx.indexOf(VER.id);
+      var newer = pos > 0 ? DATA.versions[pos - 1] : null;      // 列表是倒序，前一个更新
+      var older = pos >= 0 && pos < n - 1 ? DATA.versions[pos + 1] : null;
+
+      var nav = '<div class="pn-nav">' +
+        (newer ? '<a class="prev" href="patchnote.html?id=' + encodeURIComponent(newer.id) + '">◀ 更新版本<br>' + esc(newer.id) + ' ' + esc(newer.title) + '</a>' : '<a class="prev" style="visibility:hidden"></a>') +
+        (older ? '<a class="next" href="patchnote.html?id=' + encodeURIComponent(older.id) + '">更早版本 ▶<br>' + esc(older.id) + ' ' + esc(older.title) + '</a>' : '<a class="next" style="visibility:hidden"></a>') +
+        '</div>';
+
+      var warn = (z && z.fully_translated) ? "" :
+        '<div class="notice"><b>本页尚未汉化</b> —— 下方为维基英文原文。更新公告是上游文本的搬运，中文可按版本增量补齐；' +
+        '本页的 <code>?id=' + esc(VER.id) + '</code> 与英文主干已就位，补译文不需要改代码。</div>';
+
+      var html = '<div class="col-main">' +
+        '<div class="card pn-top">' + art +
+          '<div style="min-width:0;flex:1">' +
+            '<h1>' + esc(VER.title) + '</h1>' +
+            '<div class="verline">版本 ' + esc(VER.id) + (z && z.fully_translated ? ' <span class="badge zh">已汉化</span>' : ' <span class="badge">英文原文</span>') + '</div>' +
+            '<div class="fields">' +
+              '<span><b>发布日期</b> ' + esc(VER.release_date || "—") + (VER.release_time ? " · " + esc(VER.release_time) : "") + '</span>' +
+              '<span><b>更新体积</b> ' + esc(VER.size || "—") + '</span>' +
+              '<span><b>内容</b> ' + merged.length + ' 节</span>' +
+            '</div>' +
+            '<div class="links">' +
+              (VER.blog_url ? '<a href="' + esc(VER.blog_url) + '" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>' : '') +
+              '<a href="' + esc(VER.wiki_url) + '" target="_blank" rel="noopener noreferrer">维基来源 ↗</a>' +
+              (VER.previous ? '<a href="patchnote.html?id=' + encodeURIComponent(VER.previous) + '">上一版 ' + esc(VER.previous) + '</a>' : '') +
+              (VER.next ? '<a href="patchnote.html?id=' + encodeURIComponent(VER.next) + '">下一版 ' + esc(VER.next) + '</a>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        warn + sectionsHtml(merged) +
+        '<div style="margin-top:18px">' + nav + '</div>' +
+        '<div class="src">中文内容按小节 <code>id</code> 与主干对齐（校验器强制条目数相等）；更新名为官方专名，无官方中文译名时保留英文。<br>' +
+        '数据更新时间 ' + esc((DATA.updated_at || "").slice(0, 16).replace("T", " ")) + ' UTC · 来源 <a href="' + esc(DATA.source || "#") + '" target="_blank" rel="noopener noreferrer">helldivers.wiki.gg</a></div>' +
+        '</div>';
+
+      var tocHtml = '<aside class="toc-sidebar"><div class="toc-title">目录 / CONTENTS</div>' +
+        (toc.length ? toc.map(function(t) {
+          return '<a class="toc-item toc-l' + t.level + '" href="#' + esc(t.id) + '">' + esc(t.heading) + '</a>';
+        }).join("") : '<div class="side-sub">（本节无小节）</div>') + '</aside>';
+
+      document.getElementById("layout").innerHTML = html + tocHtml;
+    }
+
+    async function load() {
+      var layout = document.getElementById("layout");
+      try {
+        var id = WikiRouter.param("id") || "";
+        var pair = await Promise.all([fetchJson("./data/wiki/zh/patchnotes.json"), fetchJson("./data/wiki/zh/patchnotes_zh.json")]);
+        DATA = pair[0]; ZH = pair[1];
+        if (!DATA) throw new Error("主干缺失");
+        VER = null;
+        for (var i = 0; i < DATA.versions.length; i++) if (DATA.versions[i].id === id) VER = DATA.versions[i];
+        if (!VER) {
+          layout.innerHTML = '<div class="empty">没有找到版本「' + esc(id || "(未指定)") + '」<br><br>' +
+            '<a href="patchnotes.html" style="color:var(--yellow)">← 查看全部更新公告</a></div>';
+          return;
+        }
+        render();
+      } catch (e) {
+        console.error("[PatchNote] 加载失败:", e);
+        layout.innerHTML = '<div class="loading">⚠️ 数据加载失败</div>';
+      }
+    }
+    document.addEventListener("DOMContentLoaded", load);
+  </script>
+</body>
+</html>
