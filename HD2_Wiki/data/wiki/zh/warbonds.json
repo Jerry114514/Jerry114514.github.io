@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-22T13:08:17Z",
+  "updated_at": "2026-09-23T10:55:13Z",
   "source": "wiki.gg",
   "total": 25,
   "warbonds": [
@@ -3778,6 +3778,10 @@
         "GL-28 Belt-Fed Grenade Launcher": {
           "kind": "stratagem",
           "id": "heavy_support_gl_28_belt_fed_grenade_launcher"
+        },
+        "G/SH-39 Shield": {
+          "kind": "weapon",
+          "id": "g_sh_39_shield"
         }
       },
       "name": "破围先锋",
@@ -3962,6 +3966,14 @@
         "P-69 Veto": {
           "kind": "weapon",
           "id": "p_69_veto"
+        },
+        "CQC-73 Entrenchment Tool": {
+          "kind": "weapon",
+          "id": "cqc_73_entrenchment_tool"
+        },
+        "SMG/FLAM-34 Stoker": {
+          "kind": "weapon",
+          "id": "smg_flam_34_stoker"
         }
       },
       "name": "堑壕之师",
@@ -4331,6 +4343,26 @@
         "Surplus EAT Allocation": {
           "kind": "booster",
           "id": "surplus_eat_allocation"
+        },
+        "AR-11 Arbitrator": {
+          "kind": "weapon",
+          "id": "ar_11_arbitrator"
+        },
+        "G-8 Immolation": {
+          "kind": "weapon",
+          "id": "g_8_immolation"
+        },
+        "GL-15 Evictor": {
+          "kind": "weapon",
+          "id": "gl_15_evictor"
+        },
+        "P-34 Breacher": {
+          "kind": "weapon",
+          "id": "p_34_breacher"
+        },
+        "G-60 Anti-Tank Seeker": {
+          "kind": "weapon",
+          "id": "g_60_anti_tank_seeker"
         }
       },
       "name": "民主铁壁",
@@ -4366,6 +4398,11 @@
             [
               "AR-11 Arbitrator",
               "突击步枪",
+              "—"
+            ],
+            [
+              "G-8 Immolation",
+              "特殊投掷物",
               "—"
             ],
             [
@@ -4411,8 +4448,8 @@
               "12"
             ],
             [
-              "GL-15 Evictor",
-              "爆炸类主武器",
+              "P-34 Breacher",
+              "特殊副武器",
               "—"
             ],
             [
@@ -4433,11 +4470,6 @@
             [
               "Shroud of the Juggernaut",
               "玩家名片",
-              "—"
-            ],
-            [
-              "G-8 Immolation",
-              "特殊投掷物",
               "—"
             ],
             [
@@ -4468,11 +4500,6 @@
               "32"
             ],
             [
-              "P-34 Breacher",
-              "特殊副武器",
-              "—"
-            ],
-            [
               "Helmet Durability Check",
               "表情",
               "—"
@@ -4480,6 +4507,11 @@
             [
               "G-60 Anti-Tank Seeker",
               "特殊投掷物",
+              "—"
+            ],
+            [
+              "GL-15 Evictor",
+              "爆炸类主武器",
               "—"
             ],
             [
@@ -4516,6 +4548,10 @@
         "M90A Shotgun": {
           "kind": "weapon",
           "id": "m90a_shotgun"
+        },
+        "M6C/SOCOM Pistol": {
+          "kind": "weapon",
+          "id": "m6c_socom_pistol"
         }
       },
       "name": "民主光环驰援部队",
@@ -4817,6 +4853,14 @@
         "G/40-K Melta Mine": {
           "kind": "weapon",
           "id": "g_40_k_melta_mine"
+        },
+        "P/40-K Bolt Pistol": {
+          "kind": "weapon",
+          "id": "p_40_k_bolt_pistol"
+        },
+        "R/40-K Hot-Shot Marksman Rifle": {
+          "kind": "weapon",
+          "id": "r_40_k_hot_shot_marksman_rifle"
         }
       },
       "name": "卡斯特兰信条",

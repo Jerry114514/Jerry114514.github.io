@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-22T13:08:17Z",
+  "updated_at": "2026-09-23T11:06:17Z",
   "source": "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径",
-  "total": 1684,
+  "total": 1697,
   "terms": [
     {
       "en": "% To Main",
@@ -10231,6 +10231,98 @@
       "zh": "G/40 热熔地雷",
       "source": "口径（A 项 · 公告用名）",
       "note": "7.1.0 公告用名（无 `-K`），与站内 `patchnotes_zh.json` 的写法一致；wiki 页名与站内 `name_en` 为 `G/40-K Melta Mine`，**同一投掷物**。跨库比对名字时两者都要认（handover §19.8 已记过这处不一致）"
+    },
+    {
+      "en": "AR-11 Arbitrator",
+      "zh": "AR-11 仲裁者",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Arbitrator=仲裁者；站内近义已有 审判者(Adjudicator)/审查官(Censor)）"
+    },
+    {
+      "en": "CQC-73 Entrenchment Tool",
+      "zh": "CQC-73 堑壕工具",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Entrenchment Tool=军用折叠铲/工兵铲；「堑壕」站内既有（堑壕之师债券），取字面「堑壕工具」）"
+    },
+    {
+      "en": "G-60 Anti-Tank Seeker",
+      "zh": "G-60 反坦克追踪者",
+      "source": "口径（A 项 · 官方译名）",
+      "note": "武器 · 2026-09-23 补录；**用户给定口径**。依据：G-50 Seeker 站内译「寻踪者」+ 反坦克（初拟）；用户改为「追踪者」",
+      "rejected": [
+        {
+          "zh": "G-60 反坦克寻踪者",
+          "source": "本站 2026-09-23 初拟",
+          "tier": "本站拟定"
+        }
+      ]
+    },
+    {
+      "en": "G-8 Immolation",
+      "zh": "G-8 燔祭",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Immolation=燔祭/焚祭（献祭式焚烧）；暂拟，可改「焚化弹」）"
+    },
+    {
+      "en": "G/SH-39 Shield",
+      "zh": "G/SH-39 护盾",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Shield=护盾（站内 Shield Generator Relay 译「防护罩生成中继器」））"
+    },
+    {
+      "en": "GL-15 Evictor",
+      "zh": "GL-15 驱逐者",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Evictor=驱逐者（与 GL-52 缓和者 同族命名风格））"
+    },
+    {
+      "en": "LAS-12 Sai",
+      "zh": "LAS-12 钗",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Sai=钗（冲绳短兵器，中文实有译名）；与 LAS-13 三叉戟/ LAS-5 长柄镰 同族（能量武器借冷兵器命名））"
+    },
+    {
+      "en": "M6C/SOCOM Pistol",
+      "zh": "M6C/SOCOM 手枪",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：型号直译（同 MA5C 突击步枪 的处理））"
+    },
+    {
+      "en": "P-34 Breacher",
+      "zh": "P-34 爆破者",
+      "source": "口径（A 项 · 官方译名）",
+      "note": "武器 · 2026-09-23 补录；**用户给定口径**。依据：Breacher=破门者/破障者（初拟）；用户改为「爆破者」",
+      "rejected": [
+        {
+          "zh": "P-34 破门者",
+          "source": "本站 2026-09-23 初拟",
+          "tier": "本站拟定"
+        }
+      ]
+    },
+    {
+      "en": "P/40-K Bolt Pistol",
+      "zh": "P/40-K 爆弹手枪",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：战锤 40K 中文惯译 Bolt Pistol=爆弹手枪（同批 Castellan's Creed 联动））"
+    },
+    {
+      "en": "R/40-K Hot-Shot Marksman Rifle",
+      "zh": "R/40-K 热射精确射手步枪",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：战锤 40K Hot-shot=热射；精确射手步枪=站内 subcategory_name）"
+    },
+    {
+      "en": "SMG/FLAM-34 Stoker",
+      "zh": "SMG/FLAM-34 司炉",
+      "source": "weapons.json",
+      "note": "武器 · 2026-09-23 补录；译名由本站拟定并**经用户复核认可**（依据：Stoker=司炉（烧炉工），契合喷火职能；暂拟）"
+    },
+    {
+      "en": "TD-110 Maelstrom",
+      "zh": "TD-110 “风暴漩涡”坦克",
+      "source": "口径（A 项 · 官方译名）",
+      "note": "战略配备 · 坦克；2026-09-23 用户给定官方译名。⚠ 站内**尚无该条目**（`stratagems_full.json` 未收录，全仓检索 0 处），此处先登记译名备查；待补录该战略配备时按本条用词"
     }
   ]
 }
