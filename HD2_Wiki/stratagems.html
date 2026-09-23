@@ -128,18 +128,29 @@
       }
     }
 
+    // 分类键帽（2026-09-23 改为「顺序固定、标签与计数实时取自数据」）：
+    //   此前 7 个分类是硬编码的，新增 `civilian`（民用，wiki.gg 的 Civilian Stratagems）
+    //   时不会出现在键帽里、条目只能从「全部」进 —— 改成从数据推导后，
+    //   以后再加分类不必改这个页面（标签取条目自带的 category_label）。
+    var CAT_ORDER = ["orbital", "eagle", "support", "backpack", "deployable", "vehicle", "mission", "civilian"];
+
+    function catLabelOf(id) {
+      for (var i = 0; i < stratagems.length; i++) {
+        if (stratagems[i].category === id) return stratagems[i].category_label || id;
+      }
+      return id;
+    }
+
     function renderFilters() {
       var bar = document.getElementById("filter-bar");
-      var cats = [
-        { id: "all", label: "全部 " + stratagems.length },
-        { id: "orbital", label: "轨道 " + stratagems.filter(function(s){return s.category==="orbital";}).length },
-        { id: "eagle", label: "飞鹰 " + stratagems.filter(function(s){return s.category==="eagle";}).length },
-        { id: "support", label: "支援武器 " + stratagems.filter(function(s){return s.category==="support";}).length },
-        { id: "backpack", label: "背包 " + stratagems.filter(function(s){return s.category==="backpack";}).length },
-        { id: "deployable", label: "可部署物 " + stratagems.filter(function(s){return s.category==="deployable";}).length },
-        { id: "vehicle", label: "载具 " + stratagems.filter(function(s){return s.category==="vehicle";}).length },
-        { id: "mission", label: "任务 " + stratagems.filter(function(s){return s.category==="mission";}).length },
-      ];
+      var ids = CAT_ORDER.slice();
+      stratagems.forEach(function(s) { if (ids.indexOf(s.category) < 0) ids.push(s.category); });
+      var cats = [{ id: "all", label: "全部 " + stratagems.length }];
+      ids.forEach(function(id) {
+        var n = stratagems.filter(function(s) { return s.category === id; }).length;
+        if (!n) return;
+        cats.push({ id: id, label: catLabelOf(id) + " " + n });
+      });
       bar.innerHTML = cats.map(function(c) {
         return '<button class="' + (c.id === curCat ? "active" : "") + '" onclick="setCat(\'' + c.id + '\')">' + c.label + '</button>';
       }).join("");

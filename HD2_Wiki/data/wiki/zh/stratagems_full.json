@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-23T14:33:45Z",
+  "updated_at": "2026-09-23T17:45:58Z",
   "source": "Helldivers Wiki.gg + community translations",
-  "total": 109,
+  "total": 115,
   "stratagems": [
     {
       "id": "orbital_120mm_he_barrage",
@@ -4753,6 +4753,104 @@
       "unlock_zh": "8000 申购点"
     },
     {
+      "id": "support_cqc_20_breaching_hammer",
+      "name": "CQC-20 破门锤",
+      "name_en": "CQC-20 Breaching Hammer",
+      "category": "support",
+      "category_label": "支援武器",
+      "code": "DLRLU",
+      "call_in_time": null,
+      "cooldown": "480s",
+      "uses": "无限",
+      "unlock": "75 Medals",
+      "image": "https://helldivers.wiki.gg/images/Breaching_Hammer_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+      "detailed_stats": {
+        "recoil": "0",
+        "capacity": "1",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "Explosion CQC-20 Breaching Hammer",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "Explosion",
+              "inner_radius": "2200 Explosion",
+              "inner_durable": "2200 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 2199.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 2199.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II",
+              "pen_slight_angle": "Anti-Tank II",
+              "pen_large_angle": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "0.5 m",
+              "radius_outer": "3 m",
+              "radius_shockwave": "12 m"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/Breaching_Hammer_Stratagem_Icon_Background.svg",
+      "unlock_zh": "75 奖章"
+    },
+    {
+      "id": "support_cqc_9_defoliation_tool",
+      "name": "CQC-9 除叶工具",
+      "name_en": "CQC-9 Defoliation Tool",
+      "category": "support",
+      "category_label": "支援武器",
+      "code": "DLRRD",
+      "call_in_time": null,
+      "cooldown": "480s",
+      "uses": "无限",
+      "unlock": "85 Medals",
+      "image": "https://helldivers.wiki.gg/images/Defoliation_Tool_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "detailed_stats": {
+        "recoil": "0",
+        "attacks": [
+          {
+            "name": "Defolation Tool",
+            "type": "damage",
+            "damage": {
+              "element": "Melee",
+              "damage_standard": "450 Melee",
+              "damage_durable": "225 Melee"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "10",
+              "push_force": "30"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Stun Small",
+          "status_strength": "5"
+        }
+      },
+      "icon": "https://helldivers.wiki.gg/images/Defoliation_Tool_Stratagem_Icon_Background.svg",
+      "unlock_zh": "85 奖章"
+    },
+    {
       "id": "vehicle_exo_45_patriot_exosuit",
       "name": "EXO-45 “爱国者”外骨骼装甲",
       "name_en": "EXO-45 Patriot Exosuit",
@@ -5488,6 +5586,122 @@
       },
       "icon": "https://helldivers.wiki.gg/images/Bastion_MK_XVI_Stratagem_Icon_Background.svg",
       "unlock_zh": "35000 申购点"
+    },
+    {
+      "id": "vehicle_td_110_maelstrom",
+      "name": "TD-110 “风暴漩涡”坦克",
+      "name_en": "TD-110 Maelstrom",
+      "category": "vehicle",
+      "category_label": "载具",
+      "code": "LDRDLDULR",
+      "call_in_time": null,
+      "cooldown": "780s",
+      "uses": "无限",
+      "unlock": "Armored Eagle",
+      "image": "https://helldivers.wiki.gg/images/Maelstrom_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/TD-110_Maelstrom",
+      "detailed_stats": {
+        "uses": "Unlimited",
+        "cooldown": "Standard",
+        "attacks": []
+      },
+      "icon": "https://helldivers.wiki.gg/images/Maelstrom_Stratagem_Icon_Background.svg",
+      "unlock_zh": "装甲雄鹰战役"
+    },
+    {
+      "id": "vehicle_m_104_incinerator_fast_recon_vehicle",
+      "name": "M-104 焚化者快速侦察载具",
+      "name_en": "M-104 Incinerator FRV",
+      "category": "vehicle",
+      "category_label": "载具",
+      "code": "LDRLDUU",
+      "call_in_time": null,
+      "cooldown": "480s",
+      "uses": "无限",
+      "unlock": "N/A",
+      "image": "https://helldivers.wiki.gg/images/Incinerator_FRV_Stratagem_Icon_Background.svg",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/M-104_Incinerator_FRV",
+      "detailed_stats": {
+        "cooldown": "480 s",
+        "uses": "∞",
+        "main_health": "2900",
+        "main_armor": "Medium",
+        "recoil": "4.5",
+        "recoil_horizontal": "3",
+        "recoil_vertical": "6",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "15",
+        "capacity": "800",
+        "spare_magazines": "0",
+        "starting_magazines": "0",
+        "mags_from_supply": "0",
+        "mags_from_ammo_box": "1",
+        "attacks": [
+          {
+            "name": "SWP FLAMETHROWER S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "3 Fire",
+              "damage_durable": "3 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Heavy"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
+          },
+          {
+            "name": "Incinerator FRV Fuel Explosion",
+            "type": "explosion",
+            "damage": {
+              "inner_radius": "1500 Explosion",
+              "inner_durable": "1500 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 1499.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 1499.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Anti-Tank II"
+            },
+            "area_of_effect": {
+              "radius_inner": "10 m",
+              "radius_outer": "25 m",
+              "radius_shockwave": "35 m"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "4",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
+      "icon": "https://helldivers.wiki.gg/images/Incinerator_FRV_Stratagem_Icon_Background.svg",
+      "unlock_zh": null
     },
     {
       "id": "deployable_gatling_sentry",
@@ -7906,6 +8120,109 @@
         "attacks": []
       },
       "icon": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg"
+    },
+    {
+      "id": "civilian_cqc_72_entrenchment_tool",
+      "name": "CQC-72 堑壕工具",
+      "name_en": "CQC-72 Entrenchment Tool",
+      "category": "civilian",
+      "category_label": "民用",
+      "code": "",
+      "call_in_time": null,
+      "cooldown": "—",
+      "uses": "无限",
+      "unlock": "Points of Interest",
+      "image": "https://helldivers.wiki.gg/images/CQC-72_Entrenchment_Tool_Support_Render.png",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/CQC-72_Entrenchment_Tool",
+      "detailed_stats": {
+        "fire_rate": "150 rpm",
+        "recoil": "0",
+        "ergonomics": "0",
+        "capacity": "0",
+        "reload_time": "0 s",
+        "spare_magazines": "0",
+        "attacks": [
+          {
+            "name": "CQC-72 Entrenchment Tool",
+            "type": "damage",
+            "damage": {
+              "element": "Melee",
+              "damage_standard": "165 Melee",
+              "damage_durable": "83 Melee"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "25",
+              "push_force": "30"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/CQC-72_Entrenchment_Tool_Support_Render.png",
+      "unlock_zh": "地图兴趣点拾取"
+    },
+    {
+      "id": "civilian_sg_88_break_action_shotgun",
+      "name": "SG-88 折管霰弹枪",
+      "name_en": "SG-88 Break-Action Shotgun",
+      "category": "civilian",
+      "category_label": "民用",
+      "code": "",
+      "call_in_time": null,
+      "cooldown": "—",
+      "uses": "无限",
+      "unlock": "Points of Interest",
+      "image": "https://helldivers.wiki.gg/images/SG-88_Break-Action_Shotgun_Support_Render.png",
+      "description": "",
+      "source_page": "https://helldivers.wiki.gg/wiki/SG-88_Break-Action_Shotgun",
+      "detailed_stats": {
+        "fire_rate": "600 rpm",
+        "recoil": "33.25",
+        "recoil_horizontal": "6.5",
+        "recoil_vertical": "60",
+        "spread": "↔[60.00] ↕[60.00]",
+        "sway": "1",
+        "ergonomics": "65",
+        "capacity": "2",
+        "attacks": [
+          {
+            "name": "10g MAGNUM P",
+            "type": "projectile",
+            "projectile": {
+              "pellets": "x 9",
+              "mass": "6 g",
+              "initial_velocity": "385 m/s",
+              "drag_factor": "50%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "65 Ballistic",
+              "damage_durable": "13 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "20"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/SG-88_Break-Action_Shotgun_Support_Render.png",
+      "unlock_zh": "地图兴趣点拾取"
     }
   ]
 }

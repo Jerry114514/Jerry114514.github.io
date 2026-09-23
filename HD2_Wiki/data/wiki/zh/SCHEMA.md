@@ -385,6 +385,27 @@ warbond   = item.warbond_zh || item.warbond
 
 `category`、`category_label`、`code`、`call_in_time`、`cooldown`、`uses`、`unlock`、`unlock_zh`、`image`、`icon`、`detailed_stats{}`（含 `attacks[]`）、`source_page`（**遗留字段名**，等价于公共 `source_url`）。
 
+**分类与「非呼叫型」条目（2026-09-23 登记）**：`category` / `category_label` 与 wiki.gg 的分类对齐
+（`orbital` 轨道 / `eagle` 飞鹰 / `support` 支援武器 / `backpack` 背包 / `deployable` 可部署物 /
+`vehicle` 载具 / `mission` 任务 / **`civilian` 民用**）。新增 `civilian`（wiki 的 `Category:Civilian Stratagems`，
+全站当前仅 `CQC-72 Entrenchment Tool` / `SG-88 Break-Action Shotgun` 两条）—— 它们是**地图兴趣点上的
+拾取物**，不是呼叫型战略配备，故：
+* `code` 为 **空串**（上游页面没有 `stratagem_code`；这是唯一允许空串的取值，其余条目一律为 `UDLR` 串）；
+* `cooldown` 为 **`—`**（不适用；**不要**写「无限」——那是"可呼叫且不计次数"的含义，与这里语义不同）；
+* `image` / `icon` 用上游的 `…_Support_Render.png`（这两个型号没有战略配备图标背景）；
+
+`stratagems.html` 的分类键帽自 2026-09-23 起**从数据推导**（顺序取 `CAT_ORDER`，标签取条目的 `category_label`），
+新增分类不必改页面。
+
+**数值字段一律以上游为准、不沿用邻居的默认值（2026-09-23 登记）**：本批新条目的 `cooldown` 直接取
+infobox 的 `base_cooldown`（`CQC-20`/`CQC-9`/`M-104` = `480s`、`TD-110` = `780s`）。⚠ 既有 `support`
+分类的 **30 条 cooldown 全是 `无限`**，是旧编码器的解析缺失（上游 `CQC-1 One True Flag` 明写 `base_cooldown = 480s`），
+见第 8 节登记；**新条目不得照抄该写法**。
+
+`M-104 Incinerator FRV`（2026-09-23 补录）：上游 infobox `source = N/A` 且正文写明
+「At this time, the Incinerator FRV is unavailable for use.」（曾是桑吉斯行动变体）——
+`unlock` 如实记 `N/A`，**不加**未发布类字段（`release_status` 目前只有 `boosters`/`warbonds` 渲染）。
+
 ### 7.6 `missions.json`
 
 顶层 `categories[]`；`tasks[]` 元素：`id`、`name`、`name_zh`、`icon`、`difficulty` / `difficulty_zh`、`faction`、`time_limit` / `time_limit_zh`、`steps[]` / `steps_zh[]`、`tactical_info` / `tactical_info_zh`。
@@ -612,6 +633,8 @@ warbond   = item.warbond_zh || item.warbond
 | `blocks/navigation.json` 的卡片 `count`（2026-09-22 实测，**线上一致**） | 与数据集 `total` 不一致：`武器` **45**（数据集实际 103）、`战略配备` **89**（实际 109）、`敌人` **65**（实际 95）；其余对得上（强化资源 20 / 战争债券 25 / 任务 105 / 游戏机制 5 / 更新公告 10） | 目录卡片计数应与对应数据集 `total` 一致（§2 的 `total` 约定、§10 第 8 条自检项） | **未处理**：语义待用户确认后再改（校验器当前**不**校验该字段，所以 CI 不会变红，属"绿着但不对"）。若要修，`敌人` 需先定口径 —— 算 95 条数据集条目，还是 `enemies.html` 实际渲染的非亚阵营页数 |
 | `weapons.json` 的 `stats_short.penetration` / `stats_full.penetration`（2026-09-23 实测） | 只在旧编码器能从 infobox 渲染值认出 `Light/Medium/Heavy` 时才正确；遇 `Anti-Tank I/III`、`Unarmored`、`No Hitbox` 或**多值**（`Heavy (Projectile) Medium (Explosion)`）会**静默回退成 `light`** —— 全库 `Anti-Tank *` 的 8 条都是 `light` | 取 infobox 渲染值里的**首个**类型词（多值时与 `stats_full.damage` 配对） | **部分修正（2026-09-23）**：只改了 `p_40_k_bolt_pistol` → `heavy`（渲染值明写 Heavy + traits 明写 Heavy Armor Penetrating）；其余保持现状（**不许**用「AP 数字 → 轻/中/重」自行发明映射，见 §9 第 21 条） |
 | `weapons.json` 的 `description` / `description_zh`（2026-09-23 实测） | **33 条** `description` 是 Attachments 表残留 `Any math should be done on values listed…`、**38 条**是版本号戳（如 `1.005.002 2026-01-22`）、只有 10 条是真简介；更麻烦的是 **41 条 `description_zh` 是照着那段残留逐句翻译出来的**（"任何计算都应基于详细武器统计部分列出的数值。"） | `description` = 上游 `{{Quote\|…\|Armory Description}}` 英文原文；`description_zh` = 中文；`unlock` / `unlock_zh` 同理 | **新条目已按 canonical 写**（2026-09-23 的 12 条）；**存量 71 条未修**（上游每条都有 Armory Description，可批量修，见 §9 第 21 条与交接文档 §0.5 P2） |
+| `stratagems_full.json` 的 **`support` 分类全部 30 条** `cooldown = "无限"`（2026-09-23 实测） | 旧编码器对该分类取不到 `base_cooldown`，回落成 transform 的默认值「无限」；上游 infobox 实际有冷却（实测 `CQC-1 One True Flag` = `480s`、`CQC-20`/`CQC-9` = `480s`） | `cooldown` = 上游 `base_cooldown`（无则该条目确为无限） | **未修（本批只保证新条目正确）**：新补录的 4 条写上游真值（480s/780s），与邻居不一致是**已知的存量缺陷**，需单独一批回上游逐条核（`uses` 仍是「无限」，语义正确） |
+| `stratagems_full.json` 的 `code` / `cooldown`（2026-09-23 新增取值） | 新分类 `civilian` 的两条：`code = ""`、`cooldown = "—"` | 空串 = 上游无呼叫码；`—` = 不适用（站内既有的「无此项」写法，见 §7.2 奖励表） | 已登记（见 §7.5）。校验器只查字段存在性，不判空，无需额外例外 |
 
 ---
 
@@ -765,6 +788,22 @@ warbond   = item.warbond_zh || item.warbond
 
 
 ---
+
+23. **战略配备补录与非呼叫型条目（2026-09-23 登记并实施）**：按交接文档 §0.5 的 P2 补录 6 条（`109 → 115`）：
+    `CQC-20 Breaching Hammer` / `CQC-9 Defoliation Tool`（`support`，围攻破袭者 P1 75 勋章 / 巨蟒突击兵 P2 85 勋章）、
+    `TD-110 Maelstrom` / `M-104 Incinerator FRV`（`vehicle`，冷却 780s / 480s，解锁＝装甲雄鹰战役 / 上游 `N/A`）、
+    `CQC-72 Entrenchment Tool` / `SG-88 Break-Action Shotgun`（**新分类 `civilian` / 民用**，地图兴趣点拾取物）。
+    三条口径不得擅改：① **数值全部来自上游 infobox 与渲染后的详细数据表**（复用
+    `scripts/archive/fetch_detailed_stats.py`、`scripts/archive/fetch_stratagems.py` 的解析器，
+    脚本 `scripts/archive/add_stratagems.py` 可复跑，默认 dry-run）；② **不沿用邻居的错误默认值**
+    （新条目 cooldown 写上游真值；`support` 分类存量 30 条的「无限」见第 8 节，**不要**跟着写）；
+    ③ **民用两条按 wiki.gg 的分类收录**（它们不在 `Category:Stratagems` 里，无呼叫码、无战略配备图标，
+    故 `code = ""`、`cooldown = "—"`、图标取 `…_Support_Render.png`）。
+    附带：`terms.json` 1697 → **1704**（+5 译名 + `Civilian Stratagems` + `Points of Interest`，并清掉
+    `TD-110 Maelstrom` 上「站内尚无该条目」的过期说明）；`warbonds.json` 的 `reward_refs` +2
+    （`siege_breakers` 第 1 页 / `python_commandos` 第 2 页）；校验器 `IMG.HOTLINK` 基线 109 → 115；
+    `sitemap.xml` 484 → 490（幂等，仅 +6）。**上游渲染值自身畸形的照抄不修**：`CQC-72` 的
+    详细数据表 5 个字段上游就是 `0`（页面未填），与 §9 第 21 条的「上游自己写歪」同性质。
 
 ## 10. 校验清单
 
