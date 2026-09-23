@@ -1,22 +1,22 @@
 {
-  "updated_at": "2026-09-22T13:08:17Z",
+  "updated_at": "2026-09-23T11:06:17Z",
   "source": "Helldivers Wiki.gg",
-  "total": 91,
+  "total": 103,
   "categories": {
     "primary": {
       "name": "主武器",
       "name_en": "Primary Weapons",
-      "count": 50
+      "count": 55
     },
     "secondary": {
       "name": "副武器",
       "name_en": "Secondary Weapons",
-      "count": 21
+      "count": 25
     },
     "throwables": {
       "name": "投掷物",
       "name_en": "Throwables",
-      "count": 20
+      "count": 23
     },
     "support": {
       "name": "支援武器",
@@ -121,6 +121,50 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/AR-2_Coyote_Primary_Render.png/240px-AR-2_Coyote_Primary_Render.png",
       "unlock_zh": "尘卷风 第一章节",
       "description_zh": "任何计算都应基于详细武器统计部分列出的数值。"
+    },
+    {
+      "id": "ar_11_arbitrator",
+      "name": "AR-11 仲裁者",
+      "name_en": "AR-11 Arbitrator",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "subcategory_name": "突击步枪",
+      "stats_short": {
+        "damage": 70.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 70.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 1200,
+        "recoil": 13.0,
+        "penetration": "light",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "全自动",
+          "三连发",
+          "10g"
+        ],
+        "ergonomics": 30,
+        "reload_time": "3.75s",
+        "dps": null
+      },
+      "traits": [
+        "轻甲穿透"
+      ],
+      "unlock": "Ironclad Democracy P1",
+      "description": "An assault rifle sporting caseless ammunition and a top-mounted magazine. An electrical firing mechanism releases the rounds in rapid succession upon firing. Equipped with an underslung shotgun for added versatility.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-11_Arbitrator",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/AR-11_Arbitrator_Primary_Render.png/240px-AR-11_Arbitrator_Primary_Render.png",
+      "unlock_zh": "民主铁壁 第一章节",
+      "description_zh": "采用无壳弹药与顶部弹匣的突击步枪。电子击发机构在开火时连续释放弹丸。下挂霰弹枪，进一步提升适应性。"
     },
     {
       "id": "ar_23_liberator",
@@ -1278,6 +1322,76 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/CQC-42_Machete_Secondary_Render.png/240px-CQC-42_Machete_Secondary_Render.png"
     },
     {
+      "id": "cqc_73_entrenchment_tool",
+      "name": "CQC-73 堑壕工具",
+      "name_en": "CQC-73 Entrenchment Tool",
+      "category": "secondary",
+      "subcategory": "melee",
+      "subcategory_name": "近战武器",
+      "stats_short": {
+        "damage": 165.0,
+        "capacity": null,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 165.0,
+        "damage_type": "Melee",
+        "capacity": null,
+        "fire_rate": 150,
+        "recoil": 0.0,
+        "penetration": "medium",
+        "reserve_ammo": 0,
+        "fire_modes": [],
+        "ergonomics": 0,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "近战",
+        "单手"
+      ],
+      "unlock": "Entrenched Division P1",
+      "description": "",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "detailed_stats": {
+        "fire_rate": "150 rpm",
+        "recoil": "0",
+        "ergonomics": "0",
+        "capacity": "0",
+        "reload_time": "0 s",
+        "spare_magazines": "0",
+        "attacks": [
+          {
+            "name": "CQC-73 Entrenchment Tool",
+            "type": "damage",
+            "damage": {
+              "element": "Melee",
+              "damage_standard": "165 Melee",
+              "damage_durable": "83 Melee"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Unarmored",
+              "pen_large_angle": "Unarmored",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "25",
+              "push_force": "30"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/CQC-73_Entrenchment_Tool_Secondary_Render.png/240px-CQC-73_Entrenchment_Tool_Secondary_Render.png",
+      "unlock_zh": "堑壕之师 第一章节",
+      "description_zh": ""
+    },
+    {
       "id": "dbs_2_double_freedom",
       "name": "DBS-2 双重自由",
       "name_en": "DBS-2 Double Freedom",
@@ -1765,6 +1879,46 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/G-7_Pineapple_Throwable_Render.png/240px-G-7_Pineapple_Throwable_Render.png"
     },
     {
+      "id": "g_8_immolation",
+      "name": "G-8 燔祭",
+      "name_en": "G-8 Immolation",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 20.0,
+        "capacity": 6,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 20.0,
+        "damage_type": null,
+        "capacity": 6,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "燃烧弹"
+      ],
+      "unlock": "Ironclad Democracy P1",
+      "description": "An incendiary device that shatters on impact, without explosive force, instantly creating a localized and persistent combustion field.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-8_Immolation",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/G-8_Immolation_Throwable_Render.png/240px-G-8_Immolation_Throwable_Render.png",
+      "unlock_zh": "民主铁壁 第一章节",
+      "description_zh": "命中即碎的燃烧装置，不产生爆轰，而是在原地瞬间形成一小片持续燃烧的火场。"
+    },
+    {
       "id": "g_10_incendiary",
       "name": "G-10 燃烧弹",
       "name_en": "G-10 Incendiary",
@@ -2199,6 +2353,48 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/G-50_Seeker_Throwable_Render.png/240px-G-50_Seeker_Throwable_Render.png"
     },
     {
+      "id": "g_60_anti_tank_seeker",
+      "name": "G-60 反坦克追踪者",
+      "name_en": "G-60 Anti-Tank Seeker",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 1800.0,
+        "capacity": 3,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 1800.0,
+        "damage_type": "Explosion",
+        "capacity": 3,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "反坦克",
+        "爆炸",
+        "制导"
+      ],
+      "unlock": "Ironclad Democracy P3",
+      "description": "Equipped with a heavy payload suitable against armored vehicles, this grenade delivery drone follows the user until it detects an enemy nearby, then flies towards it and explodes on impact.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G-60_Anti-Tank_Seeker",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/G-60_Anti-Tank_Seeker_Throwable_Render.png/240px-G-60_Anti-Tank_Seeker_Throwable_Render.png",
+      "unlock_zh": "民主铁壁 第三章节",
+      "description_zh": "搭载足以对付装甲载具的重型战斗部。这架投雷无人机在投出后跟随使用者，侦测到附近敌人便飞向目标并命中引爆。"
+    },
+    {
       "id": "g_89_smokescreen",
       "name": "G-89 烟幕",
       "name_en": "G-89 Smokescreen",
@@ -2570,6 +2766,90 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/G-40-K_Melta_Mine_Throwable_Render.png/240px-G-40-K_Melta_Mine_Throwable_Render.png",
       "unlock_zh": "卡斯特兰信条 第二章节",
       "description_zh": "威力强大的单次使用近炸式热能地雷。据说 Chara 陷落时，引爆的热熔地雷之多，足以盖过那颗行星的太阳。"
+    },
+    {
+      "id": "g_sh_39_shield",
+      "name": "G/SH-39 护盾",
+      "name_en": "G/SH-39 Shield",
+      "category": "throwables",
+      "subcategory": "throwables",
+      "subcategory_name": "投掷物",
+      "stats_short": {
+        "damage": 0.0,
+        "capacity": 4,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 0.0,
+        "damage_type": "Explosion",
+        "capacity": 4,
+        "fire_rate": null,
+        "recoil": null,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "",
+        "dps": null
+      },
+      "traits": [
+        "粘性"
+      ],
+      "unlock": "Siege Breakers P3",
+      "description": "A throwable emplacement that generates a spherical, projectile-blocking shield on impact. Has a limited lifetime once deployed.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/G/SH-39_Shield",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/G-SH-39_Shield_Throwable_Render.png/240px-G-SH-39_Shield_Throwable_Render.png",
+      "unlock_zh": "破围先锋 第三章节",
+      "description_zh": "一种投掷式装置，落地即生成球形护盾以阻挡射弹。部署后存在时间有限。"
+    },
+    {
+      "id": "gl_15_evictor",
+      "name": "GL-15 驱逐者",
+      "name_en": "GL-15 Evictor",
+      "category": "primary",
+      "subcategory": "explosives",
+      "subcategory_name": "爆炸武器",
+      "stats_short": {
+        "damage": 490.0,
+        "capacity": 4,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 490.0,
+        "damage_type": null,
+        "capacity": 4,
+        "fire_rate": 60,
+        "recoil": 83.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [
+          "泵动式"
+        ],
+        "ergonomics": 65,
+        "reload_time": "2.67",
+        "dps": null
+      },
+      "traits": [
+        "中甲穿透",
+        "爆炸",
+        "逐发装填"
+      ],
+      "unlock": "Ironclad Democracy",
+      "description": "This pump-action grenade launcher trades precision for devastating area-of-effect capabilities with a powerful pump-action grenade launcher. Its manual single-round reload makes it a highly methodical choice for squads requiring an explosive approach to dispute resolution.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/GL-15_Evictor",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/GL-15_Evictor_Primary_Render.png/240px-GL-15_Evictor_Primary_Render.png",
+      "unlock_zh": "民主铁壁 第三章节",
+      "description_zh": "泵动式榴弹发射器，以牺牲精度换取压倒性的范围杀伤；手动逐发装填，是偏好用爆炸解决争端的小队的稳妥之选。"
     },
     {
       "id": "gp_20_ultimatum",
@@ -3004,6 +3284,48 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/LAS-7_Dagger_Secondary_Render.png/240px-LAS-7_Dagger_Secondary_Render.png"
     },
     {
+      "id": "las_12_sai",
+      "name": "LAS-12 钗",
+      "name_en": "LAS-12 Sai",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 80.0,
+        "capacity": 7,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 80.0,
+        "damage_type": "Laser",
+        "capacity": 7,
+        "fire_rate": 800,
+        "recoil": 11.0,
+        "penetration": "medium",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "2.00s",
+        "dps": null
+      },
+      "traits": [
+        "中甲穿透",
+        "单手操作",
+        "过热"
+      ],
+      "unlock": "Superstore",
+      "description": "A rapid-fire laser submachine gun prioritizing area saturation over pinpoint precision. Its high fire rate makes it effective for close-quarter crowd pacification, provided the user is comfortable with indiscriminate choice of targets.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-12_Sai",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/LAS-12_Sai_Primary_Render.png/240px-LAS-12_Sai_Primary_Render.png",
+      "unlock_zh": "超级商店",
+      "description_zh": "速射激光冲锋枪，强调区域压制而非精准点射。高射速使其适合近距离清场，前提是使用者不介意无差别选靶。"
+    },
+    {
       "id": "las_13_trident",
       "name": "LAS-13 三叉戟",
       "name_en": "LAS-13 Trident",
@@ -3388,6 +3710,91 @@
         ]
       },
       "icon": "https://helldivers.wiki.gg/images/thumb/LAS-58_Talon_Secondary_Render.png/240px-LAS-58_Talon_Secondary_Render.png"
+    },
+    {
+      "id": "m6c_socom_pistol",
+      "name": "M6C/SOCOM 手枪",
+      "name_en": "M6C/SOCOM Pistol",
+      "category": "secondary",
+      "subcategory": "pistols",
+      "subcategory_name": "手枪",
+      "stats_short": {
+        "damage": 125.0,
+        "capacity": 12,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 125.0,
+        "damage_type": "Ballistic",
+        "capacity": 12,
+        "fire_rate": 900,
+        "recoil": 20.0,
+        "penetration": "light",
+        "reserve_ammo": 10,
+        "fire_modes": [
+          "半自动"
+        ],
+        "ergonomics": 100,
+        "reload_time": "1.5s",
+        "dps": 1875
+      },
+      "traits": [
+        "轻甲穿透",
+        "单手操作",
+        "消音"
+      ],
+      "unlock": "Halo: ODST P3",
+      "description": "A pistol with a built-in laser sight, suppressor, and flashlight. Produced by Martian Armory.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/M6C/SOCOM_Pistol",
+      "detailed_stats": {
+        "fire_rate": "900 rpm",
+        "recoil": "19.5",
+        "recoil_horizontal": "11.5",
+        "recoil_vertical": "27.5",
+        "spread": "↔[10.00] ↕[10.00]",
+        "sway": "1",
+        "ergonomics": "100",
+        "capacity": "12",
+        "spare_magazines": "10",
+        "starting_magazines": "6",
+        "mags_from_supply": "10",
+        "mags_from_ammo_box": "5",
+        "attacks": [
+          {
+            "name": "M6C/SOCOM P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "125 Ballistic",
+              "damage_durable": "28 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/M6C-SOCOM_Pistol_Secondary_Render.png/240px-M6C-SOCOM_Pistol_Secondary_Render.png",
+      "unlock_zh": "民主光环驰援部队 第三章节",
+      "description_zh": "内置激光瞄准器、消音器与手电的手枪。由火星兵工厂生产。"
     },
     {
       "id": "m7s_smg",
@@ -4079,6 +4486,49 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/P-33_Missile_Pistol_Secondary_Render.png/240px-P-33_Missile_Pistol_Secondary_Render.png"
     },
     {
+      "id": "p_34_breacher",
+      "name": "P-34 爆破者",
+      "name_en": "P-34 Breacher",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "特殊武器",
+      "stats_short": {
+        "damage": 2000.0,
+        "capacity": 1,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 2000.0,
+        "damage_type": null,
+        "capacity": 1,
+        "fire_rate": 20,
+        "recoil": 313.0,
+        "penetration": "light",
+        "reserve_ammo": null,
+        "fire_modes": [],
+        "ergonomics": null,
+        "reload_time": "2.68s",
+        "dps": null
+      },
+      "traits": [
+        "单手操作",
+        "反坦克",
+        "粘性",
+        "爆炸"
+      ],
+      "unlock": "Ironclad Democracy P2",
+      "description": "A missile pistol equipped with sticky projectiles that use phosphorus fuel to burn through an enemy's armor—or any other outer layer—before finally exploding.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P-34_Breacher",
+      "detailed_stats": null,
+      "icon": "https://helldivers.wiki.gg/images/thumb/P-34_Breacher_Secondary_Render.png/240px-P-34_Breacher_Secondary_Render.png",
+      "unlock_zh": "民主铁壁 第二章节",
+      "description_zh": "配备黏附弹的导弹手枪。弹体先用磷燃料烧穿敌人装甲（或任何外层），最后才爆炸。"
+    },
+    {
       "id": "p_35_re_educator",
       "name": "P-35 思想改造",
       "name_en": "P-35 Re-Educator",
@@ -4517,6 +4967,118 @@
         ]
       },
       "icon": "https://helldivers.wiki.gg/images/thumb/P-113_Verdict_Secondary_Render.png/240px-P-113_Verdict_Secondary_Render.png"
+    },
+    {
+      "id": "p_40_k_bolt_pistol",
+      "name": "P/40-K 爆弹手枪",
+      "name_en": "P/40-K Bolt Pistol",
+      "category": "secondary",
+      "subcategory": "special",
+      "subcategory_name": "特殊武器",
+      "stats_short": {
+        "damage": 325.0,
+        "capacity": 6,
+        "penetration": "heavy"
+      },
+      "stats_full": {
+        "damage": 325.0,
+        "damage_type": "Ballistic",
+        "capacity": 6,
+        "fire_rate": 150,
+        "recoil": 325.0,
+        "penetration": "heavy",
+        "reserve_ammo": 4,
+        "fire_modes": [
+          "半自动"
+        ],
+        "ergonomics": 30,
+        "reload_time": "2.45s",
+        "dps": 1250
+      },
+      "traits": [
+        "重甲穿透",
+        "爆炸",
+        "单手操作"
+      ],
+      "unlock": "Castellan’s Creed",
+      "description": "The utilitarian sidearm that was standard-issue to the Charan Colonial Guard in the early days of the Galactic Federation. Produced by ST Construction.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/P/40-K_Bolt_Pistol",
+      "detailed_stats": {
+        "fire_rate": "150 rpm",
+        "recoil": "325",
+        "recoil_horizontal": "150",
+        "recoil_vertical": "500",
+        "spread": "↔[2.00] ↕[2.00]",
+        "sway": "1",
+        "ergonomics": "30",
+        "capacity": "6",
+        "spare_magazines": "4",
+        "starting_magazines": "3",
+        "mags_from_supply": "6",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "P/40-K P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "100 g",
+              "initial_velocity": "350 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "30%",
+              "lifetime": "0.600000024 sec",
+              "penetration_slowdown": "25%",
+              "explosion_on_impact": "P/40-K_P_IE"
+            },
+            "damage": {
+              "damage_standard": "325 Ballistic",
+              "damage_durable": "115 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "20",
+              "stagger_force": "35",
+              "push_force": "15"
+            }
+          },
+          {
+            "name": "P/40-K P IE",
+            "type": "explosion",
+            "damage": {
+              "damage_element": "None",
+              "inner_radius": "175 Explosion",
+              "inner_durable": "175 Explosion",
+              "outer_radius": {
+                "min": 0.0,
+                "max": 174.0
+              },
+              "outer_durable": {
+                "min": 0.0,
+                "max": 174.0
+              }
+            },
+            "penetration": {
+              "pen_direct": "Medium"
+            },
+            "area_of_effect": {
+              "radius_inner": "1 m",
+              "radius_outer": "3.5 m",
+              "radius_shockwave": "5 m"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/P-40-K_Bolt_Pistol_Secondary_Render.png/240px-P-40-K_Bolt_Pistol_Secondary_Render.png",
+      "unlock_zh": "卡斯特兰信条 第二章节",
+      "description_zh": "实用至上的副武器，银河联邦早期曾是 Chara 殖民地卫队的制式装备。由 ST 建设公司生产。"
     },
     {
       "id": "plas_1_scorcher",
@@ -5834,6 +6396,90 @@
       "description_zh": "宪法步枪没有任何配件。"
     },
     {
+      "id": "r_40_k_hot_shot_marksman_rifle",
+      "name": "R/40-K 热射精确射手步枪",
+      "name_en": "R/40-K Hot-Shot Marksman Rifle",
+      "category": "primary",
+      "subcategory": "energy_based",
+      "subcategory_name": "能量武器",
+      "stats_short": {
+        "damage": 275.0,
+        "capacity": 12,
+        "penetration": "medium"
+      },
+      "stats_full": {
+        "damage": 275.0,
+        "damage_type": "Ballistic",
+        "capacity": 12,
+        "fire_rate": 210,
+        "recoil": 19.0,
+        "penetration": "medium",
+        "reserve_ammo": 7,
+        "fire_modes": [
+          "半自动"
+        ],
+        "ergonomics": 30,
+        "reload_time": "2.9s",
+        "dps": null
+      },
+      "traits": [
+        "中甲穿透"
+      ],
+      "unlock": "Castellan’s Creed",
+      "description": "The alloy in these long-range rifles includes metals from the dead planet Chara, overrun in the First Galactic War. Produced by ST Construction.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/R/40-K_Hot-Shot_Marksman_Rifle",
+      "detailed_stats": {
+        "fire_rate": "210 rpm",
+        "recoil": "18.75",
+        "recoil_horizontal": "12.5",
+        "recoil_vertical": "25",
+        "spread": "↔[0.50] ↕[0.50]",
+        "sway": "1",
+        "ergonomics": "30",
+        "capacity": "12",
+        "spare_magazines": "7",
+        "starting_magazines": "5",
+        "mags_from_supply": "7",
+        "mags_from_ammo_box": "3",
+        "attacks": [
+          {
+            "name": "R/40-K P",
+            "type": "projectile",
+            "projectile": {
+              "mass": "10 g",
+              "initial_velocity": "500 m/s",
+              "drag_factor": "0%",
+              "gravity_factor": "0%",
+              "lifetime": "3 sec",
+              "penetration_slowdown": "0%"
+            },
+            "damage": {
+              "damage_standard": "275 Ballistic",
+              "damage_durable": "40 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Medium",
+              "pen_slight_angle": "Medium",
+              "pen_large_angle": "Medium",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "20",
+              "push_force": "14"
+            }
+          }
+        ]
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/R-40-K_Hot-Shot_Primary_Render.png/240px-R-40-K_Hot-Shot_Primary_Render.png",
+      "unlock_zh": "卡斯特兰信条 第一章节",
+      "description_zh": "这些远程步枪的合金中含有来自死亡行星 Chara 的金属——那颗星球在第一次银河战争中沦陷。由 ST 建设公司生产。"
+    },
+    {
       "id": "sg_8_punisher",
       "name": "SG-8 制裁者",
       "name_en": "SG-8 Punisher",
@@ -6997,6 +7643,123 @@
       },
       "icon": "https://helldivers.wiki.gg/images/thumb/SMG-203_Gallant_Primary_Render.png/240px-SMG-203_Gallant_Primary_Render.png",
       "description_zh": "任何计算都应基于详细武器统计部分列出的数值。"
+    },
+    {
+      "id": "smg_flam_34_stoker",
+      "name": "SMG/FLAM-34 司炉",
+      "name_en": "SMG/FLAM-34 Stoker",
+      "category": "primary",
+      "subcategory": "submachine_guns",
+      "subcategory_name": "冲锋枪",
+      "stats_short": {
+        "damage": 130.0,
+        "capacity": 45,
+        "penetration": "light"
+      },
+      "stats_full": {
+        "damage": 130.0,
+        "damage_type": "Ballistic",
+        "capacity": 45,
+        "fire_rate": 420,
+        "recoil": 9.0,
+        "penetration": "light",
+        "reserve_ammo": 5,
+        "fire_modes": [],
+        "ergonomics": 60,
+        "reload_time": "2.8s (12mm) 2.3s (Flamethrower)",
+        "dps": 910
+      },
+      "traits": [
+        "轻甲穿透",
+        "单手持握",
+        "燃烧弹"
+      ],
+      "unlock": "Entrenched Division P1",
+      "description": "This versatile submachine gun equipped with iron sights and frontline inciniration capabilities.",
+      "lore": "",
+      "variants": [],
+      "tips": [],
+      "related": {},
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG/FLAM-34_Stoker",
+      "detailed_stats": {
+        "fire_rate": "420 rpm",
+        "recoil": "1.5",
+        "recoil_horizontal": "1.5",
+        "recoil_vertical": "1.5",
+        "spread": "↔[1.00] ↕[1.00]",
+        "sway": "1",
+        "ergonomics": "70",
+        "capacity": "50",
+        "spare_magazines": "3",
+        "starting_magazines": "2",
+        "mags_from_supply": "3",
+        "mags_from_ammo_box": "1",
+        "attacks": [
+          {
+            "name": "12x25mm FULL METAL JACKET P3",
+            "type": "projectile",
+            "projectile": {
+              "mass": "15 g",
+              "initial_velocity": "285 m/s",
+              "drag_factor": "120%",
+              "gravity_factor": "100%",
+              "penetration_slowdown": "25%"
+            },
+            "damage": {
+              "damage_standard": "130 Ballistic",
+              "damage_durable": "30 Ballistic"
+            },
+            "penetration": {
+              "pen_direct": "Light",
+              "pen_slight_angle": "Light",
+              "pen_large_angle": "Light",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "demolition_force": "10",
+              "stagger_force": "15",
+              "push_force": "10"
+            }
+          },
+          {
+            "name": "Underbarrel SMG/FLAM-34 STOKER 0 S",
+            "type": "spray",
+            "damage": {
+              "element": "Fire",
+              "damage_standard": "2 Fire",
+              "damage_durable": "2 Fire"
+            },
+            "penetration": {
+              "pen_direct": "Heavy",
+              "pen_slight_angle": "Heavy",
+              "pen_large_angle": "Heavy",
+              "pen_extreme_angle": "Unarmored"
+            },
+            "special_effects": {
+              "second_status": "FlamerSlowed",
+              "third_status": "Fire_Panic",
+              "demolition_force": "10",
+              "stagger_force": "5",
+              "push_force": "5"
+            }
+          }
+        ],
+        "status_effects": {
+          "status": "Fire",
+          "status_strength": "2",
+          "damage": {
+            "element": "Fire",
+            "damage_standard": "100 Fire",
+            "damage_durable": "100 Fire"
+          },
+          "demolition_force": "0",
+          "stagger_force": "0",
+          "push_force": "0"
+        }
+      },
+      "icon": "https://helldivers.wiki.gg/images/thumb/SMGFLAM-34_Stoker_Primary_Icon.png/240px-SMGFLAM-34_Stoker_Primary_Icon.png",
+      "unlock_zh": "堑壕之师 第一章节",
+      "description_zh": "多用途冲锋枪，配机械瞄具，并具备前线焚烧能力。"
     },
     {
       "id": "sta_11_smg",
