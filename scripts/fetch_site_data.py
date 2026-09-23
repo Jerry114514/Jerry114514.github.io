@@ -563,8 +563,11 @@ CAMPAIGN_ZH_PATH = os.path.abspath(os.path.join(
 
 _TAG_RE = re.compile(r"<[^>]*>")
 _PHASE_STATUS_FALLBACK = {0: ("in_progress", "进行中"), 2: ("success", "成功"), 3: ("failure", "失败")}
+# 阵营中文名一律走站内口径（terms.json / factions.json）：Illuminate = 光能者。
+# 2026-09-23 修正：此前这里写的是上游用的「光能族」，与站内统一口径不一致
+# （战役文本走中文层时看不出来，一旦 campaign_zh.json 缺键就会回退到这个兜底并露出旧译名）。
 _RACE_FALLBACK = {1: ("Humans", "超级地球"), 2: ("Terminids", "终结族"),
-                  3: ("Automaton", "机器人"), 4: ("Illuminate", "光能族")}
+                  3: ("Automaton", "机器人"), 4: ("Illuminate", "光能者")}
 
 
 def _plain(text):

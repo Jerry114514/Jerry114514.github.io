@@ -36,6 +36,33 @@ jobs:
               || echo "  !! 拉取失败: $f"
           done
 
+      # 站点口径规范化（2026-09-23 新增）
+      # -----------------------------------------------------------------
+      # 症状：2026-09-20 站内把阵营名统一成「光能者」（terms.json / factions.json 口径），
+      # 但 HD2-Bot-Release 的这张对照表里写的是「光能族」—— 当天 12:48 的每日同步
+      # 就把站内统一**原样覆盖回去**了，线上一直留着旧译名，且 CI 不会红。
+      # 处理：同步后统一改写为站内口径。
+      # 判据（必须能真的变红，别写成恒真检查）：改写后
+      #   ① 文件里不得再有「光能族」；② 出现的「光能者」次数不得少于改写前的「光能族」次数
+      #   —— ② 专门用来抓"sed 没生效"（编码/写法变化/文件被跳过）这类静默失败。
+      # 注：其余两个同步文件（星图对照表_修正版.md / 群使用说明.txt）实测无该写法，故只处理这一个。
+      - name: 规范化站点术语口径（光能族 → 光能者）
+        run: |
+          F="HD2-Galatic_war-Map/tables/HD2行动变量对照表.md"
+          if [ ! -f "$F" ]; then
+            echo "文件不存在（本轮下载失败），跳过规范化"
+            exit 0
+          fi
+          BEFORE=$(grep -o '光能族' "$F" | wc -l)
+          sed -i 's/光能族/光能者/g' "$F"
+          AFTER=$(grep -o '光能族' "$F" | wc -l)
+          CANON=$(grep -o '光能者' "$F" | wc -l)
+          echo "术语规范化：「光能族」$BEFORE 处 → 残留 $AFTER 处；现有「光能者」$CANON 处"
+          if [ "$AFTER" != "0" ] || [ "$CANON" -lt "$BEFORE" ]; then
+            echo "::error::术语规范化未生效（残留 $AFTER，光能者 $CANON < 改写前 $BEFORE）—— 请人工核对口径"
+            exit 1
+          fi
+
       - name: Commit and push
         run: |
           git config user.name "Jerry Jiang"
