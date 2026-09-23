@@ -632,7 +632,7 @@ infobox 的 `base_cooldown`（`CQC-20`/`CQC-9`/`M-104` = `480s`、`TD-110` = `78
 | 全数据集 | 部分文件 `source` 为 `Helldivers Wiki.gg` / `https://helldivers.wiki.gg` | `wiki.gg` | 新数据与本次修订后的 `boosters.json` 统一写 `wiki.gg` |
 | `blocks/navigation.json` 的卡片 `count`（2026-09-22 实测，**线上一致**） | 与数据集 `total` 不一致：`武器` **45**（数据集实际 103）、`战略配备` **89**（实际 109）、`敌人` **65**（实际 95）；其余对得上（强化资源 20 / 战争债券 25 / 任务 105 / 游戏机制 5 / 更新公告 10） | 目录卡片计数应与对应数据集 `total` 一致（§2 的 `total` 约定、§10 第 8 条自检项） | **未处理**：语义待用户确认后再改（校验器当前**不**校验该字段，所以 CI 不会变红，属"绿着但不对"）。若要修，`敌人` 需先定口径 —— 算 95 条数据集条目，还是 `enemies.html` 实际渲染的非亚阵营页数 |
 | `weapons.json` 的 `stats_short.penetration` / `stats_full.penetration`（2026-09-23 实测） | 只在旧编码器能从 infobox 渲染值认出 `Light/Medium/Heavy` 时才正确；遇 `Anti-Tank I/III`、`Unarmored`、`No Hitbox` 或**多值**（`Heavy (Projectile) Medium (Explosion)`）会**静默回退成 `light`** —— 全库 `Anti-Tank *` 的 8 条都是 `light` | 取 infobox 渲染值里的**首个**类型词（多值时与 `stats_full.damage` 配对） | **部分修正（2026-09-23）**：只改了 `p_40_k_bolt_pistol` → `heavy`（渲染值明写 Heavy + traits 明写 Heavy Armor Penetrating）；其余保持现状（**不许**用「AP 数字 → 轻/中/重」自行发明映射，见 §9 第 21 条） |
-| `weapons.json` 的 `description` / `description_zh`（2026-09-23 实测） | **33 条** `description` 是 Attachments 表残留 `Any math should be done on values listed…`、**38 条**是版本号戳（如 `1.005.002 2026-01-22`）、只有 10 条是真简介；更麻烦的是 **41 条 `description_zh` 是照着那段残留逐句翻译出来的**（"任何计算都应基于详细武器统计部分列出的数值。"） | `description` = 上游 `{{Quote\|…\|Armory Description}}` 英文原文；`description_zh` = 中文；`unlock` / `unlock_zh` 同理 | **新条目已按 canonical 写**（2026-09-23 的 12 条）；**存量 71 条未修**（上游每条都有 Armory Description，可批量修，见 §9 第 21 条与交接文档 §0.5 P2） |
+| `weapons.json` 的 `description` / `description_zh`（2026-09-23 实测） | **33 条** `description` 是 Attachments 表残留 `Any math should be done on values listed…`、**38 条**是版本号戳（如 `1.005.002 2026-01-22`）、只有 10 条是真简介；更麻烦的是 **41 条 `description_zh` 是照着那段残留逐句翻译出来的**（"任何计算都应基于详细武器统计部分列出的数值。"） | `description` = 上游 `{{Quote\|…\|Armory Description}}` 英文原文；`description_zh` = 中文；`unlock` / `unlock_zh` 同理 | **新条目已按 canonical 写**（2026-09-23 的 12 条）；**存量 71 条已于 2026-09-23 全部修掉**：`description` 一律改为上游 `{{Quote|…|Armory Description}}` 英文原文（71/71 抽到，0 缺失），41 条由残留翻译而来的 `description_zh` 同步重译（见 §9 第 24 条）。**实测残留计数**：Attachments 说明 33 条 + 版本号戳 38 条 = 71 条 ✓ |
 | `stratagems_full.json` 的 **`support` 分类全部 30 条** `cooldown = "无限"`（2026-09-23 实测） | 旧编码器对该分类取不到 `base_cooldown`，回落成 transform 的默认值「无限」；上游 infobox 实际有冷却（实测 `CQC-1 One True Flag` = `480s`、`CQC-20`/`CQC-9` = `480s`） | `cooldown` = 上游 `base_cooldown`（无则该条目确为无限） | **未修（本批只保证新条目正确）**：新补录的 4 条写上游真值（480s/780s），与邻居不一致是**已知的存量缺陷**，需单独一批回上游逐条核（`uses` 仍是「无限」，语义正确） |
 | `stratagems_full.json` 的 `code` / `cooldown`（2026-09-23 新增取值） | 新分类 `civilian` 的两条：`code = ""`、`cooldown = "—"` | 空串 = 上游无呼叫码；`—` = 不适用（站内既有的「无此项」写法，见 §7.2 奖励表） | 已登记（见 §7.5）。校验器只查字段存在性，不判空，无需额外例外 |
 
@@ -804,6 +804,21 @@ infobox 的 `base_cooldown`（`CQC-20`/`CQC-9`/`M-104` = `480s`、`TD-110` = `78
     （`siege_breakers` 第 1 页 / `python_commandos` 第 2 页）；校验器 `IMG.HOTLINK` 基线 109 → 115；
     `sitemap.xml` 484 → 490（幂等，仅 +6）。**上游渲染值自身畸形的照抄不修**：`CQC-72` 的
     详细数据表 5 个字段上游就是 `0`（页面未填），与 §9 第 21 条的「上游自己写歪」同性质。
+
+24. **武器 `description` / `description_zh` 收口（2026-09-23 登记并实施）**：一次修掉两类缺陷，共 80 条。
+    ① **抓取残留 71 条**（33 条 Attachments 表说明 `Any math should be done on values listed…` + 38 条版本号戳
+    `1.005.002 2026-01-22`）：`description` 全部替换为上游 `{{Quote|…|Armory Description}}` 的**英文原文**
+    （复用 `scripts/archive/fix_weapon_descriptions.py --scan`，71/71 抽到、0 缺失）；
+    由残留逐句翻译而来的 `description_zh` 同步重译（71 条）。
+    ② **字段倒置 9 条**（`ar_23_liberator` / `p_11_stim_pistol` / `p_33_missile_pistol` / `plas_1_scorcher` /
+    `r_36_eruptor` / `sg_97_sweeper` / `sg_225_breaker` / `sg_225ie_breaker_incendiary` / `vg_70_variable`）：
+    `description` 里存的是**中文**（游戏内官方中文文案）而 `description_zh` 为空 —— 与 §4 第 2 条
+    「`X` = 英文、`X_zh` = 中文」相反。处理：**把原中文原样移到 `description_zh`**（它是官方文案，不重译），
+    `description` 回填上游英文原文。前端 `description_zh || description` 的取值不变，**显示零差异**。
+    **验收判据**：`description` 命中残留正则 0 条、`description_zh` 命中「任何计算/详细武器统计」0 条；
+    逐字段比对确认**只有** `description` / `description_zh` 两个字段变化（其余 15 个字段一律不动）；
+    `total` 仍为 103。**新条目的口径**：`description` = 上游 Armory Description 英文；
+    `description_zh` = 中文（若该篇是游戏内官方中文，**原样保留**，不得重译）。
 
 ## 10. 校验清单
 
