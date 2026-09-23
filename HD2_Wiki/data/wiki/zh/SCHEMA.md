@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.11 · 2026-09-23（v1.11 登记 §7.13 的两项**机翻契约**：`episodes.<键>.mt` / `phases.<键>.mt`（机翻标记，人工校对后删除）与**键的两种写法**（`<id32>` 首选 / `title:<大写标题>` 兜底，供上游 id32 暂缺时使用）；新增 §7.12 边界第 4 条：**`note` 含「分类」的词条是分类标签、不是名词译法，机翻注入时必须跳过**（实测写出过「处理设施与场所」病句）。同日私密仓上线 `Translate Campaign` 流水线，设计见 §7.13）
 > 版本：v1.10 · 2026-09-23（v1.10 **补录 §19.15 列出的另外 12 条武器**：`AR-11 Arbitrator` / `CQC-73 Entrenchment Tool` / `G-60 Anti-Tank Seeker` / `G-8 Immolation` / `G/SH-39 Shield` / `GL-15 Evictor` / `LAS-12 Sai` / `M6C/SOCOM Pistol` / `P-34 Breacher` / `P/40-K Bolt Pistol` / `R/40-K Hot-Shot Marksman Rifle` / `SMG/FLAM-34 Stoker` → `weapons.json` **91 → 103 条**（primary 50→55 / secondary 21→25 / throwables 20→23），校验器 `IMG.HOTLINK` 基线 91 → 103；同批修正 `warbonds.json` 里 `ironclad_democracy` 的**页序错误**（G-8 Immolation 2→1 / P-34 Breacher 3→2 / GL-15 Evictor 2→3，以上游渲染页为准）；新增 §9 第 21 条与 §8 两行新条目）
 > 版本：v1.9 · 2026-09-22（v1.9 登记 §7.3 `weapons.json` 的两条**既有**中文覆盖字段 `unlock_zh` / `description_zh`（`weapon.html` 按 `X_zh || X` 取值，此前只在 41 条里野生存在、未登记），并写入三条实测陷阱：① 条目顺序 = `fetch_weapons.py` 的 `sort_key(name_en)` **全局排序**（不是按 `category` 分组）；② `detailed_stats` 顶层基础参数必须取「**本体**那张 `attack-data-table-weapon` 表」——带下挂武器的页面还有第二张同名表，机器抓取会把下挂的 `fire_rate`/`recoil`/`ergonomics`/`capacity` 覆盖上去；③ `stats_full.capacity`（infobox）与 `detailed_stats.capacity`（正文表）**允许不同**，两处上游数值本身就不一致。同日补录两条缺口 `AR/GL-21 One-Two`（`ar_gl_21_one_two`）与 `G/40-K Melta Mine`（`g_40_k_melta_mine`），`weapons.json` **89 → 91 条**，校验器 `IMG.HOTLINK` 基线同步 89 → 91）
 > 版本：v1.8 · 2026-09-22（v1.8 新增 §7.14 **更新公告** `patchnotes.json` / `patchnotes_zh.json` —— 全站第一个「主干由机器抓取」的数据集（`scripts/fetch_patchnotes.py` 走 helldivers.wiki.gg 的 MediaWiki API）；配套校验器新增 `PATCH.PAIRING` / `PATCH.FIELDS` / `PATCH.SECTION` 三项，其中 `PATCH.PAIRING` 是本站首次采用**索引配对**并强制「中文条目数 == 主干条目数」；页面 `patchnotes.html` + `patchnote.html` 与 `navigation.json` 第 9 项）
@@ -458,6 +459,10 @@ warbond   = item.warbond_zh || item.warbond
 1. 本表**只统一译名口径，不改变各数据集 `name` / `name_zh` 的权威性**：同一英文在两个数据集里各自是条目名（如 `SEAF Artillery` 在 `stratagems_full.json` 作「超级地球武装部队大炮」、在 `missions.json` 作「SEAF 火炮」）时，标 `ambiguous: true` 并同时记录两种口径，**不强行改名**。
 2. `ds_terms.json` 的键含大量数值 + 单位字符串（`0.349999994 sec`），属「文本替换表」而非术语，仍按第 3 级来源并入（便于统一「100 Ballistic → 100 弹道」这类展示值）。
 3. 本表是**查阅型数据**，前端不加载、不渲染；读取方式与其它数据集一致（`[IO.File]::ReadAllText()` + `ConvertFrom-Json`）。
+4. **`note` 含「分类」的条目是"分类标签"，不是名词译法（2026-09-23 登记）**：例如 `FACILITY → 设施与场所`（`note = 行动变量分类`）。
+   把它的 `zh` 当普通名词注入译文，会写出「处理设施与场所」这类病句 —— 实测已在战役机翻里出现 3 处（同日已修）。
+   **凡 `note` 含「分类」的条目（当前 15 条），机翻 prompt 注入时一律跳过**；私密仓的机翻流水线按此过滤（`campaign_translator.py::load_glossary()`）。
+   判据说明：这些条目的英文是**全大写分类键**（`FACILITY` / `CAMPAIGN BLOCKER`…），与正文里的普通单词同形，`re.I` 匹配会误伤。
 
 ### 7.13 `HD2-Galatic_war-Map/data/campaign_zh.json`（进行中的战役中文化层 · 2026-09-20 登记）
 
@@ -482,6 +487,26 @@ warbond   = item.warbond_zh || item.warbond
 | `title` | string | 是 | 战役名中文 |
 | `description` | string | 否 | 情报简介中文（多段用 `\n\n` 分隔） |
 | `phases` | object | 否 | 键为**阶段 id32 字符串**，值 `{ title?, briefing? }`；`title` 为阶段名中文，`briefing` 为简报中文（多段 `\n\n`） |
+| `mt` | boolean | 否 | **机翻标记**（2026-09-23 登记）：`true` = 本场是机翻流水线**整场新建**的，待人工校对。人工校对后删除（删掉即视为已校） |
+
+**`episodes.phases.<键>` 结构**：字段同上表的 `title` / `briefing`，另有：
+
+| 字段名 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `mt` | boolean | 否 | **阶段级机翻标记**：该阶段的 `title`/`briefing` 由机器翻译。**人工校对后删除** |
+
+**键的两种写法（2026-09-23 登记，重要）**：
+
+| 键 | 何时用 |
+| --- | --- |
+| `<id32>`（数字字符串） | **首选**。上游 `episodes[].id32` / `phases[].id32` 正常时一律用它 |
+| `title:<大写英文标题>` | **兜底**。上游新战役刚上线时 `id32` 可能**暂时缺失**（2026-09-22 实测过线上 `active_campaign.id` 为空），此时按 id32 索引必然落空 → 中文化层可用标题键兜住。`fetch_site_data.py::_zh_by_id_or_title()` 与机翻脚本 `entry_keys()` **同口径**：先查 id32、再查标题键 |
+
+**中文化层由谁维护（2026-09-23 登记）**：
+
+1. **人工**：直接在站点侧编辑本文件（这是权威）。
+2. **私密仓机翻流水线 `Translate Campaign`**（每 4 小时）：只补**空着的**字段，**绝不覆盖任何已有中文**；写 `mt: true`；结构自检不过就不写盘、不推送。
+   它不认识的奖励 `mixId` **只报告不猜**（上游不给奖励名，翻不了），需人工补 `reward_types`。
 
 **取值与回退约定**：
 
