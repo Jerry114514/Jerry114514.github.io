@@ -3,9 +3,18 @@
   "title": "MAJOR ORDER",
   "original": "Liberate the designated planets to secure territory for long-term construction of the TD-110 Maelstrom Tank.",
   "translated": "解放指定星球，为 TD-110 漩涡坦克的长期建造夺取领土。",
-  "translated_at": "2026-09-23T07:28:44Z"
+  "translated_at": "2026-09-23T18:17:42Z"
  },
  "items": [
+  {
+   "id": 3938,
+   "original": "MINOR TERMINID OUTBREAK\n\nA minor Terminid outbreak has occured on FRONTERIA. It is evident that some dissidents continue their hopeless effort to disrupt citizen confidence in the TCS+. The Helldivers are ordered to put down this small, low-threat outbreak.",
+   "translated": "终结族小规模爆发\n\nFRONTERIA 出现小规模终结族爆发。显然，仍有异见分子在徒劳地破坏公民对 TCS+ 的信心。绝地潜兵奉命镇压这场威胁等级不高的小规模爆发。",
+   "published_at": "2026-09-23T12:29:26Z",
+   "translated_at": "2026-09-23T18:17:41Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3936,
    "original": "NEW MAJOR ORDER\n\nEnemy aggression prevents the long-term construction of the new Maelstrom Tank, threatening our citizens' inherent right to self-defense. Liberate MARFARK and PHACT BAY immediately.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-09-19T19:29:19Z",
    "source": "dispatch",
    "engine": "manual-patch"
-  },
-  {
-   "id": 3927,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on HALDUS with the Gas Mines Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨出的资金已获分配，将在未来24小时内以“毒气地雷”战略配备支援绝地潜兵在海德斯的行动。",
-   "published_at": "2026-09-17T16:05:23Z",
-   "translated_at": "2026-09-19T19:29:19Z",
-   "source": "dispatch",
-   "engine": "manual-patch"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-23T07:28:44Z",
+  "computed_at": "2026-09-23T18:17:43Z",
   "planet_index": null
  }
 }
