@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.12 · 2026-09-23（v1.12 **「已发布」状态自动化**：新增 `scripts/sync_release_status.py` + `.github/workflows/sync-release-status.yml`（每天 04:30 UTC）—— 按 `release_date <= 今天` 单向把债券由 `unreleased` 翻成 `released`，并让强化资源**随债券**发布、从逐页奖励表继承页号与价格，价格已知时连带改静态列表页 `boosters.html`；先在 §7.1 / §7.2 登记该字段的自动维护口径，§9 新增第 22 条记三条纪律（单向 / 先校验后提交 / 散文不动））
 > 版本：v1.11 · 2026-09-23（v1.11 登记 §7.13 的两项**机翻契约**：`episodes.<键>.mt` / `phases.<键>.mt`（机翻标记，人工校对后删除）与**键的两种写法**（`<id32>` 首选 / `title:<大写标题>` 兜底，供上游 id32 暂缺时使用）；新增 §7.12 边界第 4 条：**`note` 含「分类」的词条是分类标签、不是名词译法，机翻注入时必须跳过**（实测写出过「处理设施与场所」病句）。同日私密仓上线 `Translate Campaign` 流水线，设计见 §7.13）
 > 版本：v1.10 · 2026-09-23（v1.10 **补录 §19.15 列出的另外 12 条武器**：`AR-11 Arbitrator` / `CQC-73 Entrenchment Tool` / `G-60 Anti-Tank Seeker` / `G-8 Immolation` / `G/SH-39 Shield` / `GL-15 Evictor` / `LAS-12 Sai` / `M6C/SOCOM Pistol` / `P-34 Breacher` / `P/40-K Bolt Pistol` / `R/40-K Hot-Shot Marksman Rifle` / `SMG/FLAM-34 Stoker` → `weapons.json` **91 → 103 条**（primary 50→55 / secondary 21→25 / throwables 20→23），校验器 `IMG.HOTLINK` 基线 91 → 103；同批修正 `warbonds.json` 里 `ironclad_democracy` 的**页序错误**（G-8 Immolation 2→1 / P-34 Breacher 3→2 / GL-15 Evictor 2→3，以上游渲染页为准）；新增 §9 第 21 条与 §8 两行新条目）
 > 版本：v1.9 · 2026-09-22（v1.9 登记 §7.3 `weapons.json` 的两条**既有**中文覆盖字段 `unlock_zh` / `description_zh`（`weapon.html` 按 `X_zh || X` 取值，此前只在 41 条里野生存在、未登记），并写入三条实测陷阱：① 条目顺序 = `fetch_weapons.py` 的 `sort_key(name_en)` **全局排序**（不是按 `category` 分组）；② `detailed_stats` 顶层基础参数必须取「**本体**那张 `attack-data-table-weapon` 表」——带下挂武器的页面还有第二张同名表，机器抓取会把下挂的 `fire_rate`/`recoil`/`ergonomics`/`capacity` 覆盖上去；③ `stats_full.capacity`（infobox）与 `detailed_stats.capacity`（正文表）**允许不同**，两处上游数值本身就不一致。同日补录两条缺口 `AR/GL-21 One-Two`（`ar_gl_21_one_two`）与 `G/40-K Melta Mine`（`g_40_k_melta_mine`），`weapons.json` **89 → 91 条**，校验器 `IMG.HOTLINK` 基线同步 89 → 91）
@@ -249,6 +250,12 @@ warbond   = item.warbond_zh || item.warbond
 
 > 分组合并（`rowspan`）在抓取阶段已展开为重复值，本 schema 不保留 `rowspan` 语义。
 
+**发布状态与价格（2026-09-23 登记）**：`release_status` / `warbond_page` / `price` / `price_zh` 在**所属债券发布后**
+由 `scripts/sync_release_status.py` 自动补齐（见 §9 第 22 条）—— 它按债券的 `release_date` 单向翻转状态，
+并从债券的**逐页奖励表**继承页号与勋章价格。
+⚠ **`boosters.html` 的卡片价格是写死的静态 HTML**（列表页为 SEO 静态化），与 `boosters.json` 是**两份**；
+新增/改价的条目必须两边都改（脚本会在价格已知时自动改那份静态副本，但**人工改价时别只改 JSON**）。
+
 ### 7.2 `warbonds.json`
 
 **公共字段**：`id`、`name`、`name_en`、`icon`、`release_status`（第 3 节）；`description` / `description_zh` **不使用**（本数据集用 `intro_zh` / `overview_zh`，见下）。
@@ -298,6 +305,11 @@ warbond   = item.warbond_zh || item.warbond
 - 键是奖励英文名，若日后重抓导致奖励文案变动，须同步改键名。
 
 > 顶层 `total` 必须等于 `warbonds` 数组长度。图标为 `./assets/warbonds/<wiki File 名>.webp`（本站下载，不热链；原 PNG 母版保留在同目录，仅为备份）。
+
+**`release_status` 是自动维护字段（2026-09-23 登记）**：`scripts/sync_release_status.py` 每天按
+**`release_date <= 今天`** 单向翻转 `unreleased → released`（`release_date` 早已取自上游 infobox 的 `date`）；
+它**从不回退**，也**不改散文** —— `intro_zh` / `overview_zh` 里若还写着「尚未上架 / 未发布 / Unreleased」，
+脚本只打印警告，措辞仍由人改（见 §9 第 22 条）。
 
 ### 7.3 `weapons.json`
 
@@ -734,6 +746,22 @@ warbond   = item.warbond_zh || item.warbond
       - **用户给定口径 2 条**（`source = 口径（A 项 · 官方译名）`）：`G-60 Anti-Tank Seeker` → **G-60 反坦克追踪者**（初拟「反坦克寻踪者」已进 `rejected`）、`P-34 Breacher` → **P-34 爆破者**（初拟「破门者」已进 `rejected`）。**注意**：`G-50 Seeker` 站内仍作「**寻踪者**」，与本条「追踪者」并存 —— 两者是上游两个不同型号，**不要互相"统一"**（未经用户口径不得改 G-50）。
       - **其余 10 条**：译名由本站拟定、**经用户复核认可**（`source = weapons.json`，note 注明"非游戏内官方译名"）。
       - **顺带登记一条站内尚无条目的战略配备译名**：`TD-110 Maelstrom` → **TD-110 “风暴漩涡”坦克**（用户给定官方译名，级别 0）。全仓检索该型号 **0 处** —— `stratagems_full.json` 尚未收录它，故本次**只登记译名**（见交接文档 §0.5，补录该战略配备时应按本条用词）。
+
+22. **「已发布」状态自动化（2026-09-23 登记并上线）**：`scripts/sync_release_status.py` + `.github/workflows/sync-release-status.yml`（每天 04:30 UTC，独立工作流）。
+    背景：**「民主铁壁」上架后站内仍标着"未发布"、强化资源价格还是「待发布」** —— 这类状态过去只能靠人记得改，
+    忘了就一直错，而且 **CI 不会红**（"绿着但不对"）。
+    - **两条规则**（只用站内已有数据，不联网、不猜）：① 债券：`release_date <= 今天` ⇒ `released`；
+      ② 强化资源：所属债券已发布 ⇒ 自己也已发布，并从债券**逐页奖励表**继承 `warbond_page` 与 `price`/`price_zh`。
+    - **三条纪律**：**① 单向**（只 `unreleased → released`，`release_date` 缺失则跳过并警告）；**② 先校验后提交**
+      （写盘前先验 `json.dumps(indent=2)` 可逐字节复现，CI 侧再过 `validate_wiki_data.py` 才 commit）；
+      **③ 散文不动**（`intro_zh`/`overview_zh` 里的「尚未上架/未发布」只报告，措辞由人改）。
+    - **价格未知时只翻状态**：逐页奖励表里该行是 `—`（上游没印价）时，`price_zh` 保持「待发布」并把
+      "需人工按条目页补价"打进行摘要 —— **不推算、不补算**（沿用 §7.2 的既定纪律）。
+    - **连带改静态列表页**：`boosters.html` 的价格是写死 HTML，脚本在价格已知时同步改那份副本；
+      **这是本仓第二处"同一事实存两份"的地方**（第一处是 `blocks/navigation.json` 的计数），新增条目时两边都要动。
+    - **验证方式（本仓标准）**：7 个离线 hermetic 场景 + 真实仓幂等复跑 —— 含"发行前一天不动 / 发行当天（含当天）翻转 /
+      幂等 / `--check` 绝不写盘 / 价格未知只翻状态并告警 / 价格已知时静态页清零 / 已发布数据不回溯"。
+      测试用 `--today YYYY-MM-DD` 把"今天"参数化，`RS_ROOT` 指向沙箱副本，**不碰真数据**。
 
 
 ---

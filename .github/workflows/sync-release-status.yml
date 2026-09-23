@@ -1,0 +1,99 @@
+name: Sync Release Status
+
+# 战争债券 / 强化资源「已发布」状态自动同步
+# ---------------------------------------------------------------------------
+# 解决什么问题（2026-09-23 实例）：
+#   「民主铁壁」上架后，站内仍标着**未发布**、强化资源价格还是「待发布」—— 这种状态过去
+#   **只能靠人记得改**；忘了就一直错，而且**CI 不会红**（属"绿着但不对"）。
+#
+# 做什么：每天跑一次 scripts/sync_release_status.py
+#   ① 债券：`release_date <= 今天` ⇒ `release_status: unreleased -> released`
+#   ② 强化资源：所属债券已发布 ⇒ 自己也已发布，并从债券的逐页奖励表**继承**页号与勋章价格
+#   ③ 价格已知时，连带把 `boosters.html` 里写死的卡片「待发布」改成真实价格
+#   ④ 逐页奖励表里价格是 `—`（上游没印）时**只翻状态**，把"需人工补价"打印到运行摘要里
+#
+# 三条纪律：
+#   · **单向**：只翻 unreleased -> released，永不回退。
+#   · **先校验后提交**：`validate_wiki_data.py` 不通过则本工作流整体失败 → **不会提交**。
+#   · **散文不动**：`intro_zh`/`overview_zh` 里若还写着「尚未上架/未发布」，只报告，交给人改写。
+#
+# 为什么独立工作流：与 fetch-patchnotes 同理 —— 不必给"一天最多变一次"的东西更高频，
+# 也不想把风险挂进 fetch-data（整站数据主命脉）。⚠ GitHub 会节流新增定时工作流（§11.4），
+# 所以本工作流**同时支持 workflow_dispatch**，忘记时手动跑一次即可。
+
+on:
+  schedule:
+    - cron: '30 4 * * *'    # 每天 04:30 UTC（错开 upstream-watch 03:00 / sync-tables 08:00）
+  workflow_dispatch:
+    inputs:
+      check:
+        description: '只打印计划不写盘（1=check）'
+        type: string
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-release-status
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 同步「已发布」状态（无事可做则文件不动）
+        id: sync
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          set -eo pipefail
+          if [ "${{ github.event.inputs.check || '0' }}" = "1" ]; then
+            python scripts/sync_release_status.py --check 2>&1 | tee /tmp/sync_out.txt
+          else
+            python scripts/sync_release_status.py 2>&1 | tee /tmp/sync_out.txt
+          fi
+          n="$(sed -n 's/^RELEASE_SYNC=//p' /tmp/sync_out.txt | tail -1)"
+          w="$(sed -n 's/^RELEASE_WARNINGS=//p' /tmp/sync_out.txt | tail -1)"
+          echo "count=${n:-0}" >> "$GITHUB_OUTPUT"
+          echo "warnings=${w:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: 数据校验（不通过则整体失败，因此不会提交）
+        if: github.event.inputs.check != '1'
+        run: python scripts/validate_wiki_data.py
+
+      - name: Commit and push
+        if: github.event.inputs.check != '1'
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2_Wiki/data/wiki/zh/warbonds.json HD2_Wiki/data/wiki/zh/boosters.json HD2_Wiki/boosters.html
+          if git diff --cached --quiet; then
+            echo "无状态变化，跳过提交"
+          else
+            git commit -m "data(债券): 自动同步已发布状态 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          fi
+
+      - name: 运行摘要
+        if: always()
+        run: |
+          {
+            echo '### Sync Release Status'
+            echo ''
+            echo "- 本轮翻转为「已发布」：${{ steps.sync.outputs.count || '0' }} 项"
+            echo "- 需人工处理：${{ steps.sync.outputs.warnings || '0' }} 项"
+            echo ''
+            echo '```'
+            grep -E 'RELEASE_|\[需人工\]|\[债券\]|\[强化资源\]|\[静态页\]|没有待更新' /tmp/sync_out.txt 2>/dev/null \
+              || echo "(详见上面的作业日志)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
