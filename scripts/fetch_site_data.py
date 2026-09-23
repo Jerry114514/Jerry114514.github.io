@@ -586,6 +586,28 @@ def _load_campaign_zh():
     return {}
 
 
+def _zh_by_id_or_title(zh_map, id_value, title):
+    """按 `<id32>` 取中文覆盖；**id32 缺失时按 `title:<大写英文标题>` 兜底**。
+
+    2026-09-23 新增。背景：上游（companion live API）在新战役刚上线的那段时间里，
+    `episodes[].id32` / `phases[].id32` 可能**还没填**（2026-09-22 实测线上 `active_campaign.id`
+    为空，见交接文档 §18.5）——而中文化层是按 id32 索引的，于是**中文明明写了却匹配不上**，
+    页面继续显示英文，且**没有任何报错**（静默失败）。
+
+    因此约定：中文化层除 `<id32>` 外，还可以用 `"title:<英文标题大写>"` 作为键；
+    取用时先按 id32、再按标题兜底。调用方把 `id_missing` 一起写进 data.json，便于发现上游异常。
+    """
+    if id_value:
+        hit = zh_map.get(str(id_value))
+        if isinstance(hit, dict) and hit:
+            return hit
+    if title:
+        hit = zh_map.get("title:" + str(title).strip().upper())
+        if isinstance(hit, dict):
+            return hit
+    return {}
+
+
 def _reward_of(entry, zh):
     """{mixId, amount} -> 带中英文名/图标类型的奖励对象。
 
@@ -801,7 +823,7 @@ def build_active_campaign(companion, zh=None):
             latest_phase = s.get("latestPhaseId32")
             break
 
-    zh_ep = zh_eps.get(str(ep.get("id32"))) or {}
+    zh_ep = _zh_by_id_or_title(zh_eps, ep.get("id32"), _plain(ep.get("title")))
     zh_phases = zh_ep.get("phases") or {}
 
     phases = []
@@ -812,7 +834,7 @@ def build_active_campaign(companion, zh=None):
         sm = zh_status.get(str(st)) or {}
         fb_key, fb_cn = _PHASE_STATUS_FALLBACK.get(st, ("unknown", "未知"))
         key = sm.get("key") or fb_key
-        zph = zh_phases.get(str(p.get("id32"))) or {}
+        zph = _zh_by_id_or_title(zh_phases, p.get("id32"), _plain(p.get("introTitle")))
         p_img = campaign_banner_of(p.get("introMediaId32"))
         phases.append({
             "id": p.get("id32"),
@@ -856,6 +878,8 @@ def build_active_campaign(companion, zh=None):
     return {
         "available": True,
         "id": ep.get("id32"),
+        # 上游 id32 缺失时置真（中文化层此时只能按 title:<标题> 兜底命中，见 _zh_by_id_or_title）
+        "id_missing": not bool(ep.get("id32")),
         "title": _plain(ep.get("title")),
         "title_cn": zh_ep.get("title") or "",
         "label": "ACTIVE CAMPAIGN",
