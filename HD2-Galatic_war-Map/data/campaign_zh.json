@@ -3,8 +3,8 @@
     "desc": "「进行中的战役」中文化层。英文原文来自 helldiverscompanion.com live API 的 episodes 字段（由 scripts/fetch_site_data.py 抓取并合并本文件）；本文件按上游 id32 覆盖中文，缺失的 id32 一律回退英文原文，绝不阻断渲染。",
     "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
-    "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。",
-    "updated_at": "2026-09-20"
+    "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。",
+    "updated_at": "2026-09-23"
   },
   "_assets": {
     "desc": "战役奖励图标（本地文件）。companion 的奖励图标不是位图，而是前端 bundle 内嵌的压缩图标库，运行时渲染成内联 <svg viewBox=\"0 0 1000 1000\">；站点上没有任何图标位图 URL。下面两个文件即该内联 SVG 的矢量路径本地化副本（d / fill 原样），由浏览器实测提取，非截图切割。",
@@ -83,6 +83,12 @@
       "img": "./assets/campaign/reward_cape.svg"
     },
     "2961949068": {
+      "en": "CAPE",
+      "cn": "披风",
+      "icon": "cape",
+      "img": "./assets/campaign/reward_cape.svg"
+    },
+    "1618361436": {
       "en": "CAPE",
       "cn": "披风",
       "icon": "cape",
@@ -189,6 +195,16 @@
         },
         "1622985592": {
           "title": "屏障强化"
+        }
+      }
+    },
+    "3894275519": {
+      "title": "装甲雄鹰",
+      "description": "一家爱国的防务承包商已同意为公民制造个人防卫坦克。绝地潜兵奉命夺取必要的资源与领土，以捍卫公民的自卫权。",
+      "phases": {
+        "2032505036": {
+          "title": "确保领土",
+          "briefing": "国防部已与 AM Defense 签署新协议，建造一款新型坦克：TD-110 “风暴漩涡”坦克。这家爱国的承包商正是那条高质量快速侦察载具产品线的制造商。作为公民自由的全新前沿，符合条件的公民将可购买该型坦克。\n\n然而，敌人的侵略正在威胁这份自由：他们不让 AM Defense 获得近期划拨给“风暴漩涡”坦克生产线的领土。绝地潜兵奉命立即解放玛尔法克与丈人一湾。\n\nAM Defense 已慷慨地无偿提供“风暴漩涡”坦克原型车，用于充实绝地潜兵的军械库，以完成这片领土的解放。"
         }
       }
     }
