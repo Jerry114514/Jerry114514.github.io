@@ -3,9 +3,18 @@
   "title": "MAJOR ORDER",
   "original": "Liberate the designated planets to secure territory for long-term construction of the TD-110 Maelstrom Tank.",
   "translated": "解放指定星球，为 TD-110 漩涡坦克的长期建造夺取领土。",
-  "translated_at": "2026-09-23T22:47:00Z"
+  "translated_at": "2026-09-24T03:39:07Z"
  },
  "items": [
+  {
+   "id": 3939,
+   "original": "STRATEGIC ALERT\n\nThe Automaton Incineration Corps has been reported on VINDEMITARIX PRIME.",
+   "translated": "战略警报\n\n据报，机器人炽灼部队已现身文德米塔里克斯主星。",
+   "published_at": "2026-09-24T00:06:22Z",
+   "translated_at": "2026-09-24T03:39:06Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3938,
    "original": "MINOR TERMINID OUTBREAK\n\nA minor Terminid outbreak has occured on FRONTERIA. It is evident that some dissidents continue their hopeless effort to disrupt citizen confidence in the TCS+. The Helldivers are ordered to put down this small, low-threat outbreak.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-09-19T19:29:19Z",
    "source": "dispatch",
    "engine": "manual-patch"
-  },
-  {
-   "id": 3928,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on MARFARK with the Anti-Personnel Mine Deployer Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨出的资金已获分配，将在未来24小时内以“反步兵地雷部署器”战略配备支援绝地潜兵在玛尔法克的行动。",
-   "published_at": "2026-09-18T16:21:39Z",
-   "translated_at": "2026-09-19T19:29:19Z",
-   "source": "dispatch",
-   "engine": "manual-patch"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-23T22:47:00Z",
+  "computed_at": "2026-09-24T03:39:07Z",
   "planet_index": null
  }
 }
