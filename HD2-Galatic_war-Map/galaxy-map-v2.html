@@ -28,7 +28,7 @@
     --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);
     --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;
     --yellow:#f5c518; --blue:#3b82f6;
-    --c-humans:#ffe800; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
+    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;
     --radius:12px; --radius-s:8px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -372,6 +372,25 @@
   #planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mute);
     font-family:var(--font-mono);border-top:1px solid #161616}
 
+  /* ── 防御战（入侵）卡片（2026-09-24 新增）──────────────────────────────
+     被入侵星球不再显示「已解放 100%」，改用与主页一致的**双进度条 + 战况**，
+     但视觉沿用星图这套（直角条 + 等宽数字 + 斜纹头）。
+     ⚠ P0 铁律（交接文档 §11.1-7）：双条**顺序固定为上=超级地球、下=入侵方**，
+       且超级地球那条**恒为蓝**；卡片外框/顶部色表达"谁在打"（入侵方），两者必须解耦。 */
+  #planet-card .kind.def{color:#FF6A4A}
+  #planet-card.def .ficon{color:var(--c-humans)}      /* 星球归属仍是超级地球，图标不吃卡片威胁色 */
+  #planet-card .def-race{padding:8px 9px 2px;display:grid;gap:5px}
+  #planet-card .def-row{display:grid;grid-template-columns:62px 1fr 54px;align-items:center;gap:6px}
+  #planet-card .def-row .lbl{font-size:.66rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #planet-card .def-row .val{font-family:var(--font-mono);font-size:.68rem;color:var(--text);text-align:right}
+  #planet-card .def-row .track{position:relative;height:9px;background:#1A1A1A;border:1px solid var(--line-2);overflow:hidden}
+  #planet-card .def-row .track i{display:block;height:100%}
+  #planet-card .def-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    padding:4px 9px 0;font-size:.66rem;color:var(--text-mute)}
+  #planet-card .def-meta b{font-family:var(--font-mono);color:var(--text);font-weight:700}
+  #planet-card .def-meta .st-win{color:#1FA84A}
+  #planet-card .def-meta .st-lose{color:#FF4D2E}
+
   /* 轮盘 */
   #wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;
     transform:translate(-50%,-50%);cursor:pointer}
@@ -393,7 +412,7 @@
   }
 </style>
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
-<link rel="stylesheet" href="./css/map-hud.css?v=20260913e">
+<link rel="stylesheet" href="./css/map-hud.css?v=20260924a">
 </head>
 <body>
 <header>
@@ -449,7 +468,7 @@
       <div><i style="background:var(--c-automaton)"></i>机器人</div>
       <div><i style="background:var(--c-illuminate)"></i>光能者</div>
       <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
-      <div><span class="ln" style="border-image:linear-gradient(90deg,#ffe800,#f59e0b) 1"></span>我方黄 → 敌方阵营色</div>
+      <div><span class="ln" style="border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
       <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
     </div>
     <div class="muted" id="srcnote"></div>
@@ -466,9 +485,10 @@
 const $ = (id) => document.getElementById(id);
 const SVGNS = "http://www.w3.org/2000/svg";
 
-// 阵营代表色（超级地球 2026-09 起 = #ffe800，与 assets/faction-icons/humans.svg 的黄骷髅
-// 及 HD2_Wiki/data/wiki/zh/factions.json 的 super_earth.color 三者同值；其余三方不动）
-const OWNER_COLOR = { Humans:"#ffe800", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
+// 阵营代表色（超级地球 2026-09-24 起 = #5BA3D0 蓝，与主页 tokens.css 的 --c-faction-hum 同值。
+// 2026-09-18~09-24 曾用 #ffe800 黄，与终结族 #F5C518 对比度仅 1.30、209 个我方圆点 vs 23 个终结族圆点难以分辨，
+// 故按用户要求回退为蓝；humans.svg 的骷髅形状不变，只由 CSS 着色）
+const OWNER_COLOR = { Humans:"#5BA3D0", Terminids:"#F5C518", Automaton:"#D6806D", Illuminate:"#CF64F8" };
 const OWN_CN     = { Humans:"超级地球", Terminids:"终结族", Automaton:"机器人", Illuminate:"光能者" };
 const FACTION_KEYS = ["Humans","Terminids","Automaton","Illuminate"];
 
@@ -509,9 +529,9 @@ const STRAIN_WIKI_ID = {
   Mindless_Masses:"mindless_masses", Appropriators:"appropriators",
   Vote_Snatchers:"vote_snatchers", Invasion_Fleet:"invasion_fleet",
 };
-// 阵营代表色（与 HD2_Wiki/data/wiki/zh/factions.json 的 color 一致：
-// super_earth #ffe800 / terminids #f59e0b / automatons #ef4444 / illuminate #AA44FF）
-const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#ffe800" };
+// 阵营代表色（与站点口径一致：超级地球 = 蓝 #5BA3D0；
+// terminids #f59e0b / automatons #ef4444 / illuminate #AA44FF）
+const FACTION_COLOR = { Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF", Humans:"#5BA3D0" };
 // 返回 { url, kind, color, badge, text }
 function wikiLinkFor(p) {
   const owner = p.currentOwner || "";
@@ -1122,9 +1142,9 @@ async function boot() {
   // 跨阵营 57）。上一版误把「非跨阵营」的线全部丢弃，导致星图几乎看不到连线。
   //   · 同阵营线：用该阵营代表色的暗色实线
   //   · 跨阵营线：额外叠加一层「我方（超级地球）色 → 阵营代表色」渐变（见 supply-grad-* 图层）
-  // 2026-09：超级地球改动为 #ffe800 后，这里的「我方端点」同步由蓝改黄
-  // （SUPPLY_FACTION_COLOR.Humans 原为 #3b82f6，与 OWNER_COLOR/FACTION_COLOR 的 #5BA3D0 本就不一致）。
-  const SUPPLY_FACTION_COLOR = { Humans:"#ffe800", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
+  // 2026-09-24：超级地球改动为 #5BA3D0 后，这里的「我方端点」同步由黄改蓝
+  // （SUPPLY_FACTION_COLOR.Humans 必须与 OWNER_COLOR / FACTION_COLOR / --c-humans 同值，否则连线端点会撞色）。
+  const SUPPLY_FACTION_COLOR = { Humans:"#5BA3D0", Terminids:"#f59e0b", Automaton:"#ef4444", Illuminate:"#AA44FF" };
   const supplyFC = fc((() => {
     const out = [];
     for (const k of Object.keys(WP)) {
@@ -1132,7 +1152,7 @@ async function boot() {
       for (const to of (WP[k] || [])) {
         const b = posOf(+to); if (!b) continue;
         const oA = ownerOf(+k) || "None", oB = ownerOf(+to) || "None";
-        // 跨阵营渐变以「我方那一端」为我方色（#ffe800）起点；其余取任一端阵营色
+        // 跨阵营渐变以「我方那一端」为我方色（#5BA3D0）起点；其余取任一端阵营色
         let grad = null;
         if (oA === "Humans" && oB !== "Humans") grad = oB;
         else if (oB === "Humans" && oA !== "Humans") grad = oA;
@@ -1158,7 +1178,7 @@ async function boot() {
   // 跨阵营渐变图层：line-gradient 不是 data-driven，故按「阵营 × 我方端点」显式生成 6 条。
   // humanEnd=1 → from 端是我方（我方色在 0%）；humanEnd=0 → to 端是我方（我方色在 100%）。
   const GRAD_HEX = { Terminids:"245,158,11", Automaton:"239,68,68", Illuminate:"170,68,255" };
-  const BLUE_C = "rgba(255,232,0,.95)";   // 我方（超级地球）= #ffe800
+  const BLUE_C = "rgba(91,163,208,.95)";   // 我方（超级地球）= #5BA3D0
   const SUPPLY_GRAD_LAYERS = [];
   for (const [fac, rgb] of Object.entries(GRAD_HEX)) {
     for (const humanEnd of [1, 0]) {
@@ -1179,13 +1199,34 @@ async function boot() {
     }
   }
 
-  // 入侵战役连线（用于方向箭头）：坐标取反，使箭头由**入侵方**指向**被入侵星球**
-  const attackFC = fc((data.planet_attacks || []).map(a => {
-    const src = posOf(a.source), tgt = posOf(a.target);   // src=被入侵(我方)，tgt=入侵方
-    if (!src || !tgt) return null;
+  // 真·入侵（防御战）：campaignType=defense / eventType=1 / type=1|4（与主页 index.html 同一判据）
+  const INVASIONS = (data.campaigns || []).filter(c =>
+    c.planet && c.planet.index != null &&
+    (String(c.campaignType).toLowerCase() === "defense" || c.eventType === 1 ||
+     c.type === 1 || c.type === 4));
+
+  // 入侵战役连线（红虚线 + 箭头）：**只有真在打防御战的星球才画**。
+  // 2026-09-24 修正：旧版直接拿上游 planet_attacks 的**全部跨阵营相邻对**（60+ 条）画红线，
+  //   于是整张图到处是红虚线、看着像到处都是接敌；而「我方星球 ↔ 敌方星球」的相邻关系
+  //   本来就由 supply 连线（跨阵营那条）叠的渐变层表达了，红线属于重复表达 + 误导。
+  // 现在：从 planet_attacks 里找出与被入侵星球相邻、且归属 = campaign.faction 的那颗敌星作起点，
+  //   坐标顺序 [入侵方 → 被入侵星球]，箭头方向与之一致。
+  const attackFC = fc(INVASIONS.map(c => {
+    const mine = c.planet.index, dst = posOf(mine);
+    if (!dst) return null;
+    const fac = String(c.faction || "");
+    const neighbours = (data.planet_attacks || [])
+      .filter(a => a.source === mine || a.target === mine)
+      .map(a => (a.source === mine ? a.target : a.source));
+    // 优先取「归属 = 入侵方阵营」的邻居；取不到就退回第一个邻居（仍是相邻的那颗）
+    const origin = (neighbours.find(i => String((BYIDX[i] || {}).currentOwner || "") === fac) != null)
+      ? neighbours.find(i => String((BYIDX[i] || {}).currentOwner || "") === fac)
+      : neighbours[0];
+    const from = origin != null ? posOf(origin) : null;
+    if (!from) return null;
     return { type: "Feature",
-             geometry: { type: "LineString", coordinates: [[tgt.x, tgt.y], [src.x, src.y]] },
-             properties: { from: a.target, to: a.source } };  // 已按入侵方向调换
+             geometry: { type: "LineString", coordinates: [[from.x, from.y], [dst.x, dst.y]] },
+             properties: { from: origin, to: mine, faction: fac } };
   }).filter(Boolean));
 
   // 玩家热力（按星球）
@@ -1335,7 +1376,9 @@ async function boot() {
     `<span><b>星球</b> ${planets.length}</span>` +
     FACTION_KEYS.map(k => `<span style="color:${OWNER_COLOR[k]}">${OWN_CN[k]} ${owners[k] || 0}</span>`).join("") +
     `<span style="color:var(--blue)"><b>战术目标</b> ${Object.keys(TACBY).length}</span>` +
-    `<span style="color:#E74C3C"><b>反攻</b> ${(data.planet_attacks || []).length}</span>` +
+    // 口径随「红虚线 = 只在入侵战役时出现」一起改：这里显示的就是图上真实在打的入侵数
+    //（旧版显示 planet_attacks 全量 = 60+ 条跨阵营相邻对，"反攻 68" 与图上的 1 条红线对不上）
+    `<span style="color:#E74C3C"><b>入侵</b> ${INVASIONS.length}</span>` +
     `<span><b>更新</b> ${(data.fetchedAt || "").slice(5, 16).replace("T", " ")}</span>`;
 
   // ---- 5) 地图 ----
@@ -2231,6 +2274,70 @@ function bindUI(data, planets) {
   }
 
   // 同步渲染核心信息（保证「点击必有反馈」），图片/图标随后异步补上
+  // 剩余时长：18h 35m / 2d 3h（星图只用于防御战倒计时，保持短）
+  function durTxt(sec) {
+    sec = Math.max(0, Math.floor(sec || 0));
+    const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
+    return d > 0 ? `${d}d ${h}h` : (h > 0 ? `${h}h ${m}m` : `${m}m`);
+  }
+
+  // 防御战（入侵）卡片：与主页 index.html 的 pcDefenseRace 同一套口径，
+  // 视觉贴合星图（直角条 + 等宽数字 + 斜纹头）。
+  // ⚠ P0 铁律（交接文档 §11.1-7）：双条**顺序固定为上=超级地球、下=入侵方**，
+  //   且超级地球那条**恒为蓝**（不跟卡片威胁色走）。
+  function defCardHtml(p, index, camp, owner, share) {
+    const atkF = String(camp.faction || "");
+    const atkLabel = OWN_CN[atkF] || atkF || "敌方";
+    const atkColor = FACTION_COLOR[atkF] || "#E74C3C";
+    const atk = camp.attackersProgress != null ? Number(camp.attackersProgress) : null;
+    const def = camp.defendersProgress != null ? Number(camp.defendersProgress) : null;
+    const aR = camp.attackersRate, dR = camp.defendersRate;
+    const remainH = (camp.remainingTime || 0) / 3600;
+    // 我方均速：优先取实测差值；否则用「进度 ÷ 已历时间」（已历时间 = 入侵进度 ÷ 固定速率）
+    const elapsedH = (aR > 0 && atk > 0) ? atk / aR : 0;
+    const pace = (dR != null && dR > 0) ? dR : ((elapsedH > 0 && def != null) ? def / elapsedH : null);
+    // 战况：剩余时间内能打满 = 优势（与主页同判据）
+    let st, cls;
+    if (pace != null && def != null && remainH > 0) {
+      const win = pace * remainH >= (100 - def);
+      st = win ? "优势" : "劣势"; cls = win ? "st-win" : "st-lose";
+    } else if (def != null && atk != null) {
+      st = def >= atk ? "优势" : "劣势"; cls = def >= atk ? "st-win" : "st-lose";
+    } else { st = "数据不足"; cls = ""; }
+    const row = (label, pct, bg) => {
+      const known = pct != null && isFinite(pct);
+      const w = known ? Math.max(0, Math.min(100, pct)).toFixed(2) : "0.00";
+      return `<div class="def-row"><span class="lbl">${esc(label)}</span>` +
+             `<div class="track"><i style="width:${w}%;background:${bg}"></i></div>` +
+             `<span class="val">${known ? Number(pct).toFixed(2) + "%" : "--"}</span></div>`;
+    };
+    return `<div class="hd"><span class="kind def">⚠ 防御战 · 入侵中</span>` +
+        (camp.remainingTime ? `<span class="eta lose">⏳ ${durTxt(camp.remainingTime)}</span>` : "") +
+      `</div>` +
+      `<div class="title"><span class="ficon"></span><span class="names">` +
+        `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
+        `<span class="en">${esc(p.name || "")}</span>` +
+        `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
+      `</span></div>` +
+      `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
+      `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
+      `<div class="def-race">` +
+        row("超级地球", def, "var(--c-humans)") +
+        row(atkLabel, atk, atkColor) +
+      `</div>` +
+      `<div class="def-meta"><span>进攻 <b>${aR != null ? Number(aR).toFixed(3) : "--"}%</b>/h` +
+        ` · 防守 <b>${pace != null ? pace.toFixed(3) : "--"}%</b>/h</span>` +
+        `<span style="margin-left:auto">战况 <b class="${cls}">${esc(st)}</b></span></div>` +
+      (camp.invasionLevel != null
+        ? `<div class="def-meta"><span>⚔️ 入侵等级 <b>${esc(camp.invasionLevel)}</b></span>` +
+          `<span>等级越高敌方兵力越强</span></div>` : "") +
+      `<div class="stats">` +
+        `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
+        `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
+      `</div>` +
+      `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
+  }
+
   function showPlanetCard(index) {
     const p = BYIDX[index]; if (!p) return;
     const el = $("planet-card"); if (!el) return;
@@ -2239,24 +2346,38 @@ function bindUI(data, planets) {
     const color = colorOf(owner);
     const lib = libPct(p);
     const camp = (data.campaigns || []).find(c => c.planet && c.planet.index === index);
+    // 防御战（入侵）判定：与主页 index.html 同一判据（campaignType=defense / eventType=1 / type=1|4）
+    const isDef = !!camp && (String(camp.campaignType).toLowerCase() === "defense" ||
+                             camp.eventType === 1 || camp.type === 1 || camp.type === 4);
     // 超级地球持有的星球：其 health 恒为满血（见主页 index.html 中同类注释），
     // 于是 (1-health/maxHealth) 会算出 0% —— 与「已解放」自相矛盾。
     // 这类星球一律按「已解放」呈现：战争性质=✓ 已解放（绿）、进度 100%、不显示速率。
+    // ⚠ 但**正在被入侵的我方星球不在此列**（2026-09-24 用户报的正是这个：菁宿一/MEISSA
+    //   明明在打防御战，卡片却写「✓ 已解放 100%」——那时的真实进度只存在于 campaign 里）。
     const humanOwned = String(p.currentOwner || "Humans").toLowerCase() === "humans";
-    const libShow = humanOwned ? 100 : lib;
-    const kind = humanOwned ? "✓ 已解放"
+    const showLiberated = humanOwned && !isDef;
+    const libShow = showLiberated ? 100 : lib;
+    const kind = isDef ? "⚠ 防御战 · 入侵中"
+      : (showLiberated ? "✓ 已解放"
       : (camp ? (String(camp.campaignType).toLowerCase() === "defense" ? "入侵 · 防御战役" : "解放战役")
-              : (p.attacking ? "遭受进攻" : "无战役"));
+              : (p.attacking ? "遭受进攻" : "无战役")));
     const r = rateOf(p), eta = etaOf(p);
     const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
     const gross = grossOf(p);
-    el.style.setProperty("--pc-color", color);
+    // 外框/顶部色 = "谁在打这颗星球"（入侵方，威胁感）；条内颜色另算（超级地球恒蓝）——两者解耦（§11.1-7）
+    el.classList.toggle("def", !!isDef);
+    el.style.setProperty("--pc-color", isDef
+      ? (FACTION_COLOR[String(camp.faction || "")] || "#E74C3C")
+      : color);
+    if (isDef) {
+      el.innerHTML = defCardHtml(p, index, camp, owner, share);
+    } else {
     el.innerHTML =
-      `<div class="hd"><span class="kind${humanOwned ? " ok" : ""}">${esc(kind)}</span>` +
+      `<div class="hd"><span class="kind${showLiberated ? " ok" : ""}">${esc(kind)}</span>` +
         // 估不出来就不显示（净速率≤ 0 时无解放时间可言，不要占着右上角写「无法估算」）；
         // 已解放的星球不显示任何速率
-        (humanOwned ? "" : (eta != null
+        (showLiberated ? "" : (eta != null
           ? `<span class="eta">预估解放 ${fmtHours(eta)} · ${r.m}</span>`
           : (r.v < 0 ? `<span class="eta lose">▼ ${Math.abs(r.v).toFixed(3)}%/h · ${r.m}</span>` : ""))) +
       `</div>` +
@@ -2268,8 +2389,8 @@ function bindUI(data, planets) {
       `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
       `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
       `<div class="bar"><i style="width:${libShow.toFixed(2)}%"></i><span class="mk" style="left:${libShow.toFixed(2)}%"></span></div>` +
-      `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${humanOwned ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
-        (humanOwned ? "" :
+      `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${showLiberated ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
+        (showLiberated ? "" :
         `<span class="rate" style="color:${r.v >= 0 ? "#1FA84A" : "#FF4D2E"}">` +
         `${r.v >= 0 ? "▲" : "▼"} ${Math.abs(r.v).toFixed(3)}% / h<span class="m">${r.m}</span></span>`) + `</div>` +
       `<div class="stats">` +
@@ -2279,6 +2400,7 @@ function bindUI(data, planets) {
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
       `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
+    }
     el.classList.add("on");
     positionOverlays();
     PC_SNAP[index] = { t: Date.now(), lib: lib };     // 记录观测点，供下次「实测」
@@ -2356,6 +2478,7 @@ function bindUI(data, planets) {
   window.__wheel = showWheel;
   window.__rateOf = rateOf;                  // 速率推演（自检用）
   window.__pcSnap = PC_SNAP;                 // 观测快照（自检用）
+window.__map = MAP;                        // 地图实例（自检用：图层/数据源核对，如 attack 源只应含入侵连线）
   // 点信息卡本身也打开轮盘
   (function bindCardClick() {
     const el = $("planet-card");

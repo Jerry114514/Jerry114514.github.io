@@ -39,9 +39,11 @@
   --blur: none;
   --stripe: repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);
   --font-mono: "Rajdhani","Orbitron","Consolas","Courier New",monospace;
-  /* 阵营色：超级地球 = 黄 #ffe800（2026-09 用户决策，与阵营图标黄骷髅一致）；
-     其余三阵营保留不动（辨识度优先）。本层在内联 <style> 之后加载，故这里是**实际生效**的值。 */
-  --c-humans: #ffe800; --c-terminids: #F5C518; --c-automaton: #D6806D; --c-illuminate: #CF64F8;
+  /* 阵营色：超级地球 = 蓝 #5BA3D0（2026-09-24 用户要求，与主页 tokens.css 的 --c-humans 同值；
+     2026-09-18~09-24 曾用黄 #ffe800，与终结族黄 #F5C518 在星图上难以分辨）；
+     其余三阵营保留不动（辨识度优先）。本层在内联 <style> 之后加载，故这里是**实际生效**的值 ——
+     改星图阵营色必须改这一行，只改 galaxy-map-v2.html 的内联 <style> 不生效。 */
+  --c-humans: #5BA3D0; --c-terminids: #F5C518; --c-automaton: #D6806D; --c-illuminate: #CF64F8;
 }
 body { background: var(--bg-deep); color: var(--text); font-size: 14px; }
 
