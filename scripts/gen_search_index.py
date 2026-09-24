@@ -324,15 +324,6 @@ BUILDERS = (docs_weapons, docs_enemies, docs_stratagems, docs_boosters, docs_war
 
 
 def build():
-    h = hashlib.sha256()
-    h.update(("format:%d\n" % FORMAT).encode("utf-8"))   # 生成器格式变化也要换 digest
-    for rel in SOURCES:
-        p = os.path.join(BASE, rel.replace("/", os.sep))
-        if os.path.exists(p):
-            h.update(rel.encode("utf-8"))
-            h.update(io.open(p, "rb").read())
-    digest = h.hexdigest()[:16]
-
     docs = []
     for b in BUILDERS:
         docs.extend(list(b()))
@@ -343,7 +334,18 @@ def build():
         if cur is None or len(d[4]) > len(cur[4]):
             best[d[0]] = d
     docs = sorted(best.values(), key=lambda d: (d[2], d[1], d[0]))
-    return digest, docs
+
+    # digest 取**索引内容本身**（不是源文件字节）—— 两个理由：
+    #   ① 它是前端缓存键（`?v=<digest>`），只有"内容真的变了"才该换，源文件里的
+    #      `updated_at` 这类易变字段每天在动，混进哈希会让索引每轮重建 + 空提交（§11.1-8）；
+    #   ② CI 的检出与我本地工作树可能因"影子历史"而字节不同（§11.1-8 的 CRLF/换行差异），
+    #      按内容算哈希对两边都稳定（2026-09-24 实测：本地 `patchnotes.json` 只差一个
+    #      `updated_at`，索引 docs 完全相同却算出了不同 digest）。
+    h = hashlib.sha256()
+    h.update(("format:%d\n" % FORMAT).encode("utf-8"))
+    h.update(json.dumps(docs, ensure_ascii=False, sort_keys=True,
+                        separators=(",", ":")).encode("utf-8"))
+    return h.hexdigest()[:16], docs
 
 
 def serialize(digest, docs):
