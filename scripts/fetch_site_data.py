@@ -417,6 +417,30 @@ def fetch_companion():
             if gid not in lst:  # 去重：companion 偶发同星球重复效果（如 HEZE BAY 1375）
                 lst.append(gid)
 
+    # 星球下属区域（城市 / 超大型工厂）的运行时状态（2026-09-24 新增）
+    #   来源：warStatus.planetRegions（owner/health/players/isAvailable）+ warInfo.planetRegions（maxHealth）
+    #   为什么在这里取：游戏内「星球→下属城市/超大型工厂」那一层，公开接口里只有这一份**运行时**数据；
+    #   区域**名字与类型**是静态地图数据，另存 tables/planet_regions.json（抓 wiki 的 Lua 数据模块），
+    #   前端按**顺序**把两者配对（顺序可用 maxHealth ↔ 区域规模交叉验证：定居点 10 万 / 城镇 20 万 / 城市 40 万 / 大城市 60 万）。
+    reg_max = {}
+    for r in ((obj.get("warInfo") or {}).get("planetRegions") or []):
+        reg_max[(r.get("planetIndex"), r.get("regionIndex"))] = r.get("maxHealth")
+    comp_regions = {}
+    for r in (ws.get("planetRegions") or []):
+        pi = r.get("planetIndex")
+        if pi is None:
+            continue
+        comp_regions.setdefault(pi, []).append({
+            "regionIndex": r.get("regionIndex"),
+            "owner": norm_owner(r.get("owner")),
+            "health": r.get("health"),
+            "maxHealth": reg_max.get((pi, r.get("regionIndex"))),
+            "players": r.get("players", 0),
+            "isAvailable": r.get("isAvailable"),
+        })
+    for lst in comp_regions.values():
+        lst.sort(key=lambda x: x.get("regionIndex") if x.get("regionIndex") is not None else 0)
+
     planets = []
     for ps in ps_list:
         planets.append({
@@ -431,6 +455,7 @@ def fetch_companion():
             "activeEffects": comp_effects.get(ps.get("index"), []),
             "regenPerSecond": ps.get("regenPerSecond") or 0,
             "position": ps.get("position") or {"x": 0, "y": 0},
+            "regions": comp_regions.get(ps.get("index"), []),
         })
 
     campaigns = []
@@ -1002,6 +1027,9 @@ def main():
                     p["activeEffects"] = cp["activeEffects"]
                 if cp.get("position"):
                     p["position"] = cp["position"]
+                # 下属区域（城市/超大型工厂）的运行时状态：只有 companion 有
+                if cp.get("regions"):
+                    p["regions"] = cp["regions"]
                 p["_regen"] = cp.get("regenPerSecond") or 0
 
     # 用 hd2dev 的星球名/sector/maxHealth 统一覆盖（hd2dev sector 为社区维护、与对照表一致）

@@ -391,6 +391,36 @@
   #planet-card .def-meta .st-win{color:#1FA84A}
   #planet-card .def-meta .st-lose{color:#FF4D2E}
 
+  /* ── 星球下属区域：城市 / 超大型工厂（2026-09-24 demo）─────────────────
+     对应游戏内「点开星球 → 左栏列城市/超大型工厂」，命名与类型取 wiki 的静态数据，
+     进度取 companion 的 warStatus.planetRegions（真实运行时）。 */
+  #planet-card .regions{margin-top:6px;border-top:1px solid var(--line-2)}
+  #planet-card .rg-hd{display:flex;align-items:baseline;gap:6px;padding:5px 9px 3px;
+    font-size:.7rem;color:var(--yellow);font-family:var(--font-mono)}
+  #planet-card .rg-hd b{color:var(--text)}
+  #planet-card .rg-tip{margin-left:auto;font-size:.6rem;color:var(--text-mute);font-family:inherit}
+  #planet-card .rg-list{display:grid;gap:1px;padding:0 5px 5px}
+  #planet-card .rg-row{display:grid;grid-template-columns:16px 1fr 76px 50px;align-items:center;gap:5px;
+    padding:3px 4px;background:none;border:1px solid transparent;color:var(--text);
+    font:inherit;text-align:left;cursor:pointer}
+  #planet-card .rg-row:hover{border-color:var(--line-2);background:#121212}
+  #planet-card .rg-row.on{border-color:var(--yellow);background:#161205}
+  #planet-card .rg-row.rg-self .rg-name{color:var(--text-dim)}
+  #planet-card .rg-ico{font-size:.72rem;text-align:center}
+  #planet-card .rg-name{font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #planet-card .rg-name i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}
+  #planet-card .rg-type{font-size:.6rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #planet-card .rg-type em{font-style:normal;color:var(--yellow);margin-left:2px;font-size:.55rem}
+  #planet-card .rg-lib{font-family:var(--font-mono);font-size:.66rem;color:var(--text);text-align:right}
+  #planet-card .rg-detail{margin:2px 9px 8px;padding:6px 7px;background:#0D0D0D;border:1px solid var(--line-2)}
+  #planet-card .rg-d-hd{font-size:.72rem;color:var(--yellow);margin-bottom:3px}
+  #planet-card .rg-d-hd i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}
+  #planet-card .rg-d-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.62rem;color:var(--text-mute)}
+  #planet-card .rg-d-meta b{font-family:var(--font-mono);color:var(--text)}
+  #planet-card .rg-d-desc{margin-top:4px;font-size:.64rem;line-height:1.55;color:var(--text-dim)}
+  #planet-card .rg-d-act{margin-top:4px;font-size:.62rem;line-height:1.5;color:var(--text-mute);
+    border-top:1px solid #1a1a1a;padding-top:4px}
+
   /* 轮盘 */
   #wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;
     transform:translate(-50%,-50%);cursor:pointer}
@@ -946,7 +976,7 @@ async function effectIconMarkup(file) {
 
 /* ================================================================ 主流程 ==== */
 let MAP = null;
-let DATA = null, BYIDX = {}, WP = {}, TACBY = {};
+let DATA = null, BYIDX = {}, WP = {}, TACBY = {}, REGIONS = {}, REGIONS_ZH = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
 let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（取自 starmap.json，唯一权威源）
 let UNLISTED_IDX = new Set();                  // 未分区星球的 index（不显示在星图上，见构造 GeoJSON 处）
@@ -988,6 +1018,11 @@ async function boot() {
   } catch (_) { ICON_INDEX = {}; }
   // 行动变量表（tables/hd2_variables.json；含作战限制红 Tag 判定）
   await loadVariables();
+  // 星球下属区域（城市/超大型工厂）静态表（2026-09-24 demo）：名字/类型/描述 + 中文名覆盖
+  try {
+    REGIONS = (await (await fetch("./tables/planet_regions.json?v=20260924a", { cache: "no-store" })).json()).planets || {};
+    REGIONS_ZH = (await (await fetch("./tables/planet_regions_zh.json?v=20260924a", { cache: "no-store" })).json()).planets || {};
+  } catch (_) { REGIONS = {}; REGIONS_ZH = {}; }
   // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
   const SECTOR_ALIASES = {
@@ -2197,6 +2232,120 @@ function bindUI(data, planets) {
   const plCn   = (p) => PL_CN[String(p.name || "").toUpperCase()] || "";
   const secCn  = (p) => SEC_CN[String(p.sector || "").toUpperCase()] || p.sector || "—";
 
+  /* ---- 星球下属区域：城市 / 超大型工厂（2026-09-24 demo）------------------
+     三个来源：
+       · 名字/类型/描述 —— tables/planet_regions.json（抓 wiki 的 Module:Data/PlanetStatistics）
+       · 中文名        —— tables/planet_regions_zh.json（覆盖表；无据可查的一律回退英文原名，
+                          游戏内官方中文名没有公开数据源，**不许自行音译生造**）
+       · 运行时进度    —— data.json 里每颗星球的 regions[]（companion warStatus.planetRegions）
+     两者按**顺序**配对，顺序用 maxHealth ↔ 区域规模交叉验证（定居点 10 万 / 城镇 20 万 /
+     城市 40 万 / 大城市 60 万；Automaton 超大型工厂单列，HP 100 万）。
+     用 no-store 拉这两个静态表：文件小、变得少，且避免 force-cache 把一次边缘 404 钉在浏览器里（§19.20）。 */
+  // ⚠ REGIONS / REGIONS_ZH 的声明在文件顶部（与 DATA/BYIDX 一起）—— 引导阶段就要赋值，
+  //   写在这里会踩 let 的 TDZ（"Cannot access before initialization"）。
+  const REGION_TYPE_ZH = { Settlement: "定居点", Town: "城镇", City: "城市", MegaCity: "大城市" };
+  const REGION_HP = { Settlement: 100000, Town: 200000, City: 400000, MegaCity: 600000 };
+
+  function regionTypeOf(r) {
+    if (String((r || {}).region_type || "").toLowerCase() === "megafactory") return "Megafactory";
+    return (r || {}).size || "";
+  }
+  function regionTypeLabel(r) {
+    const t = regionTypeOf(r);
+    return t === "Megafactory" ? "超大型工厂" : (REGION_TYPE_ZH[t] || t || "区域");
+  }
+  function regionLibPct(st, meta) {
+    if (!st) return null;
+    if (String(st.owner || "").toLowerCase() === "humans") return 100;
+    const mh = st.maxHealth || REGION_HP[(meta || {}).size] || 0;
+    if (!mh || st.health == null) return null;
+    return Math.max(0, Math.min(100, 100 * (1 - st.health / mh)));
+  }
+  function regionRowHtml(o) {
+    const pct = o.pct == null ? "—" : (o.pct >= 99.995 ? "100%" : o.pct.toFixed(2) + "%");
+    const stars = o.stars ? "★".repeat(o.stars) : "";
+    return `<button type="button" class="rg-row${o.self ? " rg-self" : ""}" data-rg="${o.i}">` +
+      `<span class="rg-ico">${o.self ? "🌐" : (o.megafactory ? "🏭" : "🏙")}</span>` +
+      `<span class="rg-name">${esc(o.zh || o.en || "区域 " + o.i)}${o.zh && o.en ? "<i>" + esc(o.en) + "</i>" : ""}</span>` +
+      `<span class="rg-type">${esc(o.type)}${stars ? "<em>" + stars + "</em>" : ""}</span>` +
+      `<span class="rg-lib">${pct}</span></button>`;
+  }
+  function buildRegionsHtml(p, index, planetPct) {
+    const st = REGIONS[String(index)];
+    if (!st || !st.regions || !st.regions.length) return "";
+    const auto = String(p.currentOwner || "") === "Automaton";
+    const zhMap = REGIONS_ZH[String(index)] || {};
+    const rows = [regionRowHtml({
+      i: 0, self: true, type: auto ? "超大型工厂" : "城市", megafactory: auto,
+      zh: plCn(p) || p.name, en: plCn(p) ? (p.name || "") : "", pct: planetPct,
+    })];
+    st.regions.forEach((r, k) => {
+      rows.push(regionRowHtml({
+        i: k + 1, type: regionTypeLabel(r),
+        stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[regionTypeOf(r)] || 0,
+        megafactory: regionTypeOf(r) === "Megafactory",
+        zh: zhMap[r.name] || "", en: r.name,
+        pct: regionLibPct((p.regions || [])[k], r),
+      }));
+    });
+    return `<div class="regions"><div class="rg-hd">🏙 区域 <b>${st.regions.length}</b>` +
+      `<span class="rg-tip">城市 / 超大型工厂 · 点一行看详情</span></div>` +
+      `<div class="rg-list">${rows.join("")}</div>` +
+      `<div class="rg-detail" id="pc-rgdetail" hidden></div></div>`;
+  }
+  function regionDetailHtml(p, index, meta, k) {
+    const live = (p.regions || [])[k] || null;
+    const zhMap = REGIONS_ZH[String(index)] || {};
+    const pct = regionLibPct(live, meta);
+    // 归属 = 当前控制方（运行时 owner；无运行时数据时退回 wiki 的静态 owner 字段）
+    //   ⚠ 不要硬编「超级地球」：区域仍被敌方控制时（如 BRNO 3/4 已解放但控制方仍是终结族）
+    //     那样会自相矛盾。解放进度另有一栏。
+    const owner = (live && live.owner) ? (OWN_CN[live.owner] || live.owner)
+                                       : (meta.owner || "—");
+    return `<div class="rg-d-hd">${esc(zhMap[meta.name] || meta.name)}` +
+        (zhMap[meta.name] ? `<i>${esc(meta.name)}</i>` : "") + `</div>` +
+      `<div class="rg-d-meta"><span>类型 <b>${esc(regionTypeLabel(meta))}</b></span>` +
+        `<span>归属 <b>${esc(owner)}</b></span>` +
+        `<span>已解放 <b>${pct == null ? "—" : (pct >= 99.995 ? "100%" : pct.toFixed(2) + "%")}</b></span>` +
+        (live && live.players ? `<span>玩家 <b>${fmt(live.players)}</b></span>` : "") + `</div>` +
+      (meta.desc ? `<div class="rg-d-desc">${esc(meta.desc)}</div>` : "") +
+      `<div class="rg-d-act">行动影响：完成此处的行动有助于解放这座城市，成功解放后将大幅推动星球解放进程。</div>` +
+      (String(meta.region_type || "").toLowerCase() === "megafactory"
+        ? `<div class="rg-d-act">⚠ 机器人超大型工厂：归类与城市不同，但解放机制相同。</div>` : "");
+  }
+  function regionSelfDetail(p, index) {
+    const auto = String(p.currentOwner || "") === "Automaton";
+    const nm = (plCn(p) || p.name || "") + (auto ? "超大型工厂" : "城市");
+    const lib = String(p.currentOwner || "Humans").toLowerCase() === "humans" ? 100 : libPct(p);
+    return `<div class="rg-d-hd">${esc(nm)}</div>` +
+      `<div class="rg-d-meta"><span>范围 <b>星球本体</b></span>` +
+        `<span>归属 <b>${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</b></span>` +
+        `<span>已解放 <b>${lib >= 99.995 ? "100%" : lib.toFixed(2) + "%"}</b></span></div>` +
+      `<div class="rg-d-act">行动影响：解放这里 = 推进整颗星球的解放进度（星球本体的进度条）。</div>`;
+  }
+  // 点某一行 → 在下方展开详情（数据都在内存里，不再回查）
+  function bindRegionRows() {
+    const card = $("planet-card");
+    if (!card || card.__rgBound) return;
+    card.__rgBound = true;
+    card.addEventListener("click", (ev) => {
+      const row = ev.target.closest ? ev.target.closest(".rg-row") : null;
+      if (!row) return;
+      ev.stopPropagation();                       // 别触发「点卡片打开轮盘」
+      const idx = (PC_IDX != null) ? PC_IDX : (card.__pcIdx != null ? card.__pcIdx : null);
+      const k = Number(row.getAttribute("data-rg"));
+      const p = BYIDX[idx], st = REGIONS[String(idx)] || {};
+      const box = $("pc-rgdetail");
+      if (!p || !box) return;
+      Array.prototype.forEach.call(card.querySelectorAll(".rg-row"),
+        (x) => x.classList.toggle("on", x === row));
+      if (box.__for === k && !box.hidden) { box.hidden = true; box.__for = null; return; }
+      box.__for = k; box.hidden = false;
+      box.innerHTML = k === 0 ? regionSelfDetail(p, idx)
+                              : regionDetailHtml(p, idx, st.regions[k - 1], k - 1);
+    });
+  }
+
   async function biomeImage(biome) {
     if (!biome) return null;
     if (BIOME_IDX === null) {
@@ -2285,7 +2434,7 @@ function bindUI(data, planets) {
   // 视觉贴合星图（直角条 + 等宽数字 + 斜纹头）。
   // ⚠ P0 铁律（交接文档 §11.1-7）：双条**顺序固定为上=超级地球、下=入侵方**，
   //   且超级地球那条**恒为蓝**（不跟卡片威胁色走）。
-  function defCardHtml(p, index, camp, owner, share) {
+  function defCardHtml(p, index, camp, owner, share, regionsHtml) {
     const atkF = String(camp.faction || "");
     const atkLabel = OWN_CN[atkF] || atkF || "敌方";
     const atkColor = FACTION_COLOR[atkF] || "#E74C3C";
@@ -2335,6 +2484,7 @@ function bindUI(data, planets) {
         `<span class="st2">玩家 <b>${fmt(p.players)}</b> · 全服 <b>${share.toFixed(2)}%</b></span>` +
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
+      (regionsHtml || "") +
       `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
   }
 
@@ -2365,13 +2515,15 @@ function bindUI(data, planets) {
     const total = (data.player_distribution && data.player_distribution.total) || 0;
     const share = total > 0 ? (p.players || 0) / total * 100 : 0;
     const gross = grossOf(p);
+    // 区域列表（城市/超大型工厂）：有数据的星球才渲染（demo，2026-09-24）
+    const regionsHtml = buildRegionsHtml(p, index, libShow);
     // 外框/顶部色 = "谁在打这颗星球"（入侵方，威胁感）；条内颜色另算（超级地球恒蓝）——两者解耦（§11.1-7）
     el.classList.toggle("def", !!isDef);
     el.style.setProperty("--pc-color", isDef
       ? (FACTION_COLOR[String(camp.faction || "")] || "#E74C3C")
       : color);
     if (isDef) {
-      el.innerHTML = defCardHtml(p, index, camp, owner, share);
+      el.innerHTML = defCardHtml(p, index, camp, owner, share, regionsHtml);
     } else {
     el.innerHTML =
       `<div class="hd"><span class="kind${showLiberated ? " ok" : ""}">${esc(kind)}</span>` +
@@ -2399,9 +2551,12 @@ function bindUI(data, planets) {
         `<span class="st2">抵抗度 <b>${p.resistance != null ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
+      regionsHtml +
       `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
     }
     el.classList.add("on");
+    el.__pcIdx = index;                 // 区域行点击时用它兜底（PC_IDX 可能已被别的监听清空）
+    bindRegionRows();
     positionOverlays();
     PC_SNAP[index] = { t: Date.now(), lib: lib };     // 记录观测点，供下次「实测」
     decoratePlanetCard(index, owner, p);
@@ -2485,6 +2640,10 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
     if (!el) return;
     el.addEventListener("click", (ev) => {
       ev.stopPropagation();
+      // ⚠ 区域行（.rg-row）的点击由 bindRegionRows 处理，**必须在这里让路**：
+      //   两个监听挂在同一个元素上，本监听注册更早 → 先执行；它会 hidePlanetCard()（把 PC_IDX 清空）
+      //   并打开轮盘，于是区域处理器再跑时 PC_IDX 已是 null，静默 return —— 表现就是"点行没反应"。
+      if (ev.target && ev.target.closest && ev.target.closest(".rg-row")) return;
       if (PC_IDX == null) return;
       const i = PC_IDX; hidePlanetCard(); showWheel(i);
     });
