@@ -1,7 +1,38 @@
 {
-  "updated_at": "2026-09-22T12:30:00Z",
+  "updated_at": "2026-09-24T17:14:42Z",
   "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。`mt: true` 表示**机器翻译、待人工校对**（页面显示「机翻 · 待校对」）；人工校对完成后删掉该字段即为已校对。更新名用官方中文译名（已登记于 terms.json）。",
   "versions_zh": [
+    {
+      "id": "1.007.101",
+      "title_zh": "自由入寂：7.1.1",
+      "fully_translated": true,
+      "mt": true,
+      "sections_zh": [
+        {
+          "id": "overview",
+          "heading_zh": "概述",
+          "items_zh": [
+            "本次热修复旨在解决玩家在使用终端时，或使用超宽窗口的用户遇到的若干崩溃问题。"
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading_zh": "修复",
+          "items_zh": [
+            "崩溃修复",
+            "修复了在全屏模式下打开终端时可能发生的崩溃。",
+            "修复了使用超宽窗口时可能发生的崩溃。"
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading_zh": "已知问题",
+          "items_zh": [
+            "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues"
+          ]
+        }
+      ]
+    },
     {
       "id": "1.007.100",
       "title_zh": "自由入寂：7.1.0",
