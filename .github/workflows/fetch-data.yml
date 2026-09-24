@@ -63,7 +63,8 @@ jobs:
                 break
               fi
               echo "第 $i 轮推送被拒（main 上已有新提交），rebase 后重试…"
-              git pull --rebase --autostash origin main || true
+              # rebase 若因冲突中断，先 abort 回到干净状态再重试（否则会卡在半 rebase 状态）
+              git pull --rebase --autostash origin main || git rebase --abort || true
               sleep $((i * 3))
               if [ "$i" = "5" ]; then
                 echo "::error::连续 5 轮推送失败，请检查分支保护或远端状态"
