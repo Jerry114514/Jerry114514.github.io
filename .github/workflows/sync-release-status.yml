@@ -80,7 +80,7 @@ jobs:
             echo "无状态变化，跳过提交"
           else
             git commit -m "data(债券): 自动同步已发布状态 ($(date -u '+%Y-%m-%d %H:%M'))"
-            git push
+            bash scripts/ci_push_retry.sh
           fi
 
       - name: 运行摘要

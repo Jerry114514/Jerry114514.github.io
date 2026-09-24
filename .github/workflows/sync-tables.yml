@@ -70,7 +70,7 @@ jobs:
           git add HD2-Galatic_war-Map/tables/
           if ! git diff --cached --quiet; then
             git commit -m "tables: 每日同步对照表 ($(date -u '+%Y-%m-%d %H:%M'))"
-            git push
+            bash scripts/ci_push_retry.sh
           else
             echo "对照表无变化，跳过提交"
           fi

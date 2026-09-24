@@ -61,5 +61,5 @@ jobs:
             echo "索引已是最新，跳过提交"
           else
             git commit -m "data(搜索): 重建站内搜索索引 ($(date -u '+%Y-%m-%d %H:%M'))"
-            git push
+            bash scripts/ci_push_retry.sh
           fi

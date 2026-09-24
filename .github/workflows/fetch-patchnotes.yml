@@ -78,7 +78,7 @@ jobs:
             echo "公告无变化，跳过提交"
           else
             git commit -m "data(公告): 自动接入更新公告 ($(date -u '+%Y-%m-%d %H:%M'))"
-            git push
+            bash scripts/ci_push_retry.sh
           fi
 
       - name: 有新版本 → 开 issue 提醒翻译
