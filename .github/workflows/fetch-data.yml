@@ -50,7 +50,26 @@ jobs:
           git add HD2-Galatic_war-Map/assets/campaign
           if ! git diff --cached --quiet; then
             git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"
-            git push
+            # ⚠ 推送竞态（2026-09-24 修）：本工作流每 5 分钟一次，而它 check out 之后、
+            #   push 之前，main 上完全可能有别的提交落下来（人工 API 推送、fetch-patchnotes、
+            #   sync-tables、sync-release-status、build-search-index 都会提交）→ 直接 push 被拒
+            #   （non-fast-forward）→ job 变红，但数据本身没有问题。
+            #   实测：用户收到的「Fetch HD2 Data Run failed」邮件全是这一类（日志里
+            #   `error: failed to push some refs`，且失败步是 Commit and push）。
+            #   故改成：最多 5 轮，每轮先 rebase 到最新 main 再推。
+            for i in 1 2 3 4 5; do
+              if git push; then
+                echo "推送成功（第 $i 轮）"
+                break
+              fi
+              echo "第 $i 轮推送被拒（main 上已有新提交），rebase 后重试…"
+              git pull --rebase --autostash origin main || true
+              sleep $((i * 3))
+              if [ "$i" = "5" ]; then
+                echo "::error::连续 5 轮推送失败，请检查分支保护或远端状态"
+                exit 1
+              fi
+            done
           else
             echo "数据无变化，跳过提交"
           fi

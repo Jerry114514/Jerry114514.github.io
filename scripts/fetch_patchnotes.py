@@ -269,6 +269,25 @@ def main():
             print("!! %s 抓取失败: %s" % (v, e))
             stats.append({"version": v, "error": str(e)[:160], "warnings": ["抓取失败"]})
 
+    # ---- 累积式保留：窗口外、但本地已收过的版本**不再丢弃**（2026-09-24 修，P0）----
+    # 旧行为：`picked` 只取上游**最新 limit 个** → 上游一发新版就把最老的挤出窗口。
+    #   而中文覆盖 patchnotes_zh.json 是**累积**的：被挤掉的那条立刻变成
+    #   「覆盖里的版本在主干中不存在」→ 校验器（PATCH.PAIRING 那族）拦下 →
+    #   fetch-patchnotes 工作流**在提交之前**失败 → 主干永远更新不了 →
+    #   **每 2 小时红一次、而且什么都不会变**（自锁）。实测：1.006.203 被挤出后，
+    #   该工作流从 2026-09-24 13:25 起持续失败（用户收到的报错邮件就是这个）。
+    # 现在：主干 = 最新 limit 个 ∪ 本地已有的全部旧版本 → 覆盖层永远是其子集。
+    #   代价：本文件**只增不减**，体积按「新增版本数 × ~27 KB」线性增长（一年约 +0.3 MB）。
+    #   要收缩就显式跑 `--refresh --limit N`（会丢掉窗口外版本，届时必须同时清理中文覆盖的孤儿条目）。
+    known_ids = {x.get("id") for x in versions}
+    kept = [d for vid, d in old.items() if vid not in known_ids]
+    if kept:
+        kept.sort(key=lambda d: vkey(d.get("id") or ""), reverse=True)
+        versions.extend(kept)
+        stats.extend({"version": d.get("id"), "cached": True, "sections": 0, "items": 0,
+                      "warnings": ["窗口外，累积保留"]} for d in kept)
+        print("保留窗口外旧版本 %d 个：%s" % (len(kept), ", ".join(d.get("id") or "?" for d in kept)))
+
     doc = {
         "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "source": INDEX_SOURCE,

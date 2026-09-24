@@ -1,8 +1,82 @@
 {
-  "updated_at": "2026-09-22T11:28:43Z",
+  "updated_at": "2026-09-24T15:06:54Z",
   "source": "https://helldivers.wiki.gg/wiki/Category:Patch_Notes",
-  "total": 10,
+  "total": 11,
   "versions": [
+    {
+      "id": "1.007.101",
+      "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.101",
+      "title": "Devoid of Liberty: 7.1.1",
+      "cover_wiki": "Helldivers 2 Devoid of Liberty Key Art EN 2x3.png",
+      "release_date": "2026-09-24",
+      "release_time": "9:00 AM UTC",
+      "size": "82.6 MB",
+      "previous": "1.007.100",
+      "next": null,
+      "blog_url": "https://store.steampowered.com/news/app/553850/view/715665292442731519?l=english",
+      "image_local": "./assets/patchnotes/helldivers_2_devoid_of_liberty_key_art_en_2x3.webp",
+      "sections": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "This hotfix aims to resolve some crashes for players when using terminals, or users with superwide windows.",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "fixes",
+          "heading": "Fixes",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "Crash Fixes",
+              "links": [],
+              "files": []
+            },
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Fixed crash that could occur in Fullscreen when opening terminals.",
+              "links": [],
+              "files": []
+            },
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Fixed crash that could occur with superwide windows.",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "known_issues",
+          "heading": "Known Issues",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        }
+      ]
+    },
     {
       "id": "1.007.100",
       "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.100",
