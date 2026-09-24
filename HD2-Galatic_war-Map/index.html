@@ -7,7 +7,7 @@
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260922a">
+  <link rel="stylesheet" href="./css/home.css?v=20260924a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -429,6 +429,8 @@
   // 而 starmap 对每颗星球都有 system（中文星区）与 sector_en（英文星区），与 data.json 有值处 100% 一致。
   let sectorEnToCn = null;  // 由 fetchAll 注入（starmap.systems）
   let SEC_BY_NAME = {}, SEC_BY_IDX = {};   // 星球 -> {cn: 中文星区, en: 英文星区}
+// 星球下属区域（城市/超大型工厂，2026-09-24）：静态表 + 中文名覆盖，与星图共用同一份数据
+let PC_REGIONS = {}, PC_REGIONS_ZH = {};
   const sectorCn = (s) => {
     if (sectorEnToCn && sectorEnToCn[s]) return sectorEnToCn[s];
     return SECTOR_CN[s] || s;
@@ -512,6 +514,13 @@
         if (v.ID != null) SEC_BY_IDX[v.ID] = info;
       }
     } catch (_) { /* ignore */ }
+
+    // 星球下属区域（城市/超大型工厂）：静态名字/类型（wiki 数据模块）+ 中文名覆盖，
+    // 与星图共用同一份 tables/*.json；缺失时整块不渲染（不致命）。
+    try { PC_REGIONS = ((await HD2Source.jsonSoft("./tables/planet_regions.json")) || {}).planets || {}; }
+    catch (_) { PC_REGIONS = {}; }
+    try { PC_REGIONS_ZH = ((await HD2Source.jsonSoft("./tables/planet_regions_zh.json")) || {}).planets || {}; }
+    catch (_) { PC_REGIONS_ZH = {}; }
 
     // 从 starmap 构建 星区英文 -> 中文 映射（覆盖内置 SECTOR_CN 的缺失/错误）
     if (starMap && Array.isArray(starMap.systems)) {
@@ -2056,6 +2065,55 @@ function renderPlayers(data) {
     </div>`;
   }
 
+  // 星球下属区域（城市 / 超大型工厂）——与星图**同一套数据与口径**（2026-09-24 新增）
+  //   名字/类型：tables/planet_regions.json（wiki 的 Lua 数据模块）
+  //   中文名    ：tables/planet_regions_zh.json（AI 译 + 截图口径覆盖，回退英文原名）
+  //   进度      ：data.json 里每颗星球的 regions[]（companion 运行时）
+  //   规模↔HP：定居点 10 万 / 城镇 20 万 / 城市 40 万 / 大城市 60 万；机器人超大型工厂 100 万
+  const PC_REGION_TYPE_ZH = { Settlement: "定居点", Town: "城镇", City: "城市", MegaCity: "大城市" };
+  const PC_REGION_HP = { Settlement: 100000, Town: 200000, City: 400000, MegaCity: 600000 };
+  function pcRegionTypeOf(r) {
+    return String((r || {}).region_type || "").toLowerCase() === "megafactory" ? "Megafactory" : ((r || {}).size || "");
+  }
+  function pcRegionTypeLabel(r) {
+    const t = pcRegionTypeOf(r);
+    return t === "Megafactory" ? "超大型工厂" : (PC_REGION_TYPE_ZH[t] || t || "区域");
+  }
+  function pcRegionLib(st, meta) {
+    if (!st) return null;
+    if (String(st.owner || "").toLowerCase() === "humans") return 100;
+    const mh = st.maxHealth || PC_REGION_HP[(meta || {}).size] || 0;
+    if (!mh || st.health == null) return null;
+    return Math.max(0, Math.min(100, 100 * (1 - st.health / mh)));
+  }
+  // 只显示静态表里有区域的星球；没有就不渲染整块（不占版面）
+  function pcRegionsHtml(p, nameCn, planetLibPct) {
+    const st = PC_REGIONS[String(p.index)];
+    if (!st || !st.regions || !st.regions.length) return "";
+    const auto = String(p.currentOwner || "") === "Automaton";
+    const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
+    const pctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
+    const row = (o) => `<div class="pc-rg${o.self ? " self" : ""}">
+      <span class="ico">${o.self ? "🌐" : (o.megafactory ? "🏭" : "🏙")}</span>
+      <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
+      <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
+      <span class="pct">${pctTxt(o.pct)}</span></div>`;
+    const rows = [row({ self: true, type: auto ? "超大型工厂" : "城市",
+                        megafactory: auto, zh: nameCn, en: nameCn ? (p.name || "") : "",
+                        pct: planetLibPct })];
+    st.regions.forEach((r, k) => {
+      rows.push(row({
+        type: pcRegionTypeLabel(r),
+        stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
+        megafactory: pcRegionTypeOf(r) === "Megafactory",
+        zh: zhMap[r.name] || "", en: r.name,
+        pct: pcRegionLib((p.regions || [])[k], r),
+      }));
+    });
+    return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
+      `<span class="tip">城市 / 超大型工厂</span></div>${rows.join("")}</div>`;
+  }
+
   // 星球卡片（2026-09-13 改版：战役图标 + 环境图 + 进度条 + 侵蚀等级 + 词条）
   function renderPlanetCard(p, starMap, statusLabel, statusClass) {
     const name = planetName(p, starMap);
@@ -2173,6 +2231,7 @@ function renderPlayers(data) {
       ${top}${landmark}${head}
       ${isLiberated ? "" : `<p class="pc-desc">${desc}</p>`}
       ${progress}${invasion}${traits}
+      ${pcRegionsHtml(p, name.cn || "", isDefense ? libPctRaw : (isLiberated ? 100 : libPctRaw))}
       <div class="planet-detail-wrap" style="display:none">
         ${planetDetailHtml(p, starMap, statusLabel)}
       </div>

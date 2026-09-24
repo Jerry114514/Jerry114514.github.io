@@ -1469,6 +1469,26 @@
     }
     .planet-card .pc-trait p{margin:5px 0 0;font-size:11.5px;line-height:1.65;color:var(--text-dim)}
 
+    /* ---- ⑥-b 星球下属区域（城市 / 超大型工厂，2026-09-24）----
+       与星图星球卡片同一套数据与口径（tables/planet_regions*.json + data.json 的 regions[]）。
+       第 0 行是星球本体（游戏里也这么列：<星球>城市 / 机器人星球为 <星球>超大型工厂）。 */
+    .planet-card .pc-regions{border-top:2px solid var(--fcd)}
+    .planet-card .pc-regions .rhd{
+      display:flex;align-items:baseline;gap:6px;padding:7px 12px 4px;
+      font-size:11px;font-weight:700;color:var(--yellow);letter-spacing:.06em;
+    }
+    .planet-card .pc-regions .rhd b{color:var(--text)}
+    .planet-card .pc-regions .rhd .tip{margin-left:auto;font-size:9.5px;font-weight:400;color:var(--text-mute);letter-spacing:0}
+    .planet-card .pc-rg{display:flex;align-items:center;gap:7px;padding:4px 12px;font-size:11.5px}
+    .planet-card .pc-rg + .pc-rg{border-top:1px solid var(--border)}
+    .planet-card .pc-rg .ico{flex:0 0 14px;text-align:center;font-size:11px}
+    .planet-card .pc-rg .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .planet-card .pc-rg .nm i{font-style:normal;color:var(--text-mute);font-size:9.5px;margin-left:4px}
+    .planet-card .pc-rg.self .nm{color:var(--text-dim)}
+    .planet-card .pc-rg .ty{flex:0 0 66px;font-size:10px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .planet-card .pc-rg .ty em{font-style:normal;color:var(--yellow);font-size:9px;margin-left:2px}
+    .planet-card .pc-rg .pct{flex:0 0 48px;text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+
     /* ---- 已解放：去掉进度条区，仅保留状态行 ---- */
     .planet-card .pc-liberated{
       padding:0 12px 11px;font-size:12px;font-weight:700;

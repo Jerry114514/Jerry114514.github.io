@@ -1,30 +1,400 @@
 {
-  "_note": "区域（城市/超大型工厂）中文名覆盖表。键 = 星球 index；值 = {英文区域名: 中文名}。只有**有据可查**的才登记（目前全部来自用户提供的游戏内截图），其余留空由前端回退显示英文原名 —— 游戏内官方中文名没有公开数据源，不许自行音译生造。",
-  "source": "用户提供的游戏内截图（2026-09-24）",
-  "_coverage": "4/211",
+  "_note": "区域（城市/超大型工厂）中文名覆盖表。键 = 星球 index；值 = {英文区域名: 中文名}。口径（2026-09-24 用户裁定）：**机器翻译 + 页面并列显示英文原名**。游戏内官方中文名没有公开数据源；截图能确定的少数条目优先，其余为 AI 译文，**未逐条人工校对**，如需正式口径请以游戏内文本为准。",
+  "_provenance": {
+    "_screenshot_confirmed": [
+      "BRNO",
+      "GOTHENBURG III",
+      "NYA SKELLEFTEA",
+      "TECHNOLOCKIA ALLATEED"
+    ],
+    "_ai_translated_count": 205,
+    "_unbound_screenshot_names": [
+      "老鹅城",
+      "斯窝城",
+      "斯德哥尔摩"
+    ],
+    "_unbound_note": "截图里出现过但这三条无法确定对应哪条英文区域名，故不登记（不用猜测充当官方译名）"
+  },
+  "source": "AI 翻译（用户 2026-09-24 裁定）+ 用户提供的游戏内截图（4 条）",
   "planets": {
-    "198": {
-      "TECHNOLOCKIA ALLATEED": "亚·阿拉提德"
+    "0": {
+      "EAGLEOPOLIS": "鹰都",
+      "ADMINISTRATIVE CENTER 02": "行政中心 02",
+      "REMEMBRANCE": "追思",
+      "YORK SUPREME": "约克至尊",
+      "PORT MERCY": "慈悲港",
+      "PROSPERITY CITY": "繁荣城",
+      "EQUALITY-ON-SEA": "滨海平等"
     },
-    "217": {
-      "BRNO": "布尔诺"
+    "7": {
+      "NEW COB": "新科布",
+      "GENE": "基因",
+      "STARPASS": "星关"
+    },
+    "16": {
+      "OTARU'S PLEDGE": "小樽之誓",
+      "XIAMEN ANEW": "新厦门",
+      "MUNITION CITY": "军火城",
+      "NEW HOPE CITY": "新希望城"
+    },
+    "28": {
+      "SCARLET HAVEN": "绯红港",
+      "EDWARD'S GRAVE": "爱德华之墓",
+      "LIGHT-OF-LIBERTY": "自由之光"
+    },
+    "29": {
+      "KURRI KURRI": "库里库里",
+      "ANNWN": "安温",
+      "AGARTHA": "阿加尔塔",
+      "PROMINENCE": "显赫"
+    },
+    "32": {
+      "NEW YEARNING CITY": "新渴望城"
+    },
+    "33": {
+      "ACCOUNTANT GRAEBER": "会计格雷伯",
+      "BEACHVIEW": "望海滩",
+      "THE VILLAS": "别墅群",
+      "NEW ALEXANDRIA": "新亚历山大"
+    },
+    "36": {
+      "LUXE POINT": "奢华角",
+      "SHADY OAKS": "荫橡",
+      "DOSTOINSTVO": "多斯托因斯特沃"
+    },
+    "37": {
+      "GRACIOUS LIBERTY": "仁慈自由",
+      "LUSCIOUS LIBERTY": "甘美自由",
+      "COUNCILLOR RORA": "议员萝拉"
+    },
+    "42": {
+      "NEW ASPIRATION CITY": "新抱负城"
+    },
+    "44": {
+      "BRAWFERMLAND": "布劳弗姆兰",
+      "NEW ABERDEEN": "新阿伯丁",
+      "SAORSA GLEN": "自由谷"
+    },
+    "53": {
+      "LEMURIA RISING": "利莫里亚崛起",
+      "PIONEER'S DREAM": "先驱之梦",
+      "BASE CAMP 8": "8 号营地"
+    },
+    "56": {
+      "PILOT'S BERTH": "领航泊位",
+      "PLETHORA": "丰盈",
+      "ANTBOOT": "蚁靴"
+    },
+    "57": {
+      "SCHOLAR'S MOOR": "学者荒原",
+      "BLESTRAIL": "福佑径",
+      "HILDOARA CENTRAL": "希尔道拉中心"
+    },
+    "58": {
+      "PORUGU": "波罗古",
+      "PADOSAN": "帕多桑"
+    },
+    "60": {
+      "RECON HEIGHTS": "侦察高地",
+      "SILO A": "A 号筒仓",
+      "VOTER'S FALLOW": "选民休耕"
+    },
+    "61": {
+      "FARMHANDSTOWN": "农工镇",
+      "FORT BOUNTY": "赏金堡",
+      "FUTURIA": "未来域"
+    },
+    "67": {
+      "FORTITUDE": "坚毅",
+      "FREEDOM'S TORCH": "自由火炬",
+      "FEARLESS HOLLOW": "无畏谷"
+    },
+    "72": {
+      "FROSTOWN": "霜镇"
+    },
+    "78": {
+      "LIL'OME": "小窝",
+      "LLANFAIRPWLLGWYNGYLLGOGERYCHWYRNDROBWLLLLANTYSILIOGOGOGOCH II": "兰韦尔普尔古因吉尔戈格里惠尔恩德罗布尔兰蒂西利奥戈戈戈赫 II"
+    },
+    "80": {
+      "CLE ELUM REDIVIVA": "克利埃勒姆·复兴",
+      "LAELIA": "莱莉亚"
+    },
+    "81": {
+      "PORTE LIBERTÉ": "自由之门",
+      "UNDERVATTEN": "温德瓦滕"
+    },
+    "82": {
+      "NEW KATHMANDU": "新加德满都",
+      "PO'S RAVENNA": "波之拉文纳"
+    },
+    "88": {
+      "PEOPLE'S HAND": "人民之手",
+      "TOPSOIL": "表土",
+      "HUMAN WILL": "人类意志"
+    },
+    "90": {
+      "REBELSGRAVE": "叛军之墓",
+      "REFORMED-BY-TRUTH": "真理重塑",
+      "OBEDIENCE": "顺从"
+    },
+    "92": {
+      "GRAFSART": "格拉夫萨特",
+      "GRAFSWALLIT": "格拉夫斯瓦利特",
+      "GRAFSEAD": "格拉夫塞德"
+    },
+    "94": {
+      "RESPITE": "喘息"
+    },
+    "95": {
+      "MALLSTRIP NODES": "商业带节点",
+      "BIRTH": "诞生"
     },
     "100": {
       "NYA SKELLEFTEA": "谢莱夫特奥",
+      "ÖDESHÖGRE": "厄德舍格雷",
       "GOTHENBURG III": "哥德堡III"
+    },
+    "102": {
+      "VANQUISHMENT": "征服",
+      "FREECREST": "自由峰"
+    },
+    "107": {
+      "RESILIENCE": "韧性",
+      "HOT GATES": "炽门"
+    },
+    "110": {
+      "CONVENIENCE": "便利",
+      "FIREFLY MEADOWS": "萤火草甸"
+    },
+    "112": {
+      "BLACKVEIN MINES": "黑脉矿场",
+      "BENEVOLENCE": "仁德",
+      "ANNE'S VIGIL": "安妮守望"
+    },
+    "114": {
+      "BATU BELIG": "巴图贝利格",
+      "EAGLEMOUNT": "鹰山"
+    },
+    "116": {
+      "VÁHTJER": "瓦赫捷尔",
+      "MALMBERGET": "马尔姆贝里耶特"
+    },
+    "117": {
+      "HAERSTVIK": "海尔斯维克"
+    },
+    "125": {
+      "LOKAHEIM": "洛卡海姆",
+      "PSEUDOTOPIA": "伪托邦",
+      "FAMEWOLF PEAK": "名狼峰"
+    },
+    "126": {
+      "CHATOYANT": "猫眼辉",
+      "CARBONDALE": "卡本代尔",
+      "PERIWINKLE MILLS": "长春花磨坊"
+    },
+    "128": {
+      "BUJU": "布朱"
+    },
+    "129": {
+      "DEMOCRACY ALWAYS": "民主永驻",
+      "ERIDANI": "埃里达尼"
+    },
+    "130": {
+      "CURRENCY": "货币",
+      "NEW NEWTONVILLE": "新牛顿维尔",
+      "OL' OLDHAM": "老奥尔德姆"
+    },
+    "131": {
+      "TIMELY": "及时",
+      "APPROVAL CITY": "批准城",
+      "OLD BRANCH": "老枝"
+    },
+    "135": {
+      "TRAITOR'S END": "叛徒之末",
+      "STRENGTH": "力量"
+    },
+    "138": {
+      "GREATER STOROUSE": "大斯托鲁斯",
+      "NEW STOROUSE": "新斯托鲁斯",
+      "SHED": "棚屋",
+      "FREE TRADE": "自由贸易"
+    },
+    "139": {
+      "KESUMA": "克苏马",
+      "UNGU": "温古",
+      "NO COMPOUND": "无营地",
+      "FILIBUSTER": "阻挠议事"
+    },
+    "140": {
+      "PERMACURIS": "永护",
+      "HANGAR 6": "6 号机库"
+    },
+    "141": {
+      "UNNAMED": "无名",
+      "WORKSONG": "劳动号子",
+      "SEVERITY": "严酷"
+    },
+    "142": {
+      "NEW TOKYO": "新东京"
+    },
+    "143": {
+      "ASPEN HILLS": "白杨丘陵",
+      "MEGACORPUS": "巨躯"
+    },
+    "150": {
+      "EASTCLEFT": "东裂谷",
+      "KINABATANGAN": "京那巴当岸",
+      "DOWNPOUR": "暴雨"
+    },
+    "153": {
+      "EIGHTRINGS": "八环",
+      "BROKER'S WEALTH": "经纪之财"
+    },
+    "154": {
+      "SAPPHIRE LAKE": "蓝宝石湖"
+    },
+    "155": {
+      "FORT SANGUINE": "殷红堡",
+      "KNIGHT'S HONOR": "骑士荣耀",
+      "SEVENSEAL": "七印"
+    },
+    "156": {
+      "UTOPIA VAREN": "乌托邦瓦伦"
+    },
+    "158": {
+      "HILJAISUUS": "希尔亚伊苏斯",
+      "KALASATAMA": "卡拉萨塔马",
+      "YDINKESKUSTA": "于丁凯斯库斯塔",
+      "EVOLUTION PLATS": "演化台地"
+    },
+    "161": {
+      "MAJOSYRI": "马约西里",
+      "QUASAR": "类星体",
+      "ZENITH": "天顶"
+    },
+    "162": {
+      "SYCAMORE GARDENS": "悬铃木园",
+      "KODIAK FALLS": "科迪亚克瀑布",
+      "VOTING DISTRICT F-012357": "投票选区 F-012357"
+    },
+    "168": {
+      "NEW DA NANG": "新岘港",
+      "PHAM'S SITE": "范氏场址",
+      "OLD CHEMLAND": "旧化工原"
+    },
+    "173": {
+      "ALTONBURG": "阿尔通堡",
+      "ERSATZ": "仿制"
+    },
+    "180": {
+      "PENSCEWT": "彭斯丘特",
+      "EAGLE'S LIKENESS": "鹰之像",
+      "CONSENSUS": "共识"
+    },
+    "182": {
+      "UNANIMITY": "一致",
+      "UNISON": "和谐"
+    },
+    "183": {
+      "ON-EARSAHOU": "昂厄尔萨胡",
+      "CLOCKSTOP": "停钟",
+      "MAGNITUDE": "宏大"
+    },
+    "184": {
+      "GENERATORSVILLE": "发电机镇"
+    },
+    "185": {
+      "ADNAN": "阿德南"
+    },
+    "194": {
+      "SERENITY SUMMIT": "宁静峰",
+      "MORSKIE OKO": "莫尔斯基奥科",
+      "CRYSTAL SLOPES": "水晶坡",
+      "BUCU'S REST": "布库之憩"
+    },
+    "196": {
+      "LIFEBLOOD": "生命之血",
+      "REQUIEM": "安魂曲",
+      "DIVER'S REST": "潜兵之憩"
+    },
+    "198": {
+      "TECHNOLOCKIA ALLATEED": "亚·阿拉提德"
+    },
+    "199": {
+      "SONGGUO CUN": "松果村",
+      "XIN FUZHOU": "新福州"
+    },
+    "200": {
+      "PARRHESIA": "帕雷西亚",
+      "ISEGORIA": "伊塞戈里亚"
+    },
+    "207": {
+      "SEORAKSAN": "雪岳山",
+      "GYEONGSEONG": "京城"
+    },
+    "216": {
+      "QUASAR": "类星体",
+      "SYZYGY": "朔望"
+    },
+    "217": {
+      "OLD DOVE": "老鸽城",
+      "BRNO": "布尔诺",
+      "NEW EAGLE": "新鹰城"
+    },
+    "219": {
+      "VILHELMINA DOROTHEA FREDRIKA": "维尔赫尔米娜·多罗特娅·弗雷德里卡",
+      "MOGO PLAINS": "莫戈平原",
+      "KALASATAMA PORT": "卡拉萨塔马港"
+    },
+    "221": {
+      "HANDAKAS": "汉达卡斯",
+      "HAKU CITY": "白城"
+    },
+    "226": {
+      "BLIGHTSMURK": "凋零霾",
+      "BASE CAMP 8": "8 号营地",
+      "ZONE 3": "3 号区域"
+    },
+    "228": {
+      "EXALT": "升华",
+      "EAGLESTAR ETERNAL": "鹰星永恒"
+    },
+    "230": {
+      "HOLL": "霍尔"
+    },
+    "239": {
+      "FOUNDRY": "铸造厂",
+      "STEEL RESOLVE": "钢铁意志"
+    },
+    "241": {
+      "FREEDOM ETERNAL": "自由永恒",
+      "NUOVA ROMA": "新罗马"
+    },
+    "244": {
+      "SEQUIM": "塞奎姆"
+    },
+    "245": {
+      "MIRAGE": "蜃景",
+      "DRYWELL": "干井"
+    },
+    "246": {
+      "ONSEN": "温泉",
+      "GIRI": "吉里",
+      "SAPPORO": "札幌"
+    },
+    "253": {
+      "GEMSTELLE GENERATOR": "宝石台发电机"
+    },
+    "260": {
+      "TRANSCENDENCE": "超越",
+      "AUTONOMY": "自治",
+      "STAR KIELD": "星基尔德",
+      "OMNIPARITUS": "万全",
+      "SOLIDARITET": "索利达里泰特",
+      "URSOOT NINE": "乌尔苏特九",
+      "LURZA": "卢尔扎",
+      "CAMRAT FOR": "卡姆拉特福"
     }
-  },
-  "_type_zh": {
-    "Settlement": "定居点",
-    "Town": "城镇",
-    "City": "城市",
-    "MegaCity": "大城市",
-    "Megafactory": "超大型工厂"
-  },
-  "_size_hp": {
-    "Settlement": 100000,
-    "Town": 200000,
-    "City": 400000,
-    "MegaCity": 600000
   }
 }
