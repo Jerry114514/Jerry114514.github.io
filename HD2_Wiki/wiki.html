@@ -280,18 +280,28 @@
 
     function seBox() { return document.getElementById("wiki-search-results"); }
 
-    function seFetch(url) {
-      return fetch(url, { cache: "force-cache" }).then(function (r) {
+    /* ⚠ 一律**不要**用 cache:"force-cache"（2026-09-24 实测踩坑）：
+       文件刚推上去时边缘可能还 404，而 force-cache 会把那次 404 **永久钉在浏览器缓存里** ——
+       同一 URL 之后请求永远是 404（no-store 与 ?cb= 都正常返回 200），表现为
+       「随机条目点了没反应、标题联想永远为空」，且硬刷新之前不会自愈。
+       所以默认走正常缓存，失败才用 ?cb= 绕缓存重试一次。 */
+    function seFetch(url, bust) {
+      var u = url + (bust ? (url.indexOf("?") < 0 ? "?" : "&") + "cb=" + Date.now() : "");
+      return fetch(u, { cache: bust ? "no-store" : "default" }).then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
       });
     }
 
+    function seFetchRetry(url) {
+      return seFetch(url, false).catch(function () { return seFetch(url, true); });
+    }
+
     function loadEntries() {
       if (SE.entries) return Promise.resolve(SE.entries);
-      if (SE.entriesErr) return Promise.resolve(null);
-      return seFetch("./data/wiki/zh/search_entries.json").then(function (d) {
+      return seFetchRetry("./data/wiki/zh/search_entries.json").then(function (d) {
         SE.entries = d;
+        SE.entriesErr = false;
         return d;
       }).catch(function (e) {
         SE.entriesErr = true;
@@ -302,9 +312,9 @@
     function loadIndex() {
       if (SE.index) return Promise.resolve(SE.index);
       if (SE.loading) return SE.loading;
-      seStatus("正在加载全文索引（首次约 0.7 MB，之后走浏览器缓存）…");
-      SE.loading = seFetch("./data/wiki/zh/search_index.json?v=" +
-                           ((SE.entries && SE.entries.digest) || "1"))
+      seStatus("正在加载全文索引（首次约 0.8 MB，之后走浏览器缓存）…");
+      SE.loading = seFetchRetry("./data/wiki/zh/search_index.json?v=" +
+                                ((SE.entries && SE.entries.digest) || "1"))
         .then(function (d) {
           SE.index = d;
           seStatus("全文索引就绪：共 " + d.count + " 条可搜索内容（含机制页小节与公告条目）");
@@ -443,13 +453,26 @@
       if (SE.hits[0]) { location.href = SE.hits[0][0]; }
     }
 
-    /* 随机条目：优先从"值得一读"的板块里抽，避免连续两次抽到同一条 */
-    function seRandom() {
+    /* 随机条目：优先从"值得一读"的板块里抽，避免连续两次抽到同一条。
+       ⚠ 必须有出口：条目表取不到时**不能递归重试**（2026-09-24 实测过：一次边缘 404
+       会让按钮点了毫无反应，且看不出原因），改为给出提示并退回板块导航。 */
+    function seRandom(tried) {
       var pool = [];
       if (SE.entries && SE.entries.docs) {
         pool = SE.entries.docs.filter(function (d) { return d[2] !== "首页" && d[2] !== "文档"; });
       }
-      if (!pool.length) { loadEntries().then(seRandom); return; }
+      if (!pool.length) {
+        if (tried) {
+          seStatus("⚠️ 条目表暂时取不到（可能是网络或缓存问题），先带你去板块导航；刷新页面可重试。");
+          var navGrid = document.querySelector(".nav-grid");
+          var nav = document.getElementById("navigation") ||
+                    (navGrid && navGrid.closest(".wiki-card")) || document.querySelector(".wiki-card");
+          if (nav) nav.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        loadEntries().then(function () { seRandom(true); });
+        return;
+      }
       var pick = pool[Math.floor(Math.random() * pool.length)], n = 0;
       while (pick[0] === SE.last && n++ < 10) pick = pool[Math.floor(Math.random() * pool.length)];
       SE.last = pick[0];
@@ -475,15 +498,15 @@
       document.addEventListener("click", function (e) {
         if (!e.target.closest(".wiki-search")) { seBox().classList.remove("open"); }
       });
-      /* 随机条目：顶部链接 + 首页卡片里的「开始探索」按钮（blocks.js 渲染 data-action） */
+      /* 随机条目：顶部链接 + 首页卡片里的「开始探索」按钮（blocks.js 渲染 data-action）。
+         委托监听**立刻挂上**，不等条目表 —— 否则条目表一次请求失败，按钮就彻底没反应。 */
       var rnd = document.getElementById("random-entry-link");
-      if (rnd) { rnd.addEventListener("click", function (e) { e.preventDefault(); seRandom(); }); }
-      loadEntries().then(function () {
-        document.body.addEventListener("click", function (e) {
-          var b = e.target.closest('[data-action="random"]');
-          if (b) { e.preventDefault(); seRandom(); }
-        });
+      if (rnd) { rnd.addEventListener("click", function (e) { e.preventDefault(); seRandom(false); }); }
+      document.body.addEventListener("click", function (e) {
+        var b = e.target.closest('[data-action="random"]');
+        if (b) { e.preventDefault(); seRandom(false); }
       });
+      loadEntries();
       /* 空闲时预取全文索引：多数情况下用户一开始打字，结果就是"秒出" */
       var prefetch = function () { loadIndex(); };
       if (window.requestIdleCallback) { window.requestIdleCallback(prefetch, { timeout: 4000 }); }
