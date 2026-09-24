@@ -39,6 +39,7 @@ on:
       - 'HD2-Galatic_war-Map/data/campaign_zh.json'
       - 'HD2-Galatic_war-Map/banner.json'
       - 'scripts/validate_wiki_data.py'
+      - 'scripts/gen_search_index.py'
       - '.github/workflows/validate-data.yml'
   workflow_dispatch:      # 支持手动触发
 
@@ -77,6 +78,36 @@ jobs:
           set -e
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           echo "校验器退出码：${code}（0=通过，1=有失败项，2=用法/环境错误）"
+          exit 0
+
+      # 搜索索引新鲜度（**有意不阻塞**）：数据变了但索引没重建 → 首页搜索会漏掉新内容。
+      # 索引由 .github/workflows/build-search-index.yml 在数据 push 时自动重建，
+      # 这里只把"过期"这件事显式暴露出来，免得它变成又一个"绿着但坏了"。
+      # 之所以不改红：私密仓两条机翻流水线用 Contents API 直接推数据，那些 push 不经过本工作流的
+      # 重建步骤，索引会在几十秒后由 build-search-index.yml 补上 —— 此刻变红纯属噪声。
+      - name: 搜索索引新鲜度（不阻塞）
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          out="$(python scripts/gen_search_index.py --check 2>&1)"
+          code=$?
+          set -e
+          {
+            echo "## 🔎 站内搜索索引"
+            echo ""
+            if [ "$code" = "0" ]; then
+              echo "✅ 与当前数据一致。"
+            else
+              echo "⚠️ **与数据不一致（需要重建）** —— 首页搜索会漏掉刚改的内容。"
+              echo ""
+              echo '```'
+              printf '%s\n' "$out" | tail -n 8
+              echo '```'
+              echo ""
+              echo "本机修：\`python scripts/gen_search_index.py\`；线上会自动跑 \`Build Search Index\`（数据 push 触发）。"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
       # 把结果写进 Job Summary，PR 作者在 Checks 页面直接能读到该改哪里

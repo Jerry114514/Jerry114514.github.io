@@ -1,0 +1,65 @@
+name: Build Search Index
+
+# 站内全文搜索索引（首页搜索 / 随机条目用）
+# ---------------------------------------------------------------------------
+# 做什么：数据一变就把 scripts/gen_search_index.py 的确定性产物重新生成并提交：
+#   · HD2_Wiki/data/wiki/zh/search_index.json    （全文，约 0.8 MB，首次搜索时惰性加载）
+#   · HD2_Wiki/data/wiki/zh/search_entries.json  （轻量条目表，约 70 KB，随首页加载）
+#
+# 为什么用 push 触发而不是 schedule（§11.4 的教训：新增的定时工作流会被 GitHub 节流）：
+#   索引的新鲜度完全由"数据被改"驱动，而 push 触发是可靠的。覆盖的写入方包括：
+#   · 私密仓两条机翻流水线用 Contents API 直接推 patchnotes_zh.json / campaign_zh.json
+#   · 人工在 GitHub 网页上改 JSON
+#   · fetch-patchnotes.yml 抓新公告（它内部也会跑一次，这里是兜底）
+#   不会自激：默认 GITHUB_TOKEN 推的提交不会再触发工作流；且数据没变时脚本不写盘（无空提交）。
+#
+# 手动兜底：workflow_dispatch；本机等价命令 `python scripts/gen_search_index.py`。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'HD2_Wiki/data/wiki/zh/**.json'
+      - 'HD2_Wiki/data/wiki/zh/**.md'
+      - 'CONTRIBUTING.md'
+      - 'scripts/gen_search_index.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-search-index
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 生成搜索索引（数据没变则不写盘）
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/gen_search_index.py
+
+      - name: 校验索引与数据一致
+        run: python scripts/gen_search_index.py --check
+
+      - name: Commit and push
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2_Wiki/data/wiki/zh/search_index.json HD2_Wiki/data/wiki/zh/search_entries.json
+          if git diff --cached --quiet; then
+            echo "索引已是最新，跳过提交"
+          else
+            git commit -m "data(搜索): 重建站内搜索索引 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          fi

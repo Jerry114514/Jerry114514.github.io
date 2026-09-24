@@ -28,10 +28,12 @@
 
 
     /* Search */
-    .wiki-search { text-align: center; padding: 16px 20px; }
+    .wiki-search-wrap { max-width: 720px; margin: 0 auto; padding: 16px 20px 0; }
+
+    .wiki-search { text-align: left; padding: 0; position: relative; }
 
     .wiki-search input {
-      width: 100%; max-width: 480px; padding: 10px 16px; border: 1px solid var(--border);
+      width: 100%; max-width: none; padding: 10px 16px; border: 1px solid var(--border);
       border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text);
       font-size: 0.9rem; outline: none; transition: border-color 0.2s;
     }
@@ -39,6 +41,39 @@
     .wiki-search input:focus { border-color: var(--blue); }
 
     .wiki-search input::placeholder { color: var(--text-mute); }
+
+    /* 全文搜索（2026-09-23）：命中段落 + 深链锚点 */
+    .wiki-search-status { min-height: 1.15em; margin-top: 6px; font-size: 0.74rem; color: var(--text-mute); }
+
+    .wiki-search-results {
+      display: none; margin-top: 8px; border: 1px solid var(--border);
+      border-radius: var(--radius); background: var(--bg-card);
+      max-height: 62vh; overflow-y: auto;
+    }
+
+    .wiki-search-results.open { display: block; }
+
+    .wsr-item { display: block; padding: 10px 14px; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }
+
+    .wsr-item:last-child { border-bottom: none; }
+
+    .wsr-item.active, .wsr-item:hover { background: rgba(59,130,246,0.12); }
+
+    .wsr-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+
+    .wsr-title { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+
+    .wsr-kind { font-size: 0.68rem; color: var(--text-mute); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+
+    .wsr-group { font-size: 0.7rem; color: var(--text-mute); }
+
+    .wsr-snippet { margin-top: 4px; font-size: 0.78rem; line-height: 1.6; color: var(--text-dim); word-break: break-word; white-space: pre-line; }
+
+    .wsr-snippet mark { background: rgba(245,197,24,0.28); color: var(--yellow); padding: 0 2px; border-radius: 2px; }
+
+    .wsr-empty { padding: 14px; font-size: 0.82rem; color: var(--text-mute); }
+
+    .wsr-more { padding: 8px 14px; font-size: 0.74rem; color: var(--text-mute); text-align: center; }
 
 
     /* Grid */
@@ -70,6 +105,9 @@
     .wiki-card .btn:hover { background: var(--blue); color: #fff; }
 
     .wiki-card .btn + .btn { margin-left: 8px; }
+
+    /* 首页「开始探索（随机条目）」是按钮而非链接（blocks.js 的 data-action） */
+    .wiki-card button.btn { background: none; font: inherit; cursor: pointer; }
 
 
     /* Navigation categories */
@@ -161,13 +199,19 @@
     <p>自由 · 民主 · 超级地球</p>
     <div class="nav-links">
       <a href="https://jerry114514.github.io/HD2-Galatic_war-Map/">◀ 返回战况面板</a>
-      <a href="#">全部页面</a>
+      <a href="#" id="random-entry-link" title="随机打开一条条目">🎲 随机条目</a>
+      <a href="#navigation">全部页面</a>
       <a href="https://github.com/Jerry114514/Jerry114514.github.io">GitHub</a>
     </div>
   </header>
 
-  <div class="wiki-search">
-    <input type="text" id="wiki-search-input" placeholder="🔍 搜索维基内容…（武器、战备、敌人、星球）" oninput="filterWiki(event)">
+  <div class="wiki-search-wrap">
+    <div class="wiki-search">
+      <input type="text" id="wiki-search-input" autocomplete="off" spellcheck="false"
+             placeholder="🔍 搜索全站正文…（支持中文/英文，可按段落命中：如「抗性」「踉跄阈值」「轨道凝固汽油弹」）">
+      <div class="wiki-search-status" id="wiki-search-status"></div>
+      <div class="wiki-search-results" id="wiki-search-results" role="listbox" aria-label="搜索结果"></div>
+    </div>
   </div>
 
   <div class="wiki-grid" id="wiki-grid">
@@ -215,20 +259,235 @@
     </p>
   </footer>
 
-  <script src="./assets/js/blocks.js"></script>
+  <script src="./assets/js/blocks.js?v=20260923a"></script>
   <script>
     "use strict";
-        function filterWiki(e) {
-      var q = (e.target.value || "").trim().toLowerCase();
-      var cards = document.querySelectorAll(".wiki-card");
-      cards.forEach(function(c) {
-        if (!q) { c.style.display = ""; return; }
-        c.style.display = c.textContent.toLowerCase().includes(q) ? "" : "none";
+    /* ---------------- 站内全文搜索 + 随机条目（2026-09-23） ----------------
+       两级数据，都是 scripts/gen_search_index.py 生成的确定性产物：
+         · search_entries.json（约 95 KB）—— 随页面加载：标题联想 + 随机条目池 + 索引版本号
+         · search_index.json （约 0.7 MB）—— **首次搜索时惰性加载一次**，之后由浏览器缓存
+           （请求带 ?v=<digest>，数据一变 digest 就变，缓存自然失效）
+       命中粒度到**段落**：机制页与更新公告按小节建条目，点击直达 #锚点。 */
+
+    var SE = { entries: null, entriesErr: false, index: null, loading: null,
+               hits: [], active: -1, last: "" };
+    var SE_LIMIT = 50;
+
+    function seEsc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+    function seStatus(t) { document.getElementById("wiki-search-status").textContent = t || ""; }
+
+    function seBox() { return document.getElementById("wiki-search-results"); }
+
+    function seFetch(url) {
+      return fetch(url, { cache: "force-cache" }).then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
       });
+    }
+
+    function loadEntries() {
+      if (SE.entries) return Promise.resolve(SE.entries);
+      if (SE.entriesErr) return Promise.resolve(null);
+      return seFetch("./data/wiki/zh/search_entries.json").then(function (d) {
+        SE.entries = d;
+        return d;
+      }).catch(function (e) {
+        SE.entriesErr = true;
+        return null;
+      });
+    }
+
+    function loadIndex() {
+      if (SE.index) return Promise.resolve(SE.index);
+      if (SE.loading) return SE.loading;
+      seStatus("正在加载全文索引（首次约 0.7 MB，之后走浏览器缓存）…");
+      SE.loading = seFetch("./data/wiki/zh/search_index.json?v=" +
+                           ((SE.entries && SE.entries.digest) || "1"))
+        .then(function (d) {
+          SE.index = d;
+          seStatus("全文索引就绪：共 " + d.count + " 条可搜索内容（含机制页小节与公告条目）");
+          window.setTimeout(function () { if (!seBox().classList.contains("open")) seStatus(""); }, 5000);
+          return d;
+        })
+        .catch(function (e) {
+          SE.loading = null;
+          seStatus("⚠️ 全文索引加载失败（" + e.message + "），当前仅能按标题匹配");
+          return null;
+        });
+      return SE.loading;
+    }
+
+    function seTerms(q) {
+      return q.toLowerCase().split(/\s+/).filter(function (t) { return t.length > 0; });
+    }
+
+    function seEvery(text, terms) {
+      var t = (text || "").toLowerCase();
+      for (var i = 0; i < terms.length; i++) { if (t.indexOf(terms[i]) < 0) return false; }
+      return true;
+    }
+
+    function seScore(d, terms) {
+      var title = (d[1] || "").toLowerCase(), group = (d[3] || "").toLowerCase(),
+          body = (d[4] || "").toLowerCase(), s = 0;
+      for (var i = 0; i < terms.length; i++) {
+        var t = terms[i];
+        if (title === t) s += 200;
+        else if (title.indexOf(t) === 0) s += 120;
+        else if (title.indexOf(t) >= 0) s += 70;
+        else if (group.indexOf(t) >= 0) s += 25;
+        if (body.indexOf(t) >= 0) s += 10;
+      }
+      return s;
+    }
+
+    function seSnippet(x, terms) {
+      if (!x) return "";
+      var low = x.toLowerCase(), at = -1, hit = "";
+      for (var i = 0; i < terms.length; i++) {
+        var p = low.indexOf(terms[i]);
+        if (p >= 0 && (at < 0 || p < at)) { at = p; hit = terms[i]; }
+      }
+      if (at < 0) return "";
+      var a = Math.max(0, at - 40), b = Math.min(x.length, at + hit.length + 56);
+      return (a > 0 ? "…" : "") + x.slice(a, b) + (b < x.length ? "…" : "");
+    }
+
+    function seMark(text, terms) {
+      var out = seEsc(text);
+      terms.forEach(function (t) {
+        if (t.length < 1) return;
+        var re = new RegExp(seEsc(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        out = out.replace(re, function (m) { return "<mark>" + m + "</mark>"; });
+      });
+      return out;
+    }
+
+    function seRender(terms) {
+      var box = seBox(), html = [];
+      if (!terms.length) { box.innerHTML = ""; box.classList.remove("open"); return; }
+      if (!SE.hits.length) {
+        html.push('<div class="wsr-empty">没有匹配 <strong>' + seEsc(terms.join(" ")) +
+                  '</strong> 的内容。试试更短的关键词，或换个说法（中英均可）。</div>');
+      } else {
+        SE.hits.forEach(function (d, i) {
+          var snip = seSnippet(d[4], terms);
+          html.push('<a class="wsr-item' + (i === SE.active ? " active" : "") + '" role="option" href="' +
+            seEsc(d[0]) + '">' +
+            '<div class="wsr-head"><span class="wsr-title">' + seMark(d[1], terms) + '</span>' +
+            '<span class="wsr-kind">' + seEsc(d[2]) + '</span>' +
+            (d[3] ? '<span class="wsr-group">' + seEsc(d[3]) + '</span>' : "") + '</div>' +
+            (snip ? '<div class="wsr-snippet">' + seMark(snip, terms) + '</div>' : "") +
+            '</a>');
+        });
+        var total = SE.total || SE.hits.length;
+        if (total > SE.hits.length) {
+          html.push('<div class="wsr-more">共 ' + total + ' 条命中，已显示前 ' + SE.hits.length +
+                    ' 条 —— 加一个关键词可以缩小范围</div>');
+        } else {
+          html.push('<div class="wsr-more">共 ' + total + ' 条命中</div>');
+        }
+      }
+      box.innerHTML = html.join("");
+      box.classList.add("open");
+    }
+
+    function seSearch(q) {
+      var terms = seTerms(q);
+      SE.active = -1;
+      if (!terms.length) { SE.hits = []; seRender(terms); seStatus(""); return; }
+      /* 第一步：先用轻量条目表给出标题命中（索引还没到时也能立刻有结果） */
+      var quick = [];
+      if (SE.entries && SE.entries.docs) {
+        quick = SE.entries.docs.filter(function (d) {
+          return seEvery(d[1], terms) || seEvery(d[3], terms);
+        }).sort(function (a, b) { return seScore(b, terms) - seScore(a, terms); });
+      }
+      if (quick.length) {
+        SE.hits = quick.slice(0, SE_LIMIT).map(function (d) { return [d[0], d[1], d[2], d[3], ""]; });
+        SE.total = quick.length;
+        seRender(terms);
+        seStatus("标题命中 " + quick.length + " 条" + (SE.index ? "" : "（正在补全文结果…）"));
+      }
+      /* 第二步：拉到全文索引后按正文重排/补齐 */
+      loadIndex().then(function (idx) {
+        var cur = document.getElementById("wiki-search-input").value.trim();
+        if (!idx || cur.toLowerCase() !== q.trim().toLowerCase()) return;
+        var hits = idx.docs.filter(function (d) { return seEvery(d[4], terms); });
+        var extra = ((SE.entries && SE.entries.docs) || []).filter(function (d) {
+          return seEvery(d[1], terms) || seEvery(d[3], terms);
+        }).map(function (d) { return [d[0], d[1], d[2], d[3], ""]; });
+        hits = hits.concat(extra);
+        var seen = {}, uniq = [];
+        hits.forEach(function (d) { if (!seen[d[0]]) { seen[d[0]] = 1; uniq.push(d); } });
+        uniq.sort(function (a, b) { return seScore(b, terms) - seScore(a, terms); });
+        SE.hits = uniq.slice(0, SE_LIMIT);
+        SE.total = uniq.length;
+        seRender(terms);
+        seStatus("全文命中 " + uniq.length + " 条" + (uniq.length > SE.hits.length ? "（已显示前 " + SE.hits.length + " 条）" : ""));
+      });
+    }
+
+    function seMove(step) {
+      if (!SE.hits.length) return;
+      SE.active = (SE.active + step + SE.hits.length) % SE.hits.length;
+      seRender(seTerms(document.getElementById("wiki-search-input").value));
+      var el = seBox().querySelectorAll(".wsr-item")[SE.active];
+      if (el) { el.scrollIntoView({ block: "nearest" }); }
+    }
+
+    function seOpenFirst() {
+      if (SE.active >= 0 && SE.hits[SE.active]) { location.href = SE.hits[SE.active][0]; return; }
+      if (SE.hits[0]) { location.href = SE.hits[0][0]; }
+    }
+
+    /* 随机条目：优先从"值得一读"的板块里抽，避免连续两次抽到同一条 */
+    function seRandom() {
+      var pool = [];
+      if (SE.entries && SE.entries.docs) {
+        pool = SE.entries.docs.filter(function (d) { return d[2] !== "首页" && d[2] !== "文档"; });
+      }
+      if (!pool.length) { loadEntries().then(seRandom); return; }
+      var pick = pool[Math.floor(Math.random() * pool.length)], n = 0;
+      while (pick[0] === SE.last && n++ < 10) pick = pool[Math.floor(Math.random() * pool.length)];
+      SE.last = pick[0];
+      location.href = pick[0];
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       WikiBlocks.render(document.getElementById("wiki-grid"));
+
+      var input = document.getElementById("wiki-search-input");
+      var timer = null;
+      input.addEventListener("input", function () {
+        var v = input.value;
+        window.clearTimeout(timer);
+        timer = window.setTimeout(function () { seSearch(v); }, 120);
+      });
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowDown") { e.preventDefault(); seMove(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); seMove(-1); }
+        else if (e.key === "Enter") { e.preventDefault(); seOpenFirst(); }
+        else if (e.key === "Escape") { input.value = ""; seSearch(""); input.blur(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".wiki-search")) { seBox().classList.remove("open"); }
+      });
+      /* 随机条目：顶部链接 + 首页卡片里的「开始探索」按钮（blocks.js 渲染 data-action） */
+      var rnd = document.getElementById("random-entry-link");
+      if (rnd) { rnd.addEventListener("click", function (e) { e.preventDefault(); seRandom(); }); }
+      loadEntries().then(function () {
+        document.body.addEventListener("click", function (e) {
+          var b = e.target.closest('[data-action="random"]');
+          if (b) { e.preventDefault(); seRandom(); }
+        });
+      });
+      /* 空闲时预取全文索引：多数情况下用户一开始打字，结果就是"秒出" */
+      var prefetch = function () { loadIndex(); };
+      if (window.requestIdleCallback) { window.requestIdleCallback(prefetch, { timeout: 4000 }); }
+      else { window.setTimeout(prefetch, 2500); }
     });
   </script>
 </body>

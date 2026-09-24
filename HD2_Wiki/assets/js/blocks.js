@@ -39,7 +39,14 @@ var WikiBlocks = (function () {
             '<h2>' + esc(data.title) + '</h2>' +
             '<p style="font-size:0.9rem;color:var(--yellow);margin-bottom:8px">' + esc(data.subtitle) + '</p>' +
             '<p>' + esc(data.content) + '</p>' +
-            (data.buttons ? data.buttons.map(function(b) { return '<a class="btn" href="' + esc(b.link) + '">' + esc(b.text) + '</a>'; }).join("") : "") +
+            (data.buttons ? data.buttons.map(function(b) {
+              /* action 型按钮（如首页「开始探索」= 随机条目）：由页面脚本用
+                 [data-action] 委托处理，见 wiki.html 的 seRandom()。 */
+              if (b.action) {
+                return '<button type="button" class="btn" data-action="' + esc(b.action) + '">' + esc(b.text) + '</button>';
+              }
+              return '<a class="btn" href="' + esc(b.link) + '">' + esc(b.text) + '</a>';
+            }).join("") : "") +
             '</div>';
         case "about":
           return '<div class="' + cls + '">' +

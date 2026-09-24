@@ -59,6 +59,12 @@ jobs:
       - name: 同步 sitemap 详情页
         run: python scripts/gen_sitemap.py
 
+      # 站内搜索索引（scripts/gen_search_index.py，2026-09-23 加入）：
+      # 公告一变，首页全文搜索就该能立刻搜到新条目 —— 索引是**确定性产物**，
+      # 数据没变时脚本不写盘，所以这一步不会制造空提交。
+      - name: 重建站内搜索索引
+        run: python scripts/gen_search_index.py
+
       - name: 数据校验（不通过就整体失败，因此不会提交）
         run: python scripts/validate_wiki_data.py
 
@@ -66,7 +72,8 @@ jobs:
         run: |
           git config user.name "Jerry Jiang"
           git config user.email "69064950+Jerry114514@users.noreply.github.com"
-          git add HD2_Wiki/data/wiki/zh/patchnotes.json sitemap.xml
+          git add HD2_Wiki/data/wiki/zh/patchnotes.json sitemap.xml \
+                  HD2_Wiki/data/wiki/zh/search_index.json HD2_Wiki/data/wiki/zh/search_entries.json
           if git diff --cached --quiet; then
             echo "公告无变化，跳过提交"
           else
