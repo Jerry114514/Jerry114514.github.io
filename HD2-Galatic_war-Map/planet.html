@@ -198,12 +198,17 @@
     if (h >= 1) return Math.floor(h) + " 小时 " + Math.round((h % 1) * 60) + " 分";
     return Math.max(1, Math.round(h * 60)) + " 分";
   }
-  function fmtDuration(sec) {                  // 秒 → 1M 6D 18h 2m（companion 同款粗粒度）
-    if (!sec) return "—";
+  // 官方 war_stats 的时间字段是**毫秒**（2026-09-25 用 FRONTERIA 实测：raw 3,176,496,038 ↔
+  // companion 页面显示 1M 6D 18h 2m 24s ≈ 3,175,344 秒，比值 1000.4）→ 先 /1000 再格式化。
+  // 与 companion 同款粗粒度：M(30 天) D h m。
+  function fmtDuration(ms) {
+    if (!ms) return "—";
+    const sec = ms / 1000;
     const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
     const M = Math.floor(d / 30);
     return (M ? M + "M " : "") + (d % 30) + "D " + h + "h " + m + "m";
   }
+  const msToHours = (ms) => (ms ? Math.round(ms / 1000 / 3600) : null);
 
   /* ---- 数据状态 ---- */
   let DATA = null, PL_CN = {}, PL_SEC = {}, SEC_CN = {}, WAY = {}, REG_TABLE = {}, REG_ZH = {}, BIOME_IDX = null,
@@ -483,7 +488,7 @@
     const cells = [
       ["任务完成", fmt(won), tot ? "占 " + rate.toFixed(1) + "%" : ""],
       ["任务失败", fmt(lost), tot ? "占 " + (100 - rate).toFixed(1) + "%" : ""],
-      ["任务总时长", fmtDuration(s.missionTime), "累计"],
+      ["任务总时长", fmtDuration(s.missionTime), "累计（官方毫秒字段）"],
       ["开火", fmt(shots), ""],
       ["命中", fmt(hits), ""],
       ["阵亡绝地潜兵", fmt(deaths), ""],
@@ -491,7 +496,7 @@
       ["终结族击杀", fmt(s.bugKills || 0), ""],
       ["机器人击杀", fmt(s.automatonKills || 0), ""],
       ["光能者击杀", fmt(s.illuminateKills || 0), ""],
-      ["绝地潜兵投入", fmt(s.timePlayed ? Math.round(s.timePlayed / 3600) : null), "累计人时"],
+      ["绝地潜兵投入", fmt(msToHours(s.timePlayed)), "累计人时"],
       ["复活", fmt(s.revives || 0), ""],
     ].map(([k, v, sub]) => `<div class="kpi"><div class="k">${esc(k)}</div><div class="v">${esc(v)}${sub ? `<small>${esc(sub)}</small>` : ""}</div></div>`).join("");
     return `<div class="kpis" style="border:1px solid var(--line);border-radius:8px;overflow:hidden">${cells}</div>
