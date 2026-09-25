@@ -230,15 +230,20 @@
   }
   // 官方 war_stats 的时间字段是**毫秒**（2026-09-25 用 FRONTERIA 实测：raw 3,176,496,038 ↔
   // companion 页面显示 1M 6D 18h 2m 24s ≈ 3,175,344 秒，比值 1000.4）→ 先 /1000 再格式化。
-  // 与 companion 同款粗粒度：M(30 天) D h m。
+  // 三年战争的累计值会到 700+ 天，只写「天」不好读 → 按 companion 的粗粒度分档，但写成中文：
+  // 年 / 周 / 天 / 时 / 分，最多显示 3 档（跳过前导零）。
   function fmtDuration(ms) {
     if (!ms) return "—";
-    const sec = ms / 1000;
-    const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
-    const M = Math.floor(d / 30);
-    return (M ? M + "M " : "") + (d % 30) + "D " + h + "h " + m + "m";
+    let sec = Math.floor(ms / 1000);
+    const units = [["年", 365 * 86400], ["周", 7 * 86400], ["天", 86400], ["时", 3600], ["分", 60]];
+    const parts = [];
+    units.forEach(([label, size]) => {
+      const n = Math.floor(sec / size);
+      sec -= n * size;
+      if (n > 0) parts.push(n + " " + label);
+    });
+    return parts.length ? parts.slice(0, 3).join(" ") : Math.max(1, Math.floor(ms / 1000)) + " 秒";
   }
-  const msToHours = (ms) => (ms ? Math.round(ms / 1000 / 3600) : null);
 
   /* ---- 表格助手（模块级：warHtml/statsHtml/regionsHtml/linksHtml/srcHtml 都要用）----
      结构与站内维基的 `.info-table` 家族一致（表头琥珀斜纹 + 大写 + 字距、数据行细线、偶数行压深），
@@ -534,28 +539,49 @@
     const rate = tot > 0 ? won / tot * 100 : (s.missionSuccessRate || 0);
     const shots = s.bulletsFired || 0, hits = s.bulletsHit || 0;
     const accident = s.friendlies || 0, deaths = s.deaths || 0;
+    // ⚠ 击杀是**该星球自本场战争开战以来的累计值**，不是"当前控制方造成的"：
+    //   星球三年里反复易主，所以机器人星球上也会留下当年打终结族的旧账
+    //   （实测 300 颗星球里 210 颗三个阵营都有击杀；三类击杀之和恰好等于全服总数）。
+    //   companion 的做法是**只显示与控制方对应的那一类**（MARFARK 只显示 Dead Automatons），
+    //   本页照此办理：主打一行 + 其余历史累计压成一条弱化说明 —— 既对齐 companion，
+    //   也不会让人误以为"机器人星球上在打虫子"。
+    const kills = [
+      { key: "terminids", cn: "终结族", v: s.bugKills || 0 },
+      { key: "automaton", cn: "机器人", v: s.automatonKills || 0 },
+      { key: "illuminate", cn: "光能者", v: s.illuminateKills || 0 },
+    ];
+    const ownerKey = String(P.currentOwner || "").toLowerCase();
+    const ownerMatch = kills.find((k) => k.key === ownerKey) || null;
+    const mainKill = ownerMatch || kills.slice().sort((a, b) => b.v - a.v)[0];
+    const otherKills = kills.filter((k) => k !== mainKill && k.v > 0);
+    const killNote = ownerMatch ? "当前控制方" : "该星球历史主要交战阵营（现由" + (OWN_CN[P.currentOwner] || P.currentOwner || "未知") + "控制）";
     const rows = [
       T.grp("任务", 3),
       T.r([T.t("任务完成"), T.t(fmt(won), "num hi"), T.t(tot ? "成功率 " + rate.toFixed(1) + "%" : "—", "num dim")]),
       T.r([T.t("任务失败"), T.t(fmt(lost), "num hi"), T.t(tot ? "占 " + (100 - rate).toFixed(1) + "%" : "—", "num dim")]),
-      T.r([T.t("任务总时长"), T.t(fmtDuration(s.missionTime), "num"), T.t("官方毫秒字段 ÷1000", "dim")]),
+      T.r([T.t("累计任务时长"), T.t(fmtDuration(s.missionTime), "num"),
+           T.t("全部玩家累计（官方毫秒字段 ÷1000）", "dim")]),
       T.grp("火力", 3),
       T.r([T.t("开火"), T.t(fmt(shots), "num"), T.t("累计发数", "dim")]),
       T.r([T.t("命中"), T.t(fmt(hits), "num"), T.t(shots ? "命中率 " + (hits / shots * 100).toFixed(1) + "%" : "—", "num dim")]),
-      T.grp("战果", 3),
-      T.r([T.t("终结族击杀"), T.t(fmt(s.bugKills || 0), "num"), T.t("减员", "dim")]),
-      T.r([T.t("机器人击杀"), T.t(fmt(s.automatonKills || 0), "num"), T.t("减员", "dim")]),
-      T.r([T.t("光能者击杀"), T.t(fmt(s.illuminateKills || 0), "num"), T.t("减员", "dim")]),
-      T.grp("伤亡与投入", 3),
+      T.grp("战果（击杀为该星球累计，含易主前的旧账）", 3),
+      T.r([T.t(mainKill.cn + "击杀"), T.t(fmt(mainKill.v), "num hi"), T.t(killNote, "dim")]),
+      otherKills.length
+        ? T.r([T.t("其他阵营历史累计"), T.t(otherKills.map((k) => k.cn + " " + fmt(k.v)).join(" · "), "dim"),
+               T.t("易主前打下的", "num dim")])
+        : "",
+      T.grp("伤亡", 3),
       T.r([T.t("阵亡绝地潜兵"), T.t(fmt(deaths), "num hi"), T.t("", "dim")]),
       T.r([T.t("误伤"), T.t(fmt(accident), "num"), T.t(deaths ? "占阵亡 " + (accident / Math.max(1, deaths) * 100).toFixed(1) + "%" : "—", "num dim")]),
       T.r([T.t("复活"), T.t(fmt(s.revives || 0), "num"), T.t("", "dim")]),
-      T.r([T.t("绝地潜兵投入"), T.t(fmt(msToHours(s.timePlayed)), "num"), T.t("累计人时", "dim")]),
-    ];
+    ].filter(Boolean);
     return T.table([{ t: "指标" }, { t: "数值", cls: "num" }, { t: "备注", cls: "num" }], rows, "minwide") +
       `<p class="note" style="margin-top:10px">口径：与官方 API <code>war_stats.planets_stats</code> 一致（本场战争开战以来累计），
-      与 companion 的星球统计**同源**，数字应当一致。「命中率 &gt; 100%」是官方原始数据的特征（多弹丸武器按发/弹计数口径不同），
-      此处照实呈现、不做修正；时间字段是毫秒（见页脚口径）。</p>`;
+      与 companion 的星球统计**同源**。**击杀按星球累计、不按阵营归属** —— 本场战争打了三年，星球反复易主，
+      所以机器人星球上也会留着当年打终结族的数字（实测 300 颗星球里 210 颗三个阵营都有击杀，
+      且三类之和恰好等于全服总数）。这里与 companion 一样只把与控制方对应的那一类作为主行，
+      其余压成一条弱化说明。「命中率 &gt; 100%」是官方原始数据的特征（多弹丸武器按发/弹计数口径不同），照实呈现不修正；
+      时间字段单位是毫秒。</p>`;
   }
 
   function regionsHtml() {
