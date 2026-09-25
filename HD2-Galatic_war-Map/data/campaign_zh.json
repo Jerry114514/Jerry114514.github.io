@@ -26,6 +26,11 @@
       "ic_build": "currency.item_stratagem|#FBFAF5|0.56",
       "note": "白 #FBFAF5 战略配备图标（单层路径，d / transform 原样复制）。用于所有被 companion 归到 Yde(Stratagem) 的战役奖励 mixId（如当前「装甲雄鹰」的 1618361436）。"
     },
+    "campaign/reward_item.svg": {
+      "from": "**本地自绘几何占位**（不是游戏资源，别当官方图标）",
+      "icon_key": null,
+      "note": "中性菱形占位：用于 companion 分类表里、但本站提取不到真实矢量图标的奖励类型（Body Armor / Primary / Item）。companion 对它们的兜底是内联 `entity.generic`，本站不冒充具体奖励图标。⚠ 必须是真文件：validate_wiki_data.py 的 IMG.EXISTS 要求 img 非空且文件存在，留空字符串会让 fetch-patchnotes.yml 的校验步骤整轮失败（2026-09-25 踩过）。"
+    },
     "campaign/banner_*.webp": {
       "from": "https://helldiverscompanion.com/news/<name>.webp（位图 700x340，公开无鉴权）",
       "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
@@ -83,28 +88,28 @@
       "en": "BODY ARMOR",
       "cn": "护甲",
       "icon": "item",
-      "img": "",
+      "img": "./assets/campaign/reward_item.svg",
       "note": "companion 归 Hde(Body Armor)；本地没有该图标，用中性占位图（不要拿披风冒充）"
     },
     "2232169940": {
       "en": "PRIMARY",
       "cn": "主武器",
       "icon": "item",
-      "img": "",
+      "img": "./assets/campaign/reward_item.svg",
       "note": "companion 归 Ude(Primary)；本地没有该图标，用中性占位图"
     },
     "1407130184": {
       "en": "ITEM",
       "cn": "物品",
       "icon": "item",
-      "img": "",
+      "img": "./assets/campaign/reward_item.svg",
       "note": "不在 companion 任何分类表里 → 用它的兜底类型 Item"
     },
     "2547900634": {
       "en": "ITEM",
       "cn": "物品",
       "icon": "item",
-      "img": "",
+      "img": "./assets/campaign/reward_item.svg",
       "note": "不在 companion 任何分类表里 → 用它的兜底类型 Item"
     }
   },

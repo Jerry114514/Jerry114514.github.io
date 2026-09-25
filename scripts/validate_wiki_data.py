@@ -146,8 +146,14 @@ KNOWN = {
            "id 在分类内唯一、跨分类重复；mission.html 取后命中者。新增重复即报错"),
 }
 
-# 非路径的 icon 取值白名单（emoji / 枚举），不算死链
-NON_PATH_ICON_ENUMS = {"medal", "cape"}
+# 非路径的 icon 取值白名单（emoji / 枚举），不算死链。
+# ⚠ 2026-09-25 从 {medal, cape} 扩到前端的全部奖励渲染分支。依据不是"顺手放宽"，而是
+#   companion 前端 bundle 的奖励解析函数 yg()（详见交接文档 §19.28）：不在货币表 Kde、
+#   也不在各装备 id 表里的 mixId 会落到 Cape / Body Armor / Helmet / Primary / Sidearm /
+#   Throwable / Stratagem / Pattern / Item。站内 index.html 的 CAMP_REWARD_KINDS 与
+#   campaign_zh.json 的 reward_types[].icon 必须与此同步 —— 否则「战略配备」会被渲染成披风
+#   （§19.28 修掉的线上 bug 就是这么来的）。
+NON_PATH_ICON_ENUMS = {"medal", "cape", "stratagem", "item"}
 
 # 禁止站内图片热链的字段：icon 必须站内相对路径（SCHEMA §1）
 ICON_MUST_BE_LOCAL = ("icon",)
@@ -1656,11 +1662,11 @@ class Validator(object):
                 if not isinstance(v, dict) or not v.get("cn"):
                     self.rep.add("SCHEMA.FIELDS", relpath, ("reward_types", k),
                                  "reward_types[%r] 缺少 cn" % k,
-                                 "值形如 {\"en\": ..., \"cn\": ..., \"icon\": \"medal\"|\"cape\"}")
+                                 "值形如 {\"en\": ..., \"cn\": ..., \"icon\": \"medal\"|\"cape\"|\"stratagem\"|\"item\"}")
                 elif v.get("icon") not in NON_PATH_ICON_ENUMS:
                     self.rep.add("SCHEMA.TYPES", relpath, ("reward_types", k, "icon"),
-                                 "icon = %r 不是 medal / cape" % v.get("icon"),
-                                 "icon 是前端渲染分支的枚举名，不是文件路径")
+                                 "icon = %r 不在白名单 %s" % (v.get("icon"), " / ".join(sorted(NON_PATH_ICON_ENUMS))),
+                                 "icon 是前端渲染分支的枚举名，不是文件路径；新增类型要同时改 index.html 的 CAMP_REWARD_KINDS")
         ep = obj.get("episodes")
         if isinstance(ep, dict):
             for k, v in ep.items():

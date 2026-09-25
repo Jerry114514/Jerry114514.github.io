@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" width="24" height="24" role="img" aria-label="Reward">
+  <!-- 中性占位图标（**不是**游戏资源，别当官方图标用）：
+       用于 companion 分类表里、但本站没有本地矢量图标可提取的奖励类型
+       （Body Armor / Primary / Item —— companion 对它们的兜底是内联 `entity.generic`）。
+       依据见交接文档 §19.28：companion 前端 yg() 把 mixId 分到各表，本站只对
+       cape / medal / stratagem 提取到了真实矢量路径（reward_cape|medal|stratagem.svg），
+       其余类型用这个几何占位，**不冒充任何具体奖励图标**。
+       校验口径：validate_wiki_data.py 的 IMG.EXISTS 要求 img 非空且文件真实存在，
+       故这里必须落地成一个真文件，而不是留空字符串。 -->
+  <path d="M12 2.8 21.2 12 12 21.2 2.8 12Z" fill="none" stroke="#FBFAF5" stroke-width="1.6"
+        stroke-linejoin="round"/>
+  <path d="M12 8.2v7.6" stroke="#FBFAF5" stroke-width="1.6" stroke-linecap="round"/>
+</svg>

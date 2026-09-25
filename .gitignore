@@ -76,3 +76,7 @@ HD2_Wiki/data/wiki/zh/*啓琛_md
 /HD2-Galatic_war-Map/assets/planet-icons/P脰PLI_IX.png
 #    · PowerShell 事故残留：Out-File 把类型名当成了文件名，内容其实是 hosts 清单
 /System.Collections.Hashtable
+
+# 本地维护工具（GitHub API 推送/取文件/日志/自检脚本）—— **不发布、不推送**
+# 放仓库里而不是 %TEMP%：TEMP 每个会话都会轮换，工具每次重建（2026-09-25 已踩三次）
+/.tools-local/
