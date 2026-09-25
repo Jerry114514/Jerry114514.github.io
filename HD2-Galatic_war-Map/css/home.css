@@ -1471,7 +1471,8 @@
 
     /* ---- ⑥-b 星球下属区域（城市 / 超大型工厂，2026-09-24）----
        与星图星球卡片同一套数据与口径（tables/planet_regions*.json + data.json 的 regions[]）。
-       第 0 行是星球本体（游戏里也这么列：<星球>城市 / 机器人星球为 <星球>超大型工厂）。 */
+       ⚠ **不列"星球本体"那一行**（2026-09-24 用户反馈）：静态表里 211 条区域没有一条与星球同名，
+         游戏面板里的"<星球>城市"行不是区域；且星球自身进度条上方已有，重复且把本体误标成城市。 */
     .planet-card .pc-regions{border-top:2px solid var(--fcd)}
     .planet-card .pc-regions .rhd{
       display:flex;align-items:baseline;gap:6px;padding:7px 12px 4px;
@@ -1484,7 +1485,6 @@
     .planet-card .pc-rg .ico{flex:0 0 14px;text-align:center;font-size:11px}
     .planet-card .pc-rg .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .planet-card .pc-rg .nm i{font-style:normal;color:var(--text-mute);font-size:9.5px;margin-left:4px}
-    .planet-card .pc-rg.self .nm{color:var(--text-dim)}
     .planet-card .pc-rg .ty{flex:0 0 66px;font-size:10px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .planet-card .pc-rg .ty em{font-style:normal;color:var(--yellow);font-size:9px;margin-left:2px}
     .planet-card .pc-rg .pct{flex:0 0 48px;text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}

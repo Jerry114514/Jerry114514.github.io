@@ -7,7 +7,7 @@
   <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260924a">
+  <link rel="stylesheet" href="./css/home.css?v=20260924b">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -2087,29 +2087,27 @@ function renderPlayers(data) {
     return Math.max(0, Math.min(100, 100 * (1 - st.health / mh)));
   }
   // 只显示静态表里有区域的星球；没有就不渲染整块（不占版面）
-  function pcRegionsHtml(p, nameCn, planetLibPct) {
+  // ⚠ **只列下属区域，不列"星球本体"那一行**（2026-09-24 用户反馈）：
+  //   与星球同名的那一行不是区域（静态表 84 星 / 211 个区域里**没有一条**与星球同名），
+  //   把它标成「城市 / 超大型工厂」是错的；且星球自身进度条上面已有，重复且误导。
+  //   故本块 = tables/planet_regions.json 的 regions 原样列表。
+  function pcRegionsHtml(p) {
     const st = PC_REGIONS[String(p.index)];
     if (!st || !st.regions || !st.regions.length) return "";
-    const auto = String(p.currentOwner || "") === "Automaton";
     const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
     const pctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
-    const row = (o) => `<div class="pc-rg${o.self ? " self" : ""}">
-      <span class="ico">${o.self ? "🌐" : (o.megafactory ? "🏭" : "🏙")}</span>
+    const row = (o) => `<div class="pc-rg">
+      <span class="ico">${o.megafactory ? "🏭" : "🏙"}</span>
       <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
       <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
       <span class="pct">${pctTxt(o.pct)}</span></div>`;
-    const rows = [row({ self: true, type: auto ? "超大型工厂" : "城市",
-                        megafactory: auto, zh: nameCn, en: nameCn ? (p.name || "") : "",
-                        pct: planetLibPct })];
-    st.regions.forEach((r, k) => {
-      rows.push(row({
-        type: pcRegionTypeLabel(r),
-        stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
-        megafactory: pcRegionTypeOf(r) === "Megafactory",
-        zh: zhMap[r.name] || "", en: r.name,
-        pct: pcRegionLib((p.regions || [])[k], r),
-      }));
-    });
+    const rows = st.regions.map((r, k) => row({
+      type: pcRegionTypeLabel(r),
+      stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
+      megafactory: pcRegionTypeOf(r) === "Megafactory",
+      zh: zhMap[r.name] || "", en: r.name,
+      pct: pcRegionLib((p.regions || [])[k], r),
+    }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="tip">城市 / 超大型工厂</span></div>${rows.join("")}</div>`;
   }
@@ -2231,7 +2229,7 @@ function renderPlayers(data) {
       ${top}${landmark}${head}
       ${isLiberated ? "" : `<p class="pc-desc">${desc}</p>`}
       ${progress}${invasion}${traits}
-      ${pcRegionsHtml(p, name.cn || "", isDefense ? libPctRaw : (isLiberated ? 100 : libPctRaw))}
+      ${pcRegionsHtml(p)}
       <div class="planet-detail-wrap" style="display:none">
         ${planetDetailHtml(p, starMap, statusLabel)}
       </div>
