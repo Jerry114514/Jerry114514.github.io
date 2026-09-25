@@ -1120,11 +1120,12 @@ function renderPlayers(data) {
          phase_count, current_phase_index, phases[{ title/title_cn,
          briefing/briefing_cn, status_key, status_cn, reward,
          intro_image_id/intro_image(阶段插画，暂未展示) }],
-         reward[{ name/name_cn, amount, icon, icon_img }],
+         reward[{ name/name_cn, amount, icon, icon_img, detail }],
          banner_image_id, banner_image_path, banner_image, banner_image_local }
       图片：横幅位图取 banner_image_local（assets/campaign/，本地化）→ banner_image
             （上游 /news/<name>.webp）→ 阵营渐变；奖励图标取 reward.icon_img
             （assets/campaign/reward_*.svg）→ 内联 SVG。两级都有降级，不留破图。
+            reward.detail（可选）= 具体奖励名，由 data/campaign_zh.json 的 reward_types[].detail 提供。
      上游：helldiverscompanion.com live API 的 episodes（无 CORS，故由 Actions 侧
            fetch_site_data.py 落盘）；中文来自 data/campaign_zh.json，缺失回退英文。
      ============================================================== */
@@ -1135,7 +1136,12 @@ function renderPlayers(data) {
   // 奖励图标：优先用数据里的本地图标文件（campaign_zh.json → reward_types[].img →
   // fetch_site_data.py 落进 data.json 的 reward.icon_img），没有才用内联 SVG 兜底。
   // 本地图标的来源：companion 奖励图标是内联 SVG（bundle 内嵌压缩图标库，站点无位图 URL），
-  // 已把矢量路径原样落到 assets/campaign/reward_{cape,medal}.svg，详见 campaign_zh.json._assets。
+  // 已把矢量路径原样落到 assets/campaign/reward_{medal,cape,stratagem}.svg，详见 campaign_zh.json._assets。
+  // ⚠ 类型 kind 只认下面这 4 个（campaign_zh.json.reward_types[].icon 是 2026-09-25 按 companion
+  //   前端 yg() 的 id 分表逐条核对出来的）；**不要再用"不是勋章就当披风"这种默认** ——
+  //   上一轮正是那样把 7 条奖励类型标错（把战略配备/主武器/护甲全显示成披风）。
+  const CAMP_REWARD_KINDS = ["medal", "cape", "stratagem", "item"];
+
   function campRewardIcon(kind, img) {
     if (img) {
       // 图标加载失败（文件缺失/被清理）→ 退回内联 SVG，不留破图
@@ -1157,26 +1163,41 @@ function renderPlayers(data) {
         + `<path d="M12 11.4l1.15 2.33 2.57.37-1.86 1.81.44 2.56L12 17.26l-2.3 1.21.44-2.56-1.86-1.81 2.57-.37z" fill="currentColor"/>`
         + `</svg>`;
     }
-    // cape（披风）：肩扣 + 垂坠布料
+    if (kind === "cape") {
+      // cape（披风）：肩扣 + 垂坠布料
+      return `<svg class="camp-rw-svg" viewBox="0 0 24 24" aria-hidden="true">`
+        + `<path d="M6 4h12l-1.2 3.2V21l-4.8-2.6L7.2 21V7.2z" fill="currentColor" opacity=".9"/>`
+        + `<path d="M9 4.6h6l-.6 1.6H9.6z" fill="#000" opacity=".35"/>`
+        + `<rect x="5" y="2.6" width="14" height="2.1" rx="1" fill="currentColor"/>`
+        + `</svg>`;
+    }
+    if (kind === "stratagem") {
+      // 战略配备：与 assets/campaign/reward_stratagem.svg 同源（companion currency.item_stratagem
+      // 的 <path d> 逐字复制，只是把填充换成 currentColor 以跟随主题色）
+      return `<svg class="camp-rw-svg" viewBox="0 0 1000 1000" aria-hidden="true">`
+        + `<path transform="translate(220 220) scale(0.56)" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-miterlimit="1.77"`
+        + ` d="M500,653c-86,3-158-73-157-157s61-156,157-155,157,79,157,158S587,657,500,653Zm45,249c97-7,237-85,270-152L706,688c-114,119-297,120-412,0L182,752C279,866,400,913,545,902ZM564,97c-3,23-2,113,1,128,78,20,138,64,179,134s48,144,25,222l110,64C972,412,825,136,564,97ZM436,224V96C151,145,33,437,122,644l108-63C184,410,288,261,436,224Z"/></svg>`;
+    }
+    // item（未知类型）：中性占位菱形 —— **不冒充任何真实奖励图标**
     return `<svg class="camp-rw-svg" viewBox="0 0 24 24" aria-hidden="true">`
-      + `<path d="M6 4h12l-1.2 3.2V21l-4.8-2.6L7.2 21V7.2z" fill="currentColor" opacity=".9"/>`
-      + `<path d="M9 4.6h6l-.6 1.6H9.6z" fill="#000" opacity=".35"/>`
-      + `<rect x="5" y="2.6" width="14" height="2.1" rx="1" fill="currentColor"/>`
-      + `</svg>`;
+      + `<path d="M12 2.8 21.2 12 12 21.2 2.8 12Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>`
+      + `<path d="M12 8.2v7.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
   };
 
   function campRewardBlock(rw, label) {
     if (!rw) return "";
-    const kind = rw.icon === "medal" ? "medal" : "cape";
-    const name = rw.name_cn || rw.name || (kind === "medal" ? "战争债券勋章" : "披风");
+    const kind = CAMP_REWARD_KINDS.indexOf(rw.icon) >= 0 ? rw.icon : "item";
+    const name = rw.name_cn || rw.name || "奖励";
     const en = rw.name_cn && rw.name ? `<span class="camp-rw-en">${esc(rw.name)}</span>` : "";
+    // detail = "具体是什么"（如 战略配备 → TD-110 “风暴漩涡”坦克），由中文化层提供，没有就不渲染
+    const detail = rw.detail ? `<span class="camp-rw-en">· ${esc(rw.detail)}</span>` : "";
     const amt = (typeof rw.amount === "number" && rw.amount > 0)
       ? `<span class="camp-rw-amt">×${esc(rw.amount)}</span>` : "";
     return `<div class="camp-reward camp-reward-${kind}">
       <div class="camp-rw-label">${esc(label || "奖励")}</div>
       <div class="camp-rw-body">
         <span class="camp-rw-icon${rw.icon_img ? " camp-rw-icon-img" : ""}">${campRewardIcon(kind, rw.icon_img)}</span>
-        <span class="camp-rw-name">${esc(name)}${en}${amt}</span>
+        <span class="camp-rw-name">${esc(name)}${en}${detail}${amt}</span>
       </div>
     </div>`;
   }

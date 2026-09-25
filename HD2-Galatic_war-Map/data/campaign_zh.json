@@ -20,6 +20,12 @@
       "ic_build": "currency.medal|#ccc566|&040303a3|0.8|0,2",
       "note": "金色骷髅勋章：icBack 底板 + icPath 骷髅徽章两层路径"
     },
+    "campaign/reward_stratagem.svg": {
+      "from": "https://helldiverscompanion.com/#overview 「ACTIVE CAMPAIGN → REWARD STRATAGEM」那个内联 SVG（2026-09-25 浏览器实测提取）",
+      "icon_key": "currency.item_stratagem",
+      "ic_build": "currency.item_stratagem|#FBFAF5|0.56",
+      "note": "白 #FBFAF5 战略配备图标（单层路径，d / transform 原样复制）。用于所有被 companion 归到 Yde(Stratagem) 的战役奖励 mixId（如当前「装甲雄鹰」的 1618361436）。"
+    },
     "campaign/banner_*.webp": {
       "from": "https://helldiverscompanion.com/news/<name>.webp（位图 700x340，公开无鉴权）",
       "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
@@ -39,6 +45,7 @@
       "cn": "失败"
     }
   },
+  "_reward_types_doc": "mixId → 奖励类型。**类型是核对出来的，不是猜的**：2026-09-25 拆 companion 前端 bundle（/_app/immutable/chunks/c218d6d7d3b8daac.js）里的奖励解析函数 yg() 与它引用的 id 表逐条判定 —— Kde=货币（勋章/征用单/样本/超级点券）；Gde=Cape 115 条；Hde=Body Armor 252；Xde=Helmet 112；Ude=Primary 54；jde=Sidearm 26；xde=Throwable 26；Yde=Stratagem 381；Zde=Pattern 112；都不在 → Item。⚠ 上一轮把 8 个 mixId 一律写成「披风」，经核对**只有 3890208935 真是 Cape，其余 7 条全错**（本轮已按表改正）。复算方法：在该 chunk 里搜 `yg=e=>{const t=Kde[e]` 定位函数，再按 `Xde=[...]` 取出各 id 表做成员判断。",
   "reward_types": {
     "897894480": {
       "en": "WARBOND MEDAL",
@@ -52,47 +59,53 @@
       "icon": "cape",
       "img": "./assets/campaign/reward_cape.svg"
     },
-    "2768520552": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
-    },
-    "2232169940": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
-    },
-    "1407130184": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
-    },
-    "3421347422": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
-    },
-    "2547900634": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
+    "1618361436": {
+      "en": "STRATAGEM",
+      "cn": "战略配备",
+      "icon": "stratagem",
+      "img": "./assets/campaign/reward_stratagem.svg",
+      "detail": "TD-110 “风暴漩涡”坦克",
+      "note": "「装甲雄鹰」战役奖励（命中 Yde/Stratagem 表）。具体是什么：companion 重要指令原文写「long-term construction of the TD-110 Maelstrom Tank」，且站内 stratagems_full.json 里 TD-110 Maelstrom 的 unlock = 装甲雄鹰战役，故补 detail。"
     },
     "2961949068": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
+      "en": "STRATAGEM",
+      "cn": "战略配备",
+      "icon": "stratagem",
+      "img": "./assets/campaign/reward_stratagem.svg"
     },
-    "1618361436": {
-      "en": "CAPE",
-      "cn": "披风",
-      "icon": "cape",
-      "img": "./assets/campaign/reward_cape.svg"
+    "2768520552": {
+      "en": "STRATAGEM",
+      "cn": "战略配备",
+      "icon": "stratagem",
+      "img": "./assets/campaign/reward_stratagem.svg"
+    },
+    "3421347422": {
+      "en": "BODY ARMOR",
+      "cn": "护甲",
+      "icon": "item",
+      "img": "",
+      "note": "companion 归 Hde(Body Armor)；本地没有该图标，用中性占位图（不要拿披风冒充）"
+    },
+    "2232169940": {
+      "en": "PRIMARY",
+      "cn": "主武器",
+      "icon": "item",
+      "img": "",
+      "note": "companion 归 Ude(Primary)；本地没有该图标，用中性占位图"
+    },
+    "1407130184": {
+      "en": "ITEM",
+      "cn": "物品",
+      "icon": "item",
+      "img": "",
+      "note": "不在 companion 任何分类表里 → 用它的兜底类型 Item"
+    },
+    "2547900634": {
+      "en": "ITEM",
+      "cn": "物品",
+      "icon": "item",
+      "img": "",
+      "note": "不在 companion 任何分类表里 → 用它的兜底类型 Item"
     }
   },
   "episodes": {

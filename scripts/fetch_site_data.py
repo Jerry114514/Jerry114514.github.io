@@ -643,6 +643,14 @@ def _reward_of(entry, zh):
     来源说明（2026-09 实测）：companion 的奖励图标不是位图，而是前端 bundle 内嵌的
     压缩图标库，运行时渲染成内联 <svg viewBox="0 0 1000 1000">；站点无图标位图可下载，
     故把该内联 SVG 的矢量路径原样落成本地文件（见 data/campaign_zh.json 的 _assets）。
+
+    detail：可选的"具体是什么"补充名（如战略配备 → TD-110 “风暴漩涡”坦克），
+    只由中文化层提供；没有就不渲染。
+
+    ⚠ 类型判定纪律（§19.26-B「猜出来的字段要能一眼看出是猜的」）：icon 一律来自
+    data/campaign_zh.json 的 reward_types，且该表的类型是 2026-09-25 按 companion 前端
+    yg() 的 id 分表逐条核对过的；**不要在这里按 mixId 猜类型**（上一轮把 8 个 mixId
+    一律当披风，7 条是错的）。表里没有的 mixId 只给中性兜底 "reward"。
     """
     if not isinstance(entry, dict):
         return None
@@ -656,6 +664,7 @@ def _reward_of(entry, zh):
         "name_cn": meta.get("cn") or "",
         "icon": meta.get("icon") or ("medal" if is_medal else "reward"),
         "icon_img": meta.get("img") or "",
+        "detail": meta.get("detail") or "",
     }
 
 
@@ -747,6 +756,11 @@ EPISODE_BANNERS = {
     2005640682: "victory6",
     1683375211: "tcsplus7",
     1005171692: "sporeburst5",
+    # 2026-09-25 新增：「装甲雄鹰」战役横幅。id 来自 companion live API 的
+    # episodes[].bannerImageId32 = 13912390，文件名取自同一张前端表
+    # （chunk c218d6d7d3b8daac.js：`...,sporeburst5:E1("sporeburst5",1005171692),bastion3:E1("bastion3",13912390)}`）
+    # → https://helldiverscompanion.com/news/bastion3.webp（752x348 WebP，实测 20668 字节）。
+    13912390: "bastion3",
 }
 
 CAMPAIGN_BANNER_BASE = "https://helldiverscompanion.com/news"

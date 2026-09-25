@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" width="1000" height="1000" role="img" aria-label="Stratagem">
+  <!-- 来源：helldiverscompanion.com 战役奖励图标 currency.item_stratagem（页面内联 SVG，随 JS bundle 内嵌压缩图标库）。
+       本文件为其矢量路径的本地化副本（路径 d 与填充色逐字保留，仅去掉运行时动画分组与 class）。
+       上游渲染参数 icBuild = "currency.item_stratagem|#FBFAF5|0.56"（白 #FBFAF5 / 缩放 0.56 / 无位移）。
+       提取方式（2026-09-25）：浏览器打开 companion #overview，读「ACTIVE CAMPAIGN → REWARD STRATAGEM」
+       那个 <svg viewBox="0 0 1000 1000"> 的 <path>，d / fill / transform 原样复制。
+       判定依据：companion 前端 bundle 的 Jde/yg() 把「不在货币表 Kde、也不在各装备 id 表里」的
+       mixId 归到 Yde（Stratagem）→ text:"Stratagem"、icon:"currency.item_stratagem"。 -->
+  <path transform="translate(220 220) scale(0.56)"
+        d="M500,653c-86,3-158-73-157-157s61-156,157-155,157,79,157,158S587,657,500,653Zm45,249c97-7,237-85,270-152L706,688c-114,119-297,120-412,0L182,752C279,866,400,913,545,902ZM564,97c-3,23-2,113,1,128,78,20,138,64,179,134s48,144,25,222l110,64C972,412,825,136,564,97ZM436,224V96C151,145,33,437,122,644l108-63C184,410,288,261,436,224Z"
+        fill="#FBFAF5" stroke="#FBFAF5" stroke-width="0"
+        stroke-linecap="round" stroke-linejoin="miter" stroke-miterlimit="1.77"/>
+</svg>
