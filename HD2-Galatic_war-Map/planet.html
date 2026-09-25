@@ -291,7 +291,7 @@
     // 并发拉取静态表（任一失败都不阻断主流程）
     const [sm, way, reg, regZh, bioIdx, bioFb, eff, hist] = await Promise.all([
       soft("./tables/starmap.json"), soft("./tables/waypoints.json"),
-      soft("./tables/planet_regions.json"), soft("./tables/planet_regions_zh.json"),
+      soft("./tables/planet_regions.json?v=20260925b"), soft("./tables/planet_regions_zh.json?v=20260925b"),
       soft("./assets/biomes/index.json"), soft("./tables/planet_biomes.json"),
       soft("./tables/effect_id_cn.json"), soft("./data/history/player_distribution.json"),
     ]);

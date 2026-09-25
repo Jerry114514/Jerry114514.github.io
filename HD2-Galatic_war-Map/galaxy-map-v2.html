@@ -337,6 +337,23 @@
                  再次点击 → 轮盘（星球详细信息 / DSS 效果）
      参考 helldiverscompanion.com/#map 的交互与信息组织
      ════════════════════════════════════════════════════════════ */
+  /* ---- 侧栏手风琴（2026-09-25 用户裁定：三栏滤镜保留但不默认展开）----
+     检索 / 阵营筛选 / 图层 默认 .collapsed（markup 里写死），点标题展开；星球详情与图例默认展开。 */
+  aside .sec > h2{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}
+  aside .sec > h2::after{content:"▾";margin-left:auto;font-size:.7rem;color:var(--text-mute);transition:transform .15s}
+  aside .sec.collapsed > h2::after{transform:rotate(-90deg)}
+  aside .sec.collapsed > .card{display:none}
+  /* 信息卡上的「完整资料 / 聚焦」按钮组 */
+  .pc-actions{display:flex;gap:6px;margin-top:9px}
+  .pc-actions .btn{flex:1;font-size:.74rem;text-align:center;text-decoration:none;line-height:1.5}
+  .pc-actions .btn.primary{border-color:var(--yellow);color:var(--yellow)}
+  /* 移动端：信息卡改成底部抽屉（positionOverlays 写的是行内 left/top，用 !important 压过） */
+  @media (max-width:767px){
+    #planet-card{left:0 !important;right:0;bottom:0;top:auto !important;width:auto;max-height:66vh;overflow:auto;
+      border-left:none;border-right:none;border-bottom:none}
+    #planet-card::after{display:none}
+    .pc-actions .btn{min-height:40px;display:flex;align-items:center;justify-content:center}
+  }
   #planet-card{
     position:absolute;z-index:18;display:none;width:322px;
     background:var(--panel);border:1px solid var(--line-2);
@@ -492,33 +509,45 @@
   <div id="aside-rail" title="展开侧栏"><span>◀</span></div>
 
   <aside>
-    <h2>🔍 检索</h2>
-    <div class="card">
-      <input class="search" id="q" type="search" placeholder="输入星球名…（如 CHOOHE / 海尔迈尔）" autocomplete="off">
-      <div id="hits" style="margin-top:8px"></div>
-    </div>
+    <section class="sec collapsed">
+      <h2>🔍 检索</h2>
+      <div class="card">
+        <input class="search" id="q" type="search" placeholder="输入星球名…（如 CHOOHE / 海尔迈尔）" autocomplete="off">
+        <div id="hits" style="margin-top:8px"></div>
+      </div>
+    </section>
 
-    <h2>🎛️ 阵营筛选</h2>
-    <div class="card"><div class="chips" id="factions"></div></div>
+    <section class="sec collapsed">
+      <h2>🎛️ 阵营筛选</h2>
+      <div class="card"><div class="chips" id="factions"></div></div>
+    </section>
 
-    <h2>🗂️ 图层</h2>
-    <div class="card"><div class="chips" id="layers"></div></div>
+    <section class="sec collapsed">
+      <h2>🗂️ 图层</h2>
+      <div class="card"><div class="chips" id="layers"></div></div>
+    </section>
 
-    <h2 id="detailTitle">📋 星球详情</h2>
-    <div class="card" id="detail">
-      <div class="muted">点击星球→星球上方显示信息卡；再次点击→轮盘（星球详细信息 / DSS 效果）。<br>滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
-    </div>
+    <section class="sec">
+      <h2 id="detailTitle">📋 星球详情</h2>
+      <div class="card" id="detail">
+        <div class="muted">点星球 → 星球上方弹出信息卡（手机上是从底部滑出的抽屉）；
+          卡里点「📄 完整资料」进入独立资料页（解放度/战役/区域/统计/环境/补给线都在那页）。<br>
+          滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>
+      </div>
+    </section>
 
-    <h2>📖 图例</h2>
-    <div class="card legend">
-      <div><i style="background:var(--c-humans)"></i>超级地球</div>
-      <div><i style="background:var(--c-terminids)"></i>终结族</div>
-      <div><i style="background:var(--c-automaton)"></i>机器人</div>
-      <div><i style="background:var(--c-illuminate)"></i>光能者</div>
-      <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
-      <div><span class="ln" style="border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
-      <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
-    </div>
+    <section class="sec">
+      <h2>📖 图例</h2>
+      <div class="card legend">
+        <div><i style="background:var(--c-humans)"></i>超级地球</div>
+        <div><i style="background:var(--c-terminids)"></i>终结族</div>
+        <div><i style="background:var(--c-automaton)"></i>机器人</div>
+        <div><i style="background:var(--c-illuminate)"></i>光能者</div>
+        <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
+        <div><span class="ln" style="border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
+        <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
+      </div>
+    </section>
     <div class="muted" id="srcnote"></div>
   </aside>
 </main>
@@ -1038,8 +1067,8 @@ async function boot() {
   await loadVariables();
   // 星球下属区域（城市/超大型工厂）静态表（2026-09-24 demo）：名字/类型/描述 + 中文名覆盖
   try {
-    REGIONS = (await (await fetch("./tables/planet_regions.json?v=20260925a", { cache: "no-store" })).json()).planets || {};
-    REGIONS_ZH = (await (await fetch("./tables/planet_regions_zh.json?v=20260925a", { cache: "no-store" })).json()).planets || {};
+    REGIONS = (await (await fetch("./tables/planet_regions.json?v=20260925b", { cache: "no-store" })).json()).planets || {};
+    REGIONS_ZH = (await (await fetch("./tables/planet_regions_zh.json?v=20260925b", { cache: "no-store" })).json()).planets || {};
   } catch (_) { REGIONS = {}; REGIONS_ZH = {}; }
   // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接
@@ -2220,15 +2249,12 @@ function bindUI(data, planets) {
               `<span class="tac">${OWN_CN[camp.faction] || camp.faction || ""}</span></div>` : "") +
       (ev ? `<div style="margin-top:9px"><span class="tac" style="border-color:rgba(245,197,24,.6);color:var(--yellow);background:rgba(245,197,24,.1)">活动事件</span>` +
             `<div class="tacTxt">进度 ${(ev.maxHealth > 0 ? (1 - ev.health / ev.maxHealth) * 100 : 0).toFixed(1)}%</div></div>` : "") +
-      (tags.length ? `<div style="margin-top:9px">` + tags.map(t =>
-          `<span class="tac">${esc(t.title)}</span>`).join("") +
-          tags.map(t => `<div class="tacTxt">${esc(t.text)}</div>`).join("") + `</div>` : "") +
-      varHtml +
-      (() => { const wl = wikiLinkFor(p); return wl ?
-          `<a class="pd-wiki" style="color:${esc(wl.color)}" href="${esc(wl.url)}" title="在本站中文维基查看该图鉴">` +
-          `<span class="ic">🔗</span><span class="badge">${esc(wl.badge)}</span>` +
-          `<span class="tx">${esc(wl.text)}</span><span class="go">↗</span></a>` : ""; })() +
-      `<div style="margin-top:10px"><button class="btn" style="width:100%;font-size:.74rem" onclick="window.__focusPlanet(${index})">🎯 聚焦到该星球</button></div>`;
+      // 2026-09-25：行动变量 / 词条 / 维基链接这些「重内容」已搬到独立资料页 planet.html，
+      // 侧栏只留一眼能看完的摘要 + 两个入口，避免右栏又变成信息堆（用户反馈的正是这个）。
+      `<div class="pc-actions">` +
+        `<a class="btn primary" href="./planet.html?idx=${index}">📄 完整资料</a>` +
+        `<button class="btn" onclick="window.__focusPlanet(${index})">🎯 聚焦</button>` +
+      `</div>`;
   }
 
   /* ============================================================
@@ -2488,7 +2514,10 @@ function bindUI(data, planets) {
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
       (regionsHtml || "") +
-      `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
+      `<div class="pc-actions">` +
+        `<a class="btn primary" href="./planet.html?idx=${index}">📄 完整资料</a>` +
+        `<button type="button" class="btn" data-act="wheel">🎡 轮盘</button>` +
+      `</div>`;
   }
 
   function showPlanetCard(index) {
@@ -2555,7 +2584,10 @@ function bindUI(data, planets) {
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
       regionsHtml +
-      `<div class="tail">再次点击星球或点本卡 → 打开轮盘</div>`;
+      `<div class="pc-actions">` +
+        `<a class="btn primary" href="./planet.html?idx=${index}">📄 完整资料</a>` +
+        `<button type="button" class="btn" data-act="wheel">🎡 轮盘</button>` +
+      `</div>`;
     }
     el.classList.add("on");
     el.__pcIdx = index;                 // 区域行点击时用它兜底（PC_IDX 可能已被别的监听清空）
@@ -2626,7 +2658,7 @@ function bindUI(data, planets) {
         ev.stopPropagation();
         const act = g.getAttribute("data-act");
         hideWheel();
-        if (act === "detail") { showDetail(index); openAside(); }
+        if (act === "detail") { location.href = "./planet.html?idx=" + index; }
         else if (act === "dss") { showDssPanel(index); openAside(); }
       });
     });
@@ -2643,6 +2675,8 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
     if (!el) return;
     el.addEventListener("click", (ev) => {
       ev.stopPropagation();
+      // ⚠ 卡片里的「📄 完整资料」是 <a>：要让浏览器照常跳转，别被这里拦住去开轮盘
+      if (ev.target && ev.target.closest && ev.target.closest("a")) return;
       // ⚠ 区域行（.rg-row）的点击由 bindRegionRows 处理，**必须在这里让路**：
       //   两个监听挂在同一个元素上，本监听注册更早 → 先执行；它会 hidePlanetCard()（把 PC_IDX 清空）
       //   并打开轮盘，于是区域处理器再跑时 PC_IDX 已是 null，静默 return —— 表现就是"点行没反应"。
@@ -2747,6 +2781,14 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
   $("aside-backdrop").addEventListener("click", () => setAside(true));
   $("aside-toggle").addEventListener("click", () =>
     setAside(!document.body.classList.contains("aside-collapsed")));
+  // 侧栏手风琴（2026-09-25）：点标题展开/收起。检索/阵营筛选/图层在 markup 里默认 .collapsed
+  // ——用户的要求是"保留这三栏滤镜，但不默认展开"，把版面让给地图。
+  document.querySelectorAll("aside .sec > h2").forEach((h) => {
+    h.addEventListener("click", () => {
+      const sec = h.parentElement;
+      if (sec) sec.classList.toggle("collapsed");
+    });
+  });
   // 移动端：抽屉打开时，在「地图画布」上按下即收起（不误伤侧栏内输入框与图层开关）
   $("stage").addEventListener("pointerdown", (e) => {
     if (isMobile() && !document.body.classList.contains("aside-collapsed") && e.target.closest("#map"))
