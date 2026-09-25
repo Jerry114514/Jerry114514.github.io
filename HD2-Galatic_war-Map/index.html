@@ -3,8 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>绝地潜兵2 · 中文实时战况数据面板</title>
-  <meta name="description" content="绝地潜兵2 实时战况数据面板：重要指令、可攻打星球、星区目录、最新资讯。" />
+  <title>绝地潜兵2 中文实时战况数据面板 - 真理部</title>
+  <meta name="description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。" />
+  <!-- SEO / 社交分享（2026-09-25 统一补齐：robots + Open Graph + Twitter Card + JSON-LD） -->
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://jerry114514.github.io/HD2-Galatic_war-Map/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="绝地潜兵2 · 真理部">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="绝地潜兵2 中文实时战况数据面板 - 真理部">
+  <meta property="og:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。">
+  <meta property="og:url" content="https://jerry114514.github.io/HD2-Galatic_war-Map/">
+  <meta property="og:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="绝地潜兵2 中文资料站 · 银河星图">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="绝地潜兵2 中文实时战况数据面板 - 真理部">
+  <meta name="twitter:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。">
+  <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
   <link rel="stylesheet" href="./css/home.css?v=20260924b">
@@ -2780,8 +2798,9 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     const t = data.fetchedAt ? new Date(data.fetchedAt) : new Date();
     $("last-update").textContent = "更新于 " + t.toLocaleTimeString("zh-CN", { hour12: false });
     // 数据源标识
+    // 标签页标题：统一写「绝地潜兵2」全称（2026-09-25），别再用内部缩写 HD2
     if (data.source) {
-      document.title = `HD2 真理部 · 实时战况数据面板 [${data.source}]`;
+      document.title = `绝地潜兵2 真理部 · 实时战况数据面板 [${data.source}]`;
     }
   }
 

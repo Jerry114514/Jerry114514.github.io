@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>星球卡片 · Diesel Punk HUD 静态稿</title>
+  <!-- 设计原型 / 静态稿：不参与索引（与 robots.txt 同口径） -->
+  <meta name="robots" content="noindex,nofollow">
+<style>
+:root{
+  --bg-deep:#0B0E14; --text:#E2E8F0; --text-dim:#94A3B8; --text-mute:#64748B;
+  --yellow:#F5C518; --line:rgba(255,255,255,.06);
+  --c-faction-auto:#E74C3C;  --c-faction-auto-d:#7A1F0E;
+  --c-faction-term:#F5C518;  --c-faction-term-d:#5C4A0A;
+  --c-faction-illu:#CF64F8;  --c-faction-illu-d:#4A1F5C;
+  --c-faction-hum:#ffe800;   --c-faction-hum-d:#6B6000;
+  --warn:#FF4D2E; --ok:#1FA84A;
+  --font-mono:"Rajdhani","Orbitron","Consolas","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#000;color:var(--text);font-family:"Microsoft YaHei","PingFang SC",sans-serif;padding:20px 18px 40px;
+  background-image:radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.05) 50%, transparent 51%),
+    radial-gradient(1px 1px at 68% 12%, rgba(255,255,255,.04) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 78%, rgba(255,255,255,.045) 50%, transparent 51%);
+  background-size:420px 420px,520px 520px,460px 460px}
+h1.demo-h{font-family:var(--font-mono);font-size:16px;font-weight:700;letter-spacing:.18em;margin:0 0 4px;color:var(--yellow)}
+.demo-sub{font-size:11.5px;color:var(--text-mute);margin:0 0 18px;font-family:var(--font-mono);letter-spacing:.05em}
+
+.planet-grid{display:grid;gap:14px;align-items:start;grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1279px){ .planet-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:1023px){ .planet-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:767px){ .planet-grid{grid-template-columns:1fr} }
+
+.planet-card{--fc:var(--c-faction-hum);--fcd:var(--c-faction-hum-d);
+  background:var(--bg-deep);border:2px solid var(--fc);border-radius:0;box-shadow:none;
+  max-width:380px;overflow:hidden;display:flex;flex-direction:column}
+.planet-card.f-auto{--fc:var(--c-faction-auto);--fcd:var(--c-faction-auto-d)}
+.planet-card.f-term{--fc:var(--c-faction-term);--fcd:var(--c-faction-term-d)}
+.planet-card.f-illu{--fc:var(--c-faction-illu);--fcd:var(--c-faction-illu-d)}
+
+.pc-ficon{width:18px;height:18px;flex:0 0 18px;display:block;fill:var(--fc)}
+.pc-ficon path,.pc-ficon polygon{fill:var(--fc)}
+.pc-tico{width:16px;height:16px;flex:0 0 16px;display:block;fill:var(--fc)}
+.pc-tico path,.pc-tico polygon{fill:var(--fc)}
+
+.pc-top{display:flex;align-items:center;gap:8px;height:38px;padding:0 10px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line)}
+.pc-fname{font-size:12.5px;font-weight:700;color:var(--fc);letter-spacing:.06em;white-space:nowrap}
+.pc-res{margin-left:auto;display:flex;align-items:center;gap:12px}
+.pc-res .item{display:flex;align-items:center;gap:5px}
+.pc-res .chip{width:16px;height:16px;display:grid;place-items:center;background:var(--yellow);color:#000;border-radius:0;
+  font-family:var(--font-mono);font-weight:700;font-size:10px;line-height:1}
+.pc-res .num{font-family:var(--font-mono);font-weight:700;font-size:13px;color:#FFF;letter-spacing:.02em}
+.pc-reinf{width:16px;height:16px;flex:0 0 16px;display:block}
+
+.pc-landmark{position:relative;height:148px;flex:0 0 148px;overflow:hidden;border-bottom:1px solid var(--line);background:#0D1118}
+.pc-landmark img{width:100%;height:100%;object-fit:cover;display:block}
+
+.pc-head{display:flex;align-items:center;gap:10px;padding:12px 12px 10px}
+.pc-campwrap{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center}
+.pc-campic{width:32px;height:32px;display:block}
+.pc-headtxt{min-width:0;flex:1}
+.pc-type{font-size:12px;color:var(--text);letter-spacing:.1em;line-height:1.2;display:block}
+.pc-name{font-size:19px;font-weight:700;color:var(--yellow);line-height:1.25;margin-top:2px;display:block;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-name.def{color:#FFF;font-family:var(--font-mono);font-size:22px}
+.pc-desc{padding:0 12px 11px;font-size:11.5px;line-height:1.65;color:var(--text-dim);margin:0}
+
+.pc-progress{padding:0 12px 10px}
+.pc-bar{position:relative;height:9px;border-radius:0;display:flex;overflow:hidden}
+.pc-bar .fill{background:var(--fc);height:100%}
+.pc-bar .slot{flex:1;height:100%;background:repeating-linear-gradient(45deg,var(--fcd) 0 6px,transparent 6px 12px)}
+.pc-bar .cursor{position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:1;width:0;height:0;
+  border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:6px solid var(--fc)}
+.pc-stats{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.pc-stats .k{font-size:11px;color:var(--text-mute)}
+.pc-stats .v{font-family:var(--font-mono);font-weight:700;font-size:11.5px}
+.pc-stats .v.low{color:var(--ok)} .pc-stats .v.mid{color:var(--yellow)} .pc-stats .v.dim{color:var(--text-dim)}
+.pc-stats .r{display:flex;align-items:center;gap:6px}
+
+.pc-invasion{display:flex;align-items:center;gap:12px;padding:9px 12px;
+  border-top:1px solid color-mix(in srgb, var(--fc) 40%, transparent);
+  border-bottom:1px solid color-mix(in srgb, var(--fc) 40%, transparent)}
+@supports not (background: color-mix(in srgb, red 10%, transparent)){
+  .pc-invasion{border-top-color:rgba(255,255,255,.14);border-bottom-color:rgba(255,255,255,.14)}}
+.pc-shield{width:52px;height:66px;flex:0 0 52px;display:block}
+.pc-shield svg{width:100%;height:100%;display:block}
+.pc-invtxt{min-width:0;flex:1}
+.pc-invtxt .k{font-size:12px;color:var(--text-mute)}
+.pc-invtxt .timer{display:block;font-family:var(--font-mono);font-weight:700;font-size:15px;color:var(--warn);margin-top:3px}
+
+.pc-traits{border-top:2px solid var(--fcd)}
+.pc-trait{padding:9px 12px;border-bottom:1px solid var(--line)}
+.pc-trait:last-child{border-bottom:none}
+.pc-trait .h{display:flex;align-items:center;gap:7px}
+.pc-trait .h b{font-size:12.5px;font-weight:700;color:var(--fc);letter-spacing:.05em}
+.pc-trait p{margin:5px 0 0;font-size:11.5px;line-height:1.65;color:var(--text-dim)}
+</style>
+</head>
+<body>
+<h1 class="demo-h">PLANET CARD / 星球卡片静态稿</h1>
+<p class="demo-sub">战役图标 = Defense / Liberation_Campaign_Icon · 增援图标 = Reinforce_Stratagem · 环境图 = API biome → wiki.gg</p>
+<div class="planet-grid">
+
+  <article class="planet-card f-illu" data-biome="Desert Cliffs">
+    <div class="pc-top">
+      <svg class="pc-ficon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M1345.5 50c27.596 0 50 22.404 50 50s-22.404 50-50 50-50-22.404-50-50 22.404-50 50-50m70.101 30.515C1437.61 99.944 1451.5 128.363 1451.5 160c0 58.503-47.497 106-106 106s-106-47.497-106-106c0-31.637 13.89-60.056 35.899-79.485A72 72 0 0 0 1273.5 97c0 39.738 32.262 72 72 72s72-32.262 72-72c0-5.671-.657-11.19-1.899-16.485" transform="translate(-2933.333 -118.519)scale(2.37037)"/></svg>
+      <span class="pc-fname">光能者</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">489</span></span>
+        <span class="item"><svg class="pc-reinf" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><desc>Traced by Dogo314</desc> <g transform="translate(-28.444 589.487)scale(.98084)"> <path style="fill:none" d="M29-601h261v261H29z"/> <clipPath id="a"> <path d="M29-601h261v261H29z"/> </clipPath> <g clip-path="url(#a)"> <path style="fill:#363426" transform="translate(-252.39 -601)scale(1.01953)" d="M276 0h256v256H276z"/> <path d="M1526 101h8v32l-40 32-40-32v-32h8c0-17.661 14.339-32 32-32s32 14.339 32 32m-56 24h12l4-8h16l4 8h12v-24h-48zm90-50.028h-27.972v-12H1560V35h12v27.972h27.972v12H1572v27.973h-12zM1546 189h-104l-16-16v-16h32l16 16h40l16-16h32v16z" style="fill:#ffe" transform="translate(-1379.992 -585.707)scale(1.01953)"/> <path d="M276 15V0h256v15zM518 .82H290v13.36h228zm-10 12.774h-32l32-1.875zM300 1.406h32l-32 1.875zm208 0v1.875l-32-1.875zM300 13.594v-1.875l32 1.875z" style="fill:#c9b269" transform="matrix(1.01953 0 0 17.4 -252.39 -601)"/> </g> </g></svg><span class="num">12</span></span>
+      </div>
+    </div>
+    <div class="pc-landmark"><img src="./assets/biomes/Sandy_spiky_Landscape.png" alt="Desert Cliffs" loading="lazy"></div>
+    <div class="pc-head">
+      <span class="pc-campwrap"><svg class="pc-campic" viewBox="0 0 166 166" xmlns="http://www.w3.org/2000/svg"><path style="fill:none" d="M0 0h1080v1080H0z" transform="scale(.1537)"/> <path d="M434 44c46.361 0 84 37.639 84 84s-37.639 84-84 84-84-37.639-84-84 37.639-84 84-84m0 25.301c-32.397 0-58.699 26.302-58.699 58.699s26.302 58.699 58.699 58.699 58.699-26.302 58.699-58.699S466.397 69.301 434 69.301m-36.309 61.735h-11.257v-6.072h11.257c1.462-17.689 15.584-31.811 33.273-33.273V80.434h6.072v11.257c17.689 1.462 31.811 15.584 33.273 33.273h11.257v6.072h-11.257c-1.462 17.689-15.584 31.811-33.273 33.273v11.257h-6.072v-11.257c-17.689-1.462-31.811-15.584-33.273-33.273M434 97.639c-16.757 0-30.361 13.604-30.361 30.361s13.604 30.361 30.361 30.361 30.361-13.604 30.361-30.361S450.757 97.639 434 97.639m0 22.265a8.1 8.1 0 0 1 8.096 8.096 8.1 8.1 0 0 1-8.096 8.096 8.1 8.1 0 0 1-8.096-8.096 8.1 8.1 0 0 1 8.096-8.096" style="fill:currentColor" transform="translate(-345.825 -43.475)scale(.98807)"/></svg></span>
+      <span class="pc-headtxt">
+        <span class="pc-type">解放战役</span>
+        <span class="pc-name">新戈23</span>
+      </span>
+    </div>
+    <p class="pc-desc">这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。</p>
+    <div class="pc-progress">
+      <div class="pc-bar"><span class="cursor"></span><div class="fill" style="width:0.014%"></div><div class="slot"></div></div>
+      <div class="pc-stats">
+        <span class="k">已解放 <span class="v dim">0.01423%</span></span>
+        <span class="r"><span class="k">抵抗强度</span><span class="v mid">中等 (1.54%)</span></span>
+      </div>
+    </div>
+    
+    <div class="pc-traits">
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M1345.5 50c27.596 0 50 22.404 50 50s-22.404 50-50 50-50-22.404-50-50 22.404-50 50-50m70.101 30.515C1437.61 99.944 1451.5 128.363 1451.5 160c0 58.503-47.497 106-106 106s-106-47.497-106-106c0-31.637 13.89-60.056 35.899-79.485A72 72 0 0 0 1273.5 97c0 39.738 32.262 72 72 72s72-32.262 72-72c0-5.671-.657-11.19-1.899-16.485" transform="translate(-2933.333 -118.519)scale(2.37037)"/></svg><b>入侵舰队</b></div>
+        <p>光能者主力入侵舰队已降临该星球，既有傲慢的监视者，也有成群结对、遭到洗脑的超级地球公民。一旦发现，立即击杀，否则将面临暴力的抵抗，甚至遭遇叛国宣传。</p>
+      </div>
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M1345.5 50c27.596 0 50 22.404 50 50s-22.404 50-50 50-50-22.404-50-50 22.404-50 50-50m70.101 30.515C1437.61 99.944 1451.5 128.363 1451.5 160c0 58.503-47.497 106-106 106s-106-47.497-106-106c0-31.637 13.89-60.056 35.899-79.485A72 72 0 0 0 1273.5 97c0 39.738 32.262 72 72 72s72-32.262 72-72c0-5.671-.657-11.19-1.899-16.485" transform="translate(-2933.333 -118.519)scale(2.37037)"/></svg><b>占领者</b></div>
+        <p>光能者部署在这颗星球上的只有同族。</p>
+      </div></div>
+  </article>
+
+  <article class="planet-card f-illu" data-biome="Desert Cliffs">
+    <div class="pc-top">
+      <svg class="pc-ficon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M1345.5 50c27.596 0 50 22.404 50 50s-22.404 50-50 50-50-22.404-50-50 22.404-50 50-50m70.101 30.515C1437.61 99.944 1451.5 128.363 1451.5 160c0 58.503-47.497 106-106 106s-106-47.497-106-106c0-31.637 13.89-60.056 35.899-79.485A72 72 0 0 0 1273.5 97c0 39.738 32.262 72 72 72s72-32.262 72-72c0-5.671-.657-11.19-1.899-16.485" transform="translate(-2933.333 -118.519)scale(2.37037)"/></svg>
+      <span class="pc-fname">光能者</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">1,821</span></span>
+        <span class="item"><svg class="pc-reinf" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><desc>Traced by Dogo314</desc> <g transform="translate(-28.444 589.487)scale(.98084)"> <path style="fill:none" d="M29-601h261v261H29z"/> <clipPath id="a"> <path d="M29-601h261v261H29z"/> </clipPath> <g clip-path="url(#a)"> <path style="fill:#363426" transform="translate(-252.39 -601)scale(1.01953)" d="M276 0h256v256H276z"/> <path d="M1526 101h8v32l-40 32-40-32v-32h8c0-17.661 14.339-32 32-32s32 14.339 32 32m-56 24h12l4-8h16l4 8h12v-24h-48zm90-50.028h-27.972v-12H1560V35h12v27.972h27.972v12H1572v27.973h-12zM1546 189h-104l-16-16v-16h32l16 16h40l16-16h32v16z" style="fill:#ffe" transform="translate(-1379.992 -585.707)scale(1.01953)"/> <path d="M276 15V0h256v15zM518 .82H290v13.36h228zm-10 12.774h-32l32-1.875zM300 1.406h32l-32 1.875zm208 0v1.875l-32-1.875zM300 13.594v-1.875l32 1.875z" style="fill:#c9b269" transform="matrix(1.01953 0 0 17.4 -252.39 -601)"/> </g> </g></svg><span class="num">31</span></span>
+      </div>
+    </div>
+    <div class="pc-landmark"><img src="./assets/biomes/Sandy_spiky_Landscape.png" alt="Desert Cliffs" loading="lazy"></div>
+    <div class="pc-head">
+      <span class="pc-campwrap"><svg class="pc-campic" viewBox="0 0 166 166" xmlns="http://www.w3.org/2000/svg"><path style="fill:none" d="M0 0h1080v1080H0z" transform="scale(.1537)"/> <path d="M434 44c46.361 0 84 37.639 84 84s-37.639 84-84 84-84-37.639-84-84 37.639-84 84-84m0 25.301c-32.397 0-58.699 26.302-58.699 58.699s26.302 58.699 58.699 58.699 58.699-26.302 58.699-58.699S466.397 69.301 434 69.301m-36.309 61.735h-11.257v-6.072h11.257c1.462-17.689 15.584-31.811 33.273-33.273V80.434h6.072v11.257c17.689 1.462 31.811 15.584 33.273 33.273h11.257v6.072h-11.257c-1.462 17.689-15.584 31.811-33.273 33.273v11.257h-6.072v-11.257c-17.689-1.462-31.811-15.584-33.273-33.273M434 97.639c-16.757 0-30.361 13.604-30.361 30.361s13.604 30.361 30.361 30.361 30.361-13.604 30.361-30.361S450.757 97.639 434 97.639m0 22.265a8.1 8.1 0 0 1 8.096 8.096 8.1 8.1 0 0 1-8.096 8.096 8.1 8.1 0 0 1-8.096-8.096 8.1 8.1 0 0 1 8.096-8.096" style="fill:currentColor" transform="translate(-345.825 -43.475)scale(.98807)"/></svg></span>
+      <span class="pc-headtxt">
+        <span class="pc-type">解放战役</span>
+        <span class="pc-name">可利亚</span>
+      </span>
+    </div>
+    <p class="pc-desc">这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。</p>
+    <div class="pc-progress">
+      <div class="pc-bar"><span class="cursor"></span><div class="fill" style="width:83.4%"></div><div class="slot"></div></div>
+      <div class="pc-stats">
+        <span class="k">已解放 <span class="v dim">83.39650%</span></span>
+        <span class="r"><span class="k">抵抗强度</span><span class="v low">低 (0.00%)</span></span>
+      </div>
+    </div>
+    
+    <div class="pc-traits">
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M1345.5 50c27.596 0 50 22.404 50 50s-22.404 50-50 50-50-22.404-50-50 22.404-50 50-50m70.101 30.515C1437.61 99.944 1451.5 128.363 1451.5 160c0 58.503-47.497 106-106 106s-106-47.497-106-106c0-31.637 13.89-60.056 35.899-79.485A72 72 0 0 0 1273.5 97c0 39.738 32.262 72 72 72s72-32.262 72-72c0-5.671-.657-11.19-1.899-16.485" transform="translate(-2933.333 -118.519)scale(2.37037)"/></svg><b>窃票者</b></div>
+        <p>光能者在该星球上释放了新一波毫无民主理念的奴仆。请准备好迎接暴力的选民压制手段。</p>
+      </div></div>
+  </article>
+
+  <article class="planet-card f-term" data-biome="Acidic Badlands">
+    <div class="pc-top">
+      <svg class="pc-ficon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M333 27c31.449 70-3.276 122.972-59 142-41 14-89.448 30-121 90 18-15 45-24 81-24h99s52-51 52-104-52-104-52-104" transform="translate(-337.655 -59.586)scale(2.2069)"/> <path d="M196 187c-8-47 11-92 74-116-26 32-23 62-3 84-25 7-51 17-71 32" transform="translate(-337.655 -59.586)scale(2.2069)"/></svg>
+      <span class="pc-fname">终结族</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">10,651</span></span>
+        <span class="item"><svg class="pc-reinf" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><desc>Traced by Dogo314</desc> <g transform="translate(-28.444 589.487)scale(.98084)"> <path style="fill:none" d="M29-601h261v261H29z"/> <clipPath id="a"> <path d="M29-601h261v261H29z"/> </clipPath> <g clip-path="url(#a)"> <path style="fill:#363426" transform="translate(-252.39 -601)scale(1.01953)" d="M276 0h256v256H276z"/> <path d="M1526 101h8v32l-40 32-40-32v-32h8c0-17.661 14.339-32 32-32s32 14.339 32 32m-56 24h12l4-8h16l4 8h12v-24h-48zm90-50.028h-27.972v-12H1560V35h12v27.972h27.972v12H1572v27.973h-12zM1546 189h-104l-16-16v-16h32l16 16h40l16-16h32v16z" style="fill:#ffe" transform="translate(-1379.992 -585.707)scale(1.01953)"/> <path d="M276 15V0h256v15zM518 .82H290v13.36h228zm-10 12.774h-32l32-1.875zM300 1.406h32l-32 1.875zm208 0v1.875l-32-1.875zM300 13.594v-1.875l32 1.875z" style="fill:#c9b269" transform="matrix(1.01953 0 0 17.4 -252.39 -601)"/> </g> </g></svg><span class="num">148</span></span>
+      </div>
+    </div>
+    <div class="pc-landmark"><img src="./assets/biomes/Sandy_acid_Landscape.png" alt="Acidic Badlands" loading="lazy"></div>
+    <div class="pc-head">
+      <span class="pc-campwrap"><svg class="pc-campic" viewBox="0 0 166 166" xmlns="http://www.w3.org/2000/svg"><path style="fill:none" d="M0 0h1080v1080H0z" transform="scale(.1537)"/> <path d="M434 44c46.361 0 84 37.639 84 84s-37.639 84-84 84-84-37.639-84-84 37.639-84 84-84m0 25.301c-32.397 0-58.699 26.302-58.699 58.699s26.302 58.699 58.699 58.699 58.699-26.302 58.699-58.699S466.397 69.301 434 69.301m-36.309 61.735h-11.257v-6.072h11.257c1.462-17.689 15.584-31.811 33.273-33.273V80.434h6.072v11.257c17.689 1.462 31.811 15.584 33.273 33.273h11.257v6.072h-11.257c-1.462 17.689-15.584 31.811-33.273 33.273v11.257h-6.072v-11.257c-17.689-1.462-31.811-15.584-33.273-33.273M434 97.639c-16.757 0-30.361 13.604-30.361 30.361s13.604 30.361 30.361 30.361 30.361-13.604 30.361-30.361S450.757 97.639 434 97.639m0 22.265a8.1 8.1 0 0 1 8.096 8.096 8.1 8.1 0 0 1-8.096 8.096 8.1 8.1 0 0 1-8.096-8.096 8.1 8.1 0 0 1 8.096-8.096" style="fill:currentColor" transform="translate(-345.825 -43.475)scale(.98807)"/></svg></span>
+      <span class="pc-headtxt">
+        <span class="pc-type">解放战役</span>
+        <span class="pc-name">璨光</span>
+      </span>
+    </div>
+    <p class="pc-desc">这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。</p>
+    <div class="pc-progress">
+      <div class="pc-bar"><span class="cursor"></span><div class="fill" style="width:0.015%"></div><div class="slot"></div></div>
+      <div class="pc-stats">
+        <span class="k">已解放 <span class="v dim">0.01525%</span></span>
+        <span class="r"><span class="k">抵抗强度</span><span class="v low">低 (1.25%)</span></span>
+      </div>
+    </div>
+    
+    <div class="pc-traits">
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M333 27c31.449 70-3.276 122.972-59 142-41 14-89.448 30-121 90 18-15 45-24 81-24h99s52-51 52-104-52-104-52-104" transform="translate(-337.655 -59.586)scale(2.2069)"/> <path d="M196 187c-8-47 11-92 74-116-26 32-23 62-3 84-25 7-51 17-71 32" transform="translate(-337.655 -59.586)scale(2.2069)"/></svg><b>终结族遏制体系+</b></div>
+        <p>在这颗星球上，喷洒灭虫终结剂的高塔网络抵御着源自“阴霾”的终结族。</p>
+      </div></div>
+  </article>
+
+  <article class="planet-card f-auto" data-biome="Icy Glaciers">
+    <div class="pc-top">
+      <svg class="pc-ficon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg>
+      <span class="pc-fname">机器人</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">2,410</span></span>
+        <span class="item"><svg class="pc-reinf" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><desc>Traced by Dogo314</desc> <g transform="translate(-28.444 589.487)scale(.98084)"> <path style="fill:none" d="M29-601h261v261H29z"/> <clipPath id="a"> <path d="M29-601h261v261H29z"/> </clipPath> <g clip-path="url(#a)"> <path style="fill:#363426" transform="translate(-252.39 -601)scale(1.01953)" d="M276 0h256v256H276z"/> <path d="M1526 101h8v32l-40 32-40-32v-32h8c0-17.661 14.339-32 32-32s32 14.339 32 32m-56 24h12l4-8h16l4 8h12v-24h-48zm90-50.028h-27.972v-12H1560V35h12v27.972h27.972v12H1572v27.973h-12zM1546 189h-104l-16-16v-16h32l16 16h40l16-16h32v16z" style="fill:#ffe" transform="translate(-1379.992 -585.707)scale(1.01953)"/> <path d="M276 15V0h256v15zM518 .82H290v13.36h228zm-10 12.774h-32l32-1.875zM300 1.406h32l-32 1.875zm208 0v1.875l-32-1.875zM300 13.594v-1.875l32 1.875z" style="fill:#c9b269" transform="matrix(1.01953 0 0 17.4 -252.39 -601)"/> </g> </g></svg><span class="num">7</span></span>
+      </div>
+    </div>
+    <div class="pc-landmark"><img src="./assets/biomes/Arctic_glacier_base_Landscape.png" alt="Icy Glaciers" loading="lazy"></div>
+    <div class="pc-head">
+      <span class="pc-campwrap"><svg class="pc-campic" viewBox="0 0 166 166" xmlns="http://www.w3.org/2000/svg"><path style="fill:none" d="M0 0h1080v1080H0z" transform="scale(.1537)"/> <path d="M434 44c46.361 0 84 37.639 84 84s-37.639 84-84 84-84-37.639-84-84 37.639-84 84-84m0 25.301c-32.397 0-58.699 26.302-58.699 58.699s26.302 58.699 58.699 58.699 58.699-26.302 58.699-58.699S466.397 69.301 434 69.301m-36.309 61.735h-11.257v-6.072h11.257c1.462-17.689 15.584-31.811 33.273-33.273V80.434h6.072v11.257c17.689 1.462 31.811 15.584 33.273 33.273h11.257v6.072h-11.257c-1.462 17.689-15.584 31.811-33.273 33.273v11.257h-6.072v-11.257c-17.689-1.462-31.811-15.584-33.273-33.273M434 97.639c-16.757 0-30.361 13.604-30.361 30.361s13.604 30.361 30.361 30.361 30.361-13.604 30.361-30.361S450.757 97.639 434 97.639m0 22.265a8.1 8.1 0 0 1 8.096 8.096 8.1 8.1 0 0 1-8.096 8.096 8.1 8.1 0 0 1-8.096-8.096 8.1 8.1 0 0 1 8.096-8.096" style="fill:currentColor" transform="translate(-345.825 -43.475)scale(.98807)"/></svg></span>
+      <span class="pc-headtxt">
+        <span class="pc-type">解放战役</span>
+        <span class="pc-name">玛尔法克</span>
+      </span>
+    </div>
+    <p class="pc-desc">这颗星球被列为敌占领地。绝地潜兵必须从残暴入侵者手中夺回控制权。</p>
+    <div class="pc-progress">
+      <div class="pc-bar"><span class="cursor"></span><div class="fill" style="width:0.011%"></div><div class="slot"></div></div>
+      <div class="pc-stats">
+        <span class="k">已解放 <span class="v dim">0.01120%</span></span>
+        <span class="r"><span class="k">抵抗强度</span><span class="v low">低 (0.75%)</span></span>
+      </div>
+    </div>
+    
+    <div class="pc-traits">
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg><b>喷气旅</b></div>
+        <p>机器人在该星球上部署了一系列特殊型号。请做好应对失窃的喷气背包技术升级优化的机器人。</p>
+      </div>
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg><b>巨型者激增</b></div>
+        <p>据报告称，该星球上出现大量敌方巨型者。请做好应对重甲敌军的准备。</p>
+      </div></div>
+  </article>
+
+  <article class="planet-card f-auto" data-biome="Magma">
+    <div class="pc-top">
+      <svg class="pc-ficon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg>
+      <span class="pc-fname">机器人</span>
+      <div class="pc-res">
+        <span class="item"><span class="chip">R</span><span class="num">7,532</span></span>
+        <span class="item"><svg class="pc-reinf" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><desc>Traced by Dogo314</desc> <g transform="translate(-28.444 589.487)scale(.98084)"> <path style="fill:none" d="M29-601h261v261H29z"/> <clipPath id="a"> <path d="M29-601h261v261H29z"/> </clipPath> <g clip-path="url(#a)"> <path style="fill:#363426" transform="translate(-252.39 -601)scale(1.01953)" d="M276 0h256v256H276z"/> <path d="M1526 101h8v32l-40 32-40-32v-32h8c0-17.661 14.339-32 32-32s32 14.339 32 32m-56 24h12l4-8h16l4 8h12v-24h-48zm90-50.028h-27.972v-12H1560V35h12v27.972h27.972v12H1572v27.973h-12zM1546 189h-104l-16-16v-16h32l16 16h40l16-16h32v16z" style="fill:#ffe" transform="translate(-1379.992 -585.707)scale(1.01953)"/> <path d="M276 15V0h256v15zM518 .82H290v13.36h228zm-10 12.774h-32l32-1.875zM300 1.406h32l-32 1.875zm208 0v1.875l-32-1.875zM300 13.594v-1.875l32 1.875z" style="fill:#c9b269" transform="matrix(1.01953 0 0 17.4 -252.39 -601)"/> </g> </g></svg><span class="num">0</span></span>
+      </div>
+    </div>
+    <div class="pc-landmark"><img src="./assets/biomes/Magma_Base_Landscape.png" alt="Magma" loading="lazy"></div>
+    <div class="pc-head">
+      <span class="pc-campwrap"><svg class="pc-campic" viewBox="0 0 166 166" xmlns="http://www.w3.org/2000/svg"><path style="fill:none" d="M0 0h1080v1080H0z" transform="scale(.1537)"/> <path d="M434 44c46.361 0 84 37.639 84 84s-37.639 84-84 84-84-37.639-84-84 37.639-84 84-84m0 30.361-47.566 9.109v77.928L434 189.735l47.566-28.337V83.47zm0 11.133L472.458 91v65.222L434 179.133l-38.458-22.911V91zm0 5.152-33.398 4.537v58.163L434 173.243l33.398-19.897V95.183z" style="fill:currentColor" transform="translate(-345.825 -43.475)scale(.98807)"/></svg></span>
+      <span class="pc-headtxt">
+        <span class="pc-type">防御战</span>
+        <span class="pc-name def">K</span>
+      </span>
+    </div>
+    <p class="pc-desc">这颗星球遇袭。绝地潜兵必须保卫星球，抵御暴政军队。</p>
+    <div class="pc-progress">
+      <div class="pc-bar"><span class="cursor"></span><div class="fill" style="width:0.009%"></div><div class="slot"></div></div>
+      <div class="pc-stats">
+        <span class="k">已解放 <span class="v dim">0.00916%</span></span>
+        
+      </div>
+    </div>
+    
+    <div class="pc-invasion">
+      <span class="pc-shield">
+    <svg viewBox="0 0 72 74" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="36,4 66,4 66,42 36,68 6,42 6,4" fill="#0B0E14" stroke="var(--fc)" stroke-width="3"/>
+      <polygon points="6,39 66,39 66,42 36,68 6,42" fill="var(--fc)"/>
+      <text x="36" y="32" text-anchor="middle" font-size="24" font-weight="700" fill="var(--fc)"
+            font-family="Rajdhani,Orbitron,Consolas,monospace">40</text>
+    </svg>
+  </span>
+      <span class="pc-invtxt">
+        <span class="k">入侵等级</span>
+        <span class="timer">保卫 01:16:56:52</span>
+      </span>
+    </div>
+    <div class="pc-traits">
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg><b>蹂躏者激增</b></div>
+        <p>机器人已向该星球部署了大量蹂躏者。请做好应对重甲敌军的准备。</p>
+      </div>
+      <div class="pc-trait">
+        <div class="h"><svg class="pc-tico" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M672 0v167l-71 52zm-38.866 68-15.393 47.48L552 68zM688 0l71 219-71-52zm38.866 68H808l-65.741 47.48z" transform="matrix(2 0 0 2 -1104 37)"/></svg><b>炽灼部队</b></div>
+        <p>装备火焰喷射器和燃烧弹药的机器人部队正在该星球上肆虐横行。请做好准备，应对肆无忌惮的纵火犯。他们唯有将人类珍视的……</p>
+      </div></div>
+  </article>
+</div>
+</body>
+</html>

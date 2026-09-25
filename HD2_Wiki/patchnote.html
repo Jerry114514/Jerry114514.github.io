@@ -4,7 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>更新公告 - 绝地潜兵2 中文维基</title>
-  <meta name="description" content="绝地潜兵2 更新公告详情 - 分节补丁说明、官方公告链接、上一版/下一版导航" />
+  <meta name="description" content="绝地潜兵2 更新公告详情：分节补丁说明、官方公告链接、上一版 / 下一版导航。" />
+  <!-- SEO / 社交分享（2026-09-25 统一补齐：robots + Open Graph + Twitter Card + JSON-LD） -->
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="绝地潜兵2 中文维基（真理部）">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="更新公告 - 绝地潜兵2 中文维基">
+  <meta property="og:description" content="绝地潜兵2 更新公告详情：分节补丁说明、官方公告链接、上一版 / 下一版导航。">
+  <meta property="og:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="绝地潜兵2 中文资料站 · 银河星图">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="更新公告 - 绝地潜兵2 中文维基">
+  <meta name="twitter:description" content="绝地潜兵2 更新公告详情：分节补丁说明、官方公告链接、上一版 / 下一版导航。">
+  <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "更新公告 - 绝地潜兵2 中文维基", "description": "绝地潜兵2 更新公告详情：分节补丁说明、官方公告链接、上一版 / 下一版导航。", "url": "https://jerry114514.github.io/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 中文维基（真理部）", "url": "https://jerry114514.github.io/"}}</script>
   <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
   <style>
 body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; background: var(--bg-deep); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
@@ -161,7 +177,11 @@ body { font-family: "SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif; 
       var dispTitle = (z && z.title_zh) || VER.title;
 
       document.getElementById("breadcrumb").innerHTML = '← <a href="patchnotes.html">更新公告</a> › ' + esc(VER.id);
-      document.title = dispTitle + " - 绝地潜兵2 中文维基";
+      // SEO：按当前版本改写 title/description + 自指 canonical（见 wiki-router.js 的 WikiRouter.seo）
+      WikiRouter.seo({
+        title: dispTitle + " - 绝地潜兵2 中文维基",
+        description: "绝地潜兵2 更新公告 " + VER.id + "「" + dispTitle + "」中文版补丁说明：分节内容、官方公告链接与相邻版本导航。"
+      });
 
       var art = VER.image_local
         ? '<div class="art"><img src="' + esc(VER.image_local) + '" alt="" onerror="this.parentNode.style.display=\'none\'"></div>'
