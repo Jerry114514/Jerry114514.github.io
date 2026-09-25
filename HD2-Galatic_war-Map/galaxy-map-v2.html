@@ -2669,6 +2669,20 @@ function bindUI(data, planets) {
   window.__rateOf = rateOf;                  // 速率推演（自检用）
   window.__pcSnap = PC_SNAP;                 // 观测快照（自检用）
 window.__map = MAP;                        // 地图实例（自检用：图层/数据源核对，如 attack 源只应含入侵连线）
+  // 深链：?planet=<星球序号> —— 维基「星球索引」页与星球资料页会用这个参数跳回星图。
+  //   boot() 是异步的，这里轮询等 BYIDX 就绪（最多 ~10 秒），到位后聚焦并弹出信息卡。
+  (function deepLink() {
+    const want = Number(new URLSearchParams(location.search).get("planet"));
+    if (!Number.isFinite(want) || want < 0) return;
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if (BYIDX && BYIDX[want]) {
+        clearInterval(timer);
+        try { if (window.__focusPlanet) window.__focusPlanet(want); showPlanetCard(want); } catch (_) {}
+      } else if (tries > 40) { clearInterval(timer); }
+    }, 250);
+  })();
   // 点信息卡本身也打开轮盘
   (function bindCardClick() {
     const el = $("planet-card");

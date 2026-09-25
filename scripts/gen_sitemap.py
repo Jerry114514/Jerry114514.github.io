@@ -188,9 +188,37 @@ def patchnotes_group():
              "items": [(v["id"], None, lm) for v in versions]}]
 
 
+def planets_group():
+    """星球资料页（主站子站 `planet.html?idx=N`）—— 2026-09-25 新增。
+
+    只收录「有内容」的星球：有区域（城市/超大型工厂）**或**当前有人（players > 0）。
+    理由：273 颗星球里有一批是长期无人、无区域、无战役的空壳，全量收录等于给搜索引擎
+    灌 200+ 个近似空页；这条筛选线同时满足「内链可达」和「不灌水」。
+    """
+    data = read_json(ROOT / "HD2-Galatic_war-Map" / "data.json")
+    reg_path = ROOT / "HD2-Galatic_war-Map" / "tables" / "planet_regions.json"
+    regs = (read_json(reg_path).get("planets") or {}) if reg_path.exists() else {}
+    lm = mtime_date(ROOT / "HD2-Galatic_war-Map" / "data.json")
+    items = []
+    for p in data.get("planets", []):
+        idx = p.get("index")
+        if idx is None:
+            continue
+        has_regions = bool(((regs.get(str(idx)) or {}).get("regions")) or [])
+        if not (has_regions or (p.get("players") or 0) > 0):
+            continue
+        items.append((str(idx), None, lm))
+    items.sort(key=lambda t: int(t[0]))
+    return [{"comment": "星球资料页 · %d 颗（有区域或当前有人口）· 数据：HD2-Galatic_war-Map/data.json" % len(items),
+             "tpl": "planet.html", "param": "idx",
+             "base": BASE.rsplit("HD2_Wiki/", 1)[0] + "HD2-Galatic_war-Map/",
+             "changefreq": "daily", "priority": "0.6",
+             "items": items}]
+
+
 GROUPS = [weapons_group, stratagems_group, enemies_group,
           missions_group, boosters_group, warbonds_group, mechanics_group,
-          patchnotes_group]
+          patchnotes_group, planets_group]
 
 
 def build_block() -> tuple[str, int]:
@@ -201,8 +229,14 @@ def build_block() -> tuple[str, int]:
         for group in factory():
             tpl = group["tpl"]
             chunks.append("  <!-- %s -->" % group["comment"])
+            # 默认按「HD2_Wiki/<页>?id=<条目 id>」生成；星球资料页在主站子站、参数名也不同，
+            # 所以允许分组自带 base / param（2026-09-25 新增，用于 planet.html?idx=N）。
+            param = group.get("param", "id")
+            base = group.get("base", BASE)
+            cf = group.get("changefreq", CHANGEFREQ)
+            pr = group.get("priority", PRIORITY)
             for pid, category, lastmod in group["items"]:
-                url = BASE + tpl + "?id=" + pid
+                url = base + tpl + "?" + param + "=" + pid
                 if category:
                     url += "&category=" + category
                 chunks.append(
@@ -211,7 +245,7 @@ def build_block() -> tuple[str, int]:
                     "    <lastmod>%s</lastmod>\n"
                     "    <changefreq>%s</changefreq>\n"
                     "    <priority>%s</priority>\n"
-                    "  </url>" % (esc(url), lastmod, CHANGEFREQ, PRIORITY)
+                    "  </url>" % (esc(url), lastmod, cf, pr)
                 )
                 total += 1
     chunks.append(END)

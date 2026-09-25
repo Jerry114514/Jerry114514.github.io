@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星球索引 - 绝地潜兵2 中文维基</title>
+  <meta name="description" content="绝地潜兵2 全星球索引：按星区列出所有星球，含归属阵营、实时解放度、在线玩家与下属区域（城市 / 超大型工厂）数量，支持筛选与搜索，并可直达单颗星球的资料页与银河星图。">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://jerry114514.github.io/HD2_Wiki/planets.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="绝地潜兵2 中文维基（真理部）">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="星球索引 - 绝地潜兵2 中文维基">
+  <meta property="og:description" content="绝地潜兵2 全星球索引：按星区列出所有星球，含归属阵营、实时解放度、在线玩家与下属区域数量。">
+  <meta property="og:url" content="https://jerry114514.github.io/HD2_Wiki/planets.html">
+  <meta property="og:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="绝地潜兵2 中文资料站 · 银河星图">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="星球索引 - 绝地潜兵2 中文维基">
+  <meta name="twitter:description" content="绝地潜兵2 全星球索引：按星区列出所有星球，含归属阵营、实时解放度、在线玩家与下属区域数量。">
+  <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "星球索引 - 绝地潜兵2 中文维基", "description": "绝地潜兵2 全星球索引：按星区列出所有星球，含归属阵营、实时解放度、在线玩家与下属区域数量。", "url": "https://jerry114514.github.io/HD2_Wiki/planets.html", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 中文维基（真理部）", "url": "https://jerry114514.github.io/"}}</script>
+  <link rel="stylesheet" href="./assets/css/wiki-base.css?v=20260913e">
+  <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260918a">
+  <style>
+    .wiki-header .sub { color: var(--text-dim); font-size: 0.86rem; margin-top: 6px; line-height: 1.8; }
+    .wiki-header .sub b { color: var(--text); font-variant-numeric: tabular-nums; }
+    .hd-links { margin-top: 10px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .hd-links .back { display: inline-block; color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; }
+    .hd-links .back:hover { color: var(--yellow); border-color: var(--yellow); }
+    /* 星区分组标题 */
+    .sec-hd { display: flex; align-items: baseline; gap: 8px; margin: 22px 18px 8px;
+      font-size: 0.95rem; color: var(--yellow); letter-spacing: 0.04em; }
+    .sec-hd .en { color: var(--text-mute); font-size: 0.74rem; letter-spacing: 0.12em; font-weight: 400; }
+    .sec-hd .n { margin-left: auto; color: var(--text-mute); font-size: 0.74rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+    #list { max-width: 1180px; margin: 0 auto; padding: 0 14px 40px; }
+    .pl-name a { color: var(--text); text-decoration: none; }
+    .pl-name a:hover { color: var(--yellow); }
+    .pl-name .en { color: var(--text-mute); font-size: 0.72rem; margin-left: 5px; }
+    .own { display: inline-flex; align-items: center; gap: 6px; }
+    .own i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    td.lib.ok { color: #1FA84A; }
+    td.lib.mid { color: var(--yellow); }
+    .pl-act a { color: var(--blue); text-decoration: none; white-space: nowrap; margin-right: 8px; font-size: 0.76rem; }
+    .pl-act a:hover { color: var(--yellow); }
+    .empty { padding: 40px 0; text-align: center; color: var(--text-mute); }
+    .sk { height: 14px; margin: 10px 18px; background: linear-gradient(90deg, #141414, #1e1e1e, #141414); border-radius: 4px; }
+    @media (max-width: 620px) {
+      .sec-hd { margin-left: 12px; margin-right: 12px; }
+      #list { padding: 0 8px 32px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wiki-header">
+    <h1>🪐 星球索引</h1>
+    <p class="sub">共 <b id="stat-planets">—</b> 颗星球 · <b id="stat-sectors">—</b> 个星区 ·
+      在线玩家 <b id="stat-players">—</b> · 数据抓取于 <b id="stat-time">—</b></p>
+    <div class="hd-links">
+      <a class="back" href="wiki.html">◀ 返回维基首页</a>
+      <a class="back" href="../HD2-Galatic_war-Map/galaxy-map-v2.html">🌌 银河星图</a>
+      <a class="back" href="../HD2-Galatic_war-Map/index.html">📊 实时战况面板</a>
+    </div>
+  </header>
+
+  <div class="wiki-toolbar">
+    <div class="filter-bar" id="faction-filter" role="group" aria-label="按归属阵营筛选"></div>
+    <span class="wt-divider"></span>
+    <div class="filter-bar" id="sort-filter" role="group" aria-label="排序方式"></div>
+    <span class="wt-divider"></span>
+    <label class="wt-search"><input type="text" id="q" placeholder="🔍 搜索星球 / 星区（中英皆可）" autocomplete="off"></label>
+    <span class="wt-count" id="count"></span>
+  </div>
+
+  <main id="list">
+    <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
+  </main>
+
+  <footer class="wiki-footer">
+    <p>绝地潜兵2 中文维基 · 星球索引 · 数据来自官方战况 API（每 5 分钟自动更新）</p>
+    <p style="font-size:.74rem;color:var(--text-mute)">
+      解放度口径：己方（超级地球）持有的星球一律显示 100%（官方 API 对己方星球报满血）；
+      其余按 <code>1 − health / maxHealth</code>。「区域」为该星球下属城市 / 超大型工厂数量（覆盖 84 颗星球）。
+    </p>
+  </footer>
+
+  <script>
+  "use strict";
+  /* ============================================================================
+     星球索引（2026-09-25 新增，挂在维基下）
+     目的：① 给"所有星球"一个可浏览、可搜索、可被搜索引擎收录的目录页；
+           ② 把 270+ 颗星球的资料页（../HD2-Galatic_war-Map/planet.html?idx=N）接进内链，
+              让爬虫从维基这边就能发现它们（原来只有星图里点得到）。
+     数据：全部复用主站同一份文件，不新增任何抓取管线：
+       data.json（战况 + 玩家分布）· tables/starmap.json（星区/译名）· tables/planet_regions.json（区域数）
+     ============================================================================ */
+
+  var DATA = null, PL = [], SECTORS = [], REG = {}, PL_SEC = {}, SEC_EN = {};
+  var OWN_COLOR = { Humans: "#5BA3D0", Terminids: "#F5C518", Automaton: "#D6806D", Illuminate: "#CF64F8" };
+  var OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
+  var curFaction = "all", curSort = "players";
+
+  var esc = function (s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+  var fmt = function (n) { return (n == null ? "—" : Number(n).toLocaleString("en-US")); };
+
+  function libShow(p) {
+    if (String(p.currentOwner || "").toLowerCase() === "humans") return 100;
+    return p.maxHealth > 0 ? Math.max(0, Math.min(100, 100 * (1 - p.health / p.maxHealth))) : null;
+  }
+
+  async function boot() {
+    try {
+      var base = "../HD2-Galatic_war-Map/";
+      var rs = await Promise.all([
+        fetch(base + "data.json?t=" + Date.now(), { cache: "no-store" }),
+        fetch(base + "tables/starmap.json", { cache: "no-store" }),
+        fetch(base + "tables/planet_regions.json?v=20260925b", { cache: "no-store" })
+      ]);
+      if (!rs[0].ok) throw new Error("HTTP " + rs[0].status + " data.json");
+      DATA = await rs[0].json();
+      var sm = rs[1].ok ? await rs[1].json() : { systems: [] };
+      REG = rs[2].ok ? ((await rs[2].json()).planets || {}) : {};
+
+      // 星区顺序 + 译名 + 星球→星区 映射（官方 API 的 sector 字段大量为空，必须回退 starmap）
+      (sm.systems || []).forEach(function (s) {
+        if (!s.name) return;
+        SECTORS.push({ cn: s.name, en: s.name_en || "", planets: [] });
+        (s.planets || []).forEach(function (p) {
+          if (!p.en) return;
+          PL_SEC[String(p.en).toUpperCase()] = s.name;
+          if (p.cn) SEC_EN[String(p.en).toUpperCase()] = p.cn;
+        });
+      });
+
+      var total = (DATA.player_distribution && DATA.player_distribution.total) || 0;
+      PL = (DATA.planets || []).map(function (p) {
+        var sec = PL_SEC[String(p.name || "").toUpperCase()] || p.sector || "未归档星区";
+        return {
+          index: p.index, en: p.name || "", cn: SEC_EN[String(p.name || "").toUpperCase()] || "",
+          sector: sec, owner: p.currentOwner || "", players: p.players || 0,
+          lib: libShow(p), regions: (REG[String(p.index)] && REG[String(p.index)].regions || []).length,
+          share: total > 0 ? (p.players || 0) / total * 100 : 0,
+          attacking: !!p.attacking
+        };
+      });
+
+      document.getElementById("stat-planets").textContent = fmt(PL.length);
+      document.getElementById("stat-sectors").textContent = fmt(
+        (SECTORS.length ? SECTORS.length : new Set(PL.map(function (x) { return x.sector; })).size));
+      document.getElementById("stat-players").textContent = fmt(total);
+      document.getElementById("stat-time").textContent = DATA.fetchedAt
+        ? new Date(DATA.fetchedAt).toLocaleString("zh-CN", { hour12: false }) : "—";
+
+      renderFilters();
+      render();
+    } catch (e) {
+      document.getElementById("list").innerHTML =
+        '<div class="empty">⚠️ 战况数据加载失败：' + esc(e.message) + '<br>数据由 CI 每 5 分钟生成，稍后重试即可。</div>';
+    }
+  }
+
+  function renderFilters() {
+    var order = ["all", "Humans", "Terminids", "Automaton", "Illuminate"];
+    document.getElementById("faction-filter").innerHTML = order.map(function (k) {
+      var n = k === "all" ? PL.length : PL.filter(function (p) { return p.owner === k; }).length;
+      var label = k === "all" ? "全部" : (OWN_CN[k] || k);
+      var dot = k === "all" ? "" : '<i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' +
+        OWN_COLOR[k] + ';margin-right:5px"></i>';
+      return '<button type="button" data-f="' + k + '" class="' + (k === curFaction ? "active" : "") + '">' +
+        dot + label + '<span class="c">' + n + '</span></button>';
+    }).join("");
+    var sorts = [["players", "在线玩家"], ["lib", "解放度"], ["sector", "按星区"], ["index", "星球序号"]];
+    document.getElementById("sort-filter").innerHTML = sorts.map(function (s) {
+      return '<button type="button" data-s="' + s[0] + '" class="' + (s[0] === curSort ? "active" : "") + '">' +
+        s[1] + "</button>";
+    }).join("");
+    document.getElementById("faction-filter").querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { curFaction = b.getAttribute("data-f"); renderFilters(); render(); });
+    });
+    document.getElementById("sort-filter").querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { curSort = b.getAttribute("data-s"); renderFilters(); render(); });
+    });
+    var q = document.getElementById("q");
+    if (!q.__bound) { q.__bound = true; q.addEventListener("input", render); }
+  }
+
+  function filtered() {
+    var kw = (document.getElementById("q").value || "").trim().toUpperCase();
+    return PL.filter(function (p) {
+      if (curFaction !== "all" && p.owner !== curFaction) return false;
+      if (!kw) return true;
+      return (p.cn + " " + p.en + " " + p.sector).toUpperCase().indexOf(kw) >= 0;
+    });
+  }
+
+  function rowHtml(p) {
+    var libTxt = p.lib == null ? "—" : p.lib.toFixed(2) + "%";
+    var libCls = p.lib == null ? "" : (p.lib >= 99.995 ? "ok" : (String(p.owner).toLowerCase() === "humans" ? "ok" : (p.lib >= 50 ? "mid" : "")));
+    return '<tr>' +
+      '<td class="pl-name"><a href="../HD2-Galatic_war-Map/planet.html?idx=' + p.index + '">' +
+        esc(p.cn || p.en || ("#" + p.index)) + "</a>" +
+        (p.cn && p.en ? '<span class="en">' + esc(p.en) + "</span>" : "") +
+        (p.attacking ? ' <span style="color:#FF4D2E;font-size:.7rem">⚠ 遭受进攻</span>' : "") + "</td>" +
+      '<td><span class="own"><i style="background:' + (OWN_COLOR[p.owner] || "#64748b") + '"></i>' +
+        esc(OWN_CN[p.owner] || p.owner || "未知") + "</span></td>" +
+      '<td class="lib ' + libCls + '" style="text-align:right;font-variant-numeric:tabular-nums">' + libTxt + "</td>" +
+      '<td style="text-align:right;font-variant-numeric:tabular-nums">' + fmt(p.players) +
+        (p.share ? ' <span style="color:var(--text-mute);font-size:.72rem">' + p.share.toFixed(1) + "%</span>" : "") + "</td>" +
+      '<td style="text-align:right;font-variant-numeric:tabular-nums">' + (p.regions || "—") + "</td>" +
+      '<td class="pl-act">' +
+        '<a href="../HD2-Galatic_war-Map/planet.html?idx=' + p.index + '">📄 资料</a>' +
+        '<a href="../HD2-Galatic_war-Map/galaxy-map-v2.html?planet=' + p.index + '">🗺️ 星图</a>' +
+      "</td></tr>";
+  }
+
+  var HEAD = '<div class="table-wrap"><table class="stats-table">' +
+    "<thead><tr><th>星球</th><th>归属</th><th style=\"text-align:right\">解放度</th>" +
+    "<th style=\"text-align:right\">在线玩家</th><th style=\"text-align:right\">区域</th><th>操作</th></tr></thead><tbody>";
+
+  function cmp(a, b) {
+    if (curSort === "lib") return (b.lib || 0) - (a.lib || 0);
+    if (curSort === "index") return a.index - b.index;
+    if (curSort === "sector") return a.sector.localeCompare(b.sector, "zh") || a.index - b.index;
+    return b.players - a.players;
+  }
+
+  function render() {
+    var list = filtered(), host = document.getElementById("list");
+    document.getElementById("count").textContent = list.length + " / " + PL.length + " 颗";
+    if (!list.length) { host.innerHTML = '<div class="empty">没有匹配的星球</div>'; return; }
+
+    if (curSort === "sector") {                       // 扁平表，按星区名排序时不再分组
+      host.innerHTML = HEAD + list.slice().sort(cmp).map(rowHtml).join("") + "</tbody></table></div>";
+      return;
+    }
+    // 按星区分组（星区顺序跟随 starmap，未知星区排在最后）
+    var groups = {}, order = [];
+    SECTORS.forEach(function (s) { groups[s.cn] = { cn: s.cn, en: s.en, items: [] }; order.push(s.cn); });
+    list.forEach(function (p) {
+      if (!groups[p.sector]) { groups[p.sector] = { cn: p.sector, en: "", items: [] }; order.push(p.sector); }
+      groups[p.sector].items.push(p);
+    });
+    var html = "";
+    order.forEach(function (key) {
+      var g = groups[key];
+      if (!g || !g.items.length) return;
+      var players = g.items.reduce(function (a, b) { return a + b.players; }, 0);
+      html += '<h2 class="sec-hd">' + esc(g.cn) + (g.en ? ' <span class="en">' + esc(g.en) + "</span>" : "") +
+        '<span class="n">' + g.items.length + " 颗 · 在线 " + fmt(players) + "</span></h2>" +
+        HEAD + g.items.slice().sort(cmp).map(rowHtml).join("") + "</tbody></table></div>";
+    });
+    host.innerHTML = html;
+  }
+
+  boot();
+  </script>
+</body>
+</html>
