@@ -1,13 +1,22 @@
 {
-  "_note": "区域（城市/超大型工厂）中文名覆盖表。键 = 星球 index；值 = {英文区域名: 中文名}。口径（2026-09-24 用户裁定）：**机器翻译 + 页面并列显示英文原名**。游戏内官方中文名没有公开数据源；截图能确定的少数条目优先，其余为 AI 译文，**未逐条人工校对**，如需正式口径请以游戏内文本为准。",
+  "_note": "区域（城市/超大型工厂）中文名覆盖表。键 = 星球 index；值 = {英文区域名: 中文名}。口径（2026-09-24 用户裁定）：**机器翻译 + 页面并列显示英文原名**。游戏内官方中文名没有公开数据源；**用户直接给出的官方译名优先**，截图能确定的条目次之，其余为 AI 译文（**未逐条人工校对**），如需正式口径请以游戏内文本为准。",
   "_provenance": {
+    "_official_user_provided": [
+      "REMEMBRANCE",
+      "YORK SUPREME",
+      "PORT MERCY",
+      "PROSPERITY CITY",
+      "EQUALITY-ON-SEA"
+    ],
+    "_official_note": "2026-09-25 用户给出的**官方中文名**（超级地球 5 城）：REMEMBRANCE = 缅城 / YORK SUPREME = 棒约克 / PORT MERCY = 馨家泊 / PROSPERITY CITY = 荣都 / EQUALITY-ON-SEA = 仰齐浜。同批未改的两条经核对本来一致：EAGLEOPOLIS = 鹰都、ADMINISTRATIVE CENTER 02 = 行政中心 02。⚠ 已知冲突：wiki 编年史译文 HD2_Wiki/data/wiki/zh/mechanics/galactic_war_history_zh.json 里仍写作「约克至尊」（上一轮 AI 旧译），待术语表统一时一并收口。",
     "_screenshot_confirmed": [
       "BRNO",
       "GOTHENBURG III",
       "NYA SKELLEFTEA",
       "TECHNOLOCKIA ALLATEED"
     ],
-    "_ai_translated_count": 205,
+    "_ai_translated_count": 200,
+    "_count_note": "计数口径 = **去重英文区域名**：211 个区域实例 / 209 个去重名（BASE CAMP 8、QUASAR 各出现在 2 颗星球上）= 官方 5 + 截图 4 + AI 200。",
     "_unbound_screenshot_names": [
       "老鹅城",
       "斯窝城",
@@ -15,16 +24,16 @@
     ],
     "_unbound_note": "截图里出现过但这三条无法确定对应哪条英文区域名，故不登记（不用猜测充当官方译名）"
   },
-  "source": "AI 翻译（用户 2026-09-24 裁定）+ 用户提供的游戏内截图（4 条）",
+  "source": "AI 翻译（用户 2026-09-24 裁定）+ 用户提供的游戏内截图（4 条）+ 用户提供的官方中文名（5 条，2026-09-25）",
   "planets": {
     "0": {
       "EAGLEOPOLIS": "鹰都",
       "ADMINISTRATIVE CENTER 02": "行政中心 02",
-      "REMEMBRANCE": "追思",
-      "YORK SUPREME": "约克至尊",
-      "PORT MERCY": "慈悲港",
-      "PROSPERITY CITY": "繁荣城",
-      "EQUALITY-ON-SEA": "滨海平等"
+      "REMEMBRANCE": "缅城",
+      "YORK SUPREME": "棒约克",
+      "PORT MERCY": "馨家泊",
+      "PROSPERITY CITY": "荣都",
+      "EQUALITY-ON-SEA": "仰齐浜"
     },
     "7": {
       "NEW COB": "新科布",

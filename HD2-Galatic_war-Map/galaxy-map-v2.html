@@ -1019,8 +1019,8 @@ async function boot() {
   await loadVariables();
   // 星球下属区域（城市/超大型工厂）静态表（2026-09-24 demo）：名字/类型/描述 + 中文名覆盖
   try {
-    REGIONS = (await (await fetch("./tables/planet_regions.json?v=20260924a", { cache: "no-store" })).json()).planets || {};
-    REGIONS_ZH = (await (await fetch("./tables/planet_regions_zh.json?v=20260924a", { cache: "no-store" })).json()).planets || {};
+    REGIONS = (await (await fetch("./tables/planet_regions.json?v=20260925a", { cache: "no-store" })).json()).planets || {};
+    REGIONS_ZH = (await (await fetch("./tables/planet_regions_zh.json?v=20260925a", { cache: "no-store" })).json()).planets || {};
   } catch (_) { REGIONS = {}; REGIONS_ZH = {}; }
   // 星区/星球中文映射（tables/starmap.json；缺失时回退英文，不致命）
   // 官方 API 与 hd2dev 的星区拼写不一致，沿用 index.html 的别名表桥接

@@ -517,9 +517,11 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
 
     // 星球下属区域（城市/超大型工厂）：静态名字/类型（wiki 数据模块）+ 中文名覆盖，
     // 与星图共用同一份 tables/*.json；缺失时整块不渲染（不致命）。
-    try { PC_REGIONS = ((await HD2Source.jsonSoft("./tables/planet_regions.json")) || {}).planets || {}; }
+    // ⚠ 带 ?v= 版本号（与星图同规矩）：JSON 改动后必须升版本，否则 Pages CDN 会继续发旧表。
+    //   （jsonSoft 只发 no-store，不给中间缓存兜底；2026-09-25 官方译名那次就是靠它生效的。）
+    try { PC_REGIONS = ((await HD2Source.jsonSoft("./tables/planet_regions.json?v=20260925a")) || {}).planets || {}; }
     catch (_) { PC_REGIONS = {}; }
-    try { PC_REGIONS_ZH = ((await HD2Source.jsonSoft("./tables/planet_regions_zh.json")) || {}).planets || {}; }
+    try { PC_REGIONS_ZH = ((await HD2Source.jsonSoft("./tables/planet_regions_zh.json?v=20260925a")) || {}).planets || {}; }
     catch (_) { PC_REGIONS_ZH = {}; }
 
     // 从 starmap 构建 星区英文 -> 中文 映射（覆盖内置 SECTOR_CN 的缺失/错误）
