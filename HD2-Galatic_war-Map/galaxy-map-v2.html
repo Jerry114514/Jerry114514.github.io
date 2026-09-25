@@ -276,6 +276,8 @@
   #hits .hit:hover{background:rgba(255,255,255,.07)}
   #hits .hit .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
   #hits .hit .own{margin-left:auto;color:var(--text-mute);font-size:.68rem}
+  #hits .hit .hit-wiki{text-decoration:none;color:var(--blue);font-size:.72rem;padding:0 4px;border:1px solid transparent;border-radius:4px}
+  #hits .hit .hit-wiki:hover{color:var(--yellow);border-color:var(--yellow)}
   ::-webkit-scrollbar{width:8px;height:8px}
   ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
   ::-webkit-scrollbar-track{background:transparent}
@@ -2074,7 +2076,10 @@ function bindUI(data, planets) {
     if (!list.length) { box.innerHTML = '<div class="muted" style="padding:4px 8px">无匹配</div>'; return; }
     box.innerHTML = list.map(p =>
       `<div class="hit" data-i="${p.index}"><span class="dot" style="background:${colorOf(p.owner)}"></span>` +
-      `<span>${esc(p.nameCn || p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span></div>`).join("");
+      `<span>${esc(p.nameCn || p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span>` +
+      // 内链：每个结果都能直接进资料页（2026-09-25）。点这一格不应触发行点击（focusPlanet）
+      `<a class="hit-wiki" href="./planet.html?idx=${p.index}" title="打开资料页" ` +
+      `onclick="event.stopPropagation()">📄</a></div>`).join("");
   }
   function performSearch(term) {
     if (!term) return;

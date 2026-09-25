@@ -2150,7 +2150,11 @@ function renderPlayers(data) {
       pct: pcRegionLib((p.regions || [])[k], r),
     }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
-      `<span class="tip">城市 / 超大型工厂</span></div>${rows.join("")}</div>`;
+      `<span class="tip">城市 / 超大型工厂</span>` +
+      // 内链：星球卡直接给出资料页入口（2026-09-25）。stopPropagation 避免触发卡片自身的详情展开。
+      `<a href="./planet.html?idx=${p.index}" title="打开该星球的完整资料页（战役 / 统计 / 环境 / 补给线）" ` +
+      `onclick="event.stopPropagation()" style="margin-left:6px;color:var(--blue);font-size:10px;text-decoration:none">📄 资料</a>` +
+      `</div>${rows.join("")}</div>`;
   }
 
   // 星球卡片（2026-09-13 改版：战役图标 + 环境图 + 进度条 + 侵蚀等级 + 词条）
