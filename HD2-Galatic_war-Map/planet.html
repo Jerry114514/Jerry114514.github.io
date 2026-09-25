@@ -536,7 +536,13 @@
     const img = file
       ? `<div class="biome"><img src="./assets/biomes/${esc(file)}" alt="${esc(biomeName())}" loading="lazy"><div class="cap">${esc(biomeName() || "环境")}</div></div>`
       : `<div class="biome" style="padding:18px;text-align:center" class="empty">${esc(biomeName() || "未知环境")}（无环境图）</div>`;
-    const fx = (P.activeEffects || []).map((id) => EFFECT_CN[String(id)] || ("效果 #" + id));
+    // 同一效果可能有多个 id 映射到同一个中文名（实测 MARFARK 的 activeEffects=[1248,1249]
+    // 都是「炽灼部队」）→ 按名字去重，避免同一词条显示两遍
+    const fx = [];
+    (P.activeEffects || []).forEach((id) => {
+      const n = EFFECT_CN[String(id)] || ("效果 #" + id);
+      if (fx.indexOf(n) < 0) fx.push(n);
+    });
     const tags = fx.length ? fx.map((n) => `<span class="tag">⚡ ${esc(n)}</span>`).join("")
       : `<p class="empty">当前没有生效中的星球效果（词条）。</p>`;
     return `${img}
