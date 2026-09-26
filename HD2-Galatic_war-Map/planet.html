@@ -215,6 +215,23 @@
   const RACE_CN = { 1: "超级地球", 2: "终结族", 3: "机器人", 4: "光能者" };
   const LIB_RATE_K = 32;                       // 与 galaxy-map-v2.html 同值
   const ETA_MAX_H = 720;                       // 30 天以上不显示
+  /* 「等效推进速率」的基准球：血量 100 万（游戏里最常见的档位；2026-09-26 两个快照里都是 273 颗中的 181 颗）。
+     ⚠ 为什么需要它（2026-09-26 用户反馈「300 万血 + 1.5 抵抗的西斯，全服 90% 人打了 5 天，体感与数字不符」）：
+       界面上的速率是**百分比/小时**，分母就是该星球自己的 maxHealth，所以
+         · 100 万血 / 抵抗 1.5 → 净速率 X %/h
+         · 300 万血 / 抵抗 1.5 → 净速率**同样是** X %/h（血量不改变百分比速率）
+       但两者的**绝对**进展差了 3 倍。要让"体感"回到数字上，就得回到绝对值：
+         施加(血/秒) = 玩家数 × 影响系数 × K ÷ 3600
+         回血(血/秒) = 抵抗度% × maxHealth ÷ 3600
+       两者的差（净血/秒）换算成"基准球的 %/h"就是等效推进速率 —— 这样 300 万血的星球
+       会诚实地显示出"等效只有 1/3 的速度"，与"打 5 天"的体感一致。
+     口径出处与实测见交接文档 §19.36；对分母做任何改动都要同步更新 srcHtml() 里的口径表。 */
+  const BASE_MAX_HEALTH = 1000000;
+  // 相对基准球的血量倍数：>1 表示这颗星球比基准球更"厚"
+  const hpRatioOf = (p) => (p && p.maxHealth > 0) ? p.maxHealth / BASE_MAX_HEALTH : 1;
+  // 等效推进速率（基准球口径）：净速率 × 血量倍数。
+  // 含义 =「同样的绝对投入，放在一颗 100 万血的基准球上，每小时能推进多少 %」
+  const eqRateOf = (p) => netOf(p) * hpRatioOf(p);
   const REGION_TYPE_ZH = { Settlement: "定居点", Town: "城镇", City: "城市", MegaCity: "大城市" };
   const REGION_STARS = { Settlement: 1, Town: 2, City: 3, MegaCity: 4 };
 
@@ -382,6 +399,7 @@
     const total = (DATA.player_distribution && DATA.player_distribution.total) || 0;
     const share = total > 0 ? (P.players || 0) / total * 100 : 0;
     const r = netOf(P), eta = etaOf(P);
+    const hpRatio = hpRatioOf(P), eqRate = eqRateOf(P);
 
     const status = isDef ? { cn: "⚠ 防御战 · 入侵中", cls: "def" }
       : showLib ? { cn: "✓ 已解放 · 超级地球控制中", cls: "ok" }
@@ -401,8 +419,13 @@
       ["施加影响", "+" + grossOf(P).toFixed(3) + "%/h", "在线玩家 × 影响系数"],
       ["抵抗度", P.resistance != null ? (+P.resistance).toFixed(2) + "%" : "—", "敌方抵抗（%/h）"],
       ["净速率", (r >= 0 ? "+" : "") + r.toFixed(3) + "%/h", "推演：施加 − 抵抗"],
+      // 等效推进速率（2026-09-26 新增）：把"血厚"这件事折回百分比，才会与体感一致。
+      // 血量 = 基准时与净速率完全相同；血量 3 倍时只有净速率的 1/3（同一份绝对投入摊到 3 倍血池上）。
+      ["等效推进速率", (eqRate >= 0 ? "+" : "") + eqRate.toFixed(3) + "%/h",
+        "百万血基准：净速率 × " + hpRatio.toFixed(2) + " 倍血量"],
       ["预计解放", eta == null ? (r < 0 ? "不会解放（净速率为负）" : "—") : fmtHours(eta), "按当前净速率线性外推"],
-      ["血量", fmt(P.health) + " / " + fmt(P.maxHealth), "剩余 / 上限"],
+      ["血量", fmt(P.health) + " / " + fmt(P.maxHealth),
+        hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"],
       ["星区", secCn(), P.sector ? P.sector : "取自 tables/starmap.json"],
       ["所属阵营", OWN_CN[owner] || owner, owner],
     ].map(([k, v, s]) => T.r([T.t(esc(k)), T.t(esc(v), "num hi"), T.t(esc(s), "dim")])).join("");
@@ -438,7 +461,12 @@
                 <div class="bar"><i style="width:${Math.min(100, lib).toFixed(2)}%"></i><span class="mk" style="left:${Math.min(100, lib).toFixed(2)}%"></span></div>
                 <div class="rate">
                   ${showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
-                    : `<span>净速率 <b class="${r >= 0 ? "up" : "down"}">${r >= 0 ? "▲" : "▼"} ${Math.abs(r).toFixed(3)}%/h</b> · 推演</span>
+                            + (hpRatio > 1.001
+                               ? `<span>等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准</span>`
+                               : "")
+                    : `<span>净速率 <b class="${r >= 0 ? "up" : "down"}">${r >= 0 ? "▲" : "▼"} ${Math.abs(r).toFixed(3)}%/h</b> · 推演${
+                        // 只有"血比基准厚"时才补这一句：基准球上两者数值相同，写出来是噪音
+                        hpRatio > 1.001 ? `（等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准）` : ""}</span>
                        ${eta != null ? `<span>预计 <b>${fmtHours(eta)}</b> 后解放</span>` : ""}`}
                 </div>
               </div>
@@ -529,7 +557,9 @@
     if (!rows.length) return `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
     return T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
       `<p class="note" style="margin-top:10px">说明：速率是**推演值**（在线玩家 × 影响系数 ÷ 血量 − 抵抗度）。
-      星图页在同一次会话里做两次观测后会切成「实测」，本页每次打开都是新会话，故一律标「推演」。</p>`;
+      星图页在同一次会话里做两次观测后会切成「实测」，本页每次打开都是新会话，故一律标「推演」。
+      「等效推进速率」= 净速率 × 血量倍数（基准球 100 万血）：同样一份绝对投入，放在基准球上每小时能推进多少。
+      界面上的「净速率」分母是这颗星球自己的血量，所以<b>血厚不会让它变小</b> —— 两者一起看才看得出这颗球有多"厚"。</p>`;
   }
 
   function statsHtml() {
@@ -722,6 +752,8 @@
       ["影响系数", DATA.impactMultiplier != null ? (+DATA.impactMultiplier).toFixed(6) : "—"],
       ["解放进度", "1 − health / maxHealth"],
       ["速率", `在线玩家 × 影响系数 × ${LIB_RATE_K} ÷ 血量 − 抵抗度`],
+      ["等效推进速率", `净速率 × 血量倍数，基准球 = 100 万血（2026-09-26 两个快照里都是 273 颗中的 181 颗）`],
+      ["抵抗度", "敌方回血换算成该星球血量的百分比／小时（绝对值 = 抵抗度% × 血量 ÷ 3600）"],
       ["累计统计", "官方 <code>war_stats.planets_stats</code>（时间字段单位＝毫秒）"],
     ].map(([k, v]) => T.r([T.t(esc(k)), T.t(v, "hi")]));
     return T.table([{ t: "项目" }, { t: "口径 / 取值" }], rows) +
