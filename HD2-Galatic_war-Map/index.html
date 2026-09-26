@@ -1937,6 +1937,18 @@ function renderPlayers(data) {
     poi.push(`<div class="pd-chip">🌍 星区：${esc(planetSectorCn(p))}</div>`);
     const poiHtml = poi.join("");
 
+    // 兴趣点之后的固定出口：**星球资料页**（2026-09-26 补内链，接手必读 §8-2）
+    // 为什么要单独给一条：本卡展开区是"卡片内详情"，而 `planet.html?idx=N` 是独立页
+    //（含战役/战略分析、星球统计、环境条件、补给线、逐区域明细），此前**只有"有区域"的
+    //  84 颗星球**能从卡片上的「📄 资料」链过去，其余 189 颗在整个主页上没有任何资料页入口。
+    // 放在展开区末尾 = 用户已经在看这颗星球的细节，正是"想再看全的"那一刻。
+    // stopPropagation：卡片整体是点击展开/收起的手风琴，别让这次点击把刚展开的详情收回去。
+    const detailLink = `<div class="pd-section">
+        <a href="./planet.html?idx=${p.index}" onclick="event.stopPropagation()"
+           title="打开 ${esc(name.cn || name.en)} 的完整资料页（战役 / 统计 / 环境 / 补给线）"
+           style="display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-size:0.78rem;text-decoration:none;border:1px solid rgba(91,163,208,.45);border-radius:999px;padding:4px 12px;width:fit-content">📄 打开完整资料页<span style="opacity:.7">（战役 / 统计 / 环境 / 补给线）</span></a>
+      </div>`;
+
     return `
       <div class="planet-detail">
         ${strat}
@@ -1946,6 +1958,7 @@ function renderPlayers(data) {
           <div class="pd-title">兴趣点<span class="pd-cn">POINTS OF INTEREST</span></div>
           <div class="pd-chips">${poiHtml}</div>
         </div>
+        ${detailLink}
       </div>`;
   }
 
@@ -2220,7 +2233,11 @@ function renderPlayers(data) {
       ${hideCampType ? "" : `<span class="pc-campwrap">${campIcon}</span>`}
       <span class="pc-headtxt">
         ${hideCampType ? "" : `<span class="pc-type">${esc(isDefense ? "防御战" : "解放战役")}</span>`}
-        <span class="pc-name${isDefense ? " def" : ""}">${esc(name.cn || name.en)}</span>
+        ${/* 星球名做成资料页链接（2026-09-26 补内链）：全站最常用的入口就是这颗星球的名字，
+             不该只有"有区域"的星球才有资料页入口。stopPropagation 保住卡片自身的点击展开。 */
+          `<a class="pc-namelink" href="./planet.html?idx=${p.index}" onclick="event.stopPropagation()"
+              title="打开 ${esc(name.cn || name.en)} 的完整资料页（战役 / 统计 / 环境 / 补给线）">` +
+          `<span class="pc-name${isDefense ? " def" : ""}">${esc(name.cn || name.en)}</span></a>`}
       </span>
     </div>`;
 
@@ -2720,6 +2737,13 @@ function renderPlayers(data) {
             <span class="sector-chevron">▶</span>
             <span class="sector-name">${esc(cn)}</span>
             <span class="sector-name-en">${esc(enLabel)}</span>
+            ${/* 维基「星球索引」的带参深链（2026-09-26 补内链，接手必读 §8-2）：
+                 索引页支持 ?s=<星区名>，落地即**自动展开并滚到该星区**（跳转逻辑见 planets.html）。
+                 为什么不逐个星球列链接：那是 273 条链接，会把这个折叠头挤爆；本板块的可浏览
+                 列表在索引页，这里给的是"去那个星区的完整列表"。stopPropagation 保住折叠头。 */
+              `<a class="sector-link" href="../HD2_Wiki/planets.html?s=${encodeURIComponent(cn)}"
+                 onclick="event.stopPropagation()" title="在星球索引中查看「${esc(cn)}」星区的全部星球（归属 / 解放度 / 在线玩家 / 区域数）"
+                 style="color:var(--blue);font-size:0.72rem;text-decoration:none;border:1px solid rgba(91,163,208,.4);border-radius:999px;padding:2px 9px;white-space:nowrap">📄 星球索引</a>`}
             <span class="sector-count">${list.length} 颗</span>
           </div>
           <div class="sector-body"><div class="sector-body-inner">${cards}</div></div>

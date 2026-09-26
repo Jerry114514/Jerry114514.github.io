@@ -36,6 +36,9 @@
       font-size: 0.95rem; color: var(--yellow); letter-spacing: 0.04em; }
     .sec-hd .en { color: var(--text-mute); font-size: 0.74rem; letter-spacing: 0.12em; font-weight: 400; }
     .sec-hd .n { margin-left: auto; color: var(--text-mute); font-size: 0.74rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+    /* 深链落点高亮（?s=<星区>，2026-09-26）：给一小段黄色底把"就是这一块"点出来 */
+    .sec-hd.focus-hl { background: rgba(245, 197, 24, 0.10); border-radius: 6px;
+      box-shadow: inset 0 0 0 1px rgba(245, 197, 24, 0.35); transition: background 0.4s; }
     #list { max-width: 1180px; margin: 0 auto; padding: 0 14px 40px; }
     .pl-name a { color: var(--text); text-decoration: none; }
     .pl-name a:hover { color: var(--yellow); }
@@ -102,6 +105,17 @@
   var OWN_COLOR = { Humans: "#5BA3D0", Terminids: "#F5C518", Automaton: "#D6806D", Illuminate: "#CF64F8" };
   var OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
   var curFaction = "all", curSort = "players";
+  /* 星区深链（2026-09-26 新增）：主页「星区目录」每个星区头给出 ../HD2_Wiki/planets.html?s=<星区中文名>。
+     为什么要它：主页那个板块是折叠头 + 卡片，压根没有逐星球的可浏览列表；而本页是"某星区有哪些星球"
+     的完整表格。落地时滚到该星区并高亮，跳转才不像是"到了另一个无关页面"。
+     ⚠ 不要把 curSort 改成 "sector"（首版就这么写的，实测踩到）：`render()` 里 `curSort === "sector"`
+     走的是**扁平表**分支（按星区名排序、不分组、也没有 .sec-hd 元素）→ 既没有分组标题可滚，
+     又把本页默认的「按星区分组」视图换掉了。深链只负责**定位**，视图仍由用户的排序选择决定。
+     注意：s 的值是**中文星区名**，必须与 render() 里 groups 的键一致（找不到就静默不滚）。 */
+  var FOCUS_SEC = (function () {
+    try { return (new URLSearchParams(location.search).get("s") || "").trim(); }
+    catch (e) { return ""; }
+  })();
 
   var esc = function (s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -252,11 +266,33 @@
       var g = groups[key];
       if (!g || !g.items.length) return;
       var players = g.items.reduce(function (a, b) { return a + b.players; }, 0);
-      html += '<h2 class="sec-hd">' + esc(g.cn) + (g.en ? ' <span class="en">' + esc(g.en) + "</span>" : "") +
+      html += '<h2 class="sec-hd" data-sec="' + esc(key) + '">' +
+        esc(g.cn) + (g.en ? ' <span class="en">' + esc(g.en) + "</span>" : "") +
         '<span class="n">' + g.items.length + " 颗 · 在线 " + fmt(players) + "</span></h2>" +
         HEAD + g.items.slice().sort(cmp).map(rowHtml).join("") + "</tbody></table></div>";
     });
     host.innerHTML = html;
+    focusSector();
+  }
+
+  /* 滚动到 ?s= 指定的星区并高亮一下（找不到就静默跳过，不影响正常浏览）。
+     ⚠ 不要用 querySelector('.sec-hd[data-sec="' + FOCUS_SEC + '"]')：星区名会先经 esc() 写进
+     HTML（中文本身没问题，但星区名里若有引号就会把选择器拼坏），而且属性值要再走一次 CSS 转义。
+     首版就是这么写的，实测**页面首次加载时匹配不到**（手动复跑才滚），改成逐个读 dataset 比对。
+     用 rAF 双跳：等浏览器把这批表格真正布局完，scrollIntoView 才落得准。 */
+  function focusSector() {
+    if (!FOCUS_SEC || focusSector.done) return;
+    var list = document.querySelectorAll(".sec-hd[data-sec]"), el = null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].getAttribute("data-sec") === FOCUS_SEC) { el = list[i]; break; }
+    }
+    if (!el) return;
+    focusSector.done = true;
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      el.scrollIntoView({ block: "start" });
+      el.classList.add("focus-hl");
+      window.setTimeout(function () { el.classList.remove("focus-hl"); }, 2200);
+    }); });
   }
 
   boot();
