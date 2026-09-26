@@ -555,6 +555,7 @@
         <div><span class="ln" style="border-color:rgba(239,68,68,.8)"></span>入侵战役（箭头=入侵方方向）</div>
         <div><span class="ln" style="border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1"></span>我方蓝 → 敌方阵营色</div>
         <div><i style="border:2px solid var(--blue);background:none"></i>战术目标星球</div>
+        <div><span class="ln" style="border-image:linear-gradient(90deg,#143ca0,#0096c8,#00c878,#e6c828,#f07820,#ff3c3c,#fff5eb) 1"></span>玩家热力：冷 → 白热（**相对**密度，非人数刻度）</div>
       </div>
     </section>
     <div class="muted" id="srcnote"></div>
@@ -1544,17 +1545,29 @@ async function boot() {
         { id: "faction-line", type: "line", source: "faction",
           paint: { "line-color": ["get", "color"], "line-width": 1.1, "line-opacity": .45 } },
 
-        // 玩家热力（默认关）。色带里 **0.05 那一档是关键**：没有它，权重小的星球
-        // （对数标度后仍在 0.05~0.5 之间）会整片落在全透明区、看起来像没生效（@see heatFC 注释）
+        // 玩家热力（默认关）＝ **热成像风格**（2026-09-26 用户要求："按热成像的形式"）。
+        // 视觉配方：冷（深蓝）→ 青 → 绿 → 黄 → 橙红 → 白热核心，alpha 随密度攀升。
+        // 三条设计约束（改参数前先读）：
+        //   ① 色带必须**从低密度就可见**：旧版第一档是 0.2 且 alpha 只有 .25，权重小的星球整片落空，
+        //      整层看起来像没生效（见 §19.40）。现在 0.03 起就有 alpha .35。
+        //   ② alpha 阶梯不能太急：热成像的"白热核心"只该出现在真热点上，否则整图糊成一片白、
+        //      也会把底下的补给线/星球图标盖掉。
+        //   ③ 图层顺序在补给线**下面**（本块位置）→ 热力不会遮住线与图标，只在地图底子上发光。
         { id: "heat", type: "heatmap", source: "heat", layout: { visibility: "none" },
           paint: {
             "heatmap-weight": ["get", "value"],
-            "heatmap-intensity": 1.15,
-            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 4, 14, 8, 34, 12, 68],
-            "heatmap-opacity": .7,
+            "heatmap-intensity": 1.35,
+            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 4, 16, 8, 38, 12, 74],
+            "heatmap-opacity": .85,
             "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
-              0, "rgba(0,0,0,0)", .05, "rgba(245,197,24,.22)", .25, "rgba(245,197,24,.45)",
-              .5, "rgba(245,140,24,.62)", .75, "rgba(239,96,40,.8)", 1, "rgba(239,68,68,1)"],
+              0,   "rgba(0,0,0,0)",
+              .03, "rgba(20,60,160,.35)",     // 深蓝：刚有人的边缘
+              .15, "rgba(0,150,200,.5)",      // 青
+              .35, "rgba(0,200,120,.6)",      // 绿
+              .55, "rgba(230,200,40,.72)",    // 黄
+              .75, "rgba(240,120,30,.85)",    // 橙红
+              .9,  "rgba(255,60,60,.92)",     // 红
+              1,   "rgba(255,245,235,1)"],    // 白热核心
           } },
 
         // 补给线（全部边）：同阵营用本阵营暗色，跨阵营稍暗以让渐变层突出
