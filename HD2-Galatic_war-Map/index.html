@@ -25,7 +25,7 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260924b">
+  <link rel="stylesheet" href="./css/home.css?v=20260926a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -212,6 +212,7 @@
       <div class="block-head">
         <span class="block-emoji">⚔️</span>
         <h2 class="block-title">当前可攻打星球</h2>
+        <div class="sortbar" id="attackable-sort" role="group" aria-label="排序方式"></div>
         <span class="block-meta" id="attackable-meta"></span>
       </div>
       <div id="attackable-content">
@@ -1927,12 +1928,20 @@ function renderPlayers(data) {
     if (currentData && currentData.dss && currentData.dss.planetIndex === p.index) {
       poi.push(`<div class="pd-chip poi-dss">🛰️ DSS 民主空间站停靠中</div>`);
     }
-    // 敌军反攻预警
-    const atk = ((currentData || {}).planet_attacks || []).find(a => a.target === p.index);
-    if (atk) {
-      const srcP = (currentData.planets || []).find(x => x.index === atk.source);
-      const srcN = srcP ? planetName(srcP, starMap) : null;
-      poi.push(`<div class="pd-chip poi-atk">⚠️ 敌军反攻中 · 来自 ${esc(srcN ? (srcN.cn || srcN.en) : "#" + atk.source)}</div>`);
+    // 入侵状态 与 敌星邻接 —— 两件事分开说（2026-09-26 修，合作方提问）
+    // 旧版：`planet_attacks` 里只要 target 命中就写「⚠️ 敌军反攻中 · 来自 X」。
+    //   该表是**跨阵营相邻对**（恒 ~67 条），不是"正在被打" → 超级地球持有的星球也会被判"遭反攻"
+    //   （用户截图：欧绍恩）。现在改成两条各自如实：
+    //     ① 真被入侵（campaigns 防御类 / planetEvents / attacking）→ 才说"正遭敌军入侵"；
+    //     ② 仅与敌星相邻 → 中性写「邻近敌星」，也不再用"反攻/来自"这种带方向的措辞。
+    const inv = currentData ? invasionMapOf(currentData)[p.index] : null;
+    if (inv) {
+      const srcCn = inv.src ? (EVENT_RACE_CN[inv.src] || "") : "";
+      poi.push(`<div class="pd-chip poi-atk">⚠️ 正遭敌军入侵${srcCn ? " · 发起方 " + esc(srcCn) : ""}</div>`);
+    }
+    const adj = currentData ? adjacentEnemyPlanets(currentData, p.index, 3) : [];
+    if (adj.length) {
+      poi.push(`<div class="pd-chip poi-adj">🛰️ 邻近敌星：${adj.map(x => esc(x.cn)).join("、")}</div>`);
     }
     poi.push(`<div class="pd-chip">🌍 星区：${esc(planetSectorCn(p))}</div>`);
     const poiHtml = poi.join("");
@@ -2483,6 +2492,120 @@ function renderPlayers(data) {
   });
 
   /* ==============================================================
+     入侵与邻接：两件**不同**的事，别混着用（2026-09-26 修）
+     --------------------------------------------------------------
+     背景（合作方提问）：主页星球卡把"与敌星相邻"写成了「敌军反攻中 · 来自 X」，
+     而欧绍恩本来就是超级地球持有 → 语义自相矛盾。
+     数据口径：
+       · `planet_attacks`（companion `warStatus.planetAttacks`）= **跨阵营相邻对**，
+         恒 ~67 条。星图 2026-09-24 已明确按**无向邻接**使用（galaxy-map-v2.html:1293 有注释）。
+         **它不代表"正在被打"**。
+       · 真正"正在被打"的三个来源：`campaigns` 里防御类（campaignType=defense / type∈{1,4}）、
+         `planet_events`、以及 `planets[].attacking` 布尔位。
+     ============================================================== */
+
+  // 「这颗星球正遭入侵」的集合：`{index: {cn, src}}`（src = 入侵来源，取不到则空）
+  // ⚠ 判据要与 `renderDefenseRecon()` / `renderAttackable()` 的排除条件**保持一致**，
+  //   否则会出现"紧急战情里有、这里说没被打"的矛盾。
+  // planetEvents.race 的取值与 planet.html 的 RACE_CN 同源（1 超级地球 / 2 终结族 / 3 机器人 / 4 光能者）
+  const EVENT_RACE_CN = { 1: "超级地球", 2: "终结族", 3: "机器人", 4: "光能者" };
+  function invasionMapOf(data) {
+    const out = {};
+    (data.campaigns || []).forEach(c => {
+      const i = (c.planet || {}).index;
+      if (i == null) return;
+      // 官方 type 语义：0=解放战，1/4=防御战；抓取脚本另有 campaignType / eventType 两个派生字段
+      const isDef = String(c.campaignType || "").toLowerCase() === "defense"
+        || c.type === 1 || c.type === 4 || c.type === "1" || c.type === "4";
+      if (isDef) out[i] = out[i] || {};
+    });
+    (data.planet_events || []).forEach(e => {
+      const i = e.planetIndex;
+      if (i == null) return;
+      out[i] = out[i] || {};
+      out[i].event = e;
+      out[i].src = e.race;      // planetEvents 带 race（发起方阵营）
+    });
+    (data.planets || []).forEach(p => {
+      if (p.attacking) { out[p.index] = out[p.index] || {}; }
+    });
+    return out;
+  }
+
+  // 便捷判据（键存在即"正遭入侵"）。放在函数外，**避免把方法挂在返回对象上** ——
+  // 那样 `Object.keys(invasionMap)` 会多出一个 `isInvaded` 键，被误当成一颗星球
+  //（`updateAttackWarning` 正是那样遍历的）。
+  const isInvadedIn = (inv, i) => i != null && Object.prototype.hasOwnProperty.call(inv, i);
+
+  // 与某颗星球**相邻**的敌方星球（无向邻接上的另一端），最多 3 颗。
+  // 只用来回答"这颗球旁边有谁"，**绝不**用来宣称"正在被打"。
+  function adjacentEnemyPlanets(data, idx, limit) {
+    const byIdx = {};
+    (data.planets || []).forEach(p => { byIdx[p.index] = p; });
+    const seen = {};
+    const out = [];
+    for (const a of (data.planet_attacks || [])) {
+      if (a.source !== idx && a.target !== idx) continue;
+      const other = a.source === idx ? a.target : a.source;
+      if (other === idx || seen[other]) continue;
+      const op = byIdx[other];
+      if (op && String(op.currentOwner || "") === "Humans") continue;   // 只要敌方那一头
+      seen[other] = 1;
+      const nm = op ? planetName(op, data.starMap) : null;
+      out.push({ index: other, cn: nm ? (nm.cn || nm.en) : ("#" + other), owner: op ? op.currentOwner : "" });
+      if (limit && out.length >= limit) break;
+    }
+    return out;
+  }
+
+  /* ---- 「变种 / 特殊单位」白名单（2026-09-26 新增，供"可攻打星球"排序用）----
+     为什么必须**显式列白名单**：hd2_variables.json 的 categories 里除了变种，还有「环境条件」
+     （暴雨 / 火龙卷）、「作战限制」、「设施与场所」（数据中心 / 新希望城）等，全都算进来等于没排。
+     取值是 categories[].name（中文），与 tables/hd2_variables.json 一一对应；
+     名字若要改，必须**两边同时改**（改错不会报错，只会静默失去排序效果）。 */
+  const VARIANT_CATS = ["终结族变种", "终结族特殊个体", "机器人军团", "机器人特殊单位",
+                        "机器人辅助军团", "光能者宗派"];
+  // 该星球身上的"变种类"词条（去重，按 VARIANT_CATS 顺序）
+  function variantKindsOf(planet) {
+    const ids = [...new Set((planet && planet.activeEffects) || [])];
+    const hits = [];
+    ids.forEach(id => {
+      const d = effectCnDescMap[id];
+      if (!d || !d.cn || VARIANT_CATS.indexOf(d.cat) < 0) return;
+      if (hits.indexOf(d.cn) < 0) hits.push(d.cn);
+    });
+    return hits;
+  }
+  // 「当前可攻打星球」的排序档位：默认按在线玩家降序（旧版无排序 = 上游数组原序，用户看不出规则）
+  const ATTACK_SORTS = [
+    ["players", "🔥 热度"],
+    ["variants", "🧬 变种优先"],
+    ["oldest", "📅 战役旧→新"],
+  ];
+  const SORT_KEY = "hd2_attackable_sort";
+  let SORT_MODE = (function () {
+    try {
+      const v = window.localStorage.getItem(SORT_KEY);
+      return ATTACK_SORTS.some(s => s[0] === v) ? v : "players";
+    } catch (e) { return "players"; }     // 隐私模式/localStorage 被禁时静默退回默认
+  })();
+  // 渲染排序控件（放在区块头里；点击只重排，不重新取数）
+  function renderAttackableSort() {
+    const box = $("attackable-sort");
+    if (!box) return;
+    box.innerHTML = ATTACK_SORTS.map(([k, label]) =>
+      `<button type="button" data-sort="${k}" class="${k === SORT_MODE ? "active" : ""}">${esc(label)}</button>`
+    ).join("");
+    box.querySelectorAll("button").forEach(b => {
+      b.addEventListener("click", () => {
+        SORT_MODE = b.getAttribute("data-sort");
+        try { window.localStorage.setItem(SORT_KEY, SORT_MODE); } catch (e) { /* 忽略 */ }
+        if (currentData) renderAttackable(currentData);
+      });
+    });
+  }
+
+  /* ==============================================================
      渲染：区块2 可攻打星球
      ============================================================== */
   // 活动事件：planetEvents 渲染（进度条 + warTime 倒计时，倒计时机制与 DSS 同款）
@@ -2501,8 +2624,10 @@ function renderPlayers(data) {
       const raceCn = RACE[(camp || {}).faction] || "敌方";
       const pct = ev.maxHealth ? Math.min(100, Math.max(0, ev.health / ev.maxHealth * 100)) : 0;
       const expDeadline = warDeadline(ev.expireTime);
-      const atk = (data.planet_attacks || []).find(a => a.target === ev.planetIndex);
-      const evName = ev.eventType === 1 ? "紧急解放" : "星球事件 #" + ev.eventType;
+      // ⚠ 措辞订正（2026-09-26）：eventType=1 是**防御战/入侵**（敌方来打我们守），
+      //   旧文案写「紧急解放」，与同一页面其它地方的"防御战"自相矛盾；数据里这一档的
+      //   health/maxHealth 是**入侵方的剩余兵力**（打空即防守成功），所以条形图照旧、只把话说清。
+      const evName = ev.eventType === 1 ? "紧急防御 · 敌军入侵中" : "星球事件 #" + ev.eventType;
       return `
         <div class="pe-event">
           <div class="pe-head">
@@ -2511,26 +2636,29 @@ function renderPlayers(data) {
             ${cdSpan(expDeadline, "cn", "", "00:00", ' class="pe-countdown"')}
           </div>
           <div class="hp-bar"><div class="hp-bar-fill ${hpColorClass(pct)}" style="width:${pct}%"></div></div>
-          <div class="pe-sub">${esc(nm.en || "")} · 防御余量 ${pct.toFixed(1)}%${atk ? ' · <span class="pe-atk">⚠ 该星正遭敌军反攻</span>' : ""}</div>
+          <div class="pe-sub">${esc(nm.en || "")} · 防御余量 ${pct.toFixed(1)}%<span style="color:var(--text-mute)">（入侵方剩余兵力，归零即防守成功）</span></div>
         </div>`;
     }).join("");
     root.innerHTML = html;
     cdTick();   // 立即刷新一次；此后由全局倒计时引擎每秒推进
   }
 
-  // 反攻预警：urgent-meta 追加（renderDefenseRecon 之后调用）
+  // 入侵预警：urgent-meta 追加（renderDefenseRecon 之后调用）
+  // ⚠ 2026-09-26 修：旧版直接把 `planet_attacks` 的**全部邻接对**列在这里（60+ 条，恒有），
+  //   与「紧急战情」自己列出的 0~2 个防御目标完全对不上（用户看到的是"进攻线 68 条"却只有一个红目标）。
+  //   现在只统计**真入侵**的星球，数量与下面的卡片保持一致。
   function updateAttackWarning(data) {
     const meta = $("urgent-meta");
     if (!meta) return;
-    const atks = data.planet_attacks || [];
-    if (!atks.length) return;
-    const names = atks.map(a => {
-      const p = (data.planets || []).find(x => x.index === a.target);
-      const n = p ? planetName(p, data.starMap) : null;
-      return n ? (n.cn || n.en) : ("#" + a.target);
-    });
+    const names = Object.keys(invasionMapOf(data)).map(i => {
+      const p = (data.planets || []).find(x => x.index === Number(i));
+      if (!p) return null;
+      const n = planetName(p, data.starMap);
+      return n ? (n.cn || n.en) : ("#" + i);
+    }).filter(Boolean);
+    if (!names.length) return;
     const cur = meta.textContent;
-    meta.textContent = (cur ? cur + " · " : "") + `⚠ 敌军进攻线 ${atks.length} 条：${names.slice(0, 3).join("、")}${atks.length > 3 ? " 等" : ""}`;
+    meta.textContent = (cur ? cur + " · " : "") + `⚠ 正遭入侵：${names.slice(0, 3).join("、")}${names.length > 3 ? " 等 " + names.length + " 颗" : ""}`;
   }
 
   function renderDefenseRecon(data) {
@@ -2548,7 +2676,8 @@ function renderPlayers(data) {
       if (!p._campaign) return false;
       const c = p._campaign;
       return c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1;
-    });
+    // 按 index 去重（同一星球重复出现会把同一张卡渲染两次）
+    }).filter((p, i, arr) => p.index == null || arr.findIndex(x => x.index === p.index) === i);
     if (urgent.length === 0) {
       root.innerHTML = `<div class="empty">当前无紧急战情。</div>`;
       meta.textContent = "";
@@ -2577,6 +2706,7 @@ function renderPlayers(data) {
   function renderAttackable(data) {
     const root = $("attackable-content");
     const meta = $("attackable-meta");
+    const inv = invasionMapOf(data);   // 「正遭入侵」集合：这批星球归「紧急战情」管，不在这里重复展示
 
     if (data.campaigns && data.campaigns.__err) {
       root.innerHTML = `<div class="error">无法获取战役列表：${esc(data.campaigns.__err)}</div>`;
@@ -2597,19 +2727,25 @@ function renderPlayers(data) {
         ...(fp || {}),
         _campaign: c
       };
-    // 排除防御战+侦察战（由紧急战情模块独立展示）
-    }).filter(p => {
-      const c = p._campaign;
-      return !(c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1);
-    });
+    // 排除防御战+侦察战+星球事件（由紧急战情模块独立展示）
+    }).filter(p => !isInvadedIn(inv, p.index));
 
     // 其次取有 attacking 但不在 campaigns 里的（被入侵但暂无主要战役）
     const seenIdx = new Set(fromCampaigns.map(p => p.index));
     const fromAttacking = (data.planets || [])
       .filter(p => (p.attacking || []).length > 0 && !seenIdx.has(p.index))
-      .map(p => ({ ...p, _fromAttacking: true }));
+      .map(p => ({ ...p, _fromAttacking: true }))
+      .filter(p => !isInvadedIn(inv, p.index));   // 已由「紧急战情」承接
 
-    const list = [...fromCampaigns, ...fromAttacking];
+    // 合并 + **按 index 去重**（campaigns 里同一星球理论上可能重复，重复会把同一张卡渲染两次）
+    const merged = [...fromCampaigns, ...fromAttacking];
+    const seen = new Set();
+    const list = merged.filter(p => {
+      if (p.index == null) return true;
+      if (seen.has(p.index)) return false;
+      seen.add(p.index);
+      return true;
+    });
 
     if (list.length === 0) {
       root.innerHTML = `<div class="empty">当前无可攻打目标，银河暂时和平。</div>`;
@@ -2617,9 +2753,33 @@ function renderPlayers(data) {
       return;
     }
 
-    meta.textContent = `${list.length} 个活跃目标`;
+    /* 排序（2026-09-26 新增，合作方提问）：
+       旧版**完全没有排序** —— 顺序 = 上游 `campaigns` 数组原序（≈ campaignId 升序 = 战役创建先后），
+       与"哪颗球人多/值得打"无关，新战役追加在末尾、旧战役结束会整段前移，用户看不出规则。
+       现在是三档显式排序，默认「🔥 热度」（在线玩家降序）。 */
+    const playersOf = (p) => p.players || 0;
+    const variantOf = (p) => variantKindsOf(p)[0] || "";
+    const sorted = list.slice();
+    if (SORT_MODE === "variants") {
+      // 变种/特殊单位优先；同级按在线玩家降序（否则同级里仍是随机序）
+      sorted.sort((a, b) => (variantOf(b) ? 1 : 0) - (variantOf(a) ? 1 : 0) || playersOf(b) - playersOf(a));
+    } else if (SORT_MODE === "oldest") {
+      // 战役创建先后：campaignId 小的先打（没有 campaign 的排在最后），同级按玩家降序
+      sorted.sort((a, b) => {
+        const ca = a._campaign && a._campaign.id != null ? a._campaign.id : Infinity;
+        const cb = b._campaign && b._campaign.id != null ? b._campaign.id : Infinity;
+        return ca - cb || playersOf(b) - playersOf(a);
+      });
+    } else {
+      sorted.sort((a, b) => playersOf(b) - playersOf(a));
+    }
 
-    const html = list.map(p => {
+    renderAttackableSort();
+    const vCount = list.filter(p => variantOf(p)).length;
+    meta.textContent = `${list.length} 个活跃目标`
+      + (SORT_MODE === "variants" && vCount ? ` · 其中 ${vCount} 个带变种/特殊单位` : "");
+
+    const html = sorted.map(p => {
       const owner = p.currentOwner || "Unknown";
       const isHuman = owner === "Humans";
       // 侦察战（Recon）：recon_stats 有该星球数据时用专用卡片

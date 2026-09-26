@@ -307,6 +307,19 @@
       text-align: right;
       line-height: 1.35;
     }
+    /* 区块头里的排序控件（2026-09-26 新增：可攻打星球）。
+       放区块头而不是内容区：区块头本来就是"标题 + 右侧 meta"的 flex 行，塞一个紧凑控件不改变版面，
+       窄屏时随 .block-head 的 wrap 规则掉到第二行（该规则已在移动端断点里登记）。 */
+    .sortbar { display: flex; gap: 6px; flex-wrap: wrap; align-self: center; }
+    .sortbar button {
+      padding: 3px 10px; border: 1px solid var(--line-2); border-radius: 999px;
+      background: transparent; color: var(--text-dim); font-size: 0.74rem; cursor: pointer;
+      font-family: inherit; transition: all 0.15s;
+    }
+    .sortbar button:hover { border-color: var(--yellow); color: var(--yellow); }
+    .sortbar button.active { background: var(--yellow); color: #000; border-color: var(--yellow); font-weight: 600; }
+    .pd-chip.poi-adj { border-color: rgba(148, 163, 184, 0.4); color: var(--text-dim); }
+
     /* DSS 停靠位置已移入面板内部（.dss-hud .dss-loc），原 #dss-meta 规则作废 */
 
     /* ============================================================
