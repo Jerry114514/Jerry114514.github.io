@@ -666,7 +666,12 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       goal = 100;
       const pl = currentData && currentData.planets
         ? currentData.planets.find(x => x.index === planet) : null;
-      if (pl && pl.maxHealth) {
+      // ⚠ 2026-09-26 修：己方（超级地球）持有的星球官方报满血 → (1 − health/maxHealth) 恒为 0，
+      //   于是「解放 XX 星球」这个任务即使已完成也显示 0%（用户反馈：丈人一湾已解放，任务仍 0/100）。
+      //   口径与卡片/星图/资料页统一：我方星球记 100%。
+      if (pl && String(pl.currentOwner || "").toLowerCase() === "humans") {
+        current = 100;
+      } else if (pl && pl.maxHealth) {
         current = Math.round((1 - (pl.health || 0) / pl.maxHealth) * 100);
       } else {
         current = 0;
@@ -2165,10 +2170,16 @@ function renderPlayers(data) {
     const isDefense = camp.campaignType === "defense" || camp.eventType === 1
       || camp.type === "defense" || camp.type === 1 || camp.type === 4;
     // 血量 / 解放度（沿用原有公式）
+    // ⚠ 2026-09-26 修：**己方（超级地球）持有的星球，官方 API 报的是满血**，
+    //   于是 1 − health/maxHealth 恒为 0% —— 卡片会显示「已解放 0.00%」且不进"已解放"样式，
+    //   与"这颗星球已经拿下来了"自相矛盾（用户反馈：丈人一湾已解放却显示 0%）。
+    //   星图 §19.24、星球资料页都修过同一类问题，主页这张卡此前漏了。
+    //   口径统一：**非防御战的我方星球 = 100%**（防御战走 campaign 双进度，不受影响）。
+    const humanOwned = String(p.currentOwner || "").toLowerCase() === "humans";
     const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
-    const libPctRaw = Math.max(0, Math.min(100, 100 - hpPctRaw));
+    const libPctRaw = (!isDefense && humanOwned) ? 100 : Math.max(0, Math.min(100, 100 - hpPctRaw));
     const libShown = libPctRaw.toFixed(2);
-    const isLiberated = statusLabel === "已解放" || libPctRaw >= 99.9;
+    const isLiberated = (!isDefense && humanOwned) || statusLabel === "已解放" || libPctRaw >= 99.9;
 
     // ---- ① 顶部：阵营 + 资源/玩家 ----
     // 入侵（防御战）星球：整张卡改用**入侵方**的阵营色与图标。
