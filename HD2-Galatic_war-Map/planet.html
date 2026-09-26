@@ -601,7 +601,11 @@
       const ours = String(P.currentOwner || "").toLowerCase() === "humans";
       let p = lv ? libShowOf(lv.owner, lv.health, mh) : null;
       if (p == null && ours) p = 100;
-      const ownerCn = lv && lv.owner ? (OWN_CN[lv.owner] || lv.owner) : (rg.owner || "—");
+      // 归属：有运行时数据用运行时；没有则用静态表（wiki Lua 模块，字段是英文原名）——
+      // 己方星球直接记「超级地球」（静态表的 owner 是抓取当时的阵营，早就过期了，
+      // 之前这里会显示 "Terminids" 这种英文原名，与旁边 100% 自相矛盾）。
+      const ownerCn = (lv && lv.owner) ? (OWN_CN[lv.owner] || lv.owner)
+        : (ours ? "超级地球" : (OWN_CN[rg.owner] || rg.owner || "—"));
       const zh = zhMap[rg.name] || "";
       rows.push(T.r([
         T.t(`${typeOf === "Megafactory" ? "🏭" : "🏙"} ${esc(zh || rg.name)}` +
