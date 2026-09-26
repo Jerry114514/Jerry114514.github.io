@@ -2141,6 +2141,14 @@ function renderPlayers(data) {
     const st = PC_REGIONS[String(p.index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
+    // 己方星球：官方在"没有区域战役"时不再下发 regions[]，此时区域进度只能是"—"，
+    // 但整颗星球都拿下来了，逐条显示"—"会让人以为区域数据丢了 → 我方星球一律记 100%。
+    // ⚠ 有运行时数据时**仍以运行时为准**（我方星球上也可能是某个区域还在打）。
+    const ours = String(p.currentOwner || "").toLowerCase() === "humans";
+    const pctOf = (live, meta) => {
+      const v = pcRegionLib(live, meta);
+      return (v == null && ours) ? 100 : v;
+    };
     const pctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
     const row = (o) => `<div class="pc-rg">
       <span class="ico">${o.megafactory ? "🏭" : "🏙"}</span>
@@ -2152,7 +2160,7 @@ function renderPlayers(data) {
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
       megafactory: pcRegionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: pcRegionLib((p.regions || [])[k], r),
+      pct: pctOf((p.regions || [])[k], r),
     }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="tip">城市 / 超大型工厂</span>` +

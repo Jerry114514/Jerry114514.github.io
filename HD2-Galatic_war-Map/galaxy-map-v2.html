@@ -2323,6 +2323,13 @@ function bindUI(data, planets) {
     const st = REGIONS[String(index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = REGIONS_ZH[String(index)] || {};
+    // 己方星球在"无区域战役"时官方不再下发 regions[] → 逐条只能显示"—"；
+    // 整颗星球都是我们的，故我方星球一律记 100%（有运行时数据时仍以运行时为准）。
+    const ours = String(p.currentOwner || "").toLowerCase() === "humans";
+    const pctOf = (live, meta) => {
+      const v = regionLibPct(live, meta);
+      return (v == null && ours) ? 100 : v;
+    };
     // ⚠ **只列下属区域，不列"星球本体"那一行**（2026-09-24 用户反馈）：
     //   与星球同名的那条不是城市/工厂，把它标成「城市」是错的；而且星球自身的进度
     //   卡片上方已有进度条，再列一行只是重复。游戏面板确实列了它，但我们按用户口径去掉。
@@ -2331,7 +2338,7 @@ function bindUI(data, planets) {
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[regionTypeOf(r)] || 0,
       megafactory: regionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: regionLibPct((p.regions || [])[k], r),
+      pct: pctOf((p.regions || [])[k], r),
     }));
     return `<div class="regions"><div class="rg-hd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="rg-tip">城市 / 超大型工厂 · 点一行看详情</span></div>` +

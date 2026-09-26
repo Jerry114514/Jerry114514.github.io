@@ -596,7 +596,11 @@
       const typeCn = typeOf === "Megafactory" ? "超大型工厂" : (REGION_TYPE_ZH[typeOf] || typeOf || "区域");
       const stars = REGION_STARS[typeOf] || 0;
       const mh = (lv && lv.maxHealth) || 0;
-      const p = lv ? libShowOf(lv.owner, lv.health, mh) : null;
+      // 己方星球在"无区域战役"时官方不下发 regions[] → 逐条只能是"—"；整颗星球都是我们的，
+      // 故我方星球一律记 100%（有运行时数据时仍以运行时为准，例如某区域还在打）。
+      const ours = String(P.currentOwner || "").toLowerCase() === "humans";
+      let p = lv ? libShowOf(lv.owner, lv.health, mh) : null;
+      if (p == null && ours) p = 100;
       const ownerCn = lv && lv.owner ? (OWN_CN[lv.owner] || lv.owner) : (rg.owner || "—");
       const zh = zhMap[rg.name] || "";
       rows.push(T.r([
