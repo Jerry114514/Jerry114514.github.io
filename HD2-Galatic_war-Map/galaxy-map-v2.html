@@ -349,10 +349,17 @@
   .pc-actions{display:flex;gap:6px;margin-top:9px}
   .pc-actions .btn{flex:1;font-size:.74rem;text-align:center;text-decoration:none;line-height:1.5}
   .pc-actions .btn.primary{border-color:var(--yellow);color:var(--yellow)}
-  /* 移动端：信息卡改成底部抽屉（positionOverlays 写的是行内 left/top，用 !important 压过） */
+  /* 移动端：信息卡改成底部抽屉（positionOverlays 写的是行内 left/top，用 !important 压过）
+     ⚠ 2026-09-26 修（用户反馈：手机上卡片跑到左上角、还渲染出界）：
+       旧规则只压了 left/top，**漏了行内 `transform: translate(-50%,-100%)`** ——
+       那条 transform 是为"桌面端贴在星球正上方"设计的：卡片变全宽后，
+       `-100%` 会把它整体**向上抬整整一个卡片高度**，于是从底部抽屉跑到屏幕外／左上角。
+       根治办法不是再加一条 patch，而是**桌面端别再写死坐标**（见 positionOverlays 的 isMobile 分支），
+       这里同时把 transform 归零，双保险。 */
   @media (max-width:767px){
     #planet-card{left:0 !important;right:0;bottom:0;top:auto !important;width:auto;max-height:66vh;overflow:auto;
-      border-left:none;border-right:none;border-bottom:none}
+      border-left:none;border-right:none;border-bottom:none;
+      transform:none !important}
     #planet-card::after{display:none}
     .pc-actions .btn{min-height:40px;display:flex;align-items:center;justify-content:center}
   }
@@ -1031,7 +1038,9 @@ let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星�
 let UNLISTED_IDX = new Set();                  // 未分区星球的 index（不显示在星图上，见构造 GeoJSON 处）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
-const LAYER_ON = { territory:true, supply:true, attack:true, icons:true, heat:false, labels:true };
+// 图层开关的初始状态。⚠ `icons`（星球图标）已于 2026-09-26 按用户要求**移除** ——
+// 该图层现在恒显示（见 applyLayerToggles 里 `setLayerVis("planet-icon", true)`）。
+const LAYER_ON = { territory:true, supply:true, attack:true, heat:false, labels:true };
 
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
@@ -2024,8 +2033,8 @@ function bindUI(data, planets) {
     applyFactionFilter();
   });
 
-  // 图层开关
-  const LAYER_LABEL = { territory:"领土/星区", supply:"补给线", attack:"反攻线", icons:"星球图标", heat:"玩家热力", labels:"星球名" };
+  // 图层开关（2026-09-26：用户要求删除「星球图标」这一项 → 它恒显示，不再出现在这里）
+  const LAYER_LABEL = { territory:"领土/星区", supply:"补给线", attack:"反攻线", heat:"玩家热力", labels:"星球名" };
   $("layers").innerHTML = Object.keys(LAYER_ON).map(k =>
     `<span class="chip${LAYER_ON[k] ? " on" : ""}" data-l="${k}">${LAYER_LABEL[k]}</span>`).join("");
   $("layers").addEventListener("click", (e) => {
@@ -2441,24 +2450,38 @@ function bindUI(data, planets) {
   function hideWheel() { WHEEL_IDX = null; const w = $("wheel"); if (w) w.classList.remove("on"); }
 
   // 让卡片/轮盘跟随星球（地图移动、缩放时调用）
+  /* ⚠ 2026-09-26：**移动端不写行内坐标**（用户反馈：手机卡片跑到左上角、渲染出界）。
+     旧版无差别地给卡片写 left/top/transform，靠媒体查询用 !important 反压 —— 只要漏一项就会错位
+     （实际就漏了 transform，卡片被 translate(-100%) 抬出屏幕）。
+     现在按视口分流：窄屏交给 CSS 的底部抽屉（left/right/bottom 全由样式定），JS 一个字都不写；
+     桌面端才写"贴星球正上方"的坐标。轮盘同理。 */
   function positionOverlays() {
+    const narrow = window.matchMedia("(max-width:767px)").matches;
     const rfn = window.__planetR;
     const off = Math.max(18, (typeof rfn === "function" ? rfn(MAP.getZoom(), 1) : 18) + 12);
     if (PC_IDX != null) {
       const p = BYIDX[PC_IDX], el = $("planet-card");
       if (p && p.position && el && el.classList.contains("on")) {
-        const pt = MAP.project([p.position.x, p.position.y]);
-        el.style.left = pt.x.toFixed(1) + "px";
-        el.style.top = (pt.y - off).toFixed(1) + "px";
-        el.style.transform = "translate(-50%,-100%)";
+        if (narrow) {
+          // 底部抽屉由 CSS 定位：清掉可能残留的行内值，避免 resize 跨断点后错位
+          el.style.left = ""; el.style.top = ""; el.style.transform = "";
+        } else {
+          const pt = MAP.project([p.position.x, p.position.y]);
+          el.style.left = pt.x.toFixed(1) + "px";
+          el.style.top = (pt.y - off).toFixed(1) + "px";
+          el.style.transform = "translate(-50%,-100%)";
+        }
       }
     }
     if (WHEEL_IDX != null) {
       const p = BYIDX[WHEEL_IDX], w = $("wheel");
       if (p && p.position && w && w.classList.contains("on")) {
-        const pt = MAP.project([p.position.x, p.position.y]);
-        w.style.left = pt.x.toFixed(1) + "px";
-        w.style.top = pt.y.toFixed(1) + "px";
+        if (narrow) { w.style.left = ""; w.style.top = ""; }
+        else {
+          const pt = MAP.project([p.position.x, p.position.y]);
+          w.style.left = pt.x.toFixed(1) + "px";
+          w.style.top = pt.y.toFixed(1) + "px";
+        }
       }
     }
   }
@@ -2765,10 +2788,21 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
                         : f); } catch (_) {}
     }
   }
+  /* ⚠ 2026-09-26 修（用户反馈：图层列表里只有「补给线」能用）：
+     旧写法第二行是 `for (const l of SUPPLY_GRAD_LAYERS) ...`，而 `SUPPLY_GRAD_LAYERS` 在运行时
+     取不到（实测抛 `ReferenceError: SUPPLY_GRAD_LAYERS is not defined`，行号正指向这一行）。
+     它在同一个脚本里明明是顶层 `const` —— 但**不管原因是什么，这里都不该依赖它**：
+     函数一旦抛出，后面 9 个 setLayerVis 全部不执行 → 表现就是"点其它按钮没反应、只有补给线生效"
+     （补给线是**第一行**，它已经生效了才轮到崩）。
+     现在改成"从地图自己的图层表里挑 supply-grad-* 前缀"，自洽、不依赖外部声明，
+     以后再加渐变图层也自动覆盖；并给每个图层单独 catch，**任何一个失败都不再中断其余开关**。 */
   function applyLayerToggles() {
-    // 补给线：1 条实线基底 + 6 条跨阵营渐变（阵营 × 方向）
+    if (!MAP || !MAP.getStyle || !MAP.getStyle()) return;    // 地图尚未就绪：别抛错，等下次
+    // 补给线：1 条实线基底 + 全部跨阵营渐变层（按 id 前缀取，见上）
     setLayerVis("supply-base", LAYER_ON.supply);
-    for (const l of SUPPLY_GRAD_LAYERS) setLayerVis(l.id, LAYER_ON.supply);
+    let gradIds = [];
+    try { gradIds = MAP.getStyle().layers.map(l => l.id).filter(id => id.indexOf("supply-grad-") === 0); } catch (_) {}
+    for (const id of gradIds) setLayerVis(id, LAYER_ON.supply);
     setLayerVis("attack-line", LAYER_ON.attack);
     setLayerVis("attack-arrow", LAYER_ON.attack);
     setLayerVis("sector-fill", LAYER_ON.territory);
@@ -2776,7 +2810,8 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
     setLayerVis("faction-fill", LAYER_ON.territory);
     setLayerVis("faction-line", LAYER_ON.territory);
     setLayerVis("flabel", LAYER_ON.territory);
-    setLayerVis("planet-icon", LAYER_ON.icons);
+    // 星球图标已从图层列表移除（用户要求）→ 恒显示，不再受开关控制
+    setLayerVis("planet-icon", true);
     setLayerVis("planet-label", LAYER_ON.labels);
     setLayerVis("heat", LAYER_ON.heat);
   }
