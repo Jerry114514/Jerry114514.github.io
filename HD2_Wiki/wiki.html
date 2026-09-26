@@ -445,7 +445,14 @@
       loadIndex().then(function (idx) {
         var cur = document.getElementById("wiki-search-input").value.trim();
         if (!idx || cur.toLowerCase() !== q.trim().toLowerCase()) return;
-        var hits = idx.docs.filter(function (d) { return seEvery(d[4], terms); });
+        var hits = idx.docs.filter(function (d) {
+          /* ⚠ 必须同时收「标题/分组命中」（2026-09-26 修）：只按正文（d[4]）过滤，会把
+             **标题命中但正文里没有该词**的条目整条丢掉 —— 最典型是星球索引目录页
+             （正文只有一句说明，标题才是「星球索引」），于是搜「星球索引」时它自己搜不到，
+             只搜出一篇恰好提到该词的文档。标题命中在 seScore 里权重最高（200/120/70），
+             合并后正是"最相关排最前"的行为。 */
+          return seEvery(d[4], terms) || seEvery(d[1], terms) || seEvery(d[3], terms);
+        });
         var extra = ((SE.entries && SE.entries.docs) || []).filter(function (d) {
           return seEvery(d[1], terms) || seEvery(d[3], terms);
         }).map(function (d) { return [d[0], d[1], d[2], d[3], ""]; });

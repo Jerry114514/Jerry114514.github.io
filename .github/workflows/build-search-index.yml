@@ -23,6 +23,14 @@ on:
       - 'HD2_Wiki/data/wiki/zh/**.md'
       - 'CONTRIBUTING.md'
       - 'scripts/gen_search_index.py'
+      # 「星球」板块（2026-09-26 新增）的源表：星区/星球中英名与下属区域名。
+      # ⚠ 这些文件一旦变了而索引没重建，星球名/区域名的搜索就会静默过期 ——
+      #   它们由 fetch_planet_regions.py 或人工维护，**不在**上面的 wiki 数据目录里，必须单独列。
+      # 不列 HD2-Galatic_war-Map/data.json：它每 5 分钟被 CI 重写，会把这个 job 变成高频轰炸；
+      #   而索引只拿它做"这颗星球现在有没有人"的判断，进出索引的星数变化很慢，落后一轮可接受。
+      - 'HD2-Galatic_war-Map/tables/starmap.json'
+      - 'HD2-Galatic_war-Map/tables/planet_regions.json'
+      - 'HD2-Galatic_war-Map/tables/planet_regions_zh.json'
   workflow_dispatch:
 
 permissions:

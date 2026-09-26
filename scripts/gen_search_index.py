@@ -40,7 +40,8 @@ WIKI = "https://jerry114514.github.io/HD2_Wiki/"
 
 # 输出格式版本：改**索引的内容结构/收集规则**时必须 +1 —— 它会进 digest，
 # 这样即使源数据没变，浏览器/边缘缓存里的旧索引也会立刻失效（否则最多会脏 10 分钟）。
-FORMAT = 3
+# v4（2026-09-26）：新增「星球」板块（星球资料页 + 下属区域名 + 星区）。
+FORMAT = 4
 
 # 参与索引的源文件（相对仓库根）—— 顺序固定，digest 才稳定
 SOURCES = [
@@ -71,6 +72,16 @@ SOURCES = [
     "HD2_Wiki/data/wiki/zh/mechanics/galactic_war_history_zh.json",
     "CONTRIBUTING.md",
     "HD2_Wiki/data/wiki/zh/SCHEMA.md",
+]
+
+# 只被 `docs_planets()` 读取、**不进上面的 SOURCES** 的文件：星球时刻在变归属与人口，
+# 把它们算进"源文件哈希"会让索引每 5 分钟就翻新一轮（§11.1-8 的空提交问题）。
+# 索引的 digest 取的是**索引内容本身**，所以只有"真的有星球进出索引"时才会换 digest。
+PLANET_SOURCES = [
+    "HD2-Galatic_war-Map/tables/starmap.json",
+    "HD2-Galatic_war-Map/tables/planet_regions.json",
+    "HD2-Galatic_war-Map/tables/planet_regions_zh.json",
+    "HD2-Galatic_war-Map/data.json",
 ]
 
 TAG_RE = re.compile(r"<[^>]+>")
@@ -308,6 +319,89 @@ def docs_mechanics():
                       "游戏机制", title, parts)
 
 
+# ---------------- 星球（2026-09-26 新增） ----------------
+#
+# 为什么单独一块：星球的「名字」不在 HD2_Wiki 的数据里，而在主站的静态对照表里 ——
+#   · `tables/starmap.json`   星区（中文名 / 英文名）+ 「星球属于哪个星区」+ 星球中英名；
+#   · `tables/planet_regions.json` / `planet_regions_zh.json` 下属区域（城市 / 超大型工厂）；
+#   · `HD2-Galatic_war-Map/data.json` 只用来判断"这颗星球现在有没有人"（见下面的入索引口径）。
+# 在此之前站内搜索**完全搜不到星球**（搜「丈人一湾」「MARTYR'S BAY」都是 0 命中），
+# 而星球资料页有 172 颗已进 sitemap、却没有任何站内入口 —— 这是最刺眼的一处断链。
+#
+# 入索引口径：与 `scripts/gen_sitemap.py` 的 `planets_group()` **完全一致**
+#   = 有下属区域（城市 / 超大型工厂）**或**当前有人口。
+#   理由：273 颗星球里有一批长期无人、无区域、无战役的空壳，全量收录等于给搜索灌 200+ 条空条目。
+#   ⚠ 按 §6-1 的口径，这里**不含**归属/解放度这类运行时数字（它们每 5 分钟在变，
+#     写进索引会让 digest 每轮翻新、天天空提交；归属在资料页上自己会显示）。
+
+def _planet_name_map():
+    """starmap.json → {英文名大写: {"cn","en","sector_cn","sector_en"}}。"""
+    sm = load_json("HD2-Galatic_war-Map/tables/starmap.json")
+    out = {}
+    for sysm in sm.get("systems") or []:
+        s_cn, s_en = sysm.get("name") or "", sysm.get("name_en") or ""
+        for p in sysm.get("planets") or []:
+            en = (p.get("en") or "").strip()
+            if not en:
+                continue
+            out[en.upper()] = {"cn": (p.get("cn") or "").strip(), "en": en,
+                               "sector_cn": s_cn, "sector_en": s_en}
+    return out
+
+
+def _planet_title(cn, en):
+    """中英并列的标题（中文名缺失或与英文名相同时**不要**写成 "K K" / "X X"）。
+
+    口径与页面侧一致：见 `planet.html` 的 `plCn()` —— 没有中文名就退回英文原名。
+    """
+    cn, en = (cn or "").strip(), (en or "").strip()
+    if not cn or cn.upper() == en.upper():
+        return en
+    return "%s %s" % (cn, en)
+
+
+def docs_planets():
+    names = _planet_name_map()
+    reg_path = "HD2-Galatic_war-Map/tables/planet_regions.json"
+    zh_path = "HD2-Galatic_war-Map/tables/planet_regions_zh.json"
+    regs = (load_json(reg_path).get("planets") or {}) if os.path.exists(
+        os.path.join(BASE, reg_path.replace("/", os.sep))) else {}
+    regs_zh = (load_json(zh_path).get("planets") or {}) if os.path.exists(
+        os.path.join(BASE, zh_path.replace("/", os.sep))) else {}
+    data = load_json("HD2-Galatic_war-Map/data.json")
+
+    # 索引页本身也建一条（只在**标题**上命中，正文留空）——
+    # 否则用「星球」当关键词搜，只有零散星球、没有那个「所有星球」的目录页。
+    yield doc("../HD2_Wiki/planets.html", "星球索引 星球列表 全部星球", "星球", "目录页",
+              ["按星区列出全部星球的归属、解放度、在线玩家与下属区域。"])
+
+    for p in data.get("planets") or []:
+        idx = p.get("index")
+        if idx is None:
+            continue
+        en = (p.get("name") or "").strip()
+        meta = names.get(en.upper()) or {"cn": "", "en": en, "sector_cn": "", "sector_en": ""}
+        cn, sec_cn, sec_en = meta["cn"], meta["sector_cn"], meta["sector_en"]
+        # 星区回退：官方 `sector` 字段大量为空 → 用 starmap 的「星球属于哪个星区」（§6-8）
+        if not sec_cn:
+            sec_cn = (p.get("sector") or "").strip()
+        rl = ((regs.get(str(idx)) or {}).get("regions")) or []
+        if not (rl or (p.get("players") or 0) > 0):
+            continue
+
+        parts = [cn, en, sec_cn, sec_en, p.get("sector"), p.get("biome")]
+        zh_map = regs_zh.get(str(idx)) or {}
+        for rg in rl:
+            rn = (rg.get("name") or "").strip()
+            if not rn:
+                continue
+            # 区域中英名**并列**（译名口径见交接文档 §4：页面上并列显示英文原名）
+            parts.append("%s %s" % (zh_map.get(rn, ""), rn))
+            parts.append(rg.get("desc"))
+        yield doc("../HD2-Galatic_war-Map/planet.html?idx=%d" % idx,
+                  _planet_title(cn, en), "星球", sec_cn, parts)
+
+
 def docs_markdown():
     for rel, url, kind, title in (
             ("CONTRIBUTING.md", "contributing.html", "文档", "投稿指南"),
@@ -320,7 +414,8 @@ def docs_markdown():
 
 
 BUILDERS = (docs_weapons, docs_enemies, docs_stratagems, docs_boosters, docs_warbonds,
-            docs_missions, docs_factions_blocks, docs_patchnotes, docs_mechanics, docs_markdown)
+            docs_missions, docs_factions_blocks, docs_patchnotes, docs_mechanics,
+            docs_planets, docs_markdown)
 
 
 def build():

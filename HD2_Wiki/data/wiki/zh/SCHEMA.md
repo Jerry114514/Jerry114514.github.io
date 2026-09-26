@@ -1,5 +1,6 @@
 # HD2 中文维基数据集 Schema（`HD2_Wiki/data/wiki/zh/`）
 
+> 版本：v1.13 · 2026-09-26（v1.13 登记 §7.15 的**「星球」板块**（`gen_search_index.py` 的 `FORMAT` 3 → 4）：站内搜索此前**完全搜不到星球**（线上实测「丈人一湾」「PHACT BAY」均 0 命中），现纳入 172 颗有区域或有人口的星球 + 一条 `planets.html` 目录页条目，区域名也一并可搜；同时订正该节原文中「`digest` = 全部源文件内容的 sha256」的写法 —— 实际是**索引内容本身**的哈希（源文件的 `updated_at` 天天在变），并新增 `PLANET_SOURCES` / `_planet_title()` 两处口径）
 > 版本：v1.12 · 2026-09-23（v1.12 **「已发布」状态自动化**：新增 `scripts/sync_release_status.py` + `.github/workflows/sync-release-status.yml`（每天 04:30 UTC）—— 按 `release_date <= 今天` 单向把债券由 `unreleased` 翻成 `released`，并让强化资源**随债券**发布、从逐页奖励表继承页号与价格，价格已知时连带改静态列表页 `boosters.html`；先在 §7.1 / §7.2 登记该字段的自动维护口径，§9 新增第 22 条记三条纪律（单向 / 先校验后提交 / 散文不动））
 > 版本：v1.11 · 2026-09-23（v1.11 登记 §7.13 的两项**机翻契约**：`episodes.<键>.mt` / `phases.<键>.mt`（机翻标记，人工校对后删除）与**键的两种写法**（`<id32>` 首选 / `title:<大写标题>` 兜底，供上游 id32 暂缺时使用）；新增 §7.12 边界第 4 条：**`note` 含「分类」的词条是分类标签、不是名词译法，机翻注入时必须跳过**（实测写出过「处理设施与场所」病句）。同日私密仓上线 `Translate Campaign` 流水线，设计见 §7.13）
 > 版本：v1.10 · 2026-09-23（v1.10 **补录 §19.15 列出的另外 12 条武器**：`AR-11 Arbitrator` / `CQC-73 Entrenchment Tool` / `G-60 Anti-Tank Seeker` / `G-8 Immolation` / `G/SH-39 Shield` / `GL-15 Evictor` / `LAS-12 Sai` / `M6C/SOCOM Pistol` / `P-34 Breacher` / `P/40-K Bolt Pistol` / `R/40-K Hot-Shot Marksman Rifle` / `SMG/FLAM-34 Stoker` → `weapons.json` **91 → 103 条**（primary 50→55 / secondary 21→25 / throwables 20→23），校验器 `IMG.HOTLINK` 基线 91 → 103；同批修正 `warbonds.json` 里 `ironclad_democracy` 的**页序错误**（G-8 Immolation 2→1 / P-34 Breacher 3→2 / GL-15 Evictor 2→3，以上游渲染页为准）；新增 §9 第 21 条与 §8 两行新条目）
@@ -618,22 +619,35 @@ infobox 的 `base_cooldown`（`CQC-20`/`CQC-9`/`M-104` = `480s`、`TD-110` = `78
 
 | 文件 | 体积 | 加载时机 | 用途 |
 | --- | --- | --- | --- |
-| `search_entries.json` | ~70 KB | 随首页一起加载 | 随机条目池 + 标题即时联想 |
-| `search_index.json` | ~0.8 MB | **首次搜索时惰性加载一次**（之后走浏览器缓存） | 全文检索：可命中文章里的**某一段** |
+| `search_entries.json` | ~90 KB | 随首页一起加载 | 随机条目池 + 标题即时联想 |
+| `search_index.json` | ~0.9 MB | **首次搜索时惰性加载一次**（之后走浏览器缓存） | 全文检索：可命中文章里的**某一段** |
 
 结构：`{ v, digest, count, docs: [...] }`，`docs[i] = [u, t, k, g, x]` ——
-`u` URL（**相对路径**；机制页与公告带 `#锚点`）、`t` 标题（中文名 + 英文名）、
-`k` 板块（武器 / 敌人 / 战略配备 / 强化资源 / 战争债券 / 任务 / 游戏机制 / 更新公告 / 文档 / 首页 / 阵营）、
+`u` URL（**相对路径**；机制页与公告带 `#锚点`；星球资料页是 `../HD2-Galatic_war-Map/planet.html?idx=N`）、
+`t` 标题（中文名 + 英文名；**没有中文名或中英同名时只写一次**，见 `_planet_title()`）、
+`k` 板块（武器 / 敌人 / 战略配备 / 强化资源 / 战争债券 / 任务 / 游戏机制 / 更新公告 / 文档 / 首页 / 阵营 / **星球**）、
 `g` 副标题或分组、`x` 可搜索正文（HTML 已剥离，单条上限 6000 字符）。
 `search_entries.json` 结构相同但**不含 `x`**。
 
+**「星球」板块（2026-09-26 新增，`FORMAT` 3 → 4）**：数据源不在 `HD2_Wiki/` 里，而是主站的静态对照表 ——
+`tables/starmap.json`（星区中英名 + 星球中英名）、`tables/planet_regions.json` / `_zh.json`（下属区域的**中英并列**名）、
+`HD2-Galatic_war-Map/data.json`（只用来判断"这颗星球现在有没有人"）。这些文件列在脚本的 **`PLANET_SOURCES`**，
+**不进 `SOURCES`**：归属/解放度/人口每 5 分钟在变，算进哈希会让索引每轮翻新、天天空提交（§11.1-8）。
+- 入索引口径与 `scripts/gen_sitemap.py` 的 `planets_group()` **一致**：有区域**或**当前有人口
+  （本次实测 172 / 273 颗；同轮 `planet_events` 与 41 处战役的目标星球全部落在这条线内）。
+  空壳星球（0 人、无区域）**刻意不收** —— 它们的资料页内容近似空白。
+- 另单独收一条 `planets.html`（"星球索引"目录页），只挂在标题上，否则搜「星球」找不到目录页。
+
 三条约定（改这条流水线时必须一起改）：
-1. **`digest` = `FORMAT` + 全部源文件内容的 sha256 前 16 位**。前端请求 `search_index.json?v=<digest>`，
-   因此数据一变缓存自动失效。**改动索引的内容结构或收集规则时必须把脚本里的 `FORMAT` +1** ——
+1. **`digest` = `FORMAT` + 索引内容本身的 sha256 前 16 位**（`docs` 序列化后再哈希，
+   **不是**源文件字节 —— 源文件里的 `updated_at` 这类易变字段每天在动，混进去会让索引每轮重建）。
+   前端请求 `search_index.json?v=<digest>`，因此内容一变缓存自动失效。
+   **改动索引的内容结构或收集规则时必须把脚本里的 `FORMAT` +1** ——
    否则源数据没变、digest 不变，浏览器与边缘缓存会最多脏 10 分钟（2026-09-23 实测踩过：
    改了 `_flat_sections` 的递归键但没动源文件，`?v=` 不变、旧索引仍被复用）。
 2. **源文件清单在脚本的 `SOURCES` 里**（含 `CONTRIBUTING.md` 与 `SCHEMA.md`，它们是
    `contributing.html` / `schema.html` 的正文来源）。**新增数据集时必须加进去**，否则新内容搜不到。
+   另有一份 `PLANET_SOURCES`，只供"星球"板块读取、**不算哈希**（理由见上）。
 3. **小节级条目的锚点键取主干的 `id`，中文覆盖的 `subsections_zh` / `items_zh` 也要收**。
    ⚠ 2026-09-23 首版只跟着主干的 `subsections` 递归，于是**所有嵌套小节的中文正文都没进索引**
    （公告里搜不到「掉落物位置与武器随机化」、机制页深层小节同理）。
