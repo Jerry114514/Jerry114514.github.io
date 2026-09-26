@@ -1335,6 +1335,8 @@ async function boot() {
   const HEAT_SCALE = 30000;
   const heatFC = fc(planets.filter(p => (p.players || 0) > 0).map(p => ({
     type: "Feature", geometry: pt(p.position.x, p.position.y),
+    // `value`：对数标度，保证小战场也有可看的权重（热力图**可见性**靠它）
+    // `players`：原始人数，给热源**半径**用（2026-09-26 用户要求"把星球当成随人数变动的巨大热源"）
     properties: { value: Math.min(1, Math.log(1 + (p.players || 0)) / Math.log(1 + HEAT_SCALE)),
                   players: p.players || 0 },
   })));
@@ -1556,9 +1558,21 @@ async function boot() {
         { id: "heat", type: "heatmap", source: "heat", layout: { visibility: "none" },
           paint: {
             "heatmap-weight": ["get", "value"],
-            "heatmap-intensity": 1.35,
-            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 4, 16, 8, 38, 12, 74],
-            "heatmap-opacity": .85,
+            "heatmap-intensity": 1.25,
+            /* 热源半径 = **随人数放大**（2026-09-26 用户要求："把星球当成随人数变动的巨大热源；
+               现在只能看见单个星球的热力，无法体现邻近星球或片区的热力"）。
+               旧版半径只随 zoom 变（16/38/74）→ 星球之间不重叠 → 只能看到孤立的点。
+               现在按**原始人数**给半径：0 人 → 110px 底噪，500 人 → 190px，5000 人 → 260px，
+               30000 人（当前最大 42964）→ 330px。于是
+                 · 邻星（间距通常几十~百余 px）的羽状体会**互相重叠**，融合成"片区"；
+                 · 万人级战场铺成一大团热区，几百人的小战场只留小亮点（本快照人数中位仅 3 人，
+                   p75 = 77、p90 = 554 → 绝大多数是小亮点，层次不会被抹平）。
+               ⚠ 用**单个内插**（内插在 `players` 上）而不是"两个内插相乘"：后者虽然更精确，
+               但网格/GPU 对嵌套表达式的支持面窄一些，而这里必须一次改对（本次会话的 WebGL 已不可用、
+               无法本地回归验证，见 §19.42）。`heatmap-radius` 支持数据驱动表达式，单内插是标准写法。 */
+            "heatmap-radius": ["interpolate", ["linear"], ["get", "players"],
+              0, 110, 500, 190, 5000, 260, 30000, 330],
+            "heatmap-opacity": .8,
             "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
               0,   "rgba(0,0,0,0)",
               .03, "rgba(20,60,160,.35)",     // 深蓝：刚有人的边缘
