@@ -1,11 +1,20 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Liberate the designated planets to secure territory for long-term construction of the TD-110 Maelstrom Tank.",
-  "translated": "解放指定星球，为“风暴漩涡”坦克的长期建造夺取领土。",
-  "translated_at": "2026-09-25T17:35:10Z"
+  "original": "Kill the requisite enemies to ensure early investors in the TD-110 Maelstrom Tanks receive their promised deluxe features.",
+  "translated": "消灭指定数量的敌人，确保“风暴漩涡”坦克的早期投资者获得承诺的豪华配置。",
+  "translated_at": "2026-09-27T21:02:02Z"
  },
  "items": [
+  {
+   "id": 3941,
+   "original": "NEW MAJOR ORDER\n\nProduction of Maelstrom Tanks for civilian and military use is proceeding on schedule. Now, deluxe features offered as incentives for early investors must be fabricated. The Helldivers are ordered to dismantle 5,000,000 Automaton Tanks to repurpose their engine cooling systems as climate-controlled cupholders, and harvest 25,000,000 Chargers to convert their carapaces to vibration-insulation panels.",
+   "translated": "新重要指令\n\n“风暴漩涡”坦克的民用与军用生产正按计划推进。如今，作为早期投资者激励的豪华配置必须投入制造。绝地潜兵奉命拆解 500 万（5,000,000）台机器人坦克，将其引擎冷却系统改作恒温杯架；并猎杀 2500 万（25,000,000）只冲锋虫，将其甲壳改作隔振板。",
+   "published_at": "2026-09-27T19:28:41Z",
+   "translated_at": "2026-09-27T21:02:01Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3940,
    "original": "MAJOR ORDER WON\n\nThe Helldivers liberated PHACT BAY and MARFARK. AM Defense has already broken ground on massive factories for large-scale Maelstrom Tank fabrication. Pre-orders from qualifying citizens for home defense Tanks have already sold out, evidencing the eagerness of Super Earth citizens to exercise their natural-born freedoms.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-09-25T17:35:08Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3930,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on GENESIS PRIME with the Incendiary Mines Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨款已划拨，用于支援绝地潜兵在创世主星的行动，未来 24 小时内提供「燃烧地雷」战略配备。",
-   "published_at": "2026-09-18T16:24:01Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-09-27T16:34:58Z",
+  "computed_at": "2026-09-27T21:02:02Z",
   "planet_index": null
  }
 }
