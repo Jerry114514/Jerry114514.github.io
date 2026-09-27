@@ -2701,6 +2701,7 @@ function renderPlayers(data) {
       return renderPlanetCard(p, data.starMap, statusLabel, statusClass);
     }).join("");
     root.innerHTML = `<div class="planet-grid">${html}</div>`;
+    layoutPlanetGrids();   // 同上：重写栅格后必须重算 --cols/--card-w/--band-w
   }
 
   function renderAttackable(data) {
@@ -2810,6 +2811,12 @@ function renderPlayers(data) {
     }).join("");
 
     root.innerHTML = `<div class="planet-grid">${html}</div>`;
+    /* ⚠ 2026-09-26 修（用户反馈：选了排序方式后单行只剩 2 张卡、移动端布局也崩了）：
+       `layoutPlanetGrids()` 只在 refresh() 末尾调用一次，而**切换排序会重写这段 innerHTML** ——
+       新的 .planet-grid 元素上没有任何 `--cols/--card-w/--band-w`，于是回落到 CSS 兜底值
+       `repeat(var(--cols,2), minmax(0, var(--card-w,380px)))` = **恒定 2 列 / 380px**，
+       宽屏下自然只剩 2 张、窄屏则溢出。凡是**重写行星栅格 innerHTML** 的地方都必须补一次布局。 */
+    layoutPlanetGrids();
   }
 
   /* ==============================================================

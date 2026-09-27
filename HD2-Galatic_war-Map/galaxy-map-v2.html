@@ -2514,12 +2514,31 @@ function bindUI(data, planets) {
     if (WHEEL_IDX != null) {
       const p = BYIDX[WHEEL_IDX], w = $("wheel");
       if (p && p.position && w && w.classList.contains("on")) {
-        if (narrow) { w.style.left = ""; w.style.top = ""; }
-        else {
-          const pt = MAP.project([p.position.x, p.position.y]);
-          w.style.left = pt.x.toFixed(1) + "px";
-          w.style.top = pt.y.toFixed(1) + "px";
+        const pt = MAP.project([p.position.x, p.position.y]);
+        /* 轮盘尺寸取自元素实际大小（桌面 186、移动端 CSS 缩到 160），
+           并且它用 `transform:translate(-50%,-50%)` 居中 ⇒ left/top 是**中心点**。
+           ⚠ 2026-09-26 修（用户反馈：移动端点星球后"选项轮盘出现位置错误"）：
+             旧代码只写了中心点、**完全没有夹取边界**，移动端窄屏上轮盘有一半溢出屏幕外；
+             而且底部抽屉此时占着下方，轮盘压在抽屉上、也被抽屉盖住。
+           现在：① 夹取在舞台内；② 移动端把轮盘放到抽屉**上方**的可见区域（放不下就贴顶）。 */
+        const wW = w.offsetWidth || 186, wH = w.offsetHeight || 186;
+        const st = $("stage").getBoundingClientRect();
+        const half = { x: wW / 2, y: wH / 2 };
+        let cx = pt.x, cy = pt.y;
+        // 移动端：若底部抽屉正显示，则把轮盘整体限制在抽屉上缘之上（留 8px 呼吸）
+        // ⚠ 夹取的是**中心点**，所以上限还要再减掉半个高度 —— 首版忘了减，实测轮盘会压到抽屉上。
+        if (narrow) {
+          const card = $("planet-card");
+          if (card && card.classList.contains("on")) {
+            const cs = card.getBoundingClientRect();
+            const limitCenterY = Math.max(half.y + 4, cs.top - st.top - 8 - half.y);
+            if (cy > limitCenterY) cy = limitCenterY;
+          }
         }
+        cx = Math.max(half.x + 4, Math.min(st.width - half.x - 4, cx));
+        cy = Math.max(half.y + 4, Math.min(st.height - half.y - 4, cy));
+        w.style.left = cx.toFixed(1) + "px";
+        w.style.top = cy.toFixed(1) + "px";
       }
     }
   }
@@ -2745,8 +2764,16 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
   // 深链：?planet=<星球序号> —— 维基「星球索引」页与星球资料页会用这个参数跳回星图。
   //   boot() 是异步的，这里轮询等 BYIDX 就绪（最多 ~10 秒），到位后聚焦并弹出信息卡。
   (function deepLink() {
-    const want = Number(new URLSearchParams(location.search).get("planet"));
-    if (!Number.isFinite(want) || want < 0) return;
+    /* ⚠ 2026-09-26 修（用户反馈：打开星图页会自动展开「超级地球」信息卡）：
+       旧代码 `Number(new URLSearchParams(location.search).get("planet"))` ——
+       **`get()` 在参数不存在时返回 `null`，而 `Number(null) === 0`**，
+       于是"没有深链"被当成"深链到 0 号星球"，而 0 号正是 SUPER EARTH：
+       每次打开星图都会自动聚焦并弹出超级地球的卡。
+       正确写法：先取原始值、判 `null`，再转数字。 */
+    const raw = new URLSearchParams(location.search).get("planet");
+    if (raw == null || raw.trim() === "") return;
+    const want = Number(raw);
+    if (!Number.isInteger(want) || want < 0) return;
     let tries = 0;
     const timer = setInterval(() => {
       tries++;
