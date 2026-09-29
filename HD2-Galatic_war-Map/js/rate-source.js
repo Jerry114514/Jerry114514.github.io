@@ -33,6 +33,14 @@ window.HD2Recent = (function () {
     return isFinite(t) ? t : null;
   };
 
+  /* 缓存新鲜度护栏（2026-09-29）：这份帧缓存是「覆盖式刷新」的（CI 每 5 分钟跑一次，
+     帧本身 15 分钟粒度）。一旦刷新断了 —— Actions 排队/挂掉、CDN 挂了、本机没开机 ——
+     文件还躺在原地，页面会继续拿"过去那个小时"的首尾血量差算差分，照样标
+     「实测 · 近 1 小时」。那比没有实测更误导，所以这里按 index.json 的生成时间判新鲜度：
+     3 小时 = 连丢 12 轮以上才算断更 → 整块实测关闭，各调用点自动退回推演
+     （界面上显示「推演 · 无实测帧」，与缓存缺失时完全同一条路径）。 */
+  const FRESH_MAX_H = 3;
+
   /* 满血顶格（2026-09-29）：血量贴在 maxHealth 上时，玩家输出只要没超过回血，
      血量就**一点都不会动** —— 这时 Δ=0 并不代表"净速率 0"，而是"净速率 ≤ 0"。
      这种 0 不能当实测用（必须交给推演兜底），否则满血星球会被算成"推进 0"而不是负推进。
@@ -96,6 +104,11 @@ window.HD2Recent = (function () {
     state.index = idx;
     state.windowH = (idx && idx.windowHours) || 1;
     if (!idx) return false;
+    const genMs = toMs(idx.generatedAt);
+    if (genMs != null && (Date.now() - genMs) > FRESH_MAX_H * 3600000) {
+      state.index = null;
+      return false;
+    }
 
     const want = (opts && opts.planets) || (idx.planets || []);
     const jobs = want.map(async (i) => {
