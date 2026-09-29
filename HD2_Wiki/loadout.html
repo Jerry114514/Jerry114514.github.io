@@ -43,6 +43,10 @@
     .toolbar { max-width: 1200px; margin: 0 auto; padding: 18px 20px 0; width: 100%; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
     .draw-btn { padding: 10px 26px; border: none; border-radius: 10px; background: linear-gradient(135deg, #f5c518, #f59e0b); color: #0a0e1a; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; }
+    /* 平衡随机按钮：同尺寸，蓝色系以区别于纯随机（2026-09-29 新增） */
+    .draw-btn.alt { background: linear-gradient(135deg, #5BA3D0, #3B82F6); color: #06121f; }
+    .draw-btn.alt.on { box-shadow: 0 0 0 2px #93c5fd inset, 0 0 12px rgba(59,130,246,.55); }
+    .draw-btn.on { box-shadow: 0 0 0 2px #fde68a inset, 0 0 12px rgba(245,197,24,.5); }
 
     .draw-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,197,24,0.3); }
 
@@ -170,6 +174,7 @@
 
   <div class="toolbar">
     <button class="draw-btn" id="draw-btn">🎲 随机抽取</button>
+    <button class="draw-btn alt" id="balanced-btn" title="按游戏内冲突规则抽取：不重复占三号位、不重复占背包位、自带背包的三号位不与其它三号位或背包共存；次抛类（EAT 系列）不占冲突位，可以随时搭">⚖️ 平衡随机</button>
     <span class="meta" id="meta">正在加载战备库…</span>
   </div>
 
@@ -187,6 +192,18 @@
     var DIM_LABEL = ["对单", "对群", "穿甲"];
     var pool = [];
     var loadout = [];
+    var mode = "pure";        // "pure" = 纯随机（原按钮）· "balanced" = 平衡随机
+    function setMode(m) {
+      mode = m;
+      loadout = (m === "balanced") ? drawBalanced() : draw();
+      var one = m === "balanced";
+      $("draw-btn").classList.toggle("on", !one);
+      $("balanced-btn").classList.toggle("on", one);
+      $("meta").textContent = pool.length + " 个战备可选 · 数据源：社区评分表 · " + (one
+        ? "平衡随机：不重复占三号位 / 背包位，自带背包的三号位不与其它三号位、背包共存（次抛 EAT 系列豁免）"
+        : "纯随机：等概率抽 4 件，不做任何约束");
+      render(loadout);
+    }
 
     function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
     function $(id) { return document.getElementById(id); }
@@ -199,13 +216,82 @@
       return { g: "D", cls: "g-D" };
     }
 
-    function draw() {
-      var p = pool.slice();
+    /* ============ 随机 / 平衡随机（2026-09-29 新增平衡版） ============
+       分类表按游戏内口径手写：官方新增战备后需要补；漏了只会让约束更宽松，不会报错。
+         · 三号位   = 支援武器 / 重型支援武器
+         · 背包位   = 背包
+         · 次抛      = 打一发就丢的 EAT 系列（不占冲突位，任何情况都能带）
+         · 背包三号位 = 自带背包的支援武器（同时占掉三号位与背包位）
+       ⚠ 若你觉得某件该进/该出这份表（例如 MLS-4X 突击兵算不算次抛），
+         直接改下面两个数组即可，其余逻辑不用动。
+       2026-09-29 按用户口径订正：
+         · LAS-98 激光大炮**不是**背包三号位（回到普通三号位）
+         · B/FLAM-80 焚燃者、M-1000 重装机枪、StA-X3 WASP 发射器**是**背包三号位
+         · MLS-4X 突击兵、MS-11 单兵导弹发射井**算次抛**（不占冲突位） */
+    var DISPOSABLE_WEAPONS = [
+      "support_eat_17_expendable_anti_tank",
+      "support_eat_411_leveller",
+      "support_eat_700_incendiary",
+      "support_mls_4x_commando",
+      "support_ms_11_missile_silo"
+    ];
+    var BACKPACK_WEAPONS = [
+      "heavy_support_gr_8_recoilless_rifle",
+      "heavy_support_ac_8_autocannon",
+      "heavy_support_faf_14_spear",
+      "heavy_support_rl_77_airburst_rocket_launcher",
+      "heavy_support_gl_28_belt_fed_grenade_launcher",
+      "heavy_support_b_flam_80_flamer",
+      "heavy_support_m_1000_hmg",
+      "heavy_support_sta_x3_wasp_launcher"
+    ];
+    function slotKindOf(x) {
+      if (!x) return "other";
+      if (x.type !== "支援武器" && x.type !== "重型支援武器") {
+        return x.type === "背包" ? "backpack" : "other";
+      }
+      if (DISPOSABLE_WEAPONS.indexOf(x.id) >= 0) return "disposable";
+      if (BACKPACK_WEAPONS.indexOf(x.id) >= 0) return "bpWeapon";
+      return "weapon";
+    }
+    // 能不能再塞进当前这套：st 记录已经占掉的位
+    function canTake(x, st) {
+      var k = slotKindOf(x);
+      if (k === "disposable") return true;                 // 次抛不占冲突位
+      if (k === "weapon")     return !st.sw && !st.bpw;     // 已有三号位 / 已有背包三号位 → 不再要
+      if (k === "backpack")   return !st.bp && !st.bpw;     // 已有背包 / 已有背包三号位 → 不再要
+      if (k === "bpWeapon")   return !st.sw && !st.bp && !st.bpw;  // 三号位或背包任一被占 → 不再要
+      return true;
+    }
+    function markTaken(x, st) {
+      var k = slotKindOf(x);
+      if (k === "weapon") st.sw = true;
+      else if (k === "backpack") st.bp = true;
+      else if (k === "bpWeapon") { st.sw = true; st.bp = true; st.bpw = true; }
+    }
+    // 洗牌：Fisher–Yates（与原来的 draw 完全同一套算法）
+    function shuffleInPlace(p) {
       for (var i = p.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var t = p[i]; p[i] = p[j]; p[j] = t;
       }
-      return p.slice(0, 4);
+      return p;
+    }
+    // 纯随机：等概率抽 4 件不重复（原逻辑，一行未改）
+    function draw() {
+      return shuffleInPlace(pool.slice()).slice(0, 4);
+    }
+    // 平衡随机：洗牌后顺序取，遇到会撞位的就跳过（次抛永远放行）
+    function drawBalanced() {
+      var p = shuffleInPlace(pool.slice());
+      var st = { sw: false, bp: false, bpw: false };
+      var out = [];
+      for (var i = 0; i < p.length && out.length < 4; i++) {
+        if (!canTake(p[i], st)) continue;
+        out.push(p[i]);
+        markTaken(p[i], st);
+      }
+      return out.length === 4 ? out : draw();   // 理论上到不了这里，兜底退回纯随机
     }
 
     function cardHtml(x, isS) {
@@ -238,13 +324,22 @@
       var item = null;
       for (var i = 0; i < pool.length; i++) if (pool[i].id === id) { item = pool[i]; break; }
       if (!item) return;
-      var same = pool.filter(function(x) { return x.type === item.type && x.id !== id; });
+      /* 同类型候选。平衡模式下还要按规则过滤：把「其它三件」当作已占位状态，
+         只列出换上去不会破坏约束的候选（否则换一下就又出现两把三号位/两个背包了）。 */
+      var st = { sw: false, bp: false, bpw: false };
+      if (mode === "balanced") {
+        loadout.forEach(function(y) { if (y.id !== id) markTaken(y, st); });
+      }
+      var same = pool.filter(function(x) {
+        if (x.type !== item.type || x.id === id) return false;
+        return mode === "balanced" ? canTake(x, st) : true;
+      });
       var mask = document.createElement("div");
       mask.className = "mask";
       var list = same.map(function(x) {
         return '<div class="mitem" data-pick="' + esc(x.id) + '"><span>' + esc(x.name) + '</span>' +
           '<span class="mstats">' + x.stats.join("/") + ' · B' + (x.bonus || 0) + '</span></div>';
-      }).join("") || '<div class="empty">同类型无其他战备</div>';
+      }).join("") || '<div class="empty">同类型没有可换的战备' + (mode === "balanced" ? "（平衡规则下都被占位挡住了）" : "") + '</div>';
       mask.innerHTML = '<div class="modal"><div class="mhead"><span class="mtitle">🔄 更换「' + esc(item.name) + '」</span><span class="mclose">✕</span></div>' +
         '<div class="mlist">' + list + '</div></div>';
       document.body.appendChild(mask);
@@ -318,10 +413,9 @@
         if (!r.ok) throw new Error("HTTP " + r.status);
         var d = await r.json();
         pool = d.stratagems || [];
-        $("meta").textContent = pool.length + " 个战备可选 · 数据源：社区评分表";
-        loadout = draw();
-        render(loadout);
-        $("draw-btn").addEventListener("click", function() { loadout = draw(); render(loadout); });
+        setMode("pure");      // 初始仍是原来的纯随机
+        $("draw-btn").addEventListener("click", function() { setMode("pure"); });
+        $("balanced-btn").addEventListener("click", function() { setMode("balanced"); });
       } catch (e) {
         $("layout").innerHTML = '<div class="empty" style="grid-column:1/-1">⚠️ 战备库加载失败：' + esc(String(e)) + '</div>';
       }
