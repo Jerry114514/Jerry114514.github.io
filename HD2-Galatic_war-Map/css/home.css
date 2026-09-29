@@ -371,6 +371,7 @@
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.08);
       overflow: hidden;
+      position: relative;
     }
     .progress-bar-fill {
       height: 100%;
@@ -378,6 +379,37 @@
       border-radius: 4px;
       transition: width 0.4s ease;
     }
+    /* 预期进度刻度（重要指令）：进度条上的一条竖线，标出「此刻应在的位置」 */
+    .progress-bar-mark {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      margin-left: -1px;
+      background: var(--blue, #3B82F6);
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.95);
+    }
+    .mo-expect {
+      margin-top: 6px;
+      font-size: 0.76rem;
+      color: var(--text-mute);
+      font-family: var(--font-mono, Consolas, monospace);
+    }
+    .mo-expect b {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .mo-expect .ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+    .mo-expect .behind {
+      color: var(--warn);
+      font-weight: 700;
+    }
+    /* 预计完成时间那行里的次要信息（速率与来源）*/
+    .mo-expect + .mo-expect { margin-top: 2px; }
+    .mo-expect .dim { color: var(--text-mute); font-weight: 400; }
     .mo-task-type {
       font-size: 0.75rem;
       color: var(--text-mute);
@@ -804,8 +836,8 @@
     .defense-status-losing { color: #E74C3C; background: rgba(231,76,60,0.15); }
     .defense-status-stalemate { color: #F5C518; background: rgba(245,197,24,0.15); }
     .defense-alert { font-size: 0.62rem; color: #E74C3C; font-weight: 700; letter-spacing: 0.08em; }
-    .stratagem-toolbar { margin-bottom: 14px; }
-    .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; }
+    .stratagem-toolbar { margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .stratagem-big-btn-wrap { display: flex; justify-content: center; padding: 30px 0; gap: 14px; flex-wrap: wrap; }
     .stratagem-big-btn {
       background: linear-gradient(135deg, rgba(245,197,24,0.25), rgba(245,197,24,0.08));
       border: 1px solid rgba(245,197,24,0.5);
@@ -821,6 +853,23 @@
     }
     .stratagem-big-btn:hover { background: rgba(245,197,24,0.3); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(245,197,24,0.25); }
     .stratagem-big-btn:active { transform: translateY(0); }
+    /* ---- 平衡随机（2026-09-29 新增）：蓝色系区分于纯随机 ---- */
+    .stratagem-big-btn.strat-big-alt {
+      background: linear-gradient(135deg, rgba(91,163,208,0.25), rgba(59,130,246,0.07));
+      border-color: rgba(91,163,208,0.5);
+      color: #93c5fd;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 20px rgba(59,130,246,0.15);
+    }
+    .stratagem-big-btn.strat-big-alt:hover { background: rgba(91,163,208,0.32); box-shadow: 0 6px 28px rgba(59,130,246,0.28); }
+    .stratagem-btn.strat-btn-alt {
+      background: linear-gradient(135deg, rgba(91,163,208,0.2), rgba(59,130,246,0.05));
+      border-color: rgba(91,163,208,0.45);
+      color: #93c5fd;
+    }
+    .stratagem-btn.strat-btn-alt:hover { background: rgba(91,163,208,0.3); }
+    /* 当前用的是哪种随机：按钮描一圈，避免"点了没反应"的错觉 */
+    .stratagem-btn.strat-btn-on { box-shadow: inset 0 0 0 1px currentColor; }
     .stratagem-btn {
       background: linear-gradient(135deg, rgba(245,197,24,0.2), rgba(245,197,24,0.05));
       border: 1px solid rgba(245,197,24,0.4);
@@ -1451,6 +1500,57 @@
     .planet-card .pc-stats .v.res-mid {color:var(--c-res-mid)}
     .planet-card .pc-stats .v.res-high{color:var(--c-res-high)}
     .planet-card .pc-stats .v.res-max {color:var(--c-res-max)}
+
+    /* ---- ④b 解放速率推演（2026-09-29 新增）：等效抵抗度 / 当前推进 / 实际推进 / 预计完成 ---- */
+    .planet-card .pc-rate{
+      display:flex;flex-direction:column;gap:4px;margin-top:7px;padding-top:7px;
+      border-top:1px dashed rgba(255,255,255,.10);
+    }
+    /* ⚠ 必须允许换行：窄卡（三列布局 / 手机）上「实际推进速率 −0.624%/h」+「预计完成 预计无法完成解放」
+       会超出一行宽度 —— 不给 flex-wrap 就会互相顶到一起、贴边裁切（实测过）。 */
+    .planet-card .pc-rate-row{
+      display:flex;align-items:baseline;justify-content:space-between;
+      gap:4px 10px;flex-wrap:wrap;
+    }
+    .planet-card .pc-rate-row .pair{display:flex;align-items:baseline;gap:6px;min-width:0}
+    .planet-card .pc-rate .k{font-size:10.5px;color:var(--text-mute);white-space:nowrap}
+    .planet-card .pc-rate .v{
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;font-size:11.5px;
+      color:var(--text-dim);white-space:nowrap;text-align:right;
+    }
+    /* 预计完成那一栏可能是「预计无法完成解放」这种长文案：允许折行，避免撞到左边的速率 */
+    .planet-card .pc-rate .v.warn{white-space:normal}
+
+    /* ---- ④c 数据来源角标（实测优先 / 推演兜底） ---- */
+    .planet-card .pc-rate-src{display:flex;justify-content:flex-end;margin-bottom:2px}
+    .planet-card .tag{
+      display:inline-block;padding:1px 6px;border:1px solid var(--line-2,rgba(255,255,255,.14));
+      border-radius:999px;font-size:9.5px;letter-spacing:.04em;color:var(--text-mute);
+      background:rgba(255,255,255,.03);white-space:nowrap;
+    }
+    .planet-card .tag.live{
+      color:#0B0E14;background:var(--c-res-mid,#1FA84A);border-color:transparent;font-weight:700;
+    }
+
+    /* ---- ④d 区域（城市 / 超大型工厂）每行下面的一行速率 ---- */
+    .planet-card .pc-rg-wrap{border-top:1px solid rgba(255,255,255,.04)}
+    .planet-card .pc-rg-wrap:first-child{border-top:0}
+    .planet-card .pc-rg-rate{
+      display:flex;align-items:baseline;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;
+      padding:0 12px 7px 12px;font-size:10.5px;color:var(--text-mute);
+    }
+    .planet-card .pc-rg-rate .pair{display:flex;align-items:baseline;gap:5px}
+    .planet-card .pc-rg-rate .k{font-size:10px;color:var(--text-mute);white-space:nowrap}
+    .planet-card .pc-rg-rate .v{
+      font-family:var(--font-mono,Consolas,monospace);font-weight:700;font-size:11px;
+      color:var(--text-dim);white-space:nowrap;
+    }
+    .planet-card .pc-rg-rate .v.pos{color:var(--ok)}
+    .planet-card .pc-rg-rate .v.neg{color:var(--warn)}
+    .planet-card .pc-rg-rate .v.warn{color:var(--warn);white-space:normal}
+    .planet-card .pc-rate .v.pos {color:var(--ok)}
+    .planet-card .pc-rate .v.neg {color:var(--warn)}
+    .planet-card .pc-rate .v.warn{color:var(--warn)}
 
     /* ---- ⑤ 入侵等级行（防御战）：钝角盾牌 + 等级数字 ---- */
     .planet-card .pc-invasion{

@@ -193,6 +193,7 @@
     </div>
   </footer>
 
+  <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
   /* ============================================================================
@@ -239,6 +240,41 @@
   const grossOf = (p) => (p && p.maxHealth > 0 && DATA) ? (p.players || 0) * (DATA.impactMultiplier || 0) * LIB_RATE_K / p.maxHealth * 100 : 0;
   const netOf = (p) => grossOf(p) - (p.resistance || 0);         // 本页没有会话内两次观测，一律"推演"
   const etaOf = (p) => { const r = netOf(p), left = 100 - libPct(p); if (!(r > 0.0005)) return null; const h = left / r; return h <= ETA_MAX_H ? h : null; };
+  /* ---- 速率取值：**实测优先**（2026-09-29）-----------------------------------------
+     实测数据来自社区 CDN 的 15 分钟帧（由采集脚本落到 ./data/recent/，
+     同源读取，见 js/rate-source.js），口径与社区站点的实测差分一致：
+       实测净推进 %/h = −(末帧血量 − 首帧血量) ÷ 满血 × 100 ÷ 帧间隔小时
+       施加/纯产出    = 实测净推进 + 抵抗度
+     拿不到帧就退回本页原有的推演公式（玩家 × 影响系数 × K ÷ 血量 − 抵抗度），并在说明里标注来源。 */
+  function rateModel(p) {
+    const R = window.HD2Recent;
+    const d = R ? R.planetDiag(p) : null;
+    if (d && d.ok) {
+      const m = d.value;
+      return {
+        net: m.net, gross: m.gross, res: m.res, resEq: m.resEq,
+        eq: m.net * hpRatioOf(p), measured: true, hours: m.hours,
+        src: "实测（近 " + (m.hours >= 1.5 ? m.hours.toFixed(1) : "1") + " 小时 CDN 帧差分）",
+      };
+    }
+    const res = Number(p.resistance) || 0;
+    const net = netOf(p);
+    return {
+      net, gross: grossOf(p), res, resEq: res * (p.maxHealth || 0) / 1e6,
+      eq: eqRateOf(p), measured: false,
+      // 满血顶格时实测看不到变化（净速率必 ≤ 0）——必须说明这是推演兜底，不是"实测 0"
+      src: (d && d.reason === "capped")
+        ? "推演兜底（满血顶格，实测看不到变化 → 净速率 ≤ 0）：在线玩家 × 影响系数 × " + LIB_RATE_K + " ÷ 血量 − 抵抗度"
+        : "推演（在线玩家 × 影响系数 × " + LIB_RATE_K + " ÷ 血量 − 抵抗度"
+          + (d && d.reason === "owner" ? "；窗口内易主" : "") + "）",
+    };
+  }
+  function etaOfNet(p, net) {
+    const left = Math.max(0, 100 - libPct(p));
+    if (!(net > 0.0005)) return null;
+    const h = left / net;
+    return h <= ETA_MAX_H ? h : null;
+  }
   function fmtHours(h) {
     if (h == null) return "—";
     if (h >= 24) return Math.floor(h / 24) + " 天 " + Math.round(h % 24) + " 时";
@@ -266,7 +302,8 @@
      结构与站内维基的 `.info-table` 家族一致（表头琥珀斜纹 + 大写 + 字距、数据行细线、偶数行压深），
      `.table-wrap` 是唯一的横向滚动壳（窄屏可横滑，不挤压列）。 */
   const T = {
-    t: (v, cls) => `<td${cls ? ` class="${cls}"` : ""}>${v}</td>`,
+    // 第三个参数是可选的 title（悬停说明）；旧调用只传两个参数，行为不变
+    t: (v, cls, title) => `<td${cls ? ` class="${cls}"` : ""}${title ? ` title="${esc(title)}"` : ""}>${v}</td>`,
     r: (cells, cls, attrs) => `<tr${cls ? ` class="${cls}"` : ""}${attrs || ""}>${cells.join("")}</tr>`,
     grp: (label, span) => `<tr class="grp"><td colspan="${span}">${esc(label)}</td></tr>`,
     table: (head, rows, cls) => `<div class="table-wrap"><table class="wtbl${cls ? " " + cls : ""}">`
@@ -301,6 +338,10 @@
     try {
       DATA = await jget("./data.json");
     } catch (e) { fail("战况数据载入失败：" + esc(e.message) + "（data.json 由 CI 每 5 分钟生成，稍后重试）"); return; }
+
+    // 实测帧（社区 CDN 15 分钟一帧，由采集脚本落到 ./data/recent/）：拿不到不影响页面，
+    // 只是速率退回推演。失败要静默 —— 这是一份"锦上添花"的数据。
+    try { if (window.HD2Recent) await HD2Recent.load({ base: "./data/recent" }); } catch (_) { }
 
     P = (DATA.planets || []).find((x) => x.index === index);
     if (!P) { fail("星球序号 " + index + " 不在当前战况数据里。"); return; }
@@ -398,8 +439,10 @@
     const lib = showLib ? 100 : libPct(P);
     const total = (DATA.player_distribution && DATA.player_distribution.total) || 0;
     const share = total > 0 ? (P.players || 0) / total * 100 : 0;
-    const r = netOf(P), eta = etaOf(P);
-    const hpRatio = hpRatioOf(P), eqRate = eqRateOf(P);
+    // 速率一律走 rateModel：实测优先，拿不到才推演（见文件顶部的说明）
+    const rm = rateModel(P);
+    const r = rm.net, eta = etaOfNet(P, r);
+    const hpRatio = hpRatioOf(P), eqRate = rm.eq;
 
     const status = isDef ? { cn: "⚠ 防御战 · 入侵中", cls: "def" }
       : showLib ? { cn: "✓ 已解放 · 超级地球控制中", cls: "ok" }
@@ -416,14 +459,17 @@
     const kpiRows = [
       ["在线玩家", fmt(P.players), share ? "占全服 " + share.toFixed(2) + "%" : "—"],
       ["解放进度", lib.toFixed(2) + "%", showLib ? "超级地球控制中" : "1 − health / maxHealth"],
-      ["施加影响", "+" + grossOf(P).toFixed(3) + "%/h", "在线玩家 × 影响系数"],
-      ["抵抗度", P.resistance != null ? (+P.resistance).toFixed(2) + "%" : "—", "敌方抵抗（%/h）"],
-      ["净速率", (r >= 0 ? "+" : "") + r.toFixed(3) + "%/h", "推演：施加 − 抵抗"],
+      ["施加影响", "+" + rm.gross.toFixed(3) + "%/h",
+        rm.measured ? "实测反推：净推进 + 抵抗度" : "推演：在线玩家 × 影响系数"],
+      ["抵抗度", rm.res != null ? rm.res.toFixed(2) + "%" : "—",
+        "敌方抵抗（%/h）；等效抵抗度 " + rm.resEq.toFixed(2) + "%（100 万血基准）"],
+      ["净速率", (r >= 0 ? "+" : "") + r.toFixed(3) + "%/h", rm.src],
       // 等效推进速率（2026-09-26 新增）：把"血厚"这件事折回百分比，才会与体感一致。
       // 血量 = 基准时与净速率完全相同；血量 3 倍时只有净速率的 1/3（同一份绝对投入摊到 3 倍血池上）。
       ["等效推进速率", (eqRate >= 0 ? "+" : "") + eqRate.toFixed(3) + "%/h",
         "百万血基准：净速率 × " + hpRatio.toFixed(2) + " 倍血量"],
-      ["预计解放", eta == null ? (r < 0 ? "不会解放（净速率为负）" : "—") : fmtHours(eta), "按当前净速率线性外推"],
+      ["预计解放", eta == null ? (r < 0 ? "不会解放（净速率为负）" : "—") : fmtHours(eta),
+        rm.measured ? "按实测净速率线性外推" : "按推演净速率线性外推"],
       ["血量", fmt(P.health) + " / " + fmt(P.maxHealth),
         hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"],
       ["星区", secCn(), P.sector ? P.sector : "取自 tables/starmap.json"],
@@ -637,6 +683,16 @@
       const ownerCn = (lv && lv.owner) ? (OWN_CN[lv.owner] || lv.owner)
         : (ours ? "超级地球" : (OWN_CN[rg.owner] || rg.owner || "—"));
       const zh = zhMap[rg.name] || "";
+      // 区域速率三件套：抵抗度 / 实际推进 / 预计解放（实测优先，见 regionRateOf）
+      const rr = regionRateOf(lv);
+      let rEta = "—", rEtaCls = "";
+      if (rr) {
+        const left = (p == null) ? null : Math.max(0, 100 - p);
+        const h = (rr.net > 0.0005 && left != null) ? left / rr.net : null;
+        if (h != null && h <= ETA_MAX_H) rEta = fmtHours(h);
+        else if (h != null) rEta = "超过 30 天";
+        else { rEta = "不会解放"; rEtaCls = "warn"; }
+      }
       rows.push(T.r([
         T.t(`${typeOf === "Megafactory" ? "🏭" : "🏙"} ${esc(zh || rg.name)}` +
             (zh ? `<span class="sub">${esc(rg.name)}</span>` : "")),
@@ -644,14 +700,41 @@
         T.t(esc(ownerCn) + (lv && lv.isAvailable ? `<span class="sub">可部署</span>` : "")),
         T.t(lv && lv.players ? fmt(lv.players) : "—", "num"),
         T.t(p == null ? "—" : p.toFixed(2) + "%", "num hi"),
-      ], "click rg-row", ` data-d="${k}"`) + `<tr class="det" data-d="${k}" hidden><td colspan="5">`
+        T.t(rr ? rr.res.toFixed(2) + "%/h" : "—", "num",
+            rr ? `区域抵抗度（每小时回复量相对本区域血池）；等效 ${rr.resEq.toFixed(2)}%/h（100 万血基准）`
+              + (rr.measured ? "· 实测" : `· 推演${rr.why === "capped" ? "（满血顶格，实测看不到变化 → 净速率 ≤ 0）" : ""}`) : ""),
+        T.t(rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h" : "—", "num " + (rr && rr.net > 0.0005 ? "ok" : "warn"),
+            rr ? (rr.measured ? "实测：社区 CDN 15 分钟帧的首尾血量差" : "推演：区域玩家 × 影响系数 × K ÷ 区域血量 − 区域抵抗度") : ""),
+        T.t(rEta, "num " + rEtaCls),
+      ], "click rg-row", ` data-d="${k}"`) + `<tr class="det" data-d="${k}" hidden><td colspan="8">`
         + (rg.desc ? esc(rg.desc) : "<span class='mini'>（该区域没有说明文本）</span>")
         + `<div class="mini" style="margin-top:6px">类型 ${esc(typeCn)}（上游 <code>${esc(rg.size || rg.region_type || "—")}</code>）· 血量 ${fmt(lv ? lv.health : null)} / ${fmt(lv ? lv.maxHealth : null)}</div></td></tr>`);
       rows.push("");
     });
-    return T.table([{ t: "区域" }, { t: "类型" }, { t: "归属" }, { t: "玩家", cls: "num" }, { t: "已解放", cls: "num" }],
+    return T.table([{ t: "区域" }, { t: "类型" }, { t: "归属" }, { t: "玩家", cls: "num" }, { t: "已解放", cls: "num" },
+                    { t: "抵抗度", cls: "num" }, { t: "实际推进", cls: "num" }, { t: "预计解放", cls: "num" }],
                    rows.filter(Boolean)) +
-      `<p class="note" style="margin-top:10px">点任意行展开该区域的说明与血量。区域进度与星图同口径（己方控制 = 100%）。</p>`;
+      `<p class="note" style="margin-top:10px">点任意行展开该区域的说明与血量。区域进度与星图同口径（己方控制 = 100%）；
+       速率**实测优先**（社区 CDN 15 分钟帧），拿不到才用推演公式，鼠标悬停看每格说明。</p>`;
+  }
+
+  /* 区域速率：实测优先，拿不到退回推演。已归我方的区域没有"推进"可言 → 返回 null。 */
+  function regionRateOf(lv) {
+    if (!lv || !(lv.maxHealth > 0)) return null;
+    if (String(lv.owner || "").toLowerCase() === "humans") return null;
+    const R = window.HD2Recent;
+    const d = R ? R.regionDiag(P.index, lv) : null;
+    if (d && d.ok) {
+      const m = d.value;
+      return { gross: m.gross, res: m.res, resEq: m.resEq, net: m.net, measured: true, hours: m.hours, why: "" };
+    }
+    const meta = R ? R.regionMeta(P.index, lv) : null;
+    if (!meta) return null;
+    const gross = (lv.players || 0) * ((DATA && DATA.impactMultiplier) || 0) * LIB_RATE_K / lv.maxHealth * 100;
+    return {
+      gross, res: meta.res, resEq: meta.resEq, net: gross - meta.res, measured: false,
+      why: d ? d.reason : "noframes",
+    };
   }
 
   function envHtml() {

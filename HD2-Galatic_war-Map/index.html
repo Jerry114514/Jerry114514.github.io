@@ -175,6 +175,7 @@
       </div>
       <div class="stratagem-toolbar">
         <button class="stratagem-btn" id="stratagem-draw-btn">🎲 随机抽取</button>
+        <button class="stratagem-btn strat-btn-alt" id="stratagem-balanced-btn" title="按游戏内冲突规则抽取：不重复占三号位、不重复占背包位、自带背包的三号位不与其它三号位或背包共存；次抛类不占冲突位">⚖️ 平衡随机</button>
       </div>
       <div id="stratagem-content">
         <div class="loading">正在加载战备库…</div>
@@ -301,6 +302,7 @@
        脚本
        ============================================================ -->
   <script src="./js/data-source.js"></script>
+  <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
   <script>
   "use strict";
@@ -597,6 +599,16 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       if (sg) stratagems = sg;
     } catch (_) { /* ignore */ }
 
+    // 实测历史（社区 CDN 的 15 分钟帧，由采集脚本落到 ./data/recent/ 后同源读取）：
+    // 速率四件套与 MO 外推都优先用它。拿不到（没有这份缓存 / CDN 挂了）返回 false，
+    // 各调用点会自动退回站内推演公式，不会变成 0。
+    let recentOk = false;
+    try {
+      recentOk = window.HD2Recent ? await HD2Recent.load({ base: "./data/recent" }) : false;
+    } catch (_) {
+      recentOk = false;
+    }
+
     return {
       war:        data.war || { __err: "no war data" },
       planets:    data.planets || { __err: "no planets data" },
@@ -621,6 +633,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       waypoints:  waypoints || {},
       fetchedAt:  data.fetchedAt,
       source:     data.source,
+      // 解放速率推演用（data.json 顶层字段；星图 / 资料页用的是同一份）
+      impactMultiplier: data.impactMultiplier || 0,
+      recentOk,
     };
   }
 
@@ -723,12 +738,94 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     return pool.slice(0, 4);
   }
 
+  /* ============ 平衡随机（2026-09-29 新增；与图鉴站 HD2_Wiki/loadout.html 同一套口径） ============
+     分类表按游戏内口径手写，用户已逐条订正：
+       · 次抛（不占冲突位，5 件）：EAT-17 / EAT-411 / EAT-700 / MLS-4X 突击兵 / MS-11 单兵导弹发射井
+       · 自带背包的三号位（8 件）：GR-8 无后坐力炮、AC-8 机炮、FAF-14 飞矛、空爆火箭弹发射器、
+         GL-28 弹链式榴弹发射器、B/FLAM-80 焚燃者、M-1000 重装机枪、StA-X3 WASP 发射器
+       · LAS-98 激光大炮、40-K 热熔枪按普通三号位
+     规则：已有非次抛三号位 → 不再要非次抛三号位；已有背包 → 不再要背包 / 自带背包的三号位；
+           已有自带背包的三号位 → 不再要非次抛三号位 / 背包。次抛全部豁免。
+     改分类表只需改下面两个数组。 */
+  const STRAT_DISPOSABLE = [
+    "support_eat_17_expendable_anti_tank",
+    "support_eat_411_leveller",
+    "support_eat_700_incendiary",
+    "support_mls_4x_commando",
+    "support_ms_11_missile_silo",
+  ];
+  const STRAT_BACKPACK_WEAPONS = [
+    "heavy_support_gr_8_recoilless_rifle",
+    "heavy_support_ac_8_autocannon",
+    "heavy_support_faf_14_spear",
+    "heavy_support_rl_77_airburst_rocket_launcher",
+    "heavy_support_gl_28_belt_fed_grenade_launcher",
+    "heavy_support_b_flam_80_flamer",
+    "heavy_support_m_1000_hmg",
+    "heavy_support_sta_x3_wasp_launcher",
+  ];
+  let stratMode = "pure";      // "pure" = 纯随机 · "balanced" = 平衡随机
+
+  function stratSlotKind(x) {
+    if (!x) return "other";
+    if (x.type !== "支援武器" && x.type !== "重型支援武器") {
+      return x.type === "背包" ? "backpack" : "other";
+    }
+    if (STRAT_DISPOSABLE.includes(x.id)) return "disposable";
+    if (STRAT_BACKPACK_WEAPONS.includes(x.id)) return "bpWeapon";
+    return "weapon";
+  }
+  function stratCanTake(x, st) {
+    const k = stratSlotKind(x);
+    if (k === "disposable") return true;
+    if (k === "weapon")   return !st.sw && !st.bpw;
+    if (k === "backpack") return !st.bp && !st.bpw;
+    if (k === "bpWeapon") return !st.sw && !st.bp && !st.bpw;
+    return true;
+  }
+  function stratMarkTaken(x, st) {
+    const k = stratSlotKind(x);
+    if (k === "weapon") st.sw = true;
+    else if (k === "backpack") st.bp = true;
+    else if (k === "bpWeapon") { st.sw = true; st.bp = true; st.bpw = true; }
+  }
+  // 平衡随机：洗牌后顺序取，撞位就跳过；次抛永远放行
+  function stratDrawBalanced() {
+    const p = stratagemPool.slice();
+    for (let i = p.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [p[i], p[j]] = [p[j], p[i]];
+    }
+    const st = { sw: false, bp: false, bpw: false };
+    const out = [];
+    for (let i = 0; i < p.length && out.length < 4; i++) {
+      if (!stratCanTake(p[i], st)) continue;
+      out.push(p[i]);
+      stratMarkTaken(p[i], st);
+    }
+    return out.length === 4 ? out : stratDraw();
+  }
+  function stratUpdateMeta() {
+    const meta = $("stratagem-meta");
+    if (!meta || !stratagemPool.length) return;
+    meta.textContent = stratagemPool.length + " 个战备可选 · " + (stratMode === "balanced"
+      ? "平衡随机：不重复占三号位 / 背包位，自带背包的三号位不共存（次抛豁免）"
+      : "纯随机：等概率抽 4 件，不做约束");
+  }
+
   function stratShowBigBtn() {
     const root = $("stratagem-content");
     if (!root) return;
-    root.innerHTML = `<div class="stratagem-big-btn-wrap"><button class="stratagem-big-btn" id="stratagem-big-btn">🎲 抽取你的随机战备</button></div>`;
+    // 两个入口并排：纯随机 / 平衡随机（2026-09-29 用户要求两种随机都要有入口）
+    root.innerHTML = `<div class="stratagem-big-btn-wrap">
+      <button class="stratagem-big-btn" id="stratagem-big-btn">🎲 抽取你的随机战备</button>
+      <button class="stratagem-big-btn strat-big-alt" id="stratagem-big-btn-balanced"
+        title="按游戏内冲突规则抽取：不重复占三号位、不重复占背包位、自带背包的三号位不与其它三号位或背包共存；次抛类（EAT/MS-11/MLS-4X）不占冲突位">⚖️ 平衡随机</button>
+    </div>`;
     const b = $("stratagem-big-btn");
-    if (b) b.addEventListener("click", stratRender);
+    if (b) b.addEventListener("click", () => stratRender("pure"));
+    const bb = $("stratagem-big-btn-balanced");
+    if (bb) bb.addEventListener("click", () => stratRender("balanced"));
   }
 
   // 战备卡片（含进度条 + 换一个）
@@ -767,14 +864,23 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
   function stratOpenSwap(id) {
     const item = stratagemPool.find(x => x.id === id);
     if (!item) return;
-    const sameType = stratagemPool.filter(x => x.type === item.type && x.id !== id);
+    /* 同类型候选。平衡模式下还要按规则过滤：把「其它三件」当作已占位状态，
+       只列出换上去不会破坏约束的候选（否则一换就又出现两把三号位/两个背包）。 */
+    const st = { sw: false, bp: false, bpw: false };
+    if (stratMode === "balanced") {
+      currentLoadout.forEach(y => { if (y.id !== id) stratMarkTaken(y, st); });
+    }
+    const sameType = stratagemPool.filter(x => {
+      if (x.type !== item.type || x.id === id) return false;
+      return stratMode === "balanced" ? stratCanTake(x, st) : true;
+    });
     const mask = document.createElement("div");
     mask.className = "strat-modal-mask";
     const list = sameType.map(x => `
       <div class="strat-modal-item" data-pick="${esc(x.id)}">
         <span>${esc(x.name)}</span>
         <span class="strat-modal-item-stats">${x.stats[0]}/${x.stats[1]}/${x.stats[2]}/${x.stats[3]} · B${x.bonus || 0}</span>
-      </div>`).join("") || `<div class="strat-empty">同类型无其他战备</div>`;
+      </div>`).join("") || `<div class="strat-empty">同类型没有可换的战备${stratMode === "balanced" ? "（平衡规则下都被占位挡住了）" : ""}</div>`;
     mask.innerHTML = `
       <div class="strat-modal">
         <div class="strat-modal-head">
@@ -805,12 +911,15 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     stratRenderWith(currentLoadout);
   }
 
-  function stratRender() {
+  // 参数：显式传 "pure" / "balanced"；作为事件处理器被直接绑定时（旧入口）沿用当前模式
+  function stratRender(mode) {
     if (!stratagemPool.length) {
       $("stratagem-content").innerHTML = `<div class="strat-empty">战备库加载失败。</div>`;
       return;
     }
-    currentLoadout = stratDraw();
+    stratMode = (mode === "balanced") ? "balanced" : (mode === "pure" ? "pure" : stratMode);
+    currentLoadout = (stratMode === "balanced") ? stratDrawBalanced() : stratDraw();
+    stratUpdateMeta();
     stratRenderWith(currentLoadout);
   }
 
@@ -871,26 +980,39 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       b.addEventListener("click", () => stratOpenSwap(b.dataset.swap));
     });
 
-    // 抽取后显示重新抽取按钮
+    // 抽取后显示两个重新抽取按钮（纯随机 / 平衡随机）
     const tb = $("stratagem-draw-btn");
     if (tb) tb.style.display = "inline-block";
+    const tbb = $("stratagem-balanced-btn");
+    if (tbb) tbb.style.display = "inline-block";
+    // 当前模式在按钮上高亮
+    if (tb) tb.classList.toggle("strat-btn-on", stratMode !== "balanced");
+    if (tbb) tbb.classList.toggle("strat-btn-on", stratMode === "balanced");
   }
 
   function renderStratagem(data) {
     const meta = $("stratagem-meta");
     if (data.stratagems && data.stratagems.length) {
       stratagemPool = data.stratagems;
-      if (meta) meta.textContent = `${stratagemPool.length} 个战备可选`;
+      stratUpdateMeta();
     }
     const btn = $("stratagem-draw-btn");
     if (btn) {
       btn.style.display = "none";
       if (!btn.dataset.bound) {
         btn.dataset.bound = "1";
-        btn.addEventListener("click", stratRender);
+        btn.addEventListener("click", () => stratRender("pure"));
       }
     }
-    stratShowBigBtn();  // 初始只显示大按钮
+    const btn2 = $("stratagem-balanced-btn");
+    if (btn2) {
+      btn2.style.display = "none";
+      if (!btn2.dataset.bound) {
+        btn2.dataset.bound = "1";
+        btn2.addEventListener("click", () => stratRender("balanced"));
+      }
+    }
+    stratShowBigBtn();  // 初始只显示两个大按钮（纯随机 / 平衡随机）
   }
 
 function renderPlayers(data) {
@@ -1021,6 +1143,30 @@ function renderPlayers(data) {
     `;
   }
 
+  /* MO 的时间窗：起点 = 最近一条含「NEW MAJOR ORDER」的播报（data.dispatches），
+     终点 = assignments.deadline。取不到起点就返回 null —— 宁可不显示预期线，
+     也不要拿错误的基准去误导（例如上一轮指令的播报）。 */
+  function moWindowOf(data) {
+    const a = (data && data.assignments) || {};
+    const end = a.deadline ? Date.parse(a.deadline) : NaN;
+    if (!isFinite(end)) return null;
+    const ds = (data.dispatches || [])
+      .filter(d => d && d.published && isFinite(Date.parse(d.published)))
+      .sort((x, y) => Date.parse(y.published) - Date.parse(x.published));
+    const pick = (needle) => {
+      for (const d of ds) {
+        const t = Date.parse(d.published);
+        if (t > end) continue;
+        if (String(d.message || "").toUpperCase().includes(needle)) return t;
+      }
+      return NaN;
+    };
+    let start = pick("NEW MAJOR ORDER");
+    if (!isFinite(start)) start = pick("MAJOR ORDER");
+    if (!isFinite(start) || !(end > start)) return null;
+    return { start, end, hours: (end - start) / 3600000 };
+  }
+
   function renderMO(data) {
     const root = $("mo-content");
     const expireEl = $("mo-expire");
@@ -1043,6 +1189,13 @@ function renderPlayers(data) {
     const planetByIndex = (data.planets && !data.planets.__err)
       ? Object.fromEntries((data.planets || []).map(p => [p.index, p]))
       : {};
+
+    // 预期进度线：按「已用时间 ÷ 指令总时长」算出此刻应到达的进度。
+    // 数据全部来自站内（dispatches 的 MO 播报时刻 + assignments.deadline），不依赖外部推算。
+    const moW = moWindowOf(data);
+    const expectPct = moW
+      ? Math.max(0, Math.min(100, (DATA_FETCH_MS - moW.start) / (moW.end - moW.start) * 100))
+      : null;
 
     const tasksHtml = a.tasks.map((tk, i) => {
       const decoded = decodeTask(tk, a.progress ? a.progress[i] : null);
@@ -1069,13 +1222,90 @@ function renderPlayers(data) {
         taskTitle = `${esc(decoded.typeCn)} · 目标：${raceName}`;
       }
 
+      // 预期进度对照：bar 上一条竖线 + 下面一行文字。
+      // 只对「有明确目标值」的任务给这条线 —— 没目标值就没有可比基准，不摆假线。
+      const expectHtml = { mark: "", line: "", eta: "" };
+      if (expectPct != null && typeof decoded.goal === "number" && decoded.goal > 0) {
+        const delta = pct - expectPct;
+        const deltaTxt = Math.abs(delta) < 0.5 ? "与预期持平"
+          : (delta > 0 ? `领先 ${Math.round(delta)} 个百分点` : `落后 ${Math.round(Math.abs(delta))} 个百分点`);
+        /* 截止时预计完成度 + 预计完成时间（2026-09-29）
+           速率来源优先级：**自指令下达以来的均速**（稳定、与社区站点观感一致）
+                            → 没有全程帧时用「近 1 小时」→ 再没有就用本机按已历时间估的平均速率。
+           为什么不全用近 1 小时：MO 的击杀数一阵一阵，实测任务1 近 1 小时 14.2 万/时 vs 全程 23.9 万/时，
+           只按 1 小时外推会得出"远远来不及"的悲观结论（和 helldiverscompanion 的观感对不上）。
+           ⚠ 单位：moW.end / DATA_FETCH_MS 都是毫秒，先换算成秒再除以 3600（此前漏了 → 外推恒 ≥100%） */
+        const remainSec = (moW.end - DATA_FETCH_MS) / 1000;
+        const mw = (window.HD2Recent && HD2Recent.moWindows) ? HD2Recent.moWindows() : null;
+        const winRun = mw && mw.run ? mw.run : null;
+        const winH1 = mw && mw.h1 ? mw.h1 : null;
+        const elapsed = Math.max(1, DATA_FETCH_MS - moW.start);
+        const rateOf = (w) => (w && w.rates ? w.rates[i] : null);
+        const rateRun = rateOf(winRun);
+        const rateH1 = rateOf(winH1);
+        const projOf = (rate) => (rate != null && rate > 0 && remainSec > 0)
+          ? Math.min(100, ((decoded.current || 0) + rate * remainSec / 3600) / decoded.goal * 100)
+          : null;
+        const projRun = projOf(rateRun);
+        const projH1 = projOf(rateH1);
+        const pctTxt = (p) => (p >= 100 ? "可完成" : `约 ${Math.round(p)}%`);
+        let projTxt;
+        if (projRun != null) {
+          projTxt = `按全程均速（${(winRun.hours / 24).toFixed(1)} 天）截止时 ${pctTxt(projRun)}`;
+          // 近 1 小时节奏明显不同（差 ≥3 个百分点）时一起标出来，解释"当下偏快/偏慢"
+          if (projH1 != null && Math.abs(projH1 - projRun) >= 3) {
+            projTxt += `｜近 1 小时节奏下 ${pctTxt(projH1)}`;
+          }
+        } else if (projH1 != null) {
+          projTxt = `按近 1 小时节奏截止时 ${pctTxt(projH1)}`;
+        } else {
+          const proj = Math.min(100, pct * ((moW.end - moW.start) / elapsed));
+          projTxt = proj >= 100 ? "按已历均速可完成" : `按已历均速截止时约 ${Math.round(proj)}%`;
+        }
+        expectHtml.mark = `<span class="progress-bar-mark" style="left:${expectPct.toFixed(2)}%"`
+          + ` title="预期进度 ${expectPct.toFixed(1)}%（指令期约 ${(moW.hours / 24).toFixed(1)} 天，按时间线性分摊）"></span>`;
+        expectHtml.line = `<div class="mo-expect">预期进度 <b>${expectPct.toFixed(1)}%</b> · `
+          + `<span class="${delta >= 0 ? "ok" : "behind"}">${deltaTxt}</span> · ${projTxt}</div>`;
+
+        const remainUnits = Math.max(0, (decoded.goal || 0) - (decoded.current || 0));
+        const elapsedH = Math.max(0.01, (DATA_FETCH_MS - moW.start) / 3600000);
+        const avgRate = (decoded.current || 0) / elapsedH;
+        const useRate = (rateRun != null && rateRun > 0) ? rateRun
+                      : (rateH1 != null && rateH1 > 0) ? rateH1
+                      : (avgRate > 0 ? avgRate : null);
+        const useSrc = (rateRun != null && rateRun > 0) ? "全程均速"
+                     : (rateH1 != null && rateH1 > 0) ? "近 1 小时"
+                     : "自指令下达以来的估算均速";
+        const marginH = (moW.end - DATA_FETCH_MS) / 3600000;
+        if (remainUnits <= 0) {
+          expectHtml.eta = `<div class="mo-expect">预计完成 <b class="ok">已完成</b></div>`;
+        } else if (useRate == null) {
+          expectHtml.eta = `<div class="mo-expect">预计完成 <span class="behind">按当前节奏无法完成（速率 ≤ 0）</span></div>`;
+        } else {
+          const etaH = remainUnits / useRate;
+          const diffH = marginH - etaH;
+          const diffTxt = diffH >= 0
+            ? `来得及（余 ${fmtEtaH(diffH)}）`
+            : `来不及（差 ${fmtEtaH(-diffH)}）`;
+          const perHour = `（${useSrc} ${fmt(Math.round(useRate))} /小时）`;
+          expectHtml.eta = `<div class="mo-expect">预计完成 <b>还需 ${fmtEtaH(etaH)}</b>`
+            + `<span class="dim"> ${perHour}</span> · 距截止 ${fmtEtaH(marginH)} · `
+            + `<span class="${diffH >= 0 ? "ok" : "behind"}">${diffTxt}</span></div>`;
+        }
+      }
+
       return `
         <div class="mo-task">
           <div class="mo-task-head">
             <span>任务 ${i + 1}：${taskTitle}</span>
             <span class="mo-task-progress">${currentStr} / ${goalStr} (${pct}%)</span>
           </div>
-          <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+          <div class="progress-bar">
+            <div class="progress-bar-fill" style="width:${pct}%"></div>
+            ${expectHtml.mark}
+          </div>
+          ${expectHtml.line}
+          ${expectHtml.eta}
         </div>
       `;
     }).join("");
@@ -2045,6 +2275,156 @@ function renderPlayers(data) {
     if (pct < 4) return "高";
     return "极高";
   }
+
+  /* ==============================================================
+     解放速率推演（2026-09-29 新增）
+     --------------------------------------------------------------
+     全部用站内数据算，口径与 galaxy-map-v2.html / planet.html 一致：
+       当前解放推进速率 gross（%/h）= 在线玩家 × 影响系数 × LIB_RATE_K ÷ 星球总血量 × 100
+       抵抗度       resRaw（%/h）    = data.json 的 resistance
+                                     （上游换算：regenPerSecond × 3600 ÷ 血量 × 100）
+       等效抵抗度   resEq （%/h）    = resRaw × 血量 ÷ 1,000,000
+                                     —— 按「100 万血」归一：每 10,000 HP/小时 记作 1%，
+                                        不同血量星球的回复量借此可横向比较
+       实际解放推进速率 net（%/h）   = gross − resRaw（抵抗吃掉推进时为负）
+       预计完成时间                  = (100 − 已解放%) ÷ net；net ≤ 0 → 无法完成解放
+     ⚠ LIB_RATE_K 与另外两页同值，**不要只改这一个文件**，否则三处数字会打架。
+     ============================================================== */
+  const LIB_RATE_K = 32;
+  const ETA_MAX_H = 720;                 // 超过 30 天不给具体时间（战役以天计）
+  /* 速率四件套的取数：**实测优先**（社区 CDN 15 分钟帧，见 js/rate-source.js），
+     拿不到才退回站内推演公式。实测的口径与 日报工具一致：
+       实测净推进 = −(末帧血量 − 首帧血量) ÷ 满血 × 100 ÷ 帧间隔小时
+       施加/当前推进 = 实测净推进 + 抵抗度 */
+  function pcRateOf(p) {
+    if (!p || !(p.maxHealth > 0)) return null;
+    const R = window.HD2Recent;
+    const d = R ? R.planetDiag(p) : null;
+    if (d && d.ok) {
+      const m = d.value;
+      return {
+        imp: (currentData && currentData.impactMultiplier) || 0,
+        gross: m.gross, resRaw: m.res, resEq: m.resEq, net: m.net,
+        measured: true, hours: m.hours, why: "",
+      };
+    }
+    const imp = (currentData && currentData.impactMultiplier) || 0;
+    const gross = (p.players || 0) * imp * LIB_RATE_K / p.maxHealth * 100;
+    const resRaw = Number(p.resistance) || 0;
+    return {
+      imp, gross, resRaw, resEq: resRaw * p.maxHealth / 1e6, net: gross - resRaw, measured: false,
+      // why: 满血顶格（实测看不到变化，净速率必然 ≤0）/ 无实测帧 / 窗口内易主
+      why: d ? d.reason : "noframes",
+    };
+  }
+  /* 区域（城市 / 超大型工厂）速率四件套：同样是实测优先。
+     live = data.json 里该星球的 regions[k]（有 maxHealth / players / owner）
+     拿不到区域抵抗度（CDN 里没这条区域）时返回 null —— 那一行就只显示解放度，不编数字。 */
+  function pcRegionRateOf(p, live) {
+    if (!live || !(live.maxHealth > 0)) return null;
+    if (String(live.owner || "").toLowerCase() === "humans") return null;   // 已经是我方的区域没有"推进"可言
+    const R = window.HD2Recent;
+    const d = R ? R.regionDiag(p.index, live) : null;
+    if (d && d.ok) {
+      const m = d.value;
+      return { gross: m.gross, res: m.res, resEq: m.resEq, net: m.net, measured: true, hours: m.hours, why: "" };
+    }
+    const meta = R ? R.regionMeta(p.index, live) : null;
+    if (!meta) return null;
+    const imp = (currentData && currentData.impactMultiplier) || 0;
+    const gross = (live.players || 0) * imp * LIB_RATE_K / live.maxHealth * 100;
+    return {
+      gross, res: meta.res, resEq: meta.resEq, net: gross - meta.res, measured: false,
+      why: d ? d.reason : "noframes",
+    };
+  }
+  // 速率：带符号三位小数
+  function fmtRate(v) {
+    if (v == null || !isFinite(v)) return "—";
+    return (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(3) + "%/h";
+  }
+  function fmtEtaH(h) {
+    if (h == null || !isFinite(h)) return "—";
+    // 先归一到"分钟"再拆天/时/分，避免出现「7 天 24 小时」这种进位残留
+    const totalMin = Math.max(1, Math.round(h * 60));
+    if (totalMin < 60) return totalMin + " 分";
+    const d = Math.floor(totalMin / 1440);
+    const hh = Math.floor((totalMin % 1440) / 60);
+    const mm = totalMin % 60;
+    return d > 0 ? `${d} 天 ${hh} 小时` : `${hh} 小时 ${mm} 分`;
+  }
+  // 解放战卡片底部的速率区
+  function pcRateHtml(p, libPctRaw) {
+    const r = pcRateOf(p);
+    if (!r) return "";
+    const left = Math.max(0, 100 - libPctRaw);
+    let etaTxt, etaCls;
+    if (r.net > 0.0005) {
+      const h = left / r.net;
+      etaTxt = h <= ETA_MAX_H ? fmtEtaH(h) : "超过 30 天";
+      etaCls = h <= ETA_MAX_H ? "" : " warn";
+    } else {
+      etaTxt = "预计无法完成解放";
+      etaCls = " warn";
+    }
+    // 数据来源角标：实测（社区 CDN 15 分钟帧）优先；满血顶格 / 无帧 / 窗口内易主时走推演，并把原因写出来
+    const whyCn = { capped: "满血顶格", noframes: "无实测帧", owner: "窗口内易主" }[r.why] || "";
+    const srcTxt = r.measured ? `实测 · 近 ${r.hours >= 1.5 ? r.hours.toFixed(1) : "1"} 小时` : (whyCn ? `推演 · ${whyCn}` : "推演");
+    const srcTip = r.measured
+      ? "实测：取社区 CDN 的 15 分钟帧，用最近约 1 小时的首尾血量差算净推进（与 日报工具同口径）"
+      : (r.why === "capped"
+        ? "推演兜底：该星球血量贴在满血上限，玩家输出只要没超过回血，实测就一个字都看不到变化 —— "
+          + "这种 0 不代表净速率 0，而是「净速率 ≤ 0」，所以改为按公式算：在线玩家 × 影响系数 × 32 ÷ 血量 − 抵抗度"
+        : "推演：站内公式 = 在线玩家 × 影响系数 × 32 ÷ 血量 − 抵抗度（" + (whyCn || "没有实测帧") + "）");
+    const eqTip = `等效抵抗度 = 抵抗度 ${r.resRaw.toFixed(2)}%/h × 血量 ${p.maxHealth.toLocaleString()} ÷ 1,000,000`
+      + ` = ${r.resEq.toFixed(2)}%/h；按「100 万血」基准，每 10,000 HP/小时 记作 1%。`;
+    const grossTip = r.measured
+      ? `当前解放推进速率（实测反推）= 实测净推进 ${r.net.toFixed(3)}%/h + 抵抗度 ${r.resRaw.toFixed(2)}%/h`
+      : `当前解放推进速率 = 在线玩家 ${(p.players || 0).toLocaleString()} × 影响系数 ${r.imp}`
+        + ` × ${LIB_RATE_K} ÷ 血量 ${p.maxHealth.toLocaleString()} × 100（未扣抵抗）`;
+    const netTip = r.measured
+      ? `实际解放推进速率 = 最近约 ${r.hours.toFixed(2)} 小时的血量差实测值（负值 = 抵抗吃掉了推进）`
+      : `实际解放推进速率 = 当前推进 ${r.gross.toFixed(3)}%/h − 抵抗度 ${r.resRaw.toFixed(2)}%/h（负值 = 抵抗吃掉了推进）`;
+    return `<div class="pc-rate">
+      <div class="pc-rate-src"><span class="tag ${r.measured ? "live" : ""}" title="${esc(srcTip)}">${srcTxt}</span></div>
+      <div class="pc-rate-row">
+        <span class="pair"><span class="k">等效抵抗度</span><span class="v" title="${esc(eqTip)}">${r.resEq.toFixed(2)}%/h</span></span>
+        <span class="pair"><span class="k">当前推进速率</span><span class="v${r.gross > 0 ? " pos" : ""}" title="${esc(grossTip)}">${fmtRate(r.gross)}</span></span>
+      </div>
+      <div class="pc-rate-row">
+        <span class="pair"><span class="k">实际推进速率</span><span class="v ${r.net > 0.0005 ? "pos" : "neg"}" title="${esc(netTip)}">${fmtRate(r.net)}</span></span>
+        <span class="pair"><span class="k">预计完成</span><span class="v${etaCls}">${esc(etaTxt)}</span></span>
+      </div>
+    </div>`;
+  }
+  // 区域（城市 / 超大型工厂）一行的速率补充：抵抗度 / 实际推进 / 预计解放 / 实测or推演
+  function pcRegionRateHtml(p, live) {
+    const r = pcRegionRateOf(p, live);
+    if (!r) return "";
+    const lib = pcRegionLib(live, null);
+    const left = lib == null ? null : Math.max(0, 100 - lib);
+    let etaTxt = "—", etaCls = "";
+    if (r.net > 0.0005 && left != null) {
+      const h = left / r.net;
+      etaTxt = h <= ETA_MAX_H ? fmtEtaH(h) : "超过 30 天";
+      etaCls = h <= ETA_MAX_H ? "" : " warn";
+    } else if (r.net <= 0.0005) {
+      etaTxt = "预计无法解放";
+      etaCls = " warn";
+    }
+    const whyCn = { capped: "满血顶格", noframes: "无实测帧", owner: "窗口内易主" }[r.why] || "";
+    const src = r.measured ? `<span class="tag live" title="实测：社区 CDN 15 分钟帧的首尾血量差">实测</span>`
+                           : `<span class="tag" title="${r.why === "capped"
+                                ? "推演兜底：该区域血量贴在满血上限，实测看不到变化（净速率 ≤ 0），改用公式算"
+                                : "推演：区域在线玩家 × 影响系数 × 32 ÷ 区域血量 − 区域抵抗度" + (whyCn ? "（" + whyCn + "）" : "")}">推演${whyCn ? " · " + whyCn : ""}</span>`;
+    const resTip = `区域抵抗度 = 回复 ${r.res != null ? r.res.toFixed(2) : "—"}%/h（相对本区域血池）；等效抵抗度 ${r.resEq != null ? r.resEq.toFixed(2) : "—"}%/h（100 万血基准）`;
+    return `<div class="pc-rg-rate">
+      <span class="pair"><span class="k">抵抗度</span><span class="v" title="${esc(resTip)}">${r.res == null ? "—" : r.res.toFixed(2) + "%/h"}</span></span>
+      <span class="pair"><span class="k">实际推进</span><span class="v ${r.net > 0.0005 ? "pos" : "neg"}" title="实际解放速率 = 净推进（负值 = 抵抗吃掉了推进）">${fmtRate(r.net)}</span></span>
+      <span class="pair"><span class="k">预计解放</span><span class="v${etaCls}">${esc(etaTxt)}</span></span>
+      ${src}
+    </div>`;
+  }
   // 秒 -> D:HH:MM:SS（与游戏内防御战倒计时同形）
   function fmtDefTimer(sec) {
     if (sec == null || !isFinite(sec) || sec <= 0) return "—";
@@ -2172,17 +2552,22 @@ function renderPlayers(data) {
       return (v == null && ours) ? 100 : v;
     };
     const pctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
-    const row = (o) => `<div class="pc-rg">
-      <span class="ico">${o.megafactory ? "🏭" : "🏙"}</span>
-      <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
-      <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
-      <span class="pct">${pctTxt(o.pct)}</span></div>`;
+    // 每一行 = 名称/类型/解放度，下面再补一行「抵抗度 · 实际推进 · 预计解放」（实测优先），
+    // 这样城市/超大型工厂也能一眼看出还差多久、推不推得动。
+    const row = (o) => `<div class="pc-rg-wrap">
+      <div class="pc-rg">
+        <span class="ico">${o.megafactory ? "🏭" : "🏙"}</span>
+        <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
+        <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
+        <span class="pct">${pctTxt(o.pct)}</span>
+      </div>${o.rate || ""}</div>`;
     const rows = st.regions.map((r, k) => row({
       type: pcRegionTypeLabel(r),
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
       megafactory: pcRegionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
       pct: pctOf((p.regions || [])[k], r),
+      rate: pcRegionRateHtml(p, (p.regions || [])[k]),
     }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="tip">城市 / 超大型工厂</span>` +
@@ -2275,6 +2660,7 @@ function renderPlayers(data) {
             <span class="v ${tier.cls}">${res > 0 ? resLabel(res) + " (" + res.toFixed(2) + "%)" : "无"}</span>
           </span>
         </div>
+        ${pcRateHtml(p, libPctRaw)}
       </div>`;
     }
 
