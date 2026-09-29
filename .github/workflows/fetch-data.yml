@@ -39,12 +39,25 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
 
+      # 实测帧缓存（2026-09-29）：站点 js/rate-source.js 读 HD2-Galatic_war-Map/data/recent/
+      # 里的社区 CDN 15 分钟帧来算「实测速率」（星球四件套 / 城市四项 / MO 预期进度）。
+      # 这份缓存不在仓库里时，Pages 上所有卡片都会退回推演、角标写「推演 · 无实测帧」。
+      # 帧每 15 分钟才变一次，而本工作流每 5 分钟跑一次 —— 多数次跑完内容没变，
+      # 不会产生提交，也就不额外触发 Pages 构建。
+      # ⚠ 缓存是滚动窗口（星球/区域 1 小时、MO 48 小时），必须靠这一步持续刷新；
+      #   推一份静态快照上去，页面会继续拿"过去那个小时"的差分标「实测」。
+      - name: Fetch HD2 recent frames (实测帧缓存)
+        run: python scripts/fetch_recent_frames.py
+        env:
+          PYTHONIOENCODING: utf-8
+
       - name: Commit and push
         run: |
           git config user.name "Jerry Jiang"
           git config user.email "69064950+Jerry114514@users.noreply.github.com"
           git add HD2-Galatic_war-Map/data.json
           git add HD2-Galatic_war-Map/data/history/player_distribution.json
+          git add HD2-Galatic_war-Map/data/recent
           # 新战役横幅（scripts/fetch_site_data.py 落盘的 assets/campaign/banner_*.webp）
           # 必须一起提交，否则 data.json 里的 banner_image_local 在线上会 404
           git add HD2-Galatic_war-Map/assets/campaign
