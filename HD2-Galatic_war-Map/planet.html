@@ -214,7 +214,10 @@
   const OWNER_COLOR = { Humans: "#5BA3D0", Terminids: "#F5C518", Automaton: "#D6806D", Illuminate: "#CF64F8" };
   const OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
   const RACE_CN = { 1: "超级地球", 2: "终结族", 3: "机器人", 4: "光能者" };
-  const LIB_RATE_K = 32;                       // 与 galaxy-map-v2.html 同值
+  // ⚠ 2026-09-29 重新标定 32 → 90；三处必须同值（index.html / 本文件 / galaxy-map-v2.html），
+  //   依据见 index.html 同名常量上方的注释（实测 K 中位数 82.8，取 90）。这是**推演兜底**常数，
+  //   有实测帧时走 js/rate-source.js 的实测路径，与本值无关。
+  const LIB_RATE_K = 90;
   const ETA_MAX_H = 720;                       // 30 天以上不显示
   /* 「等效推进速率」的基准球：血量 100 万（游戏里最常见的档位；2026-09-26 两个快照里都是 273 颗中的 181 颗）。
      ⚠ 为什么需要它（2026-09-26 用户反馈「300 万血 + 1.5 抵抗的西斯，全服 90% 人打了 5 天，体感与数字不符」）：

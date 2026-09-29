@@ -2317,10 +2317,14 @@ function bindUI(data, planets) {
        · 实测：同一会话内两次观测的差值（最可靠）
        · 推演：影响力公式估算，仅用于显示，**不写入任何数据文件、不改动抓取管线**
      ============================================================ */
-  // 推演常数：由 helldiverscompanion 同一星球的三个自洽数据反推 ——
-  //   施加 0.558%/h − 抵抗 0.31%/h ≈ 它显示的净速率 0.245%/h
-  //   反代入 players=21608、impactMultiplier≈0.013、maxHealth=1.6e6 得 K≈32
-  const LIB_RATE_K = 32;
+  // 推演常数：**原值 32** 由一次自洽观测反推（施加 0.558 − 抵抗 0.31 ≈ 净 0.245，
+  //   反代入 players=21608、impactMultiplier≈0.013、maxHealth=1.6e6 得 K≈32）。
+  // ⚠ 2026-09-29 重新标定 32 → 90：影响系数已从 ≈0.013 涨到 ≈0.032，沿用 32 会让推演值
+  //   整体偏小约 2.6 倍（足以把正在推进的星球判成「无法完成解放」）。方法：只取明显掉血的大战场，
+  //   玩家侧(血/秒) = −ΔHealth/Δt + regenPerSecond ⇒ K = 3600 × 玩家侧 ÷ (players × impactMultiplier)
+  //   实测 4 样本（idx 269, players≈17.6k, 系数≈0.032）K = 71.9/74.2/91.4/100.1，中位 82.8 → 取 90。
+  //   三处必须同值：index.html / planet.html / 本文件。详见 §19.45。
+  const LIB_RATE_K = 90;
   const PC_SNAP = {};              // {index:{t,lib}} 观测快照，供「实测」速率
   let PC_IDX = null, WHEEL_IDX = null, BIOME_IDX = null, BIOME_FB = null;
 

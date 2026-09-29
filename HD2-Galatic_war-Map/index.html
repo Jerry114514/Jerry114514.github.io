@@ -25,7 +25,7 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260926a">
+  <link rel="stylesheet" href="./css/home.css?v=20260929a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -2290,7 +2290,17 @@ function renderPlayers(data) {
        预计完成时间                  = (100 − 已解放%) ÷ net；net ≤ 0 → 无法完成解放
      ⚠ LIB_RATE_K 与另外两页同值，**不要只改这一个文件**，否则三处数字会打架。
      ============================================================== */
-  const LIB_RATE_K = 32;
+  /* ⚠ 2026-09-29 重新标定：32 → 90（改这三个文件必须同时改：本文件 / planet.html / galaxy-map-v2.html）。
+     旧值 32 是按「影响系数 ≈ 0.013」时的**一次观测**反推的；现在影响系数已涨到 ≈ 0.032，
+     沿用 32 会让推演值整体偏小约 2.6 倍，足以把正在推进的星球判成「预计无法完成解放」。
+     本次标定方法（只取**明显掉血**的大战场，避免满血顶格把 K 系统性压低）：
+         玩家侧(血/秒) = −ΔHealth/Δt + regenPerSecond
+         K = 3600 × 玩家侧 ÷ (players × impactMultiplier)
+     实测 4 个样本（idx 269，players ≈ 17.6k，impactMultiplier ≈ 0.032）：K = 71.9 / 74.2 / 91.4 / 100.1，
+     **中位数 82.8**。取 90 落在区间中上部（略偏保守地承认"推演仍偏小"一侧）。
+     ⚠ 这是**推演兜底**用的常数；有实测帧的星球走 rate-source.js 的实测路径，与本值无关
+       （见 §19.45）。影响系数若再明显变化，需按同一方法重新标定。 */
+  const LIB_RATE_K = 90;
   const ETA_MAX_H = 720;                 // 超过 30 天不给具体时间（战役以天计）
   /* 速率四件套的取数：**实测优先**（社区 CDN 15 分钟帧，见 js/rate-source.js），
      拿不到才退回站内推演公式。实测的口径与 日报工具一致：
