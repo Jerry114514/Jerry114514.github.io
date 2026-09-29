@@ -3643,6 +3643,12 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     window.addEventListener("resize", layoutPlanetGrids);
     refresh();
     startAutoRefresh();
+    // 2026-09-29：后台 / 被遮住的标签页会被浏览器冻住定时器（App 内嵌浏览器尤其明显），
+    // 切回来时顶栏「更新于」会一直停在旧值。重新可见 / 获得焦点 / 从往返缓存恢复时立刻补一次刷新。
+    const refreshWhenVisible = () => { if (document.visibilityState === "visible") refresh(); };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    window.addEventListener("focus", refreshWhenVisible);
+    window.addEventListener("pageshow", refreshWhenVisible);
     initBackToTop();
   });
 
