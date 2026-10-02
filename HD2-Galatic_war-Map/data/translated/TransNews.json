@@ -1,11 +1,20 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Kill the requisite enemies to ensure early investors in the TD-110 Maelstrom Tanks receive their promised deluxe features.",
-  "translated": "消灭指定数量的敌人，确保“风暴漩涡”坦克的早期投资者获得承诺的豪华配置。",
-  "translated_at": "2026-09-27T21:02:02Z"
+  "original": "Defend the designated planets, wielding the TD-110 Maelstrom Tank to support a public awareness sales campaign.",
+  "translated": "保卫指定行星，驾驶“风暴漩涡”坦克，为公众宣传销售活动提供支援。",
+  "translated_at": "2026-10-02T21:54:20Z"
  },
  "items": [
+  {
+   "id": 3943,
+   "original": "NEW MAJOR ORDER\n\nUnrelenting enemy aggression has put production of the Maelstrom Tank in jeopardy. To recoup costs, the Helldivers are ordered to aid the creation of a public awareness sales campaign. Footage of the Helldivers obliterating Freedom's enemies could increase pre-sales, providing the funding needed to save the project.\n\nGATRIA and WASAT have just come under attack. Deploy to defend these planets, utilizing the Maelstrom Tank.",
+   "translated": "新重要指令\n\n敌军攻势步步紧逼，风暴漩涡坦克的生产已岌岌可危。为挽回成本，绝地潜兵奉命协助打造一场面向公众的宣传销售活动。潜兵歼灭自由之敌的影像有望提振预售，为挽救该项目提供所需资金。\n\n盖尔崔亚与天樽二刚刚遭到进攻。即刻部署，保卫这两颗行星，并投入使用风暴漩涡坦克。",
+   "published_at": "2026-10-02T19:24:23Z",
+   "translated_at": "2026-10-02T21:54:19Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3942,
    "original": "MAJOR ORDER FAILED\n\nInsufficient materials have been harvested by the Helldivers to fulfill production quotas for deluxe Maelstrom Tank features. This has caused significant distress amongst the early investors who were promised these features as incentives, resulting in a precipitous drop in pre-sales and a decrease in share value.\n\nAs a result, the Maelstrom Tank project is now at risk of termination.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-09-25T17:35:08Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3932,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on ROGUE 5 with the Anti-Personnel Mine Deployer Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨款已到位，未来24小时内，罗格5上的绝地潜兵行动将获得「反步兵地雷部署器」战略配备支援。",
-   "published_at": "2026-09-19T19:07:25Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-02T19:02:04Z",
+  "computed_at": "2026-10-02T21:54:21Z",
   "planet_index": null
  }
 }
