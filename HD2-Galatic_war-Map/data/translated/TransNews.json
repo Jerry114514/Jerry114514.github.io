@@ -7,6 +7,15 @@
  },
  "items": [
   {
+   "id": 3942,
+   "original": "MAJOR ORDER FAILED\n\nInsufficient materials have been harvested by the Helldivers to fulfill production quotas for deluxe Maelstrom Tank features. This has caused significant distress amongst the early investors who were promised these features as incentives, resulting in a precipitous drop in pre-sales and a decrease in share value.\n\nAs a result, the Maelstrom Tank project is now at risk of termination.",
+   "translated": "重要指令失败\n\n绝地潜兵采集到的材料不足，无法满足“风暴漩涡”坦克豪华配置的生产配额。当初向早期投资者承诺这些配置作为激励，如今承诺落空，投资者极度不满，预售量骤降，股价随之下跌。\n\n因此，“风暴漩涡”坦克项目如今面临终止风险。",
+   "published_at": "2026-10-01T19:32:32Z",
+   "translated_at": "2026-10-01T23:44:22Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
    "id": 3941,
    "original": "NEW MAJOR ORDER\n\nProduction of Maelstrom Tanks for civilian and military use is proceeding on schedule. Now, deluxe features offered as incentives for early investors must be fabricated. The Helldivers are ordered to dismantle 5,000,000 Automaton Tanks to repurpose their engine cooling systems as climate-controlled cupholders, and harvest 25,000,000 Chargers to convert their carapaces to vibration-insulation panels.",
    "translated": "新重要指令\n\n“风暴漩涡”坦克的民用与军用生产正按计划推进。如今，作为早期投资者激励的豪华配置必须投入制造。绝地潜兵奉命拆解 500 万（5,000,000）台机器人坦克，将其引擎冷却系统改作恒温杯架；并猎杀 2500 万（25,000,000）只冲锋虫，将其甲壳改作隔振板。",
@@ -86,15 +95,6 @@
    "translated_at": "2026-09-25T17:35:08Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3931,
-   "original": "ARSENAL AUGMENTATION\n\nFunds from the Super Secure Elections Act have been allocated to support Helldiver operations on CHARON PRIME with the Gas Mines Stratagem for the next 24 hours.",
-   "translated": "军械库扩充\n\n《超级安全选举法》拨款已划拨，用于支援绝地潜兵在卡戎主星的行动，未来 24 小时内提供「毒气地雷」战略配备。",
-   "published_at": "2026-09-19T19:06:28Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-01T19:19:01Z",
+  "computed_at": "2026-10-01T23:44:23Z",
   "planet_index": null
  }
 }
