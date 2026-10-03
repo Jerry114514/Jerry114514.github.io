@@ -1240,7 +1240,7 @@ function renderPlayers(data) {
       }
       // 任务标题（口径对齐 companion 的 label 渲染）：
       //   type=3  消灭敌人 -> 「消灭X敌人」（KillEnemies）
-      //   type=12 防守     -> 「防守 <星球>（对<阵营>）」（Defense: "Defend <PLANET> against …"）
+      //   type=12 防守     -> 「防守 <星球>」（Defense: "Defend <PLANET> against …"；不附阵营后缀）
       //   type=11/13 解放/坚守 -> 「<类型> · <星球>」（Liberate|Hold "<PLANET>"）
       //   其余带阵营 -> 「<类型> · 目标：<阵营>」
       const hasRace = (decoded.race === 2 || decoded.race === 3 || decoded.race === 4);
@@ -1254,7 +1254,7 @@ function renderPlayers(data) {
         taskTitle = `消灭${raceName}敌人`;
       } else if (decoded.type === 12) {
         taskTitle = tgtName ? `防守 ${esc(tgtName)}` : esc(decoded.typeCn);
-        if (hasRace) taskTitle += `（对${raceName}）`;
+        // 按用户要求：标题不再附「（对<阵营>）」后缀
       } else if ((decoded.type === 11 || decoded.type === 13) && tgtName) {
         taskTitle = `${esc(decoded.typeCn)} · ${esc(tgtName)}`;
       } else if (hasRace) {
