@@ -36,9 +36,13 @@ on:
     paths:
       - 'HD2_Wiki/data/**'
       - 'HD2-Galatic_war-Map/tables/**'
+      # index.html 不在 HD2_Wiki/data 或 tables 之下，但它内嵌了 BUILTIN_PLANET_CN 兜底表，
+      # 改它（或改漏它）必须触发本工作流，否则「星球译名一致性」这一步永远等不到。
+      - 'HD2-Galatic_war-Map/index.html'
       - 'HD2-Galatic_war-Map/data/campaign_zh.json'
       - 'HD2-Galatic_war-Map/banner.json'
       - 'scripts/validate_wiki_data.py'
+      - 'scripts/check_planet_names.py'
       - 'scripts/gen_search_index.py'
       - '.github/workflows/validate-data.yml'
   workflow_dispatch:      # 支持手动触发
@@ -110,6 +114,43 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
+      # 星球译名一致性（**阻塞**，与上面的索引步骤不同）：
+      #   · HD2-Galatic_war-Map/tables/starmap.json 是星球名的**渲染源**（星球页/星图页都读它）；
+      #   · HD2-Galatic_war-Map/index.html 里的 BUILTIN_PLANET_CN 是 starmap 加载失败时的**离线兜底表**；
+      #   两者必须逐字节同步，否则「兜底时」和「正常时」会显示不同的中文名（2026-10 就发生过一次：
+      #   HEZE BAY / SENGE 23 只在 starmap 里有译名，兜底表漏了）。
+      # 最容易犯的错 = 只改 starmap.json、忘了重跑 --write。这一步没有自动化会替他补上，所以真的变红。
+      # 为什么保持独立脚本、不并进 validate_wiki_data.py：它还要能**修**（--write 按 starmap 重生成兜底表）。
+      - name: 星球译名一致性
+        id: planetnames
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          out="$(python scripts/check_planet_names.py --check 2>&1)"
+          code=$?
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          {
+            echo "## 🪐 星球译名一致性"
+            echo ""
+            if [ "$code" = "0" ]; then
+              echo "✅ \`BUILTIN_PLANET_CN\` 与 \`starmap.json\` 逐字节同步，\`systems[].planets[].cn\` 与 \`planets{}.cn\` 一致。"
+              echo ""
+              echo "> 下面「覆盖报告」是**不阻塞**的提示：这些星球目前还没有中文译名。"
+            else
+              echo "❌ **未通过** —— 改了 \`HD2-Galatic_war-Map/tables/starmap.json\` 却忘了同步兜底表？"
+              echo ""
+              echo "- 本机修：\`python scripts/check_planet_names.py --write\`"
+              echo "- 不要手改 \`index.html\` 里的 \`BUILTIN_PLANET_CN\`：键序、\`: \` 与 \`, \` 分隔符必须由脚本生成。"
+            fi
+            echo ""
+            echo '```'
+            printf '%s\n' "$out" | head -n 40
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+
       # 把结果写进 Job Summary，PR 作者在 Checks 页面直接能读到该改哪里
       - name: 写 Job Summary
         if: always()
@@ -122,12 +163,19 @@ jobs:
           {
             echo "## 📋 HD2 数据校验报告"
             echo ""
-            if [ "${{ steps.validate.outputs.exit_code }}" = "0" ]; then
+            if [ "${{ steps.validate.outputs.exit_code }}" = "0" ] && [ "${{ steps.planetnames.outputs.exit_code }}" = "0" ]; then
               echo "✅ **通过** —— 所有检查项均为绿。"
             else
-              echo "❌ **失败**（退出码 \`${{ steps.validate.outputs.exit_code }}\`）"
+              echo "❌ **失败**"
               echo ""
-              echo "对照下面的报错改数据即可；格式是「文件 → 路径 → 原因 → 建议修法」。"
+              if [ "${{ steps.validate.outputs.exit_code }}" != "0" ]; then
+                echo "- 数据校验器退出码 \`${{ steps.validate.outputs.exit_code }}\`（详见下方报告）"
+              fi
+              if [ "${{ steps.planetnames.outputs.exit_code }}" != "0" ]; then
+                echo "- 星球译名一致性未通过（详见上方「🪐 星球译名一致性」段）"
+              fi
+              echo ""
+              echo "对照报错改数据即可；格式是「文件 → 路径 → 原因 → 建议修法」。"
               echo "看不懂 JSON 也没关系，可以在 PR 里留言让维护者接手。"
             fi
             echo ""
@@ -150,8 +198,13 @@ jobs:
           exit 0
 
       - name: 校验失败 → 让 job 变红
-        if: always() && steps.validate.outputs.exit_code != '0'
+        if: always() && (steps.validate.outputs.exit_code != '0' || steps.planetnames.outputs.exit_code != '0')
         shell: bash
         run: |
-          echo "::error title=数据校验未通过::scripts/validate_wiki_data.py 退出码 ${{ steps.validate.outputs.exit_code }}。详情见本 job 的 Summary。"
+          if [ "${{ steps.validate.outputs.exit_code }}" != "0" ]; then
+            echo "::error title=数据校验未通过::scripts/validate_wiki_data.py 退出码 ${{ steps.validate.outputs.exit_code }}。详情见本 job 的 Summary。"
+          fi
+          if [ "${{ steps.planetnames.outputs.exit_code }}" != "0" ]; then
+            echo "::error title=星球译名不一致::scripts/check_planet_names.py --check 退出码 ${{ steps.planetnames.outputs.exit_code }}。改了 tables/starmap.json 就重跑 python scripts/check_planet_names.py --write。详情见本 job 的 Summary。"
+          fi
           exit 1
