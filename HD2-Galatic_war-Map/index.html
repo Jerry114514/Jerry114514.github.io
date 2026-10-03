@@ -2121,8 +2121,13 @@ function renderPlayers(data) {
           const d = effectCnDescMap[id];
           return d && (d.cat === "作战限制" || d.cat === "combat_restriction");
         });
-        // 中文描述优先（hd2_variables 对照表），英文描述降级（galactic_effects）
-        const cnDets = ids.map(id => effectCnDescMap[id] || {}).filter(d => d && d.desc);
+        // 中文描述优先（hd2_variables 对照表），其次 galactic_effects 里的中文译文，最后英文描述降级
+        const cnDets = ids.map(id => {
+          const v = effectCnDescMap[id];
+          if (v && v.desc) return v;
+          const e = currentEffectDetailMap[id];
+          return e && e.description_cn ? { cn: e.name || "", desc: e.description_cn } : null;
+        }).filter(Boolean);
         const enDets = ids.map(id => currentEffectDetailMap[id] || {}).filter(d => d && d.description);
         // 中文描述去重（同一效果多 ID 共享描述时只显示一次）
         const cnDescs = [...new Set(cnDets.map(d => d.desc))];
