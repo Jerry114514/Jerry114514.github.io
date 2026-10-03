@@ -10,9 +10,17 @@ body:
       value: |
         感谢帮忙校对译名！请把「英文原名」和「你建议的中文」都写清楚。
 
-        > 💡 **想自己动手改？** 译名的唯一真相源是
-        > [`HD2_Wiki/data/wiki/zh/terms.json`](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/terms.json)，
-        > 可以在网页上点铅笔直接编辑并提 PR，流程见
+        > 💡 **想自己动手改？先看清你要改的是哪一类名字 —— 它们不在同一个文件里：**
+        >
+        > - 武器 / 战备 / 敌人 / 机制等**词条名** →
+        >   [`HD2_Wiki/data/wiki/zh/terms.json`](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2_Wiki/data/wiki/zh/terms.json)
+        > - **星球名** →
+        >   [`HD2-Galatic_war-Map/tables/starmap.json`](https://github.com/Jerry114514/Jerry114514.github.io/blob/main/HD2-Galatic_war-Map/tables/starmap.json)
+        >   （`terms.json` 里虽然也有星球的行，但星球页读的是 `starmap.json`，**只改前者页面上的名字不会变**；
+        >   另外 `HD2-Galatic_war-Map/index.html` 里有一份 `BUILTIN_PLANET_CN` 离线兜底表，改完 `starmap.json`
+        >   要跑 `python scripts/check_planet_names.py --write` 同步，站点 CI 也会替你检查）
+        >
+        > 这些文件都可以在网页上点铅笔直接编辑并提 PR，流程见
         > [投稿指南（站内页）](https://jerry114514.github.io/HD2_Wiki/contributing.html)。
         > **不想碰 JSON 就继续填下面的表单即可**，维护者会代为修改。
         > 想自己动手的话，数据格式只有 6 条规则（最容易踩的是「文字必须用半角双引号包住」），
@@ -25,6 +33,18 @@ body:
       label: 英文原名
       description: 游戏内或 wiki 上的英文写法，请逐字准确（大小写、空格、标点都要对）。
       placeholder: 例如：Autocannon
+    validations:
+      required: true
+
+  - type: dropdown
+    id: data_source
+    attributes:
+      label: 这条译名属于哪一类
+      description: 两类名字存在不同文件里，选错会让改动落到空处。拿不准就选「不确定」，维护者会核对。
+      options:
+        - 词条名（武器 / 战备 / 敌人 / 机制……存在 terms.json）
+        - 星球名（存在 starmap.json）
+        - 不确定
     validations:
       required: true
 
@@ -64,7 +84,7 @@ body:
     attributes:
       label: 涉及页面
       description: 这个问题在站点的哪些页面能看到？有多个就都写上。
-      placeholder: 例如：武器图鉴-支援武器页、机制页-伤害
+      placeholder: 例如：武器图鉴-支援武器页、机制页-伤害。星球名的话写「星球页 / 星图」。
     validations:
       required: false
 
@@ -87,5 +107,5 @@ body:
       label: 提交前确认
       description: 勾选后才能提交，避免重复劳动。
       options:
-        - label: 我已经在 `terms.json` 里搜过这个英文原名，确认这不是已有的约定译法（或说明为什么应该改掉它）。
+        - label: 我已经在对应的数据文件里搜过这个英文原名（词条名搜 `terms.json`、星球名搜 `starmap.json`），确认这不是已有的约定译法（或说明为什么应该改掉它）。
           required: true

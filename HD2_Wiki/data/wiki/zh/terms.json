@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-09-23T11:06:17Z",
+  "updated_at": "2026-10-03T12:53:02Z",
   "source": "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径",
-  "total": 1704,
+  "total": 1706,
   "terms": [
     {
       "en": "% To Main",
@@ -10379,6 +10379,18 @@
       "zh": "兴趣点",
       "source": "口径（站内已确认）",
       "note": "术语 · 2026-09-23 登记；站内既有译文（missions_zh「次要兴趣点」、patchnotes_zh），故登记为 canonical；对应 wiki 的 `Minor Places of Interest`"
+    },
+    {
+      "en": "NEW INSIGHT",
+      "zh": "新悟",
+      "source": "starmap.json",
+      "note": "行星"
+    },
+    {
+      "en": "WAYWARD",
+      "zh": "逸泊",
+      "source": "starmap.json",
+      "note": "行星"
     }
   ]
 }
