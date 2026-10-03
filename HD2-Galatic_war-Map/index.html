@@ -401,15 +401,24 @@
     "Tau Ceti": "天仓五"
   };
 
-  // 任务类型枚举（来自社区经验）
-  // 任务类型（companion 社区源语义；用户指定 MO 从社区源抓）
+  // 任务类型枚举 —— **权威来源**：helldiverscompanion.com 前端 bundle
+  //   _app/immutable/chunks/BTcfBLPc.js 里的 `$0` 枚举（2026-10-04 实测抄录）：
+  //     ExtractSamples=2  KillEnemies=3  CompleteObjs=4  Extract=7  Reward=8
+  //     CompleteOps=9  Liberate=11  Defense=12  Hold=13  Contest=15
+  //   ⚠ 旧表里 `1: 解放/攻占星球` 与 `12: 升起/引爆信号弹` 都是凭空猜的：
+  //     枚举里**没有 type=1**；12 是 Defense（防守），整个 bundle 里 "Flare" 出现 0 次。
+  //     （旧表由建站首个提交 4ed4329d2 带入，注释只写「来自社区经验」，无出处。）
   const TASK_TYPE_CN = {
-    1:  "解放/攻占星球",
     2:  "采集样本",
     3:  "消灭敌人",
-    9:  "完成任务数",
+    4:  "完成目标",
+    7:  "成功撤离",
+    8:  "奖励",
+    9:  "完成行动",
     11: "解放星球",
-    12: "升起/引爆信号弹"
+    12: "防守星球",
+    13: "坚守星球",
+    15: "净解放星球数"
   };
 
   /* ==============================================================
@@ -642,16 +651,26 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
 
   /* ==============================================================
      数据解码：重要指令
-     valueTypes（社区经验，与 HD2-Bot 插件一致）：
-       1 = 标记/类型
-       2 = 阵营相关值
-       3 = 目标值（goal）
-       4 = max
-       5 = 次要索引
-       6 = 阵营（1=人类 2=虫 3=机器人 4=光能）
-       8/9 = 数量
-       11 = 物品/状态
-       12 = 星球索引
+     valueTypes —— **权威来源**：helldiverscompanion.com 前端 bundle
+       _app/immutable/chunks/BTcfBLPc.js（2026-10-04 实测抄录，两个变体同文件内并存）：
+         bhe = {1:"faction", 2:"personal", 3:"count", 4:"enemyID", 5:"itemID",
+                6:"itemType", 7:"objective", 8:"minSquadSize", 9:"minDifficulty",
+                10:"missionType", 11:"locationType", 12:"locationID"}
+         i3e = {0:"none", 1:"race", 2:"personal", 3:"goal", 4:"targetID", 5:"equipmentID",
+                6:"equipmentType", 7:"objectiveType", 8:"minimumSquadSize",
+                9:"minimumDifficulty", 10:"missionType", 11:"galaxyLocationType",
+                12:"galaxyLocationID"}
+       1  = 阵营（1=Humans 2=Terminids 3=Automaton 4=Illuminate）← **阵营只在这个字段**
+       3  = 目标值 / count
+       4  = 敌人 ID      5 = 物品 ID
+       6  = **物品类型（itemType）** —— 旧注释误标为「阵营」，已更正
+       7  = 目标类型（objective）  8 = 最小小队人数  9 = 最低难度  10 = 任务类型
+       11 = 位置类型（locationType）：1 = 星球，2 = 星区
+       12 = 位置 ID（locationID）—— **只有 locationType=1 时才是星球索引**
+     Companion 的解析佐证（同 bundle）：
+       gd(e)  = Object.fromEntries(e.valueTypes.map((t,i)=>[bhe[t], e.values[i]]))
+       mhe(…) = locationType==1 ? planets.find(M=>M.index==locationID)
+                                : locationType==2 ? sectors.find(M=>M.index==locationID) : undefined
      ============================================================== */
   function decodeTask(task, currentProgress) {
     const t = task.type;
@@ -663,19 +682,25 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       return i >= 0 ? vs[i] : null;
     };
 
-    let goal    = get(3);          // 目标值（type=3 任务为消灭数量）
+    let goal    = get(3);          // 目标值 / count
     let current = currentProgress != null ? currentProgress : null;  // progress[i]
-    let planet  = get(12);         // 星球索引（valueType 12）
-    // 值 0 / 空 = 全局任务（如消灭敌人无特定目标星球），不算星球索引，避免误匹配 index=0 的超级地球
+
+    // 位置：valueType 11 = locationType（1=星球 2=星区），valueType 12 = locationID。
+    // ⚠ 2026-10-04 更正：旧代码把 12 无条件当星球索引 —— 只有 locationType=1 时才成立，
+    //   locationType=2 时那是**星区索引**，硬当星球会误匹配到同号的星球（companion 是两张表分开查）。
+    //   locationType 缺失时退回旧口径，保证历史/异常结构数据不丢目标。
+    const locType = get(11);
+    const locId   = get(12);
+    let planet = (locType === 1 || locType == null) ? locId : null;
+    let sector = (locType === 2) ? locId : null;
+    // 值 0 / 空 = 全局任务（如消灭敌人无特定目标星球），不算索引，避免误匹配 index=0 的超级地球
     if (!planet || planet === 0) planet = null;
-    // 阵营：valueType 语义因任务类型而异。type=3 消灭敌人时 valueType 1=阵营(3=Automaton 4=Illuminate)；
-    // 其他类型回退 valueType 6（历史注释语义 1=Human 2=Terminid 3=Automaton 4=Illuminate）
-    let race = null;
-    if (t === 3) {
-      race = get(1);
-      if (race === 0) race = null;
-    }
-    if (race == null) race = get(6);
+    if (!sector || sector === 0) sector = null;
+
+    // 阵营：**永远是 valueType 1**（companion 里叫 faction / race）。
+    // ⚠ 2026-10-04 更正：旧代码只在 type=3 时读 valueType 1，其余类型回退 valueType 6 ——
+    //   但 6 的真身是 itemType（物品类型），读出来是垃圾值。已改为统一读 1。
+    let race = get(1);
     if (race === 0) race = null;
 
     // type=11 解放星球：companion 的 values 非目标值，goal=100，current 由星球解放度算
@@ -699,7 +724,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const raceMap = { 1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate" };
     const raceName = raceMap[race] || null;
 
-    return { type: t, typeCn, goal, current, planet, race, raceName };
+    return { type: t, typeCn, goal, current, planet, sector, locType, race, raceName };
   }
 
   /* ==============================================================
@@ -1213,12 +1238,25 @@ function renderPlayers(data) {
         pct = decoded.current > 0 ? 100 : 0;
         goalStr = "—";
       }
-      // 任务标题：type=3 消灭敌人带阵营 -> 「消灭X敌人」；否则「类型」+「目标：X」
+      // 任务标题（口径对齐 companion 的 label 渲染）：
+      //   type=3  消灭敌人 -> 「消灭X敌人」（KillEnemies）
+      //   type=12 防守     -> 「防守 <星球>（对<阵营>）」（Defense: "Defend <PLANET> against …"）
+      //   type=11/13 解放/坚守 -> 「<类型> · <星球>」（Liberate|Hold "<PLANET>"）
+      //   其余带阵营 -> 「<类型> · 目标：<阵营>」
       const hasRace = (decoded.race === 2 || decoded.race === 3 || decoded.race === 4);
       const raceName = decoded.raceName ? ownerCn(decoded.raceName) : "";
+      const tgtPlanet = decoded.planet != null ? planetByIndex[decoded.planet] : null;
+      const tgtName = tgtPlanet
+        ? (planetName(tgtPlanet, data.starMap).cn || planetName(tgtPlanet, data.starMap).en)
+        : null;
       let taskTitle = esc(decoded.typeCn);
       if (decoded.type === 3 && hasRace) {
         taskTitle = `消灭${raceName}敌人`;
+      } else if (decoded.type === 12) {
+        taskTitle = tgtName ? `防守 ${esc(tgtName)}` : esc(decoded.typeCn);
+        if (hasRace) taskTitle += `（对${raceName}）`;
+      } else if ((decoded.type === 11 || decoded.type === 13) && tgtName) {
+        taskTitle = `${esc(decoded.typeCn)} · ${esc(tgtName)}`;
       } else if (hasRace) {
         taskTitle = `${esc(decoded.typeCn)} · 目标：${raceName}`;
       }
@@ -1226,7 +1264,21 @@ function renderPlayers(data) {
       // 预期进度对照：bar 上一条竖线 + 下面一行文字。
       // 只对「有明确目标值」的任务给这条线 —— 没目标值就没有可比基准，不摆假线。
       const expectHtml = { mark: "", line: "", eta: "" };
-      if (expectPct != null && typeof decoded.goal === "number" && decoded.goal > 0) {
+      // type=12 防守：进度是「守住的次数」，只在守成那一刻从 0 跳到 goal，期间恒为 0 ——
+      // 任何「按已历均速外推」都只会得出「按当前节奏无法完成」的假结论（用户实拍就是这条）。
+      // 所以防守类不给线性预期线，改给一句语义说明 + 真实剩余时间。
+      const isDefense = decoded.type === 12;
+      if (isDefense) {
+        const marginH = moW ? (moW.end - DATA_FETCH_MS) / 3600000 : null;
+        if (pct >= 100) {
+          expectHtml.eta = `<div class="mo-expect">预计完成 <b class="ok">已完成</b></div>`;
+        } else {
+          expectHtml.line = `<div class="mo-expect">防守类指令：守住才结算，期间进度恒为 0，不做线性外推</div>`;
+          expectHtml.eta = `<div class="mo-expect">预计完成 <b>守住即完成</b>`
+            + (marginH != null && marginH > 0 ? `<span class="dim"> · 距截止 ${fmtEtaH(marginH)}</span>` : ``)
+            + `</div>`;
+        }
+      } else if (expectPct != null && typeof decoded.goal === "number" && decoded.goal > 0) {
         const delta = pct - expectPct;
         const deltaTxt = Math.abs(delta) < 0.5 ? "与预期持平"
           : (delta > 0 ? `领先 ${Math.round(delta)} 个百分点` : `落后 ${Math.round(Math.abs(delta))} 个百分点`);
@@ -2148,8 +2200,10 @@ function renderPlayers(data) {
     const poi = [];
     // MO 目标
     if (currentData && currentData.assignments && currentData.assignments.tasks) {
+      // 用 decodeTask 统一解码：旧代码在这里自己重读 valueType 12，忽略了 locationType
+      // （12 也可能是星区索引，那样会把星区号误当星球号）。
       const isMoTarget = currentData.assignments.tasks
-        .map(t => { const vt = t.valueTypes || [], vs = t.values || []; return vs[vt.indexOf(12)]; })
+        .map(t => decodeTask(t, null).planet)
         .includes(p.index);
       if (isMoTarget) poi.push(`<div class="pd-chip poi-mo">🎯 重要指令目标</div>`);
     }
