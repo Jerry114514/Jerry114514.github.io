@@ -932,6 +932,11 @@ def build_active_campaign(companion, zh=None):
         "race_name": race_name,
         "race_cn": race_cn,
         "status": ep.get("status"),
+        # 战役场数：running=当前进行中(status==0)的场数（整体状态判定用）；
+        # total=episodes 全量场数（companion 会保留历史战役，仅参考信息）。
+        # 用户规则：running<=3 且该战役有进行中阶段 -> 整体「进行中」；否则比胜负阶段数。
+        "episodes_running": len(running),
+        "episodes_total": len(raw_eps),
         "phase_count": len(phases),
         "current_phase_index": cur_idx,
         "current_phase_id": cur.get("id"),

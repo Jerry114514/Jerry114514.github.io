@@ -1686,6 +1686,13 @@
       min-width: 0;
       padding: 14px 18px 12px;
     }
+    /* 整体状态徽章：进行中(黄) / 获胜(绿) / 失败(红) —— 2026-10-05 战役状态判定 */
+    .camp-overall{display:inline-flex;align-items:center;gap:4px;margin-left:10px;
+      border-radius:999px;padding:2px 10px;font-size:.66rem;vertical-align:middle;letter-spacing:normal}
+    .camp-overall-en{opacity:.6;margin-left:4px;letter-spacing:.06em}
+    .camp-overall.is-in_progress{background:rgba(245,197,24,.16);color:var(--yellow);border:1px solid rgba(245,197,24,.45)}
+    .camp-overall.is-victory{background:rgba(34,197,94,.16);color:#22c55e;border:1px solid rgba(34,197,94,.5)}
+    .camp-overall.is-defeat{background:rgba(239,68,68,.16);color:#ef4444;border:1px solid rgba(239,68,68,.5)}
     .camp-banner-kicker {
       font-size: .7rem;
       letter-spacing: .16em;
