@@ -1686,13 +1686,43 @@
       min-width: 0;
       padding: 14px 18px 12px;
     }
-    /* 整体状态徽章：进行中(黄) / 获胜(绿) / 失败(红) —— 2026-10-05 战役状态判定 */
-    .camp-overall{display:inline-flex;align-items:center;gap:4px;margin-left:10px;
-      border-radius:999px;padding:2px 10px;font-size:.66rem;vertical-align:middle;letter-spacing:normal}
-    .camp-overall-en{opacity:.6;margin-left:4px;letter-spacing:.06em}
-    .camp-overall.is-in_progress{background:rgba(245,197,24,.16);color:var(--yellow);border:1px solid rgba(245,197,24,.45)}
-    .camp-overall.is-victory{background:rgba(34,197,94,.16);color:#22c55e;border:1px solid rgba(34,197,94,.5)}
-    .camp-overall.is-defeat{background:rgba(239,68,68,.16);color:#ef4444;border:1px solid rgba(239,68,68,.5)}
+    /* 整体状态：斜纹层随状态变色 + 右下角 ZZZ-thick 大字（2026-10-05 战役状态判定） */
+    .camp-banner::after { opacity: .5; transition: background .5s ease; }
+    .camp-banner.is-camp-in_progress::after { background: var(--stripe); }
+    .camp-banner.is-camp-victory::after {
+      background: repeating-linear-gradient(45deg, rgba(34,197,94,.20) 0 6px, transparent 6px 12px);
+    }
+    .camp-banner.is-camp-defeat::after {
+      background: repeating-linear-gradient(45deg, rgba(239,68,68,.22) 0 6px, transparent 6px 12px);
+    }
+    .camp-overall {
+      position: absolute;
+      right: 18px;
+      bottom: 12px;
+      z-index: 2;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      text-align: right;
+      pointer-events: none;
+      color: var(--yellow);
+    }
+    .camp-overall-main {
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,.75), 0 0 22px rgba(0,0,0,.45);
+    }
+    .camp-overall-en {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: var(--text-dim);
+      font-family: var(--font-body);
+      text-shadow: 0 1px 6px rgba(0,0,0,.8);
+    }
+    .camp-banner.is-camp-victory .camp-overall { color: #22c55e; }
+    .camp-banner.is-camp-defeat .camp-overall { color: #ef4444; }
+    .camp-banner.is-camp-in_progress .camp-overall { color: var(--yellow); }
     .camp-banner-kicker {
       font-size: .7rem;
       letter-spacing: .16em;

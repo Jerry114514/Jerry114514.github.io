@@ -1552,7 +1552,7 @@ function renderPlayers(data) {
     // 整体状态徽章（战役状态判定）
     const overall = campaignOverall(c);
     const oDef = CAMP_OVERALL[overall] || CAMP_OVERALL.in_progress;
-    const overallBadge = `<span class="camp-overall is-${overall}">${oDef.icon} ${esc(oDef.cn)}<span class="camp-overall-en">${esc(oDef.en)}</span></span>`;
+    const overallBadge = `<span class="camp-overall-main">${oDef.icon} ${esc(oDef.cn)}</span><span class="camp-overall-en">${esc(oDef.en)}</span>`;
 
 
     // 横幅三级回退：本地 assets/campaign/banner_*.webp（fetch_site_data.py 按
@@ -1560,12 +1560,13 @@ function renderPlayers(data) {
     // 上游图是真实 WebP 位图（700×340，无需鉴权），不是猜出来的路径：id32→文件名 表在
     // companion 前端 chunk 里（nd = {frv4: L1("frv4", 2434584678), ...}）。
     const bannerSrcs = [c.banner_image_local, c.banner_image].filter(Boolean);
-    const banner = `<div class="camp-banner is-${facCls}${bannerSrcs.length ? " has-img" : ""}">
+    const banner = `<div class="camp-banner is-${facCls} is-camp-${overall}${bannerSrcs.length ? " has-img" : ""}">
         ${bannerSrcs.length ? `<img class="camp-banner-img" src="${esc(bannerSrcs[0])}" alt=""
             decoding="async" referrerpolicy="no-referrer">` : ""}
         <div class="camp-banner-scrim"></div>
+        <div class="camp-overall" aria-live="polite">${overallBadge}</div>
         <div class="camp-banner-text">
-          <div class="camp-banner-kicker">进行中的战役<span class="camp-kicker-en">ACTIVE CAMPAIGN</span>${overallBadge}</div>
+          <div class="camp-banner-kicker">进行中的战役<span class="camp-kicker-en">ACTIVE CAMPAIGN</span></div>
           <h3 class="camp-banner-title">${esc(titleCn)}${titleEn ? `<span class="camp-banner-en">${esc(titleEn)}</span>` : ""}</h3>
           <div class="camp-banner-fac">${esc(c.race_cn || c.race_name || "")}${c.race_cn && c.race_name ? `<span class="camp-fac-en">${esc(c.race_name)}</span>` : ""}</div>
         </div>
