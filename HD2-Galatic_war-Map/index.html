@@ -1935,7 +1935,8 @@ function renderPlayers(data) {
       const phase = ta ? ta.status : 1;
       const isCooldown = (phase === 3);
       let descText = e.desc || "";
-      if (ta && ta.strategicDescription) descText = stripTags(ta.strategicDescription);
+      // 描述一律复用本地对照表的默认中文模板（hd2_variables 的 desc）：上游 strategicDescription 是英文，
+      // 只用于上面的毒气改版判定，不再覆盖详情面板的展示文本（用户 2026-10-07 裁定）。
       // 冷却截止时刻：status=3 时 expireAtWarTime 表示「冷却结束时间」
       const cdDeadline = isCooldown ? warDeadline(ta && ta.expireAtWarTime) : null;
       let barPct = isActive ? 100 : dInfo.pct;
