@@ -1763,6 +1763,12 @@
       gap: 8px;
     }
     .camp-fac-en { color: var(--text-mute); letter-spacing: .08em; font-size: .68rem; }
+    @media (max-width: 767px) {
+      /* 窄屏：状态转 text 流内右对齐行，避免与标题/阵营行重叠 */
+      .camp-overall { position: static; justify-content: flex-end; margin-top: 6px; }
+      .camp-overall-main { font-size: 1.05rem; }
+      .camp-overall-en { display: none; }
+    }
 
     /* ---- 正文区 ---- */
     .camp-body { padding: 16px 18px 18px; }
