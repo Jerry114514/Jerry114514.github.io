@@ -1890,6 +1890,26 @@ function renderPlayers(data) {
       const emojiMatch = (e.cn || "").match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
       const emojiIcon = emojiMatch ? emojiMatch[1] : "";
       const cnName = (e.cn || "").replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, "");
+      // 2026-10 游戏内「飞鹰风暴」改版为「飞鹰毒气风暴」：命中判定则标题显示
+
+      // 「飞鹰风暴 · 毒气」（仅标题文本，不影响布局与查表映射——hero 大图/详情映射仍用 cnName）。
+
+      // 判据（多级，任一命中）：上游英文名含 gas；策略描述含 gas/toxic/poison 单词；
+
+      //   对照表条目本身已写「毒气」。未命中保留原「飞鹰风暴」标题（原板块保险）。
+
+      const taGas = tacActions.find(t => (t.effectIds || []).some(x => ids.includes(x)));
+
+      const gasHit = cnName.includes("飞鹰风暴") && (
+
+        cnName.includes("毒气") ||
+
+        /gas/i.test((taGas && taGas.name) || "") ||
+
+        /(gas|toxic|poison)/i.test((taGas && taGas.strategicDescription) || ""));
+
+      const cnDisplay = cnName.includes("毒气") ? cnName : (gasHit ? cnName.replace("飞鹰风暴", "飞鹰风暴 · 毒气") : cnName);
+
       const iconUrl = dssIconOf(e.key || e.name || "");
       // 匹配 companion 行动：effectIds 需完整包含该条目的 ids，避免误匹配变种
       let ta = null;
@@ -1935,7 +1955,7 @@ function renderPlayers(data) {
         ? `已捐献 ${fmtNum(dInfo.cur)} / ${fmtNum(dInfo.target)} (${dInfo.pct.toFixed(1)}%)`
         : "等待募捐启动";
       return {
-        e, ta, ids, emojiIcon, cnName, iconUrl, phase, isActive, isCooldown,
+        e, ta, ids, emojiIcon, cnName, cnDisplay, iconUrl, phase, isActive, isCooldown,
         remainMs, activeDeadline, cdDeadline, descText, barPct, labelHtml, donLine, dInfo,
       };
     });
@@ -1960,11 +1980,11 @@ function renderPlayers(data) {
         ? `<div class="strip">${cdSpan(it.activeDeadline, "cn", "可用时间：")}</div>` : "";
       const right = `<span class="pct">${it.isActive ? "100%" : Math.round(it.barPct) + "%"}</span>`;
       const bar = `<div class="dss-bar-bg"><div class="dss-bar-fill" style="width:${it.barPct.toFixed(1)}%"></div></div>`;
-      return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button" aria-label="查看 ${esc(it.cnName)} 详情">
+      return `<article class="${classes.join(" ")}" data-i="${i}" tabindex="0" role="button" aria-label="查看 ${esc(it.cnDisplay)} 详情">
         ${pill}
         ${iconBox(it)}
         <div class="mid">
-          <div class="t">${esc(it.cnName)}</div>
+          <div class="t">${esc(it.cnDisplay)}</div>
           <div class="s">${it.labelHtml} · ${esc(it.donLine)}</div>
         </div>
         ${right}
