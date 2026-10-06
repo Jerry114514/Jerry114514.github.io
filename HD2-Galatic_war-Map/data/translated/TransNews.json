@@ -1,11 +1,29 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Defend the designated planets, wielding the TD-110 Maelstrom Tank to support a public awareness sales campaign.",
-  "translated": "保卫指定行星，驾驶“风暴漩涡”坦克，为公众宣传销售活动提供支援。",
-  "translated_at": "2026-10-02T21:54:20Z"
+  "original": "Liberate the designated planet and eliminate the mandated number of Illuminate hostiles in order to televise broadcasts of the sector's pacification.",
+  "translated": "解放指定星球，歼灭规定数量的光能者敌军，以便向全境播送本星区平定实况。",
+  "translated_at": "2026-10-06T16:33:00Z"
  },
  "items": [
+  {
+   "id": 3946,
+   "original": "NEW MAJOR ORDER\n\nShattered Illuminate divisions are consolidating on SENGE 23. High Command has authorized a live broadcast of their imminent eradication to every loyal home.\n\nTo bolster this initative, the recently restored DSS (Democracy Space Station) has deployed, newly equipped with the Eagle Gas Storm to enable widespread chemical peacekeeping.\n\nLiberate SENGE 23 and eliminate 400,000,000 Illuminate hostiles.",
+   "translated": "新重大指令\n\n光能者残部正在新戈23重整旗鼓。最高指挥部已批准，将这场即将到来的歼灭行动向所有忠诚的家园进行实况转播。\n\n为壮大此役声势，近日修复完毕的民主空间站已部署就位，并新装飞鹰毒气风暴，以便开展大范围化学维和。\n\n解放新戈23，歼灭 4 亿（400,000,000）光能者敌军。",
+   "published_at": "2026-10-06T13:01:02Z",
+   "translated_at": "2026-10-06T16:32:58Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
+   "id": 3945,
+   "original": "DSS MAINTENANCE UPDATE\n\nThe Democracy Space Station has been offline for recalibration. Engineers have been altering the functionality of the Eagle Storm Tactical Action, in collaboration with C.O.B. Genetics, to deploy aerosol-based deterrents.\n\nThe DSS has been returned to operational service.",
+   "translated": "民主空间站维护更新\n\n民主空间站此前离线，进行重新校准。工程人员与 C.O.B. 遗传学部门合作，改造了飞鹰风暴战术行动的功能，用以投放气溶胶类威慑剂。\n\n民主空间站现已恢复服役。",
+   "published_at": "2026-10-06T12:21:28Z",
+   "translated_at": "2026-10-06T16:32:58Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3944,
    "original": "MAJOR ORDER WON\n\nBuoyed by inspiring footage of the Federation's greatest heroes decimating its greatest enemies, Maelstrom Tank sales to the public have skyrocketed. Citizens are clamoring for the opportunity to defend their homes and families with their very own Tank. \n\nThe Maelstrom Tank is available for Helldiver use in perpetuity.",
@@ -77,24 +95,6 @@
    "translated_at": "2026-09-25T17:35:08Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3935,
-   "original": "STRATEGIC UPDATE\n\nMiscalibrations in the Democracy Space Station have required it to be taken temporarily offline in order to be resolved. The Ministry of Defense has shifted significant personnel to these fixes, making it a top priority. \n\nThose responsible for the mistakes will attend an intensive re-training seminar. If the issue persists, their families will also attend the seminar.",
-   "translated": "战略通报\n\n民主空间站出现校准偏差，须暂时下线以完成修复。国防部已调派大量人员投入此项工作，并将其列为最高优先级。\n\n对失误负有责任者，将参加强化再培训研讨班。若问题仍未解决，其家属亦须一同参加。",
-   "published_at": "2026-09-22T09:09:46Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
-  },
-  {
-   "id": 3934,
-   "original": "CAMPAIGN FAILURE\n\nCyborg interference has raised significant doubts in the veracity of the Quarter-Term Elections. As a result, a re-vote has been ordered, with enhanced election security measures to make interference impossible.\n\nSEAF Battalions have been recalled from the frontlines to secure voting sites.",
-   "translated": "战役失败\n\n生化人的干涉行为，令期中选举的真实性受到严重质疑。为此，重新投票已获下令，并配以更严密的选举安保措施，确保干涉绝无可能。\n\nSEAF各营已从前线召回，负责守卫投票站点。",
-   "published_at": "2026-09-21T16:05:14Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-06T08:41:00Z",
+  "computed_at": "2026-10-06T16:33:00Z",
   "planet_index": null
  }
 }
