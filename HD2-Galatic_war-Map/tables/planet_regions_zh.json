@@ -6,8 +6,8 @@
     "_match_rule": "按「英文原名」精确匹配该表的 英文US/英文UK 列；分类=UI/菜单文本、匹配方式=模式；同名多键时优先取 语言块 = 62e20c40739e2dec 的候选，再用「重复文本组」（sheet3）的代表值交叉裁决。",
     "_count_note": "209 个去重英文区域名（对应 211 个区域实例，BASE CAMP 8 与 QUASAR 各出现在 2 颗星球上）：官方解包 207 + 保留上一轮译名 2。",
     "_official_vs_previous": {
-      "unchanged": 209,
-      "corrected": 0,
+      "unchanged": 48,
+      "corrected": 161,
       "kept_legacy": 2,
       "_note": "与此前 AI 译文表逐条比对的结果。全量更正明细见构建时的 diff_official.json（本地工具目录，不入库）。"
     },
