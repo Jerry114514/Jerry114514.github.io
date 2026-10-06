@@ -550,9 +550,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     // 与星图共用同一份 tables/*.json；缺失时整块不渲染（不致命）。
     // ⚠ 带 ?v= 版本号（与星图同规矩）：JSON 改动后必须升版本，否则 Pages CDN 会继续发旧表。
     //   （jsonSoft 只发 no-store，不给中间缓存兜底；2026-09-25 官方译名那次就是靠它生效的。）
-    try { PC_REGIONS = ((await HD2Source.jsonSoft("./tables/planet_regions.json?v=20260925b")) || {}).planets || {}; }
+    try { PC_REGIONS = ((await HD2Source.jsonSoft("./tables/planet_regions.json?v=20261007a")) || {}).planets || {}; }
     catch (_) { PC_REGIONS = {}; }
-    try { PC_REGIONS_ZH = ((await HD2Source.jsonSoft("./tables/planet_regions_zh.json?v=20260925b")) || {}).planets || {}; }
+    try { PC_REGIONS_ZH = ((await HD2Source.jsonSoft("./tables/planet_regions_zh.json?v=20261007a")) || {}).planets || {}; }
     catch (_) { PC_REGIONS_ZH = {}; }
 
     // 从 starmap 构建 星区英文 -> 中文 映射（覆盖内置 SECTOR_CN 的缺失/错误）
@@ -2027,7 +2027,8 @@ function renderPlayers(data) {
                 ? `<span>募捐进度：${esc(it.dInfo.pct.toFixed(1) + "%　（" + fmtNum(it.dInfo.cur) + " / " + fmtNum(it.dInfo.target) + "）")}</span>`
                 : "<span>等待募捐启动</span>"));
       return {
-        cn: it.cnName,
+        // 详情面板大标题也用 cnDisplay（与卡片标题一致）；描述 desc 保持原样不动
+        cn: it.cnDisplay,
         img: heroSrcOf(it.cnName),
         desc: it.descText,
         isActive: it.isActive,
@@ -2080,7 +2081,7 @@ function renderPlayers(data) {
             </div>
             <div class="dss-detail">
               <div class="tagline"><span class="bar-y"></span><span>战术行动</span></div>
-              <h3 id="dss-detail-h3">${esc(sel ? sel.cnName : "—")}</h3>
+              <h3 id="dss-detail-h3">${esc(sel ? first.cn : "—")}</h3>
               <p class="desc" id="dss-detail-desc">${esc(first.desc)}</p>
               <div class="dss-contrib">
                 <div class="lbl">贡献度 / CONTRIBUTION</div>
@@ -2637,7 +2638,7 @@ function renderPlayers(data) {
 
   // 星球下属区域（城市 / 超大型工厂）——与星图**同一套数据与口径**（2026-09-24 新增）
   //   名字/类型：tables/planet_regions.json（wiki 的 Lua 数据模块）
-  //   中文名    ：tables/planet_regions_zh.json（AI 译 + 截图口径覆盖，回退英文原名）
+  //   中文名    ：tables/planet_regions_zh.json（**游戏内解包官方中文名**，来源 绝地潜兵2游戏内文本-归类整理版-20261003.xlsx 的「归类总表 · UI/菜单文本」；查不到的条目回退英文原名）
   //   进度      ：data.json 里每颗星球的 regions[]（companion 运行时）
   //   规模↔HP：定居点 10 万 / 城镇 20 万 / 城市 40 万 / 大城市 60 万；机器人超大型工厂 100 万
   const PC_REGION_TYPE_ZH = { Settlement: "定居点", Town: "城镇", City: "城市", MegaCity: "大城市" };
