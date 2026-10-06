@@ -548,6 +548,9 @@ def fetch_companion():
                 })
             tac_actions.append({
                 "name": ta.get("name"),
+                # strategicDescription（2026-10-05 补）：上游描述体现「Eagle Gas Strikes」
+                #   毒气改版。前端毒气判定以 effectIds 含 1425 为主判据，此字段为次级信号。
+                "strategicDescription": ta.get("strategicDescription"),
                 "status": ta.get("status"),
                 "expireAtWarTime": ta.get("statusExpireAtWarTimeSeconds"),
                 "effectIds": ta.get("effectIds") or [],

@@ -929,6 +929,9 @@ const EFFECT_COLOR = {
 // DSS 战术行动（全局）：仅作用于 DSS 当前停靠星球，随其跃迁自动跟随。
 // effectId 取自 data.dss.tacticalActions[].effectIds；status===2 为已激活。
 const DSS_ACTION_ICON = {
+  // 1425 与 1209 是上游重新登记的同一条「飞鹰风暴」效果（四组描述 hash 完全一致），
+  // 2026-10 毒气改版后上游改用 1425；两个 id 都保留映射。
+  1425:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1209:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1212:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1216:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },

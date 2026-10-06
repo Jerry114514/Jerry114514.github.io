@@ -1884,31 +1884,24 @@ function renderPlayers(data) {
     const HERO_DIR = "./assets/dss-hero/";
     const heroSrcOf = (cn) => HERO_DIR + (DSS_HERO_IMG[cn] || DSS_HERO_FALLBACK);
 
+    // 2026-10「飞鹰风暴」毒气改版：上游把 EAGLE STORM 的效果 id 由 1209 重新登记为 1425
+    // （两者 nameHash 与各组描述 hash 完全一致，是同一条效果换号），该 id 即毒气版标记。
+    // 注意：它必须与 tables/hd2_variables.json 里「✈ 飞鹰风暴」的 effect_ids 同步维护。
+    const EAGLE_GAS_EFFECT_ID = 1425;
+
     // 每个行动的完整状态（一次算好，卡片与详情共用）
     const items = allEntries.map(e => {
       const ids = e.effect_ids || [];
       const emojiMatch = (e.cn || "").match(/^([\p{Extended_Pictographic}\u200D\uFE0F]+)\s*/u);
       const emojiIcon = emojiMatch ? emojiMatch[1] : "";
       const cnName = (e.cn || "").replace(/^[\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u, "");
-      // 2026-10 游戏内「飞鹰风暴」改版为「飞鹰毒气风暴」：命中判定则标题显示
-
-      // 「飞鹰风暴 · 毒气」（仅标题文本，不影响布局与查表映射——hero 大图/详情映射仍用 cnName）。
-
-      // 判据（多级，任一命中）：上游英文名含 gas；策略描述含 gas/toxic/poison 单词；
-
-      //   对照表条目本身已写「毒气」。未命中保留原「飞鹰风暴」标题（原板块保险）。
-
-      const taGas = tacActions.find(t => (t.effectIds || []).some(x => ids.includes(x)));
-
-      const gasHit = cnName.includes("飞鹰风暴") && (
-
-        cnName.includes("毒气") ||
-
-        /gas/i.test((taGas && taGas.name) || "") ||
-
-        /(gas|toxic|poison)/i.test((taGas && taGas.strategicDescription) || ""));
-
-      const cnDisplay = cnName.includes("毒气") ? cnName : (gasHit ? cnName.replace("飞鹰风暴", "飞鹰风暴 · 毒气") : cnName);
+      // 2026-10 游戏内「飞鹰风暴」改版为「飞鹰毒气风暴」：命中判定后卡片标题显示
+      // 「飞鹰风暴 · 毒气」（仅标题文本；hero 大图与详情映射仍用未加后缀的 cnName）。
+      // 判定在下方「匹配 companion 行动」严格匹配之后进行，依赖匹配到的 ta：
+      //   ① 上游 tacticalActions[].effectIds 含毒气改版后重新登记的效果 id（EAGLE_GAS_EFFECT_ID）
+      //   ② 上游战略描述含 gas / toxic / poison 单词
+      //   ③ 对照表条目本身已写「毒气」
+      // 任一命中即可；未命中保留原「飞鹰风暴」标题。
 
       const iconUrl = dssIconOf(e.key || e.name || "");
       // 匹配 companion 行动：effectIds 需完整包含该条目的 ids，避免误匹配变种
@@ -1917,6 +1910,12 @@ function renderPlayers(data) {
         const te = (t.effectIds || []);
         if (!ta && ids.length && ids.every(x => te.includes(x))) ta = t;
       });
+      // 毒气判定：只在上面严格匹配到的 ta 上做（此前另用宽松 some 找 taGas，与这里的 every 语义冲突）
+      const gasHit = cnName.includes("飞鹰风暴") && !!ta && !cnName.includes("毒气") && (
+        (ta.effectIds || []).includes(EAGLE_GAS_EFFECT_ID) ||
+        /gas/i.test(ta.name || "") ||
+        /\b(gas|toxic|poison)\b/i.test(ta.strategicDescription || ""));
+      const cnDisplay = (cnName.includes("毒气") || !gasHit) ? cnName : cnName.replace("飞鹰风暴", "飞鹰风暴 · 毒气");
       // 三阶段：1=募捐中、2=已激活、3=冷却期。
       // 冷却期的 expireAtWarTime 是「冷却结束时间」，同样落在未来，
       // 故【不能】用 expire 是否在未来区分激活/冷却，必须看 status。
