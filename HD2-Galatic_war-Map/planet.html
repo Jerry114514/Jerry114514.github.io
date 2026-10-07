@@ -378,9 +378,11 @@
   }
 
   const plCn = () => PL_CN[String(P.name || "").toUpperCase()] || P.name || ("#" + P.index);
-  // 星区：官方 API 只给部分星球（实测很多是空串）→ 回退 starmap.json 的「星球属于哪个星区」，再退回"未知星区"
-  const secCn = () => SEC_CN[String(P.sector || "").toUpperCase()]
-    || PL_SEC[String(P.name || "").toUpperCase()] || (P.sector || "") || "未知星区";
+  // 星区：**以 starmap.json 的「该星球属于哪个星区」为准**（游戏内文本：阿基拉分区/AKIRA SECTOR…）。
+  // 官方 API 的 P.sector 是另一套 hd2dev 分区名（Sol/Barnard/Tau Ceti/Kronos/Gacrux…），与游戏分区
+  // 不符（实测 273 颗里 152 颗为空、有值的 121 颗里仅 8 颗与 starmap 一致）→ 只能兜底，不能优先。
+  const secCn = () => PL_SEC[String(P.name || "").toUpperCase()]
+    || SEC_CN[String(P.sector || "").toUpperCase()] || (P.sector || "") || "未知星区";
   // 己方星球：官方 API 报满血，直接算 (1-health/maxHealth) 会得到 0%，与"已解放"自相矛盾
   // （星图 §19.24 修过同一类 bug）→ 显示层统一按 100% 处理
   const libShowOf = (o, health, maxHealth) => {
@@ -475,7 +477,8 @@
         rm.measured ? "按实测净速率线性外推" : "按推演净速率线性外推"],
       ["血量", fmt(P.health) + " / " + fmt(P.maxHealth),
         hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"],
-      ["星区", secCn(), P.sector ? P.sector : "取自 tables/starmap.json"],
+      ["星区", secCn(), PL_SEC[String(P.name || "").toUpperCase()] ? "取自 tables/starmap.json"
+        : (P.sector ? "hd2dev 分区：" + P.sector : "—")],
       ["所属阵营", OWN_CN[owner] || owner, owner],
     ].map(([k, v, s]) => T.r([T.t(esc(k)), T.t(esc(v), "num hi"), T.t(esc(s), "dim")])).join("");
     const kpis = T.table([{ t: "指标" }, { t: "数值", cls: "num" }, { t: "说明" }], [kpiRows], "minwide");

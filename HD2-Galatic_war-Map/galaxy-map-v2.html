@@ -1039,6 +1039,19 @@ let MAP = null;
 let DATA = null, BYIDX = {}, WP = {}, TACBY = {}, REGIONS = {}, REGIONS_ZH = {};
 let PL_CN = {}, SEC_CN = {};                   // 星球/星区中文映射（starmap.json）
 let SEC_BY_PLANET = {};                        // 星球英文名 -> 中文星区（取自 starmap.json，唯一权威源）
+// 星球 → 中文星区名。游戏里星区叫「XX分区」，名字与 starmap 的 system/sector_en 一一对应
+// （游戏内置文本：阿基拉分区/AKIRA SECTOR、巴纳德分区/BARNARD SECTOR、大熊座分区/URSA SECTOR…）。
+// ⚠ 取值**必须以 SEC_BY_PLANET 为准，不能优先用 data.json 的 p.sector**：p.sector 来自 hd2dev，
+//   是另一套 21 项分区名（Sol/Barnard/Tau Ceti/Kronos/Gacrux…），与游戏分区不符 ——
+//   实测 273 颗里 152 颗为空、有值的 121 颗里仅 8 颗与 starmap 一致；且 Tau Ceti/Kronos/Yezub/
+//   Pictor/Titania/Kessel/Ursa Major/Angels Venture 在游戏文本里 0 命中。
+// 兜底顺序：starmap → SEC_CN[p.sector]（含 SECTOR_ALIASES 桥接）→ p.sector 原文 → "—"
+const secCnByPlanet = (p) => {
+  const byName = SEC_BY_PLANET[String((p && p.name) || "").toUpperCase()];
+  if (byName) return byName.toUpperCase() === "TBD" ? "不分区" : byName;   // 与主站 index.html 口径一致
+  const raw = (p && p.sector) || "";
+  return SEC_CN[String(raw).toUpperCase()] || raw || "—";
+};
 let UNLISTED_IDX = new Set();                  // 未分区星球的 index（不显示在星图上，见构造 GeoJSON 处）
 let VIEW_MODE = "galaxy";                      // galaxy | tactical | region
 const ACTIVE_FACTIONS = new Set(FACTION_KEYS); // 阵营筛选
@@ -1179,13 +1192,17 @@ async function boot() {
       // nameOf / sectorCnOf 必须返回**中文名**，否则战术词条正文里会混入英文原名
       // （如「解放HEETH将对BRILLIANCE的…」）。PL_CN/SEC_CN 已在上方由 starmap.json 填充。
       const ctx = {
-        planets: data.planets, campaigns: data.campaigns, waypoints: wpRaw,
+        // p.sector（hd2dev）与游戏分区不符、且 273 颗里 152 颗为空 → 统一换成 starmap 权威中文
+        // 星区名，供 tactical.js 的「星域解放」同星区判定与文案使用（sectorCnOf 收到中文原样返回）。
+        planets: (data.planets || []).map(p => Object.assign({}, p,
+          { sector: UNLISTED_IDX.has(p.index) ? "" : secCnByPlanet(p) })),
+        campaigns: data.campaigns, waypoints: wpRaw,
         nameOf: (idx) => {
           const p = BYIDX[idx];
           if (!p) return "#" + idx;
           return PL_CN[String(p.name || "").toUpperCase()] || p.name;
         },
-        sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,
+        sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,   // 已是中文星区名时原样返回
       };
       for (const k of Object.keys(WP)) {
         try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
@@ -1246,7 +1263,7 @@ async function boot() {
         nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
         owner: p.currentOwner || "None", ownerCn: OWN_CN[p.currentOwner] || (p.currentOwner || "未知"),
         color: OWNER_COLOR[p.currentOwner] || "#64748b",
-        sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
+        sector: p.sector || "", sectorCn: secCnByPlanet(p),
         players: p.players || 0, lib: +libPct.toFixed(1),
         tacCount: tac.length, tacTitle: tac.join(" / "),
         icon: planetIconFile(p.name) || "",
@@ -1373,8 +1390,10 @@ async function boot() {
   })));
 
   // 星区领土（近似凸包）——按星区聚合
+  // ⚠ 分组键必须走 secCnByPlanet（starmap 权威中文星区名）；用 p.sector 会把 152 颗空值星球
+  //   全塞进一个假分组「UNKNOWN」，在银河中心糊出一大片不属于任何星区的凸包。
   const bySector = {};
-  planets.forEach(p => { const s = p.sector || "UNKNOWN"; (bySector[s] = bySector[s] || []).push(p); });
+  planets.forEach(p => { const s = secCnByPlanet(p); (bySector[s] = bySector[s] || []).push(p); });
   const sectorFC = fc(Object.entries(bySector)
     .filter(([, list]) => list.length >= 3)
     .map(([name, list]) => ({
@@ -2147,7 +2166,7 @@ function bindUI(data, planets) {
   const q = $("q");
   const allNames = planets.map(p => ({ index: p.index, name: p.name || ("#" + p.index),
     nameCn: PL_CN[String(p.name || "").toUpperCase()] || "",
-    owner: p.currentOwner, sector: p.sector || "", sectorCn: SEC_CN[(p.sector || "").toUpperCase()] || "",
+    owner: p.currentOwner, sector: p.sector || "", sectorCn: secCnByPlanet(p),
     lib: p.maxHealth > 0 ? (1 - p.health / p.maxHealth) * 100 : 0 }));
   let hitsTimer = null;
   q.addEventListener("input", () => { clearTimeout(hitsTimer); hitsTimer = setTimeout(renderHits, 130); });
@@ -2216,7 +2235,7 @@ function bindUI(data, planets) {
     }
     tip.style.left = x + "px"; tip.style.top = y + "px";
     MAP.getCanvas().style.cursor = "pointer";
-    showSectorCard(pr.sector);
+    showSectorCard(pr.sectorCn || pr.sector);
   });
   MAP.on("mouseleave", "planet-core", () => {
     tip.style.display = "none"; MAP.getCanvas().style.cursor = ""; hideSectorCard();
@@ -2279,7 +2298,7 @@ function bindUI(data, planets) {
     }
     hideWheel();
     showPlanetCard(idx);
-    showSectorCard(f.properties.sector);
+    showSectorCard(f.properties.sectorCn || f.properties.sector);
   });
   // 点空白处收起。
   // ⚠ 2026-09-15 修复：原来用 `!e.features || !e.features.length` 判断空白 ——
@@ -2307,7 +2326,7 @@ function bindUI(data, planets) {
     const camp = campaigns[0];
     const ev = (data.planet_events || []).find(x => x.planetIndex === index);
     const pCn = PL_CN[String(p.name || "").toUpperCase()] || "";
-    const pSec = SEC_CN[(p.sector || "").toUpperCase()] || "";
+    const pSec = secCnByPlanet(p);
     // 行动变量：按 effectId 查 hd2_variables；作战限制(combat_restriction)显红色 Tag
     // 同一效果常有 基础 id 与 (Enemies) 变体 id 两个，故按**中文名去重**（与主站一致）
     const varSeen = {};
@@ -2335,7 +2354,7 @@ function bindUI(data, planets) {
          <div class="cell"><div class="k">归属</div><div class="v">${esc(OWN_CN[p.currentOwner] || p.currentOwner || "—")}</div></div>
          <div class="cell"><div class="k">解放度</div><div class="v">${lib}%</div></div>
          <div class="cell"><div class="k">在线玩家</div><div class="v">${fmt(p.players)}</div></div>
-         <div class="cell"><div class="k">星区</div><div class="v">${esc(pSec || p.sector || "—")}</div></div>
+         <div class="cell"><div class="k">星区</div><div class="v">${esc(pSec)}</div></div>
          <div class="cell"><div class="k">抵抗值</div><div class="v">${p.resistance != null ? p.resistance : "—"}</div></div>
          <div class="cell"><div class="k">索引</div><div class="v">${p.index}</div></div>
        </div>` +
@@ -2372,7 +2391,7 @@ function bindUI(data, planets) {
 
   const libPct = (p) => (p && p.maxHealth > 0) ? Math.max(0, Math.min(100, (1 - p.health / p.maxHealth) * 100)) : 0;
   const plCn   = (p) => PL_CN[String(p.name || "").toUpperCase()] || "";
-  const secCn  = (p) => SEC_CN[String(p.sector || "").toUpperCase()] || p.sector || "—";
+  const secCn  = (p) => secCnByPlanet(p);
 
   /* ---- 星球下属区域：城市 / 超大型工厂（2026-09-24 demo）------------------
      三个来源：

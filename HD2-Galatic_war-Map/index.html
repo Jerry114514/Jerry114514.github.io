@@ -2013,7 +2013,10 @@ function renderPlayers(data) {
           const nm = pinfo ? planetName(pinfo, data.starMap) : { cn: null, en: "星球#" + dss.planetIndex };
           // 右上角原本只写「名字 · 星区」，看着像一串无名文字、缺少引导；
           // 改为「当前停靠：名字·星区」（分隔点也去掉两侧空格，更紧凑）
-          return "当前停靠：" + (nm.cn || nm.en) + (pinfo && pinfo.sector ? "·" + sectorCn(pinfo.sector) : "");
+          // 星区名走 planetSectorCn（starmap 权威）；不用 pinfo.sector —— 那是 hd2dev 的另一套分区名，
+          // 与游戏分区不符且 273 颗里 152 颗为空，会导致这里时有时无、且名字错误。
+          const sec = pinfo ? planetSectorCn(pinfo) : "";
+          return "当前停靠：" + (nm.cn || nm.en) + (sec && sec !== "不分区" ? "·" + sec : "");
         })()
       : "未停靠";
 
@@ -2177,7 +2180,10 @@ function renderPlayers(data) {
     try {
       if (window.Tactical && currentData) {
         const tacCtx = {
-          planets: currentData.planets || [],
+          // 同上：p.sector（hd2dev）与游戏分区不符且常为空 → 换成 starmap 权威中文星区名，
+          // 供 tactical.js 的「星域解放」同星区判定与文案使用（sectorCnOf 收到中文原样返回）。
+          planets: (currentData.planets || []).map(p => Object.assign({}, p,
+            { sector: isUnlisted(p) ? "" : planetSectorCn(p) })),
           campaigns: currentData.campaigns || [],
           waypoints: currentData.waypoints || {},
           nameOf: (idx) => {
