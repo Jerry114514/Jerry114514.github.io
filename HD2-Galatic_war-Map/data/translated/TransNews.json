@@ -7,6 +7,24 @@
  },
  "items": [
   {
+   "id": 3948,
+   "original": "DSS MAINTENANCE UPDATE\n\nUnforeseable supply line disruptions are preventing Helldiver contributions to DSS Tactical Actions from being received. The issue is currently being addressed and will be resolved in an appropriately expedient manner unworthy of complaint. \n\nPersonnel are advised to avoid contribution to the DSS and undue contemplation or communication about this issue until normal operation is restored. Violations will be appropriately logged in the violator's permanent files.",
+   "translated": "民主空间站维护更新\n\n不可预见的补给线中断，正导致绝地潜兵对民主空间站战术行动的贡献无法送达。问题已在处理中，并将以适当且迅速、不容抱怨的方式解决。\n\n建议全体人员暂停对民主空间站的贡献，并在恢复正常运作前，避免对此事过度思考或传播。违规行为将适当记录在违规者的永久档案中。",
+   "published_at": "2026-10-07T15:37:44Z",
+   "translated_at": "2026-10-07T19:47:05Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
+   "id": 3947,
+   "original": "TERREK is under attack by the Terminids! All Helldivers must deploy immediately to defend it!",
+   "translated": "泰雷克正遭受终结族攻击！全体绝地潜兵必须立即部署，保卫泰雷克！",
+   "published_at": "2026-10-07T13:57:58Z",
+   "translated_at": "2026-10-07T19:47:05Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
    "id": 3946,
    "original": "NEW MAJOR ORDER\n\nShattered Illuminate divisions are consolidating on SENGE 23. High Command has authorized a live broadcast of their imminent eradication to every loyal home.\n\nTo bolster this initative, the recently restored DSS (Democracy Space Station) has deployed, newly equipped with the Eagle Gas Storm to enable widespread chemical peacekeeping.\n\nLiberate SENGE 23 and eliminate 400,000,000 Illuminate hostiles.",
    "translated": "新重大指令\n\n光能者残部正在新戈23重整旗鼓。最高指挥部已批准，将这场即将到来的歼灭行动向所有忠诚的家园进行实况转播。\n\n为壮大此役声势，近日修复完毕的民主空间站已部署就位，并新装飞鹰毒气风暴，以便开展大范围化学维和。\n\n解放新戈23，歼灭 4 亿（400,000,000）光能者敌军。",
@@ -77,24 +95,6 @@
    "translated_at": "2026-09-25T17:35:08Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3938,
-   "original": "MINOR TERMINID OUTBREAK\n\nA minor Terminid outbreak has occured on FRONTERIA. It is evident that some dissidents continue their hopeless effort to disrupt citizen confidence in the TCS+. The Helldivers are ordered to put down this small, low-threat outbreak.",
-   "translated": "终结族小规模爆发\n\n边陲发生小规模终结族爆发。显然，仍有少数异见分子执迷不悟，妄图动摇公民对TCS+的信心。绝地潜兵受命扑灭这场规模小、威胁低的爆发。",
-   "published_at": "2026-09-23T12:29:26Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
-  },
-  {
-   "id": 3936,
-   "original": "NEW MAJOR ORDER\n\nEnemy aggression prevents the long-term construction of the new Maelstrom Tank, threatening our citizens' inherent right to self-defense. Liberate MARFARK and PHACT BAY immediately.",
-   "translated": "新重要指令\n\n敌方侵略行径，令新型「风暴漩涡」坦克无法长期建造，公民固有的自卫权因此受到威胁。立刻解放玛尔法克与丈人一湾。",
-   "published_at": "2026-09-22T11:59:18Z",
-   "translated_at": "2026-09-25T17:35:08Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-07T12:50:25Z",
+  "computed_at": "2026-10-07T19:47:05Z",
   "planet_index": null
  }
 }
