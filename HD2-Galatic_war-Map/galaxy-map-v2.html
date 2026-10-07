@@ -1221,15 +1221,19 @@ async function boot() {
   };
   const HIDDEN_IDX = new Set(planets.filter(isHidden).map(p => p.index));
   const OPACITY_HIDDEN = .4;
-  // 把任意 opacity 表达式按 hidden 属性降级：hidden=1 → ×0.4，否则原样。
-  // 必须写成「基础值 × 隐藏系数」，**不能**写成
-  //   ["case", ["==", ["get", "hidden"], 1], ["*", v, OPACITY_HIDDEN], v]
-  // 因为 v 若是 zoom 相关表达式（planet-glow / planet-glow-in 的 interpolate），
-  // 那个写法会把同一个 ["zoom"] 子树放进表达式两次，MapLibre 校验直接报
-  //   Only one zoom-based "step" or "interpolate" subexpression may be used in an expression
-  // 整个样式校验失败 → map 的 load 事件永不触发 → 星图永久卡在加载遮罩（2026-10-07 修复）。
+  // 把 opacity 按 hidden 属性降级：hidden=1 → ×0.4，否则原样。
+  // MapLibre 对 zoom 表达式有两条硬规则，写错任何一条都会让**整个样式校验失败** →
+  // map 的 load 事件永不触发 → 星图永久卡在加载遮罩（2026-10 两次踩坑）：
+  //   ① 一条表达式里只能有一个 zoom 驱动的 step/interpolate；
+  //   ② zoom 的 step/interpolate 只能出现在**顶层**，不能塞进 ["*", interp, …] 里。
+  // 故：常量 opacity 走 dim()；zoom 驱动的插值走 dimZoom()，把隐藏系数下推到每个档位的输出值。
+  //   ✗ ["case", ["==", ["get","hidden"], 1], ["*", interp, OPACITY_HIDDEN], interp]  // 违反 ①
+  //   ✗ ["*", interp, HIDDEN_FACTOR]                                                  // 违反 ②
+  //   ✓ dimZoom([[4, .14], [9, .26], [13, .38]])
   const HIDDEN_FACTOR = ["case", ["==", ["get", "hidden"], 1], OPACITY_HIDDEN, 1];
   const dim = (v) => ["*", v, HIDDEN_FACTOR];
+  const dimZoom = (stops) => ["interpolate", ["linear"], ["zoom"],
+    ...stops.flatMap(([z, v]) => [z, ["*", v, HIDDEN_FACTOR]])];
 
   // 星球点（带全部展示属性）
   const planetFC = fc(planets.map(p => {
@@ -1651,7 +1655,7 @@ async function boot() {
           paint: {
             "circle-color": ["get", "color"],
             "circle-blur": 1,
-            "circle-opacity": dim(["interpolate", ["linear"], ["zoom"], 4, .14, 9, .26, 13, .38]),
+            "circle-opacity": dimZoom([[4, .14], [9, .26], [13, .38]]),
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4.2, 9, 10.5, 13, 26],
           } },
 
@@ -1660,7 +1664,7 @@ async function boot() {
           paint: {
             "circle-color": ["get", "color"],
             "circle-blur": .5,
-            "circle-opacity": dim(["interpolate", ["linear"], ["zoom"], 4, .2, 9, .34, 13, .5]),
+            "circle-opacity": dimZoom([[4, .2], [9, .34], [13, .5]]),
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.8, 9, 6.8, 13, 16],
           } },
 
