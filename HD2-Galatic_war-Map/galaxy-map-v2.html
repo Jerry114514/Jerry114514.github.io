@@ -1221,8 +1221,15 @@ async function boot() {
   };
   const HIDDEN_IDX = new Set(planets.filter(isHidden).map(p => p.index));
   const OPACITY_HIDDEN = .4;
-  // 把任意 opacity 表达式按 hidden 属性降级：hidden=1 → ×0.4，否则原样
-  const dim = (v) => ["case", ["==", ["get", "hidden"], 1], ["*", v, OPACITY_HIDDEN], v];
+  // 把任意 opacity 表达式按 hidden 属性降级：hidden=1 → ×0.4，否则原样。
+  // 必须写成「基础值 × 隐藏系数」，**不能**写成
+  //   ["case", ["==", ["get", "hidden"], 1], ["*", v, OPACITY_HIDDEN], v]
+  // 因为 v 若是 zoom 相关表达式（planet-glow / planet-glow-in 的 interpolate），
+  // 那个写法会把同一个 ["zoom"] 子树放进表达式两次，MapLibre 校验直接报
+  //   Only one zoom-based "step" or "interpolate" subexpression may be used in an expression
+  // 整个样式校验失败 → map 的 load 事件永不触发 → 星图永久卡在加载遮罩（2026-10-07 修复）。
+  const HIDDEN_FACTOR = ["case", ["==", ["get", "hidden"], 1], OPACITY_HIDDEN, 1];
+  const dim = (v) => ["*", v, HIDDEN_FACTOR];
 
   // 星球点（带全部展示属性）
   const planetFC = fc(planets.map(p => {
