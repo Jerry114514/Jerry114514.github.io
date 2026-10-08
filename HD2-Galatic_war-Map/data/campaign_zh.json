@@ -4,7 +4,7 @@
     "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**只补空字段，绝不覆盖任何已有中文**。",
-    "updated_at": "2026-10-06"
+    "updated_at": "2026-10-08"
   },
   "_assets": {
     "desc": "战役奖励图标（本地文件）。companion 的奖励图标不是位图，而是前端 bundle 内嵌的压缩图标库，运行时渲染成内联 <svg viewBox=\"0 0 1000 1000\">；站点上没有任何图标位图 URL。下面两个文件即该内联 SVG 的矢量路径本地化副本（d / fill 原样），由浏览器实测提取，非截图切割。",
@@ -265,6 +265,11 @@
           "title": "化学维和",
           "mt": true,
           "briefing": "在绝地潜兵瓦解寂域的胜利之后，SEAF情报显示，支离破碎的光能者师团正在新戈23上整合地面资产。超级地球最高司令部已授权向每个忠诚的家庭直播其即将被消灭的过程，以安抚国内投资者并激励儿童。\n\n为支持这一行动，最近修复的DSS（民主空间站）已部署，并新装备了鹰式毒气风暴，以实现广泛的化学维和。\n\n绝地潜兵被命令解放新戈23并消灭400,000,000名光能者敌人，以保障该星区。"
+        },
+        "2479972552": {
+          "title": "生物样本清除",
+          "mt": true,
+          "briefing": "光能者以其堕落行径，蓄意将新戈23散逸的无害气体残留物加以改造，使其以某种方式影响到环绕该行星运行的专属A级退休设施。\n\n这种对防御性毒气打击——通常对人类肺部完全无害——的鲁莽操控，已导致居民私人停靠舱内出现视觉模糊、轻微呼吸道刺激，以及设施工作人员擅离职守现象急剧上升。\n\n为证明鹰式毒气风暴的安全性，绝地潜兵必须守住新戈23，并部署至终结族前侧，消灭30,000,000只胆汁喷涌虫和40,000,000只胆汁喷吐虫，以协助对空气传播毒性开展至关重要且已全面规划的研究。"
         }
       },
       "mt": true
