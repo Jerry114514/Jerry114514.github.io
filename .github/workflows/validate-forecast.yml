@@ -1,0 +1,25 @@
+name: Validate war forecasts
+on:
+  pull_request:
+    paths:
+      - 'HD2-Galatic_war-Map/**'
+      - 'scripts/tests/forecast-check.mjs'
+      - '.github/workflows/validate-forecast.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'HD2-Galatic_war-Map/js/forecast.js'
+      - 'HD2-Galatic_war-Map/js/rate-source.js'
+      - 'scripts/tests/forecast-check.mjs'
+      - '.github/workflows/validate-forecast.yml'
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/tests/forecast-check.mjs

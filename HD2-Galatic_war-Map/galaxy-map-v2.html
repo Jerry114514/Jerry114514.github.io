@@ -487,6 +487,7 @@
 </style>
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
 <link rel="stylesheet" href="./css/map-hud.css?v=20260924a">
+<link rel="stylesheet" href="./css/forecast.css">
 </head>
 <body>
 <header>
@@ -562,6 +563,7 @@
   </aside>
 </main>
 
+<script src="./js/forecast.js"></script>
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script>
@@ -2568,11 +2570,17 @@ function bindUI(data, planets) {
         if (narrow) {
           // 底部抽屉由 CSS 定位：清掉可能残留的行内值，避免 resize 跨断点后错位
           el.style.left = ""; el.style.top = ""; el.style.transform = "";
+          el.style.maxHeight = ""; el.style.overflowY = "";
         } else {
           const pt = MAP.project([p.position.x, p.position.y]);
-          el.style.left = pt.x.toFixed(1) + "px";
-          el.style.top = (pt.y - off).toFixed(1) + "px";
-          el.style.transform = "translate(-50%,-100%)";
+          const stage = $("stage");
+          el.style.maxHeight = Math.max(80, stage.clientHeight - 16) + "px";
+          el.style.overflowY = "auto";
+          const left = Math.max(8, Math.min(stage.clientWidth - el.offsetWidth - 8, pt.x - el.offsetWidth / 2));
+          const top = Math.max(8, Math.min(stage.clientHeight - el.offsetHeight - 8, pt.y - off - el.offsetHeight));
+          el.style.left = left.toFixed(1) + "px";
+          el.style.top = top.toFixed(1) + "px";
+          el.style.transform = "none";
         }
       }
     }
@@ -2626,19 +2634,10 @@ function bindUI(data, planets) {
     const atkColor = FACTION_COLOR[atkF] || "#E74C3C";
     const atk = camp.attackersProgress != null ? Number(camp.attackersProgress) : null;
     const def = camp.defendersProgress != null ? Number(camp.defendersProgress) : null;
-    const aR = camp.attackersRate, dR = camp.defendersRate;
-    const remainH = (camp.remainingTime || 0) / 3600;
-    // 我方均速：优先取实测差值；否则用「进度 ÷ 已历时间」（已历时间 = 入侵进度 ÷ 固定速率）
-    const elapsedH = (aR > 0 && atk > 0) ? atk / aR : 0;
-    const pace = (dR != null && dR > 0) ? dR : ((elapsedH > 0 && def != null) ? def / elapsedH : null);
-    // 战况：剩余时间内能打满 = 优势（与主页同判据）
-    let st, cls;
-    if (pace != null && def != null && remainH > 0) {
-      const win = pace * remainH >= (100 - def);
-      st = win ? "优势" : "劣势"; cls = win ? "st-win" : "st-lose";
-    } else if (def != null && atk != null) {
-      st = def >= atk ? "优势" : "劣势"; cls = def >= atk ? "st-win" : "st-lose";
-    } else { st = "数据不足"; cls = ""; }
+    const aR = camp.attackersRate;
+    const forecast = HD2Forecast.defense(camp), pace = forecast.rate;
+    const st = forecast.win === true ? "优势" : forecast.win === false ? "劣势" : "数据不足";
+    const cls = forecast.win === true ? "st-win" : forecast.win === false ? "st-lose" : "";
     const row = (label, pct, bg) => {
       const known = pct != null && isFinite(pct);
       const w = known ? Math.max(0, Math.min(100, pct)).toFixed(2) : "0.00";
@@ -2663,6 +2662,7 @@ function bindUI(data, planets) {
       `<div class="def-meta"><span>进攻 <b>${aR != null ? Number(aR).toFixed(3) : "--"}%</b>/h` +
         ` · 防守 <b>${pace != null ? pace.toFixed(3) : "--"}%</b>/h</span>` +
         `<span style="margin-left:auto">战况 <b class="${cls}">${esc(st)}</b></span></div>` +
+      HD2Forecast.defenseHtml(camp) +
       (camp.invasionLevel != null
         ? `<div class="def-meta"><span>⚔️ 入侵等级 <b>${esc(camp.invasionLevel)}</b></span>` +
           `<span>等级越高敌方兵力越强</span></div>` : "") +
@@ -2782,6 +2782,7 @@ function bindUI(data, planets) {
         if (s) s.innerHTML = html || `<span class="st2">无星球增益 / 减益</span>`;
       }
     } catch (_) {}
+    if (alive()) positionOverlays();
   }
 
   /* ---- 轮盘：上=星球详细信息，下=DSS 效果，中心=关闭 ---- */

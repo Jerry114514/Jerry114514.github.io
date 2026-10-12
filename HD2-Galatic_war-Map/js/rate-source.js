@@ -25,6 +25,7 @@ window.HD2Recent = (function () {
     planets: {},     // idx -> frames[]
     regions: {},     // "idx:regionIndex" -> frames[]
     mo: null,        // [{timestampUtc, progress[], expiresIn, startTime}]
+    assignmentFrames: [],
     windowH: 1,
   };
 
@@ -101,6 +102,11 @@ window.HD2Recent = (function () {
     const base = (opts && opts.base) || "./data/recent";
     state.base = base;
     const idx = await jsonOrNull(base + "/index.json");
+    // Replace a snapshot on reload: do not append region frames or keep removed planets/orders.
+    state.planets = {};
+    state.regions = {};
+    state.mo = null;
+    state.assignmentFrames = [];
     state.index = idx;
     state.windowH = (idx && idx.windowHours) || 1;
     if (!idx) return false;
@@ -130,10 +136,12 @@ window.HD2Recent = (function () {
     jobs.push((async () => {
       const j = await jsonOrNull(base + "/assignments.json");
       if (!j || !Array.isArray(j.data)) return;
-      state.mo = j.data.map((f) => {
-        const a = (f.assignments || [])[0];
-        return a ? { timestampUtc: f.timestampUtc, progress: a.progress || [], expiresIn: a.expiresIn, startTime: a.startTime } : null;
-      }).filter(Boolean);
+      state.assignmentFrames = j.data;
+      state.mo = j.data.flatMap(f => (f.assignments || []).map(a => ({
+        timestampUtc: f.timestampUtc, progress: a.progress || [], expiresIn: a.expiresIn,
+        startTime: a.startTime, id: a.id32 ?? a.id, tasks: a.setting?.tasks,
+        title: a.setting?.overrideTitle,
+      })));
     })());
 
     await Promise.all(jobs);
@@ -207,61 +215,42 @@ window.HD2Recent = (function () {
     };
   }
 
-  /* MO 的多窗口速率（2026-09-29）：近 1 小时只反映"当下节奏"，而 MO 的击杀数是**一阵一阵**的，
-     单看 1 小时会和整体观感差很多（实测：任务1 近 1 小时 14.2 万/时 vs 全程均速 23.9 万/时）。
-     所以同时给出 近1h / 近6h / 近24h / 自指令下达以来 四种窗口，页面以「自指令下达以来」为准，
-     并把「近 1 小时」作为对照一起标出来。 */
-  function moWindows() {
-    const list = state.mo;
-    if (!list || list.length < 2) return null;
-    const withT = list.map((f) => ({ t: toMs(f.timestampUtc), f })).filter((x) => x.t != null).sort((a, b) => a.t - b.t);
+  /* MO 差分窗口：同一指令、同一起点、同一任务序列，且不晚于主快照。
+     run 仅代表现存缓存跨度，不冒充全程；全程估算均速由 forecast.js 计算。
+     近 1 小时只作当前节奏对照，进度已封顶时该窗口速率为零。 */
+  function moWindows(assignment, asOf = Date.now()) {
+    let list = (state.mo || []).filter(f => toMs(f.timestampUtc) <= asOf);
+    if (!assignment) {
+      const latest = list.filter(f => f.title === "MAJOR ORDER").sort((a, b) => toMs(a.timestampUtc) - toMs(b.timestampUtc)).at(-1);
+      if (!latest) return null;
+      assignment = { id: latest.id, tasks: latest.tasks };
+    }
+    list = list.filter(f => window.HD2Forecast.sameOrder(f, assignment));
+    const withT = list.map(f => ({ t: toMs(f.timestampUtc), f })).filter(x => x.t != null).sort((a, b) => a.t - b.t);
     if (withT.length < 2) return null;
-    const last = withT[withT.length - 1];
-    const startWar = Number(last.f.startTime);
+    const last = withT.at(-1);
+    if (asOf - last.t > 3600000) return null; // stale rates cannot explain a fresh snapshot
+    const sameStart = withT.filter(x => x.f.startTime != null && x.f.startTime === last.f.startTime);
+    if (sameStart.length < 2) return null;
     const mk = (base, label) => {
       if (!base) return null;
       const hours = (last.t - base.t) / 3600000;
-      if (!(hours >= 0.24)) return null;
-      const n = Math.min((last.f.progress || []).length, (base.f.progress || []).length);
-      const rates = [];
-      for (let i = 0; i < n; i++) rates.push(((last.f.progress[i] || 0) - (base.f.progress[i] || 0)) / hours);
+      if (hours < 0.24) return null;
+      const rates = (assignment.tasks || []).map((_, i) => {
+        const a = base.f.progress[i], b = last.f.progress[i];
+        // Counter resets/absent values cannot produce a valid rate.
+        return a != null && b != null && Number.isFinite(+a) && Number.isFinite(+b) && b >= a ? (b - a) / hours : null;
+      });
       return { label, rates, hours, from: base.f.timestampUtc, to: last.f.timestampUtc };
     };
-    const back = (hours) => {
-      const cut = last.t - hours * 3600000;
-      for (const x of withT) if (x.t >= cut) return x;
-      return null;
-    };
-    let runBase = null;
-    if (Number.isFinite(startWar)) {
-      for (const x of withT) if (Number(x.f.startTime) === startWar) { runBase = x; break; }
-    }
-    if (!runBase) runBase = withT[0];
+    const back = hours => sameStart.find(x => x.t >= last.t - hours * 3600000);
     return {
-      h1: mk(back(1), "近 1 小时"),
-      h6: mk(back(6), "近 6 小时"),
-      h24: mk(back(24), "近 24 小时"),
-      run: mk(runBase, "自指令下达以来"),
-      expiresInSec: last.f.expiresIn,
+      h1: mk(back(1), "近 1 小时"), h6: mk(back(6), "近 6 小时"), h24: mk(back(24), "近 24 小时"),
+      run: mk(sameStart[0], "缓存窗口均速"), expiresInSec: last.f.expiresIn,
     };
   }
-
-  function mo() {
-    const list = state.mo;
-    if (!list || list.length < 2) return null;
-    const withT = list.map((f) => ({ t: toMs(f.timestampUtc), f })).filter((x) => x.t != null).sort((a, b) => a.t - b.t);
-    if (withT.length < 2) return null;
-    const last = withT[withT.length - 1];
-    const earliest = last.t - state.windowH * 3600000;
-    let first = withT[0];
-    for (const x of withT) { if (x.t >= earliest) { first = x; break; } }
-    const hours = (last.t - first.t) / 3600000;
-    if (!(hours >= 0.24)) return null;
-    const n = Math.min((last.f.progress || []).length, (first.f.progress || []).length);
-    const rates = [];
-    for (let i = 0; i < n; i++) rates.push(((last.f.progress[i] || 0) - (first.f.progress[i] || 0)) / hours);
-    return { rates, hours, expiresInSec: last.f.expiresIn, from: first.f.timestampUtc, to: last.f.timestampUtc };
-  }
+  function mo(assignment, asOf) { return moWindows(assignment, asOf)?.h1 || null; }
+  const assignmentFrames = () => state.assignmentFrames;
 
   function stats() {
     return {
@@ -274,5 +263,5 @@ window.HD2Recent = (function () {
     };
   }
 
-  return { load, planet, planetDiag, region, regionDiag, regionMeta, mo, moWindows, stats, _state: state };
+  return { load, planet, planetDiag, region, regionDiag, regionMeta, mo, moWindows, assignmentFrames, stats, _state: state };
 })();
