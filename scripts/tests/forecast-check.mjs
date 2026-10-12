@@ -66,4 +66,45 @@ try {
   await R.load();
   check("failed reload clears stale order/region cache", () => { assert.equal(R._state.mo, null); assert.equal(Object.keys(R._state.regions).length, 0); });
 } finally { globalThis.fetch = realFetch; }
+check("type 11 liberation retains timeline and deadline forecast", () => {
+  const f = F.task({ type: 11, current: 37, goal: 100, window: w });
+  assert.equal(f.expected, 50); assert.equal(f.projected, 74); assert.equal(f.win, false);
+});
+check("type 15 net liberation retains timeline and deadline forecast", () => {
+  const f = F.task({ type: 15, current: 3, goal: 10, window: w });
+  assert.equal(f.expected, 50); assert.equal(f.projected, 60);
+});
+check("type 15 recent losses are not clamped to a false stall", () => {
+  const f = F.task({ type: 15, current: 3, goal: 10, window: w, recentRate: -.05 });
+  assert.equal(f.recentProjected, 18);
+});
+check("negative net count cannot produce a positive completion ETA", () => {
+  const f = F.task({ type: 15, current: -3, goal: 10, window: w });
+  assert.equal(f.projected, 0); assert.equal(f.etaH, null); assert.equal(f.win, false);
+});
+check("net task recent rate can be negative while kill counter resets stay unknown", () => {
+  const netTasks = [{ type: 15, values: [10], valueTypes: [3] }];
+  R._state.mo = [mf(1, 42, 5), mf(0, 42, 3)].map(f => ({ ...f, tasks: netTasks }));
+  assert.equal(R.moWindows({ id: 42, tasks: netTasks }, now).h1.rates[0], -2);
+});
+check("type 11 raw ownership flags cannot masquerade as percent per hour", () => {
+  const flags = [{ type: 11, values: [1, 228], valueTypes: [11, 12] }];
+  R._state.mo = [mf(1, 42, 0), mf(0, 42, 1)].map(f => ({ ...f, tasks: flags }));
+  assert.equal(R.moWindows({ id: 42, tasks: flags }, now).h1.rates[0], null);
+});
+check("missing forecast script does not throw from rate source", () => {
+  delete window.HD2Forecast;
+  assert.equal(R.moWindows(a, now), null);
+  window.HD2Forecast = F;
+});
+// Parse the actual page scripts as part of the portable CI regression.
+for (const page of ["index.html", "planet.html", "galaxy-map-v2.html"]) {
+  check("inline scripts parse: " + page, () => {
+    const html = fs.readFileSync(path.join(root, "HD2-Galatic_war-Map", page), "utf8");
+    for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+      if (/src=|application\/ld\+json/i.test(match[1])) continue;
+      new Function(match[2]);
+    }
+  });
+}
 console.log(`${checks} regression cases passed.`);

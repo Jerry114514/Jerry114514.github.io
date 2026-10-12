@@ -201,16 +201,18 @@ window.HD2Recent = (function () {
   /* 区域「当前值」（不管能不能算差分）：末帧的抵抗度/玩家/是否开放。
      抵抗度 = regerPerSecond × 3600 ÷ 区域满血 × 100（相对本区域血池）
      等效抵抗度 = regerPerSecond × 3600 ÷ 1,000,000 × 100（100 万血基准） */
-  function regionMeta(planetIndex, r) {
+  function regionMeta(planetIndex, r, asOf = Date.now()) {
     const frames = state.regions[planetIndex + ":" + (r && r.regionIndex)];
     if (!frames || !frames.length || !(r && r.maxHealth > 0)) return null;
-    const last = frames[frames.length - 1];
+    const last = frames.filter(f => toMs(f.timestampUtc) != null && toMs(f.timestampUtc) <= asOf).sort((a, b) => toMs(a.timestampUtc) - toMs(b.timestampUtc)).at(-1);
+    if (!last || asOf - toMs(last.timestampUtc) > 3 * 3600000) return null;
     const regen = Number(last.regerPerSecond) || 0;
     return {
       res: regen * 3600 / r.maxHealth * 100,
       resEq: regen * 3600 / 1e6 * 100,
       regenPerSecond: regen,
       players: last.players, isAvailable: last.isAvailable,
+      availabilityFactor: last.availabilityFactor, timestampUtc: last.timestampUtc,
       frames: frames.length,
     };
   }
@@ -219,6 +221,7 @@ window.HD2Recent = (function () {
      run 仅代表现存缓存跨度，不冒充全程；全程估算均速由 forecast.js 计算。
      近 1 小时只作当前节奏对照，进度已封顶时该窗口速率为零。 */
   function moWindows(assignment, asOf = Date.now()) {
+    if (typeof window.HD2Forecast?.sameOrder !== "function") return null;
     let list = (state.mo || []).filter(f => toMs(f.timestampUtc) <= asOf);
     if (!assignment) {
       const latest = list.filter(f => f.title === "MAJOR ORDER").sort((a, b) => toMs(a.timestampUtc) - toMs(b.timestampUtc)).at(-1);
@@ -237,9 +240,11 @@ window.HD2Recent = (function () {
       const hours = (last.t - base.t) / 3600000;
       if (hours < 0.24) return null;
       const rates = (assignment.tasks || []).map((_, i) => {
+        // Type 11 raw assignment progress is an ownership flag, not the decoded planet percentage.
+        if (Number(assignment.tasks[i]?.type) === 11) return null;
         const a = base.f.progress[i], b = last.f.progress[i];
         // Counter resets/absent values cannot produce a valid rate.
-        return a != null && b != null && Number.isFinite(+a) && Number.isFinite(+b) && b >= a ? (b - a) / hours : null;
+        return a != null && b != null && Number.isFinite(+a) && Number.isFinite(+b) && (b >= a || Number(assignment.tasks[i]?.type) === 15) ? (b - a) / hours : null;
       });
       return { label, rates, hours, from: base.f.timestampUtc, to: last.f.timestampUtc };
     };

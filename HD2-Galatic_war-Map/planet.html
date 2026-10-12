@@ -172,7 +172,7 @@
       .hero .nm{font-size:1.55rem}
     }
   </style>
-  <link rel="stylesheet" href="./css/forecast.css">
+  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
 </head>
 <body>
   <header class="topbar">
@@ -195,6 +195,7 @@
   </footer>
 
   <script src="./js/forecast.js"></script>
+  <script src="./js/regions.js"></script>
   <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
@@ -406,9 +407,12 @@
 
   function setMeta() {
     const t = plCn() + "（" + P.name + "）星球资料 - 绝地潜兵2 真理部";
+    const camp = (DATA.campaigns || []).find(c => c.planet?.index === P.index);
+    const defense = window.HD2Forecast?.isDefense(camp) || (DATA.planet_events || []).some(e => e.planetIndex === P.index && e.eventType === 1);
+    const progress = defense ? "防守进度 " + (camp?.defendersProgress == null ? "未知" : Number(camp.defendersProgress).toFixed(2) + "%") : "已解放 " + libPct(P).toFixed(2) + "%";
     const d = "绝地潜兵2 星球资料 · " + plCn() + "（" + P.name + "）："
       + secCn() + "星区 · 归属 " + (OWN_CN[P.currentOwner] || P.currentOwner || "未知")
-      + " · 已解放 " + libPct(P).toFixed(2) + "% · 在线玩家 " + fmt(P.players)
+      + " · " + progress + " · 在线玩家 " + fmt(P.players)
       + "。含战役与战略分析、下属区域、星球统计、环境条件与补给线。";
     const url = location.origin + location.pathname + "?idx=" + P.index;
     const set = (sel, val) => { const e = document.querySelector(sel); if (e) e.setAttribute("content", val); };
@@ -443,7 +447,7 @@
                || !!ev;
     const humanOwned = String(P.currentOwner || "Humans").toLowerCase() === "humans";
     const showLib = humanOwned && !isDef;
-    const defense = isDef && camp ? HD2Forecast.defense(camp) : null;
+    const defense = isDef && camp ? window.HD2Forecast?.defense(camp) || null : null;
     const lib = defense ? (defense.def ?? 0) : showLib ? 100 : libPct(P);
     const total = (DATA.player_distribution && DATA.player_distribution.total) || 0;
     const share = total > 0 ? (P.players || 0) / total * 100 : 0;
@@ -619,7 +623,7 @@
       ]));
     }
     if (!rows.length) return `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
-    return (HD2Forecast.isDefense(camp) ? HD2Forecast.defenseHtml(camp) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
+    return (window.HD2Forecast?.isDefense(camp) ? HD2Forecast.defenseHtml(camp) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
       `<p class="note" style="margin-top:10px">防御战使用战役事件的防守进度，不使用己方星球本体血量。预测优先采用实测防守速率，缺失时采用开战以来平均速率；解放战采用实测优先、推演兜底的净推进速率。</p>`;
   }
 
@@ -678,13 +682,14 @@
   }
 
   function regionsHtml() {
+    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = REG_TABLE[String(P.index)];
     if (!st || !st.regions || !st.regions.length) return `<p class="empty">静态表里没有这颗星球的区域数据（<code>tables/planet_regions.json</code> 覆盖 84 颗有城市/工厂的星球）。</p>`;
     const zhMap = REG_ZH[String(P.index)] || {};
     const live = P.regions || [];
     const rows = [];
     st.regions.forEach((rg, k) => {
-      const lv = live[k] || null;
+      const lv = HD2Regions.live(P, k);
       const typeOf = String(rg.region_type || "").toLowerCase() === "megafactory" ? "Megafactory" : (rg.size || "");
       const typeCn = typeOf === "Megafactory" ? "超大型工厂" : (REGION_TYPE_ZH[typeOf] || typeOf || "区域");
       const stars = REGION_STARS[typeOf] || 0;
@@ -723,7 +728,7 @@
         T.t(rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h" : "—", "num " + (rr && rr.net > 0.0005 ? "ok" : "warn"),
             rr ? (rr.measured ? "实测：社区 CDN 15 分钟帧的首尾血量差" : "推演：区域玩家 × 影响系数 × K ÷ 区域血量 − 区域抵抗度") : ""),
         T.t(rEta, "num " + rEtaCls),
-      ], "click rg-row", ` data-d="${k}"`) + `<tr class="det" data-d="${k}" hidden><td colspan="8">`
+       ], "click rg-row", ` data-d="${k}"`) + `<tr><td colspan="8">${HD2Regions.html(HD2Regions.info(P, k, rg, DATA))}</td></tr><tr class="det" data-d="${k}" hidden><td colspan="8">`
         + (rg.desc ? esc(rg.desc) : "<span class='mini'>（该区域没有说明文本）</span>")
         + `<div class="mini" style="margin-top:6px">类型 ${esc(typeCn)}（上游 <code>${esc(rg.size || rg.region_type || "—")}</code>）· 血量 ${fmt(lv ? lv.health : null)} / ${fmt(lv ? lv.maxHealth : null)}</div></td></tr>`);
       rows.push("");

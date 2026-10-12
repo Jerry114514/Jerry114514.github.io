@@ -46,7 +46,7 @@ window.HD2Forecast = (() => {
     const g = number(goal), c = number(current);
     if (g == null || g <= 0 || c == null) return { state: "unknown" };
     if (Number(type) === 13) return { state: "hold", satisfied: c >= g, expired: !!w && w.now >= w.end };
-    if (![2, 3, 9].includes(Number(type))) return { state: c >= g ? "satisfied" : "stateful" };
+    if (![2, 3, 9, 11, 15].includes(Number(type))) return { state: c >= g ? "satisfied" : "stateful" };
     if (c >= g) return { state: "complete" };
     if (!w) return { state: "unknown" };
     const elapsedH = (w.now - w.start) / HOUR, remainingH = Math.max(0, (w.end - w.now) / HOUR);
@@ -58,7 +58,7 @@ window.HD2Forecast = (() => {
     return { state: remainingH <= 0 ? "expired" : "active", expected: w.expected,
       delta: c / g * 100 - w.expected, rate, projected, etaH, remainingH,
       win: etaH != null && etaH <= remainingH,
-      recentProjected: recent == null ? null : clamp((c + Math.max(0, recent) * remainingH) / g * 100) };
+      recentProjected: recent == null ? null : clamp((c + recent * remainingH) / g * 100) };
   }
   function isDefense(c) {
     return !!c && (String(c.campaignType).toLowerCase() === "defense" || c.eventType === 1

@@ -1,16 +1,15 @@
 name: Validate war forecasts
 on:
+  # Always create the PR check, including when branch protection requires it.
   pull_request:
-    paths:
-      - 'HD2-Galatic_war-Map/**'
-      - 'scripts/tests/forecast-check.mjs'
-      - '.github/workflows/validate-forecast.yml'
   push:
     branches: [main]
     paths:
       - 'HD2-Galatic_war-Map/js/forecast.js'
       - 'HD2-Galatic_war-Map/js/rate-source.js'
-      - 'scripts/tests/forecast-check.mjs'
+      - 'HD2-Galatic_war-Map/js/regions.js'
+      - 'scripts/fetch_site_data.py'
+      - 'scripts/tests/**'
       - '.github/workflows/validate-forecast.yml'
 permissions:
   contents: read
@@ -23,3 +22,8 @@ jobs:
         with:
           node-version: '22'
       - run: node scripts/tests/forecast-check.mjs
+      - run: node scripts/tests/regions-check.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s scripts/tests -p 'test_*.py'

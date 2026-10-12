@@ -487,7 +487,7 @@
 </style>
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
 <link rel="stylesheet" href="./css/map-hud.css?v=20260924a">
-<link rel="stylesheet" href="./css/forecast.css">
+<link rel="stylesheet" href="./css/forecast.css?v=20261012c">
 </head>
 <body>
 <header>
@@ -564,6 +564,7 @@
 </main>
 
 <script src="./js/forecast.js"></script>
+  <script src="./js/regions.js"></script>
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script>
@@ -2431,9 +2432,10 @@ function bindUI(data, planets) {
       `<span class="rg-ico">${o.megafactory ? "🏭" : "🏙"}</span>` +
       `<span class="rg-name">${esc(o.zh || o.en || "区域 " + o.i)}${o.zh && o.en ? "<i>" + esc(o.en) + "</i>" : ""}</span>` +
       `<span class="rg-type">${esc(o.type)}${stars ? "<em>" + stars + "</em>" : ""}</span>` +
-      `<span class="rg-lib">${pct}</span></button>`;
+      `<span class="rg-lib">${pct}</span></button>${o.rules || ""}`;
   }
   function buildRegionsHtml(p, index) {
+    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = REGIONS[String(index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = REGIONS_ZH[String(index)] || {};
@@ -2452,7 +2454,8 @@ function bindUI(data, planets) {
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[regionTypeOf(r)] || 0,
       megafactory: regionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: pctOf((p.regions || [])[k], r),
+      pct: pctOf(HD2Regions.live(p, k), r),
+      rules: HD2Regions.html(HD2Regions.info(p, k, r, DATA)),
     }));
     return `<div class="regions"><div class="rg-hd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="rg-tip">城市 / 超大型工厂 · 点一行看详情</span></div>` +
@@ -2460,7 +2463,7 @@ function bindUI(data, planets) {
       `<div class="rg-detail" id="pc-rgdetail" hidden></div></div>`;
   }
   function regionDetailHtml(p, index, meta, k) {
-    const live = (p.regions || [])[k] || null;
+    const live = HD2Regions.live(p, k);
     const zhMap = REGIONS_ZH[String(index)] || {};
     const pct = regionLibPct(live, meta);
     // 归属 = 当前控制方（运行时 owner；无运行时数据时退回 wiki 的静态 owner 字段）
@@ -2635,7 +2638,7 @@ function bindUI(data, planets) {
     const atk = camp.attackersProgress != null ? Number(camp.attackersProgress) : null;
     const def = camp.defendersProgress != null ? Number(camp.defendersProgress) : null;
     const aR = camp.attackersRate;
-    const forecast = HD2Forecast.defense(camp), pace = forecast.rate;
+    const forecast = window.HD2Forecast?.defense(camp) || { rate: null, win: null }, pace = forecast.rate;
     const st = forecast.win === true ? "优势" : forecast.win === false ? "劣势" : "数据不足";
     const cls = forecast.win === true ? "st-win" : forecast.win === false ? "st-lose" : "";
     const row = (label, pct, bg) => {
@@ -2662,7 +2665,7 @@ function bindUI(data, planets) {
       `<div class="def-meta"><span>进攻 <b>${aR != null ? Number(aR).toFixed(3) : "--"}%</b>/h` +
         ` · 防守 <b>${pace != null ? pace.toFixed(3) : "--"}%</b>/h</span>` +
         `<span style="margin-left:auto">战况 <b class="${cls}">${esc(st)}</b></span></div>` +
-      HD2Forecast.defenseHtml(camp) +
+      (window.HD2Forecast?.defenseHtml(camp) || "<div class=campaign-forecast>预测模块未加载</div>") +
       (camp.invasionLevel != null
         ? `<div class="def-meta"><span>⚔️ 入侵等级 <b>${esc(camp.invasionLevel)}</b></span>` +
           `<span>等级越高敌方兵力越强</span></div>` : "") +

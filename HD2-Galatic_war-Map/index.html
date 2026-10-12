@@ -60,7 +60,7 @@
     load();
   })();
   </script>
-  <link rel="stylesheet" href="./css/forecast.css">
+  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
 </head>
 <body>
 
@@ -303,6 +303,7 @@
        脚本
        ============================================================ -->
   <script src="./js/forecast.js"></script>
+  <script src="./js/regions.js"></script>
   <script src="./js/data-source.js"></script>
   <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
@@ -715,10 +716,10 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       //   口径与卡片/星图/资料页统一：我方星球记 100%。
       if (pl && String(pl.currentOwner || "").toLowerCase() === "humans") {
         current = 100;
-      } else if (pl && pl.maxHealth) {
-        current = Math.round((1 - (pl.health || 0) / pl.maxHealth) * 100);
+      } else if (pl && pl.maxHealth && pl.health != null) {
+        current = Math.max(0, Math.min(100, (1 - pl.health / pl.maxHealth) * 100));
       } else {
-        current = 0;
+        current = null;
       }
     }
 
@@ -1171,8 +1172,11 @@ function renderPlayers(data) {
     `;
   }
 
+  function isDefenseCampaign(c) {
+    return window.HD2Forecast?.isDefense(c) ?? (!!c && (c.eventType === 1 || ["defense", "1", "4"].includes(String(c.campaignType || c.type).toLowerCase())));
+  }
   function moWindowOf(data) {
-    return HD2Forecast.orderWindow(data, window.HD2Recent?.assignmentFrames() || []);
+    return window.HD2Forecast?.orderWindow(data, window.HD2Recent?.assignmentFrames() || []) || null;
   }
 
   function renderMO(data) {
@@ -1240,7 +1244,7 @@ function renderPlayers(data) {
       }
 
       const expectHtml = { mark: "", line: "", eta: "" };
-      const f = HD2Forecast.task({ ...decoded, window: moW, recentRate: mw?.h1?.rates[i] });
+      const f = window.HD2Forecast?.task({ ...decoded, window: moW, recentRate: mw?.h1?.rates[i] }) || { state: "unavailable" };
       if (decoded.type === 12) {
         const marginH = moW ? (moW.end - DATA_FETCH_MS) / 3600000 : null;
         if (pct >= 100) {
@@ -1252,7 +1256,7 @@ function renderPlayers(data) {
             + `</div>`;
         }
       } else if (f.state === "hold") {
-        const c = (data.campaigns || []).find(c => c.planet?.index === decoded.planet && HD2Forecast.isDefense(c));
+        const c = (data.campaigns || []).find(c => c.planet?.index === decoded.planet && isDefenseCampaign(c));
         expectHtml.line = `<div class="mo-expect">当前${f.satisfied ? "持有目标星球" : "未满足守持条件"} · 必须在指令截止时满足，当前进度不代表已完成</div>`;
         expectHtml.eta = c ? `<div class="mo-expect">当前入侵战役预测：</div>` + HD2Forecast.defenseHtml(c)
           : `<div class="mo-expect">预计结果 ${f.satisfied ? "保持控制至截止可达成" : "需先夺回目标星球并守住至截止"}</div>`;
@@ -1267,11 +1271,11 @@ function renderPlayers(data) {
         const recent = f.recentProjected != null && f.projected != null && Math.abs(f.recentProjected - f.projected) >= 3
           ? ` · 近 1 小时节奏下约 ${f.recentProjected.toFixed(1)}%` : "";
         expectHtml.line = `<div class="mo-expect">预期进度 <b>${f.expected.toFixed(1)}%</b>（时间基准） · <span class="${delta >= 0 ? "ok" : "behind"}">${deltaTxt}</span>`
-          + ` · 截止时约 ${f.projected == null ? "—" : f.projected.toFixed(1)}%${recent}</div>`;
+          + ` · 截止时约 ${f.projected == null ? "—" : f.projected.toFixed(1)}%${recent}${decoded.type === 11 ? " · 当前解放度均速估算，未扣除指令下达前的进度" : ""}</div>`;
         expectHtml.eta = `<div class="mo-expect">预计完成 ${f.state === "expired" ? "已截止，目标未达成" : f.etaH == null ? "累计均速为零，暂无法预计完成" : `还需 ${HD2Forecast.duration(f.etaH)} · ${f.win ? "预计来得及" : "预计来不及"}`}`
-          + `<span class="dim">（自指令下达以来的估算均速 ${f.rate == null ? "—" : fmt(Math.round(f.rate))}/小时）</span></div>`;
+          + `<span class="dim">（自指令下达以来的估算均速 ${f.rate == null ? "—" : ([11, 15].includes(decoded.type) ? f.rate.toFixed(3) : fmt(Math.round(f.rate)))}/小时）</span></div>`;
       } else {
-        expectHtml.line = `<div class="mo-expect">${f.state === "satisfied" ? "当前条件已满足" : "数据不足或为状态任务，暂不作线性预测"}</div>`;
+        expectHtml.line = `<div class="mo-expect">${f.state === "satisfied" ? "当前条件已满足" : f.state === "unavailable" ? "预测模块未加载，暂无法预测" : f.state === "stateful" ? "状态类任务，暂不作线性预测" : "目标值、当前进度或指令起点数据不足，暂无法预测"}</div>`;
       }
 
       return `
@@ -1280,8 +1284,8 @@ function renderPlayers(data) {
             <span>任务 ${i + 1}：${taskTitle}</span>
             <span class="mo-task-progress">${decoded.type === 13 ? (f.state !== "hold" ? "状态数据不足" : f.satisfied ? "当前持有 · 需保持至截止" : "尚未持有") : `${currentStr} / ${goalStr} (${Number(pct.toFixed(1))}%)`}</span>
           </div>
-          <div class="progress-bar">
-            <div class="progress-bar-fill" style="width:${pct}%"></div>
+          <div class="progress-bar${decoded.type === 13 ? " mo-hold-bar" : ""}">
+            ${decoded.type === 13 ? `<span class="mo-hold-status">${f.state !== "hold" ? "守持状态未知" : f.expired ? (f.satisfied ? "截止快照满足条件 · 以官方结算为准" : "截止快照未满足条件") : f.satisfied ? "坚守中 · 截止时结算" : "等待夺回并坚守"}</span>` : `<div class="progress-bar-fill" style="width:${pct}%"></div>`}
             ${expectHtml.mark}
           </div>
           ${expectHtml.line}
@@ -2538,7 +2542,7 @@ function renderPlayers(data) {
     const atk = camp.attackersProgress;
     const def = camp.defendersProgress;
     const aR = camp.attackersRate;
-    const forecast = HD2Forecast.defense(camp);
+    const forecast = window.HD2Forecast?.defense(camp) || { rate: null, win: null };
     const pace = forecast.rate;
     const st = forecast.win === true ? "优势" : forecast.win === false ? "劣势" : "数据不足";
     const cls = forecast.win === true ? "win" : forecast.win === false ? "lose" : "even";
@@ -2556,7 +2560,7 @@ function renderPlayers(data) {
         <span class="k">进攻 ${speedTxt} · 防守 ${paceTxt}</span>
         <span class="r"><span class="k">战况</span><span class="v ${cls}">${esc(st)}</span></span>
       </div>
-      ${HD2Forecast.defenseHtml(camp)}
+      ${window.HD2Forecast?.defenseHtml(camp) || "<div class=campaign-forecast>预测模块未加载</div>"}
     </div>`;
   }
 
@@ -2587,6 +2591,7 @@ function renderPlayers(data) {
   //   把它标成「城市 / 超大型工厂」是错的；且星球自身进度条上面已有，重复且误导。
   //   故本块 = tables/planet_regions.json 的 regions 原样列表。
   function pcRegionsHtml(p) {
+    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = PC_REGIONS[String(p.index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
@@ -2607,14 +2612,15 @@ function renderPlayers(data) {
         <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
         <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
         <span class="pct">${pctTxt(o.pct)}</span>
-      </div>${o.rate || ""}</div>`;
+      </div>${o.rules || ""}${o.rate || ""}</div>`;
     const rows = st.regions.map((r, k) => row({
       type: pcRegionTypeLabel(r),
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
       megafactory: pcRegionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: pctOf((p.regions || [])[k], r),
-      rate: pcRegionRateHtml(p, (p.regions || [])[k]),
+      pct: pctOf(HD2Regions.live(p, k), r),
+      rules: HD2Regions.html(HD2Regions.info(p, k, r, currentData)),
+      rate: pcRegionRateHtml(p, HD2Regions.live(p, k)),
     }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="tip">城市 / 超大型工厂</span>` +
@@ -2629,7 +2635,7 @@ function renderPlayers(data) {
     const name = planetName(p, starMap);
     const owner = p.currentOwner || "Unknown";
     const camp = p._campaign || (currentData?.campaigns || []).find(c => c.planet?.index === p.index) || {};
-    const isDefense = HD2Forecast.isDefense(camp);
+    const isDefense = isDefenseCampaign(camp);
     // 血量 / 解放度（沿用原有公式）
     // ⚠ 2026-09-26 修：**己方（超级地球）持有的星球，官方 API 报的是满血**，
     //   于是 1 − health/maxHealth 恒为 0% —— 卡片会显示「已解放 0.00%」且不进"已解放"样式，
@@ -2810,7 +2816,7 @@ function renderPlayers(data) {
     atk = (atk == null) ? 0 : atk;
     def = (def == null) ? 0 : def;
     // 防御战：进攻方是 camp.faction（敌方），防守方是 planet.currentOwner（应为 Humans）
-    const isDef = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    const isDef = isDefenseCampaign(camp);
     const atkFaction = isDef ? (camp.faction || "Unknown") : (camp.faction || "Unknown");
     const atkColor = {
       "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)", "Automaton": "var(--c-automaton)",
@@ -3107,7 +3113,7 @@ function renderPlayers(data) {
     const urgent = fromCampaigns.filter(p => {
       if (!p._campaign) return false;
       const c = p._campaign;
-      return c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1;
+      return isDefenseCampaign(c) || c.campaignType === "recon";
     // 按 index 去重（同一星球重复出现会把同一张卡渲染两次）
     }).filter((p, i, arr) => p.index == null || arr.findIndex(x => x.index === p.index) === i);
     if (urgent.length === 0) {
@@ -3124,7 +3130,7 @@ function renderPlayers(data) {
       // 防御战渲染（与 attackable 内逻辑一致）
       const isHuman = (p.currentOwner || "") === "Humans";
       const camp = p._campaign || {};
-      const isDefense = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+      const isDefense = isDefenseCampaign(camp);
       const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
       const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;
       const libPct = 100 - hpPct;
@@ -3223,8 +3229,7 @@ function renderPlayers(data) {
       // 状态判定：优先用 campaign.type（官方语义：0=解放战 1/4=防御战 defense=防御事件）
       let statusLabel, statusClass;
       if (p._campaign) {
-        const ctype = p._campaign.type;
-        const isDefense = ctype === "defense" || ctype === 1 || ctype === 4 || ctype === "1" || ctype === "4";
+        const isDefense = isDefenseCampaign(p._campaign);
         if (isDefense) {
           statusLabel = "防御战";
           statusClass = "status-defend";

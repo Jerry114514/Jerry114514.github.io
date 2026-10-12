@@ -15,6 +15,7 @@ import os
 import re
 import sys
 import time
+import tempfile
 import urllib.request
 import urllib.error
 
@@ -23,6 +24,42 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
+
+# Optional root override; default remains the repository containing this script.
+SITE_ROOT = os.path.abspath(os.environ.get("HD2_SITE_ROOT") or os.path.join(os.path.dirname(__file__), ".."))
+
+def write_json_atomic(dest, value):
+    """Readers see either the previous complete snapshot or the new complete snapshot."""
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    handle, temp = tempfile.mkstemp(prefix=".snapshot-", suffix=".json", dir=os.path.dirname(dest))
+    try:
+        with os.fdopen(handle, "w", encoding="utf-8") as stream:
+            json.dump(value, stream, ensure_ascii=False, indent=1)
+        os.replace(temp, dest)
+    finally:
+        if os.path.exists(temp):
+            os.unlink(temp)
+
+def normalize_regions(obj):
+    """Join runtime status and static mechanics by identity, never array position."""
+    info = {(r.get("planetIndex"), r.get("regionIndex")): r
+            for r in (obj.get("warInfo") or {}).get("planetRegions") or []}
+    regions = {}
+    for r in (obj.get("warStatus") or {}).get("planetRegions") or []:
+        pi, ri = r.get("planetIndex"), r.get("regionIndex")
+        if pi is None or ri is None:
+            continue
+        meta = info.get((pi, ri), {})
+        regions.setdefault(pi, []).append({
+            "regionIndex": ri, "owner": norm_owner(r.get("owner")),
+            "health": r.get("health"), "players": r.get("players", 0),
+            "isAvailable": r.get("isAvailable"), "availabilityFactor": r.get("availabilityFactor"),
+            "maxHealth": meta.get("maxHealth"), "damageMultiplier": meta.get("damageMultiplier"),
+            "flags": meta.get("flags"), "regionSize": meta.get("regionSize"),
+        })
+    for rows in regions.values():
+        rows.sort(key=lambda row: row["regionIndex"])
+    return regions
 
 OFFICIAL_API = "https://api.live.prod.thehelldiversgame.com"
 COMPANION_LIVE = "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live"
@@ -61,7 +98,7 @@ SECTOR_ID = {
 # 地图上所有星球图标消失（2026-09 实际发生的事故）。
 # planet_index.json 是 index -> 英文名的稳定对照表（随 sync-tables 每日同步），
 # 用它兜底可以保证「名字永远不会丢」。
-_TABLES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map", "tables")
+_TABLES_DIR = os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "tables")
 
 
 def _load_name_by_index():
@@ -164,8 +201,8 @@ def now_cn() -> str:
         return time.strftime("%Y-%m-%dT%H:%M:%S+08:00")
 
 
-SNAPSHOT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data_snapshot.json")
-MAXH_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".maxhealth_cache.json")
+SNAPSHOT_FILE = os.path.join(SITE_ROOT, "scripts", ".data_snapshot.json")
+MAXH_CACHE_FILE = os.path.join(SITE_ROOT, "scripts", ".maxhealth_cache.json")
 
 
 def _load_maxh_cache() -> dict:
@@ -417,29 +454,7 @@ def fetch_companion():
             if gid not in lst:  # 去重：companion 偶发同星球重复效果（如 HEZE BAY 1375）
                 lst.append(gid)
 
-    # 星球下属区域（城市 / 超大型工厂）的运行时状态（2026-09-24 新增）
-    #   来源：warStatus.planetRegions（owner/health/players/isAvailable）+ warInfo.planetRegions（maxHealth）
-    #   为什么在这里取：游戏内「星球→下属城市/超大型工厂」那一层，公开接口里只有这一份**运行时**数据；
-    #   区域**名字与类型**是静态地图数据，另存 tables/planet_regions.json（抓 wiki 的 Lua 数据模块），
-    #   前端按**顺序**把两者配对（顺序可用 maxHealth ↔ 区域规模交叉验证：定居点 10 万 / 城镇 20 万 / 城市 40 万 / 大城市 60 万）。
-    reg_max = {}
-    for r in ((obj.get("warInfo") or {}).get("planetRegions") or []):
-        reg_max[(r.get("planetIndex"), r.get("regionIndex"))] = r.get("maxHealth")
-    comp_regions = {}
-    for r in (ws.get("planetRegions") or []):
-        pi = r.get("planetIndex")
-        if pi is None:
-            continue
-        comp_regions.setdefault(pi, []).append({
-            "regionIndex": r.get("regionIndex"),
-            "owner": norm_owner(r.get("owner")),
-            "health": r.get("health"),
-            "maxHealth": reg_max.get((pi, r.get("regionIndex"))),
-            "players": r.get("players", 0),
-            "isAvailable": r.get("isAvailable"),
-        })
-    for lst in comp_regions.values():
-        lst.sort(key=lambda x: x.get("regionIndex") if x.get("regionIndex") is not None else 0)
+    comp_regions = normalize_regions(obj)
 
     planets = []
     for ps in ps_list:
@@ -520,6 +535,16 @@ def fetch_companion():
             "expiration": "",
         }
 
+    if assignment:
+        # Companion provides an independent UTC anchor, including during hd2dev outages.
+        clock = (obj.get("clientTime") or int(time.time() * 1000)) / 1000
+        war_now = ws.get("time")
+        start_war, expires = m0.get("startTime"), m0.get("expiresIn")
+        if war_now is not None and start_war is not None:
+            assignment["startedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(clock + start_war - war_now))
+        if expires is not None:
+            assignment["deadline"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(clock + expires))
+
     war = {"statistics": {"playerCount": (ws.get("statistics") or {}).get("playerCount", 0),
                           "missionsWon": 0, "missionsLost": 0}}
 
@@ -587,7 +612,7 @@ def fetch_companion():
 # 的 ACTIVE CAMPAIGN 区块用的就是这两个字段）。
 # 中文层：HD2-Galatic_war-Map/data/campaign_zh.json（按 id32 覆盖，缺失回退英文）。
 CAMPAIGN_ZH_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map", "data", "campaign_zh.json"))
+    SITE_ROOT, "HD2-Galatic_war-Map", "data", "campaign_zh.json"))
 
 _TAG_RE = re.compile(r"<[^>]*>")
 _PHASE_STATUS_FALLBACK = {0: ("in_progress", "进行中"), 2: ("success", "成功"), 3: ("failure", "失败")}
@@ -769,7 +794,7 @@ EPISODE_BANNERS = {
 CAMPAIGN_BANNER_BASE = "https://helldiverscompanion.com/news"
 CAMPAIGN_ASSET_SUBDIR = "assets/campaign"
 CAMPAIGN_ASSET_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map",
+    SITE_ROOT, "HD2-Galatic_war-Map",
     "assets", "campaign"))
 
 # 位图魔数（校验下载结果真的是图片，防 Cloudflare 拦截页/HTML 错误页落盘）
@@ -1021,7 +1046,7 @@ def fetch_hd2dev():
 
 # ---------------- 合并 ----------------
 def main():
-    out_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "HD2-Galatic_war-Map", "data.json"))
+    out_path = os.path.abspath(os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data.json"))
 
     print("=== 抓取官方源 ===")
     official = try_fetch("官方 API", fetch_official)
@@ -1172,7 +1197,7 @@ def main():
     # 从 hd2dev 补 deadline 和 serverTime（必须在 assignments 覆盖逻辑之后，否则被覆盖清空）
     if hd2dev and hd2dev.get("assignments") and hd2dev["assignments"].get("deadline"):
         ass = base.get("assignments")
-        if ass and isinstance(ass, dict):
+        if ass and isinstance(ass, dict) and str(ass.get("id")) == str(hd2dev["assignments"].get("id")):
             ass["deadline"] = hd2dev["assignments"]["deadline"]
             ass["serverTime"] = hd2dev["assignments"]["serverTime"]
             print(f"  [OK] deadline: {ass['deadline']}")
@@ -1319,8 +1344,7 @@ def main():
                 history["history"].append(new_record)
             if len(history["history"]) > 288:
                 history["history"] = history["history"][-288:]
-            with open(hist_path, "w", encoding="utf-8") as f:
-                json.dump(history, f, ensure_ascii=False, indent=1)
+            write_json_atomic(hist_path, history)
             print(f"  [HISTORY] 已追加: {new_record['timestamp'][:19]} impact={new_record['impactMultiplier']:.4f} total={new_record['totalPlayers']}")
             result["impactMultiplier"] = new_record["impactMultiplier"]
         else:
@@ -1357,9 +1381,8 @@ def main():
         pass
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=1)
-    print(f"\n已写出: {out_path}")
+    write_json_atomic(out_path, result)
+    print("\n已写出: HD2-Galatic_war-Map/data.json")
     print(f"planets={len(result.get('planets') or [])} campaigns={len(result.get('campaigns') or [])} dispatches={len(result.get('dispatches') or [])}")
 
 
