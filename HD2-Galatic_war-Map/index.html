@@ -60,6 +60,7 @@
     load();
   })();
   </script>
+  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
 </head>
 <body>
 
@@ -301,6 +302,8 @@
   <!-- ============================================================
        脚本
        ============================================================ -->
+  <script src="./js/forecast.js"></script>
+  <script src="./js/regions.js"></script>
   <script src="./js/data-source.js"></script>
   <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
@@ -417,7 +420,7 @@
     9:  "完成行动",
     11: "解放星球",
     12: "防守星球",
-    13: "坚守星球",
+    13: "守住星球直到截止",
     15: "净解放星球数"
   };
 
@@ -713,10 +716,10 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       //   口径与卡片/星图/资料页统一：我方星球记 100%。
       if (pl && String(pl.currentOwner || "").toLowerCase() === "humans") {
         current = 100;
-      } else if (pl && pl.maxHealth) {
-        current = Math.round((1 - (pl.health || 0) / pl.maxHealth) * 100);
+      } else if (pl && pl.maxHealth && pl.health != null) {
+        current = Math.max(0, Math.min(100, (1 - pl.health / pl.maxHealth) * 100));
       } else {
-        current = 0;
+        current = null;
       }
     }
 
@@ -1169,28 +1172,11 @@ function renderPlayers(data) {
     `;
   }
 
-  /* MO 的时间窗：起点 = 最近一条含「NEW MAJOR ORDER」的播报（data.dispatches），
-     终点 = assignments.deadline。取不到起点就返回 null —— 宁可不显示预期线，
-     也不要拿错误的基准去误导（例如上一轮指令的播报）。 */
+  function isDefenseCampaign(c) {
+    return window.HD2Forecast?.isDefense(c) ?? (!!c && (c.eventType === 1 || ["defense", "1", "4"].includes(String(c.campaignType || c.type).toLowerCase())));
+  }
   function moWindowOf(data) {
-    const a = (data && data.assignments) || {};
-    const end = a.deadline ? Date.parse(a.deadline) : NaN;
-    if (!isFinite(end)) return null;
-    const ds = (data.dispatches || [])
-      .filter(d => d && d.published && isFinite(Date.parse(d.published)))
-      .sort((x, y) => Date.parse(y.published) - Date.parse(x.published));
-    const pick = (needle) => {
-      for (const d of ds) {
-        const t = Date.parse(d.published);
-        if (t > end) continue;
-        if (String(d.message || "").toUpperCase().includes(needle)) return t;
-      }
-      return NaN;
-    };
-    let start = pick("NEW MAJOR ORDER");
-    if (!isFinite(start)) start = pick("MAJOR ORDER");
-    if (!isFinite(start) || !(end > start)) return null;
-    return { start, end, hours: (end - start) / 3600000 };
+    return window.HD2Forecast?.orderWindow(data, window.HD2Recent?.assignmentFrames() || []) || null;
   }
 
   function renderMO(data) {
@@ -1216,12 +1202,8 @@ function renderPlayers(data) {
       ? Object.fromEntries((data.planets || []).map(p => [p.index, p]))
       : {};
 
-    // 预期进度线：按「已用时间 ÷ 指令总时长」算出此刻应到达的进度。
-    // 数据全部来自站内（dispatches 的 MO 播报时刻 + assignments.deadline），不依赖外部推算。
     const moW = moWindowOf(data);
-    const expectPct = moW
-      ? Math.max(0, Math.min(100, (DATA_FETCH_MS - moW.start) / (moW.end - moW.start) * 100))
-      : null;
+    const mw = window.HD2Recent?.moWindows(a, DATA_FETCH_MS);
 
     const tasksHtml = a.tasks.map((tk, i) => {
       const decoded = decodeTask(tk, a.progress ? a.progress[i] : null);
@@ -1232,7 +1214,7 @@ function renderPlayers(data) {
       }
       if (typeof decoded.goal === "number" && decoded.goal > 0) {
         goalStr = fmt(decoded.goal);
-        pct = Math.min(100, Math.round((decoded.current || 0) / decoded.goal * 100));
+        pct = Math.max(0, Math.min(100, (decoded.current || 0) / decoded.goal * 100));
       } else if (typeof decoded.current === "number") {
         // 无明确 goal：按"目标=当前"处理为 100% 或留 0
         pct = decoded.current > 0 ? 100 : 0;
@@ -1261,14 +1243,9 @@ function renderPlayers(data) {
         taskTitle = `${esc(decoded.typeCn)} · 目标：${raceName}`;
       }
 
-      // 预期进度对照：bar 上一条竖线 + 下面一行文字。
-      // 只对「有明确目标值」的任务给这条线 —— 没目标值就没有可比基准，不摆假线。
       const expectHtml = { mark: "", line: "", eta: "" };
-      // type=12 防守：进度是「守住的次数」，只在守成那一刻从 0 跳到 goal，期间恒为 0 ——
-      // 任何「按已历均速外推」都只会得出「按当前节奏无法完成」的假结论（用户实拍就是这条）。
-      // 所以防守类不给线性预期线，改给一句语义说明 + 真实剩余时间。
-      const isDefense = decoded.type === 12;
-      if (isDefense) {
+      const f = window.HD2Forecast?.task({ ...decoded, window: moW, recentRate: mw?.h1?.rates[i] }) || { state: "unavailable" };
+      if (decoded.type === 12) {
         const marginH = moW ? (moW.end - DATA_FETCH_MS) / 3600000 : null;
         if (pct >= 100) {
           expectHtml.eta = `<div class="mo-expect">预计完成 <b class="ok">已完成</b></div>`;
@@ -1278,83 +1255,37 @@ function renderPlayers(data) {
             + (marginH != null && marginH > 0 ? `<span class="dim"> · 距截止 ${fmtEtaH(marginH)}</span>` : ``)
             + `</div>`;
         }
-      } else if (expectPct != null && typeof decoded.goal === "number" && decoded.goal > 0) {
-        const delta = pct - expectPct;
-        const deltaTxt = Math.abs(delta) < 0.5 ? "与预期持平"
-          : (delta > 0 ? `领先 ${Math.round(delta)} 个百分点` : `落后 ${Math.round(Math.abs(delta))} 个百分点`);
-        /* 截止时预计完成度 + 预计完成时间（2026-09-29）
-           速率来源优先级：**自指令下达以来的均速**（稳定、与社区站点观感一致）
-                            → 没有全程帧时用「近 1 小时」→ 再没有就用本机按已历时间估的平均速率。
-           为什么不全用近 1 小时：MO 的击杀数一阵一阵，实测任务1 近 1 小时 14.2 万/时 vs 全程 23.9 万/时，
-           只按 1 小时外推会得出"远远来不及"的悲观结论（和 helldiverscompanion 的观感对不上）。
-           ⚠ 单位：moW.end / DATA_FETCH_MS 都是毫秒，先换算成秒再除以 3600（此前漏了 → 外推恒 ≥100%） */
-        const remainSec = (moW.end - DATA_FETCH_MS) / 1000;
-        const mw = (window.HD2Recent && HD2Recent.moWindows) ? HD2Recent.moWindows() : null;
-        const winRun = mw && mw.run ? mw.run : null;
-        const winH1 = mw && mw.h1 ? mw.h1 : null;
-        const elapsed = Math.max(1, DATA_FETCH_MS - moW.start);
-        const rateOf = (w) => (w && w.rates ? w.rates[i] : null);
-        const rateRun = rateOf(winRun);
-        const rateH1 = rateOf(winH1);
-        const projOf = (rate) => (rate != null && rate > 0 && remainSec > 0)
-          ? Math.min(100, ((decoded.current || 0) + rate * remainSec / 3600) / decoded.goal * 100)
-          : null;
-        const projRun = projOf(rateRun);
-        const projH1 = projOf(rateH1);
-        const pctTxt = (p) => (p >= 100 ? "可完成" : `约 ${Math.round(p)}%`);
-        let projTxt;
-        if (projRun != null) {
-          projTxt = `按全程均速（${(winRun.hours / 24).toFixed(1)} 天）截止时 ${pctTxt(projRun)}`;
-          // 近 1 小时节奏明显不同（差 ≥3 个百分点）时一起标出来，解释"当下偏快/偏慢"
-          if (projH1 != null && Math.abs(projH1 - projRun) >= 3) {
-            projTxt += `｜近 1 小时节奏下 ${pctTxt(projH1)}`;
-          }
-        } else if (projH1 != null) {
-          projTxt = `按近 1 小时节奏截止时 ${pctTxt(projH1)}`;
-        } else {
-          const proj = Math.min(100, pct * ((moW.end - moW.start) / elapsed));
-          projTxt = proj >= 100 ? "按已历均速可完成" : `按已历均速截止时约 ${Math.round(proj)}%`;
-        }
-        expectHtml.mark = `<span class="progress-bar-mark" style="left:${expectPct.toFixed(2)}%"`
-          + ` title="预期进度 ${expectPct.toFixed(1)}%（指令期约 ${(moW.hours / 24).toFixed(1)} 天，按时间线性分摊）"></span>`;
-        expectHtml.line = `<div class="mo-expect">预期进度 <b>${expectPct.toFixed(1)}%</b> · `
-          + `<span class="${delta >= 0 ? "ok" : "behind"}">${deltaTxt}</span> · ${projTxt}</div>`;
-
-        const remainUnits = Math.max(0, (decoded.goal || 0) - (decoded.current || 0));
-        const elapsedH = Math.max(0.01, (DATA_FETCH_MS - moW.start) / 3600000);
-        const avgRate = (decoded.current || 0) / elapsedH;
-        const useRate = (rateRun != null && rateRun > 0) ? rateRun
-                      : (rateH1 != null && rateH1 > 0) ? rateH1
-                      : (avgRate > 0 ? avgRate : null);
-        const useSrc = (rateRun != null && rateRun > 0) ? "全程均速"
-                     : (rateH1 != null && rateH1 > 0) ? "近 1 小时"
-                     : "自指令下达以来的估算均速";
-        const marginH = (moW.end - DATA_FETCH_MS) / 3600000;
-        if (remainUnits <= 0) {
-          expectHtml.eta = `<div class="mo-expect">预计完成 <b class="ok">已完成</b></div>`;
-        } else if (useRate == null) {
-          expectHtml.eta = `<div class="mo-expect">预计完成 <span class="behind">按当前节奏无法完成（速率 ≤ 0）</span></div>`;
-        } else {
-          const etaH = remainUnits / useRate;
-          const diffH = marginH - etaH;
-          const diffTxt = diffH >= 0
-            ? `来得及（余 ${fmtEtaH(diffH)}）`
-            : `来不及（差 ${fmtEtaH(-diffH)}）`;
-          const perHour = `（${useSrc} ${fmt(Math.round(useRate))} /小时）`;
-          expectHtml.eta = `<div class="mo-expect">预计完成 <b>还需 ${fmtEtaH(etaH)}</b>`
-            + `<span class="dim"> ${perHour}</span> · 距截止 ${fmtEtaH(marginH)} · `
-            + `<span class="${diffH >= 0 ? "ok" : "behind"}">${diffTxt}</span></div>`;
-        }
+      } else if (f.state === "hold") {
+        const c = (data.campaigns || []).find(c => c.planet?.index === decoded.planet && isDefenseCampaign(c));
+        expectHtml.line = `<div class="mo-expect">当前${f.satisfied ? "持有目标星球" : "未满足守持条件"} · 必须在指令截止时满足，当前进度不代表已完成</div>`;
+        expectHtml.eta = c ? `<div class="mo-expect">当前入侵战役预测：</div>` + HD2Forecast.defenseHtml(c)
+          : `<div class="mo-expect">预计结果 ${f.satisfied ? "保持控制至截止可达成" : "需先夺回目标星球并守住至截止"}</div>`;
+      } else if (f.state === "complete") {
+        expectHtml.line = `<div class="mo-expect">累计目标已达成 · 进度 <b class="ok">100%</b></div>`;
+        expectHtml.eta = `<div class="mo-expect">预计完成 <b class="ok">已完成</b></div>`;
+      } else if (f.state === "active" || f.state === "expired") {
+        const delta = f.delta;
+        const deltaTxt = Math.abs(delta) < 0.05 ? "与时间基准持平"
+          : `${delta >= 0 ? "领先" : "落后"} ${Math.abs(delta).toFixed(1)} 个百分点`;
+        expectHtml.mark = `<span class="progress-bar-mark" style="left:${f.expected.toFixed(2)}%" title="按指令时间线性分摊的最低进度基准"></span>`;
+        const recent = f.recentProjected != null && f.projected != null && Math.abs(f.recentProjected - f.projected) >= 3
+          ? ` · 近 1 小时节奏下约 ${f.recentProjected.toFixed(1)}%` : "";
+        expectHtml.line = `<div class="mo-expect">预期进度 <b>${f.expected.toFixed(1)}%</b>（时间基准） · <span class="${delta >= 0 ? "ok" : "behind"}">${deltaTxt}</span>`
+          + ` · 截止时约 ${f.projected == null ? "—" : f.projected.toFixed(1)}%${recent}${decoded.type === 11 ? " · 当前解放度均速估算，未扣除指令下达前的进度" : ""}</div>`;
+        expectHtml.eta = `<div class="mo-expect">预计完成 ${f.state === "expired" ? "已截止，目标未达成" : f.etaH == null ? "累计均速为零，暂无法预计完成" : `还需 ${HD2Forecast.duration(f.etaH)} · ${f.win ? "预计来得及" : "预计来不及"}`}`
+          + `<span class="dim">（自指令下达以来的估算均速 ${f.rate == null ? "—" : ([11, 15].includes(decoded.type) ? f.rate.toFixed(3) : fmt(Math.round(f.rate)))}/小时）</span></div>`;
+      } else {
+        expectHtml.line = `<div class="mo-expect">${f.state === "satisfied" ? "当前条件已满足" : f.state === "unavailable" ? "预测模块未加载，暂无法预测" : f.state === "stateful" ? "状态类任务，暂不作线性预测" : "目标值、当前进度或指令起点数据不足，暂无法预测"}</div>`;
       }
 
       return `
         <div class="mo-task">
           <div class="mo-task-head">
             <span>任务 ${i + 1}：${taskTitle}</span>
-            <span class="mo-task-progress">${currentStr} / ${goalStr} (${pct}%)</span>
+            <span class="mo-task-progress">${decoded.type === 13 ? (f.state !== "hold" ? "状态数据不足" : f.satisfied ? "当前持有 · 需保持至截止" : "尚未持有") : `${currentStr} / ${goalStr} (${Number(pct.toFixed(1))}%)`}</span>
           </div>
-          <div class="progress-bar">
-            <div class="progress-bar-fill" style="width:${pct}%"></div>
+          <div class="progress-bar${decoded.type === 13 ? " mo-hold-bar" : ""}">
+            ${decoded.type === 13 ? `<span class="mo-hold-status">${f.state !== "hold" ? "守持状态未知" : f.expired ? (f.satisfied ? "截止快照满足条件 · 以官方结算为准" : "截止快照未满足条件") : f.satisfied ? "坚守中 · 截止时结算" : "等待夺回并坚守"}</span>` : `<div class="progress-bar-fill" style="width:${pct}%"></div>`}
             ${expectHtml.mark}
           </div>
           ${expectHtml.line}
@@ -2610,22 +2541,11 @@ function renderPlayers(data) {
     const atkF = hostileFactionOf(p, camp);
     const atk = camp.attackersProgress;
     const def = camp.defendersProgress;
-    const aR = camp.attackersRate;              // 固定速率 = 100 / 总时长(h)
-    const dR = camp.defendersRate;              // 实测速率（需两次抓取差值，常为 null）
-    const remainH = (camp.remainingTime || 0) / 3600;
-    // 我方均速：进度 / 已历时间（已历时间 = 入侵进度 / 固定速率）
-    const elapsedH = (aR > 0 && atk > 0) ? atk / aR : 0;
-    const pace = (dR != null && dR > 0) ? dR : ((elapsedH > 0 && def != null) ? def / elapsedH : null);
-    // 战况：剩余时间内能打满 = 优势
-    let st, cls;
-    if (pace != null && def != null && remainH > 0) {
-      const win = pace * remainH >= (100 - def);
-      st = win ? "优势" : "劣势"; cls = win ? "win" : "lose";
-    } else if (def != null && atk != null) {
-      st = def >= atk ? "优势" : "劣势"; cls = def >= atk ? "win" : "lose";
-    } else {
-      st = "数据不足"; cls = "even";
-    }
+    const aR = camp.attackersRate;
+    const forecast = window.HD2Forecast?.defense(camp) || { rate: null, win: null };
+    const pace = forecast.rate;
+    const st = forecast.win === true ? "优势" : forecast.win === false ? "劣势" : "数据不足";
+    const cls = forecast.win === true ? "win" : forecast.win === false ? "lose" : "even";
     const paceTxt = pace != null ? pace.toFixed(3) + "%/h" : "--";
     const speedTxt = aR != null ? Number(aR).toFixed(3) + "%/h" : "--";
     // ⚠ P0 易错点（已多次踩）：防御战双进度条的**顺序固定为上=超级地球、下=入侵方**，
@@ -2640,6 +2560,7 @@ function renderPlayers(data) {
         <span class="k">进攻 ${speedTxt} · 防守 ${paceTxt}</span>
         <span class="r"><span class="k">战况</span><span class="v ${cls}">${esc(st)}</span></span>
       </div>
+      ${window.HD2Forecast?.defenseHtml(camp) || "<div class=campaign-forecast>预测模块未加载</div>"}
     </div>`;
   }
 
@@ -2670,6 +2591,7 @@ function renderPlayers(data) {
   //   把它标成「城市 / 超大型工厂」是错的；且星球自身进度条上面已有，重复且误导。
   //   故本块 = tables/planet_regions.json 的 regions 原样列表。
   function pcRegionsHtml(p) {
+    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = PC_REGIONS[String(p.index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
@@ -2690,14 +2612,15 @@ function renderPlayers(data) {
         <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
         <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
         <span class="pct">${pctTxt(o.pct)}</span>
-      </div>${o.rate || ""}</div>`;
+      </div>${o.rules || ""}${o.rate || ""}</div>`;
     const rows = st.regions.map((r, k) => row({
       type: pcRegionTypeLabel(r),
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
       megafactory: pcRegionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: pctOf((p.regions || [])[k], r),
-      rate: pcRegionRateHtml(p, (p.regions || [])[k]),
+      pct: pctOf(HD2Regions.live(p, k), r),
+      rules: HD2Regions.html(HD2Regions.info(p, k, r, currentData)),
+      rate: pcRegionRateHtml(p, HD2Regions.live(p, k)),
     }));
     return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="tip">城市 / 超大型工厂</span>` +
@@ -2711,9 +2634,8 @@ function renderPlayers(data) {
   function renderPlanetCard(p, starMap, statusLabel, statusClass) {
     const name = planetName(p, starMap);
     const owner = p.currentOwner || "Unknown";
-    const camp = p._campaign || {};
-    const isDefense = camp.campaignType === "defense" || camp.eventType === 1
-      || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    const camp = p._campaign || (currentData?.campaigns || []).find(c => c.planet?.index === p.index) || {};
+    const isDefense = isDefenseCampaign(camp);
     // 血量 / 解放度（沿用原有公式）
     // ⚠ 2026-09-26 修：**己方（超级地球）持有的星球，官方 API 报的是满血**，
     //   于是 1 − health/maxHealth 恒为 0% —— 卡片会显示「已解放 0.00%」且不进"已解放"样式，
@@ -2894,7 +2816,7 @@ function renderPlayers(data) {
     atk = (atk == null) ? 0 : atk;
     def = (def == null) ? 0 : def;
     // 防御战：进攻方是 camp.faction（敌方），防守方是 planet.currentOwner（应为 Humans）
-    const isDef = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+    const isDef = isDefenseCampaign(camp);
     const atkFaction = isDef ? (camp.faction || "Unknown") : (camp.faction || "Unknown");
     const atkColor = {
       "Terminids": "var(--c-terminids)", "Automatons": "var(--c-automaton)", "Automaton": "var(--c-automaton)",
@@ -3191,7 +3113,7 @@ function renderPlayers(data) {
     const urgent = fromCampaigns.filter(p => {
       if (!p._campaign) return false;
       const c = p._campaign;
-      return c.campaignType === "defense" || c.campaignType === "recon" || c.eventType === 1;
+      return isDefenseCampaign(c) || c.campaignType === "recon";
     // 按 index 去重（同一星球重复出现会把同一张卡渲染两次）
     }).filter((p, i, arr) => p.index == null || arr.findIndex(x => x.index === p.index) === i);
     if (urgent.length === 0) {
@@ -3208,7 +3130,7 @@ function renderPlayers(data) {
       // 防御战渲染（与 attackable 内逻辑一致）
       const isHuman = (p.currentOwner || "") === "Humans";
       const camp = p._campaign || {};
-      const isDefense = camp.campaignType === "defense" || camp.eventType === 1 || camp.type === "defense" || camp.type === 1 || camp.type === 4;
+      const isDefense = isDefenseCampaign(camp);
       const hpPctRaw = (p.maxHealth > 0) ? ((p.health || 0) / p.maxHealth) * 100 : 0;
       const hpPct = (p.maxHealth > 0) ? Math.round(hpPctRaw) : 0;
       const libPct = 100 - hpPct;
@@ -3307,8 +3229,7 @@ function renderPlayers(data) {
       // 状态判定：优先用 campaign.type（官方语义：0=解放战 1/4=防御战 defense=防御事件）
       let statusLabel, statusClass;
       if (p._campaign) {
-        const ctype = p._campaign.type;
-        const isDefense = ctype === "defense" || ctype === 1 || ctype === 4 || ctype === "1" || ctype === "4";
+        const isDefense = isDefenseCampaign(p._campaign);
         if (isDefense) {
           statusLabel = "防御战";
           statusClass = "status-defend";

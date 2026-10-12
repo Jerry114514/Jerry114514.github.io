@@ -172,6 +172,7 @@
       .hero .nm{font-size:1.55rem}
     }
   </style>
+  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
 </head>
 <body>
   <header class="topbar">
@@ -193,6 +194,8 @@
     </div>
   </footer>
 
+  <script src="./js/forecast.js"></script>
+  <script src="./js/regions.js"></script>
   <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
@@ -404,9 +407,12 @@
 
   function setMeta() {
     const t = plCn() + "（" + P.name + "）星球资料 - 绝地潜兵2 真理部";
+    const camp = (DATA.campaigns || []).find(c => c.planet?.index === P.index);
+    const defense = window.HD2Forecast?.isDefense(camp) || (DATA.planet_events || []).some(e => e.planetIndex === P.index && e.eventType === 1);
+    const progress = defense ? "防守进度 " + (camp?.defendersProgress == null ? "未知" : Number(camp.defendersProgress).toFixed(2) + "%") : "已解放 " + libPct(P).toFixed(2) + "%";
     const d = "绝地潜兵2 星球资料 · " + plCn() + "（" + P.name + "）："
       + secCn() + "星区 · 归属 " + (OWN_CN[P.currentOwner] || P.currentOwner || "未知")
-      + " · 已解放 " + libPct(P).toFixed(2) + "% · 在线玩家 " + fmt(P.players)
+      + " · " + progress + " · 在线玩家 " + fmt(P.players)
       + "。含战役与战略分析、下属区域、星球统计、环境条件与补给线。";
     const url = location.origin + location.pathname + "?idx=" + P.index;
     const set = (sel, val) => { const e = document.querySelector(sel); if (e) e.setAttribute("content", val); };
@@ -441,7 +447,8 @@
                || !!ev;
     const humanOwned = String(P.currentOwner || "Humans").toLowerCase() === "humans";
     const showLib = humanOwned && !isDef;
-    const lib = showLib ? 100 : libPct(P);
+    const defense = isDef && camp ? window.HD2Forecast?.defense(camp) || null : null;
+    const lib = defense ? (defense.def ?? 0) : showLib ? 100 : libPct(P);
     const total = (DATA.player_distribution && DATA.player_distribution.total) || 0;
     const share = total > 0 ? (P.players || 0) / total * 100 : 0;
     // 速率一律走 rateModel：实测优先，拿不到才推演（见文件顶部的说明）
@@ -463,7 +470,15 @@
 
     const kpiRows = [
       ["在线玩家", fmt(P.players), share ? "占全服 " + share.toFixed(2) + "%" : "—"],
-      ["解放进度", lib.toFixed(2) + "%", showLib ? "超级地球控制中" : "1 − health / maxHealth"],
+      [defense ? "防守进度" : "解放进度", lib.toFixed(2) + "%", defense ? "战役事件防守进度" : showLib ? "超级地球控制中" : "1 − health / maxHealth"],
+      ...(defense ? [
+        ["敌方入侵进度", defense.atk == null ? "—" : defense.atk.toFixed(2) + "%", "敌方固定时间进度"],
+        ["防守速率", defense.rate == null ? "—" : defense.rate.toFixed(3) + "%/h", defense.source],
+        ["预期进度", defense.expected == null ? "—" : defense.expected.toFixed(2) + "%", "时间基准"],
+        ["截止时预计防守进度", defense.projected == null ? "—" : defense.projected.toFixed(2) + "%", "保持当前防守节奏"],
+        ["预计战役结果", defense.win === true ? "预计守住" : defense.win === false ? "预计失守" : "数据不足", "条件预测"],
+        ["预计完成防守", HD2Forecast.duration(defense.etaH), defense.source],
+      ] : [
       ["施加影响", "+" + rm.gross.toFixed(3) + "%/h",
         rm.measured ? "实测反推：净推进 + 抵抗度" : "推演：在线玩家 × 影响系数"],
       ["抵抗度", rm.res != null ? rm.res.toFixed(2) + "%" : "—",
@@ -475,6 +490,7 @@
         "百万血基准：净速率 × " + hpRatio.toFixed(2) + " 倍血量"],
       ["预计解放", eta == null ? (r < 0 ? "不会解放（净速率为负）" : "—") : fmtHours(eta),
         rm.measured ? "按实测净速率线性外推" : "按推演净速率线性外推"],
+      ]),
       ["血量", fmt(P.health) + " / " + fmt(P.maxHealth),
         hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"],
       ["星区", secCn(), PL_SEC[String(P.name || "").toUpperCase()] ? "取自 tables/starmap.json"
@@ -506,13 +522,13 @@
                     <circle cx="66" cy="66" r="${R}" fill="none" stroke="${showLib ? "#1FA84A" : color}" stroke-width="12"
                       stroke-linecap="round" stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"/>
                   </svg>
-                  <div class="val"><b>${lib.toFixed(1)}%</b><span>${showLib ? "已解放" : "解放进度"}</span></div>
+                  <div class="val"><b>${lib.toFixed(1)}%</b><span>${defense ? "防守进度" : showLib ? "已解放" : "解放进度"}</span></div>
                 </div>
               </div>
               <div style="margin-top:14px">
                 <div class="bar"><i style="width:${Math.min(100, lib).toFixed(2)}%"></i><span class="mk" style="left:${Math.min(100, lib).toFixed(2)}%"></span></div>
                 <div class="rate">
-                  ${showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
+                  ${defense ? HD2Forecast.defenseHtml(camp) : showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
                             + (hpRatio > 1.001
                                ? `<span>等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准</span>`
                                : "")
@@ -607,11 +623,8 @@
       ]));
     }
     if (!rows.length) return `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
-    return T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
-      `<p class="note" style="margin-top:10px">说明：速率是**推演值**（在线玩家 × 影响系数 ÷ 血量 − 抵抗度）。
-      星图页在同一次会话里做两次观测后会切成「实测」，本页每次打开都是新会话，故一律标「推演」。
-      「等效推进速率」= 净速率 × 血量倍数（基准球 100 万血）：同样一份绝对投入，放在基准球上每小时能推进多少。
-      界面上的「净速率」分母是这颗星球自己的血量，所以<b>血厚不会让它变小</b> —— 两者一起看才看得出这颗球有多"厚"。</p>`;
+    return (window.HD2Forecast?.isDefense(camp) ? HD2Forecast.defenseHtml(camp) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
+      `<p class="note" style="margin-top:10px">防御战使用战役事件的防守进度，不使用己方星球本体血量。预测优先采用实测防守速率，缺失时采用开战以来平均速率；解放战采用实测优先、推演兜底的净推进速率。</p>`;
   }
 
   function statsHtml() {
@@ -669,13 +682,14 @@
   }
 
   function regionsHtml() {
+    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = REG_TABLE[String(P.index)];
     if (!st || !st.regions || !st.regions.length) return `<p class="empty">静态表里没有这颗星球的区域数据（<code>tables/planet_regions.json</code> 覆盖 84 颗有城市/工厂的星球）。</p>`;
     const zhMap = REG_ZH[String(P.index)] || {};
     const live = P.regions || [];
     const rows = [];
     st.regions.forEach((rg, k) => {
-      const lv = live[k] || null;
+      const lv = HD2Regions.live(P, k);
       const typeOf = String(rg.region_type || "").toLowerCase() === "megafactory" ? "Megafactory" : (rg.size || "");
       const typeCn = typeOf === "Megafactory" ? "超大型工厂" : (REGION_TYPE_ZH[typeOf] || typeOf || "区域");
       const stars = REGION_STARS[typeOf] || 0;
@@ -714,7 +728,7 @@
         T.t(rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h" : "—", "num " + (rr && rr.net > 0.0005 ? "ok" : "warn"),
             rr ? (rr.measured ? "实测：社区 CDN 15 分钟帧的首尾血量差" : "推演：区域玩家 × 影响系数 × K ÷ 区域血量 − 区域抵抗度") : ""),
         T.t(rEta, "num " + rEtaCls),
-      ], "click rg-row", ` data-d="${k}"`) + `<tr class="det" data-d="${k}" hidden><td colspan="8">`
+       ], "click rg-row", ` data-d="${k}"`) + `<tr><td colspan="8">${HD2Regions.html(HD2Regions.info(P, k, rg, DATA))}</td></tr><tr class="det" data-d="${k}" hidden><td colspan="8">`
         + (rg.desc ? esc(rg.desc) : "<span class='mini'>（该区域没有说明文本）</span>")
         + `<div class="mini" style="margin-top:6px">类型 ${esc(typeCn)}（上游 <code>${esc(rg.size || rg.region_type || "—")}</code>）· 血量 ${fmt(lv ? lv.health : null)} / ${fmt(lv ? lv.maxHealth : null)}</div></td></tr>`);
       rows.push("");
