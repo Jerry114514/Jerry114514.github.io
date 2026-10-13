@@ -1047,25 +1047,52 @@ def build_active_campaign(companion, zh=None):
 
 
 # ---------------- helldivers2.dev 源 ----------------
-def fetch_player_distribution():
-    """抓取玩家分布（extendedApiInformation 最新条目）"""
+def fetch_player_records():
+    """Fetch one statistics frame series for distribution, impact and trend."""
     try:
         obj = fetch_json(EXTENDED_API_URL, {"User-Agent": "Mozilla/5.0"}, 25)
-        data = obj.get("data") or []
-        if not data:
-            return None
-        latest = data[-1]
-        return {
-            "total": latest.get("totalPlayerCount") or 0,
-            "humans": latest.get("playerCountHumans") or 0,
-            "terminids": latest.get("playerCountTerminids") or 0,
-            "automatons": latest.get("playerCountAutomatons") or 0,
-            "illuminate": latest.get("playerCountIlluminate") or 0,
-            "updatedAt": latest.get("timestampUtc") or "",
-        }
+        return [{"timestamp": row.get("timestampUtc"), "totalPlayers": row.get("totalPlayerCount") or 0,
+                 "factions": {"Humans": row.get("playerCountHumans") or 0,
+                              "Terminids": row.get("playerCountTerminids") or 0,
+                              "Automatons": row.get("playerCountAutomatons") or 0,
+                              "Illuminate": row.get("playerCountIlluminate") or 0},
+                 "impactMultiplier": row.get("impactMultiplier") or 0}
+                for row in obj.get("data", [])]
     except Exception as e:
-        print(f"  [FAIL] 玩家分布: {type(e).__name__}: {e}")
-        return None
+        print(f"  [FAIL] 玩家统计（保留已有帧）: {type(e).__name__}: {e}")
+        return []
+
+
+def merge_player_history(previous, records, limit=288):
+    """Backfill all fetched frames without rewinding newer local statistics."""
+    merged = {}
+    invalid = 0
+    for row in [*previous.get("history", []), *records]:
+        if not isinstance(row, dict):
+            invalid += 1
+            continue
+        try:
+            value = row.get("timestamp")
+            if not isinstance(value, str):
+                raise ValueError("timestamp must be a string")
+            stamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if stamp.tzinfo is None:
+                raise ValueError("timestamp must include its timezone")
+        except (TypeError, ValueError):
+            invalid += 1
+            continue
+        merged[stamp] = {**row, "totalPlayers": row.get("totalPlayers") or 0,
+                         "impactMultiplier": row.get("impactMultiplier") or 0}
+    if invalid:
+        print(f"  [HISTORY] 跳过 {invalid} 条时间戳缺失、格式无效或未标时区的统计帧")
+    return {"history": [merged[stamp] for stamp in sorted(merged)[-limit:]], "maxRecords": limit}
+
+
+def distribution_from_record(record):
+    factions = record.get("factions") or {}
+    return {"total": record.get("totalPlayers") or 0, "humans": factions.get("Humans") or 0,
+            "terminids": factions.get("Terminids") or 0, "automatons": factions.get("Automatons") or 0,
+            "illuminate": factions.get("Illuminate") or 0, "updatedAt": record["timestamp"]}
 
 
 def biome_name_of(planet: dict) -> str:
@@ -1176,7 +1203,25 @@ def main():
     print("=== 抓取 helldivers2.dev ===")
     hd2dev = try_fetch("helldivers2.dev", fetch_hd2dev)
     print("=== 抓取玩家分布 ===")
-    player_dist = fetch_player_distribution()
+    hist_path = os.path.join(os.path.dirname(out_path), "data", "history", "player_distribution.json")
+    player_history = {"history": []}
+    if os.path.exists(hist_path):
+        try:
+            with open(hist_path, encoding="utf-8") as stream:
+                player_history = json.load(stream)
+        except (OSError, ValueError) as error:
+            print(f"  [HISTORY] 旧趋势读取失败，使用统计帧重建: {error}")
+    records = fetch_player_records()
+    # An older downloaded history file must not erase the last successful live frame.
+    old_stats = previous.get("player_distribution")
+    if old_stats and old_stats.get("updatedAt") and previous.get("impactMultiplier") is not None:
+        records = [{"timestamp": old_stats["updatedAt"], "totalPlayers": old_stats["total"],
+                    "factions": {"Humans": old_stats.get("humans", 0), "Terminids": old_stats.get("terminids", 0),
+                                 "Automatons": old_stats.get("automatons", 0), "Illuminate": old_stats.get("illuminate", 0)},
+                    "impactMultiplier": previous["impactMultiplier"]}, *records]
+    player_history = merge_player_history(player_history, records)
+    latest_stats = player_history["history"][-1] if player_history["history"] else None
+    player_dist = distribution_from_record(latest_stats) if latest_stats else None
 
     base = official or companion or hd2dev
     if base is None:
@@ -1432,46 +1477,14 @@ def main():
               "planet_attacks": (companion or {}).get("planet_attacks") or [],
               **base}
 
-    # 历史数据：从 extended API 获取玩家分布和影响力系数
-    try:
-        ext_req = urllib.request.Request("https://cdn.helldiverscompanion.com/live/extendedApiInformation/2days.json")
-        ext_req.add_header("User-Agent", "Mozilla/5.0")
-        ext_resp = urllib.request.urlopen(ext_req, timeout=15)
-        ext_raw = json.loads(ext_resp.read())
-        ext_entries = ext_raw.get("data", [])
-        if ext_entries:
-            latest = ext_entries[-1]
-            new_record = {
-                "timestamp": latest["timestampUtc"],
-                "totalPlayers": latest.get("totalPlayerCount", 0),
-                "factions": {
-                    "Humans": latest.get("playerCountHumans", 0),
-                    "Terminids": latest.get("playerCountTerminids", 0),
-                    "Automatons": latest.get("playerCountAutomatons", 0),
-                    "Illuminate": latest.get("playerCountIlluminate", 0),
-                },
-                "impactMultiplier": latest.get("impactMultiplier", 0),
-            }
-            hist_dir = os.path.join(os.path.dirname(out_path), "data", "history")
-            hist_path = os.path.join(hist_dir, "player_distribution.json")
-            os.makedirs(hist_dir, exist_ok=True)
-            history = {"history": [], "maxRecords": 288}
-            if os.path.exists(hist_path):
-                with open(hist_path, encoding="utf-8") as f:
-                    old = json.load(f)
-                    history["history"] = old.get("history", [])
-            timestamps = {h["timestamp"] for h in history["history"]}
-            if new_record["timestamp"] not in timestamps:
-                history["history"].append(new_record)
-            if len(history["history"]) > 288:
-                history["history"] = history["history"][-288:]
-            write_json_atomic(hist_path, history)
-            print(f"  [HISTORY] 已追加: {new_record['timestamp'][:19]} impact={new_record['impactMultiplier']:.4f} total={new_record['totalPlayers']}")
-            result["impactMultiplier"] = new_record["impactMultiplier"]
-        else:
-            print("  [HISTORY] extended API 无数据")
-    except Exception as e:
-        print(f"  [HISTORY] 失败: {e}")
+    # One frame series supplies all three views, including missing intermediate frames.
+    if latest_stats:
+        write_json_atomic(hist_path, player_history)
+        result["impactMultiplier"] = latest_stats["impactMultiplier"]
+        print(f"  [HISTORY] 最新统计: {latest_stats['timestamp']} total={latest_stats['totalPlayers']} "
+              f"impact={latest_stats['impactMultiplier']} · 本次合并 {len(records)} 帧")
+    else:
+        print("  [HISTORY] 无可用玩家统计帧")
 
     # 「进行中的战役」：companion episodes（status==0 那场）+ HD2-Galatic_war-Map/data/campaign_zh.json
     try:
