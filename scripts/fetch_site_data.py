@@ -18,6 +18,7 @@ import time
 import tempfile
 import urllib.request
 import urllib.error
+from datetime import datetime, timedelta
 
 if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
     try:
@@ -1044,9 +1045,56 @@ def fetch_hd2dev():
             "assignments": assignment, "dispatches": dispatches, "dss": None}
 
 
+def build_ownership_history(previous, current, history=None):
+    """Record observed ownership transitions, retaining a rolling 48-hour window.
+
+    A first observation is a baseline, not a capture. Times are observation
+    bounds, not the exact moment a planet changed hands.
+    """
+    def owners(snapshot):
+        return {str(p["index"]): p["currentOwner"] for p in snapshot.get("planets", [])
+                if isinstance(p.get("index"), int)
+                and p.get("currentOwner") in OWNER_MAP.values() and p["currentOwner"] != "Unknown"}
+
+    stamp = current["fetchedAt"]
+    now = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    cutoff = now - timedelta(hours=48)
+    if history:
+        baseline = history["lastSnapshot"]
+        if now <= datetime.fromisoformat(baseline["fetchedAt"].replace("Z", "+00:00")):
+            return history
+        events = list(history["events"])
+        start = history["startedAt"]
+    else:
+        baseline = {"fetchedAt": previous.get("fetchedAt", stamp), "owners": owners(previous)}
+        events = []
+        start = baseline["fetchedAt"]
+    current_owners = owners(current)
+    if datetime.fromisoformat(baseline["fetchedAt"].replace("Z", "+00:00")) < now:
+        for index, owner in current_owners.items():
+            old = baseline["owners"].get(index)
+            if old is not None and old != owner:
+                events.append({"planetIndex": int(index), "fromOwner": old, "toOwner": owner,
+                               "previousSeenAt": baseline["fetchedAt"], "detectedAt": stamp})
+    events = [event for event in events
+              if datetime.fromisoformat(event["detectedAt"].replace("Z", "+00:00")) >= cutoff]
+    return {"startedAt": start, "updatedAt": stamp, "events": events,
+            "lastSnapshot": {"fetchedAt": stamp, "owners": current_owners}}
+
+
 # ---------------- 合并 ----------------
 def main():
     out_path = os.path.abspath(os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data.json"))
+    # Keep the prior observations before replacing the live snapshot.
+    previous = {}
+    if os.path.exists(out_path):
+        with open(out_path, encoding="utf-8") as stream:
+            previous = json.load(stream)
+    ownership_history = previous.get("ownership_history")
+    seed_path = os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data", "history", "ownership_seed.json")
+    if ownership_history is None and os.path.exists(seed_path):
+        with open(seed_path, encoding="utf-8") as stream:
+            ownership_history = json.load(stream)
 
     print("=== 抓取官方源 ===")
     official = try_fetch("官方 API", fetch_official)
@@ -1380,6 +1428,7 @@ def main():
     except Exception:
         pass
 
+    result["ownership_history"] = build_ownership_history(previous, result, ownership_history)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     write_json_atomic(out_path, result)
     print("\n已写出: HD2-Galatic_war-Map/data.json")

@@ -61,6 +61,7 @@
   })();
   </script>
   <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
+  <link rel="stylesheet" href="./css/ownership-changes.css?v=20261013a">
 </head>
 <body>
 
@@ -121,14 +122,25 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         区块1b：进行中的战役（重要指令正下方）
-         参考 helldiverscompanion.com/#overview 的 ACTIVE CAMPAIGN 区块
-         数据：data.json → active_campaign
-               由 scripts/fetch_site_data.py 抓 companion live API 的 episodes 组装，
-               中文层为 HD2-Galatic_war-Map/data/campaign_zh.json（缺失自动回退英文）
-         标题放在卡片内部（与 DSS 区块同一规范），故不设 .block-head
-         ============================================================ -->
+    <!-- 星图变化：重要指令后展示所选时段内的阵营易主。 -->
+    <section class="block" id="block-changes">
+      <div class="block-head">
+        <span class="block-emoji">🌐</span>
+        <h2 class="block-title">星图变化</h2>
+        <span class="block-meta changes-meta"></span>
+      </div>
+      <div class="changes-toolbar" role="group" aria-label="星图变化时间范围">
+        <span>过去</span>
+        <button type="button" data-hours="1" aria-pressed="false">1 小时</button>
+        <button type="button" data-hours="6" aria-pressed="false">6 小时</button>
+        <button type="button" data-hours="24" aria-pressed="true">24 小时</button>
+        <button type="button" data-hours="48" aria-pressed="false">48 小时</button>
+      </div>
+      <div class="changes-content" aria-live="polite"><div class="loading">正在加载星图变化…</div></div>
+      <div class="changes-note"></div>
+    </section>
+
+    <!-- 进行中的战役：data.json → active_campaign；标题位于卡片内部。 -->
     <section class="block" id="block-campaign">
       <div id="campaign-content">
         <div class="loading">正在接收战役情报…</div>
@@ -304,6 +316,7 @@
        ============================================================ -->
   <script src="./js/forecast.js"></script>
   <script src="./js/regions.js"></script>
+  <script src="./js/ownership-changes.js?v=20261013a"></script>
   <script src="./js/data-source.js"></script>
   <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
@@ -529,6 +542,8 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
   // 读取本地 data.json（GitHub Actions 生成：官方 API -> companion -> helldivers2.dev 三级回退）
   async function fetchAll() {
     const data = await HD2Source.json(CONFIG.dataUrlBust());
+    // Seed supplies the recorded history until the first post-deployment collection.
+    const ownershipHistory = data.ownership_history || await HD2Source.jsonSoft("./data/history/ownership_seed.json");
 
     // 星译表：尝试拉取 bot 仓库的 tables/starmap.json，失败时静默降级
     let starMap = null;
@@ -649,6 +664,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       // 解放速率推演用（data.json 顶层字段；星图 / 资料页用的是同一份）
       impactMultiplier: data.impactMultiplier || 0,
       recentOk,
+      ownership_history: ownershipHistory,
     };
   }
 
@@ -3460,6 +3476,12 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
      ============================================================== */
   let refreshTimer = null;
   let lastSuccessAt = 0;
+  const renderChanges = window.HD2Changes
+    ? HD2Changes.mount($("block-changes"), (planet, data) => {
+        const name = planetName(planet, data.starMap);
+        return name.cn || name.en;
+      })
+    : () => { $("block-changes").querySelector(".changes-content").textContent = "星图变化记录暂不可用"; };
 
   async function refresh() {
     try {
@@ -3474,7 +3496,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
-      renderCampaign(data);   // 进行中的战役（重要指令正下方）
+      renderChanges(data);
+      renderCampaign(data);
       renderPlayers(data);
       renderImpact(data);
       renderDss(data);
