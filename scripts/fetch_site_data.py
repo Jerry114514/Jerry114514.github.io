@@ -642,6 +642,62 @@ def _load_campaign_zh():
     return {}
 
 
+# ---------------- 战役奖励类型表（自动提取，见 scripts/fetch_reward_types.py）----------------
+# 背景（2026-10-13）：上游 episodes[].rewards 只有 {mixId, amount}，**没有明文**；类型明文在
+# companion 前端 bundle 的奖励分类函数里。以前每出一场新战役都要人工去 hdcpn 看一眼、再手写进
+# campaign_zh.json 的 reward_types（私密仓 campaign_translator.py 也会提醒「需人工补」）。
+# 现在由 scripts/fetch_reward_types.py 自动提取成 data/reward_types.json，人工层仍可覆盖。
+_AUTO_REWARD_TYPES = None
+
+
+def _reward_types_path():
+    return os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data", "reward_types.json")
+
+
+def _auto_reward_types():
+    """自动类型表；读不到就返回空表（走中性兜底，绝不抛错）。"""
+    global _AUTO_REWARD_TYPES
+    if _AUTO_REWARD_TYPES is None:
+        _AUTO_REWARD_TYPES = {}
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import fetch_reward_types
+            _AUTO_REWARD_TYPES = fetch_reward_types.load_table(_reward_types_path())
+        except Exception as e:              # noqa: BLE001
+            print(f"  [REWARD] 自动类型表不可用（走中性兜底）: {e}")
+    return _AUTO_REWARD_TYPES
+
+
+def _ensure_reward_types(companion):
+    """本场战役出现「表里没有的 mixId」时，才去抓一次上游分类表（每场新战役至多一次）。
+
+    平常 mixId 都在表里 → 零开销；抓取/解析失败一律吞掉，继续用旧表，不影响本次数据抓取。
+    """
+    global _AUTO_REWARD_TYPES
+    try:
+        needed = set()
+        for ep in ((companion or {}).get("episodes") or []):
+            rewards = list(ep.get("rewards") or [])
+            for ph in (ep.get("phases") or []):
+                rewards += list(ph.get("rewards") or [])
+            for r in rewards:
+                if isinstance(r, dict) and r.get("mixId") is not None:
+                    needed.add(str(r.get("mixId")))
+        missing = sorted(m for m in needed if m not in _auto_reward_types())
+        if not missing:
+            return
+        print(f"  [REWARD] 未登记的奖励 mixId：{', '.join(missing)} → 刷新类型表")
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import fetch_reward_types
+        payload = fetch_reward_types.refresh(out_path=_reward_types_path())
+        _AUTO_REWARD_TYPES = payload.get("types") or {}
+        still = [m for m in missing if m not in _AUTO_REWARD_TYPES]
+        print("  [REWARD] 刷新完成：%d 条；仍未登记：%s"
+              % (len(_AUTO_REWARD_TYPES), "、".join(still) if still else "无"))
+    except Exception as e:                  # noqa: BLE001
+        print(f"  [REWARD] 类型表刷新失败（不影响本次抓取，继续用旧表）: {e}")
+
+
 def _zh_by_id_or_title(zh_map, id_value, title):
     """按 `<id32>` 取中文覆盖；**id32 缺失时按 `title:<大写英文标题>` 兜底**。
 
@@ -675,15 +731,20 @@ def _reward_of(entry, zh):
     detail：可选的"具体是什么"补充名（如战略配备 → TD-110 “风暴漩涡”坦克），
     只由中文化层提供；没有就不渲染。
 
-    ⚠ 类型判定纪律（§19.26-B「猜出来的字段要能一眼看出是猜的」）：icon 一律来自
-    data/campaign_zh.json 的 reward_types，且该表的类型是 2026-09-25 按 companion 前端
-    yg() 的 id 分表逐条核对过的；**不要在这里按 mixId 猜类型**（上一轮把 8 个 mixId
-    一律当披风，7 条是错的）。表里没有的 mixId 只给中性兜底 "reward"。
+    ⚠ 类型判定纪律（§19.26-B「猜出来的字段要能一眼看出是猜的」）：**不要在这里按 mixId 猜类型**
+    （上一轮把 8 个 mixId 一律当披风，7 条是错的）。取值优先级：
+      ① 人工层 data/campaign_zh.json 的 reward_types —— 最高优先，可覆盖类型、可给 detail；
+      ② 自动表 data/reward_types.json —— scripts/fetch_reward_types.py 从 companion 前端的奖励
+         分类函数提取（2026-10-13 起自动化，替代「人工去 hdcpn 查一眼再手写」）；
+      ③ 都没有 → 中性兜底 "REWARD"/"reward"（照常渲染，只是没有具体类型）。
     """
     if not isinstance(entry, dict):
         return None
     mix = str(entry.get("mixId") or "")
-    meta = (zh.get("reward_types") or {}).get(mix) or {}
+    auto = _auto_reward_types().get(mix) or {}
+    manual = (zh.get("reward_types") or {}).get(mix) or {}
+    meta = dict(auto)
+    meta.update(manual)                     # 人工层优先（可只覆盖其中某几个字段）
     is_medal = mix == "897894480"
     return {
         "mix_id": entry.get("mixId"),
@@ -1354,6 +1415,7 @@ def main():
 
     # 「进行中的战役」：companion episodes（status==0 那场）+ HD2-Galatic_war-Map/data/campaign_zh.json
     try:
+        _ensure_reward_types(companion)
         camp = build_active_campaign(companion, _load_campaign_zh())
         if camp:
             cur = camp["phases"][camp["current_phase_index"]]

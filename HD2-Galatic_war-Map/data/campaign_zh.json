@@ -4,7 +4,7 @@
     "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**只补空字段，绝不覆盖任何已有中文**。",
-    "updated_at": "2026-10-08"
+    "updated_at": "2026-10-13"
   },
   "_assets": {
     "desc": "战役奖励图标（本地文件）。companion 的奖励图标不是位图，而是前端 bundle 内嵌的压缩图标库，运行时渲染成内联 <svg viewBox=\"0 0 1000 1000\">；站点上没有任何图标位图 URL。下面两个文件即该内联 SVG 的矢量路径本地化副本（d / fill 原样），由浏览器实测提取，非截图切割。",
@@ -50,7 +50,7 @@
       "cn": "失败"
     }
   },
-  "_reward_types_doc": "mixId → 奖励类型。**类型是核对出来的，不是猜的**：2026-09-25 拆 companion 前端 bundle（/_app/immutable/chunks/c218d6d7d3b8daac.js）里的奖励解析函数 yg() 与它引用的 id 表逐条判定 —— Kde=货币（勋章/征用单/样本/超级点券）；Gde=Cape 115 条；Hde=Body Armor 252；Xde=Helmet 112；Ude=Primary 54；jde=Sidearm 26；xde=Throwable 26；Yde=Stratagem 381；Zde=Pattern 112；都不在 → Item。⚠ 上一轮把 8 个 mixId 一律写成「披风」，经核对**只有 3890208935 真是 Cape，其余 7 条全错**（本轮已按表改正）。复算方法：在该 chunk 里搜 `yg=e=>{const t=Kde[e]` 定位函数，再按 `Xde=[...]` 取出各 id 表做成员判断。",
+  "_reward_types_doc": "mixId → 奖励类型。**2026-10-13 起由 `data/reward_types.json` 自动化**：那张表由 `scripts/fetch_reward_types.py` 从 companion 前端 bundle 的奖励分类函数提取（结构锚点：`=e=>{const t=<idMap>[e];return t||(` + 第一个分支 `text:\"Cape\"`），现 1248 条，覆盖 Cape / Body Armor / Helmet / Primary / Sidearm / Throwable / Stratagem / Pattern 与货币目录（勋章/征用单/样本/超级点券）—— 新战役出现新 mixId 时 `fetch_site_data.py` 会自己刷新一次，不再需要人工去 hdcpn 查。**本文件的 `reward_types` 因此降级为「覆盖层」**：优先级仍最高，可只覆盖某几个字段，也可额外给 `detail`（「具体是哪件装备」—— 上游没有这个信息，只能人工给）。复算方法（保留）：在该 chunk 里搜 `text:\"Cape\"` 定位整条判定链，再按 `<var>=[…]` 取各表成员；⚠ `const Kde=[…]` 这种单独声明写法也要认（2026-10-13 实测：只认逗号声明列表会丢掉整个 Helmet 表，275 条）。已知与本表不一致的两条：1407130184 / 2547900634 —— 本表按 2026-09-25 的 bundle 记为 ITEM，现在的上游分类是 Helmet；待人工确认（截图/游戏内）后收口，收口方式 = 删掉本表条目，让它回落到自动表。",
   "reward_types": {
     "897894480": {
       "en": "WARBOND MEDAL",

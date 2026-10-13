@@ -9,6 +9,8 @@ on:
       - 'HD2-Galatic_war-Map/js/rate-source.js'
       - 'HD2-Galatic_war-Map/js/regions.js'
       - 'scripts/fetch_site_data.py'
+      - 'scripts/fetch_reward_types.py'
+      - 'HD2-Galatic_war-Map/data/reward_types.json'
       - 'scripts/tests/**'
       - '.github/workflows/validate-forecast.yml'
 permissions:

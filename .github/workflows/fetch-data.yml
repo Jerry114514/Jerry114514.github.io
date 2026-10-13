@@ -61,6 +61,9 @@ jobs:
           # 新战役横幅（scripts/fetch_site_data.py 落盘的 assets/campaign/banner_*.webp）
           # 必须一起提交，否则 data.json 里的 banner_image_local 在线上会 404
           git add HD2-Galatic_war-Map/assets/campaign
+          # 战役奖励类型表（scripts/fetch_reward_types.py 落盘）：新战役出现新 mixId 时会被重写。
+          # 必须一起提交，否则每 5 分钟都会重抓一次上游 bundle（白耗流量），页面也拿不到明文。
+          git add HD2-Galatic_war-Map/data/reward_types.json
           if ! git diff --cached --quiet; then
             git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"
             # ⚠ 推送竞态（2026-09-24 修）：本工作流每 5 分钟一次，check out 之后、push 之前
