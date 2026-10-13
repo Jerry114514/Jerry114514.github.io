@@ -16,6 +16,55 @@ def record(minutes, count=10):
             "factions": {"Humans": 1, "Terminids": count-1, "Automatons": 0, "Illuminate": 0}}
 
 class PlayerHistoryTests(unittest.TestCase):
+    def test_invalid_old_and_new_timestamps_do_not_discard_valid_frames(self):
+        bad = [{**record(0), "timestamp": value} for value in ["", None, 123, "not-a-date",
+               "2026-10-13T00:00:00", "2026-10-13"]] + [{"totalPlayers": 10}]
+        for old, new in [(bad + [record(0)], [record(15)]), ([record(0)], bad + [record(15)])]:
+            history = data.merge_player_history({"history": old}, new)
+            self.assertEqual([r["timestamp"] for r in history["history"]], [record(0)["timestamp"], record(15)["timestamp"]])
+
+    def test_missing_timestamp_in_one_upstream_frame_keeps_the_other_frames(self):
+        rows = [{"totalPlayerCount": 99}, {"timestampUtc": record(15)["timestamp"], "totalPlayerCount": 12}]
+        with patch.object(data, "fetch_json", return_value={"data": rows}):
+            history = data.merge_player_history({"history": []}, data.fetch_player_records())
+        self.assertEqual(len(history["history"]), 1)
+        self.assertEqual(history["history"][0]["totalPlayers"], 12)
+
+    def test_null_or_missing_statistics_are_numeric_zero_in_all_views(self):
+        for values in [{}, {"totalPlayerCount": None, "impactMultiplier": None,
+                           "playerCountHumans": None, "playerCountTerminids": None}]:
+            with patch.object(data, "fetch_json", return_value={"data": [{"timestampUtc": record(0)["timestamp"], **values}]}):
+                latest = data.merge_player_history({"history": []}, data.fetch_player_records())["history"][-1]
+            self.assertEqual(latest["totalPlayers"], 0)
+            self.assertEqual(latest["impactMultiplier"], 0)
+            distribution = data.distribution_from_record(latest)
+            self.assertEqual([distribution[k] for k in ["total","humans","terminids","automatons","illuminate"]], [0]*5)
+        old = {**record(0), "totalPlayers": None, "impactMultiplier": None, "factions": {"Humans": None}}
+        latest = data.merge_player_history({"history": [old]}, [])["history"][-1]
+        self.assertEqual(latest["totalPlayers"], 0)
+        self.assertEqual(latest["impactMultiplier"], 0)
+        self.assertEqual(data.distribution_from_record(latest)["humans"], 0)
+
+    def test_main_writes_fresh_war_data_despite_bad_old_and_new_timestamps(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "HD2-Galatic_war-Map/data.json"
+            hist_path = target.parent / "data/history/player_distribution.json"
+            hist_path.parent.mkdir(parents=True)
+            hist_path.write_text(json.dumps({"history": [{**record(0), "timestamp": ""}, record(0)]}), encoding="utf-8")
+            with patch.object(data,"SITE_ROOT",folder), \
+                 patch.object(data,"fetch_official",return_value={"planets": [],"campaigns": [],"dispatches": []}), \
+                 patch.object(data,"fetch_companion",return_value=None), \
+                 patch.object(data,"fetch_hd2dev",return_value=None), \
+                 patch.object(data,"fetch_player_records",return_value=[{**record(5), "timestamp": None},record(15)]), \
+                 patch.object(data,"_load_snapshot",return_value={}), \
+                 patch.object(data,"_save_snapshot"):
+                data.main()
+            result=json.loads(target.read_text(encoding="utf-8"))
+            history=json.loads(hist_path.read_text(encoding="utf-8"))
+            self.assertIn("fetchedAt",result)
+            self.assertEqual(result["player_distribution"]["updatedAt"],record(15)["timestamp"])
+            self.assertEqual(len(history["history"]),2)
+
     def test_main_uses_one_request_for_distribution_impact_and_backfill(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "HD2-Galatic_war-Map/data.json"

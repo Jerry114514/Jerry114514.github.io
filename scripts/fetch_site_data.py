@@ -1051,12 +1051,12 @@ def fetch_player_records():
     """Fetch one statistics frame series for distribution, impact and trend."""
     try:
         obj = fetch_json(EXTENDED_API_URL, {"User-Agent": "Mozilla/5.0"}, 25)
-        return [{"timestamp": row["timestampUtc"], "totalPlayers": row["totalPlayerCount"],
-                 "factions": {"Humans": row.get("playerCountHumans", 0),
-                              "Terminids": row.get("playerCountTerminids", 0),
-                              "Automatons": row.get("playerCountAutomatons", 0),
-                              "Illuminate": row.get("playerCountIlluminate", 0)},
-                 "impactMultiplier": row.get("impactMultiplier")}
+        return [{"timestamp": row.get("timestampUtc"), "totalPlayers": row.get("totalPlayerCount") or 0,
+                 "factions": {"Humans": row.get("playerCountHumans") or 0,
+                              "Terminids": row.get("playerCountTerminids") or 0,
+                              "Automatons": row.get("playerCountAutomatons") or 0,
+                              "Illuminate": row.get("playerCountIlluminate") or 0},
+                 "impactMultiplier": row.get("impactMultiplier") or 0}
                 for row in obj.get("data", [])]
     except Exception as e:
         print(f"  [FAIL] 玩家统计（保留已有帧）: {type(e).__name__}: {e}")
@@ -1065,18 +1065,34 @@ def fetch_player_records():
 
 def merge_player_history(previous, records, limit=288):
     """Backfill all fetched frames without rewinding newer local statistics."""
-    merged = {datetime.fromisoformat(row["timestamp"].replace("Z", "+00:00")): row
-              for row in previous.get("history", [])}
-    for row in records:
-        merged[datetime.fromisoformat(row["timestamp"].replace("Z", "+00:00"))] = row
+    merged = {}
+    invalid = 0
+    for row in [*previous.get("history", []), *records]:
+        if not isinstance(row, dict):
+            invalid += 1
+            continue
+        try:
+            value = row.get("timestamp")
+            if not isinstance(value, str):
+                raise ValueError("timestamp must be a string")
+            stamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if stamp.tzinfo is None:
+                raise ValueError("timestamp must include its timezone")
+        except (TypeError, ValueError):
+            invalid += 1
+            continue
+        merged[stamp] = {**row, "totalPlayers": row.get("totalPlayers") or 0,
+                         "impactMultiplier": row.get("impactMultiplier") or 0}
+    if invalid:
+        print(f"  [HISTORY] 跳过 {invalid} 条时间戳缺失、格式无效或未标时区的统计帧")
     return {"history": [merged[stamp] for stamp in sorted(merged)[-limit:]], "maxRecords": limit}
 
 
 def distribution_from_record(record):
-    factions = record["factions"]
-    return {"total": record["totalPlayers"], "humans": factions.get("Humans", 0),
-            "terminids": factions.get("Terminids", 0), "automatons": factions.get("Automatons", 0),
-            "illuminate": factions.get("Illuminate", 0), "updatedAt": record["timestamp"]}
+    factions = record.get("factions") or {}
+    return {"total": record.get("totalPlayers") or 0, "humans": factions.get("Humans") or 0,
+            "terminids": factions.get("Terminids") or 0, "automatons": factions.get("Automatons") or 0,
+            "illuminate": factions.get("Illuminate") or 0, "updatedAt": record["timestamp"]}
 
 
 def biome_name_of(planet: dict) -> str:
