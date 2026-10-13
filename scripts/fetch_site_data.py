@@ -1082,14 +1082,26 @@ def build_ownership_history(previous, current, history=None):
             "lastSnapshot": {"fetchedAt": stamp, "owners": current_owners}}
 
 
+def load_ownership_baseline(path):
+    """A damaged old snapshot must not prevent fetching its replacement."""
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as stream:
+            snapshot = json.load(stream)
+        if not isinstance(snapshot, dict):
+            raise ValueError("snapshot root must be an object")
+        return snapshot
+    except (OSError, ValueError) as error:
+        print(f"  [OWNERSHIP] 旧 data.json 读取失败（跳过归属基线）: {error}")
+        return {}
+
+
 # ---------------- 合并 ----------------
 def main():
     out_path = os.path.abspath(os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data.json"))
     # Keep the prior observations before replacing the live snapshot.
-    previous = {}
-    if os.path.exists(out_path):
-        with open(out_path, encoding="utf-8") as stream:
-            previous = json.load(stream)
+    previous = load_ownership_baseline(out_path)
     ownership_history = previous.get("ownership_history")
     seed_path = os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data", "history", "ownership_seed.json")
     if ownership_history is None and os.path.exists(seed_path):

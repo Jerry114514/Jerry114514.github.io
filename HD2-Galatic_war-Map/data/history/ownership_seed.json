@@ -1,4 +1,12 @@
 {
+  "_meta": {
+    "desc": "从主分支已提交战况快照还原的阵营易主初始记录，不含模拟战况",
+    "generated_at": "2026-10-13T13:34:50+08:00",
+    "source_ref": "0ac538b0305d4238ef855f11a124ea3582d9c197",
+    "source_path": "HD2-Galatic_war-Map/data.json",
+    "snapshot_count": 79,
+    "note": "只用于首次部署；之后以 data.json 的 ownership_history 为准；本文件不会随上游刷新"
+  },
   "startedAt": "2026-10-11T09:11:02+08:00",
   "updatedAt": "2026-10-13T09:15:55+08:00",
   "events": [

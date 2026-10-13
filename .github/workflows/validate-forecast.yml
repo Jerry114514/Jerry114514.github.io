@@ -26,6 +26,7 @@ jobs:
       - run: node scripts/tests/forecast-check.mjs
       - run: node scripts/tests/regions-check.mjs
       - run: node scripts/tests/ownership-changes-check.mjs
+      - run: node scripts/tests/reinforcement-share-check.mjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

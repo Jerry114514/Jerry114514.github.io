@@ -1,6 +1,10 @@
 .campaign-forecast { margin: 8px 0; font-size: .78rem; line-height: 1.65; overflow-wrap: anywhere; }
 .campaign-forecast .good { color: var(--ok); }
 .campaign-forecast .bad { color: var(--warn); }
+.reinforcement-forecast { margin-top: 6px; font-size: .75rem; line-height: 1.6; overflow-wrap: anywhere; }
+.reinforcement-forecast .good { color: var(--ok); }
+.reinforcement-forecast .bad { color: var(--warn); }
+#planet-card > .reinforcement-forecast { margin: 8px 9px; font-size: .68rem; }
 .forecast-source { opacity: .7; font-size: .7rem; }
 #planet-card .campaign-forecast { margin: 8px 9px; font-size: .68rem; }
 

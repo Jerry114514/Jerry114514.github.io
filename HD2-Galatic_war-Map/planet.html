@@ -172,7 +172,7 @@
       .hero .nm{font-size:1.55rem}
     }
   </style>
-  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
+  <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
 </head>
 <body>
   <header class="topbar">
@@ -194,7 +194,7 @@
     </div>
   </footer>
 
-  <script src="./js/forecast.js"></script>
+  <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
   <script src="./js/rate-source.js"></script>
   <script>
@@ -528,7 +528,7 @@
               <div style="margin-top:14px">
                 <div class="bar"><i style="width:${Math.min(100, lib).toFixed(2)}%"></i><span class="mk" style="left:${Math.min(100, lib).toFixed(2)}%"></span></div>
                 <div class="rate">
-                  ${defense ? HD2Forecast.defenseHtml(camp) : showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
+                  ${defense ? HD2Forecast.defenseHtml(camp, DATA, P) : showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
                             + (hpRatio > 1.001
                                ? `<span>等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准</span>`
                                : "")
@@ -536,6 +536,7 @@
                         // 只有"血比基准厚"时才补这一句：基准球上两者数值相同，写出来是噪音
                         hpRatio > 1.001 ? `（等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准）` : ""}</span>
                        ${eta != null ? `<span>预计 <b>${fmtHours(eta)}</b> 后解放</span>` : ""}`}
+                  ${!defense && !showLib ? window.HD2Forecast?.reinforcementHtml(DATA, P) || "" : ""}
                 </div>
               </div>
             </div>
@@ -623,7 +624,7 @@
       ]));
     }
     if (!rows.length) return `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
-    return (window.HD2Forecast?.isDefense(camp) ? HD2Forecast.defenseHtml(camp) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
+    return (window.HD2Forecast?.isDefense(camp) ? HD2Forecast.defenseHtml(camp, DATA, P) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
       `<p class="note" style="margin-top:10px">防御战使用战役事件的防守进度，不使用己方星球本体血量。预测优先采用实测防守速率，缺失时采用开战以来平均速率；解放战采用实测优先、推演兜底的净推进速率。</p>`;
   }
 

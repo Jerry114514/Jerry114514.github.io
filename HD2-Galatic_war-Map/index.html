@@ -60,7 +60,7 @@
     load();
   })();
   </script>
-  <link rel="stylesheet" href="./css/forecast.css?v=20261012c">
+  <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
   <link rel="stylesheet" href="./css/ownership-changes.css?v=20261013a">
 </head>
 <body>
@@ -314,7 +314,7 @@
   <!-- ============================================================
        脚本
        ============================================================ -->
-  <script src="./js/forecast.js"></script>
+  <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
   <script src="./js/ownership-changes.js?v=20261013a"></script>
   <script src="./js/data-source.js"></script>
@@ -1274,7 +1274,7 @@ function renderPlayers(data) {
       } else if (f.state === "hold") {
         const c = (data.campaigns || []).find(c => c.planet?.index === decoded.planet && isDefenseCampaign(c));
         expectHtml.line = `<div class="mo-expect">当前${f.satisfied ? "持有目标星球" : "未满足守持条件"} · 必须在指令截止时满足，当前进度不代表已完成</div>`;
-        expectHtml.eta = c ? `<div class="mo-expect">当前入侵战役预测：</div>` + HD2Forecast.defenseHtml(c)
+        expectHtml.eta = c ? `<div class="mo-expect">当前入侵战役预测：</div>` + HD2Forecast.defenseHtml(c, data, data.planets.find(p => p.index === decoded.planet))
           : `<div class="mo-expect">预计结果 ${f.satisfied ? "保持控制至截止可达成" : "需先夺回目标星球并守住至截止"}</div>`;
       } else if (f.state === "complete") {
         expectHtml.line = `<div class="mo-expect">累计目标已达成 · 进度 <b class="ok">100%</b></div>`;
@@ -2472,6 +2472,7 @@ function renderPlayers(data) {
         <span class="pair"><span class="k">实际推进速率</span><span class="v ${r.net > 0.0005 ? "pos" : "neg"}" title="${esc(netTip)}">${fmtRate(r.net)}</span></span>
         <span class="pair"><span class="k">预计完成</span><span class="v${etaCls}">${esc(etaTxt)}</span></span>
       </div>
+      ${window.HD2Forecast?.reinforcementHtml(currentData, p) || ""}
     </div>`;
   }
   // 区域（城市 / 超大型工厂）一行的速率补充：抵抗度 / 实际推进 / 预计解放 / 实测or推演
@@ -2576,7 +2577,7 @@ function renderPlayers(data) {
         <span class="k">进攻 ${speedTxt} · 防守 ${paceTxt}</span>
         <span class="r"><span class="k">战况</span><span class="v ${cls}">${esc(st)}</span></span>
       </div>
-      ${window.HD2Forecast?.defenseHtml(camp) || "<div class=campaign-forecast>预测模块未加载</div>"}
+      ${window.HD2Forecast?.defenseHtml(camp, currentData, p) || "<div class=campaign-forecast>预测模块未加载</div>"}
     </div>`;
   }
 
