@@ -87,7 +87,69 @@ window.HD2Forecast = (() => {
     const m = Math.max(1, Math.round(h * 60)), d = Math.floor(m / 1440), hh = Math.floor(m % 1440 / 60);
     return d ? `${d} 天 ${hh} 小时` : hh ? `${hh} 小时 ${m % 60} 分钟` : `${m} 分钟`;
   }
-  function defenseHtml(c) {
+  function reinforcement(data = {}, p = {}, c = null, efficiencyK = 90) {
+    const total = number(data.player_distribution?.total), players = number(p.players);
+    const currentShare = total > 0 && players != null && players >= 0 && players <= total ? players / total * 100 : null;
+    const mode = isDefense(c) ? "defense" : "liberation";
+    const unknown = { state: "unknown", mode, currentShare };
+    let requiredRate, maxHealth;
+    if (mode === "defense") {
+      const f = defense(c);
+      if (f.def >= 100) return { state: "complete", mode, currentShare };
+      if (f.remainingH === 0) return { state: "expired", mode, currentShare };
+      requiredRate = f.requiredRate;
+      // A defense damages the invasion event, not the human-owned planet.
+      maxHealth = number((data.planet_events || []).find(event => event.planetIndex === p.index && event.eventType === 1)?.maxHealth);
+    } else {
+      if (p.currentOwner === "Humans" || (number(p.health) === 0 && number(p.maxHealth) > 0))
+        return { state: "complete", mode, currentShare };
+      requiredRate = number(p.resistance);
+      maxHealth = number(p.maxHealth);
+    }
+    if (currentShare == null || requiredRate == null || requiredRate < 0) return unknown;
+    // Rewrite the site's existing gross-rate model in share units:
+    // gross %/h = share (%) * (total online * impact multiplier * K / HP).
+    // Hold the sampled global impact budget and operation efficiency constant.
+    let ratePerShare;
+    let source = "推演";
+    const measuredDefenseRate = mode === "defense" ? number(c.defendersRate) : null;
+    if (measuredDefenseRate != null) {
+      // This is the recent snapshot delta, not the opening-to-now mean.
+      // A measured stall/loss cannot establish a positive contribution efficiency.
+      if (!(measuredDefenseRate > 0) || !(currentShare > 0)) return unknown;
+      ratePerShare = measuredDefenseRate / currentShare;
+      source = "实测";
+    } else {
+      const impact = number(data.impactMultiplier);
+      if (!(impact > 0) || !(maxHealth > 0)) return unknown;
+      ratePerShare = total * impact * efficiencyK / maxHealth;
+    }
+    if (!(ratePerShare > 0)) return unknown;
+    const requiredShare = requiredRate / ratePerShare;
+    const strict = mode === "liberation"; // Equaling regeneration only stalls.
+    return { state: requiredShare > 100 || (strict && requiredShare >= 100) ? "impossible" : "active",
+      mode, currentShare, requiredShare, requiredRate, ratePerShare, strict, source,
+      sufficient: strict ? currentShare > requiredShare : currentShare >= requiredShare,
+      gap: Math.max(0, requiredShare - currentShare) };
+  }
+  function reinforcementHtml(data, p, c = null) {
+    if (!p) return "";
+    const r = reinforcement(data, p, c);
+    if (r.state === "complete" || r.state === "expired") return "";
+    const current = r.currentShare == null ? "" : ` · 当前 ${r.currentShare.toFixed(2)}%`;
+    if (r.state === "unknown") return `<div class="reinforcement-forecast">增援占比：数据不足${current}</div>`;
+    // Round the displayed minimum upward so it never understates the estimate.
+    const ceil = value => (Math.ceil((value - 1e-9) * 100) / 100).toFixed(2);
+    const goal = r.mode === "defense" ? "守住需" : "持续推进需";
+    const result = r.state === "impossible" ? "当前效率下无法达成" : r.sufficient ? "已达门槛"
+      : r.gap > 0 ? `还差约 ${ceil(r.gap)} 个百分点` : "需再提高占比";
+    const explanation = r.source === "实测" ? "按近期防守速率与当前兵力占比估算；假定单位占比贡献保持不变。"
+      : "按当前全服影响力与站内作战效率模型估算；占比提高需保持该效率，实际结果会随任务效率和影响系数变化。";
+    return `<div class="reinforcement-forecast" title="${explanation}">`
+      + `${goal} <b>${r.strict ? "&gt;" : "≥"}${ceil(r.requiredShare)}%</b> 在线兵力${current}`
+      + ` · <span class="${r.sufficient && r.state !== "impossible" ? "good" : "bad"}">${result}</span> <span class="forecast-source">${r.source}</span></div>`;
+  }
+  function defenseHtml(c, data = null, p = null) {
     const f = defense(c), cls = f.win === true ? "good" : f.win === false ? "bad" : "";
     const expected = f.expected == null ? "数据不足" : `${f.expected.toFixed(2)}%（时间基准）`;
     const delta = f.delta == null ? "" : ` · ${f.delta >= 0 ? "领先" : "落后"} ${Math.abs(f.delta).toFixed(2)} 个百分点`;
@@ -96,8 +158,9 @@ window.HD2Forecast = (() => {
     return `<div class="campaign-forecast"><div>预期进度 <b>${expected}</b>${delta}</div>`
       + `<div>截止时预计防守进度 <b>${f.projected == null ? "—" : f.projected.toFixed(2) + "%"}</b></div>`
       + `<div>预计战役结果 <b class="${cls}">${result}</b> · 预计完成 ${finish}</div>`
+      + (data && p ? reinforcementHtml(data, p, c) : "")
       + `<div class="forecast-source">${f.source}${f.rate == null ? "：数据不足" : " " + f.rate.toFixed(3) + "%/h"}`
       + `${f.requiredRate == null ? "" : " · 所需防守速率 " + f.requiredRate.toFixed(3) + "%/h"} · 保持当前节奏的条件预测</div></div>`;
   }
-  return { orderWindow, sameOrder, task, isDefense, defense, defenseHtml, duration };
+  return { orderWindow, sameOrder, task, isDefense, defense, defenseHtml, duration, reinforcement, reinforcementHtml };
 })();
