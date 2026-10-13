@@ -28,7 +28,7 @@ class OwnershipHistoryTests(unittest.TestCase):
                  patch.object(data, "fetch_official", return_value=fresh), \
                  patch.object(data, "fetch_companion", return_value=None), \
                  patch.object(data, "fetch_hd2dev", return_value=None), \
-                 patch.object(data, "fetch_player_distribution", return_value={"total": 1}), \
+                 patch.object(data, "fetch_player_records", return_value=[]), \
                  patch.object(data, "_load_snapshot", return_value={}), \
                  patch.object(data, "_save_snapshot"), \
                  patch.object(data.urllib.request, "urlopen", side_effect=OSError("offline test")):
