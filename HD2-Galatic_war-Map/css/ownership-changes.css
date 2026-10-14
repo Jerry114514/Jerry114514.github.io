@@ -15,4 +15,5 @@
 .changes-uncertain { color: var(--text-mute); font-size: 11px; }
 .changes-note { margin-top: 8px; color: var(--text-mute); font-size: 12px; }
 .changes-note:empty { display: none; }
+.changes-defense { color: var(--c-humans); border: 1px solid currentColor; padding: 3px 7px; font-size: 12px; }
 @media (max-width: 768px) { .changes-row { grid-template-columns: 1fr; gap: 6px; } }
