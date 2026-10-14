@@ -59,7 +59,8 @@ class DssDataTests(unittest.TestCase):
                     raise RuntimeError('detail unavailable')
                 return self.station()
             if url.endswith('/Status'):
-                return {'time': 1000, 'spaceStations': [{'id32': 749875195, 'planetIndex': 246}]}
+                return {'time': 1000, 'spaceStations': [{'id32': 749875195, 'planetIndex': 246,
+                                                       'activeEffectIds': [1238, 1261]}]}
             if '/Assignment/' in url or '/NewsFeed/' in url:
                 return []
             return {}
@@ -68,6 +69,7 @@ class DssDataTests(unittest.TestCase):
             result = data.fetch_official()['dss']
             self.assertIn(f'{data.OFFICIAL_API}/api/SpaceStation/{data.WAR_ID}/749875195', calls)
             self.assertEqual(result['donationSource'], 'official')
+            self.assertEqual(result['activeEffectIds'], [1238, 1261])
             self.assertEqual(result['donationUpdatedAtMs'], 2000000)
             self.assertEqual(result['tacticalActions'][0]['cost'][0]['maxDonation'], 75)
             fail_detail = True
@@ -75,6 +77,22 @@ class DssDataTests(unittest.TestCase):
             self.assertEqual(result['planetIndex'], 246)
             self.assertEqual(result['tacticalActions'], [])
             self.assertIsNone(result['donationUpdatedAtMs'])
+
+    def test_station_without_id_skips_detail_and_keeps_official_source(self):
+        def fetch(url, headers, timeout):
+            self.assertNotIn('/SpaceStation/', url)
+            if url.endswith('/Status'):
+                return {'time': 1000, 'spaceStations': [{'planetIndex': 246, 'activeEffectIds': [1238]}]}
+            if '/Assignment/' in url or '/NewsFeed/' in url:
+                return []
+            return {}
+
+        with patch.object(data, 'fetch_json', side_effect=fetch):
+            result = data.fetch_official()
+        self.assertEqual(result['war']['time'], 1000)
+        self.assertEqual(result['dss']['planetIndex'], 246)
+        self.assertEqual(result['dss']['activeEffectIds'], [1238])
+        self.assertEqual(result['dss']['tacticalActions'], [])
 
 
 if __name__ == '__main__':

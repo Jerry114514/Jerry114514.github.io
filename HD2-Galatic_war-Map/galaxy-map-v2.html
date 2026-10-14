@@ -567,7 +567,7 @@
   <script src="./js/regions.js"></script>
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
-<script src="./js/dss-donations.js?v=20261014a"></script>
+<script src="./js/dss-donations.js?v=20261014b"></script>
 <script>
 "use strict";
 /* ============================================================================
@@ -935,7 +935,7 @@ const EFFECT_COLOR = {
 const DSS_ACTION_ICON = {
   // 1425 与 1209 是上游重新登记的同一条「飞鹰风暴」效果（四组描述 hash 完全一致），
   // 2026-10 毒气改版后上游改用 1425；两个 id 都保留映射。
-  1425:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
+  1425:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰毒气风暴" },
   1209:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1212:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1216:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
@@ -2885,9 +2885,9 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
       return;
     }
     const ST = { 1: ["募捐中", "#f5c518"], 2: ["已激活", "#1FA84A"], 3: ["冷却中", "#FF4D2E"] };
-    const acts = dss.tacticalActions || [];
+    const acts = (dss.tacticalActions || []).filter(ta => [1, 2, 3].includes(ta.status));
     const rows = acts.map(ta => {
-      const meta = DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {};
+      const meta = (ta.effectIds || []).includes(1425) ? DSS_ACTION_ICON[1425] : (DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {});
       const s = ST[ta.status] || ["未知", "#94a3b8"];
       const prog = HD2DssDonations.progress(ta);
       return `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);background:#0D0D0D">` +

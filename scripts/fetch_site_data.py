@@ -453,11 +453,14 @@ def fetch_official():
             "donationSource": "unavailable",
             "flags": s0.get("flags"),
         }
-        # Status only has station metadata; the detail endpoint has funding costs.
-        detail = try_fetch("官方 DSS", lambda: fetch_json(
-            f"{OFFICIAL_API}/api/SpaceStation/{WAR_ID}/{s0['id32']}", HEADERS_OFFICIAL, 20))
-        if detail and detail.get("tacticalActions"):
-            dss = normalize_dss(detail, st.get("time") or 0, int(time.time() * 1000), "official")
+        # Status owns station-wide effects; detail owns action costs.
+        sid = s0.get("id32")
+        if sid is not None:
+            detail = try_fetch("官方 DSS", lambda: fetch_json(
+                f"{OFFICIAL_API}/api/SpaceStation/{WAR_ID}/{sid}", HEADERS_OFFICIAL, 20))
+            if detail and detail.get("tacticalActions"):
+                dss = normalize_dss(detail, st.get("time") or 0, int(time.time() * 1000), "official")
+                dss["activeEffectIds"] = dss["activeEffectIds"] or (s0.get("activeEffectIds") or [])
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
             "assignments": assignment, "dispatches": dispatches, "dss": dss}

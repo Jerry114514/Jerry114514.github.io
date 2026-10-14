@@ -16,6 +16,12 @@
 
 `clientTimeMs/currentWarTime` 仍服务现有倒计时。另设 `donationUpdatedAtMs/donationSource` 表示捐赠读数的时间及来源。复用旧 tacticalActions 时，保留旧捐赠时间；不能把新位置或战争时钟的采集时间贴给旧进度。旧格式快照用自己的 clientTimeMs 作兼容时间；完全没有时间则显示“捐赠数据时间未知”。页面显示数据截至时间，快照回退另有标记，不按瞬时 deltaPerSecond 长时间外推进度。
 
-这次修复不改变站点的调度频率，也不声称进度是实时刷新的。现有毒气版说明模板属于另一项内容维护，未混入这次捐赠数值修复。
+站点调度频率保持原状，不声称进度是实时刷新的。
+
+行动卡片由接口 tacticalActions 生成，仅显示 status 为 1（募捐）、2（激活）、3（冷却）的行动。本地目录只提供说明，未启用的旧飞鹰／组合行动不占卡片。效果集合先匹配最具体的定义，再按 action_id32 补充匹配；新行动没有本地定义时仍显示其名称和真实进度，不因匹配失败隐藏或归零。
+
+经典飞鹰（1209）与当前毒气飞鹰（1425）分开定义。毒气说明核对官方 SpaceStation 详情的 zh-Hans 返回：任务期间定期部署“飞鹰”毒气打击，并减缓敌人在保卫战役中的进展。主页显示“飞鹰毒气风暴”，复用飞鹰素材。
+
+官方 detail 不带 station 级 activeEffectIds 时保留 Status 的值；Status 缺少 station ID 时跳过 detail 请求，保留官方其余数据。缺少 ID 的异常原本就在内层 try_fetch 作用域内，不会直接令整个官方源失败。
 
 回归检查：`node scripts/tests/dss-donations-check.mjs`、`python -m unittest discover -s scripts/tests -p 'test_*.py'`。

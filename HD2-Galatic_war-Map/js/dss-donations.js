@@ -15,6 +15,21 @@
     return Math.min(100, Math.max(0, cost.current / cost.target * 100));
   }
 
+  // Runtime actions own the cards; the catalog only supplies names and descriptions.
+  function actionEntries(actions, entries) {
+    return actions.filter(action => [1, 2, 3].includes(action.status)).map(action => {
+      const effects = action.effectIds || [];
+      const candidates = entries.filter(entry => entry.effect_ids?.length &&
+        entry.effect_ids.every(id => effects.includes(id)));
+      candidates.sort((a, b) => b.effect_ids.length - a.effect_ids.length);
+      const entry = candidates[0] || entries.find(entry =>
+        entry.action_id32 != null && entry.action_id32 === action.id32) || {
+          cn: action.name || "未知战术行动", desc: "暂无本地中文说明。", effect_ids: effects,
+        };
+      return { entry, action };
+    });
+  }
+
   function resourceLines(action) {
     return (action?.cost || []).map(cost => {
       const resource = RESOURCES[cost.itemMixId];
@@ -37,5 +52,5 @@
     return `捐赠数据截至 ${label}${dss?.donationSource === "snapshot" ? "（上次成功快照）" : ""}`;
   }
 
-  root.HD2DssDonations = { progress, resourceLines, snapshotLabel };
+  root.HD2DssDonations = { progress, actionEntries, resourceLines, snapshotLabel };
 })(typeof window !== "undefined" ? window : globalThis);
