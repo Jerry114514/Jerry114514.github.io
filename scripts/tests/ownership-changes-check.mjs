@@ -46,4 +46,35 @@ test("gaps do not invent a continuous ownership path", () => {
   const view = select({ ...history, events: [event(0, "Humans", "Automaton", 3), event(0, "Terminids", "Humans", 2)] }, 24, now);
   assert.deepEqual(view.rows[0].paths, [["Humans", "Automaton"], ["Terminids", "Humans"]]);
 });
+const defense = (planetIndex, hours, attacker = 'Automaton') =>
+  ({planetIndex, attacker, eventId: 5717, detectedAt:stamp(hours), previousSeenAt:stamp(hours + .1)});
+test('same-owner defense victory still creates a planet row', () => {
+  const view = select({...history, events:[], defenseEvents:[defense(246,.5)]},24,now);
+  assert.equal(view.changes,0);
+  assert.equal(view.defenses,1);
+  assert.equal(view.rows[0].planetIndex,246);
+  assert.deepEqual(view.rows[0].paths,[]);
+  assert.equal(view.rows[0].victories.length,1);
+});
+test('ownership and successful defenses share one row without a fake owner arrow', () => {
+  const view = select({...history, events:[event(246,'Terminids','Humans',3)],
+    defenseEvents:[defense(246,2),defense(246,1,'Illuminate')]},24,now);
+  assert.equal(view.rows.length,1);
+  assert.deepEqual(view.rows[0].paths,[['Terminids','Humans']]);
+  assert.equal(view.defenses,2);
+});
+test('defense victories obey the selected time window and reject future observations', () => {
+  const view = select({...history,events:[],defenseEvents:[defense(246,25),defense(170,.5),defense(171,-1)]},1,now);
+  assert.deepEqual(view.rows.map(row=>row.planetIndex),[170]);
+});
+test('legacy history cannot claim full defense coverage', () => {
+  assert.equal(select(history,24,now).defenseCoverageHours,0);
+  assert.equal(select(history,24,now).defenseStale,true);
+});
+test('defense observation coverage and freshness are independent of ownership', () => {
+  const view=select({...history,defenseStartedAt:stamp(4),defenseUpdatedAt:stamp(2)},24,now);
+  assert.equal(view.defenseCoverageHours,2);
+  assert.equal(view.defenseStale,true);
+  assert.equal(view.stale,false);
+});
 console.log(`${count} ownership-change regressions passed`);

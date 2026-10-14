@@ -453,14 +453,18 @@ def fetch_official():
             "donationSource": "unavailable",
             "flags": s0.get("flags"),
         }
-        # Status only has station metadata; the detail endpoint has funding costs.
-        detail = try_fetch("官方 DSS", lambda: fetch_json(
-            f"{OFFICIAL_API}/api/SpaceStation/{WAR_ID}/{s0['id32']}", HEADERS_OFFICIAL, 20))
-        if detail and detail.get("tacticalActions"):
-            dss = normalize_dss(detail, st.get("time") or 0, int(time.time() * 1000), "official")
+        # Status owns station-wide effects; detail owns action costs.
+        sid = s0.get("id32")
+        if sid is not None:
+            detail = try_fetch("官方 DSS", lambda: fetch_json(
+                f"{OFFICIAL_API}/api/SpaceStation/{WAR_ID}/{sid}", HEADERS_OFFICIAL, 20))
+            if detail and detail.get("tacticalActions"):
+                dss = normalize_dss(detail, st.get("time") or 0, int(time.time() * 1000), "official")
+                dss["activeEffectIds"] = dss["activeEffectIds"] or (s0.get("activeEffectIds") or [])
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches, "dss": dss}
+            "assignments": assignment, "dispatches": dispatches, "dss": dss,
+            "planet_events": st.get("planetEvents") or []}
 
 
 # ---------------- companion 源 ----------------
@@ -1179,6 +1183,52 @@ def build_ownership_history(previous, current, history=None):
             "lastSnapshot": {"fetchedAt": stamp, "owners": current_owners}}
 
 
+def build_defense_history(history, official, stamp):
+    """Observe defense victories without treating missing/late API data as wins."""
+    if official is None:
+        return history
+    now = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    war_time = (official.get("war") or {}).get("time")
+    if not isinstance(war_time, (int, float)):
+        return history
+    previous = history.get("defenseSnapshot")
+    if previous and (war_time <= previous["warTime"] or
+                     now <= datetime.fromisoformat(previous["fetchedAt"].replace("Z", "+00:00"))):
+        return history
+    owners = {str(p["index"]): p.get("currentOwner") for p in official.get("planets") or []}
+    events = {str(e["id"]): e for e in official.get("planet_events") or []
+              if e.get("eventType") == 1 and e.get("id") is not None
+              and isinstance(e.get("planetIndex"), int)}
+    old_events = {str(e["id"]): e for e in (previous or {}).get("events", [])}
+    victories = [e for e in history.get("defenseEvents", [])
+                 if datetime.fromisoformat(e["detectedAt"].replace("Z", "+00:00")) >= now - timedelta(hours=48)]
+    known = {(e["eventId"], e["startTime"]) for e in victories}
+    for key, event in {**old_events, **events}.items():
+        index = event["planetIndex"]
+        if owners.get(str(index)) != "Humans":
+            continue
+        health = event.get("health")
+        old_health = old_events.get(key, {}).get("health")
+        already_cleared = isinstance(old_health, (int, float)) and old_health <= 0
+        cleared = key in events and not already_cleared and isinstance(health, (int, float)) and health <= 0
+        # A vanished event before its deadline, while the planet stays human,
+        # records an observed successful defense (including a successful gambit).
+        ended_early = (key not in events and not already_cleared and previous["owners"].get(str(index)) == "Humans"
+                       and isinstance(event.get("expireTime"), (int, float))
+                       and previous["warTime"] < war_time < event["expireTime"])
+        identity = (event["id"], event.get("startTime"))
+        if identity not in known and (cleared or ended_early):
+            victories.append({"eventId": event["id"], "startTime": event.get("startTime"),
+                              "planetIndex": index, "attacker": norm_owner(event.get("race")),
+                              "previousSeenAt": (previous or {}).get("fetchedAt", stamp),
+                              "detectedAt": stamp, "evidence": "health_zero" if cleared else "ended_early"})
+            known.add(identity)
+    return {**history, "defenseStartedAt": history.get("defenseStartedAt", stamp),
+            "defenseUpdatedAt": stamp, "defenseEvents": victories,
+            "defenseSnapshot": {"fetchedAt": stamp, "warTime": war_time,
+                                "events": list(events.values()), "owners": owners}}
+
+
 def load_ownership_baseline(path):
     """A damaged old snapshot must not prevent fetching its replacement."""
     if not os.path.exists(path):
@@ -1526,7 +1576,10 @@ def main():
     except Exception:
         pass
 
-    result["ownership_history"] = build_ownership_history(previous, result, ownership_history)
+    history = build_ownership_history(previous, result, ownership_history)
+    # Preserve the independent official defense baseline across ownership refreshes.
+    history.update({k: v for k, v in (ownership_history or {}).items() if k.startswith("defense")})
+    result["ownership_history"] = build_defense_history(history, official, result["fetchedAt"])
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     write_json_atomic(out_path, result)
     print("\n已写出: HD2-Galatic_war-Map/data.json")

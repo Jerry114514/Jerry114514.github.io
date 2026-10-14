@@ -17,23 +17,35 @@ window.HD2Changes = (() => {
       return time >= cutoff && time <= now && Number.isInteger(event.planetIndex)
         && FACTIONS[event.fromOwner] && FACTIONS[event.toOwner] && event.fromOwner !== event.toOwner;
     }).sort((a, b) => Date.parse(a.detectedAt) - Date.parse(b.detectedAt));
+    const victories = (history.defenseEvents || []).filter(event => {
+      const time = Date.parse(event.detectedAt);
+      return time >= cutoff && time <= now && Number.isInteger(event.planetIndex);
+    });
     const planets = new Map();
-    for (const event of events) {
+    for (const event of [...events, ...victories.map(event => ({ ...event, defense: true }))]
+        .sort((a, b) => Date.parse(a.detectedAt) - Date.parse(b.detectedAt))) {
       let row = planets.get(event.planetIndex);
       if (!row) {
-        row = { planetIndex: event.planetIndex, paths: [], changes: 0, uncertain: false };
+        row = { planetIndex: event.planetIndex, paths: [], victories: [], changes: 0, uncertain: false };
         planets.set(event.planetIndex, row);
       }
-      const last = row.paths.at(-1);
-      if (last?.at(-1) === event.fromOwner) last.push(event.toOwner);
-      else row.paths.push([event.fromOwner, event.toOwner]);
-      row.changes++;
+      if (event.defense) row.victories.push(event);
+      else {
+        const last = row.paths.at(-1);
+        if (last?.at(-1) === event.fromOwner) last.push(event.toOwner);
+        else row.paths.push([event.fromOwner, event.toOwner]);
+        row.changes++;
+      }
       row.uncertain ||= Date.parse(event.previousSeenAt) < cutoff;
       row.latest = event.detectedAt;
     }
     return {
       rows: [...planets.values()].sort((a, b) => Date.parse(b.latest) - Date.parse(a.latest)),
       changes: events.length,
+      defenses: victories.length,
+      defenseCoverageHours: history.defenseStartedAt ? Math.max(0, Math.min(hours, 48,
+        (Math.min(now, Date.parse(history.defenseUpdatedAt)) - Math.max(cutoff, Date.parse(history.defenseStartedAt))) / HOUR)) : 0,
+      defenseStale: !history.defenseUpdatedAt || now - Date.parse(history.defenseUpdatedAt) > 20 * 60000,
       coverageHours: Math.max(0, Math.min(hours, 48,
         (Math.min(now, Date.parse(history.updatedAt)) - Math.max(cutoff, Date.parse(history.startedAt))) / HOUR)),
       stale: now - Date.parse(history.updatedAt) > 20 * 60000,
@@ -57,12 +69,15 @@ window.HD2Changes = (() => {
         note.textContent = "";
         return;
       }
-      meta.textContent = `${view.rows.length} 颗星球 · ${view.changes} 次变化`;
+      meta.textContent = `${view.rows.length} 颗星球 · ${view.changes} 次易主 · ${view.defenses} 次防守成功`;
       const coverage = view.coverageHours < hours - .1
         ? `记录覆盖约 ${view.coverageHours.toFixed(1)} 小时` : "";
-      note.textContent = [coverage, view.stale ? "数据更新延迟" : ""].filter(Boolean).join(" · ");
+      const defenseCoverage = view.defenseCoverageHours < hours - .1
+        ? `防守记录覆盖约 ${view.defenseCoverageHours.toFixed(1)} 小时` : "";
+      note.textContent = [coverage, view.stale ? "数据更新延迟" : "", defenseCoverage,
+        view.defenseStale ? "防守数据待更新" : "", "防守成功依据官方事件观测"].filter(Boolean).join(" · ");
       if (!view.rows.length) {
-        content.innerHTML = '<div class="empty">已记录时段内无阵营变化</div>';
+        content.innerHTML = '<div class="empty">已记录时段内无阵营变化或防守成功</div>';
         return;
       }
       const planets = new Map((data.planets || []).map(planet => [planet.index, planet]));
@@ -70,7 +85,8 @@ window.HD2Changes = (() => {
       content.innerHTML = view.rows.map(row => {
         const planet = planets.get(row.planetIndex) || { index: row.planetIndex, name: `#${row.planetIndex}` };
         const paths = row.paths.map(path => path.map(faction).join('<span class="changes-arrow" aria-label="变为">→</span>')).join('<span class="changes-break">；</span>');
-        return `<div class="changes-row"><a class="changes-planet" href="./planet.html?idx=${row.planetIndex}">${esc(nameOf(planet, data))}</a><div class="changes-path">${paths}${row.uncertain ? '<span class="changes-uncertain">范围待确认</span>' : ""}</div></div>`;
+        const wins = row.victories.map(event => `<span class="changes-defense">🛡 防守成功${FACTIONS[event.attacker] ? ` · 抵御${FACTIONS[event.attacker][0]}` : ""}</span>`).join("");
+        return `<div class="changes-row"><a class="changes-planet" href="./planet.html?idx=${row.planetIndex}">${esc(nameOf(planet, data))}</a><div class="changes-path">${paths}${wins}${row.uncertain ? '<span class="changes-uncertain">范围待确认</span>' : ""}</div></div>`;
       }).join("");
     }
     buttons.forEach(button => button.addEventListener("click", () => {
