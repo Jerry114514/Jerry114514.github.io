@@ -254,6 +254,39 @@ def _save_snapshot(data: dict) -> None:
 
 
 # ---------------- 官方源 ----------------
+def normalize_dss(station, war_time, client_time_ms, source):
+    """Preserve funding progress, resource identity and the actual snapshot clock separately."""
+    actions = []
+    for action in station.get("tacticalActions") or []:
+        costs = [{"itemMixId": cost.get("itemMixId"), "target": cost.get("targetValue"),
+                  "current": cost.get("currentValue"), "deltaPerSec": cost.get("deltaPerSecond"),
+                  "maxDonation": cost.get("maxDonationAmount"),
+                  "maxDonationPeriodSec": cost.get("maxDonationPeriodSeconds")}
+                 for cost in action.get("cost") or []]
+        actions.append({"id32": action.get("id32"), "name": action.get("name"),
+                        "strategicDescription": action.get("strategicDescription"),
+                        "status": action.get("status"),
+                        "expireAtWarTime": action.get("statusExpireAtWarTimeSeconds"),
+                        "effectIds": action.get("effectIds") or [],
+                        "activeEffectIds": action.get("activeEffectIds") or [], "cost": costs})
+    return {"id32": station.get("id32"), "planetIndex": station.get("planetIndex"),
+            "activeEffectIds": station.get("activeEffectIds") or [],
+            "electionEnd": norm_time(station.get("currentElectionEndWarTime")),
+            "electionEndWarTime": station.get("currentElectionEndWarTime"),
+            "clientTimeMs": client_time_ms, "currentWarTime": war_time,
+            "tacticalActions": actions, "flags": station.get("flags"),
+            "donationUpdatedAtMs": client_time_ms, "donationSource": source}
+
+
+def restore_dss_actions(current, previous):
+    """A new station/war clock must not make an old donation snapshot look fresh."""
+    result = dict(current)
+    result["tacticalActions"] = previous["tacticalActions"]
+    result["donationUpdatedAtMs"] = previous.get("donationUpdatedAtMs", previous.get("clientTimeMs"))
+    result["donationSource"] = "snapshot"
+    return result
+
+
 def fetch_official():
     st = fetch_json(f"{OFFICIAL_API}/api/WarSeason/{WAR_ID}/Status", HEADERS_OFFICIAL, 20)
     wi = fetch_json(f"{OFFICIAL_API}/api/WarSeason/{WAR_ID}/WarInfo", HEADERS_OFFICIAL, 20)
@@ -407,6 +440,7 @@ def fetch_official():
     if ss_list:
         s0 = ss_list[0]
         dss = {
+            "id32": s0.get("id32"),
             "planetIndex": s0.get("planetIndex"),
             "activeEffectIds": s0.get("activeEffectIds") or [],
             "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
@@ -415,8 +449,15 @@ def fetch_official():
             "clientTimeMs": int(time.time() * 1000),
             "currentWarTime": st.get("time") or 0,
             "tacticalActions": [],
+            "donationUpdatedAtMs": None,
+            "donationSource": "unavailable",
             "flags": s0.get("flags"),
         }
+        # Status only has station metadata; the detail endpoint has funding costs.
+        detail = try_fetch("官方 DSS", lambda: fetch_json(
+            f"{OFFICIAL_API}/api/SpaceStation/{WAR_ID}/{s0['id32']}", HEADERS_OFFICIAL, 20))
+        if detail and detail.get("tacticalActions"):
+            dss = normalize_dss(detail, st.get("time") or 0, int(time.time() * 1000), "official")
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
             "assignments": assignment, "dispatches": dispatches, "dss": dss}
@@ -560,40 +601,8 @@ def fetch_companion():
     ss_list = obj.get("spaceStations") or []
     if ss_list:
         s0 = ss_list[0]
-        # 转换 tacticalActions（含捐献进度/到期时间）
-        tac_actions = []
-        for ta in (s0.get("tacticalActions") or []):
-            costs = []
-            for c in (ta.get("cost") or []):
-                costs.append({
-                    "target": c.get("targetValue"),
-                    "current": round(c.get("currentValue") or 0, 1),
-                    "deltaPerSec": c.get("deltaPerSecond"),
-                    "maxDonation": c.get("maxDonationAmount"),
-                    "maxDonationPeriodSec": c.get("maxDonationPeriodSeconds"),
-                })
-            tac_actions.append({
-                "name": ta.get("name"),
-                # strategicDescription（2026-10-05 补）：上游描述体现「Eagle Gas Strikes」
-                #   毒气改版。前端毒气判定以 effectIds 含 1425 为主判据，此字段为次级信号。
-                "strategicDescription": ta.get("strategicDescription"),
-                "status": ta.get("status"),
-                "expireAtWarTime": ta.get("statusExpireAtWarTimeSeconds"),
-                "effectIds": ta.get("effectIds") or [],
-                "activeEffectIds": ta.get("activeEffectIds") or [],
-                "cost": costs,
-            })
-        dss = {
-            "planetIndex": s0.get("planetIndex"),
-            "activeEffectIds": s0.get("activeEffectIds") or [],
-            "electionEnd": norm_time(s0.get("currentElectionEndWarTime")),
-            "electionEndWarTime": s0.get("currentElectionEndWarTime"),
-            "tacticalActions": tac_actions,
-            "flags": s0.get("flags"),
-            # warTime 换算基准：抓取时刻的真实时间（毫秒）与当前游戏 warTime
-            "clientTimeMs": obj.get("clientTime") or (int(time.time()) * 1000),
-            "currentWarTime": (obj.get("warStatus") or {}).get("time") or 0,
-        }
+        dss = normalize_dss(s0, (obj.get("warStatus") or {}).get("time") or 0,
+                            obj.get("clientTime"), "companion")
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
             "assignments": assignment, "dispatches": dispatches, "dss": dss,
@@ -1398,25 +1407,27 @@ def main():
     elif hd2dev and hd2dev.get("dispatches"):
         base["dispatches"] = hd2dev["dispatches"]
 
-    # DSS：companion（含 tacticalActions 捐献数据）优先 -> 官方 -> 快照兜底
+    # DSS：官方 detail（含资源身份和捐献数据）优先 -> companion -> 快照兜底
     # 若 companion 失败但快照已有 tacticalActions，则保留旧 tacticalActions，避免进度条丢失
     snap = _load_snapshot()
     prev_tac = (snap.get("dss") or {}).get("tacticalActions")
-    if companion and companion.get("dss") and companion["dss"].get("tacticalActions"):
+    if official and official.get("dss") and official["dss"].get("tacticalActions"):
+        base["dss"] = official["dss"]
+    elif companion and companion.get("dss") and companion["dss"].get("tacticalActions"):
         base["dss"] = companion["dss"]
     elif official and official.get("dss"):
         base["dss"] = official["dss"]
         if prev_tac and not base["dss"].get("tacticalActions"):
-            base["dss"]["tacticalActions"] = prev_tac
+            base["dss"] = restore_dss_actions(base["dss"], snap["dss"])
             print("  [DSS] 保留上次 tacticalActions（companion 失败）")
     elif companion and companion.get("dss"):
         base["dss"] = companion["dss"]
         if prev_tac and not base["dss"].get("tacticalActions"):
-            base["dss"]["tacticalActions"] = prev_tac
+            base["dss"] = restore_dss_actions(base["dss"], snap["dss"])
             print("  [DSS] 保留上次 tacticalActions（companion 无数据）")
     else:
         if snap and snap.get("dss"):
-            base["dss"] = snap["dss"]
+            base["dss"] = restore_dss_actions(snap["dss"], snap["dss"])
             print("  [FALLBACK] DSS 使用上次成功快照")
         else:
             base["dss"] = None

@@ -567,6 +567,7 @@
   <script src="./js/regions.js"></script>
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
+<script src="./js/dss-donations.js?v=20261014a"></script>
 <script>
 "use strict";
 /* ============================================================================
@@ -2888,8 +2889,7 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
     const rows = acts.map(ta => {
       const meta = DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {};
       const s = ST[ta.status] || ["未知", "#94a3b8"];
-      const c0 = (ta.cost && ta.cost[0]) || null;
-      const prog = (c0 && c0.target) ? Math.min(100, (c0.current || 0) / c0.target * 100) : null;
+      const prog = HD2DssDonations.progress(ta);
       return `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);background:#0D0D0D">` +
         `<div style="display:flex;align-items:center;gap:6px">` +
           `<span style="color:${s[1]};font-size:.64rem;font-family:var(--font-mono)">${s[0]}</span>` +
@@ -2897,11 +2897,13 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
           (prog != null ? `<span style="margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${prog.toFixed(1)}%</span>` : "") +
         `</div>` +
         (prog != null ? `<div style="height:5px;background:#1A1A1A;margin-top:5px"><i style="display:block;height:100%;width:${prog.toFixed(1)}%;background:${s[1]}"></i></div>` +
-          `<div class="muted" style="margin-top:3px">已捐献 ${fmt(c0.current)} / ${fmt(c0.target)}</div>` : "") +
+          `<div class="muted" style="margin-top:3px">募捐进度 ${prog.toFixed(1)}%</div>` : "") +
+        `<div class="muted" style="margin-top:3px">${esc(HD2DssDonations.resourceLines(ta).join("；"))}</div>` +
       `</div>`;
     }).join("");
     box.innerHTML = head +
       `<div class="muted">行动 ${acts.length} 项 · 数据与主页「民主空间站 / DSS」区块同源。</div>` +
+      `<div class="muted" style="margin-top:4px">${esc(HD2DssDonations.snapshotLabel(dss))}</div>` +
       (rows || `<div class="muted" style="margin-top:6px">暂无战术行动数据</div>`) +
       tail;
   }
