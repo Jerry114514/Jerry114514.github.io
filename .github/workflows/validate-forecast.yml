@@ -9,6 +9,7 @@ on:
       - 'HD2-Galatic_war-Map/js/rate-source.js'
       - 'HD2-Galatic_war-Map/js/regions.js'
       - 'HD2-Galatic_war-Map/js/ownership-changes.js'
+      - 'HD2-Galatic_war-Map/js/dss-donations.js'
       - 'HD2-Galatic_war-Map/data/history/ownership_seed.json'
       - 'scripts/fetch_site_data.py'
       - 'scripts/fetch_reward_types.py'
@@ -29,6 +30,7 @@ jobs:
       - run: node scripts/tests/regions-check.mjs
       - run: node scripts/tests/ownership-changes-check.mjs
       - run: node scripts/tests/reinforcement-share-check.mjs
+      - run: node scripts/tests/dss-donations-check.mjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
