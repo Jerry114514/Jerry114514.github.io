@@ -1,11 +1,20 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Hold the designated planet and eliminate the mandated number of bile-producing Terminids in order to prove the safety of our chemical airstrikes, and to aid vital and fully planned research into airborne toxicity.",
-  "translated": "守住指定行星，歼灭规定数量的吐酸终结族，以证明我方化学空袭的安全性，并协助推进一项至关重要、且已周密规划的空载毒性研究。",
-  "translated_at": "2026-10-08T17:15:00Z"
+  "original": "Hold the designated planet, complete the required number of operations, and terminate the mandated quantity of Illuminate hostiles in order to restore peace of mind and full respiratory capacity to our most honored retirees.",
+  "translated": "守住指定行星，完成规定次数的行动，并歼灭指定数量的光能者敌军，以此让我们最受敬重的退休人员重获心安与完整的呼吸能力。",
+  "translated_at": "2026-10-14T18:22:30Z"
  },
  "items": [
+  {
+   "id": 3955,
+   "original": "NEW MAJOR ORDER\n\nFollowing Illuminate interference against Class A elder statespersons, High Command has authorized the AIR (Anti-Illuminate Restitution) initiative. For every Illuminate terminated during this order, this vital charitable fund will receive 0.004 Super Credits.\n\nHelldivers: hold SENGE 23, complete 1,250,000 operations and kill 1,000,000,000 Illuminate forces to restore peace of mind and full respiratory capacity to our most honored retirees.",
+   "translated": "新重要指令\n\n鉴于光能者对甲级元老的干扰，最高指挥部已批准 AIR（反光能者赔偿）计划。本指令期间，每消灭一名光能者，这项至关重要的慈善基金将获得 0.004 超级信用点。\n\n绝地潜兵：守住新戈23，完成 1,250,000 次行动，消灭 10 亿（1,000,000,000）光能者部队，为我方最受敬重的退休人员恢复内心安宁与完整呼吸能力。",
+   "published_at": "2026-10-14T15:46:26Z",
+   "translated_at": "2026-10-14T18:22:27Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3954,
    "original": "MAJOR ORDER WON\n\nThanks to the Helldivers' steadfast obedience, the chemical safety demonstration on SENGE 23 has concluded with the successful defense of the planet from further Illuminate interference. \n\nAdditionally, a complete recalibration of SEAF aerosol payloads has resulted in Class A retirees happily reporting an immediate improvement to their well-deserved scenic views, and an abundance of pristine, pine-scented air.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-10-06T16:32:58Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3945,
-   "original": "DSS MAINTENANCE UPDATE\n\nThe Democracy Space Station has been offline for recalibration. Engineers have been altering the functionality of the Eagle Storm Tactical Action, in collaboration with C.O.B. Genetics, to deploy aerosol-based deterrents.\n\nThe DSS has been returned to operational service.",
-   "translated": "民主空间站维护更新\n\n民主空间站此前离线，进行重新校准。工程人员与 C.O.B. 遗传学部门合作，改造了飞鹰风暴战术行动的功能，用以投放气溶胶类威慑剂。\n\n民主空间站现已恢复服役。",
-   "published_at": "2026-10-06T12:21:28Z",
-   "translated_at": "2026-10-06T16:32:58Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-14T13:24:02Z",
+  "computed_at": "2026-10-14T18:22:30Z",
   "planet_index": null
  }
 }
