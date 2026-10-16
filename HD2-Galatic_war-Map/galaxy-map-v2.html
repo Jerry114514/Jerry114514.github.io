@@ -1393,29 +1393,306 @@ async function boot() {
                   players: p.players || 0 },
   })));
 
-  // 星区领土（近似凸包）——按星区聚合
-  // ⚠ 分组键必须走 secCnByPlanet（starmap 权威中文星区名）；用 p.sector 会把 152 颗空值星球
-  //   全塞进一个假分组「UNKNOWN」，在银河中心糊出一大片不属于任何星区的凸包。
-  const bySector = {};
-  planets.forEach(p => { const s = secCnByPlanet(p); (bySector[s] = bySector[s] || []).push(p); });
-  const sectorFC = fc(Object.entries(bySector)
-    .filter(([, list]) => list.length >= 3)
-    .map(([name, list]) => ({
-      type: "Feature",
-      geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.16))] },
-      properties: { name, count: list.length },
-    })));
+  /* 星区领土：游戏 / companion 同一套极坐标网格 —— 24 个 15° 楔形 × 10 个 0.1 半径环。
+     每格 = 两条径向直边 + 两条环弧（环弧就是游戏里那圈「曲边」的来源）；星球落进哪格就属于哪个星区，
+     空格用最近星球补齐。分组键仍走 secCnByPlanet（starmap 权威中文星区名）。
+     ⚠ 格子大小**就是观感**（2026-10-16 用户要求「几块矩形拼起来」）：格子取游戏口径 15°×0.1，
+       星区的边就只有径向直边和同心弧两种方向、拐角是直角，拼出来像几块倾斜的矩形；
+       格子放大到 72×36 时边会碎成细密台阶，再抽稀就会切成斜线（两头都不是那个味道）。 */
+  const WED = 24, RING = 10;                                  // 与游戏同口径：15° × 0.1
+  const countBySector = {}, bySector = {}, ownerTally = {};
+  planets.forEach(p => {
+    const sec = secCnByPlanet(p);
+    (bySector[sec] = bySector[sec] || []).push(p);
+    countBySector[sec] = (countBySector[sec] || 0) + 1;
+    ownerTally[sec] = ownerTally[sec] || {};
+    ownerTally[sec][p.currentOwner] = (ownerTally[sec][p.currentOwner] || 0) + 1;
+  });
+  const dominantOwner = (sec) => {
+    const t = ownerTally[sec] || {};
+    return Object.keys(t).sort((a, b) => t[b] - t[a])[0] || "Humans";
+  };
+  const ownerColorOf = sec => OWNER_COLOR[dominantOwner(sec)] || "#64748b";
+  // 底色：超级地球（我方）掌控的星区**不上底色**（2026-10-16 用户要求：直接透明），
+  // 其余阵营照旧上色；边界线不受影响，所有星区都照常描边。
+  const sectorFillOf = sec => (dominantOwner(sec) === "Humans" ? "rgba(0,0,0,0)" : ownerColorOf(sec));
+  // 格子归属：① 格子里有星球 → 这格归该星球所在星区（同格多颗取多数，平手取离格心最近的：
+  //   否则会出现「这颗星球长在别人家块里」）；② 空格 → 归最近星球所在的星区。
+  // 这样星区边界随星球分布自然变得大小不一，但每条边都落在 15°×0.1 的格子线上。
+  const cellOwner = {};
+  {
+    const W = 360 / WED;
+    const cellOf = (x, y) => Math.min(WED - 1, Math.floor((((Math.atan2(y, x) * 180 / Math.PI + 90) % 360) + 360) % 360 / W)) +
+      ":" + Math.min(RING - 1, Math.floor(Math.hypot(x, y) * RING));
+    const claim = {};
+    planets.forEach(p => (claim[cellOf(p.position.x, p.position.y)] = claim[cellOf(p.position.x, p.position.y)] || []).push(p));
+    Object.entries(claim).forEach(([k, list]) => {
+      const parts = k.split(":"), w = +parts[0], r = +parts[1];
+      const th = ((w + .5) * W - 90) * Math.PI / 180, rad = (r + .5) / RING;
+      const cx = rad * Math.cos(th), cy = rad * Math.sin(th), tally = {};
+      list.forEach(p => {
+        const s = secCnByPlanet(p), t = tally[s] = tally[s] || { n: 0, d: Infinity };
+        t.n++; t.d = Math.min(t.d, Math.hypot(p.position.x - cx, p.position.y - cy));
+      });
+      cellOwner[k] = Object.keys(tally).sort((a, b) => tally[b].n - tally[a].n || tally[a].d - tally[b].d)[0];
+    });
+    for (let w = 0; w < WED; w++) for (let r = 0; r < RING; r++) {
+      if (cellOwner[w + ":" + r]) continue;
+      const th = ((w + .5) * W - 90) * Math.PI / 180, rad = (r + .5) / RING;
+      const mx = rad * Math.cos(th), my = rad * Math.sin(th);
+      let best = null, bestD = Infinity;
+      for (const p of planets) {
+        const dx = p.position.x - mx, dy = p.position.y - my, d = dx * dx + dy * dy;
+        if (d < bestD) { bestD = d; best = p; }
+      }
+      if (best) cellOwner[w + ":" + r] = secCnByPlanet(best);
+    }
+  }
+  const polarPt = (w, rad) => {
+    const th = (w * (360 / WED) - 90) * Math.PI / 180;
+    return [rad * Math.cos(th), rad * Math.sin(th)];
+  };
+  const ownerAt = (w, r) => (r < 0 || r >= RING ? "OUT" :
+    (cellOwner[((w % WED) + WED) % WED + ":" + r] || "OUT"));
+
+  /* ── 星区轮廓（2026-10-16）：把同属一个星区的细格**并成一整块**，沿格子边界走出一圈轮廓 ──
+     逐格填充时，格与格之间会留下缝（半透明下更明显），而且每个星区被拆成上百个小面；
+     改成「并集轮廓」后，一个星区就是一整块面，形状严格贴格子（径向直边 + 同心弧，直角拐角），
+     也就是游戏/companion 那种「几块矩形拼起来」的观感。
+     ⚠ 抽稀必须**按共享的边界链做**（不是每个星区各抽各的）：一个星区的边同时也是邻格的边，
+       两边各自抽稀会得到两条不同的折线 → 半透明填充之间裂出细缝（或叠色）。
+       所以先把整张边界图拆成「链」（度=2 的中间点串起来、junction 处断开），每条链只抽稀一次；
+       相邻星区引用同一条链（一正一反）→ 填充严丝合缝、描边与填充共用同一条线。 */
+  // 角点 KP(w,r)＝角度索引 w × 半径索引 r；r=0 的一整圈在几何上就是圆心，统一塌成节点 "C"。
+  const KP = (w, r) => (r <= 0 ? "C" : (((w % WED) + WED) % WED) + ":" + r);
+  const nodeRC = (k) => (k === "C" ? [0, 0] : k.split(":").map(Number));
+  const nodePt = (k) => { const rc = nodeRC(k); return polarPt(rc[0], rc[1] / RING); };
+
+  // 第 1 步：每格只出「与邻格归属不同」的边，统一按逆时针定向
+  // （下边 +w、右边 +r、上边 -w、左边 -r）→ 每个角点恰好 1 进 1 出，顺着走必然闭合。
+  // 半径最小那一圈的下边退化成圆心一个点，跳过（圆心附近单独处理，见下）。
+  // ⚠ 边存成**有向边表**（而不是「角点 → 唯一后继」）：同一个星区的两格若只共用一个角
+  //   （对角相碰），那个角点就是 2 进 2 出，用「每角点一个后继」的 Map 会把边覆盖掉、
+  //   走环再也回不到起点（2026-10-16 踩过：页面会卡在加载遮罩上）。
+  const edgesOf = new Map();                              // 星区 -> [[角点, 后继角点], ...]
+  const dirAdd = (S, a, b) => { let l = edgesOf.get(S); if (!l) edgesOf.set(S, l = []); l.push([a, b]); };
+  for (let w = 0; w < WED; w++) for (let r = 0; r < RING; r++) {
+    const S = ownerAt(w, r);
+    if (r > 0 && ownerAt(w, r - 1) !== S) dirAdd(S, KP(w, r), KP(w + 1, r));          // 下边（弧）
+    if (r > 0 && ownerAt(w + 1, r) !== S) dirAdd(S, KP(w + 1, r), KP(w + 1, r + 1));  // 右边（径向）
+    if (ownerAt(w, r + 1) !== S) dirAdd(S, KP(w + 1, r + 1), KP(w, r + 1));           // 上边（弧）
+    if (r > 0 && ownerAt(w - 1, r) !== S) dirAdd(S, KP(w, r + 1), KP(w, r));          // 左边（径向）
+  }
+  // 圆心那一圈：一个星区在 r=0 上的每个连续段 → 一段「穿圆心」的跳线 KP(w0,1) → KP(w1+1,1)
+  // （真实数据里整圈 r=0 同属太阳系 → 没有任何跳线；这里只是保证换数据也不会走崩）
+  const centerOver = new Map();                           // 星区 -> Map(起点角点 -> 终点角点)
+  {
+    const r0 = Array.from({ length: WED }, (_, w) => ownerAt(w, 0));
+    const oneRing = r0.every(s => s === r0[0]);
+    if (!oneRing) for (let w0 = 0; w0 < WED; w0++) {
+      if (r0[w0] === r0[(w0 - 1 + WED) % WED]) continue;      // 只在段首出跳线
+      let len = 0; while (len < WED && r0[(w0 + len) % WED] === r0[w0]) len++;
+      let m = centerOver.get(r0[w0]);
+      if (!m) centerOver.set(r0[w0], m = new Map());
+      m.set(KP(w0, 1), KP(w0 + len, 1));
+    }
+  }
+  // 出边表（一个角点可能有多条出边，见上）
+  const outOf = new Map();                                // 星区 -> Map(角点 -> [后继角点, ...])
+  edgesOf.forEach((list, S) => {
+    const m = new Map();
+    list.forEach(([a, b]) => { const l = m.get(a); if (l) l.push(b); else m.set(a, [b]); });
+    outOf.set(S, m);
+  });
+
+  // 第 2 步：全局边界图（无向）→ 拆成链。径向边 r≥1、弧向边 1≤r≤RING（含最外圈）。
+  const adj = new Map(), bEdges = [];
+  const edgeKey = (a, b) => (a < b ? a + "|" + b : b + "|" + a);
+  const addEdge = (a, b) => {
+    if (a === b) return;
+    if (!adj.has(a)) adj.set(a, []);
+    if (!adj.has(b)) adj.set(b, []);
+    adj.get(a).push(b); adj.get(b).push(a); bEdges.push([a, b]);
+  };
+  for (let w = 0; w < WED; w++) {
+    for (let r = 1; r < RING; r++) if (ownerAt(w - 1, r) !== ownerAt(w, r)) addEdge(KP(w, r), KP(w, r + 1));
+    for (let r = 1; r <= RING; r++) if (ownerAt(w, r - 1) !== ownerAt(w, r)) addEdge(KP(w, r), KP(w + 1, r));
+  }
+  const chains = [], usedEdge = new Set();
+  for (const [a0, b0] of bEdges) {
+    if (usedEdge.has(edgeKey(a0, b0))) continue;
+    usedEdge.add(edgeKey(a0, b0));
+    const nodes = [a0, b0];
+    let closed = false;
+    for (const dir of [1, -1]) {
+      if (closed) break;
+      let prev = dir > 0 ? a0 : b0, cur = dir > 0 ? b0 : a0;
+      while (adj.get(cur).length === 2) {
+        const nb = adj.get(cur), nx = nb[0] === prev ? nb[1] : nb[0];
+        const back = dir > 0 ? nodes[0] : nodes[nodes.length - 1];
+        if (nx === back) { closed = true; break; }
+        if (usedEdge.has(edgeKey(cur, nx))) break;
+        usedEdge.add(edgeKey(cur, nx));
+        if (dir > 0) nodes.push(nx); else nodes.unshift(nx);
+        prev = cur; cur = nx;
+      }
+    }
+    chains.push({ nodes, closed });
+  }
+
+  // 第 3 步：**不做斜切抽稀**，只把「同向共线」的相邻点并掉。
+  // ⚠ 这里踩过一次坑（2026-10-16）：最初照交接文档用 Douglas–Peucker（容差 0.9 个细格）把台阶
+  //   压成长直边，台阶是被压平了，但压出来的是任意角度的斜线，星区变成歪扭的多边形 —— 用户要的是
+  //   「几块矩形拼起来」：形状**严格贴格子**（径向直边 + 同心弧，拐角是直角），台阶就在格子尺度上。
+  //   所以现在：连续同角度的径向边并成一条长直线、同半径的弧边并成一条长弧，拐角一个都不动。
+  // 弧边按角度取样（约 1.25° 一段）。格子是 15° 的粗格，若只取两三个点，长弧会变成折线、
+  // 圆盘外缘也会被切成多边形；取样够密，弧看起来就是弧。
+  const ARC_STEP_DEG = 1.25;
+  const arcSamples = (a, b) => {
+    const [wa, ra] = nodeRC(a), [wb, rb] = nodeRC(b);
+    if (ra !== rb || wa === wb) return [nodePt(a), nodePt(b)];
+    let dw = wb - wa; if (dw > 1) dw = -1; else if (dw < -1) dw = 1;
+    const n = Math.max(2, Math.ceil(Math.abs(dw) * (360 / WED) / ARC_STEP_DEG));
+    const out = [];
+    for (let i = 0; i <= n; i++) out.push(polarPt(wa + dw * i / n, ra / RING));
+    return out;
+  };
+  // 同向判定：p 处拐没拐弯（叉积为 0 且点积 > 0 才算「还是那条直线」）。
+  // 阈值取 1e-6 的正弦值 ≈ 0.00006°，弧上每 1/6 格的取样点也有 ~0.83° 的方向变化，绝不会被误并。
+  const straightAt = (o, p, q) => {
+    const ax = p[0] - o[0], ay = p[1] - o[1], bx = q[0] - p[0], by = q[1] - p[1];
+    const la = Math.hypot(ax, ay), lb = Math.hypot(bx, by);
+    if (la < 1e-12 || lb < 1e-12) return true;
+    return Math.abs((ax * by - ay * bx) / (la * lb)) < 1e-6 && (ax * bx + ay * by) > 0;
+  };
+  const weldStraight = (pts) => {                         // 去重复点 + 去「共线同向」的中间点（形状不变）
+    const uniq = [];
+    for (const p of pts) {
+      const l = uniq[uniq.length - 1];
+      if (!l || l[0] !== p[0] || l[1] !== p[1]) uniq.push(p);
+    }
+    const out = [];
+    for (let i = 0; i < uniq.length; i++) {
+      if (out.length && i + 1 < uniq.length && straightAt(out[out.length - 1], uniq[i], uniq[i + 1])) continue;
+      out.push(uniq[i]);                                 // 首尾两点永远保留（它们是 junction）
+    }
+    return out;
+  };
+  chains.forEach(ch => {
+    const pts = [];
+    const seq = ch.closed ? ch.nodes.concat([ch.nodes[0]]) : ch.nodes;
+    for (let i = 0; i < seq.length - 1; i++) {
+      const seg = arcSamples(seq[i], seq[i + 1]);
+      for (let k = 0; k < seg.length - 1; k++) pts.push(seg[k]);
+    }
+    pts.push(nodePt(seq[seq.length - 1]));
+    ch.simp = weldStraight(pts);
+  });
+
+  // 第 4 步：顺着第 1 步的有向边走环。链的入口只有两个方向：从链首进（顺着读）或从链尾进（倒着读），
+  // 所以走到链端点就把整条链的折线一次吐完（相邻星区共用这条折线 → 填充严丝合缝）。
+  const entryOf = new Map();                              // "角点|后继" -> {i, fwd}
+  chains.forEach((ch, i) => {
+    const n = ch.nodes, last = n.length - 1;
+    if (last < 1) return;
+    entryOf.set(n[0] + "|" + n[1], { i, fwd: true });
+    // ⚠ 只有两个角点的短链（= 一条边）也必须登记反向入口，否则反向走时会当成「单边」处理，
+    //   弧边就退化成一条弦（2026-10-16 踩过：整盘面积少 0.75%，症状是弧被拉直）
+    entryOf.set(n[last] + "|" + n[last - 1], { i, fwd: false });
+  });
+  const ringArea = (r) => { let s = 0; for (let i = 0; i < r.length - 1; i++) s += r[i][0] * r[i + 1][1] - r[i + 1][0] * r[i][1]; return s / 2; };
+  const inRing = (p, rg) => {                              // 射线法：点是否在某环内
+    let hit = false;
+    for (let i = 0, j = rg.length - 2; i < rg.length - 1; j = i++) {
+      const yi = rg[i][1], yj = rg[j][1];
+      if ((yi > p[1]) !== (yj > p[1]) &&
+          p[0] < (rg[j][0] - rg[i][0]) * (p[1] - yi) / (yj - yi) + rg[i][0]) hit = !hit;
+    }
+    return hit;
+  };
+  // 网格步方向（±w / ±r），用来判「下一个出口往哪拐」
+  const stepDir = (a, b) => {
+    const A = nodeRC(a), B = nodeRC(b);
+    let dw = B[0] - A[0];
+    if (dw > 1) dw = -1; else if (dw < -1) dw = 1;
+    return [dw, B[1] - A[1]];
+  };
+  // 从 cur 出发，来向是 din，挑下一条出边：**尽量左转**（平面图追面的标准做法）。
+  // 星区两格对角相碰的角点上有 2 进 2 出，靠这条规则两块各走各的，不会串成一个蝴蝶结。
+  const nextAfter = (din, cur, outs, over) => {
+    if (over) { const f = over.get(cur); if (f) return f; }       // 穿圆心的跳线优先
+    const list = outs.get(cur);
+    if (!list || !list.length) return null;
+    if (list.length === 1 || !din || cur === "C") return list[0];
+    let best = null, bestAng = -Infinity;
+    for (const d of list) {
+      const dd = stepDir(cur, d);
+      if (dd[0] === -din[0] && dd[1] === -din[1]) continue;       // 不走回头路
+      const ang = Math.atan2(din[0] * dd[1] - din[1] * dd[0], din[0] * dd[0] + din[1] * dd[1]);
+      if (ang > bestAng) { bestAng = ang; best = d; }
+    }
+    return best || list[0];
+  };
+  const sectorFC = fc([...outOf.entries()].map(([name, outs]) => {
+    const over = centerOver.get(name) || null;
+    const used = new Set(), rings = [];
+    for (const [a0, list] of outs) for (const b0 of list) {
+      if (used.has(edgeKey(a0, b0))) continue;
+      if (!entryOf.has(a0 + "|" + b0)) continue;            // 只从链端点起步，保证整条链一次吐完
+      // 每一步处理一条「边」（cur → nxt）：边若属于某条链，就把整条链的折线一次吐完并跳到链的另一端
+      const pts = [nodePt(a0)], seen = new Set();
+      let cur = a0, nxt = b0, din = null, guard = 0, closed = false;
+      while (nxt != null && guard++ < 5000) {               // 兜底：数据异常也别把页面卡死
+        used.add(edgeKey(cur, nxt));
+        const en = entryOf.get(cur + "|" + nxt);
+        if (en) {
+          const ch = chains[en.i], seq = en.fwd ? ch.simp : ch.simp.slice().reverse();
+          for (let k = 1; k < seq.length; k++) pts.push(seq[k]);
+          for (const n of ch.nodes) seen.add(n);
+          for (let k = 0; k + 1 < ch.nodes.length; k++) used.add(edgeKey(ch.nodes[k], ch.nodes[k + 1]));
+          const end = ch.closed ? ch.nodes[0] : (en.fwd ? ch.nodes[ch.nodes.length - 1] : ch.nodes[0]);
+          const from = ch.closed ? ch.nodes[ch.nodes.length - 1] : (en.fwd ? ch.nodes[ch.nodes.length - 2] : ch.nodes[1]);
+          din = stepDir(from, end); cur = end;
+        } else {
+          // 没成链的单边（正常情况下不该出现，兜底用）：弧边也要按弧取样，别退化成弦
+          const seg = arcSamples(cur, nxt);
+          if (over && over.get(cur) === nxt) pts.push([0, 0]);      // 穿圆心
+          for (let k = 1; k < seg.length; k++) pts.push(seg[k]);
+          din = stepDir(cur, nxt); cur = nxt;
+        }
+        if (cur === a0 && nextAfter(din, a0, outs, over) === b0) { closed = true; break; }  // 回到起始边 → 闭合
+        const adv = nextAfter(din, cur, outs, over);
+        if (adv == null) break;
+        // 回到起始角点不算「重访」（下一步如果是起始边就是闭合，见上）；其它重复角点说明自触 → 在此收环
+        if (adv !== a0 && seen.has(adv)) break;
+        seen.add(adv); nxt = adv;
+      }
+      if (!closed) console.warn(`[星区] ${name} 的轮廓没有闭合，已跳过这一圈（数据可能异常）`);
+      const clean = pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
+      if (clean.length >= 4 && Math.abs(ringArea(clean)) > 1e-12) rings.push(ring(clean));
+    }
+    // 走环方向与 (x,y) 里的手性相反（网格平面中是逆时针 → 平面上是顺时针）：
+    // 外环反向一次即 RFC 7946 的「外环逆时针」，空腔反过来（顺时针）。当前数据没有空腔，
+    // 但它是数据驱动的 —— 万一某星区被另一个星区整个包住，空腔必须挂到包住它的那个外环上。
+    const outers = [], holes = [];
+    rings.forEach(r => (ringArea(r) < 0 ? outers : holes).push(r));
+    outers.sort((a, b) => Math.abs(ringArea(b)) - Math.abs(ringArea(a)));
+    const host = (h) => {
+      const c = h.slice(0, -1).reduce((a, p) => [a[0] + p[0], a[1] + p[1]], [0, 0]).map(v => v / (h.length - 1));
+      return outers.filter(o => inRing(c, o)).pop() || null;     // 最小的那个包住它的外环
+    };
+    const polys = outers.map(o => [o.slice().reverse()]);
+    for (const h of holes) {
+      const o = host(h), hr = h.slice().reverse();
+      if (o) polys[outers.indexOf(o)].push(hr); else polys.push([hr]);   // 兜底：找不到宿主就当独立外环
+    }
+    return { type: "Feature", geometry: { type: "MultiPolygon", coordinates: polys },
+             properties: { name, count: countBySector[name] || 0, color: ownerColorOf(name), fill: sectorFillOf(name) } };
+  }));
 
   // 势力领土（近似凸包，仅非我方阵营绘制，作为大色块）
-  const factionFC = fc(FACTION_KEYS
-    .filter(k => k !== "Humans")
-    .map(k => {
-      const list = planets.filter(p => p.currentOwner === k);
-      if (list.length < 3) return null;
-      const hull = expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.20);
-      return { type: "Feature", geometry: { type: "Polygon", coordinates: [ring(hull)] },
-               properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], count: list.length } };
-    }).filter(Boolean));
+  // 势力凸包弃用：改用上面的星区轮廓直接上色（游戏/companion 的同一思路）
+  const factionFC = fc([]);
 
   // 星区名不再绘制在地图上（改由左上角星区卡呈现，详见 showSectorCard）
 
@@ -1589,11 +1866,14 @@ async function boot() {
             "circle-stroke-opacity": .7,
           } },
 
-        // 星区（细虚线，弱）
+        // 星区：按该星区的主导阵营上色；**超级地球的星区不上底色**（fill 属性直接是透明色，
+        // 见 sectorFillOf）。轮廓是「格子并集」的结果（逐格填充已弃用），
+        // 所以填充边缘与下面的描边是同一条折线，不会裂缝。
         { id: "sector-fill", type: "fill", source: "sector",
-          paint: { "fill-color": "rgba(255,255,255,.014)" } },
+          paint: { "fill-color": ["get", "fill"], "fill-opacity": .3, "fill-antialias": false } },
+        // 描边跟着同一份轮廓走（游戏内观感：少量长直边 / 长弧，内部没有格线）
         { id: "sector-line", type: "line", source: "sector",
-          paint: { "line-color": "rgba(255,255,255,.10)", "line-width": .8, "line-dasharray": [4, 4] } },
+          paint: { "line-color": "rgba(235,242,250,.5)", "line-width": .9 } },
 
         // 势力领土（大色块）
         { id: "faction-fill", type: "fill", source: "faction",
