@@ -1413,9 +1413,16 @@ async function boot() {
     return Object.keys(t).sort((a, b) => t[b] - t[a])[0] || "Humans";
   };
   const ownerColorOf = sec => OWNER_COLOR[dominantOwner(sec)] || "#64748b";
-  // 底色：超级地球（我方）掌控的星区**不上底色**（2026-10-16 用户要求：直接透明），
-  // 其余阵营照旧上色；边界线不受影响，所有星区都照常描边。
-  const sectorFillOf = sec => (dominantOwner(sec) === "Humans" ? "rgba(0,0,0,0)" : ownerColorOf(sec));
+  // 底色：**只要星区里有一颗星球被敌方占领，整片星区就上敌方色**（2026-10-17 用户要求：
+  //   塞提亚、赤血这类敌占星球所在的星区必须渲染成光能者色，不能因为「我方星球更多」而留透明）。
+  //   敌方有多个阵营时，取敌方星球最多的那个阵营；一颗敌方星球都没有（全员我方）→ 不上底色。
+  //   边界线不受影响，所有星区都照常描边。
+  const sectorFillOf = sec => {
+    const t = ownerTally[sec] || {};
+    const enemy = Object.keys(t).filter(o => o !== "Humans" && OWNER_COLOR[o])
+      .sort((a, b) => t[b] - t[a])[0];
+    return enemy ? OWNER_COLOR[enemy] : "rgba(0,0,0,0)";
+  };
   // 格子归属：① 格子里有星球 → 这格归该星球所在星区（同格多颗取多数，平手取离格心最近的：
   //   否则会出现「这颗星球长在别人家块里」）；② 空格 → 归最近星球所在的星区。
   // 这样星区边界随星球分布自然变得大小不一，但每条边都落在 15°×0.1 的格子线上。
