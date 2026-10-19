@@ -7,6 +7,24 @@
  },
  "items": [
   {
+   "id": 3959,
+   "original": "STRATEGIC ALERT\n\nThe Automaton Incineration Corps has been reported on VINDEMITARIX PRIME.",
+   "translated": "战略警报\n\n据报，机器人炽灼部队已现身文德米塔里克斯主星。",
+   "published_at": "2026-10-19T17:48:39Z",
+   "translated_at": "2026-10-19T19:41:24Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
+   "id": 3958,
+   "original": "MAJOR ORDER WON\n\nThanks to the Helldivers’ philanthropic bravery and altruistic lethality, the AIR (Anti-Illuminate Restitution) initiative has been funded to its maximum level. Every revered Class A orbital retirement facility affected by recent Illuminate interference has now received a heavily subsidised upgrade to their respiratory fortification package.\n\nWith regional real estate futures fully stabilized and all corporate liabilities mitigated, the Helldivers stand triumphant.",
+   "translated": "重要指令达成\n\n全赖绝地潜兵乐善好施的胆魄与舍己为人的杀伐，AIR（反光能者补偿）计划已获全额拨款。凡受近期光能者干扰的尊贵 A 级轨道退休设施，其呼吸防御套件均已获得高额补贴升级。\n\n区域地产期货全面企稳，企业债务尽数化解，绝地潜兵凯旋而立。",
+   "published_at": "2026-10-19T15:50:51Z",
+   "translated_at": "2026-10-19T19:41:24Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
+  {
    "id": 3957,
    "original": "CONTROL CENTER ADVISORY\n\nUpon completion of this Campaign, Helldivers will receive permanent access to the DSS Eagle Gas Storm Tactical Action.\n\nThe technician responsible for mislabeling this performance incentive as a Stratagem in the Control Center has committed to thoroughly understanding the distinction between a Tactical Action and a Stratagem during an intensive re-education seminar, alongside their immediate family.",
    "translated": "控制中心通告\n\n本次战役结束后，绝地潜兵将永久获得民主空间站的飞鹰毒气风暴战术行动权限。\n\n控制中心内误将此项绩效激励标注为战略配备的技术员，已承诺在强化再教育研讨会上彻底弄清战术行动与战略配备的区别，其直系亲属将一同参加。",
@@ -77,24 +95,6 @@
    "translated_at": "2026-10-08T17:14:58Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3949,
-   "original": "MAJOR ORDER WON\n\nThe liberation of SENGE 23 has concluded with a decisive victory for the Helldivers. High-definition broadcasts of the engagement were successfully transmitted to cheering homes across the Federation, prompting an immediate 4.2% increase in regional real estate futures.\n\nAs a routine operational byproduct, harmless gaseous residues are now dispersing into adjacent residential flight corridors. Air quality experts have decisively concluded there is no cause for concern.",
-   "translated": "重要指令达成\n\n新戈23的解放以绝地潜兵的压倒性胜利告终。交战的高清转播已成功传送至联邦各地欢呼的千家万户，区域房地产期货随即上涨 4.2%。\n\n作为例行行动的副产品，无害的气体残留物目前正扩散至邻近的居民飞行走廊。空气质量专家已果断判定：无需担忧。",
-   "published_at": "2026-10-08T08:32:30Z",
-   "translated_at": "2026-10-08T17:14:58Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
-  },
-  {
-   "id": 3948,
-   "original": "DSS MAINTENANCE UPDATE\n\nUnforeseable supply line disruptions are preventing Helldiver contributions to DSS Tactical Actions from being received. The issue is currently being addressed and will be resolved in an appropriately expedient manner unworthy of complaint. \n\nPersonnel are advised to avoid contribution to the DSS and undue contemplation or communication about this issue until normal operation is restored. Violations will be appropriately logged in the violator's permanent files.",
-   "translated": "民主空间站维护更新\n\n不可预见的补给线中断，正导致绝地潜兵对民主空间站战术行动的贡献无法送达。问题已在处理中，并将以适当且迅速、不容抱怨的方式解决。\n\n建议全体人员暂停对民主空间站的贡献，并在恢复正常运作前，避免对此事过度思考或传播。违规行为将适当记录在违规者的永久档案中。",
-   "published_at": "2026-10-07T15:37:44Z",
-   "translated_at": "2026-10-07T19:47:05Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-19T12:26:37Z",
+  "computed_at": "2026-10-19T19:41:26Z",
   "planet_index": null
  }
 }
