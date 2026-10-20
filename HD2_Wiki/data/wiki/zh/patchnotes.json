@@ -1,8 +1,1705 @@
 {
-  "updated_at": "2026-09-24T15:06:54Z",
+  "updated_at": "2026-10-20T13:26:58Z",
   "source": "https://helldivers.wiki.gg/wiki/Category:Patch_Notes",
-  "total": 11,
+  "total": 12,
   "versions": [
+    {
+      "id": "1.007.200",
+      "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.200",
+      "title": "Devoid of Liberty: 7.2.0",
+      "cover_wiki": "Helldivers 2 Devoid of Liberty Key Art EN 2x3.png",
+      "release_date": "2026-10-20",
+      "release_time": "9:00 AM UTC",
+      "size": "2.9 GB",
+      "previous": "1.007.101",
+      "next": null,
+      "blog_url": "https://store.steampowered.com/news/app/553850/view/715666559007196081?l=english",
+      "image_local": "./assets/patchnotes/helldivers_2_devoid_of_liberty_key_art_en_2x3.webp",
+      "sections": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "Super Earth is excited to share more with you all in regards to our latest changes for Helldivers on the frontline, with the introduction of Easy Anti-Cheat, the Scope of Authority Warbond and improvements to weapons and stratagems, there is something for the whole family to enjoy!",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "new_anticheat_introduced",
+          "heading": "New Anti-Cheat introduced",
+          "level": 2,
+          "items": [
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Implemented Easy Anti-Cheat, with additional security tools in place to enhance its effectiveness and improve game integrity protection",
+              "links": [],
+              "files": []
+            },
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "For more information on EAC, you can read our blog (here) or visit https://www.easy.ac/support/articles",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "community_feedback_changes",
+          "heading": "Community Feedback Changes",
+          "level": 2,
+          "items": [
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Balance pass on Killzone and Halo Legendary warbond weapons",
+              "links": [],
+              "files": []
+            },
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Sickle rebalance",
+              "links": [],
+              "files": []
+            },
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "Balance pass on several stratagems",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "general_gameplay",
+          "heading": "General Gameplay",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "bug_bile_enemies",
+              "heading": "Bug Bile enemies",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "We broke out the bug strain that spawns Bile Warriors, Spewers, Scavengers, which could randomly become active on a mission, into its own bug strain that now is controlled by the Game Masters and will have its own visualization to show when it’s active just like other bug strains like Rupture, Spore Burst etc.",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            }
+          ]
+        },
+        {
+          "id": "balancing",
+          "heading": "Balancing",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "primary_weapons",
+              "heading": "Primary weapons",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "balance_pass_on_killzone_and_halo_legendary_warbond_weapons",
+                  "heading": "Balance pass on Killzone and Halo Legendary warbond weapons",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "These weapons felt a bit weaker versus similar weapons when accounting for the fact that they do not have any weapon customization.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Since legendary warbond weapons don't get customization, we think some of the weapons need a slight increase in their base stats to compensate.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "These will be more effective versus similar weapons, but weapons with attachments can be customized to work better in different ways.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": [
+                    {
+                      "id": "m90a_shotgun",
+                      "heading": "M90A Shotgun",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage from 605 to 726",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 220 to 264",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "ma5c_assault_rifle",
+                      "heading": "MA5C Assault Rifle",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Drift from 20 to 15",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Climb from 30 to 20",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Horizontal Climb from 12 to 6",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 16 to 20",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "sta52_assault_rifle",
+                      "heading": "StA-52 Assault Rifle",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased spare max magazines from 6 to 7",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Drift from 15 to 7.5",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Climb from 25 to 12.5",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Horizontal Drift from 10 to 5",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Horizontal Climb from 6 to 4",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "sta11_smg",
+                      "heading": "StA-11 SMG",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage from 90 to 100",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 18 to 20",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Drift from 20 to 12",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased recoil Vertical Climb from 10 to 8",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased ergonomic from 80 to 90",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "plas39_accelerator_rifle",
+                      "heading": "PLAS-39 Accelerator Rifle",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "p",
+                          "depth": 0,
+                          "text": "Problem we want to solve:",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "We feel the weapon has a good identity and mechanics but some of them are a bit punishing and force players too much into using particular armor passives together with them.",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "The stagger force being high is normally a good thing, but if you are trying to hit weak spots then the first shot gets the enemy to stagger and then the second and third shot misses the weak spot against certain enemies. So lowering the stagger force should make it easier to use this as a precision weapon.",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "p",
+                          "depth": 0,
+                          "text": "Intent and expectation with the changes:",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "By making the reload faster, it should make its ammo economy less punishing.",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "By lowering the stagger force it should make it easier to use this as a precision weapon.",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "p",
+                          "depth": 0,
+                          "text": "Changes:",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Faster reload from 3.3 sec to 2.7 sec",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased stagger strength on projectile from 20 to 15",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    }
+                  ]
+                },
+                {
+                  "id": "balance_pass_on_sickle_variants",
+                  "heading": "Balance pass on Sickle variants",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "These weapons have fallen behind in practicality since it was released compared to similar weapons.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The charge up and down time also feels too long.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Lean more into what makes these weapons different compared to ballistic weapons.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It will also both be faster to start to shoot and cooldown.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": [
+                    {
+                      "id": "las16_sickle",
+                      "heading": "LAS-16 Sickle",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased time until weapons start to shoot from when trigger is pressed from 0.5sec to 0.33 sec",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased time until weapon heat starts cooling down after firing from 1.33sec to 0.66sec",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Less heat build up per projectile from 1.15 to 0.95",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "las17_doubleedge_sickle",
+                      "heading": "LAS-17 Double-Edge Sickle",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased time until weapons start to shoot from when trigger is pressed from 0.5sec to 0.33 sec",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Decreased time until weapon heat starts cooling down after firing from 1.33sec to 0.66sec",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    }
+                  ]
+                },
+                {
+                  "id": "shotguns_with_light_penetration_regular_ballistic_pellets",
+                  "heading": "Shotguns with light penetration regular ballistic pellets",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The light penetration regular pellet shotguns have fallen behind in effectiveness compared to other shotguns with for instance medium penetration or status effects",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "These shotguns will have a faster time to kill and hit harder with each round",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": [
+                    {
+                      "id": "sg8_punisher",
+                      "heading": "SG-8 Punisher",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage from 405 to 486",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 108 to 135",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "sg225_breaker",
+                      "heading": "SG-225 Breaker",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage from 330 to 396",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 66 to 88",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "sg225sp_breaker_spraypray",
+                      "heading": "SG-225SP Breaker Spray&Pray",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage from 240 to 288",
+                          "links": [],
+                          "files": []
+                        },
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased durable damage from 64 to 80",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "sidearm_weapons",
+              "heading": "Sidearm Weapons",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "sg22_bushwhacker",
+                  "heading": "SG-22 Bushwhacker",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased damage from 450 to 540",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased durable damage from 108 to 135",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                }
+              ]
+            },
+            {
+              "id": "missions",
+              "heading": "Missions",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Minor combat balancing tweaks for EVACUATE HIGH VALUE ASSETS",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "stratagems",
+              "heading": "Stratagems",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "m1000_maxigun",
+                  "heading": "M-1000 Maxigun",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It is hard to avoid incoming attacks when firing as it takes too long to get back movement control after firing.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Corpses can block other enemies while you fire the weapon and this in combination with being stationary while firing can make it harder to shoot other enemies",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It will be easier to avoid incoming attacks because movement is allowed faster after the fire button is released.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It will now stagger more types of enemies and also be better at pushing away corpses.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Decreased time until regaining movement control after firing from 0.5 sec to 0 sec",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased stagger force from 15 to 20",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased stagger impulse from 12 to 24",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                },
+                {
+                  "id": "cqc20_breaching_hammer",
+                  "heading": "CQC-20 Breaching Hammer",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "This weapon can not be used as often as other similar close range anti-tank stratagem weapons.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Now it can be used more often and be closer to similar weapons in regards to usability.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased spare charges from 7 to 10",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                },
+                {
+                  "id": "orbital_airburst_strike",
+                  "heading": "Orbital Airburst Strike",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The Orbital Airburst Strike projectile comes in with a steeper angle since the new positioning of the Super Destroyers in missions. This made the spread of the shrapnel too large, unpredictable and does not saturate the area well enough",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Now the spread of the shrapnel should be closer together and saturate the target area better.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It will also be more available to use to compensate more for the random nature of the stratagem",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Decreased cooldown from 100 to 90",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Decreased explosion cone angle from 35 to 27 which creates a tighter pattern for the shrapnel",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                },
+                {
+                  "id": "heavy_mounted_flamethrowers_damage",
+                  "heading": "Heavy mounted flamethrowers damage",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The amount of particles in this effect made it so the damage of flames did not feel similar to flamethrowers.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Now it will be better at dealing damage to enemies in the flames and perform closer to other flamethrowers",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": [
+                    {
+                      "id": "exo51_lumberer_exosuit",
+                      "heading": "EXO-51 Lumberer Exosuit",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage on flame particle from 3 to 8",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    },
+                    {
+                      "id": "aflam40_flame_sentry",
+                      "heading": "A/FLAM-40 Flame Sentry",
+                      "level": 5,
+                      "items": [
+                        {
+                          "kind": "li",
+                          "depth": 0,
+                          "text": "Increased damage on flame particle from 3 to 8",
+                          "links": [],
+                          "files": []
+                        }
+                      ],
+                      "subsections": []
+                    }
+                  ]
+                },
+                {
+                  "id": "eagle_airstrike_gas",
+                  "heading": "Eagle Airstrike Gas",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The Eagle Airstrike gas had the unintended ability to destroy structures, which caused it to behave more like Orbital projectiles as opposed to Eagles.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Now it can only destroy structures that other eagle bombs can destroy",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Decreased the explosions demolition strength from 50 to 40",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading": "Fixes",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "crash_fixes",
+              "heading": "Crash Fixes",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a crash that could occur when scrolling through and equipping vehicle customization patterns in Ship Management",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed customized vehicle previews failing or crashing after rapidly changing customization patterns",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed two crashes related to SEAF shuttles when a lot of enemies are around",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a rare crash that could happen when another Helldiver reloads the Flak Cannon on their Exo suit under very poor network conditions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a crash that could occur when attempting to emote with SEAF soldiers",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed crash related to ragdolls",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue where popups would cause a crash",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue with upscalers that could result in a crash or a grey screen at certain resolutions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Cycling between resolutions or render scale should no longer crash the game",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Improved DirectX 12 stability",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "weapons_stratagem_fixes",
+              "heading": "Weapons & Stratagem Fixes",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue that allowed the M-103 Supply FRV's turret to spam movement audio when enemies were around, but it didn't visibly move",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the TD-220 Bastion main gun triggered the team reload request voice line",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed bug where reloading the flak cannon on the EXO-55 Breakthrough Exosuit would sometimes work incorrectly",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "The 40-K Meltagun now destroys Command Bunkers’ sides correctly",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue causing the Hellbomb to be unavailable on one side of the Gazer Spire objective",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the Melta Mine inconsistently triggered when used on Vox Engine",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an animation issue with the Hyena when the reload is interrupted",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "enemies",
+              "heading": "Enemies",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the Bile Titan would clip through the cave roof in some of the passages in one of the Spore Lung locations",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "The Crescent Overseer's backpack can now be destroyed, killing the enemy in the process",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "The Hive Lord will now leave combat earlier if not damaged by players for a certain duration",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the Vox Engine doors damaged players too much while on the ground",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where Watchers spawned in very large numbers when mixing Illuminate's fleets",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Crusher head gore no longer leaves a transparent hole where the neck is supposed to be",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where Hulk Scorchers would take damage and stagger from their own saw attack",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "performance_visual",
+              "heading": "Performance & Visual",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "cpu_optimizations",
+                  "heading": "CPU optimizations",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Improved multithreaded performance for smoother frame pacing and better frame times, particularly on lower core-count CPUs and Xbox Series S",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Reduced stuttering during intense combat scenes by optimizing how particle effects are processed",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "General improvements to level loading responsiveness",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "[PC] Reduced hitching caused by shader compilation",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                },
+                {
+                  "id": "visual_improvements",
+                  "heading": "Visual improvements",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "[PC] Fixed an issue that could cause graphical issues when using Dynamic Resolution Scaling on AMD Radeon graphics cards.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "[PC] Adjusted Screen Space Reflections to flicker less when no anti-aliasing is used",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Fixed horizontal streak artifacts in reflections",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Fixed visual artifacts around objects when smoke is present in the background and Variable Rate Shading is used",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Dynamic Resolution Scaling now checks for gpu bound frames before decreasing resolution",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The image in Message Of The Day in 'Example Patch Notes' now has the correct aspect ratio",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Added missing color grading when NVIDIA DLSS or AMD FSR upscaling are enabled",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                }
+              ]
+            },
+            {
+              "id": "misc",
+              "heading": "Misc",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the player could get stuck in one of the Extract Organic soup location",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where a SEAF could use an incorrect voice line when being revived by another SEAF",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the players unlocked the \"Democracy ain't done with you yet\" achievement when stimming SEAF",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the player name of a disconnected player would still remain in the minimap",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an enemy pathing issue on the illuminate missions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue with softlocking 'Condemn Illicit Experiments' objective where the camera could get stuck under the portable comms relay",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the IX-Voidwalker helmet would disappear in some camera angles",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where only Harvesters could spawn in cities when facing the Appropriator fleet",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Explosions that originate inside a shield bubble should now properly damage entities inside the shield",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where players could get stuck in Sabotage Pipes location",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where the Charger was having trouble navigating one of the Collect Data locations",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue with players getting stuck underneath a pipe in one of the Extract Organic Soup location",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed enemy traversal issues in one of the Collect Data locations",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue with players floating above ground when interacting with the Data Jack in the Disrupt Shield Generator(s) objective",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed enemy navigation issues in one of the Spore Lung objective locations",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Support weapon settings (e.g., fire mode) now persist between uses and across sessions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue with the “Recover Scientific Specimens” optional objectives",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where no animations would be triggered while interacting with a minigame if Dispatches showed at the same time",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Extreme weather conditions are now more muted while behind large objects and indoors",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue with weapons on the ship bridge disappearing from view at a certain camera angle",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Improved soundscape when filming with the shoulder-mounted camera in first person view",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "The assisted reload animations have been reworked to function better when the shooter is prone",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed rendering bug that could cause incorrect lighting for certain particle effects (smoke plumes, etc.)",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "When unlocked, ICBM lights now deactivate in order to increase the visibility of remaining locks.",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a bug that caused a Democracy Officer voiceover line about the Gloom to play significantly more often than it should",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Added emotes for SEAF: Rock, paper, scissors, Pull my finger and Test of Conviction",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Improved hitbox alignment for ragdolling enemies during frame-rate drops",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where some character parts could behave incorrectly during ragdoll transitions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "The banners on the hologram map that denote the presence of special enemy variants have been adjusted for improved readability",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Improved cooldown mechanism for Stingrays when there are a lot of enemies, making their spawn frequency work a bit more as intended",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "GPU busy % frame statistic is now available on all platforms",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Added a message overlay explaining when chat functionality is unavailable due to communication restrictions on consoles.",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where text within certain popups couldn't be scrolled using the controller",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Usernames changes are updated mid game when playing multiplayer",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Bug rocks no longer bleed red",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a bug where spawned Exo suits would have the default skin applied (instead of the actually selected skin) for late joining players",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a bug that would cause Helldivers to get knocked in the air when exiting a driving vehicle",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue preventing enemies from spawning at locations in CR1 Appropriator planets",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Tesla and Generator VFX no longer become huge from a distance",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an overlapping VO issue on immediate extraction missions",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue where 'Infiltrate Illuminate Lair' objectives were not taggable in some situations",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed some city destruction sync issues",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed Message of the Day QR code to work with more phones",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed minor navigation issues on desert planets",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue where cave points of interest could be partially outside the cave",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "In-world subtitles now take into account subtitle settings",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Replaying the tutorial level no longer resets custom armor choices",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue where Hellpods could sometime land on cave roofs on Hive Worlds",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "SEAF Gun stratagem name now updates with the projectile type in stratagem list.",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed various bugs in the armory weapon customization",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a bug that caused the minimap Fog of War effect to not sync between players",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Cyrillic characters will no longer display extra spaces between characters for players using non-Cyrillic text.",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Display names with Bengali, Devanagari and Thai characters should be displayed correctly. Ship-operator names should show up again on consoles",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed an issue where some leaping enemies could jump in the wrong direction when targeting the Breakthrough Exosuit",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Switching to a different equipment slot during an emote will no longer lead to unnatural weapon handling",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Added back button to speech initial setting screen",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            }
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading": "Known Issues",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        }
+      ]
+    },
     {
       "id": "1.007.101",
       "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.101",
