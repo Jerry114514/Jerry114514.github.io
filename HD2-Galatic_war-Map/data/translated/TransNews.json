@@ -1,11 +1,20 @@
 {
  "mo_brief": {
   "title": "MAJOR ORDER",
-  "original": "Hold the designated planet, complete the required number of operations, and terminate the mandated quantity of Illuminate hostiles in order to restore peace of mind and full respiratory capacity to our most honored retirees.",
-  "translated": "守住指定行星，完成规定次数的行动，并歼灭指定数量的光能者敌军，以此让我们最受敬重的退休人员重获心安与完整的呼吸能力。",
-  "translated_at": "2026-10-14T18:22:30Z"
+  "original": "Liberate the designated planets to secure the raw materials needed to properly honor our fallen heroes.",
+  "translated": "解放指定行星，确保获取用以妥善缅怀阵亡英雄所需的原材料。",
+  "translated_at": "2026-10-20T09:14:56Z"
  },
  "items": [
+  {
+   "id": 3960,
+   "original": "To honor the fallen, the government has authorized the construction of The Malevelon Creek Memorial & Interrogation Center for Human Rights. However, enemy aggression threatens this project. \n\nTheir occupation of Super Earth territories rich in rare metals, crude oil, and radioactive isotopes, among others, steals from the prosperity of all. This is an insult to the memory of our heroes. The Helldivers are ordered to liberate FURY, ESKER, and ZEA RUGOSIA.",
+   "translated": "为缅怀阵亡将士，政府已批准建造“马利夫伦溪纪念与人权审讯中心”。然而，敌人的侵略正威胁这项工程。\n\n他们占领了富含稀有金属、原油与放射性同位素等资源的超级地球领土，窃取了本属于全体公民的繁荣。这是对我们英雄英灵的侮辱。绝地潜兵奉命解放费里、艾斯科尔与泽亚鲁戈西亚。",
+   "published_at": "2026-10-20T09:09:25Z",
+   "translated_at": "2026-10-20T09:14:54Z",
+   "source": "dispatch",
+   "engine": "deepseek-chat"
+  },
   {
    "id": 3959,
    "original": "STRATEGIC ALERT\n\nThe Automaton Incineration Corps has been reported on VINDEMITARIX PRIME.",
@@ -86,15 +95,6 @@
    "translated_at": "2026-10-09T23:51:45Z",
    "source": "dispatch",
    "engine": "deepseek-chat"
-  },
-  {
-   "id": 3950,
-   "original": "NEW MAJOR ORDER\n\nThe Illuminate have manipulated harmless gaseous residues into somehow affecting exclusive Class A retirement facilities orbiting SENGE 23.\n\nTo prove the safety of Eagle Gas Storms—normally entirely benevolent to human lungs—Helldivers must hold SENGE 23, and deploy to the Terminid front to eliminate 30,000,000 Bile Spewers and 40,000,000 Bile Spitters, to aid vital and fully planned research into airborne toxicity.",
-   "translated": "新重要指令\n\n光能者将无害的气体残留物加以操控，竟使其影响到环绕新戈23运行的专属A级退休设施。\n\n为证明飞鹰毒气风暴的安全性（通常对人体肺部完全无害），绝地潜兵必须守住新戈23，并部署至终结族前线，消灭 3000 万（30,000,000）只喷酸虫与 4000 万（40,000,000）只吐酸虫，以协助一项至关重要且计划周全的空气毒性研究。",
-   "published_at": "2026-10-08T13:41:21Z",
-   "translated_at": "2026-10-08T17:14:58Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat"
   }
  ],
  "strategic": {
@@ -104,7 +104,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-19T23:24:00Z",
+  "computed_at": "2026-10-20T09:14:56Z",
   "planet_index": null
  }
 }
