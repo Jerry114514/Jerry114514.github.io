@@ -52,17 +52,34 @@ HEADING_IDS = [
 ALPHA = re.compile(r"[^a-z0-9]")
 
 
-def api(qs, tries=3):
+class UpstreamUnavailable(RuntimeError):
+    """上游 wiki.gg 暂时不可用（5xx / 读超时 / 连接失败）。
+
+    这不是本站的故障：定时任务每 2 小时跑一次，下一轮自然会补上。
+    2026-10-21 实测 wiki.gg 连续返回 502 把 job 打红（一轮三连败），所以把「上游不可用」
+    和「数据/格式错误」分开：前者 main() 里按「本轮跳过」处理，后者照旧非 0 退出。
+    """
+
+
+def api(qs, tries=6):
+    """调 MediaWiki API。偶发 502 / 读超时很常见 → 指数退避多试几次；
+    仍然失败抛 UpstreamUnavailable（main 里当「上游暂不可用」跳过本轮）。"""
     url = API + "?" + qs
     last = None
     for i in range(tries):
         try:
-            raw = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=45).read()
-            return json.loads(raw.decode("utf-8"))
-        except Exception as e:                                   # 网络抖动重试
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=45) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except Exception as e:                                   # 网络抖动 / 上游 5xx：退避重试
             last = e
-            time.sleep(1.5 * (i + 1))
-    raise RuntimeError("API 失败 %s: %s" % (qs[:60], last))
+            if i + 1 < tries:
+                retry_after = 0
+                try:
+                    retry_after = int((getattr(e, "headers", None) or {}).get("Retry-After") or 0)
+                except Exception:
+                    retry_after = 0
+                time.sleep(min(60, retry_after or 2 ** (i + 1)))  # 2/4/8/16/32s
+    raise UpstreamUnavailable("API 失败 %s: %s" % (qs[:60], last))
 
 
 def norm_id(heading):
@@ -248,7 +265,15 @@ def main():
             print("!! 旧文件解析失败，将全量重抓: %s" % e)
             old_doc = None
 
-    d = api("action=query&list=categorymembers&cmtitle=Category%3APatch%20Notes&cmlimit=500&format=json")
+    try:
+        d = api("action=query&list=categorymembers&cmtitle=Category%3APatch%20Notes&cmlimit=500&format=json")
+    except UpstreamUnavailable as e:
+        # 上游挂了不是本站故障：本轮不写盘、不提交，等下一个 2 小时的定时跑次。
+        print("!! 上游 wiki.gg 暂不可用，本轮跳过（下一轮自动重试）: %s" % e)
+        if a.report:
+            with io.open(a.report, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write("UPSTREAM_UNAVAILABLE: %s\n" % str(e)[:200])
+        return 0
     if "query" not in d:
         print("API 错误：%s" % json.dumps(d, ensure_ascii=False)[:300])
         return 2
