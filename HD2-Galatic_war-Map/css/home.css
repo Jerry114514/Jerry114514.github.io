@@ -1572,27 +1572,86 @@
       font-size:15px;color:var(--warn);margin-top:3px;
     }
 
-    /* ---- ⑥ 词条列表 ---- */
-    .planet-card .pc-traits{border-top:2px solid var(--fcd)}
-    .planet-card .pc-trait{padding:9px 12px;border-bottom:1px solid var(--border)}
-    .planet-card .pc-trait:last-child{border-bottom:none}
-    .planet-card .pc-trait .h{display:flex;align-items:center;gap:7px}
-    .planet-card .pc-trait .h b{
-      font-size:12.5px;font-weight:700;color:var(--fc);letter-spacing:.05em;
+    /* ---- ⑥ 环境图上的行动变量图标层（2026-10）----
+       变种 / 增益 / 设施等词条不再铺在卡片正文（那几段长说明会把同排卡片拉得高矮不齐），
+       改为小图标直接压在星球环境图底部；名称 + 完整说明见悬停 / 聚焦 / 点击浮层。
+       图标 18px、按钮 26px 见方，最多两行 —— 320px 窄卡也不溢出、不挡星球主体。 */
+    .planet-card .pc-fx{
+      position:absolute;left:0;right:0;bottom:0;z-index:2;
+      display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px;
+      padding:14px 7px 6px;pointer-events:none;
+      background:linear-gradient(180deg,rgba(10,10,10,0) 0%,rgba(10,10,10,.55) 55%,rgba(10,10,10,.88) 100%);
     }
-    .planet-card .pc-trait p{margin:5px 0 0;font-size:11.5px;line-height:1.65;color:var(--text-dim)}
+    .planet-card .pc-fx-i{
+      pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;
+      min-width:26px;height:26px;padding:0 4px;margin:0;cursor:pointer;
+      border:1px solid rgba(255,255,255,.22);border-radius:0;
+      background:rgba(12,12,12,.78);color:#94A3B8;font:inherit;
+    }
+    .planet-card .pc-fx-i:hover,
+    .planet-card .pc-fx-i[aria-pressed="true"]{border-color:currentColor}
+    .planet-card .pc-fx-i:focus-visible{outline:2px solid var(--yellow);outline-offset:1px}
+    .planet-card .pc-fx-ic{display:block;width:18px;height:18px;line-height:0}
+    .planet-card .pc-fx-ic svg{display:block;width:100%;height:100%;fill:currentColor}
+    .planet-card .pc-fx-ic img{display:block;width:100%;height:100%;object-fit:contain}
+    /* 取图失败（file:// / 404）降级成短文字，不留空框 */
+    .planet-card .pc-fx-ic-txt{font-size:9px;line-height:1;color:inherit}
+    /* 没有专用图标的效果：短标签；完整名称/说明在 aria-label 与浮层里 */
+    .planet-card .pc-fx-txt{color:#E6EDF7}
+    .planet-card .pc-fx-lbl{
+      display:block;max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      font-size:10px;line-height:1;letter-spacing:.02em;
+    }
+    .planet-card .pc-fx-neg{color:#FF8A6A;border-color:rgba(255,77,46,.55)}
+    .planet-card .pc-fx-more{color:var(--yellow);font-size:10px;font-weight:700}
 
     /* ---- ⑥-b 星球下属区域（城市 / 超大型工厂，2026-09-24）----
        与星图星球卡片同一套数据与口径（tables/planet_regions*.json + data.json 的 regions[]）。
        ⚠ **不列"星球本体"那一行**（2026-09-24 用户反馈）：静态表里 211 条区域没有一条与星球同名，
          游戏面板里的"<星球>城市"行不是区域；且星球自身进度条上方已有，重复且把本体误标成城市。 */
-    .planet-card .pc-regions{border-top:2px solid var(--fcd)}
-    .planet-card .pc-regions .rhd{
-      display:flex;align-items:baseline;gap:6px;padding:7px 12px 4px;
+    /* ---- ⑥-b 统一折叠区（城市 / 超大型工厂 + 星球详情，2026-10 第二轮）----
+       用户反馈：原来城市列表与星球详情各有一套开合，先点开卡片一次、再点区域一次 = 二重展开。
+       现在整卡只有这一个入口：一次展开同时显示城市列表与详情，再点统一收起；
+       没有区域数据的星球用同一个入口（不带计数，也不留空行）。
+       收起时标题行下面一行紧凑提示（开放城市数量 + 进度最好的那座城市），点它也照常展开。
+       ⚠ 不列「星球本体」那一行（2026-09-24 用户反馈：静态表 211 条区域没有一条与星球同名）。 */
+    .planet-card .pc-sec{border-top:2px solid var(--fcd);margin-top:auto}
+    .planet-card .pc-sec .rhd{
+      display:flex;align-items:center;gap:6px;padding:7px 12px 6px;
       font-size:11px;font-weight:700;color:var(--yellow);letter-spacing:.06em;
     }
-    .planet-card .pc-regions .rhd b{color:var(--text)}
-    .planet-card .pc-regions .rhd .tip{margin-left:auto;font-size:9.5px;font-weight:400;color:var(--text-mute);letter-spacing:0}
+    /* 入口按钮：原生 button（Enter / 空格可用），aria-expanded 与 body 的 hidden
+       由页面点击委托同步；卡片上不再有第二套开合。 */
+    .planet-card .pc-sec-toggle{
+      display:inline-flex;align-items:center;gap:6px;flex:1;min-width:0;
+      padding:0;margin:0;border:0;background:none;cursor:pointer;
+      color:inherit;font:inherit;letter-spacing:inherit;text-align:left;
+    }
+    .planet-card .pc-sec-toggle b{color:var(--text)}
+    .planet-card .pc-sec-toggle .arw{font-size:9px;color:var(--text-mute);transition:transform .15s}
+    .planet-card .pc-sec-toggle[aria-expanded="true"] .arw{transform:rotate(90deg)}
+    .planet-card .pc-sec-toggle .tip{
+      font-size:9.5px;font-weight:400;color:var(--text-mute);letter-spacing:0;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .planet-card .pc-sec-toggle .lbl{font-size:9.5px;font-weight:400;color:var(--blue);letter-spacing:0}
+    .planet-card .pc-sec-toggle:hover .lbl,
+    .planet-card .pc-sec-toggle:focus-visible .lbl{color:var(--yellow)}
+    .planet-card .pc-sec-toggle:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+    /* 一行城市提示；展开时保留高度，避免窗口尺寸变化后收起高度漂移。 */
+    .planet-card .pc-sec-hint{
+      padding:0 12px 7px;font-size:10px;line-height:1.35;color:var(--text-mute);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
+    }
+    .planet-card .pc-sec-body[hidden]{display:none}
+    /* 脚本没加载成功时的兜底：原生 <details>，同一个入口语义，不靠 JS 也能开 */
+    .planet-card .pc-sec-native>summary{list-style:none;cursor:pointer}
+    .planet-card .pc-sec-native>summary::-webkit-details-marker{display:none}
+    .planet-card .pc-rg-doc{
+      flex:0 0 auto;font-size:10px;font-weight:400;color:var(--blue);
+      letter-spacing:0;text-decoration:none;
+    }
+    .planet-card .pc-rg-doc:hover{color:var(--yellow);text-decoration:underline}
     .planet-card .pc-rg{display:flex;align-items:center;gap:7px;padding:4px 12px;font-size:11.5px}
     .planet-card .pc-rg + .pc-rg{border-top:1px solid var(--border)}
     .planet-card .pc-rg .ico{flex:0 0 14px;text-align:center;font-size:11px}
@@ -1601,6 +1660,30 @@
     .planet-card .pc-rg .ty{flex:0 0 66px;font-size:10px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .planet-card .pc-rg .ty em{font-style:normal;color:var(--yellow);font-size:9px;margin-left:2px}
     .planet-card .pc-rg .pct{flex:0 0 48px;text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+
+    /* ---- ⑥-c 行动变量说明浮层（挂 body，不卡片裁剪）----
+       .pc-landmark / .planet-card 都是 overflow:hidden，浮层放卡片里会被裁掉，
+       故由 planet-card-effects.js 挂在 body 上按图标位置 fixed 定位。
+       悬停 / Tab 聚焦 / 点击（触屏）共用同一个浮层；Esc、滚动或点别处关闭。 */
+    .pc-fx-tip{
+      position:fixed;z-index:var(--z-modal,999);max-width:min(300px, calc(100vw - 20px));
+      padding:8px 10px;background:#0C0C0C;border:1px solid rgba(255,176,0,.55);
+      box-shadow:0 8px 24px rgba(0,0,0,.6);pointer-events:none;
+      font-size:11.5px;line-height:1.6;color:var(--text-dim);
+    }
+    .pc-fx-tip[hidden]{display:none}
+    .pc-fx-tip .t{font-weight:700;font-size:12px;color:var(--yellow);letter-spacing:.04em}
+    .pc-fx-tip .d{margin:4px 0 0;white-space:pre-line}
+    .pc-fx-tip .c{margin:4px 0 0;font-size:10px;color:var(--text-mute)}
+    .pc-fx-tip .c[hidden]{display:none}
+
+    /* 手机（≤768px，断点规范）：图标与间距收一档，保证 320px 卡宽两行内排完 */
+    @media (max-width:768px){
+      .planet-card .pc-fx{gap:3px;padding:12px 5px 5px}
+      .planet-card .pc-fx-i{min-width:24px;height:24px;padding:0 3px}
+      .planet-card .pc-fx-ic{width:16px;height:16px}
+      .planet-card .pc-fx-lbl{max-width:54px;font-size:9.5px}
+    }
 
     /* ---- 已解放：去掉进度条区，仅保留状态行 ---- */
     .planet-card .pc-liberated{

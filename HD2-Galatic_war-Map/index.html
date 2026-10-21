@@ -25,7 +25,7 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20260929a">
+  <link rel="stylesheet" href="./css/home.css?v=20261021b">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -321,6 +321,7 @@
   <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
+  <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
 
@@ -1732,6 +1733,23 @@ function renderPlayers(data) {
       g.style.setProperty("--card-w", cardW + "px");
       g.style.setProperty("--band-w", avail + "px");
     });
+    // 只按收起时的自然高度对齐同排卡片；展开统一折叠区只增高本卡（.planet-grid 是 align-items:start）。
+    const rows = [];
+    grids.forEach(function (g) {
+      const cards = Array.from(g.querySelectorAll(":scope > .planet-card"));
+      cards.forEach(c => { c.style.minHeight = ""; });
+      if (!g.offsetWidth) return;
+      const columns = Math.max(1, Math.min(cols, cards.length));
+      for (let i = 0; i < cards.length; i += columns) rows.push(cards.slice(i, i + columns));
+    });
+    const heights = rows.map(row => Math.ceil(Math.max(...row.map(c => {
+      // 只扣**统一折叠区**：城市列表与星球详情现在都在同一个 .pc-sec-body 里，
+      // 分成两块分别扣会重复计算（子块高度已经包含在父块里，嵌套扣除会把高度扣穿）；
+      // 收起时 body 带 [hidden]，offsetHeight 为 0 → 量到的就是收起态的自然高度。
+      const body = c.querySelector(".pc-sec-body");
+      return c.getBoundingClientRect().height - (body?.offsetHeight || 0);
+    }))));
+    rows.forEach((row, i) => row.forEach(c => { c.style.minHeight = heights[i] + "px"; }));
   }
 
   /* 血条颜色（按血量百分比）：红(0-30%) 黄(30.1-60%) 绿(60.1-100%) */
@@ -2575,49 +2593,79 @@ function renderPlayers(data) {
     if (!mh || st.health == null) return null;
     return Math.max(0, Math.min(100, 100 * (1 - st.health / mh)));
   }
-  // 只显示静态表里有区域的星球；没有就不渲染整块（不占版面）
-  // ⚠ **只列下属区域，不列"星球本体"那一行**（2026-09-24 用户反馈）：
-  //   与星球同名的那一行不是区域（静态表 84 星 / 211 个区域里**没有一条**与星球同名），
-  //   把它标成「城市 / 超大型工厂」是错的；且星球自身进度条上面已有，重复且误导。
-  //   故本块 = tables/planet_regions.json 的 regions 原样列表。
-  function pcRegionsHtml(p) {
-    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
-    const st = PC_REGIONS[String(p.index)];
-    if (!st || !st.regions || !st.regions.length) return "";
+  // 卡片折叠区：城市 / 超大型工厂列表 **和** 星球详情共用同一个入口
+  // （2026-10 第二轮用户反馈：取消原来的「区域块 + 详情面板」两套开合 ——
+  //   一次展开同时显示两者，再点统一收起；没有区域数据的星球用同一个入口）。
+  // 收起时标题行下面给一行紧凑提示（开放城市数量 + 进度最好的那座城市），
+  // 文案由 planet-card-effects.js 的 regionHint 生成，开放判据见那里。
+  // ⚠ 只列下属区域，不列「星球本体」那一行（2026-09-24 用户反馈：静态表 211 条区域
+  //   没有一条与星球同名，把它标成「城市 / 超大型工厂」是错的；星球自身进度条上面已有）。
+  const pcRegionPctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
+  function pcCardSection(p, starMap, statusLabel) {
+    const regionsReady = !!window.HD2Regions;
+    const st = regionsReady ? PC_REGIONS[String(p.index)] : null;
+    const regions = (st && st.regions) || [];
     const zhMap = PC_REGIONS_ZH[String(p.index)] || {};
-    // 己方星球：官方在"没有区域战役"时不再下发 regions[]，此时区域进度只能是"—"，
-    // 但整颗星球都拿下来了，逐条显示"—"会让人以为区域数据丢了 → 我方星球一律记 100%。
+    // 己方星球：官方在「没有区域战役」时不再下发 regions[]，此时区域进度只能是「—」，
+    // 但整颗星球都拿下来了，逐条显示「—」会让人以为区域数据丢了 → 我方星球一律记 100%。
     // ⚠ 有运行时数据时**仍以运行时为准**（我方星球上也可能是某个区域还在打）。
     const ours = String(p.currentOwner || "").toLowerCase() === "humans";
     const pctOf = (live, meta) => {
       const v = pcRegionLib(live, meta);
       return (v == null && ours) ? 100 : v;
     };
-    const pctTxt = (v) => v == null ? "—" : (v >= 99.995 ? "100%" : v.toFixed(2) + "%");
-    // 每一行 = 名称/类型/解放度，下面再补一行「抵抗度 · 实际推进 · 预计解放」（实测优先），
-    // 这样城市/超大型工厂也能一眼看出还差多久、推不推得动。
-    const row = (o) => `<div class="pc-rg-wrap">
+    // 每一行 = 名称 / 类型 / 解放度 + 区域规则 + 一行速率（实测优先），口径与星图一致
+    const items = regions.map((r, k) => {
+      const live = regionsReady ? HD2Regions.live(p, k) : null;
+      const info = regionsReady ? HD2Regions.info(p, k, r, currentData) : null;
+      return {
+        meta: r,
+        zh: zhMap[r.name] || "",
+        en: r.name,
+        type: pcRegionTypeLabel(r),
+        stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
+        pct: pctOf(live, r),
+        rules: info ? HD2Regions.html(info) : "",
+        rate: pcRegionRateHtml(p, live),
+        available: info ? info.available : null,
+      };
+    });
+    const rowsHtml = items.map(it => `<div class="pc-rg-wrap">
       <div class="pc-rg">
-        <span class="ico">${o.megafactory ? "🏭" : "🏙"}</span>
-        <span class="nm">${esc(o.zh || o.en)}${o.zh && o.en ? `<i>${esc(o.en)}</i>` : ""}</span>
-        <span class="ty">${esc(o.type)}${o.stars ? `<em>${"★".repeat(o.stars)}</em>` : ""}</span>
-        <span class="pct">${pctTxt(o.pct)}</span>
-      </div>${o.rules || ""}${o.rate || ""}</div>`;
-    const rows = st.regions.map((r, k) => row({
-      type: pcRegionTypeLabel(r),
-      stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[pcRegionTypeOf(r)] || 0,
-      megafactory: pcRegionTypeOf(r) === "Megafactory",
-      zh: zhMap[r.name] || "", en: r.name,
-      pct: pctOf(HD2Regions.live(p, k), r),
-      rules: HD2Regions.html(HD2Regions.info(p, k, r, currentData)),
-      rate: pcRegionRateHtml(p, HD2Regions.live(p, k)),
-    }));
-    return `<div class="pc-regions"><div class="rhd">🏙 区域 <b>${st.regions.length}</b>` +
-      `<span class="tip">城市 / 超大型工厂</span>` +
-      // 内链：星球卡直接给出资料页入口（2026-09-25）。stopPropagation 避免触发卡片自身的详情展开。
-      `<a href="./planet.html?idx=${p.index}" title="打开该星球的完整资料页（战役 / 统计 / 环境 / 补给线）" ` +
-      `onclick="event.stopPropagation()" style="margin-left:6px;color:var(--blue);font-size:10px;text-decoration:none">📄 资料</a>` +
-      `</div>${rows.join("")}</div>`;
+        <span class="ico">${pcRegionTypeOf(it.meta) === "Megafactory" ? "🏭" : "🏙"}</span>
+        <span class="nm">${esc(it.zh || it.en)}${it.zh && it.en ? `<i>${esc(it.en)}</i>` : ""}</span>
+        <span class="ty">${esc(it.type)}${it.stars ? `<em>${"★".repeat(it.stars)}</em>` : ""}</span>
+        <span class="pct">${pcRegionPctTxt(it.pct)}</span>
+      </div>${it.rules}${it.rate}</div>`).join("");
+    const detailHtml = planetDetailHtml(p, starMap, statusLabel);
+    const docHref = `./planet.html?idx=${p.index}`;
+    const rg = window.HD2PlanetCardEffects;
+    // 收起时的一行城市提示：只喂 available（真实 isAvailable），本函数不猜开放/交战
+    const summary = rg ? rg.regionHint(items.map(it => ({
+      name: it.zh || it.en, pct: it.pct, available: it.available,
+    }))) : "";
+    const label = items.length
+      ? "城市与星球详情（区域 " + items.length + "）" + (summary ? " · " + summary : "")
+      : "星球详情（战略分析 / 行动变量 / 兴趣点）";
+    if (!rg) {
+      // 兜底（脚本没加载成功）：用原生 <details> 给同一个入口，键盘可用、信息不丢
+      return `<details class="pc-sec pc-sec-native"><summary class="rhd">` +
+        `<span class="k">${items.length ? "🏙 区域" : "📋 详情"}</span>${items.length ? " <b>" + items.length + "</b>" : ""}` +
+        `<a class="pc-rg-doc" href="${docHref}" title="打开该星球的完整资料页（战役 / 统计 / 环境 / 补给线）">📄 资料</a>` +
+        `</summary><div class="pc-sec-body">` +
+        (regionsReady ? rowsHtml : `<div class="region-rules">区域信息暂不可用</div>`) +
+        `<div class="planet-detail-wrap">${detailHtml}</div></div></details>`;
+    }
+    return rg.cardSectionHtml({
+      index: p.index,
+      count: items.length,
+      hint: items.length ? "城市 / 超大型工厂" : (regionsReady ? "" : "区域信息暂不可用"),
+      summary,
+      label,
+      docHref,
+      rowsHtml,
+      detailHtml,
+    });
   }
 
   // 星球卡片（2026-09-13 改版：战役图标 + 环境图 + 进度条 + 侵蚀等级 + 词条）
@@ -2653,11 +2701,22 @@ function renderPlayers(data) {
       </div>
     </div>`;
 
-    // ---- ② 环境图（API biome -> 本地缓存） ----
+    // ---- ② 环境图 + 行动变量图标层 ----
+    // 变种 / 增益等词条不再铺在卡片正文（最多 3 段长说明会把同排卡片拉得高矮不齐），
+    // 改为以图标直接叠在星球背景图底部；名称 + 完整说明在悬停 / 键盘聚焦 / 点击浮层里，
+    // 卡片详情面板也仍然列全部词条。图标映射复用星图的 EFFECT_ICON / EFFECT_COLOR。
+    const fxHtml = (window.HD2PlanetCardEffects && (p.activeEffects || []).length)
+      ? window.HD2PlanetCardEffects.effectsHtml(p.activeEffects, {
+          vars: effectCnDescMap,
+          names: currentEffectMap,
+          details: currentEffectDetailMap,
+        })
+      : "";
     const bImg = pcBiomeOf(p, name.en);
-    const landmark = bImg
-      ? `<div class="pc-landmark"><img src="${esc(bImg)}" alt="${esc(p.biome || "")}" decoding="async"></div>`
-      : `<div class="pc-landmark pc-nobiome"></div>`;
+    const landmark = `<div class="pc-landmark${bImg ? "" : " pc-nobiome"}">` +
+      (bImg ? `<img src="${esc(bImg)}" alt="${esc(p.biome || "")}" decoding="async">` : "") +
+      fxHtml +
+      `</div>`;
 
     // ---- ③ 战役类型 + 星球名 ----
     // 阵营归属=超级地球 且 已解放：**不再标注战役类型**（此时并没有「战役」在打，
@@ -2721,36 +2780,15 @@ function renderPlayers(data) {
       </div>`;
     }
 
-    // ---- ⑦ 词条（星球行动变量；标题取阵营色）
-    // 注意：主页没有星图那套 EFFECT_ICON，用的是 buildDssEffectMap 产出的
-    // effectCnDescMap（effectId -> {cn, desc, cat}）；这里按 id 反查并去重。
-    let traits = "";
-    {
-      const seen = {};
-      const hits = [];
-      for (const id of (p.activeEffects || [])) {
-        const t = effectCnDescMap[id];
-        if (!t || !t.cn || seen[t.cn]) continue;
-        seen[t.cn] = 1;
-        hits.push(t);
-      }
-      if (hits.length) {
-        traits = `<div class="pc-traits">` + hits.slice(0, 3).map(t => `
-          <div class="pc-trait">
-            <div class="h"><b>${esc(t.cn)}</b></div>
-            ${t.desc ? `<p>${esc(t.desc)}</p>` : ""}
-          </div>`).join("") + `</div>`;
-      }
-    }
+    // ---- ⑦ 词条 ----
+    // 2026-10：正文不再输出变种 / buff 长说明块（原来最多截三段、每段一整句话，
+    // 把同排卡片底端拉得参差）；已移到 ② 的环境图图标层，说明见浮层与卡片详情。
 
     return `<div class="planet-card f-${fk}" data-planet-index="${p.index}">
       ${top}${landmark}${head}
       ${isLiberated ? "" : `<p class="pc-desc">${desc}</p>`}
-      ${progress}${invasion}${traits}
-      ${pcRegionsHtml(p)}
-      <div class="planet-detail-wrap" style="display:none">
-        ${planetDetailHtml(p, starMap, statusLabel)}
-      </div>
+      ${progress}${invasion}
+      ${pcCardSection(p, starMap, statusLabel)}
     </div>`;
   }
 
@@ -2911,13 +2949,49 @@ function renderPlayers(data) {
       }
       return;  // 词条点击不触发卡片展开
     }
-    const wrap = card.querySelector(".planet-detail-wrap");
-    if (!wrap) return;
-    const isOpen = wrap.style.display !== "none";
-    // 收起其他
-    document.querySelectorAll(".planet-detail-wrap").forEach(w => w.style.display = "none");
-    wrap.style.display = isOpen ? "none" : "block";
+    // 资料链接：正常跳转，不切换卡片折叠
+    if (e.target.closest(".pc-rg-doc")) return;
+    // 行动变量图标：浮层由 planet-card-effects.js 在捕获阶段处理并阻止冒泡；
+    // 这里再挡一层，脚本未初始化时点图标也不会误触卡片展开。
+    if (e.target.closest(".pc-fx-i")) return;
+    // 统一折叠（2026-10 第二轮反馈：城市列表与星球详情不再各开一套）：
+    // 点入口行、或收起时那行城市提示，都能开合；一次展开同时显示城市列表与详情。
+    const secHit = e.target.closest(".pc-sec-toggle, .pc-sec-hint");
+    if (secHit) { toggleCardSection(secHit.closest(".pc-sec")); return; }
+    // 阅读/选择已展开的内容不收起卡片，统一由入口控制关闭。
+    if (e.target.closest(".pc-sec-body")) return;
+    // 点卡片其它位置沿用旧行为：开合本卡；.pc-sec-native 是脚本缺失时的原生兜底，不参与
+    toggleCardSection(card.querySelector(".pc-sec:not(.pc-sec-native)"));
   });
+
+  // 开合统一折叠区：aria-expanded / .lbl 文案 / body hidden / .open 一起改，
+  // 保证键盘（原生 button 的 Enter / 空格）与读屏状态始终和视觉一致。
+  function setCardSectionOpen(sect, open) {
+    if (!sect) return;
+    const btn = sect.querySelector(".pc-sec-toggle");
+    const body = sect.querySelector(".pc-sec-body");
+    if (!btn || !body) return;
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    const lbl = btn.querySelector(".lbl");
+    if (lbl) lbl.textContent = open ? "收起" : "展开";
+    const base = btn.getAttribute("data-exp-label") || "";
+    btn.setAttribute("aria-label", (open ? "收起" : "展开") + (base ? " · " + base : ""));
+    body.hidden = !open;
+    sect.classList.toggle("open", open);
+  }
+  // 同一时刻只留一张卡展开（同屏两张超长卡片既难读、也会把整排拉得很长）。
+  // 同一星球在 MO / 可攻打列表各有一张卡时 DOM 独立、id 独立，互不串操作。
+  function toggleCardSection(sect) {
+    if (!sect) return;
+    const btn = sect.querySelector(".pc-sec-toggle");
+    const open = btn ? btn.getAttribute("aria-expanded") === "true" : false;
+    if (!open) {
+      document.querySelectorAll(".pc-sec.open").forEach(other => {
+        if (other !== sect) setCardSectionOpen(other, false);
+      });
+    }
+    setCardSectionOpen(sect, !open);
+  }
 
   /* ==============================================================
      入侵与邻接：两件**不同**的事，别混着用（2026-09-26 修）
@@ -3688,7 +3762,10 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
     startCountdownEngine();   // 全局单例：所有 data-cd 节点由它每秒推进
+    // 星球卡图标层：SVG 补全 + 说明浮层 + 统一折叠区（城市列表 + 详情）的键盘/触屏交互
+    window.HD2PlanetCardEffects?.init();
     window.addEventListener("resize", layoutPlanetGrids);
+    document.fonts?.ready.then(layoutPlanetGrids);
     refresh();
     startAutoRefresh();
     // 2026-09-29：后台 / 被遮住的标签页会被浏览器冻住定时器（App 内嵌浏览器尤其明显），
