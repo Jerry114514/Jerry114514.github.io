@@ -3,9 +3,9 @@
   "desc": "战役奖励 mixId → 类型明文/图标。**自动生成，勿手改**（改也下次刷新会覆盖）：跑 python scripts/fetch_reward_types.py 重新生成。",
   "source": "https://helldiverscompanion.com 前端 bundle 的奖励解析函数（结构锚点提取，见脚本头部说明）",
   "method": "scripts/fetch_reward_types.py",
-  "chunk": "Us9gZ0u2.js",
-  "generated_at": "2026-10-20T23:10:05Z",
-  "count": 1248,
+  "chunk": "BKrC7bYi.js",
+  "generated_at": "2026-10-21T01:32:11Z",
+  "count": 1249,
   "override": "人工补充/覆盖走 HD2-Galatic_war-Map/data/campaign_zh.json 的 reward_types（优先级更高，可额外给 detail 说明「具体是哪件装备」——上游没有这个信息）"
  },
  "types": {
@@ -3592,6 +3592,13 @@
    "icon": "cape",
    "img": "./assets/campaign/reward_cape.svg",
    "icBuild": "currency.item_cape2|#FBFAF5|0.8|0,-3"
+  },
+  "2659326411": {
+   "en": "Stratagem",
+   "cn": "战略配备",
+   "icon": "stratagem",
+   "img": "./assets/campaign/reward_stratagem.svg",
+   "icBuild": "currency.item_stratagem|#FBFAF5|0.56"
   },
   "2660793694": {
    "en": "Helmet",
