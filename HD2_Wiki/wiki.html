@@ -53,10 +53,11 @@
       background: linear-gradient(90deg, rgba(245,197,24,.14), rgba(59,130,246,.12));
       border: 1px solid rgba(245,197,24,.55); border-radius: 12px;
     }
-    .official-wiki-banner .tag {
+    .official-wiki-banner .owb-tag {
       flex: 0 0 auto; font-size: .7rem; font-weight: 700; letter-spacing: .08em;
       color: var(--yellow); border: 1px solid rgba(245,197,24,.6);
       border-radius: 999px; padding: 2px 8px; white-space: nowrap;
+      background: transparent;   /* 防全局 .tag 之类选择器染色 */
     }
     .official-wiki-banner .txt { flex: 1; min-width: 220px; font-size: .85rem; line-height: 1.6; color: var(--text-dim); }
     .official-wiki-banner .txt strong { color: var(--text); }
@@ -252,7 +253,7 @@
   </header>
 
   <aside class="official-wiki-banner" aria-label="官方中文 Wiki">
-    <span class="tag">官方中文 WIKI 已上线</span>
+    <span class="owb-tag">官方中文 WIKI 已上线</span>
     <div class="txt"><strong>建议优先查阅 wiki.gg 官方中文 Wiki</strong>（内容更全、维护更及时）。本站保留离线检索、星图联动与中文整理，作为<strong>兜底与补充</strong>。</div>
     <a class="go" href="https://helldivers.wiki.gg/zh/wiki/Main_Page" target="_blank" rel="noopener noreferrer">前往官方中文 Wiki ↗</a>
   </aside>
