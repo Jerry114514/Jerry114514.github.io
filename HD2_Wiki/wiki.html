@@ -46,6 +46,32 @@
 
     .wiki-header .nav-links a:hover { color: var(--yellow); border-color: var(--yellow); }
 
+    /* 官方中文 Wiki 引导（2026-10-22）：wiki.gg 中文站上线后，本站内容转为兜底与补充 */
+    .official-wiki-banner {
+      max-width: 960px; margin: 16px auto 0; padding: 14px 18px;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      background: linear-gradient(90deg, rgba(245,197,24,.14), rgba(59,130,246,.12));
+      border: 1px solid rgba(245,197,24,.55); border-radius: 12px;
+    }
+    .official-wiki-banner .tag {
+      flex: 0 0 auto; font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      color: var(--yellow); border: 1px solid rgba(245,197,24,.6);
+      border-radius: 999px; padding: 2px 8px; white-space: nowrap;
+    }
+    .official-wiki-banner .txt { flex: 1; min-width: 220px; font-size: .85rem; line-height: 1.6; color: var(--text-dim); }
+    .official-wiki-banner .txt strong { color: var(--text); }
+    .official-wiki-banner .go {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border: 1px solid var(--yellow); border-radius: 8px;
+      color: var(--yellow); text-decoration: none; font-size: .85rem;
+      font-weight: 600; white-space: nowrap; transition: all .2s;
+    }
+    .official-wiki-banner .go:hover { background: var(--yellow); color: #0B0E14; }
+    @media (max-width: 640px) {
+      .official-wiki-banner { margin: 12px 16px 0; padding: 12px 14px; }
+      .official-wiki-banner .go { width: 100%; justify-content: center; }
+    }
+
 
     /* Search */
     .wiki-search-wrap { max-width: 720px; margin: 0 auto; padding: 16px 20px 0; }
@@ -225,6 +251,12 @@
     </div>
   </header>
 
+  <aside class="official-wiki-banner" aria-label="官方中文 Wiki">
+    <span class="tag">官方中文 WIKI 已上线</span>
+    <div class="txt"><strong>建议优先查阅 wiki.gg 官方中文 Wiki</strong>（内容更全、维护更及时）。本站保留离线检索、星图联动与中文整理，作为<strong>兜底与补充</strong>。</div>
+    <a class="go" href="https://helldivers.wiki.gg/zh/wiki/Main_Page" target="_blank" rel="noopener noreferrer">前往官方中文 Wiki ↗</a>
+  </aside>
+
   <div class="wiki-search-wrap">
     <div class="wiki-search">
       <input type="text" id="wiki-search-input" autocomplete="off" spellcheck="false"
@@ -273,7 +305,7 @@
   <footer class="wiki-footer">
     <p>绝地潜兵2 中文维基 · 社区驱动 · 非官方数据源</p>
     <p style="margin-top:4px">
-      <a href="https://helldivers.wiki.gg">Helldivers Wiki.gg</a> · 
+      <a href="https://helldivers.wiki.gg/zh/wiki/Main_Page" target="_blank" rel="noopener noreferrer">Helldivers 中文 Wiki.gg</a> · 
       <a href="https://discord.gg/helldivers">Discord</a> · 
       <a href="https://store.steampowered.com/app/553850">Steam</a>
     </p>

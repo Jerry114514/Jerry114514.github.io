@@ -6,7 +6,7 @@ name: Fetch Patch Notes
 #   ① 发现新版本 → 抓成英文主干写进 HD2_Wiki/data/wiki/zh/patchnotes.json
 #   ② 同步 sitemap 里的详情页（gen_sitemap.py 幂等，已有 URL 的 lastmod 不动）
 #   ③ **先过校验器再提交**（§11.1-13「先校验后写盘」在 CI 里的等价物）
-#   ④ 有新版本就开 issue 提醒「待翻译」
+#   ④ 有新版本 → 向私密转译仓发 repository_dispatch，**直接触发翻译入库**（2026-10-22）
 #
 # 为什么是**独立工作流**而不是挂进 fetch-data.yml：
 #   挂进 fetch-data 延迟更低（那条 */5 的 schedule 实测最可靠），但 fetch-data 是
@@ -16,8 +16,10 @@ name: Fetch Patch Notes
 #   若发现长期不触发，按交接文档 §11.4 的做法把它挂进 fetch-data.yml（那条 schedule 稳定）。
 #   手动兜底：本工作流支持 workflow_dispatch，也可在本机直接跑 scripts/fetch_patchnotes.py。
 #
-# 翻译是**人在环**的一步（交接文档 §19.8 的 L1/L4）：本工作流只搬英文主干，
-# 中文由人按小节 id 对齐写进 patchnotes_zh.json（校验器 PATCH.PAIRING 强制条目数相等）。
+# 翻译不再「人在环」：HD2Web-Trans 的 Translate Patch Notes 会拉站点权威主干、机翻 +
+# 结构自检，然后把 patchnotes_zh.json 推回本站（本站校验器 PATCH.PAIRING 兜底）。
+# 本工作流只负责「英文主干入库 + 触发翻译」；dispatch 失败会让 job 变红，不再静默等 6h 定时。
+# ⚠ 跨仓触发需要 secrets.HD2_TRANS_TOKEN（对 HD2Web-Trans 有 Actions: write 的 PAT）。
 
 on:
   schedule:
@@ -26,7 +28,6 @@ on:
 
 permissions:
   contents: write         # 提交 patchnotes.json 与 sitemap.xml
-  issues: write           # 新版本入库后开 issue 提醒翻译
 
 concurrency:
   group: fetch-patchnotes
@@ -81,19 +82,26 @@ jobs:
             bash scripts/ci_push_retry.sh
           fi
 
-      - name: 有新版本 → 开 issue 提醒翻译
+      - name: 有新版本 → 触发翻译入库（HD2Web-Trans）
         if: steps.fetch.outputs.new != ''
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRANS_TOKEN: ${{ secrets.HD2_TRANS_TOKEN }}
         run: |
           set -euo pipefail
           vers="${{ steps.fetch.outputs.new }}"
-          first="$(printf '%s' "$vers" | cut -d, -f1)"
-          open_n="$(gh issue list --state open --search '更新公告待翻译' --json number --jq 'length')"
-          if [ "$open_n" != "0" ]; then
-            echo "已有未关闭的「待翻译」issue，跳过创建（避免刷屏）"
-            exit 0
+          if [ -z "${TRANS_TOKEN:-}" ]; then
+            echo "::error::缺少 secrets.HD2_TRANS_TOKEN（跨仓触发翻译需要 PAT）"
+            exit 1
           fi
-          gh issue create \
-            --title "📢 更新公告待翻译：$vers" \
-            --body "$(printf '新版本公告已自动入库（英文主干）：**%s**\n\n- 数据：`HD2_Wiki/data/wiki/zh/patchnotes.json`\n- 页面：https://jerry114514.github.io/HD2_Wiki/patchnote.html?id=%s\n- 翻译：按小节 `id` 对齐写进 `HD2_Wiki/data/wiki/zh/patchnotes_zh.json`，**节内条目数必须与主干相等**（校验器 `PATCH.PAIRING` 强制）\n- 更新名先查 `data/wiki/zh/terms.json`（例：`Devoid of Liberty = 自由入寂`）\n- 译完把该版本的 `fully_translated` 置 true\n' "$vers" "$first")"
+          http="$(curl -sS -o /tmp/dispatch.json -w '%{http_code}' -X POST \
+            -H "Authorization: Bearer $TRANS_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -H 'Content-Type: application/json' \
+            https://api.github.com/repos/Jerry114514/HD2Web-Trans/dispatches \
+            -d "{\"event_type\":\"translate-patchnotes\",\"client_payload\":{\"versions\":\"$vers\"}}")"
+          if [ "$http" != "204" ]; then
+            echo "::error::触发翻译失败: HTTP $http — $(cat /tmp/dispatch.json)"
+            exit 1
+          fi
+          echo "已触发 Translate Patch Notes 入库：$vers"
