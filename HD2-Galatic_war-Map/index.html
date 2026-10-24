@@ -321,6 +321,7 @@
   <script src="./js/rate-source.js"></script>
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
+  <script src="./js/mo-equipment.js?v=20261024a"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -745,7 +746,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const raceMap = { 1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate" };
     const raceName = raceMap[race] || null;
 
-    return { type: t, typeCn, goal, current, planet, sector, locType, race, raceName };
+    return { type: t, typeCn, goal, current, planet, sector, locType, race, raceName, itemID: get(5) };
   }
 
   /* ==============================================================
@@ -1219,6 +1220,10 @@ function renderPlayers(data) {
     const planetByIndex = (data.planets && !data.planets.__err)
       ? Object.fromEntries((data.planets || []).map(p => [p.index, p]))
       : {};
+    // MO 限定装备官中名（2026-10-24）：major_order.tasks 由 HD2Web-Trans 解析写入
+    //（itemMixId -> 官方英文索引 -> 站点权威图鉴官方简中，见 js/mo-equipment.js）。
+    // 旧数据没有 tasks 时表为空，任务行自动降级为 raw ID 展示，其余不受影响。
+    const equipNames = window.HD2MoEquipment ? window.HD2MoEquipment.nameById(mo.tasks) : {};
 
     const moW = moWindowOf(data);
     const mw = window.HD2Recent?.moWindows(a, DATA_FETCH_MS);
@@ -1296,12 +1301,21 @@ function renderPlayers(data) {
         expectHtml.line = `<div class="mo-expect">${f.state === "satisfied" ? "当前条件已满足" : f.state === "unavailable" ? "预测模块未加载，暂无法预测" : f.state === "stateful" ? "状态类任务，暂不作线性预测" : "目标值、当前进度或指令起点数据不足，暂无法预测"}</div>`;
       }
 
+      // 限定装备（valueType 5=itemID）：优先取 HD2Web-Trans 解析出的官方中文名
+      //（按 requirement.id 查找，与任务顺序无关）；名称缺失时区分展示：
+      //   有官方英文名 -> 「使用：<英文名>」（en_fallback，title 标注）；
+      //   完全未知     -> 「使用：装备 #<raw ID>」（不猜名，与流水线 unresolved 口径一致）。
+      // 逻辑在 js/mo-equipment.js（scripts/tests/mo-equipment-check.mjs 离线校验）。
+      const equipLine = window.HD2MoEquipment
+        ? window.HD2MoEquipment.line(decoded.itemID, equipNames, esc) : "";
+
       return `
         <div class="mo-task">
           <div class="mo-task-head">
             <span>任务 ${i + 1}：${taskTitle}</span>
             <span class="mo-task-progress">${decoded.type === 13 ? (f.state !== "hold" ? "状态数据不足" : f.satisfied ? "当前持有 · 需保持至截止" : "尚未持有") : `${currentStr} / ${goalStr} (${Number(pct.toFixed(1))}%)`}</span>
           </div>
+          ${equipLine}
           <div class="progress-bar${decoded.type === 13 ? " mo-hold-bar" : ""}">
             ${decoded.type === 13 ? `<span class="mo-hold-status">${f.state !== "hold" ? "守持状态未知" : f.expired ? (f.satisfied ? "截止快照满足条件 · 以官方结算为准" : "截止快照未满足条件") : f.satisfied ? "坚守中 · 截止时结算" : "等待夺回并坚守"}</span>` : `<div class="progress-bar-fill" style="width:${pct}%"></div>`}
             ${expectHtml.mark}

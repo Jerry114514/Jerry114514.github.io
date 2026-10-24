@@ -33,6 +33,7 @@ jobs:
       - run: node scripts/tests/ownership-changes-check.mjs
       - run: node scripts/tests/reinforcement-share-check.mjs
       - run: node scripts/tests/dss-donations-check.mjs
+      - run: node scripts/tests/mo-equipment-check.mjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

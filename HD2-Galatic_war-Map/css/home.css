@@ -389,6 +389,16 @@
       background: var(--blue, #3B82F6);
       box-shadow: 0 0 5px rgba(59, 130, 246, 0.95);
     }
+    /* 限定装备行（重要指令）：「使用：重机枪部署支架」等，位于任务标题与进度条之间 */
+    .mo-task-equip {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-mute);
+    }
+    .mo-task-equip b {
+      color: var(--text);
+      font-weight: 700;
+    }
     .mo-expect {
       margin-top: 6px;
       font-size: 0.76rem;
