@@ -12,11 +12,18 @@
   function validatePhysicsParams(opts) {
     // 公共入口统一拒绝会产生 NaN/Infinity 伪结果的参数（2026-10-24 审查 P1：
     // massG=0 时 K=Infinity，页面此前仍显示“完成”但整表都是 NaN）。
+    // 错误带结构化 {code, field}，app 层按 locale 渲染中英文（message 保留中文兜底）。
+    const physicsError = (kind, label) => {
+      const error = new Error(label + (kind === "physics_positive" ? " 必须是有限正数" : " 必须是有限非负数"));
+      error.code = kind;
+      error.field = label;
+      return error;
+    };
     const requirePositive = (value, label) => {
-      if (!Number.isFinite(value) || value <= 0) throw new Error(label + " 必须是有限正数");
+      if (!Number.isFinite(value) || value <= 0) throw physicsError("physics_positive", label);
     };
     const requireNonNegative = (value, label) => {
-      if (!Number.isFinite(value) || value < 0) throw new Error(label + " 必须是有限非负数");
+      if (!Number.isFinite(value) || value < 0) throw physicsError("physics_non_negative", label);
     };
     requirePositive(opts.caliberMm, "caliberMm");
     requirePositive(opts.massG, "massG");
@@ -31,8 +38,10 @@
 
   function assertStepBudget(maxSteps) {
     if (!Number.isSafeInteger(maxSteps) || maxSteps > MAX_TOTAL_STEPS) {
-      throw new Error("模拟步数过大（" + maxSteps + " > 上限 " + MAX_TOTAL_STEPS
+      const error = new Error("模拟步数过大（" + maxSteps + " > 上限 " + MAX_TOTAL_STEPS
         + "），请减小时间上限或更新频率");
+      error.code = "step_budget";
+      throw error;
     }
   }
 
@@ -471,8 +480,11 @@
     const inheritScan = opts.inheritVelocity && (opts.shooterSpeed ?? 0) > 0;
     const plannedSamples = 1 + 2 * Math.floor(89 / angleStep) + (inheritScan ? 2 + Math.floor(89 / angleStep) : 0);
     if (!Number.isSafeInteger(plannedSamples) || plannedSamples > MAX_ANGLE_SAMPLES) {
-      throw new Error("仰角采样数过大（" + plannedSamples + " > 上限 " + MAX_ANGLE_SAMPLES
+      const error = new Error("仰角采样数过大（" + plannedSamples + " > 上限 " + MAX_ANGLE_SAMPLES
         + "），请增大仰角粗扫步长 angleStepDeg");
+      error.code = "sweep_budget";
+      error.values = { count: plannedSamples, cap: MAX_ANGLE_SAMPLES };
+      throw error;
     }
     let angles = [0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3];
     for (let i = 1; i <= Math.floor(89 / angleStep); i++) {
@@ -486,8 +498,11 @@
       (a, b) => a - b
     );
     if (angles.length > MAX_ANGLE_SAMPLES) {
-      throw new Error("仰角采样数过大（" + angles.length + " > 上限 " + MAX_ANGLE_SAMPLES
+      const error = new Error("仰角采样数过大（" + angles.length + " > 上限 " + MAX_ANGLE_SAMPLES
         + "），请增大仰角粗扫步长 angleStepDeg");
+      error.code = "sweep_budget";
+      error.values = { count: angles.length, cap: MAX_ANGLE_SAMPLES };
+      throw error;
     }
     const segments = [];
     let segment = [];

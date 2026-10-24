@@ -277,6 +277,24 @@ test('invalid physics parameters surface a calculation error instead of NaN pseu
   assert.ok(h.get('status').dataset.state === 'done', '修正参数后同一会话应正常完成');
 });
 
+// 2026-10-24 复审 P2：英文 locale 下参数错误必须是英文（结构化 {code, field} 按 locale 渲染）
+test('physics parameter errors are localized in the English locale', () => {
+  const h = harness();
+  h.toggleLocale();
+  h.setDamage(90, 0);
+  h.input('massG', 0);
+  h.run('traj', { error: true });
+  assert.match(h.get('status').textContent, /massG must be a finite positive number/);
+  // 同一英文会话下的扫描预算错误
+  h.input('massG', 8);
+  h.input('angleStepDeg', 1e-9);
+  h.run('aim', { error: true });
+  assert.match(h.get('status').textContent, /Elevation sweep sample count too large/);
+  // 切回中文：同一 lastError 重新渲染为中文
+  h.toggleLocale();
+  assert.match(h.get('status').textContent, /仰角采样数过大/);
+});
+
 // These assertions also pin the real dataset assumptions used by the regressions.
 dataTest('real fixtures: record counts, target mappings, and six missing type-0 references', () => {
   assert.equal(projectileItems.length, 355);

@@ -23,7 +23,7 @@
       "error.velocity": "速度继承参数无效：总速率须为有限非负数，水平方向角和上下倾角须为有限数，上下倾角须在 -90° 到 90° 之间；输入不能为空。", "chart.unavailable3d": "3D 查看器未加载，请刷新页面；数值结果仍可查看。",
       "solution.unique": "唯一解", "solution.low": "低抛", "solution.high": "高抛", "solution.other": "其他",
       "chart.trajectory": "弹道轨迹", "chart.flight": "飞行轨迹", "chart.horizontal": "水平距离 X (m)", "chart.height": "高度 Y (m)", "chart.damageTitle": "普通伤害与累计路程", "chart.damage": "普通伤害", "chart.floor": "公式下限 25%", "chart.path": "累计路程 (m)", "chart.rangeCurve": "水平射程", "chart.target": "目标 {range} m", "chart.solution": "求解点", "chart.angleRange": "仰角与水平射程", "chart.launchAngle": "发射仰角 (°)", "chart.landingX": "水平落点 X (m)", "chart.impactTrajectory": "命中轨迹（首个可达目标）", "chart.noTrajectory": "没有可显示的命中轨迹", "chart.aimTarget": "目标 X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
-      "error.time": "时间参数无效：更新频率须为有限正数，寿命须为有限非负数；轨迹模式的模拟时长也须为有限正数。", "error.steps": "模拟步数过大，请降低模拟时长或更新频率。", "error.parameters": "输入参数无效，请检查数值和单位。", "error.generic": "发生未预期的计算错误。", "footer.text": "物理模型说明：", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
+      "error.time": "时间参数无效：更新频率须为有限正数，寿命须为有限非负数；轨迹模式的模拟时长也须为有限正数。", "error.steps": "模拟步数过大，请降低模拟时长或更新频率。", "error.parameters": "输入参数无效，请检查数值和单位。", "error.generic": "发生未预期的计算错误。", "error.physics.positive": "{field} 必须是有限正数。", "error.physics.nonNegative": "{field} 必须是有限非负数。", "error.physics.sweepBudget": "仰角采样数过大（{count} > 上限 {cap}），请增大仰角粗扫步长 angleStepDeg。", "footer.text": "物理模型说明：", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     },
     en: {
       "brand.title": "Helldivers 2 · Ballistics Simulator", "brand.subtitle": "A local projectile-configuration and trajectory research tool", "locale.label": "Switch language",
@@ -45,7 +45,7 @@
       "error.velocity": "Invalid velocity inheritance: total speed must be finite and non-negative, azimuth and elevation must be finite, and elevation must be between -90° and 90°; inputs cannot be empty.", "chart.unavailable3d": "The 3D viewer did not load. Refresh the page; numerical results remain available.",
       "solution.unique": "Unique", "solution.low": "Low arc", "solution.high": "High arc", "solution.other": "Other",
       "chart.trajectory": "Projectile trajectory", "chart.flight": "Flight path", "chart.horizontal": "Horizontal distance X (m)", "chart.height": "Height Y (m)", "chart.damageTitle": "Normal damage vs. cumulative path", "chart.damage": "Normal damage", "chart.floor": "Formula floor 25%", "chart.path": "Cumulative path (m)", "chart.rangeCurve": "Horizontal range", "chart.target": "Target {range} m", "chart.solution": "Solutions", "chart.angleRange": "Launch angle vs. horizontal range", "chart.launchAngle": "Launch elevation (°)", "chart.landingX": "Landing X (m)", "chart.impactTrajectory": "Impact trajectories (first reachable target)", "chart.noTrajectory": "No reachable trajectory to display", "chart.aimTarget": "Target X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
-      "error.time": "Invalid time settings: update rate must be finite and positive, lifetime must be finite and non-negative, and trajectory duration must be finite and positive.", "error.steps": "Too many simulation steps. Reduce the duration or update rate.", "error.parameters": "Invalid input. Check parameter values and units.", "error.generic": "An unexpected calculation error occurred.", "footer.text": "Physics model: ", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
+      "error.time": "Invalid time settings: update rate must be finite and positive, lifetime must be finite and non-negative, and trajectory duration must be finite and positive.", "error.steps": "Too many simulation steps. Reduce the duration or update rate.", "error.parameters": "Invalid input. Check parameter values and units.", "error.generic": "An unexpected calculation error occurred.", "error.physics.positive": "{field} must be a finite positive number.", "error.physics.nonNegative": "{field} must be a finite non-negative number.", "error.physics.sweepBudget": "Elevation sweep sample count too large ({count} > cap {cap}). Increase the coarse angle step (angleStepDeg).", "footer.text": "Physics model: ", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     }
   };
 
@@ -357,9 +357,11 @@
   function translateError(error) {
     const message = error && error.message ? error.message : String(error);
     if (message === "NO_TARGETS") return t("results.noTargets");
-    // 2026-10-24 审查：物理参数校验错误直接透传原始消息（含具体字段名），
-    // 让用户知道是哪个输入非法；其余未知错误仍走通用文案。
-    if (/必须是有限(正|非负)数|仰角采样数过大/.test(message)) return message;
+    // 2026-10-24 审查：物理层抛结构化 {code, field/values} 错误，按 locale 渲染中英文。
+    if (error && error.code === "physics_positive") return t("error.physics.positive", { field: error.field });
+    if (error && error.code === "physics_non_negative") return t("error.physics.nonNegative", { field: error.field });
+    if (error && error.code === "step_budget") return t("error.steps");
+    if (error && error.code === "sweep_budget") return t("error.physics.sweepBudget", error.values || {});
     if (/shooter|direction|inherit|velocity|射手|方向|继承/i.test(message)) return t("error.velocity");
     if (message.includes("step_hz") || message.includes("life_time") || message.includes("total_time")) return t("error.time");
     if (message.includes("步数过大") || message.includes("Too many simulation steps")) return t("error.steps");
