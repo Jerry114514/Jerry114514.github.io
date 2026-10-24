@@ -1,0 +1,13 @@
+{
+ "_meta": {
+  "desc": "人工审核的装备攻击 → 射弹 type 别名表。仅在确定性匹配失败、且经人工核对游戏数据确认归属时写入。键 = '装备id::攻击名'。目录生成时优先级低于组件直配与确定性搜索，仅作兜底；不确定的条目必须留在 unresolved，不得写入本表。",
+  "schema": {
+   "projectile_type": "int",
+   "note": "确认依据与日期"
+  },
+  "known_notes": {
+   "P/40-K Bolt Pistol": "已通过标点归一化自动关联（RawData 实体 'P-40-K Bolt Pistol (Model)'，type 202），无需别名。"
+  }
+ },
+ "aliases": {}
+}

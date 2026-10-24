@@ -1,0 +1,60 @@
+name: Sync Ballistics Catalog
+
+on:
+  # 每天一次即可：游戏数据按补丁更新（上游 1.007.100 / 2026-09-22），不需要 15 分钟或 5 分钟
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ballistics-catalog-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 目录同步：解析上游 main HEAD SHA → 按 SHA 下载 5 个数据文件（临时目录）→
+      # 校验（_metadata/game_version/patch_date/exported_type_count）→ 关联 Wiki 装备 →
+      # 生成精简目录 + manifest。上游 commit 未变化时秒级退出；
+      # 解析失败 / 结构变化 / ready 数骤降时 exit 1 并保留已有目录。
+      - name: Sync equipment catalog from RawData upstream
+        run: python scripts/sync_ballistics_catalog.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
+
+      # 只有派生产物真实变化才提交（避免空 commit + 无谓的 Pages 重建）
+      - name: Commit catalog updates
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add HD2_Ballistics/data/equipment_catalog.json HD2_Ballistics/data/rawdata_manifest.json
+          if git diff --cached --quiet; then
+            echo "目录无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "data(弹道): 同步武器目录 ($(date -u '+%Y-%m-%d %H:%M'))"
+          pushed=0
+          for i in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then pushed=1; break; fi
+            echo "!! push 被拒（第 $i/3 次），$((i * 5))s 后重试"
+            sleep $((i * 5))
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "::error::武器目录推送失败（重试 3 次仍被拒）"
+            exit 1
+          fi
+          echo "武器目录已推送"

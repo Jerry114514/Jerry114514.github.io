@@ -1,0 +1,33 @@
+{
+ "schema_version": 1,
+ "upstream": {
+  "repo": "Darctor/Helldivers2_RawData",
+  "commit": "d7bb0b0205d7e5448a81708d319039958fb5da34",
+  "game_version": "1.007.100",
+  "patch_date": "2026-09-22",
+  "fetched_at": "2026-10-24T15:08:32Z"
+ },
+ "files": {
+  "url_template": "https://raw.githubusercontent.com/Darctor/Helldivers2_RawData/{sha}/{path}",
+  "sha256": {
+   "generated_projectile_settings.json": "d2ad3e82382cf77cb338e05dd405eefa2955facfe3528254839ad0b841dd781f",
+   "generated_damage_settings.json": "689a0befc5d51f3d5cba59093f99762c56542b18555af0ddfa1fbbd276ca5296",
+   "ProjectileWeaponComponentData.json": "b33459bbe2e66f3eaa526d1d55c83bb57cab1d0dc76ff095c66a84ca312f2c9d",
+   "EntityComponentMap.json": "cfd640849b02eacb1b1b24819ad33a251028f7e61279a4461dab76bf3e03885c",
+   "Hash.csv": "26a302301b054503d23e7b6ddff637e5b2fb5978e7cfd6361a92ba85602c17ea"
+  },
+  "paths": [
+   "Data/settings/generated_projectile_settings.json",
+   "Data/settings/generated_damage_settings.json",
+   "Data/entities/ProjectileWeaponComponentData.json",
+   "Data/settings/EntityComponentMap.json",
+   "Data/Hash.csv"
+  ]
+ },
+ "catalog_stats": {
+  "ready": 91,
+  "unsupported": 77,
+  "unresolved": 8
+ },
+ "generated_at": "2026-10-24T15:08:32Z"
+}
