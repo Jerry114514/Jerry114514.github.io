@@ -12,6 +12,7 @@ const web = path.resolve(__dirname, '..');
 const root = path.resolve(web, '..');
 const sources = Object.fromEntries(['index.html', 'ballistics.js', 'trajectory3d.js', 'app.js'].map((name) =>
   [name, fs.readFileSync(path.join(web, name), 'utf8')]));
+const equipmentCatalogText = fs.readFileSync(path.join(web, 'data', 'equipment_catalog.json'), 'utf8');
 // 游戏数据文件（data/generated_*.json）只存在于本地工作区，不随站点部署。
 // 缺失时依赖真实数据的用例整组 skip，纯 DOM/物理用例照常在 CI 运行（2026-10-24 审查 P2）。
 const dataDir = path.join(root, 'data');
@@ -35,6 +36,13 @@ const realProjectile = () => file('generated_projectile_settings.json', rawProje
 const realDamage = () => file('generated_damage_settings.json', rawDamage);
 const SKIP_NO_GAME_DATA = '本地缺少 data/generated_projectile_settings.json / generated_damage_settings.json（游戏数据不随站点部署）';
 const dataTest = (name, fn) => test(name, { skip: hasGameData ? false : SKIP_NO_GAME_DATA }, fn);
+
+class DOMEvent {
+  constructor(type, properties = {}) {
+    this.type = type;
+    Object.assign(this, properties);
+  }
+}
 
 class Element {
   constructor(tagName, attributes = {}) {
@@ -107,6 +115,7 @@ class Element {
   }
   focus() {}
   dispatchEvent(event) {
+    assert.ok(event instanceof DOMEvent, 'dispatchEvent must receive a DOM Event, not a plain object');
     event.target = this;
     for (const listener of this.listeners.get(event.type) ?? []) {
       // Deliberately do not await event listeners, just as in the browser.
@@ -115,7 +124,7 @@ class Element {
     }
     return true;
   }
-  click() { if (!this.disabled) this.dispatchEvent({ type: 'click' }); }
+  click() { if (!this.disabled) this.dispatchEvent(new DOMEvent('click')); }
 }
 
 const inheritanceFields = ['shooterSpeed', 'shooterAzimuthDeg', 'shooterElevationDeg'];
@@ -178,7 +187,7 @@ function harness({ viewer = true, catalogText = null } = {}) {
   const timers = [];
   const storage = new Map();
   const context = vm.createContext({
-    document, Chart,
+    document, Chart, Event: DOMEvent,
     console: { error: (...args) => errors.push(...args), warn: () => {} },
     localStorage: { getItem: (key) => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) },
     setTimeout: (callback) => { timers.push(callback); return timers.length; },
@@ -194,7 +203,7 @@ function harness({ viewer = true, catalogText = null } = {}) {
     message: (family) => get(`${family}-status`).textContent,
     check(id, checked) {
       get(id).checked = checked;
-      get(id).dispatchEvent({ type: 'change' });
+      get(id).dispatchEvent(new DOMEvent('change'));
     },
     setMovement(speed, azimuth, elevation) {
       for (const [index, value] of [speed, azimuth, elevation].entries()) this.input(inheritanceFields[index], value);
@@ -203,7 +212,7 @@ function harness({ viewer = true, catalogText = null } = {}) {
       const node = get(id);
       node.value = String(value);
       node.validity = { badInput };
-      node.dispatchEvent({ type: 'input' });
+      node.dispatchEvent(new DOMEvent('input'));
     },
     damages: () => ['normalDamage', 'durableDamage'].map((id) => Number(get(id).value)),
     setDamage(normal = 777, durable = 88) {
@@ -213,12 +222,12 @@ function harness({ viewer = true, catalogText = null } = {}) {
     choose(family, selectedFile) {
       const input = get(`${family}-file`);
       input.files = selectedFile ? [selectedFile] : [];
-      input.dispatchEvent({ type: 'change' });
+      input.dispatchEvent(new DOMEvent('change'));
     },
     async load(family, selectedFile) { this.choose(family, selectedFile); await this.flush(); },
     import(id, enter = false) {
       get('projectile-type').value = String(id);
-      if (enter) get('projectile-type').dispatchEvent({ type: 'keydown', key: 'Enter' });
+      if (enter) get('projectile-type').dispatchEvent(new DOMEvent('keydown', { key: 'Enter' }));
       else get('import-projectile').click();
     },
     toggleLocale() { get('locale-toggle').click(); },
@@ -857,31 +866,31 @@ test('3D keyboard navigation stops on keyup and blur', () => {
   const { viewer, window } = cameraHarness();
   viewer._setView('orbit');
   const start = viewer.target.x;
-  viewer.canvas.dispatchEvent({ type: 'keydown', key: 'w', shiftKey: false, preventDefault() {} });
+  viewer.canvas.dispatchEvent(new DOMEvent('keydown', { key: 'w', shiftKey: false, preventDefault() {} }));
   viewer._navigate(0.1);
   const normalTravel = viewer.target.x - start;
   assert.ok(normalTravel > 0, 'W movement should advance the free camera target');
   assert.deepEqual(Array.from(viewer.moveKeys), ['w']);
-  viewer.canvas.dispatchEvent({ type: 'keydown', key: 'Shift', shiftKey: true, preventDefault() {} });
+  viewer.canvas.dispatchEvent(new DOMEvent('keydown', { key: 'Shift', shiftKey: true, preventDefault() {} }));
   viewer._navigate(0.1);
   const boostedTravel = viewer.target.x - start - normalTravel;
   assert.ok(boostedTravel > normalTravel * 3.9, 'Shift should multiply navigation speed by four');
   assert.equal(viewer.boost, true);
   const beforeShiftRelease = viewer.target.x;
-  window.dispatchEvent({ type: 'keyup', key: 'Shift' });
+  window.dispatchEvent(new DOMEvent('keyup', { key: 'Shift' }));
   assert.equal(viewer.boost, false);
   viewer._navigate(0.1);
   assert.ok(Math.abs(viewer.target.x - beforeShiftRelease - normalTravel) < 1e-9, 'Releasing Shift restores normal speed');
   const beforeKeyup = viewer.target.x;
-  window.dispatchEvent({ type: 'keyup', key: 'w' });
+  window.dispatchEvent(new DOMEvent('keyup', { key: 'w' }));
   assert.equal(viewer.moveKeys.size, 0);
   assert.equal(viewer.navigationFrame, null);
   viewer._navigate(0.1);
   assert.equal(viewer.target.x, beforeKeyup, 'Navigation must stop after keyup');
-  viewer.canvas.dispatchEvent({ type: 'keydown', key: 'w', shiftKey: false, preventDefault() {} });
+  viewer.canvas.dispatchEvent(new DOMEvent('keydown', { key: 'w', shiftKey: false, preventDefault() {} }));
   viewer._navigate(0.1);
   const beforeBlur = viewer.target.x;
-  window.dispatchEvent({ type: 'blur' });
+  window.dispatchEvent(new DOMEvent('blur'));
   assert.equal(viewer.moveKeys.size, 0);
   assert.equal(viewer.navigationFrame, null);
   viewer._navigate(0.1);
@@ -1151,13 +1160,36 @@ const presetCatalog = () => JSON.stringify({
   stats: { ready: 3, unsupported: 1, unresolved: 0 },
 });
 
+test('AR-2 Coyote preset applies every Wiki/RawData parameter', async () => {
+  const h = harness({ catalogText: equipmentCatalogText });
+  await h.flush();
+  h.get('preset-weapon').value = 'ar_2_coyote';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.equal(h.get('preset-attack-field').hidden, true);
+  assert.equal(h.get('caliberMm').value, '7');
+  assert.equal(h.get('massG').value, '8');
+  assert.equal(h.get('vConfig').value, '650');
+  assert.equal(h.get('dragCoeff').value, '0.3');
+  assert.equal(h.get('gravityMultiplier').value, '1');
+  assert.equal(h.get('lifeTime').value, '0');
+  assert.equal(h.get('normalDamage').value, '75');
+  assert.equal(h.get('durableDamage').value, '10');
+  assert.equal(h.get('inheritVelocity').checked, true);
+  assert.equal(h.get('ignoreTerminalVelocity').checked, false);
+  assert.match(h.get('preset-badges').textContent, /projectile type 138/);
+  assert.match(h.get('preset-status').textContent, /已按预设填充参数/);
+  assert.doesNotMatch(h.get('preset-notes').textContent, /^preset\.notes$/);
+  assert.match(h.get('preset-notes').textContent, /预设来自站点武器目录/);
+  h.run('traj');
+});
+
 test('weapon presets load, autofill AR-23 and render source badges', async () => {
   const h = harness({ catalogText: presetCatalog() });
   await h.flush();
   assert.equal(h.get('panel-preset').hidden, false, '目录加载成功后面板应显示');
   // 一级类别默认 primary；武器选择应包含 AR-23 与 SG-20，不含 unsupported 之外禁用项？——包含但选中后禁用
   h.get('preset-weapon').value = 'ar_23_liberator';
-  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   // 单攻击：攻击选择行隐藏
   assert.equal(h.get('preset-attack-field').hidden, true);
   assert.equal(h.get('caliberMm').value, '5.5');
@@ -1181,20 +1213,20 @@ test('SG-20 Halt shows two attack variants and switches parameters between them'
   const h = harness({ catalogText: presetCatalog() });
   await h.flush();
   h.get('preset-weapon').value = 'sg_20_halt';
-  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('preset-attack-field').hidden, false, '多攻击武器必须显示二级选择');
   const options = h.get('preset-attack').children.map((o) => o.textContent).join('|');
   assert.match(options, /FLECHETTES/);
   assert.match(options, /STUN ROUNDS/);
   h.get('preset-attack').value = 'sg_20_halt:flechette';
-  h.get('preset-attack').dispatchEvent({ type: 'change' });
+  h.get('preset-attack').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('vConfig').value, '385');
   assert.equal(h.get('massG').value, '6');
   assert.equal(h.get('normalDamage').value, '35');
   assert.match(h.get('preset-badges').textContent, /弹丸数 ×11/);
   assert.match(h.get('preset-status').textContent, /单弹丸/);
   h.get('preset-attack').value = 'sg_20_halt:stun';
-  h.get('preset-attack').dispatchEvent({ type: 'change' });
+  h.get('preset-attack').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('vConfig').value, '800');
   assert.equal(h.get('normalDamage').value, '6');
   assert.match(h.get('preset-badges').textContent, /弹丸数 ×20/);
@@ -1208,14 +1240,14 @@ test('unsupported weapons disable run, clear old results and fall back to manual
   assert.equal(h.get('results').classList.contains('visible'), true);
   // 选择 unsupported 武器：错误提示、清结果、禁止运行、展开手动导入
   h.get('preset-weapon').value = 'spray_rifle_x';
-  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('results').classList.contains('visible'), false, '切换预设后必须清空旧结果');
   assert.equal(h.get('run').disabled, true, 'unsupported 武器必须禁止运行');
   assert.match(h.get('preset-error').textContent, /不支持/);
   assert.equal(h.get('panel-advanced').open, true, '应自动展开高级手动导入');
   // 换回 ready 武器恢复可用
   h.get('preset-weapon').value = 'ar_23_liberator';
-  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('run').disabled, false);
 });
 
@@ -1238,7 +1270,7 @@ test('weapon preset labels follow the active locale', async () => {
   const h = harness({ catalogText: presetCatalog() });
   await h.flush();
   h.get('preset-weapon').value = 'ar_23_liberator';
-  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   const zhLabel = h.get('preset-weapon').children.map((o) => o.textContent).join('|');
   assert.match(zhLabel, /AR-23 解放者/);
   h.toggleLocale();

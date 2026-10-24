@@ -30,6 +30,7 @@
       "preset.failed": "武器目录加载失败，预设已隐藏；下方手动导入仍可使用。", "preset.badSchema": "武器目录格式不符合预期，预设已隐藏；下方手动导入仍可使用。",
       "preset.badge.rawdata": "RawData v{version}（{date}）", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "弹丸数 ×{num}",
       "preset.numNote": "多弹丸武器：各弹丸弹道相同，伤害按单弹丸展示，不叠加。", "preset.ready": "已按预设填充参数。发射者移动、枪口仰角等场景参数仍由你输入。",
+      "preset.notes": "预设来自站点武器目录（RawData 上游自动同步）。发射者移动、枪口仰角、目标距离等场景参数仍由你在下方按需输入。",
       "preset.unsupported.entry": "当前弹道模型不支持该武器：{reason}", "preset.unsupported.kind": "当前弹道模型不支持「{kind}」类攻击",
       "preset.unresolved": "该攻击的射弹参数无法唯一确认（候选：{candidates}）。已回退到手动模式。", "preset.mismatch": "⚠ Wiki 与 RawData 数值不一致：{fields}", "preset.manualFallback": "已展开下方手动导入，可自行填写参数。", "footer.text": "物理模型说明：", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     },
@@ -60,6 +61,7 @@
       "preset.failed": "Weapon catalog failed to load; presets are hidden. Manual import below still works.", "preset.badSchema": "Weapon catalog has an unexpected format; presets are hidden. Manual import below still works.",
       "preset.badge.rawdata": "RawData v{version} ({date})", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "projectiles ×{num}",
       "preset.numNote": "Multi-projectile weapon: trajectories are identical; damage is shown per single projectile, not summed.", "preset.ready": "Parameters filled from preset. Scenario inputs (shooter movement, muzzle angle, targets) remain yours to set.",
+      "preset.notes": "Presets come from the site weapon catalog (automatically synced from RawData upstream). Scenario inputs such as shooter movement, muzzle angle, and target distance remain yours to set below.",
       "preset.unsupported.entry": "The current ballistic model does not support this weapon: {reason}", "preset.unsupported.kind": "The current ballistic model does not support {kind} attacks",
       "preset.unresolved": "Projectile parameters for this attack could not be uniquely resolved (candidates: {candidates}). Manual mode is available below.", "preset.mismatch": "⚠ Wiki/RawData value mismatch: {fields}", "preset.manualFallback": "Manual import below has been expanded; fill parameters by hand.", "footer.text": "Physics model: ", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     }
@@ -708,6 +710,14 @@
       || (entry.attacks.length === 1 ? entry.attacks[0] : null);
   }
 
+  function presetInputValue(value) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return String(value);
+    // RawData contains single-precision artefacts such as 0.30000001192092896.
+    // Six significant digits preserve gameplay precision without surfacing them.
+    return String(Number(number.toPrecision(6)));
+  }
+
   function setPresetStatus(key, values = {}, kind = "") {
     const node = $("preset-status");
     node.className = `import-meta${kind ? ` ${kind}` : ""}`;
@@ -764,14 +774,12 @@
                      lifeTime: params.lifeTime };
     for (const [id, value] of Object.entries(values)) {
       const node = $(id);
-      node.value = String(value);
-      node.dispatchEvent({ type: "input" });
+      node.value = presetInputValue(value);
     }
     $("ignoreTerminalVelocity").checked = !!params.ignoreTerminalVelocity;
-    $("ignoreTerminalVelocity").dispatchEvent({ type: "change" });
     const inherit = $("inheritVelocity");
     inherit.checked = !!params.inheritVelocity;
-    inherit.dispatchEvent({ type: "change" });
+    updateInheritanceInputs();
     $("normalDamage").value = String(damage.normal);
     $("durableDamage").value = String(damage.durable);
     const badges = [];
