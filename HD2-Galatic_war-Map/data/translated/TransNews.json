@@ -146,7 +146,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-24T13:52:15Z",
+  "computed_at": "2026-10-24T17:31:08Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -212,5 +212,74 @@
    "text_source": "official_untranslated",
    "mt": false
   }
- ]
+ ],
+ "source_status": {
+  "source": "arrowhead_official",
+  "language": "zh-Hans",
+  "source_version": "2026-10-24T17:31:06Z",
+  "war_id": 801,
+  "war_time_seconds": 84922850,
+  "last_success_at": "2026-10-24T17:31:06Z",
+  "stale": false
+ },
+ "tasks": {
+  "id32": 568917260,
+  "source": "arrowhead_official",
+  "source_version": "2026-10-24T17:31:06Z",
+  "retrieved_at": "2026-10-24T17:31:06Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 300000000,
+    "progress": 6129682,
+    "requirement": {
+     "type": "equipment",
+     "id": 3827587060,
+     "en": "HMG EMPLACEMENT",
+     "name": "重机枪部署支架",
+     "name_source": "site_terms(short_form)"
+    }
+   },
+   {
+    "index": 1,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 4,
+    "faction_name": "光能者",
+    "goal": 65000000,
+    "progress": 3068208,
+    "requirement": {
+     "type": "equipment",
+     "id": 376960160,
+     "en": "Anti-Materiel Rifle",
+     "name": "反器材步枪",
+     "name_source": "site_terms(prefix_stripped)"
+    }
+   },
+   {
+    "index": 2,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 3,
+    "faction_name": "机器人",
+    "goal": 50000000,
+    "progress": 615989,
+    "requirement": {
+     "type": "equipment",
+     "id": 2197477188,
+     "en": "ORBITAL RAILCANNON STRIKE",
+     "name": "轨道炮攻击",
+     "name_source": "site_terms"
+    }
+   }
+  ]
+ }
 }
