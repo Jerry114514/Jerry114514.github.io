@@ -1,0 +1,4944 @@
+{
+ "schema_version": 1,
+ "upstream": {
+  "repo": "Darctor/Helldivers2_RawData",
+  "commit": "d7bb0b0205d7e5448a81708d319039958fb5da34",
+  "game_version": "1.007.100",
+  "patch_date": "2026-09-22",
+  "fetched_at": "2026-10-24T15:08:32Z",
+  "files": {
+   "generated_projectile_settings.json": "d2ad3e82382cf77cb338e05dd405eefa2955facfe3528254839ad0b841dd781f",
+   "generated_damage_settings.json": "689a0befc5d51f3d5cba59093f99762c56542b18555af0ddfa1fbbd276ca5296",
+   "ProjectileWeaponComponentData.json": "b33459bbe2e66f3eaa526d1d55c83bb57cab1d0dc76ff095c66a84ca312f2c9d",
+   "EntityComponentMap.json": "cfd640849b02eacb1b1b24819ad33a251028f7e61279a4461dab76bf3e03885c",
+   "Hash.csv": "26a302301b054503d23e7b6ddff637e5b2fb5978e7cfd6361a92ba85602c17ea"
+  }
+ },
+ "wiki": {
+  "weapons_updated_at": "2026-09-23T11:06:17Z",
+  "stratagems_updated_at": "2026-09-23T17:45:58Z"
+ },
+ "categories": {
+  "primary": [
+   {
+    "id": "ar_2_coyote",
+    "name": "AR-2 野狼",
+    "name_en": "AR-2 Coyote",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_2_coyote:ar-2-p",
+      "name": "AR-2 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 138,
+      "params": {
+       "calibreMm": 7.0,
+       "massG": 8.0,
+       "vConfig": 650.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 75,
+       "durable": 10,
+       "damage_info_type": 118,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 8.0,
+       "speed_mps": 650.0,
+       "damage_standard": 75.0,
+       "damage_durable": 10.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-2 Coyote (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_11_arbitrator",
+    "name": "AR-11 仲裁者",
+    "name_en": "AR-11 Arbitrator",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "AR-11 Arbitrator (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "ar_23_liberator",
+    "name": "AR-23 解放者",
+    "name_en": "AR-23 Liberator",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_23_liberator:5-5x50mm-full-metal-jacket-p",
+      "name": "5.5x50mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 276,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 900.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 22,
+       "damage_info_type": 108,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 900.0,
+       "damage_standard": 90.0,
+       "damage_durable": 22.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-23 Liberator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_23a_liberator_carbine",
+    "name": "AR-23A 解放者卡宾枪",
+    "name_en": "AR-23A Liberator Carbine",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_23a_liberator_carbine:5-5x50mm-full-metal-jacket-p",
+      "name": "5.5x50mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 276,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 900.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 22,
+       "damage_info_type": 108,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 900.0,
+       "damage_standard": 90.0,
+       "damage_durable": 22.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-23A Liberator Carbine (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_23c_liberator_concussive",
+    "name": "AR-23C 震荡解放者",
+    "name_en": "AR-23C Liberator Concussive",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_23c_liberator_concussive:5-5x50mm-explosive-p",
+      "name": "5.5x50mm EXPLOSIVE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 310,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 800.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 75,
+       "durable": 35,
+       "damage_info_type": 107,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 800.0,
+       "damage_standard": 75.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-23C Liberator Concussive (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_23p_liberator_penetrator",
+    "name": "AR-23P 穿甲解放者",
+    "name_en": "AR-23P Liberator Penetrator",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_23p_liberator_penetrator:5-5x50mm-penetrator-p",
+      "name": "5.5x50mm PENETRATOR P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 7,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 1000.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 65,
+       "durable": 15,
+       "damage_info_type": 105,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 1000.0,
+       "damage_standard": 65.0,
+       "damage_durable": 15.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-23P Liberator Penetrator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_32_pacifier",
+    "name": "AR-32 安抚者",
+    "name_en": "AR-32 Pacifier",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "AR-32 Pacifier (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "ar_59_suppressor",
+    "name": "AR-59 消音器",
+    "name_en": "AR-59 Suppressor",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_59_suppressor:5-5x50mm-subsonic-p",
+      "name": "5.5x50mm SUBSONIC P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 139,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 330.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.2000000476837158,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 80,
+       "durable": 20,
+       "damage_info_type": 114,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 330.0,
+       "damage_standard": 80.0,
+       "damage_durable": 20.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-59 Suppressor (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_61_tenderizer",
+    "name": "AR-61 肉锤",
+    "name_en": "AR-61 Tenderizer",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_61_tenderizer:ar-61-p",
+      "name": "AR-61 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 44,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 105,
+       "durable": 30,
+       "damage_info_type": 135,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 820.0,
+       "damage_standard": 105.0,
+       "damage_durable": 30.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AR-61 Tenderizer (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "ar_gl_21_one_two",
+    "name": "AR/GL-21 “幺二”",
+    "name_en": "AR/GL-21 One-Two",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ar_gl_21_one_two:ar-gl-21-p",
+      "name": "AR/GL-21 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 334,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 920.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 95,
+       "durable": 24,
+       "damage_info_type": 132,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 920.0,
+       "damage_standard": 95.0,
+       "damage_durable": 24.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "ar_gl_21_one_two:40mm-heat-grenade-p",
+      "name": "40mm HEAT GRENADE P",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       85,
+       263
+      ],
+      "component_projectile_type": 334,
+      "wiki": {
+       "mass_g": 50.0,
+       "speed_mps": 100.0,
+       "damage_standard": 250.0,
+       "damage_durable": 250.0
+      }
+     },
+     {
+      "id": "ar_gl_21_one_two:40mm-heat-grenade-p-ie",
+      "name": "40mm HEAT GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "AR/GL-21 One-Two (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "arc_12_blitzer",
+    "name": "ARC-12 雷霆",
+    "name_en": "ARC-12 Blitzer",
+    "category": "primary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "br_14_adjudicator",
+    "name": "BR-14 审判者",
+    "name_en": "BR-14 Adjudicator",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "br_14_adjudicator:8x60mm-full-metal-jacket-p",
+      "name": "8x60mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 135,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 95,
+       "durable": 23,
+       "damage_info_type": 134,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 820.0,
+       "damage_standard": 95.0,
+       "damage_durable": 23.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "BR-14 Adjudicator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "cb_9_exploding_crossbow",
+    "name": "CB-9 爆燃弩",
+    "name_en": "CB-9 Exploding Crossbow",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "cb_9_exploding_crossbow:cb-9-p",
+      "name": "CB-9 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 249,
+      "params": {
+       "calibreMm": 15.0,
+       "massG": 100.0,
+       "vConfig": 100.0,
+       "dragCoeff": 1.0,
+       "gravityMultiplier": 0.5,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 270,
+       "durable": 50,
+       "damage_info_type": 208,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 100.0,
+       "damage_standard": 270.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "cb_9_exploding_crossbow:cb-9-p-ie",
+      "name": "CB-9 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "CB-9 Exploding Crossbow (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "dbs_2_double_freedom",
+    "name": "DBS-2 双重自由",
+    "name_en": "DBS-2 Double Freedom",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "dbs_2_double_freedom:dbs-2-p",
+      "name": "DBS-2 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 317,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 6.0,
+       "vConfig": 385.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 12
+      },
+      "damage": {
+       "normal": 70,
+       "durable": 35,
+       "damage_info_type": 159,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 6.0,
+       "speed_mps": 385.0,
+       "damage_standard": 70.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "DBS-2 Double Freedom (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "flam_66_torcher",
+    "name": "FLAM-66 火炬手",
+    "name_en": "FLAM-66 Torcher",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "flam_66_torcher:fire-panic",
+      "name": "Fire Panic",
+      "kind": "status",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 status 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "gl_15_evictor",
+    "name": "GL-15 驱逐者",
+    "name_en": "GL-15 Evictor",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "GL-15 Evictor (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "jar_5_dominator",
+    "name": "JAR-5 主宰",
+    "name_en": "JAR-5 Dominator",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "jar_5_dominator:15x100mm-standard-rocket-p",
+      "name": "15x100mm STANDARD ROCKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 177,
+      "params": {
+       "calibreMm": 15.0,
+       "massG": 100.0,
+       "vConfig": 180.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 275,
+       "durable": 90,
+       "damage_info_type": 153,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 180.0,
+       "damage_standard": 275.0,
+       "damage_durable": 90.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "JAR-5 Dominator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "las_5_scythe",
+    "name": "LAS-5 长柄镰",
+    "name_en": "LAS-5 Scythe",
+    "category": "primary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "las_12_sai",
+    "name": "LAS-12 钗",
+    "name_en": "LAS-12 Sai",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "LAS-12 SAI (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "las_13_trident",
+    "name": "LAS-13 三叉戟",
+    "name_en": "LAS-13 Trident",
+    "category": "primary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "las_16_sickle",
+    "name": "LAS-16 镰刀",
+    "name_en": "LAS-16 Sickle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "las_16_sickle:laser-p",
+      "name": "LASER P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 149,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 12.0,
+       "vConfig": 1300.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 6.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 60,
+       "durable": 6,
+       "damage_info_type": 48,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 60.0,
+       "damage_durable": 6.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "LAS-16 Sickle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "las_17_double_edge_sickle",
+    "name": "LAS-17 双刃镰刀",
+    "name_en": "LAS-17 Double-Edge Sickle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "las_17_double_edge_sickle:laser-p",
+      "name": "LASER P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 149,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 12.0,
+       "vConfig": 1300.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 6.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 60,
+       "durable": 6,
+       "damage_info_type": 48,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 60.0,
+       "damage_durable": 6.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "las_17_double_edge_sickle:laser-p1",
+      "name": "LASER P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 185,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 12.0,
+       "vConfig": 1300.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 6.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 55,
+       "durable": 5,
+       "damage_info_type": 50,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 55.0,
+       "damage_durable": 5.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "las_17_double_edge_sickle:laser-p2",
+      "name": "LASER P2",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       25,
+       219
+      ],
+      "component_projectile_type": 149,
+      "wiki": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 70.0,
+       "damage_durable": 7.0
+      }
+     },
+     {
+      "id": "las_17_double_edge_sickle:laser-p3",
+      "name": "LASER P3",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       25,
+       219
+      ],
+      "component_projectile_type": 149,
+      "wiki": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 70.0,
+       "damage_durable": 7.0
+      }
+     }
+    ],
+    "rawdata_name": "LAS-17 Double-Edge Sickle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "m7s_smg",
+    "name": "M7S 冲锋枪",
+    "name_en": "M7S SMG",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "m7s_smg:m7s-p",
+      "name": "M7S P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 340,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 320.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 18,
+       "damage_info_type": 71,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 320.0,
+       "damage_standard": 90.0,
+       "damage_durable": 18.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "M7S SMG (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "m90a_shotgun",
+    "name": "M90A 霰弹枪",
+    "name_en": "M90A Shotgun",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "M90A Shotgun (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "ma5c_assault_rifle",
+    "name": "MA5C 突击步枪",
+    "name_en": "MA5C Assault Rifle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "ma5c_assault_rifle:ma5c-p",
+      "name": "MA5C P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 119,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 16,
+       "damage_info_type": 136,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 820.0,
+       "damage_standard": 90.0,
+       "damage_durable": 16.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "MA5C Assault Rifle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "mp_98_knight",
+    "name": "MP-98 骑士",
+    "name_en": "MP-98 Knight",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "mp_98_knight:9x20mm-full-metal-jacket-p",
+      "name": "9x20mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 215,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 375.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 18,
+       "damage_info_type": 74,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 375.0,
+       "damage_standard": 90.0,
+       "damage_durable": 18.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "MP-98 Knight (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "plas_1_scorcher",
+    "name": "PLAS-1 焦土",
+    "name_en": "PLAS-1 Scorcher",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "plas_1_scorcher:medium-plasma-bolt-p",
+      "name": "MEDIUM PLASMA BOLT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 142,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 25.0,
+       "vConfig": 550.0,
+       "dragCoeff": 1.5,
+       "gravityMultiplier": 0.5,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 100,
+       "durable": 50,
+       "damage_info_type": 56,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 25.0,
+       "speed_mps": 550.0,
+       "damage_standard": 100.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_1_scorcher:medium-plasma-bolt-p-ie",
+      "name": "MEDIUM PLASMA BOLT P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "PLAS-1 Scorcher (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "plas_39_accelerator_rifle",
+    "name": "PLAS-39 加速步枪",
+    "name_en": "PLAS-39 Accelerator Rifle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "plas_39_accelerator_rifle:medium-plasma-bolt-p1",
+      "name": "MEDIUM PLASMA BOLT P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 155,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 25.0,
+       "vConfig": 1000.0,
+       "dragCoeff": 0.10000000149011612,
+       "gravityMultiplier": 0.5,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 250,
+       "durable": 125,
+       "damage_info_type": 308,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 25.0,
+       "speed_mps": 1000.0,
+       "damage_standard": 250.0,
+       "damage_durable": 125.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_39_accelerator_rifle:medium-plasma-bolt-p1-ie",
+      "name": "MEDIUM PLASMA BOLT P1 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "PLAS-39 Accelerator Rifle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "plas_101_purifier",
+    "name": "PLAS-101 净化者",
+    "name_en": "PLAS-101 Purifier",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "plas_101_purifier:large-plasma-bolt-p",
+      "name": "LARGE PLASMA BOLT P",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "组件 projectile_type=296 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
+      "candidates": [],
+      "component_projectile_type": 296,
+      "wiki": {
+       "mass_g": 25.0,
+       "speed_mps": 350.0,
+       "damage_standard": 100.0,
+       "damage_durable": 50.0
+      }
+     },
+     {
+      "id": "plas_101_purifier:volatile-plasma-bolt-p",
+      "name": "VOLATILE PLASMA BOLT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 129,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 25.0,
+       "vConfig": 550.0,
+       "dragCoeff": 1.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 100,
+       "damage_info_type": 63,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 25.0,
+       "speed_mps": 550.0,
+       "damage_standard": 200.0,
+       "damage_durable": 100.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_101_purifier:large-plasma-bolt-p-ie",
+      "name": "LARGE PLASMA BOLT P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "plas_101_purifier:volatile-plasma-bolt-p-ie",
+      "name": "VOLATILE PLASMA BOLT P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "PLAS-101 Purifier (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_2_amendment",
+    "name": "R-2 修正",
+    "name_en": "R-2 Amendment",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_2_amendment:r-2-p",
+      "name": "R-2 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 327,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 20.0,
+       "vConfig": 850.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 50,
+       "damage_info_type": 138,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 850.0,
+       "damage_standard": 200.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-2 Amendment (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_4_hyena",
+    "name": "R-4 鬣狗",
+    "name_en": "R-4 Hyena",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_4_hyena:9x70mm-full-metal-jacket-p1",
+      "name": "9x70mm FULL METAL JACKET P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 207,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 20.0,
+       "vConfig": 950.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 220,
+       "durable": 45,
+       "damage_info_type": 142,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 950.0,
+       "damage_standard": 220.0,
+       "damage_durable": 45.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-4 Hyena (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_6_deadeye",
+    "name": "R-6 鹰眼",
+    "name_en": "R-6 Deadeye",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_6_deadeye:r-6-p",
+      "name": "R-6 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 299,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 20.0,
+       "vConfig": 850.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 300,
+       "durable": 100,
+       "damage_info_type": 139,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 850.0,
+       "damage_standard": 300.0,
+       "damage_durable": 100.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-6 Deadeye (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_36_eruptor",
+    "name": "R-36 爆裂铳",
+    "name_en": "R-36 Eruptor",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_36_eruptor:15x100mm-high-explosive-p",
+      "name": "15x100mm HIGH EXPLOSIVE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 40,
+      "params": {
+       "calibreMm": 15.0,
+       "massG": 100.0,
+       "vConfig": 180.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 1.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 230,
+       "durable": 115,
+       "damage_info_type": 149,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 180.0,
+       "damage_standard": 230.0,
+       "damage_durable": 115.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "r_36_eruptor:15x100mm-high-explosive-p-ie",
+      "name": "15x100mm HIGH EXPLOSIVE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "r_36_eruptor:shrapnel-p",
+      "name": "SHRAPNEL P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 201,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 100.0,
+       "vConfig": 30.0,
+       "dragCoeff": 0.4000000059604645,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": false,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 110,
+       "durable": 35,
+       "damage_info_type": 189,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 30.0,
+       "damage_standard": 110.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-36 Eruptor (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_63_diligence",
+    "name": "R-63 勤勉",
+    "name_en": "R-63 Diligence",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_63_diligence:9x70mm-full-metal-jacket-p",
+      "name": "9x70mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 305,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 20.0,
+       "vConfig": 850.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 165,
+       "durable": 45,
+       "damage_info_type": 141,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 850.0,
+       "damage_standard": 165.0,
+       "damage_durable": 45.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-63 Diligence (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_63cs_diligence_counter_sniper",
+    "name": "R-63CS 反狙击勤勉",
+    "name_en": "R-63CS Diligence Counter Sniper",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_63cs_diligence_counter_sniper:9x70mm-high-velocity-p",
+      "name": "9x70mm HIGH VELOCITY P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 241,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 20.0,
+       "vConfig": 940.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 50,
+       "damage_info_type": 143,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 940.0,
+       "damage_standard": 200.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-63CS Diligence Counter Sniper (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_72_censor",
+    "name": "R-72 审查官",
+    "name_en": "R-72 Censor",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_72_censor:8x60mm-subsonic-p",
+      "name": "8x60mm SUBSONIC P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 325,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 20.0,
+       "vConfig": 330.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 165,
+       "durable": 45,
+       "damage_info_type": 130,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 330.0,
+       "damage_standard": 165.0,
+       "damage_durable": 45.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-72 Censor (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_2124_constitution",
+    "name": "R-2124 宪法",
+    "name_en": "R-2124 Constitution",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_2124_constitution:r-2124-p",
+      "name": "R-2124 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 282,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 20.0,
+       "vConfig": 850.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 180,
+       "durable": 50,
+       "damage_info_type": 137,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 20.0,
+       "speed_mps": 850.0,
+       "damage_standard": 180.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R-2124 Constitution (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "r_40_k_hot_shot_marksman_rifle",
+    "name": "R/40-K 热射精确射手步枪",
+    "name_en": "R/40-K Hot-Shot Marksman Rifle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "r_40_k_hot_shot_marksman_rifle:r-40-k-p",
+      "name": "R/40-K P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 86,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 10.0,
+       "vConfig": 500.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 3.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 275,
+       "durable": 40,
+       "damage_info_type": 510,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 10.0,
+       "speed_mps": 500.0,
+       "damage_standard": 275.0,
+       "damage_durable": 40.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "R/40-K Hot-shot Marksman Rifle",
+    "status": "ready"
+   },
+   {
+    "id": "sg_8_punisher",
+    "name": "SG-8 制裁者",
+    "name_en": "SG-8 Punisher",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "SG-8 Punisher (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "sg_8p_punisher_plasma",
+    "name": "SG-8P 等离子制裁者",
+    "name_en": "SG-8P Punisher Plasma",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_8p_punisher_plasma:large-plasma-bolt-p3",
+      "name": "LARGE PLASMA BOLT P3",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 57,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 100.0,
+       "vConfig": 90.0,
+       "dragCoeff": 4.0,
+       "gravityMultiplier": 3.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 0,
+       "durable": 0,
+       "damage_info_type": 57,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 90.0,
+       "damage_standard": 0.0,
+       "damage_durable": 0.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "sg_8p_punisher_plasma:large-plasma-bolt-p3-ie",
+      "name": "LARGE PLASMA BOLT P3 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "SG-8P Punisher Plasma (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_8s_slugger",
+    "name": "SG-8S 重炮手",
+    "name_en": "SG-8S Slugger",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_8s_slugger:10g-rifled-slugs-p",
+      "name": "10g RIFLED SLUGS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 240,
+      "params": {
+       "calibreMm": 18.0,
+       "massG": 50.0,
+       "vConfig": 390.0,
+       "dragCoeff": 2.0,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 330,
+       "durable": 90,
+       "damage_info_type": 176,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 390.0,
+       "damage_standard": 330.0,
+       "damage_durable": 90.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-8S Slugger (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_20_halt",
+    "name": "SG-20 止息",
+    "name_en": "SG-20 Halt",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_20_halt:10g-flechettes-p",
+      "name": "10g FLECHETTES P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 183,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 6.0,
+       "vConfig": 385.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 11
+      },
+      "damage": {
+       "normal": 35,
+       "durable": 10,
+       "damage_info_type": 166,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 6.0,
+       "speed_mps": 385.0,
+       "damage_standard": 35.0,
+       "damage_durable": 10.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "sg_20_halt:10g-stun-rounds-p",
+      "name": "10g STUN ROUNDS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 191,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 800.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 20
+      },
+      "damage": {
+       "normal": 6,
+       "durable": 2,
+       "damage_info_type": 175,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 800.0,
+       "damage_standard": 6.0,
+       "damage_durable": 2.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-20 Halt (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_97_sweeper",
+    "name": "SG-97 扫荡者",
+    "name_en": "SG-97 Sweeper",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "SG-97 Sweeper (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "sg_225_breaker",
+    "name": "SG-225 破裂者",
+    "name_en": "SG-225 Breaker",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_225_breaker:12g-buckshot-p",
+      "name": "12g BUCKSHOT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 179,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 4.0,
+       "vConfig": 360.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 11
+      },
+      "damage": {
+       "normal": 30,
+       "durable": 6,
+       "damage_info_type": 179,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.0,
+       "speed_mps": 360.0,
+       "damage_standard": 30.0,
+       "damage_durable": 6.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-225 Breaker (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_225ie_breaker_incendiary",
+    "name": "SG-225IE 高燃破裂者",
+    "name_en": "SG-225IE Breaker Incendiary",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_225ie_breaker_incendiary:12g-liberty-fire-p",
+      "name": "12g LIBERTY FIRE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 314,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 2.0,
+       "vConfig": 120.0,
+       "dragCoeff": 0.800000011920929,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 12
+      },
+      "damage": {
+       "normal": 20,
+       "durable": 10,
+       "damage_info_type": 182,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 2.0,
+       "speed_mps": 120.0,
+       "damage_standard": 20.0,
+       "damage_durable": 10.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-225IE Breaker Incendiary (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_225sp_breaker_spray_pray",
+    "name": "SG-225SP 千发百中破裂者",
+    "name_en": "SG-225SP Breaker Spray&Pray",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_225sp_breaker_spray_pray:12g-birdshot-p",
+      "name": "12g BIRDSHOT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 174,
+      "params": {
+       "calibreMm": 3.0,
+       "massG": 1.0,
+       "vConfig": 250.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 16
+      },
+      "damage": {
+       "normal": 15,
+       "durable": 4,
+       "damage_info_type": 178,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 1.0,
+       "speed_mps": 250.0,
+       "damage_standard": 15.0,
+       "damage_durable": 4.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-225SP Breaker Spray&Pray (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_451_cookout",
+    "name": "SG-451 野炊",
+    "name_en": "SG-451 Cookout",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sg_451_cookout:sg-451-p",
+      "name": "SG-451 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 347,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 2.0,
+       "vConfig": 120.0,
+       "dragCoeff": 0.800000011920929,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 20
+      },
+      "damage": {
+       "normal": 16,
+       "durable": 3,
+       "damage_info_type": 164,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 2.0,
+       "speed_mps": 120.0,
+       "damage_standard": 16.0,
+       "damage_durable": 3.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-451 Cookout (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "smg_32_reprimand",
+    "name": "SMG-32 训斥",
+    "name_en": "SMG-32 Reprimand",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "smg_32_reprimand:12x25mm-full-metal-jacket-p1",
+      "name": "12x25mm FULL METAL JACKET P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 123,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 140,
+       "durable": 32,
+       "damage_info_type": 96,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 140.0,
+       "damage_durable": 32.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SMG-32 Reprimand (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "smg_37_defender",
+    "name": "SMG-37 防卫者",
+    "name_en": "SMG-37 Defender",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "smg_37_defender:12x25mm-full-metal-jacket-p2",
+      "name": "12x25mm FULL METAL JACKET P2",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 3,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 110,
+       "durable": 22,
+       "damage_info_type": 83,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 110.0,
+       "damage_durable": 22.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SMG-37 Defender (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "smg_72_pummeler",
+    "name": "SMG-72 暴击斗士",
+    "name_en": "SMG-72 Pummeler",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "smg_72_pummeler:smg-72-p",
+      "name": "SMG-72 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 157,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 210.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 85,
+       "durable": 17,
+       "damage_info_type": 90,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 210.0,
+       "damage_standard": 85.0,
+       "damage_durable": 17.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SMG-72 Pummeler (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "smg_203_gallant",
+    "name": "SMG-203 英勇无畏",
+    "name_en": "SMG-203 Gallant",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "smg_203_gallant:9x20mm-high-velocity-p",
+      "name": "9x20mm HIGH VELOCITY P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 76,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 450.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 65,
+       "durable": 13,
+       "damage_info_type": 77,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 450.0,
+       "damage_standard": 65.0,
+       "damage_durable": 13.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SMG-203 Gallant (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "smg_flam_34_stoker",
+    "name": "SMG/FLAM-34 司炉",
+    "name_en": "SMG/FLAM-34 Stoker",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "smg_flam_34_stoker:12x25mm-full-metal-jacket-p3",
+      "name": "12x25mm FULL METAL JACKET P3",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 38,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 130,
+       "durable": 30,
+       "damage_info_type": 97,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 130.0,
+       "damage_durable": 30.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "smg_flam_34_stoker:underbarrel-smg-flam-34-stoker-0-s",
+      "name": "Underbarrel SMG/FLAM-34 STOKER 0 S",
+      "kind": "spray",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 spray 类攻击"
+     }
+    ],
+    "rawdata_name": "SMG/FLAM-34 Stoker (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sta_11_smg",
+    "name": "StA-11 冲锋枪",
+    "name_en": "StA-11 SMG",
+    "category": "primary",
+    "attacks": [],
+    "rawdata_name": "StA-11 SMG (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "sta_52_assault_rifle",
+    "name": "StA-52 突击步枪",
+    "name_en": "StA-52 Assault Rifle",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "sta_52_assault_rifle:5-5x50mm-full-metal-jacket-p",
+      "name": "5.5x50mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 276,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 900.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 22,
+       "damage_info_type": 108,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 900.0,
+       "damage_standard": 90.0,
+       "damage_durable": 22.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "StA-52 Assault Rifle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "vg_70_variable",
+    "name": "VG-70 变数",
+    "name_en": "VG-70 Variable",
+    "category": "primary",
+    "attacks": [
+     {
+      "id": "vg_70_variable:vg-70-p",
+      "name": "VG-70 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 94,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 320.0,
+       "dragCoeff": 0.6000000238418579,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 85,
+       "durable": 23,
+       "damage_info_type": 76,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 320.0,
+       "damage_standard": 85.0,
+       "damage_durable": 23.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "VG-70 Variable (Model)",
+    "status": "ready"
+   }
+  ],
+  "secondary": [
+   {
+    "id": "cqc_2_saber",
+    "name": "CQC-2 军刀",
+    "name_en": "CQC-2 Saber",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "cqc_5_combat_hatchet",
+    "name": "CQC-5 战斗斧",
+    "name_en": "CQC-5 Combat Hatchet",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "cqc_19_stun_lance",
+    "name": "CQC-19 眩晕长矛",
+    "name_en": "CQC-19 Stun Lance",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "cqc_30_stun_baton",
+    "name": "CQC-30 眩晕警棍",
+    "name_en": "CQC-30 Stun Baton",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "cqc_42_machete",
+    "name": "CQC-42 砍刀",
+    "name_en": "CQC-42 Machete",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "cqc_73_entrenchment_tool",
+    "name": "CQC-73 堑壕工具",
+    "name_en": "CQC-73 Entrenchment Tool",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "cqc_73_entrenchment_tool:cqc-73-entrenchment-tool",
+      "name": "CQC-73 Entrenchment Tool",
+      "kind": "damage",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 damage 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "gp_20_ultimatum",
+    "name": "GP-20 最后通牒",
+    "name_en": "GP-20 Ultimatum",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "gp_20_ultimatum:gp-20-p",
+      "name": "GP-20 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 103,
+      "params": {
+       "calibreMm": 80.0,
+       "massG": 500.0,
+       "vConfig": 20.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1000,
+       "durable": 1000,
+       "damage_info_type": 27,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 500.0,
+       "speed_mps": 20.0,
+       "damage_standard": 1000.0,
+       "damage_durable": 1000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "gp_20_ultimatum:gp-20-p-ie",
+      "name": "GP-20 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "GP-20 Ultimatum (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "gp_31_grenade_pistol",
+    "name": "GP-31 榴弹手枪",
+    "name_en": "GP-31 Grenade Pistol",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "gp_31_grenade_pistol:40mm-heat-grenade-p",
+      "name": "40mm HEAT GRENADE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 263,
+      "params": {
+       "calibreMm": 40.0,
+       "massG": 50.0,
+       "vConfig": 100.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 250,
+       "durable": 250,
+       "damage_info_type": 225,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 100.0,
+       "damage_standard": 250.0,
+       "damage_durable": 250.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "gp_31_grenade_pistol:40mm-heat-grenade-p-ie",
+      "name": "40mm HEAT GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "GP-31 Grenade Pistol (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "las_7_dagger",
+    "name": "LAS-7 匕首",
+    "name_en": "LAS-7 Dagger",
+    "category": "secondary",
+    "attacks": [],
+    "reason": "Wiki 无攻击数据",
+    "status": "unsupported"
+   },
+   {
+    "id": "las_58_talon",
+    "name": "LAS-58 猛爪",
+    "name_en": "LAS-58 Talon",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "las_58_talon:laser-p4",
+      "name": "LASER P4",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 144,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 12.0,
+       "vConfig": 1300.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 6.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 20,
+       "damage_info_type": 54,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 200.0,
+       "damage_durable": 20.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "LAS-58 Talon (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "m6c_socom_pistol",
+    "name": "M6C/SOCOM 手枪",
+    "name_en": "M6C/SOCOM Pistol",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "m6c_socom_pistol:m6c-socom-p",
+      "name": "M6C/SOCOM P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 308,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 125,
+       "durable": 28,
+       "damage_info_type": 93,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 125.0,
+       "damage_durable": 28.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "M6C/SOCOM Pistol (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_2_peacemaker",
+    "name": "P-2 和平制造者",
+    "name_en": "P-2 Peacemaker",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_2_peacemaker:9x20mm-hollow-point-p",
+      "name": "9x20mm HOLLOW POINT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 337,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 320.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 100,
+       "durable": 32,
+       "damage_info_type": 75,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 320.0,
+       "damage_standard": 100.0,
+       "damage_durable": 32.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "P-2 Peacemaker (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_4_senator",
+    "name": "P-4 参议员",
+    "name_en": "P-4 Senator",
+    "category": "secondary",
+    "attacks": [],
+    "rawdata_name": "P-4 Senator (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "p_11_stim_pistol",
+    "name": "P-11 治疗手枪",
+    "name_en": "P-11 Stim Pistol",
+    "category": "secondary",
+    "attacks": [],
+    "rawdata_name": "P-11 Stim Pistol (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "p_19_redeemer",
+    "name": "P-19 救世主",
+    "name_en": "P-19 Redeemer",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_19_redeemer:9x20mm-full-metal-jacket-p1",
+      "name": "9x20mm FULL METAL JACKET P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 291,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 7.0,
+       "vConfig": 375.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 70,
+       "durable": 12,
+       "damage_info_type": 73,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 375.0,
+       "damage_standard": 70.0,
+       "damage_durable": 12.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "P-19 Redeemer (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_33_missile_pistol",
+    "name": "P-33 制导手枪",
+    "name_en": "P-33 Missile Pistol",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_33_missile_pistol:guided-p",
+      "name": "Guided P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 152,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 1.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 3.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1000,
+       "durable": 1000,
+       "damage_info_type": 95,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 1.0,
+       "damage_standard": 1000.0,
+       "damage_durable": 1000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "p_33_missile_pistol:non-guided-p",
+      "name": "Non-Guided P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 152,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 1.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 3.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1000,
+       "durable": 1000,
+       "damage_info_type": 95,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 1.0,
+       "damage_standard": 1000.0,
+       "damage_durable": 1000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "p_33_missile_pistol:guided-p-ie",
+      "name": "Guided P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "P-33 Missile Pistol (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_34_breacher",
+    "name": "P-34 爆破者",
+    "name_en": "P-34 Breacher",
+    "category": "secondary",
+    "attacks": [],
+    "rawdata_name": "P-34 Breacher (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "p_35_re_educator",
+    "name": "P-35 思想改造",
+    "name_en": "P-35 Re-Educator",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_35_re_educator:p-35-p",
+      "name": "P-35 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 343,
+      "params": {
+       "calibreMm": 1.0,
+       "massG": 10.0,
+       "vConfig": 150.0,
+       "dragCoeff": 2.0,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 1.7000000476837158,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 60,
+       "durable": 10,
+       "damage_info_type": 67,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 10.0,
+       "speed_mps": 150.0,
+       "damage_standard": 60.0,
+       "damage_durable": 10.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "p_35_re_educator:gas-confusion",
+      "name": "Gas Confusion",
+      "kind": "status",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 status 类攻击"
+     }
+    ],
+    "rawdata_name": "P-35 Re-Educator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_69_veto",
+    "name": "P-69 否决者",
+    "name_en": "P-69 Veto",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_69_veto:15x100mm-standard-rocket-p1",
+      "name": "15x100mm STANDARD ROCKET P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 237,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 7.0,
+       "vConfig": 375.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 105,
+       "durable": 35,
+       "damage_info_type": 92,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 7.0,
+       "speed_mps": 375.0,
+       "damage_standard": 105.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "P-69 Veto (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_72_crisper",
+    "name": "P-72 迅击",
+    "name_en": "P-72 Crisper",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_72_crisper:fire-panic",
+      "name": "Fire Panic",
+      "kind": "status",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 status 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "p_92_warrant",
+    "name": "P-92 法令",
+    "name_en": "P-92 Warrant",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_92_warrant:guided-p1",
+      "name": "Guided P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 326,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 80,
+       "durable": 20,
+       "damage_info_type": 94,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 80.0,
+       "damage_durable": 20.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "p_92_warrant:non-guided-p1",
+      "name": "Non-Guided P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 326,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 80,
+       "durable": 20,
+       "damage_info_type": 94,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 80.0,
+       "damage_durable": 20.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "P-92 Warrant (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_113_verdict",
+    "name": "P-113 裁决",
+    "name_en": "P-113 Verdict",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_113_verdict:12x25mm-full-metal-jacket-p",
+      "name": "12x25mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 15,
+      "params": {
+       "calibreMm": 12.0,
+       "massG": 15.0,
+       "vConfig": 285.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 140,
+       "durable": 32,
+       "damage_info_type": 91,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 15.0,
+       "speed_mps": 285.0,
+       "damage_standard": 140.0,
+       "damage_durable": 32.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "P-113 Verdict (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "p_40_k_bolt_pistol",
+    "name": "P/40-K 爆弹手枪",
+    "name_en": "P/40-K Bolt Pistol",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "p_40_k_bolt_pistol:p-40-k-p",
+      "name": "P/40-K P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 202,
+      "params": {
+       "calibreMm": 15.0,
+       "massG": 100.0,
+       "vConfig": 350.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.30000001192092896,
+       "lifeTime": 0.6000000238418579,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 325,
+       "durable": 115,
+       "damage_info_type": 156,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 350.0,
+       "damage_standard": 325.0,
+       "damage_durable": 115.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "p_40_k_bolt_pistol:p-40-k-p-ie",
+      "name": "P/40-K P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "P-40-K Bolt Pistol (Model)",
+    "name_match": "punct_normalized",
+    "status": "ready"
+   },
+   {
+    "id": "plas_15_loyalist",
+    "name": "PLAS-15 忠诚者",
+    "name_en": "PLAS-15 Loyalist",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p",
+      "name": "SMALL PLASMA BOLT P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 171,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 10.0,
+       "vConfig": 550.0,
+       "dragCoeff": 1.0,
+       "gravityMultiplier": 0.5,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 100,
+       "durable": 50,
+       "damage_info_type": 56,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 10.0,
+       "speed_mps": 550.0,
+       "damage_standard": 100.0,
+       "damage_durable": 50.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p1",
+      "name": "SMALL PLASMA BOLT P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 70,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 25.0,
+       "vConfig": 550.0,
+       "dragCoeff": 1.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 150,
+       "durable": 75,
+       "damage_info_type": 62,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 25.0,
+       "speed_mps": 550.0,
+       "damage_standard": 150.0,
+       "damage_durable": 75.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p2",
+      "name": "SMALL PLASMA BOLT P2",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 341,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 25.0,
+       "vConfig": 350.0,
+       "dragCoeff": 1.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 150,
+       "durable": 75,
+       "damage_info_type": 62,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 25.0,
+       "speed_mps": 350.0,
+       "damage_standard": 150.0,
+       "damage_durable": 75.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p1-ie",
+      "name": "SMALL PLASMA BOLT P1 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p2-ie",
+      "name": "SMALL PLASMA BOLT P2 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "plas_15_loyalist:small-plasma-bolt-p-ie",
+      "name": "SMALL PLASMA BOLT P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "PLAS-15 Loyalist (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "sg_22_bushwhacker",
+    "name": "SG-22 游击兵",
+    "name_en": "SG-22 Bushwhacker",
+    "category": "secondary",
+    "attacks": [
+     {
+      "id": "sg_22_bushwhacker:buckshot-p1",
+      "name": "BUCKSHOT P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 260,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 6.0,
+       "vConfig": 385.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 9
+      },
+      "damage": {
+       "normal": 45,
+       "durable": 12,
+       "damage_info_type": 163,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 6.0,
+       "speed_mps": 385.0,
+       "damage_standard": 45.0,
+       "damage_durable": 12.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "SG-22 Bushwhacker (Model)",
+    "status": "ready"
+   }
+  ],
+  "support": [
+   {
+    "id": "support_40_k_thermal_gun",
+    "name": "40-K 热熔枪",
+    "name_en": "40-K Meltagun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_40_k_thermal_gun:40-k-meltagun-b",
+      "name": "40-K MELTAGUN B",
+      "kind": "beam",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 beam 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_apw_1_anti_materiel_rifle",
+    "name": "APW-1 反器材步枪",
+    "name_en": "APW-1 Anti-Materiel Rifle",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_apw_1_anti_materiel_rifle:12-5mm-eit-rounds-p",
+      "name": "12.5mm EIT ROUNDS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 226,
+      "params": {
+       "calibreMm": 12.5,
+       "massG": 52.0,
+       "vConfig": 880.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 450,
+       "durable": 225,
+       "damage_info_type": 206,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 52.0,
+       "speed_mps": 880.0,
+       "damage_standard": 450.0,
+       "damage_durable": 225.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "APW-1 Anti-Materiel Rifle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_arc_3_arc_thrower",
+    "name": "ARC-3 电弧发射器",
+    "name_en": "ARC-3 Arc Thrower",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_arc_3_arc_thrower:arc-3-arc-thrower-a",
+      "name": "ARC-3 ARC THROWER A",
+      "kind": "arc",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 arc 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_cqc_1_outcast",
+    "name": "CQC-1 唯一真棋",
+    "name_en": "CQC-1 One True Flag",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_cqc_1_outcast:one-true-flag",
+      "name": "One True Flag",
+      "kind": "damage",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 damage 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_eat_17_expendable_anti_tank",
+    "name": "EAT-17 一次性反坦克火箭",
+    "name_en": "EAT-17 Expendable Anti-Tank",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_eat_17_expendable_anti_tank:75mm-heat-grenade-p",
+      "name": "75mm HEAT GRENADE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 132,
+      "params": {
+       "calibreMm": 75.0,
+       "massG": 2500.0,
+       "vConfig": 200.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 2000,
+       "durable": 2000,
+       "damage_info_type": 227,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 2500.0,
+       "speed_mps": 200.0,
+       "damage_standard": 2000.0,
+       "damage_durable": 2000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_eat_17_expendable_anti_tank:75mm-heat-grenade-p-ie",
+      "name": "75mm HEAT GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "EAT-17 Expendable Anti-Tank (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_eat_411_leveller",
+    "name": "EAT-411 荡平者",
+    "name_en": "EAT-411 Leveller",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_eat_411_leveller:eat-411-p",
+      "name": "EAT-411 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 34,
+      "params": {
+       "calibreMm": 80.0,
+       "massG": 500.0,
+       "vConfig": 50.0,
+       "dragCoeff": 0.5,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1000,
+       "durable": 1000,
+       "damage_info_type": 454,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 500.0,
+       "speed_mps": 50.0,
+       "damage_standard": 1000.0,
+       "damage_durable": 1000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_eat_411_leveller:eat-411-p-ie",
+      "name": "EAT-411 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "EAT-411 Leveller (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_eat_700_incendiary",
+    "name": "EAT-700 一次性凝固汽油弹",
+    "name_en": "EAT-700 Expendable Napalm",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_eat_700_incendiary:eat-700-p",
+      "name": "EAT-700 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 259,
+      "params": {
+       "calibreMm": 75.0,
+       "massG": 2500.0,
+       "vConfig": 200.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 500,
+       "durable": 500,
+       "damage_info_type": 274,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 2500.0,
+       "speed_mps": 200.0,
+       "damage_standard": 500.0,
+       "damage_durable": 500.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_eat_700_incendiary:eat-700-p-ie",
+      "name": "EAT-700 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_eat_700_incendiary:20mm-flak-rounds-p1",
+      "name": "20mm FLAK ROUNDS P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 224,
+      "params": {
+       "calibreMm": 85.0,
+       "massG": 3000.0,
+       "vConfig": 15.0,
+       "dragCoeff": 15.0,
+       "gravityMultiplier": 4.0,
+       "lifeTime": 7.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": false,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 200,
+       "damage_info_type": 275,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 3000.0,
+       "speed_mps": 15.0,
+       "damage_standard": 200.0,
+       "damage_durable": 200.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_eat_700_incendiary:20mm-flak-rounds-p1-ie",
+      "name": "20mm FLAK ROUNDS P1 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "EAT-700 Expendable Napalm (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_flam_40_flamethrower",
+    "name": "FLAM-40 火焰喷射器",
+    "name_en": "FLAM-40 Flamethrower",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_flam_40_flamethrower:flam-40-flamethrower-s",
+      "name": "FLAM-40 FLAMETHROWER S",
+      "kind": "spray",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 spray 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_gl_21_grenade_launcher",
+    "name": "GL-21 榴弹发射器",
+    "name_en": "GL-21 Grenade Launcher",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_gl_21_grenade_launcher:40mm-he-grenade-p",
+      "name": "40mm HE GRENADE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 89,
+      "params": {
+       "calibreMm": 40.0,
+       "massG": 50.0,
+       "vConfig": 100.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 0,
+       "durable": 0,
+       "damage_info_type": 30,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 100.0,
+       "damage_standard": 0.0,
+       "damage_durable": 0.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_gl_21_grenade_launcher:40mm-he-grenade-p-ie",
+      "name": "40mm HE GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "GL-21 Grenade Launcher (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_gl_52_conciliator",
+    "name": "GL-52 缓和使者",
+    "name_en": "GL-52 De-Escalator",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_gl_52_conciliator:gl-52-p",
+      "name": "GL-52 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 222,
+      "params": {
+       "calibreMm": 40.0,
+       "massG": 50.0,
+       "vConfig": 100.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 20,
+       "durable": 2,
+       "damage_info_type": 32,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 100.0,
+       "damage_standard": 20.0,
+       "damage_durable": 2.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_gl_52_conciliator:gl-52-p-ie",
+      "name": "GL-52 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_gl_52_conciliator:gl-52-p-ie-a",
+      "name": "GL-52 P IE A",
+      "kind": "arc",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 arc 类攻击"
+     }
+    ],
+    "rawdata_name": "GL-52 De-Escalator (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_las_98_laser_cannon",
+    "name": "LAS-98 激光大炮",
+    "name_en": "LAS-98 Laser Cannon",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_las_98_laser_cannon:las-98-laser-cannon-b",
+      "name": "LAS-98 LASER CANNON B",
+      "kind": "beam",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 beam 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_las_99_quasar_cannon",
+    "name": "LAS-99 类星体加农炮",
+    "name_en": "LAS-99 Quasar Cannon",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_las_99_quasar_cannon:laser-p5",
+      "name": "LASER P5",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 133,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 12.0,
+       "vConfig": 1300.0,
+       "dragCoeff": 0.0,
+       "gravityMultiplier": 0.0,
+       "lifeTime": 6.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 2000,
+       "durable": 2000,
+       "damage_info_type": 383,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 12.0,
+       "speed_mps": 1300.0,
+       "damage_standard": 2000.0,
+       "damage_durable": 2000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_las_99_quasar_cannon:laser-p5-ie",
+      "name": "LASER P5 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "LAS-99 Quasar Cannon (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_m_105_stalwart",
+    "name": "M-105 盟友",
+    "name_en": "M-105 Stalwart",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_m_105_stalwart:5-5x50mm-full-metal-jacket-p",
+      "name": "5.5x50mm FULL METAL JACKET P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 276,
+      "params": {
+       "calibreMm": 5.5,
+       "massG": 4.5,
+       "vConfig": 900.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 22,
+       "damage_info_type": 108,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 900.0,
+       "damage_standard": 90.0,
+       "damage_durable": 22.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "M-105 Stalwart (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_mg_206_heavy_machine_gun",
+    "name": "MG-206 重机枪",
+    "name_en": "MG-206 Heavy Machine Gun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_mg_206_heavy_machine_gun:12-5mm-bchp-rifle-rounds-p",
+      "name": "12.5mm BCHP RIFLE ROUNDS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 275,
+      "params": {
+       "calibreMm": 12.5,
+       "massG": 52.0,
+       "vConfig": 980.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 150,
+       "durable": 35,
+       "damage_info_type": 205,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 52.0,
+       "speed_mps": 980.0,
+       "damage_standard": 150.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "MG-206 Heavy Machine Gun (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_mg_43_machine_gun",
+    "name": "MG-43 机枪",
+    "name_en": "MG-43 Machine Gun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_mg_43_machine_gun:8x60mm-full-metal-jacket-p1",
+      "name": "8x60mm FULL METAL JACKET P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 148,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 90,
+       "durable": 23,
+       "damage_info_type": 125,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 820.0,
+       "damage_standard": 90.0,
+       "damage_durable": 23.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "MG-43 Machine Gun (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_mgx_42_bullet_storm",
+    "name": "MGX-42 子弹风暴",
+    "name_en": "MGX-42 Bullet Storm",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_mgx_42_bullet_storm:mgx-42-p",
+      "name": "MGX-42 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 61,
+      "params": {
+       "calibreMm": 9.0,
+       "massG": 4.5,
+       "vConfig": 450.0,
+       "dragCoeff": 0.6000000238418579,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 100,
+       "durable": 25,
+       "damage_info_type": 117,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 4.5,
+       "speed_mps": 450.0,
+       "damage_standard": 100.0,
+       "damage_durable": 25.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "MGX-42 Bullet Storm (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_mls_4x_commando",
+    "name": "MLS-4X 突击兵",
+    "name_en": "MLS-4X Commando",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_mls_4x_commando:66mm-missile-p",
+      "name": "66mm MISSILE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 245,
+      "params": {
+       "calibreMm": 66.0,
+       "massG": 350.0,
+       "vConfig": 70.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 15.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1100,
+       "durable": 1100,
+       "damage_info_type": 237,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 350.0,
+       "speed_mps": 70.0,
+       "damage_standard": 1100.0,
+       "damage_durable": 1100.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_mls_4x_commando:66mm-missile-p-ie",
+      "name": "66mm MISSILE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "MLS-4X Commando (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_ms_11_missile_silo",
+    "name": "MS-11 单兵导弹发射井",
+    "name_en": "MS-11 Solo Silo",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_ms_11_missile_silo:swp-solo-silo-e",
+      "name": "SWP SOLO SILO E",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_ms_11_missile_silo:swp-solo-silo-eimpact",
+      "name": "SWP SOLO SILO EImpact",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_plas_45_epoch",
+    "name": "PLAS-45 纪元",
+    "name_en": "PLAS-45 Epoch",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_plas_45_epoch:large-plasma-bolt-p1",
+      "name": "LARGE PLASMA BOLT P1",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 165,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 100.0,
+       "vConfig": 250.0,
+       "dragCoeff": 0.10000000149011612,
+       "gravityMultiplier": 2.0,
+       "lifeTime": 0.6000000238418579,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 400,
+       "durable": 200,
+       "damage_info_type": 58,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 250.0,
+       "damage_standard": 400.0,
+       "damage_durable": 200.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_plas_45_epoch:large-plasma-bolt-p2",
+      "name": "LARGE PLASMA BOLT P2",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "组件 projectile_type=165 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
+      "candidates": [],
+      "component_projectile_type": 165,
+      "wiki": {
+       "mass_g": 100.0,
+       "speed_mps": 250.0,
+       "damage_standard": 800.0,
+       "damage_durable": 400.0
+      }
+     },
+     {
+      "id": "support_plas_45_epoch:plas-45-epoch-overcharge-e",
+      "name": "PLAS-45 EPOCH Overcharge E",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_plas_45_epoch:large-plasma-bolt-p1-ie",
+      "name": "LARGE PLASMA BOLT P1 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_plas_45_epoch:large-plasma-bolt-p2-ie",
+      "name": "LARGE PLASMA BOLT P2 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "PLAS-45 Epoch (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_rs_422_railgun",
+    "name": "RS-22 磁轨炮",
+    "name_en": "RS-422 Railgun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_rs_422_railgun:railgun-round-p",
+      "name": "RAILGUN ROUND P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 186,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 50.0,
+       "vConfig": 2000.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 5.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 600,
+       "durable": 225,
+       "damage_info_type": 64,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 2000.0,
+       "damage_standard": 600.0,
+       "damage_durable": 225.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_rs_422_railgun:rs-422-railgun-overcharge-e",
+      "name": "RS-422 RAILGUN Overcharge E",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "support_rs_422_railgun:railgun-max-charge",
+      "name": "Railgun Max Charge",
+      "kind": "damage",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 damage 类攻击"
+     }
+    ],
+    "rawdata_name": "RS-422 Railgun (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_spear",
+    "name": "S-11 矛枪",
+    "name_en": "S-11 Speargun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_spear:s-11-p",
+      "name": "S-11 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 125,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 100.0,
+       "vConfig": 300.0,
+       "dragCoeff": 4.0,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 1.7000000476837158,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 650,
+       "durable": 275,
+       "damage_info_type": 65,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 300.0,
+       "damage_standard": 650.0,
+       "damage_durable": 275.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "support_spear:s-11-p-e",
+      "name": "S-11 P E",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "S-11 Speargun (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_tx_41_sterilizer",
+    "name": "TX-41 灭菌器",
+    "name_en": "TX-41 Sterilizer",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_tx_41_sterilizer:tx-41-sterilizer-s",
+      "name": "TX-41 STERILIZER S",
+      "kind": "spray",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 spray 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "heavy_support_ac_8_autocannon",
+    "name": "AC-8 机炮",
+    "name_en": "AC-8 Autocannon",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_ac_8_autocannon:20mm-aphet-rounds-p",
+      "name": "20mm APHET ROUNDS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 115,
+      "params": {
+       "calibreMm": 20.0,
+       "massG": 120.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 325,
+       "durable": 260,
+       "damage_info_type": 213,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 120.0,
+       "speed_mps": 820.0,
+       "damage_standard": 325.0,
+       "damage_durable": 260.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_ac_8_autocannon:20mm-flak-rounds-p",
+      "name": "20mm FLAK ROUNDS P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 284,
+      "params": {
+       "calibreMm": 40.0,
+       "massG": 130.0,
+       "vConfig": 820.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.8999999761581421,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 150,
+       "durable": 150,
+       "damage_info_type": 202,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 130.0,
+       "speed_mps": 820.0,
+       "damage_standard": 150.0,
+       "damage_durable": 150.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_ac_8_autocannon:20mm-aphet-rounds-p-ie",
+      "name": "20mm APHET ROUNDS P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_ac_8_autocannon:20mm-flak-rounds-p-ie",
+      "name": "20mm FLAK ROUNDS P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_ac_8_autocannon:shrapnel-p",
+      "name": "SHRAPNEL P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 201,
+      "params": {
+       "calibreMm": 10.0,
+       "massG": 100.0,
+       "vConfig": 30.0,
+       "dragCoeff": 0.4000000059604645,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": false,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 110,
+       "durable": 35,
+       "damage_info_type": 189,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 100.0,
+       "speed_mps": 30.0,
+       "damage_standard": 110.0,
+       "damage_durable": 35.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "AC-8 Autocannon (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_b_flam_80_flamer",
+    "name": "B/FLAM-80 焚燃者",
+    "name_en": "B/FLAM-80 Cremator",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_b_flam_80_flamer:b-flam-80-cremator-s-dm",
+      "name": "B/FLAM-80 CREMATOR_S_dm",
+      "kind": "damage",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 damage 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "heavy_support_faf_14_spear",
+    "name": "FAF-14 飞矛",
+    "name_en": "FAF-14 Spear",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_faf_14_spear:homing-ground-missile-p",
+      "name": "HOMING GROUND MISSILE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 225,
+      "params": {
+       "calibreMm": 66.0,
+       "massG": 350.0,
+       "vConfig": 70.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 15.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 4000,
+       "durable": 4000,
+       "damage_info_type": 245,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 350.0,
+       "speed_mps": 70.0,
+       "damage_standard": 4000.0,
+       "damage_durable": 4000.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_faf_14_spear:homing-ground-missile-p-ie",
+      "name": "HOMING GROUND MISSILE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "FAF-14 Spear (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_gl_28_belt_fed_grenade_launcher",
+    "name": "GL-28 弹链式榴弹发射器",
+    "name_en": "GL-28 Belt-Fed Grenade Launcher",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_gl_28_belt_fed_grenade_launcher:gl-28-p",
+      "name": "GL-28 P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 89,
+      "params": {
+       "calibreMm": 40.0,
+       "massG": 50.0,
+       "vConfig": 100.0,
+       "dragCoeff": 1.2000000476837158,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": true,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 0,
+       "durable": 0,
+       "damage_info_type": 30,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 50.0,
+       "speed_mps": 100.0,
+       "damage_standard": 0.0,
+       "damage_durable": 0.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_gl_28_belt_fed_grenade_launcher:gl-28-p-ie",
+      "name": "GL-28 P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "GL-28 Belt-Fed Grenade Launcher (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_gr_8_recoilless_rifle",
+    "name": "GR-8 无后坐力炮",
+    "name_en": "GR-8 Recoilless Rifle",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_gr_8_recoilless_rifle:85mm-heat-grenade-p",
+      "name": "85mm HEAT GRENADE P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 153,
+      "params": {
+       "calibreMm": 85.0,
+       "massG": 3300.0,
+       "vConfig": 250.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 3200,
+       "durable": 3200,
+       "damage_info_type": 228,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 3300.0,
+       "speed_mps": 250.0,
+       "damage_standard": 3200.0,
+       "damage_durable": 3200.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_gr_8_recoilless_rifle:85mm-high-explosive-grenade-p",
+      "name": "85mm HIGH-EXPLOSIVE GRENADE P",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       36,
+       350
+      ],
+      "component_projectile_type": 153,
+      "wiki": {
+       "mass_g": 3300.0,
+       "speed_mps": 250.0,
+       "damage_standard": 750.0,
+       "damage_durable": 750.0
+      }
+     },
+     {
+      "id": "heavy_support_gr_8_recoilless_rifle:85mm-heat-grenade-p-ie",
+      "name": "85mm HEAT GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_gr_8_recoilless_rifle:85mm-high-explosive-grenade-p-ie",
+      "name": "85mm HIGH-EXPLOSIVE GRENADE P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "GR-8 Recoilless Rifle (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_m_1000_hmg",
+    "name": "M-1000 重装机枪",
+    "name_en": "M-1000 Maxigun",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_m_1000_hmg:8x60mm-high-velocity-p",
+      "name": "8x60mm HIGH VELOCITY P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 306,
+      "params": {
+       "calibreMm": 8.0,
+       "massG": 11.0,
+       "vConfig": 920.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 80,
+       "durable": 18,
+       "damage_info_type": 127,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 920.0,
+       "damage_standard": 80.0,
+       "damage_durable": 18.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     }
+    ],
+    "rawdata_name": "M-1000 Maxigun (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_sta_x3_wasp_launcher",
+    "name": "StA-X3 WASP发射器",
+    "name_en": "StA-X3 W.A.S.P. Launcher",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_sta_x3_wasp_launcher:artillery-p",
+      "name": "Artillery P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 330,
+      "params": {
+       "calibreMm": 1.0,
+       "massG": 11.0,
+       "vConfig": 500.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 20,
+       "durable": 2,
+       "damage_info_type": 32,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 500.0,
+       "damage_standard": 20.0,
+       "damage_durable": 2.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_sta_x3_wasp_launcher:burst-p",
+      "name": "Burst P",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 43,
+      "params": {
+       "calibreMm": 1.0,
+       "massG": 11.0,
+       "vConfig": 500.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 0.0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 200,
+       "durable": 200,
+       "damage_info_type": 244,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 11.0,
+       "speed_mps": 500.0,
+       "damage_standard": 200.0,
+       "damage_durable": 200.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_sta_x3_wasp_launcher:artillery-p-ie",
+      "name": "Artillery P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_sta_x3_wasp_launcher:burst-p-ie",
+      "name": "Burst P IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "StA-X3 W.A.S.P. Launcher (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "heavy_support_rl_77_airburst_rocket_launcher",
+    "name": "空爆火箭弹发射器",
+    "name_en": "RL-77 Airburst Rocket Launcher",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:20mm-flak-rounds-p2",
+      "name": "20mm FLAK ROUNDS P2",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 312,
+      "params": {
+       "calibreMm": 85.0,
+       "massG": 3300.0,
+       "vConfig": 250.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 1.5,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": false,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 350,
+       "durable": 350,
+       "damage_info_type": 380,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 3300.0,
+       "speed_mps": 250.0,
+       "damage_standard": 350.0,
+       "damage_durable": 350.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:cluster-bomb-p2",
+      "name": "CLUSTER BOMB P2",
+      "kind": "projectile",
+      "status": "ready",
+      "projectile_type": 312,
+      "params": {
+       "calibreMm": 85.0,
+       "massG": 3300.0,
+       "vConfig": 250.0,
+       "dragCoeff": 0.30000001192092896,
+       "gravityMultiplier": 1.0,
+       "lifeTime": 1.5,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": false,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 350,
+       "durable": 350,
+       "damage_info_type": 380,
+       "source": "rawdata"
+      },
+      "wiki_check": {
+       "mass_g": 3300.0,
+       "speed_mps": 250.0,
+       "damage_standard": 350.0,
+       "damage_durable": 350.0,
+       "mismatches": []
+      },
+      "sources": [
+       "wiki",
+       "rawdata"
+      ]
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:20mm-flak-rounds-p2-ie",
+      "name": "20mm FLAK ROUNDS P2 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:cluster-bomb-p2-ie",
+      "name": "CLUSTER BOMB P2 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:cluster-bomb-p1",
+      "name": "CLUSTER BOMB P1",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       78,
+       233
+      ],
+      "component_projectile_type": 312,
+      "wiki": {
+       "mass_g": 100.0,
+       "speed_mps": 25.0,
+       "damage_standard": 150.0,
+       "damage_durable": 150.0
+      }
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:cluster-bomb-p3",
+      "name": "CLUSTER BOMB P3",
+      "kind": "projectile",
+      "status": "unresolved",
+      "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+      "candidates": [
+       78,
+       233
+      ],
+      "component_projectile_type": 312,
+      "wiki": {
+       "mass_g": 100.0,
+       "speed_mps": 25.0,
+       "damage_standard": 150.0,
+       "damage_durable": 150.0
+      }
+     },
+     {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher:cluster-bomb-p1-ie",
+      "name": "CLUSTER BOMB P1 IE",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "rawdata_name": "RL-77 Airburst Rocket Launcher (Model)",
+    "status": "ready"
+   },
+   {
+    "id": "support_cqc_20_breaching_hammer",
+    "name": "CQC-20 破门锤",
+    "name_en": "CQC-20 Breaching Hammer",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_cqc_20_breaching_hammer:explosion-cqc-20-breaching-hammer",
+      "name": "Explosion CQC-20 Breaching Hammer",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 explosion 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   },
+   {
+    "id": "support_cqc_9_defoliation_tool",
+    "name": "CQC-9 除叶工具",
+    "name_en": "CQC-9 Defoliation Tool",
+    "category": "support",
+    "attacks": [
+     {
+      "id": "support_cqc_9_defoliation_tool:defolation-tool",
+      "name": "Defolation Tool",
+      "kind": "damage",
+      "status": "unsupported",
+      "reason": "当前弹道模型不支持 damage 类攻击"
+     }
+    ],
+    "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
+    "status": "unsupported"
+   }
+  ]
+ },
+ "unresolved": [
+  {
+   "equipment_id": "ar_gl_21_one_two",
+   "equipment_name": "AR/GL-21 “幺二”",
+   "attack_name": "40mm HEAT GRENADE P",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    85,
+    263
+   ]
+  },
+  {
+   "equipment_id": "las_17_double_edge_sickle",
+   "equipment_name": "LAS-17 双刃镰刀",
+   "attack_name": "LASER P2",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    25,
+    219
+   ]
+  },
+  {
+   "equipment_id": "las_17_double_edge_sickle",
+   "equipment_name": "LAS-17 双刃镰刀",
+   "attack_name": "LASER P3",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    25,
+    219
+   ]
+  },
+  {
+   "equipment_id": "plas_101_purifier",
+   "equipment_name": "PLAS-101 净化者",
+   "attack_name": "LARGE PLASMA BOLT P",
+   "reason": "组件 projectile_type=296 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
+   "candidates": []
+  },
+  {
+   "equipment_id": "support_plas_45_epoch",
+   "equipment_name": "PLAS-45 纪元",
+   "attack_name": "LARGE PLASMA BOLT P2",
+   "reason": "组件 projectile_type=165 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
+   "candidates": []
+  },
+  {
+   "equipment_id": "heavy_support_gr_8_recoilless_rifle",
+   "equipment_name": "GR-8 无后坐力炮",
+   "attack_name": "85mm HIGH-EXPLOSIVE GRENADE P",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    36,
+    350
+   ]
+  },
+  {
+   "equipment_id": "heavy_support_rl_77_airburst_rocket_launcher",
+   "equipment_name": "空爆火箭弹发射器",
+   "attack_name": "CLUSTER BOMB P1",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    78,
+    233
+   ]
+  },
+  {
+   "equipment_id": "heavy_support_rl_77_airburst_rocket_launcher",
+   "equipment_name": "空爆火箭弹发射器",
+   "attack_name": "CLUSTER BOMB P3",
+   "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
+   "candidates": [
+    78,
+    233
+   ]
+  }
+ ],
+ "stats": {
+  "ready": 91,
+  "unsupported": 77,
+  "unresolved": 8
+ }
+}
