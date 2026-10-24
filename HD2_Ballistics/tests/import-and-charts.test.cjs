@@ -50,7 +50,9 @@ class Element {
     this.files = [];
     this.style = {};
     this.validity = { badInput: false };
-    this.hidden = false;
+    // hidden/open 遵循真实 DOM 语义：由 attributes 决定初始值（details/preset 面板依赖）
+    this.hidden = 'hidden' in attributes;
+    this.open = 'open' in attributes;
     this.className = attributes.class ?? '';
     this.children = [];
     this.parentElement = null;
@@ -120,7 +122,11 @@ const inheritanceFields = ['shooterSpeed', 'shooterAzimuthDeg', 'shooterElevatio
 const directionIds = ['shooter-forward', 'shooter-forward-right', 'shooter-right', 'shooter-backward-right',
   'shooter-backward', 'shooter-backward-left', 'shooter-left', 'shooter-forward-left'];
 
-function harness({ viewer = true } = {}) {
+function harness({ viewer = true, catalogText = null } = {}) {
+  const catalogFetch = (url) => Promise.resolve({
+    ok: catalogText != null, status: catalogText != null ? 200 : 404,
+    text: async () => (catalogText != null ? catalogText : ''),
+  });
   const nodes = [];
   const errors = [];
   // Read IDs, input defaults, mode buttons, and translated labels from the real HTML.
@@ -173,9 +179,10 @@ function harness({ viewer = true } = {}) {
   const storage = new Map();
   const context = vm.createContext({
     document, Chart,
-    console: { error: (...args) => errors.push(...args) },
+    console: { error: (...args) => errors.push(...args), warn: () => {} },
     localStorage: { getItem: (key) => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) },
     setTimeout: (callback) => { timers.push(callback); return timers.length; },
+    fetch: catalogFetch,
   });
   context.window = context;
   if (viewer) context.HD2Trajectory3D = HD2Trajectory3D;
@@ -1101,4 +1108,141 @@ dataTest('late successful damage link clears stale simulation output', async () 
   assert.equal(h.get('results').classList.contains('visible'), false);
   assert.equal(h.get('result-meta').textContent, '');
   assert.equal(h.get('status').textContent, '');
+});
+
+// ---- 2026-10-24：武器预设（HD2_Ballistics/data/equipment_catalog.json）DOM 回归 ----
+const presetCatalog = () => JSON.stringify({
+  schema_version: 1,
+  upstream: { repo: 'Darctor/Helldivers2_RawData', commit: 'd7bb0b02', game_version: '1.007.100',
+              patch_date: '2026-09-22', fetched_at: '2026-10-24T00:00:00Z', files: {} },
+  wiki: { weapons_updated_at: '2026-09-23T00:00:00Z', stratagems_updated_at: '2026-09-23T00:00:00Z' },
+  categories: {
+    primary: [
+      { id: 'ar_23_liberator', name: 'AR-23 解放者', name_en: 'AR-23 Liberator', category: 'primary', status: 'ready',
+        attacks: [{ id: 'ar_23_liberator:attack', name: '5.5x50mm FULL METAL JACKET P', kind: 'projectile',
+                    status: 'ready', projectile_type: 276,
+                    params: { calibreMm: 5.5, massG: 4.5, vConfig: 900, dragCoeff: 0.3, gravityMultiplier: 1,
+                              lifeTime: 0, ignoreTerminalVelocity: false, inheritVelocity: true, numProjectiles: 1 },
+                    damage: { normal: 90, durable: 22, damage_info_type: 108, source: 'rawdata' },
+                    wiki_check: { mismatches: [] }, sources: ['wiki', 'rawdata'] }] },
+      { id: 'sg_20_halt', name: 'SG-20 止息', name_en: 'SG-20 Halt', category: 'primary', status: 'ready',
+        attacks: [
+          { id: 'sg_20_halt:flechette', name: '10g FLECHETTES P', kind: 'projectile', status: 'ready',
+            projectile_type: 183,
+            params: { calibreMm: 10, massG: 6, vConfig: 385, dragCoeff: 0.3, gravityMultiplier: 1,
+                      lifeTime: 0, ignoreTerminalVelocity: false, inheritVelocity: true, numProjectiles: 11 },
+            damage: { normal: 35, durable: 10, damage_info_type: 166, source: 'rawdata' },
+            wiki_check: { mismatches: [] }, sources: ['wiki', 'rawdata'] },
+          { id: 'sg_20_halt:stun', name: '10g STUN ROUNDS P', kind: 'projectile', status: 'ready',
+            projectile_type: 191,
+            params: { calibreMm: 10, massG: 4.5, vConfig: 800, dragCoeff: 0.3, gravityMultiplier: 1,
+                      lifeTime: 0, ignoreTerminalVelocity: false, inheritVelocity: true, numProjectiles: 20 },
+            damage: { normal: 6, durable: 2, damage_info_type: 175, source: 'rawdata' },
+            wiki_check: { mismatches: [] }, sources: ['wiki', 'rawdata'] }],
+      },
+      { id: 'spray_rifle_x', name: '喷射步枪 X', name_en: 'Spray Rifle X', category: 'primary', status: 'unsupported',
+        reason: '该装备没有射弹类攻击（火焰/光束/电弧/爆炸/近战等），当前弹道模型不支持',
+        attacks: [{ id: 'spray_rifle_x:jet', name: 'SPRAY JET S', kind: 'spray', status: 'unsupported',
+                    reason: '当前弹道模型不支持 spray 类攻击' }] },
+    ],
+    secondary: [], support: [],
+  },
+  unresolved: [],
+  stats: { ready: 3, unsupported: 1, unresolved: 0 },
+});
+
+test('weapon presets load, autofill AR-23 and render source badges', async () => {
+  const h = harness({ catalogText: presetCatalog() });
+  await h.flush();
+  assert.equal(h.get('panel-preset').hidden, false, '目录加载成功后面板应显示');
+  // 一级类别默认 primary；武器选择应包含 AR-23 与 SG-20，不含 unsupported 之外禁用项？——包含但选中后禁用
+  h.get('preset-weapon').value = 'ar_23_liberator';
+  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  // 单攻击：攻击选择行隐藏
+  assert.equal(h.get('preset-attack-field').hidden, true);
+  assert.equal(h.get('caliberMm').value, '5.5');
+  assert.equal(h.get('massG').value, '4.5');
+  assert.equal(h.get('vConfig').value, '900');
+  assert.equal(h.get('dragCoeff').value, '0.3');
+  assert.equal(h.get('gravityMultiplier').value, '1');
+  assert.equal(h.get('lifeTime').value, '0');
+  assert.equal(h.get('normalDamage').value, '90');
+  assert.equal(h.get('durableDamage').value, '22');
+  assert.equal(h.get('inheritVelocity').checked, true);
+  assert.equal(h.get('ignoreTerminalVelocity').checked, false);
+  const badgeText = h.get('preset-badges').textContent;
+  assert.match(badgeText, /RawData v1\.007\.100/);
+  assert.match(badgeText, /projectile type 276/);
+  // 预设参数可直接仿真
+  h.run('traj');
+});
+
+test('SG-20 Halt shows two attack variants and switches parameters between them', async () => {
+  const h = harness({ catalogText: presetCatalog() });
+  await h.flush();
+  h.get('preset-weapon').value = 'sg_20_halt';
+  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  assert.equal(h.get('preset-attack-field').hidden, false, '多攻击武器必须显示二级选择');
+  const options = h.get('preset-attack').children.map((o) => o.textContent).join('|');
+  assert.match(options, /FLECHETTES/);
+  assert.match(options, /STUN ROUNDS/);
+  h.get('preset-attack').value = 'sg_20_halt:flechette';
+  h.get('preset-attack').dispatchEvent({ type: 'change' });
+  assert.equal(h.get('vConfig').value, '385');
+  assert.equal(h.get('massG').value, '6');
+  assert.equal(h.get('normalDamage').value, '35');
+  assert.match(h.get('preset-badges').textContent, /弹丸数 ×11/);
+  assert.match(h.get('preset-status').textContent, /单弹丸/);
+  h.get('preset-attack').value = 'sg_20_halt:stun';
+  h.get('preset-attack').dispatchEvent({ type: 'change' });
+  assert.equal(h.get('vConfig').value, '800');
+  assert.equal(h.get('normalDamage').value, '6');
+  assert.match(h.get('preset-badges').textContent, /弹丸数 ×20/);
+});
+
+test('unsupported weapons disable run, clear old results and fall back to manual import', async () => {
+  const h = harness({ catalogText: presetCatalog() });
+  await h.flush();
+  // 先产生一次结果
+  h.run('traj');
+  assert.equal(h.get('results').classList.contains('visible'), true);
+  // 选择 unsupported 武器：错误提示、清结果、禁止运行、展开手动导入
+  h.get('preset-weapon').value = 'spray_rifle_x';
+  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  assert.equal(h.get('results').classList.contains('visible'), false, '切换预设后必须清空旧结果');
+  assert.equal(h.get('run').disabled, true, 'unsupported 武器必须禁止运行');
+  assert.match(h.get('preset-error').textContent, /不支持/);
+  assert.equal(h.get('panel-advanced').open, true, '应自动展开高级手动导入');
+  // 换回 ready 武器恢复可用
+  h.get('preset-weapon').value = 'ar_23_liberator';
+  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  assert.equal(h.get('run').disabled, false);
+});
+
+test('catalog load failure keeps presets hidden and manual mode intact', async () => {
+  const h = harness({});                       // 无 catalogText：fetch 404
+  await h.flush();
+  assert.equal(h.get('panel-preset').hidden, true, '加载失败时预设面板必须保持隐藏');
+  // 手动导入流程不受影响（复用既有合成 JSON 导入路径）
+  h.choose('projectile', jsonFile('synthetic.json', projectileJSON(
+    { type: '777 <=> ProjectileType_Unknown_777', ProjectileSettings: { items: [{
+        calibre: 5.5, mass: 4.5, speed: 900, drag: 0.3, gravity_multiplier: 1, life_time: 0,
+        damage_info_type: '108 <=> DamageInfoType_Unknown_108',
+        projectile_flags_1_detail: { inherit_velocity: 1, ignore_terminal_velocity: 0 } }] } })));
+  await h.flush();
+  h.import(777);
+  assert.equal(h.get('caliberMm').value, '5.5', '手动导入必须照常工作');
+});
+
+test('weapon preset labels follow the active locale', async () => {
+  const h = harness({ catalogText: presetCatalog() });
+  await h.flush();
+  h.get('preset-weapon').value = 'ar_23_liberator';
+  h.get('preset-weapon').dispatchEvent({ type: 'change' });
+  const zhLabel = h.get('preset-weapon').children.map((o) => o.textContent).join('|');
+  assert.match(zhLabel, /AR-23 解放者/);
+  h.toggleLocale();
+  const enLabel = h.get('preset-weapon').children.map((o) => o.textContent).join('|');
+  assert.match(enLabel, /AR-23 Liberator/);
+  assert.doesNotMatch(enLabel, /解放者/);
 });

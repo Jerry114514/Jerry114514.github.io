@@ -95,6 +95,13 @@
     .charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin-top: 1rem; }
     .chart-box { position: relative; min-width: 0; height: 330px; padding: 0.6rem; background: #fbfcfb; border: 1px solid var(--line); border-radius: 6px; }
     .chart-box.tall { height: 390px; }
+    .preset-grid select { min-height: 40px; }
+    .preset-badges { display: none; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+    .preset-badges.show { display: flex; }
+    .preset-badge { padding: 0.25rem 0.6rem; color: #34453c; font-size: 0.74rem; font-weight: 600; background: #eaf0eb; border: 1px solid var(--line); border-radius: 999px; }
+    .preset-badge.warn { color: #7a3b1d; background: #f7e8de; border-color: #e5c3ad; }
+    details.advanced-panel > summary { min-height: 40px; padding: 0.5rem 0.2rem; color: var(--forest); font-size: 0.9rem; font-weight: 700; cursor: pointer; user-select: none; }
+    details.advanced-panel[open] > summary { margin-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
     .inheritance-grid { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
     .inheritance-directions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.8rem; }
     .inheritance-directions .subtle { margin-right: 0.35rem; }
@@ -158,7 +165,30 @@
         <p class="hint mode-hint" id="mode-hint"></p>
       </div>
     </section>
-    <section class="panel" aria-labelledby="import-title">
+    <section class="panel" id="panel-preset" aria-labelledby="preset-title" hidden>
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="preset.eyebrow">武器目录</div><h2 id="preset-title" data-i18n="preset.title">武器预设</h2></div></div>
+      <div class="grid preset-grid">
+        <label class="field" for="preset-category"><span data-i18n="preset.category">武器类别</span>
+          <select id="preset-category">
+            <option value="primary"></option>
+            <option value="secondary"></option>
+            <option value="support"></option>
+          </select>
+        </label>
+        <label class="field preset-weapon-field" for="preset-weapon"><span data-i18n="preset.weapon">武器</span>
+          <select id="preset-weapon"><option value=""></option></select>
+        </label>
+        <label class="field preset-attack-field" id="preset-attack-field" for="preset-attack" hidden><span data-i18n="preset.attack">攻击 / 射击模式</span>
+          <select id="preset-attack"><option value=""></option></select>
+        </label>
+      </div>
+      <div class="preset-badges" id="preset-badges"></div>
+      <div class="import-meta" id="preset-status" role="status" aria-live="polite"></div>
+      <div class="import-meta error" id="preset-error" role="alert" hidden></div>
+      <p class="import-notes" id="preset-notes" data-i18n="preset.notes">预设来自站点武器目录（RawData 上游自动同步）。发射者移动、枪口仰角、目标距离等场景参数仍由你在下方按需输入。</p>
+    </section>
+    <details class="panel advanced-panel" id="panel-advanced">
+      <summary data-i18n="import.advanced">高级：手动导入游戏 JSON</summary>
       <div class="panel-heading"><div><div class="eyebrow" data-i18n="import.eyebrow">本地数据</div><h2 id="import-title" data-i18n="import.title">导入射弹配置</h2></div></div>
       <div class="import-layout">
         <div class="field file-field projectile-file-field"><button class="button" id="choose-projectile-file" type="button" data-i18n="import.file">选择 generated_projectile_settings.json</button><input id="projectile-file" type="file" accept=".json,application/json" hidden /></div>
@@ -169,7 +199,7 @@
       <div class="import-meta" id="import-status" role="status" aria-live="polite"><span data-i18n="import.waiting">请选择本地 JSON 文件。</span></div>
       <div class="import-meta" id="damage-status" role="status" aria-live="polite"><span data-i18n="damage.waiting">可选择伤害 JSON，按 damage_info_type 自动填入普通和耐久伤害。</span></div>
       <p class="import-notes" id="import-notes" data-i18n="import.notes">两个文件仅在本机读取。伤害按 damage_info_type 关联；simulation_steps 和寿命随机性不会由此工具应用。</p>
-    </section>
+    </details>
     <section class="panel" aria-labelledby="common-title">
       <div class="panel-heading"><div><div class="eyebrow" data-i18n="common.eyebrow">射弹与环境</div><h2 id="common-title" data-i18n="common.title">共用参数</h2></div></div>
       <div class="grid" id="common-params">

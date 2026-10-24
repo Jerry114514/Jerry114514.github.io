@@ -1,0 +1,1684 @@
+{
+ "_meta": {
+  "desc": "游戏内文本解包（schinese）武器基础名 → 官方简中名对照。用于 RawData 实体缺失 name_zh 时的补充与 Wiki 中文译名核对。匹配口径：解包表存去型号前缀的基础名（如 Slugger / Bolt Pistol），型号前缀（AR-23、P-40-K 等）在匹配时剥离。",
+  "source": "绝地潜兵2游戏内文本-20261020解包.xlsx（总表 24877 行，解包日期 2026-10-20）",
+  "extracted_at": "2026-10-24",
+  "note": "一次性人工核对产物，不参与 Actions 自动更新；RawData 实体自带 name_zh 优先于本表。"
+ },
+ "names": [
+  {
+   "base_en": "500kg BOMB",
+   "zh": "500KG炸弹",
+   "used_by": [
+    "Eagle 500KG Bomb",
+    "Eagle 500kg Bomb"
+   ]
+  },
+  {
+   "base_en": "AA EMPLACEMENT",
+   "zh": "防空炮台",
+   "used_by": [
+    "Automaton AA Emplacement"
+   ]
+  },
+  {
+   "base_en": "Accelerator Rifle",
+   "zh": "加速步枪",
+   "used_by": [
+    "PLAS-39 Accelerator Rifle"
+   ]
+  },
+  {
+   "base_en": "Adjudicator",
+   "zh": "裁决者",
+   "used_by": [
+    "BR-14 Adjudicator"
+   ]
+  },
+  {
+   "base_en": "Agitator",
+   "zh": "惑乱者",
+   "used_by": [
+    "Male Agitator"
+   ]
+  },
+  {
+   "base_en": "AIRBURST ROCKET LAUNCHER",
+   "zh": "空爆火箭弹发射器",
+   "used_by": [
+    "RL-77 Airburst Rocket Launcher"
+   ]
+  },
+  {
+   "base_en": "AMENDMENT",
+   "zh": "修正",
+   "used_by": [
+    "R-2 Amendment"
+   ]
+  },
+  {
+   "base_en": "ANTI-MATERIEL RIFLE",
+   "zh": "反器材步枪",
+   "used_by": [
+    "APW-1 Anti-Materiel Rifle"
+   ]
+  },
+  {
+   "base_en": "Anti-Personnel Minefield",
+   "zh": "反步兵雷区",
+   "used_by": [
+    "MD-6 Anti-Personnel Minefield"
+   ]
+  },
+  {
+   "base_en": "ANTI-TANK EMPLACEMENT",
+   "zh": "反坦克炮台",
+   "used_by": [
+    "E/AT-12 Anti-Tank Emplacement"
+   ]
+  },
+  {
+   "base_en": "ANTI-TANK MINES",
+   "zh": "反坦克地雷",
+   "used_by": [
+    "MD-17 Anti-Tank Mines"
+   ]
+  },
+  {
+   "base_en": "Anti-Tank Seeker",
+   "zh": "反坦克追踪者",
+   "used_by": [
+    "G-60 Anti-Tank Seeker"
+   ]
+  },
+  {
+   "base_en": "AQUIFER DRILL",
+   "zh": "含水层钻机",
+   "used_by": [
+    "Aquifer Drill"
+   ]
+  },
+  {
+   "base_en": "ARBITRATOR",
+   "zh": "仲裁者",
+   "used_by": [
+    "AR-11 Arbitrator"
+   ]
+  },
+  {
+   "base_en": "ARC",
+   "zh": "电弧",
+   "used_by": [
+    "G-31 Arc"
+   ]
+  },
+  {
+   "base_en": "ARC THROWER",
+   "zh": "电弧发射器",
+   "used_by": [
+    "ARC-3 Arc Thrower"
+   ]
+  },
+  {
+   "base_en": "Artillery",
+   "zh": "大炮",
+   "used_by": [
+    "SEAF Artillery"
+   ]
+  },
+  {
+   "base_en": "ASSAULT RIFLE",
+   "zh": "突击步枪",
+   "used_by": [
+    "MA5C Assault Rifle",
+    "StA-52 Assault Rifle"
+   ]
+  },
+  {
+   "base_en": "Autocannon",
+   "zh": "机炮",
+   "used_by": [
+    "AC-8 Autocannon"
+   ]
+  },
+  {
+   "base_en": "Autocannon Sentry",
+   "zh": "自动哨戒炮",
+   "used_by": [
+    "A/AC-8 Autocannon Sentry"
+   ]
+  },
+  {
+   "base_en": "AUTOMATON MORTAR EMPLACEMENT",
+   "zh": "机器人的迫击炮台",
+   "used_by": [
+    "Automaton Mortar Emplacement"
+   ]
+  },
+  {
+   "base_en": "BALLISTIC SHIELD BACKPACK",
+   "zh": "防弹护盾背包",
+   "used_by": [
+    "SH-20 Ballistic Shield Backpack"
+   ]
+  },
+  {
+   "base_en": "Bastion Mk XVI",
+   "zh": "堡垒Mk XVI",
+   "used_by": [
+    "TD-220 Bastion MK XVI"
+   ]
+  },
+  {
+   "base_en": "Beacon",
+   "zh": "信标",
+   "used_by": [
+    "SoS Beacon"
+   ]
+  },
+  {
+   "base_en": "Belt-Fed Grenade Launcher",
+   "zh": "弹链式榴弹发射器",
+   "used_by": [
+    "GL-28 Belt-Fed Grenade Launcher"
+   ]
+  },
+  {
+   "base_en": "Blitzer",
+   "zh": "雷霆",
+   "used_by": [
+    "ARC-12 Blitzer"
+   ]
+  },
+  {
+   "base_en": "BOLT PISTOL",
+   "zh": "爆弹手枪",
+   "used_by": [
+    "P-40-K Bolt Pistol",
+    "P/40-K Bolt Pistol"
+   ]
+  },
+  {
+   "base_en": "BREACHER",
+   "zh": "爆破者",
+   "used_by": [
+    "P-34 Breacher"
+   ]
+  },
+  {
+   "base_en": "BREACHING HAMMER",
+   "zh": "破门锤",
+   "used_by": [
+    "CQC-20 Breaching Hammer"
+   ]
+  },
+  {
+   "base_en": "BREAK-ACTION SHOTGUN",
+   "zh": "中折式霰弹枪",
+   "used_by": [
+    "SG-88 Break-Action Shotgun"
+   ]
+  },
+  {
+   "base_en": "Breaker",
+   "zh": "破裂者",
+   "used_by": [
+    "SG-225 Breaker"
+   ]
+  },
+  {
+   "base_en": "BREAKER INCENDIARY",
+   "zh": "高燃“破裂者”",
+   "used_by": [
+    "SG-225IE Breaker Incendiary"
+   ]
+  },
+  {
+   "base_en": "BREAKER SPRAY&PRAY",
+   "zh": "千发百中“破裂者”",
+   "used_by": [
+    "SG-225SP Breaker Spray&Pray"
+   ]
+  },
+  {
+   "base_en": "BREAKTHROUGH EXOSUIT",
+   "zh": "“突破”外骨骼装甲",
+   "used_by": [
+    "EXO-55 Breakthrough Exosuit"
+   ]
+  },
+  {
+   "base_en": "BULLET STORM",
+   "zh": "子弹风暴",
+   "used_by": [
+    "MGX-42 Bullet Storm"
+   ]
+  },
+  {
+   "base_en": "BUNKER TURRET",
+   "zh": "碉堡炮台",
+   "used_by": [
+    "Bunker Turret"
+   ]
+  },
+  {
+   "base_en": "BUSHWHACKER",
+   "zh": "游击兵",
+   "used_by": [
+    "SG-22 Bushwhacker"
+   ]
+  },
+  {
+   "base_en": "C4 Pack",
+   "zh": "C4背包",
+   "used_by": [
+    "B/MD C4 Pack"
+   ]
+  },
+  {
+   "base_en": "CALL IN SUPER DESTROYER",
+   "zh": "呼叫超级驱逐舰",
+   "used_by": [
+    "Call In Super Destroyer"
+   ]
+  },
+  {
+   "base_en": "Cannon Turret",
+   "zh": "加农炮台",
+   "used_by": [
+    "Cannon Turret"
+   ]
+  },
+  {
+   "base_en": "CARGO CONTAINER",
+   "zh": "货物集装箱",
+   "used_by": [
+    "Cargo Container"
+   ]
+  },
+  {
+   "base_en": "Censor",
+   "zh": "审查官",
+   "used_by": [
+    "R-72 Censor"
+   ]
+  },
+  {
+   "base_en": "Cluster Bomb",
+   "zh": "集束炸弹",
+   "used_by": [
+    "Eagle Cluster Bomb"
+   ]
+  },
+  {
+   "base_en": "COMBAT HATCHET",
+   "zh": "战斗短柄斧",
+   "used_by": [
+    "CQC-5 Combat Hatchet"
+   ]
+  },
+  {
+   "base_en": "COMMANDO",
+   "zh": "突击兵",
+   "used_by": [
+    "MLS-4X Commando"
+   ]
+  },
+  {
+   "base_en": "CONSTITUTION",
+   "zh": "宪法",
+   "used_by": [
+    "R-2124 Constitution"
+   ]
+  },
+  {
+   "base_en": "COOKOUT",
+   "zh": "野炊",
+   "used_by": [
+    "SG-451 Cookout"
+   ]
+  },
+  {
+   "base_en": "Coyote",
+   "zh": "野狼",
+   "used_by": [
+    "AR-2 Coyote"
+   ]
+  },
+  {
+   "base_en": "Cremator",
+   "zh": "焚燃者",
+   "used_by": [
+    "B/FLAM-80 Cremator"
+   ]
+  },
+  {
+   "base_en": "CRISPER",
+   "zh": "迅击",
+   "used_by": [
+    "P-72 Crisper"
+   ]
+  },
+  {
+   "base_en": "Dagger",
+   "zh": "匕首",
+   "used_by": [
+    "LAS-7 Dagger"
+   ]
+  },
+  {
+   "base_en": "DARK FLUID VESSEL",
+   "zh": "暗液体容器",
+   "used_by": [
+    "Dark Fluid Vessel"
+   ]
+  },
+  {
+   "base_en": "DE-ESCALATOR",
+   "zh": "缓和使者",
+   "used_by": [
+    "GL-52 De-Escalator"
+   ]
+  },
+  {
+   "base_en": "Deadeye",
+   "zh": "鹰眼",
+   "used_by": [
+    "R-6 Deadeye"
+   ]
+  },
+  {
+   "base_en": "Defender",
+   "zh": "捍卫者",
+   "used_by": [
+    "SMG-37 Defender"
+   ]
+  },
+  {
+   "base_en": "Defoliation Tool",
+   "zh": "除叶工具",
+   "used_by": [
+    "CQC-9 Defoliation Tool"
+   ]
+  },
+  {
+   "base_en": "Devastator",
+   "zh": "蹂躏者",
+   "used_by": [
+    "Rocket Devastator"
+   ]
+  },
+  {
+   "base_en": "Diligence",
+   "zh": "勤勉",
+   "used_by": [
+    "R-63 Diligence"
+   ]
+  },
+  {
+   "base_en": "DILIGENCE COUNTER SNIPER",
+   "zh": "反狙击“勤勉”",
+   "used_by": [
+    "R-63CS Diligence Counter Sniper"
+   ]
+  },
+  {
+   "base_en": "DIRECTIONAL SHIELD",
+   "zh": "定向护盾",
+   "used_by": [
+    "SH-51 Directional Shield"
+   ]
+  },
+  {
+   "base_en": "DOG BREATH",
+   "zh": "腐息",
+   "used_by": [
+    "AX/TX-13 Dog Breath"
+   ]
+  },
+  {
+   "base_en": "DOMINATOR",
+   "zh": "主宰",
+   "used_by": [
+    "JAR-5 Dominator"
+   ]
+  },
+  {
+   "base_en": "Double Freedom",
+   "zh": "双重自由",
+   "used_by": [
+    "DBS-2 Double Freedom"
+   ]
+  },
+  {
+   "base_en": "Double-Edge Sickle",
+   "zh": "双刃镰刀",
+   "used_by": [
+    "LAS-17 Double-Edge Sickle"
+   ]
+  },
+  {
+   "base_en": "DYNAMITE",
+   "zh": "炸药",
+   "used_by": [
+    "TED-63 Dynamite"
+   ]
+  },
+  {
+   "base_en": "Eagle 110mm Rocket Pods",
+   "zh": "“飞鹰”110mm火箭巢",
+   "used_by": [
+    "Eagle 110MM Rocket Pods",
+    "Eagle 110mm Rocket Pods"
+   ]
+  },
+  {
+   "base_en": "EAGLE 500KG BOMB",
+   "zh": "“飞鹰”500KG炸弹",
+   "used_by": [
+    "Eagle 500KG Bomb",
+    "Eagle 500kg Bomb"
+   ]
+  },
+  {
+   "base_en": "Eagle Air-to-Air Missiles",
+   "zh": "“飞鹰”空对空导弹",
+   "used_by": [
+    "Eagle Air-To-Air Missiles"
+   ]
+  },
+  {
+   "base_en": "EAGLE AIRSTRIKE",
+   "zh": "“飞鹰”空袭",
+   "used_by": [
+    "Eagle Airstrike"
+   ]
+  },
+  {
+   "base_en": "EAGLE CLUSTER BOMB",
+   "zh": "“飞鹰”集束炸弹",
+   "used_by": [
+    "Eagle Cluster Bomb"
+   ]
+  },
+  {
+   "base_en": "Eagle Gas Airstrike",
+   "zh": "“飞鹰”毒气空袭",
+   "used_by": [
+    "Eagle Gas Airstrike"
+   ]
+  },
+  {
+   "base_en": "Eagle Napalm Airstrike",
+   "zh": "“飞鹰”凝固汽油弹空袭",
+   "used_by": [
+    "Eagle Napalm Airstrike"
+   ]
+  },
+  {
+   "base_en": "Eagle Rearm",
+   "zh": "重新武装“飞鹰”",
+   "used_by": [
+    "Eagle Rearm"
+   ]
+  },
+  {
+   "base_en": "Eagle Smoke Strike",
+   "zh": "“飞鹰”烟雾攻击",
+   "used_by": [
+    "Eagle Smoke Strike"
+   ]
+  },
+  {
+   "base_en": "Eagle Strafing Run",
+   "zh": "“飞鹰”机枪扫射",
+   "used_by": [
+    "Eagle Strafing Run"
+   ]
+  },
+  {
+   "base_en": "Emancipator Exosuit",
+   "zh": "“解放者”外骨骼装甲",
+   "used_by": [
+    "EXO-49 Emancipator Exosuit"
+   ]
+  },
+  {
+   "base_en": "EMS MORTAR SENTRY",
+   "zh": "电磁冲击波迫击哨戒炮",
+   "used_by": [
+    "A/M-23 EMS Mortar Sentry"
+   ]
+  },
+  {
+   "base_en": "Entrenchment Tool",
+   "zh": "堑壕工具",
+   "used_by": [
+    "CQC-72 Entrenchment Tool",
+    "CQC-73 Entrenchment Tool"
+   ]
+  },
+  {
+   "base_en": "Epoch",
+   "zh": "纪元",
+   "used_by": [
+    "PLAS-45 Epoch"
+   ]
+  },
+  {
+   "base_en": "Eruptor",
+   "zh": "爆裂铳",
+   "used_by": [
+    "R-36 Eruptor"
+   ]
+  },
+  {
+   "base_en": "EVICTOR",
+   "zh": "驱逐者",
+   "used_by": [
+    "GL-15 Evictor"
+   ]
+  },
+  {
+   "base_en": "Expendable Anti-Tank",
+   "zh": "消耗性反坦克武器",
+   "used_by": [
+    "EAT-17 Expendable Anti-Tank"
+   ]
+  },
+  {
+   "base_en": "Expendable Napalm",
+   "zh": "消耗性凝固汽油弹",
+   "used_by": [
+    "EAT-700 Expendable Napalm"
+   ]
+  },
+  {
+   "base_en": "EXPLODING CROSSBOW",
+   "zh": "爆燃弩",
+   "used_by": [
+    "CB-9 Exploding Crossbow"
+   ]
+  },
+  {
+   "base_en": "Flame Sentry",
+   "zh": "火焰喷射哨戒炮",
+   "used_by": [
+    "A/FLAM-40 Flame Sentry"
+   ]
+  },
+  {
+   "base_en": "FLAMETHROWER",
+   "zh": "火焰喷射器",
+   "used_by": [
+    "FLAM-40 Flamethrower"
+   ]
+  },
+  {
+   "base_en": "Frag",
+   "zh": "破片弹",
+   "used_by": [
+    "G-6 Frag"
+   ]
+  },
+  {
+   "base_en": "GALLANT",
+   "zh": "英勇无畏",
+   "used_by": [
+    "SMG-203 Gallant"
+   ]
+  },
+  {
+   "base_en": "Gas",
+   "zh": "毒气榴弹",
+   "used_by": [
+    "G-4 Gas"
+   ]
+  },
+  {
+   "base_en": "Gas Mines",
+   "zh": "毒气地雷",
+   "used_by": [
+    "MD-8 Gas Mines"
+   ]
+  },
+  {
+   "base_en": "Gas Mortar Sentry",
+   "zh": "瓦斯迫击哨戒炮",
+   "used_by": [
+    "A/GM-17 Gas Mortar Sentry"
+   ]
+  },
+  {
+   "base_en": "Gatling Sentry",
+   "zh": "加特林哨戒炮",
+   "used_by": [
+    "A/G-16 Gatling Sentry"
+   ]
+  },
+  {
+   "base_en": "Giga Grenade",
+   "zh": "千兆级榴弹",
+   "used_by": [
+    "G-48 Giga Grenade"
+   ]
+  },
+  {
+   "base_en": "Grenade Launcher",
+   "zh": "榴弹发射器",
+   "used_by": [
+    "GL-21 Grenade Launcher"
+   ]
+  },
+  {
+   "base_en": "Grenade Pistol",
+   "zh": "榴弹手枪",
+   "used_by": [
+    "GP-31 Grenade Pistol"
+   ]
+  },
+  {
+   "base_en": "GRENADIER BATTLEMENT",
+   "zh": "掷弹兵防卫墙",
+   "used_by": [
+    "E/GL-21 Grenadier Battlement"
+   ]
+  },
+  {
+   "base_en": "GUARD DOG",
+   "zh": "“护卫犬”",
+   "used_by": [
+    "AX/AR-23 Guard Dog"
+   ]
+  },
+  {
+   "base_en": "GUNNER FRV",
+   "zh": "炮手快速侦察载具",
+   "used_by": [
+    "M-102 Gunner FRV"
+   ]
+  },
+  {
+   "base_en": "HALT",
+   "zh": "止息",
+   "used_by": [
+    "SG-20 Halt"
+   ]
+  },
+  {
+   "base_en": "HEAVY MACHINE GUN",
+   "zh": "重机枪",
+   "used_by": [
+    "MG-206 Heavy Machine Gun"
+   ]
+  },
+  {
+   "base_en": "Hellbomb",
+   "zh": "地狱火炸弹",
+   "used_by": [
+    "NUX-223 Hellbomb"
+   ]
+  },
+  {
+   "base_en": "High Explosive",
+   "zh": "高爆弹",
+   "used_by": [
+    "G-12 High Explosive"
+   ]
+  },
+  {
+   "base_en": "HIVE BREAKER DRILL",
+   "zh": "“虫窝破裂者”钻机",
+   "used_by": [
+    "Hive Breaker Drill"
+   ]
+  },
+  {
+   "base_en": "HMG Emplacement",
+   "zh": "重机枪部署支架",
+   "used_by": [
+    "Automaton HMG Emplacement",
+    "E/MG-101 HMG Emplacement"
+   ]
+  },
+  {
+   "base_en": "Hot Dog",
+   "zh": "热狗",
+   "used_by": [
+    "AX/FLAM-75 Hot Dog"
+   ]
+  },
+  {
+   "base_en": "HOT-SHOT MARKSMAN RIFLE",
+   "zh": "高能精确射手步枪",
+   "used_by": [
+    "R/40-K Hot-Shot Marksman Rifle",
+    "R/40-K Hot-shot Marksman Rifle"
+   ]
+  },
+  {
+   "base_en": "Hover Pack",
+   "zh": "悬浮背包",
+   "used_by": [
+    "LIFT-860 Hover Pack"
+   ]
+  },
+  {
+   "base_en": "HYENA",
+   "zh": "鬣狗",
+   "used_by": [
+    "R-4 Hyena"
+   ]
+  },
+  {
+   "base_en": "IMMOLATION",
+   "zh": "焚身",
+   "used_by": [
+    "G-8 Immolation"
+   ]
+  },
+  {
+   "base_en": "IMPACT",
+   "zh": "影响",
+   "used_by": [
+    "G-16 Impact"
+   ]
+  },
+  {
+   "base_en": "INCENDIARY",
+   "zh": "燃烧弹",
+   "used_by": [
+    "G-10 Incendiary"
+   ]
+  },
+  {
+   "base_en": "INCENDIARY IMPACT",
+   "zh": "燃烧冲击弹",
+   "used_by": [
+    "G-13 Incendiary Impact"
+   ]
+  },
+  {
+   "base_en": "Incendiary Mines",
+   "zh": "燃烧地雷",
+   "used_by": [
+    "MD-I4 Incendiary Mines"
+   ]
+  },
+  {
+   "base_en": "INCINERATOR FRV",
+   "zh": "炽灼型快速侦察载具",
+   "used_by": [
+    "M-104 Incinerator FRV"
+   ]
+  },
+  {
+   "base_en": "JUMP PACK",
+   "zh": "喷射背包",
+   "used_by": [
+    "LIFT-850 Jump Pack"
+   ]
+  },
+  {
+   "base_en": "KNIGHT",
+   "zh": "骑士",
+   "used_by": [
+    "MP-98 Knight"
+   ]
+  },
+  {
+   "base_en": "LAS-13 Trident",
+   "zh": "LAS-13“三叉戟”",
+   "used_by": [
+    "LAS-13 Trident"
+   ]
+  },
+  {
+   "base_en": "LASER",
+   "zh": "激光",
+   "used_by": [
+    "Orbital Laser"
+   ]
+  },
+  {
+   "base_en": "Laser Cannon",
+   "zh": "激光大炮",
+   "used_by": [
+    "LAS-98 Laser Cannon"
+   ]
+  },
+  {
+   "base_en": "Laser Sentry",
+   "zh": "激光哨戒炮",
+   "used_by": [
+    "A/LAS-98 Laser Sentry"
+   ]
+  },
+  {
+   "base_en": "LEVELLER",
+   "zh": "荡平者",
+   "used_by": [
+    "EAT-411 Leveller"
+   ]
+  },
+  {
+   "base_en": "Liberator",
+   "zh": "解放者",
+   "used_by": [
+    "AR-23 Liberator"
+   ]
+  },
+  {
+   "base_en": "LIBERATOR CARBINE",
+   "zh": "“解放者”卡宾枪",
+   "used_by": [
+    "AR-23A Liberator Carbine"
+   ]
+  },
+  {
+   "base_en": "Liberator Concussive",
+   "zh": "震荡“解放者”",
+   "used_by": [
+    "AR-23C Liberator Concussive"
+   ]
+  },
+  {
+   "base_en": "LIBERATOR PENETRATOR",
+   "zh": "穿甲“解放者”",
+   "used_by": [
+    "AR-23P Liberator Penetrator"
+   ]
+  },
+  {
+   "base_en": "Loyalist",
+   "zh": "忠诚者",
+   "used_by": [
+    "PLAS-15 Loyalist"
+   ]
+  },
+  {
+   "base_en": "LUMBERER EXOSUIT",
+   "zh": "“伐木者”外骨骼装甲",
+   "used_by": [
+    "EXO-51 Lumberer Exosuit"
+   ]
+  },
+  {
+   "base_en": "LURE MINE",
+   "zh": "诱饵地雷",
+   "used_by": [
+    "TM-1 Lure Mine"
+   ]
+  },
+  {
+   "base_en": "Machete",
+   "zh": "砍刀",
+   "used_by": [
+    "CQC-42 Machete"
+   ]
+  },
+  {
+   "base_en": "MACHINE GUN",
+   "zh": "机枪",
+   "used_by": [
+    "MG-43 Machine Gun"
+   ]
+  },
+  {
+   "base_en": "MACHINE GUN SENTRY",
+   "zh": "哨戒机枪",
+   "used_by": [
+    "A/MG-43 Machine Gun Sentry"
+   ]
+  },
+  {
+   "base_en": "MAELSTROM",
+   "zh": "风暴漩涡",
+   "used_by": [
+    "TD-110 Maelstrom"
+   ]
+  },
+  {
+   "base_en": "MAXIGUN",
+   "zh": "重装机枪",
+   "used_by": [
+    "M-1000 Maxigun"
+   ]
+  },
+  {
+   "base_en": "MELTA MINE",
+   "zh": "热熔地雷",
+   "used_by": [
+    "G/40-K Melta Mine"
+   ]
+  },
+  {
+   "base_en": "MELTAGUN",
+   "zh": "热熔枪",
+   "used_by": [
+    "40-K Meltagun"
+   ]
+  },
+  {
+   "base_en": "Missile Pistol",
+   "zh": "制导手枪",
+   "used_by": [
+    "P-33 Missile Pistol"
+   ]
+  },
+  {
+   "base_en": "MORTAR EMPLACEMENT",
+   "zh": "迫击炮台",
+   "used_by": [
+    "Automaton Mortar Emplacement"
+   ]
+  },
+  {
+   "base_en": "Mortar Sentry",
+   "zh": "迫击哨戒炮",
+   "used_by": [
+    "A/M-12 Mortar Sentry"
+   ]
+  },
+  {
+   "base_en": "N/A",
+   "zh": "不适用",
+   "used_by": [
+    "N/A"
+   ]
+  },
+  {
+   "base_en": "Ombudsman",
+   "zh": "巡察者",
+   "used_by": [
+    "P-41 Ombudsman"
+   ]
+  },
+  {
+   "base_en": "One True Flag",
+   "zh": "唯一真旗",
+   "used_by": [
+    "CQC-1 One True Flag"
+   ]
+  },
+  {
+   "base_en": "ONE-TWO",
+   "zh": "幺二",
+   "used_by": [
+    "AR/GL-21 One-Two"
+   ]
+  },
+  {
+   "base_en": "ORBITAL 120MM HE BARRAGE",
+   "zh": "轨道120MM高爆弹火力网",
+   "used_by": [
+    "Orbital 120mm HE Barrage"
+   ]
+  },
+  {
+   "base_en": "Orbital 380mm HE Barrage",
+   "zh": "轨道380mm高爆弹火力网",
+   "used_by": [
+    "Orbital 380mm HE Barrage"
+   ]
+  },
+  {
+   "base_en": "ORBITAL AIRBURST STRIKE",
+   "zh": "轨道空爆攻击",
+   "used_by": [
+    "Orbital Airburst Strike"
+   ]
+  },
+  {
+   "base_en": "Orbital EMS Strike",
+   "zh": "轨道电磁冲击波攻击",
+   "used_by": [
+    "Orbital EMS Strike"
+   ]
+  },
+  {
+   "base_en": "Orbital Gas Strike",
+   "zh": "轨道毒气攻击",
+   "used_by": [
+    "Orbital Gas Strike"
+   ]
+  },
+  {
+   "base_en": "Orbital Gatling Barrage",
+   "zh": "轨道加特林火力网",
+   "used_by": [
+    "Orbital Gatling Barrage"
+   ]
+  },
+  {
+   "base_en": "ORBITAL ILLUMINATION FLARE",
+   "zh": "轨道照明弹",
+   "used_by": [
+    "Orbital Illumination Flare"
+   ]
+  },
+  {
+   "base_en": "Orbital Laser",
+   "zh": "轨道激光炮",
+   "used_by": [
+    "Orbital Laser"
+   ]
+  },
+  {
+   "base_en": "Orbital Napalm Barrage",
+   "zh": "轨道凝固汽油弹火力网",
+   "used_by": [
+    "Orbital Napalm Barrage"
+   ]
+  },
+  {
+   "base_en": "Orbital Precision Strike",
+   "zh": "轨道精准攻击",
+   "used_by": [
+    "Orbital Precision Strike"
+   ]
+  },
+  {
+   "base_en": "ORBITAL RAILCANNON STRIKE",
+   "zh": "轨道炮攻击",
+   "used_by": [
+    "Orbital Railcannon Strike"
+   ]
+  },
+  {
+   "base_en": "ORBITAL SMOKE STRIKE",
+   "zh": "轨道烟雾攻击",
+   "used_by": [
+    "Orbital Smoke Strike"
+   ]
+  },
+  {
+   "base_en": "ORBITAL WALKING BARRAGE",
+   "zh": "轨道游走火力网",
+   "used_by": [
+    "Orbital Walking Barrage"
+   ]
+  },
+  {
+   "base_en": "PACIFIER",
+   "zh": "安抚者",
+   "used_by": [
+    "AR-32 Pacifier"
+   ]
+  },
+  {
+   "base_en": "Patriot Exosuit",
+   "zh": "“爱国者”外骨骼装甲",
+   "used_by": [
+    "EXO-45 Patriot Exosuit"
+   ]
+  },
+  {
+   "base_en": "PEACEMAKER",
+   "zh": "和平制造者",
+   "used_by": [
+    "P-2 Peacemaker"
+   ]
+  },
+  {
+   "base_en": "Pineapple",
+   "zh": "菠萝",
+   "used_by": [
+    "G-7 Pineapple"
+   ]
+  },
+  {
+   "base_en": "PISTOL",
+   "zh": "手枪",
+   "used_by": [
+    "Conscript Pistol",
+    "M6C/SOCOM Pistol"
+   ]
+  },
+  {
+   "base_en": "PORTABLE HELLBOMB",
+   "zh": "便携式地狱火炸弹",
+   "used_by": [
+    "B-100 Portable Hellbomb"
+   ]
+  },
+  {
+   "base_en": "PROSPECTING DRILL",
+   "zh": "勘探钻机",
+   "used_by": [
+    "Prospecting Drill"
+   ]
+  },
+  {
+   "base_en": "PUMMELER",
+   "zh": "暴击斗士",
+   "used_by": [
+    "SMG-72 Pummeler"
+   ]
+  },
+  {
+   "base_en": "PUNISHER",
+   "zh": "制裁者",
+   "used_by": [
+    "SG-8 Punisher"
+   ]
+  },
+  {
+   "base_en": "PUNISHER PLASMA",
+   "zh": "等离子“制裁者”",
+   "used_by": [
+    "SG-8P Punisher Plasma"
+   ]
+  },
+  {
+   "base_en": "PURIFIER",
+   "zh": "净化者",
+   "used_by": [
+    "PLAS-101 Purifier"
+   ]
+  },
+  {
+   "base_en": "Pyrotech",
+   "zh": "烟花术",
+   "used_by": [
+    "G-142 Pyrotech"
+   ]
+  },
+  {
+   "base_en": "Quasar Cannon",
+   "zh": "类星体加农炮",
+   "used_by": [
+    "LAS-99 Quasar Cannon"
+   ]
+  },
+  {
+   "base_en": "Radical",
+   "zh": "激进先锋",
+   "used_by": [
+    "Female Radical",
+    "Male Radical"
+   ]
+  },
+  {
+   "base_en": "RAILGUN",
+   "zh": "磁轨炮",
+   "used_by": [
+    "RS-422 Railgun"
+   ]
+  },
+  {
+   "base_en": "RE-EDUCATOR",
+   "zh": "思想改造",
+   "used_by": [
+    "P-35 Re-Educator"
+   ]
+  },
+  {
+   "base_en": "RECOILLESS RIFLE",
+   "zh": "无后坐力炮",
+   "used_by": [
+    "GR-8 Recoilless Rifle"
+   ]
+  },
+  {
+   "base_en": "Redeemer",
+   "zh": "救世主",
+   "used_by": [
+    "P-19 Redeemer"
+   ]
+  },
+  {
+   "base_en": "Reinforce",
+   "zh": "增援",
+   "used_by": [
+    "Reinforce"
+   ]
+  },
+  {
+   "base_en": "Reinforced Scout Strider",
+   "zh": "强化侦察纵步者",
+   "used_by": [
+    "Reinforced Scout Strider"
+   ]
+  },
+  {
+   "base_en": "REINFORCEMENT PODS",
+   "zh": "增援太空舱",
+   "used_by": [
+    "Reinforcement Pods"
+   ]
+  },
+  {
+   "base_en": "REPRIMAND",
+   "zh": "训斥",
+   "used_by": [
+    "SMG-32 Reprimand"
+   ]
+  },
+  {
+   "base_en": "RESUPPLY",
+   "zh": "重新补给",
+   "used_by": [
+    "Resupply"
+   ]
+  },
+  {
+   "base_en": "RIFLE",
+   "zh": "步枪",
+   "used_by": [
+    "Conscript Rifle"
+   ]
+  },
+  {
+   "base_en": "ROCKET DEVASTATOR",
+   "zh": "火箭蹂躏者",
+   "used_by": [
+    "Incendiary Rocket Devastator",
+    "Rocket Devastator"
+   ]
+  },
+  {
+   "base_en": "Rocket Sentry",
+   "zh": "火箭哨戒炮",
+   "used_by": [
+    "A/MLS-4X Rocket Sentry"
+   ]
+  },
+  {
+   "base_en": "Rover",
+   "zh": "漫游车",
+   "used_by": [
+    "AX/LAS-5 Rover"
+   ]
+  },
+  {
+   "base_en": "Saber",
+   "zh": "军刀",
+   "used_by": [
+    "CQC-2 Saber"
+   ]
+  },
+  {
+   "base_en": "Sai",
+   "zh": "钗",
+   "used_by": [
+    "LAS-12 SAI",
+    "LAS-12 Sai"
+   ]
+  },
+  {
+   "base_en": "SAM Launcher",
+   "zh": "地对空导弹发射器",
+   "used_by": [
+    "SAM Launcher"
+   ]
+  },
+  {
+   "base_en": "Scorcher",
+   "zh": "焦土",
+   "used_by": [
+    "PLAS-1 Scorcher"
+   ]
+  },
+  {
+   "base_en": "Scout Strider",
+   "zh": "侦察纵步者",
+   "used_by": [
+    "Reinforced Scout Strider"
+   ]
+  },
+  {
+   "base_en": "Scythe",
+   "zh": "长柄镰",
+   "used_by": [
+    "LAS-5 Scythe"
+   ]
+  },
+  {
+   "base_en": "SEAF Artillery",
+   "zh": "超级地球武装部队大炮",
+   "used_by": [
+    "SEAF Artillery"
+   ]
+  },
+  {
+   "base_en": "Seeker",
+   "zh": "寻踪者",
+   "used_by": [
+    "G-50 Seeker"
+   ]
+  },
+  {
+   "base_en": "SEISMIC PROBE",
+   "zh": "地震探测仪",
+   "used_by": [
+    "Seismic Probe"
+   ]
+  },
+  {
+   "base_en": "Senator",
+   "zh": "参议员",
+   "used_by": [
+    "P-4 Senator"
+   ]
+  },
+  {
+   "base_en": "Shield",
+   "zh": "之盾",
+   "used_by": [
+    "G/SH-39 Shield"
+   ]
+  },
+  {
+   "base_en": "Shield Generator Pack",
+   "zh": "防护罩生成包",
+   "used_by": [
+    "SH-32 Shield Generator Pack"
+   ]
+  },
+  {
+   "base_en": "SHIELD GENERATOR RELAY",
+   "zh": "防护罩生成中继器",
+   "used_by": [
+    "FX-12 Shield Generator Relay"
+   ]
+  },
+  {
+   "base_en": "SHOTGUN",
+   "zh": "霰弹枪",
+   "used_by": [
+    "Conscript Shotgun",
+    "M90A Shotgun",
+    "Radical Shotgun"
+   ]
+  },
+  {
+   "base_en": "Sickle",
+   "zh": "镰刀",
+   "used_by": [
+    "LAS-16 Sickle"
+   ]
+  },
+  {
+   "base_en": "SLUGGER",
+   "zh": "重炮手",
+   "used_by": [
+    "SG-8S Slugger"
+   ]
+  },
+  {
+   "base_en": "SMG",
+   "zh": "冲锋枪",
+   "used_by": [
+    "M7S SMG",
+    "StA-11 SMG"
+   ]
+  },
+  {
+   "base_en": "SMOKE",
+   "zh": "烟雾弹",
+   "used_by": [
+    "G-3 Smoke"
+   ]
+  },
+  {
+   "base_en": "SMOKESCREEN",
+   "zh": "烟幕",
+   "used_by": [
+    "G-89 Smokescreen"
+   ]
+  },
+  {
+   "base_en": "Solo Silo",
+   "zh": "单兵导弹发射井",
+   "used_by": [
+    "MS-11 Solo Silo"
+   ]
+  },
+  {
+   "base_en": "SOS Beacon",
+   "zh": "S.O.S.求救信标",
+   "used_by": [
+    "SoS Beacon"
+   ]
+  },
+  {
+   "base_en": "Spear",
+   "zh": "之矛",
+   "used_by": [
+    "FAF-14 Spear"
+   ]
+  },
+  {
+   "base_en": "Speargun",
+   "zh": "矛枪",
+   "used_by": [
+    "S-11 Speargun"
+   ]
+  },
+  {
+   "base_en": "SSSD DELIVERY",
+   "zh": "运送超级固态硬盘",
+   "used_by": [
+    "SSSD Delivery"
+   ]
+  },
+  {
+   "base_en": "Stalwart",
+   "zh": "盟友",
+   "used_by": [
+    "M-105 Stalwart"
+   ]
+  },
+  {
+   "base_en": "STERILIZER",
+   "zh": "灭菌器",
+   "used_by": [
+    "TX-41 Sterilizer"
+   ]
+  },
+  {
+   "base_en": "Stim Pistol",
+   "zh": "治疗剂手枪",
+   "used_by": [
+    "P-11 Stim Pistol"
+   ]
+  },
+  {
+   "base_en": "Stoker",
+   "zh": "司炉者",
+   "used_by": [
+    "SMG/FLAM-34 Stoker"
+   ]
+  },
+  {
+   "base_en": "STUN",
+   "zh": "眩晕弹",
+   "used_by": [
+    "G-23 Stun"
+   ]
+  },
+  {
+   "base_en": "STUN BATON",
+   "zh": "眩晕短棍",
+   "used_by": [
+    "CQC-30 Stun Baton"
+   ]
+  },
+  {
+   "base_en": "Stun Lance",
+   "zh": "眩晕长矛",
+   "used_by": [
+    "CQC-19 Stun Lance"
+   ]
+  },
+  {
+   "base_en": "Super Earth Flag",
+   "zh": "超级地球旗帜",
+   "used_by": [
+    "Super Earth Flag"
+   ]
+  },
+  {
+   "base_en": "Supply FRV",
+   "zh": "补给型快速侦察载具",
+   "used_by": [
+    "M-103 Supply FRV"
+   ]
+  },
+  {
+   "base_en": "Supply Pack",
+   "zh": "补给背包",
+   "used_by": [
+    "B-1 Supply Pack"
+   ]
+  },
+  {
+   "base_en": "SUPPRESSOR",
+   "zh": "消音器",
+   "used_by": [
+    "AR-59 Suppressor"
+   ]
+  },
+  {
+   "base_en": "Sweeper",
+   "zh": "扫荡者",
+   "used_by": [
+    "SG-97 Sweeper"
+   ]
+  },
+  {
+   "base_en": "TACTICAL VIDEO CAMERA",
+   "zh": "战术摄像机",
+   "used_by": [
+    "Tactical Video Camera"
+   ]
+  },
+  {
+   "base_en": "TALON",
+   "zh": "猛爪",
+   "used_by": [
+    "LAS-58 Talon"
+   ]
+  },
+  {
+   "base_en": "TECTONIC DRILL",
+   "zh": "地壳钻机",
+   "used_by": [
+    "Tectonic Drill"
+   ]
+  },
+  {
+   "base_en": "Tenderizer",
+   "zh": "肉锤",
+   "used_by": [
+    "AR-61 Tenderizer"
+   ]
+  },
+  {
+   "base_en": "TESLA TOWER",
+   "zh": "特斯拉塔",
+   "used_by": [
+    "A/ARC-3 Tesla Tower"
+   ]
+  },
+  {
+   "base_en": "Thermite",
+   "zh": "铝热弹",
+   "used_by": [
+    "G-123 Thermite"
+   ]
+  },
+  {
+   "base_en": "THROWING KNIFE",
+   "zh": "飞刀",
+   "used_by": [
+    "K-2 Throwing Knife"
+   ]
+  },
+  {
+   "base_en": "Torcher",
+   "zh": "火炬手",
+   "used_by": [
+    "FLAM-66 Torcher"
+   ]
+  },
+  {
+   "base_en": "ULTIMATUM",
+   "zh": "最后通牒",
+   "used_by": [
+    "GP-20 Ultimatum"
+   ]
+  },
+  {
+   "base_en": "UPLOAD DATA",
+   "zh": "上传数据",
+   "used_by": [
+    "Upload Data"
+   ]
+  },
+  {
+   "base_en": "Urchin",
+   "zh": "海胆",
+   "used_by": [
+    "G-109 Urchin"
+   ]
+  },
+  {
+   "base_en": "VARIABLE",
+   "zh": "变数",
+   "used_by": [
+    "VG-70 Variable"
+   ]
+  },
+  {
+   "base_en": "VERDICT",
+   "zh": "裁决",
+   "used_by": [
+    "P-113 Verdict"
+   ]
+  },
+  {
+   "base_en": "VETO",
+   "zh": "否决者",
+   "used_by": [
+    "P-69 Veto"
+   ]
+  },
+  {
+   "base_en": "VOX ENGINE",
+   "zh": "噪轰引擎",
+   "used_by": [
+    "Vox Engine"
+   ]
+  },
+  {
+   "base_en": "W.A.S.P. LAUNCHER",
+   "zh": "W.A.S.P.发射器",
+   "used_by": [
+    "StA-X3 W.A.S.P. Launcher"
+   ]
+  },
+  {
+   "base_en": "War Strider",
+   "zh": "战争纵步者",
+   "used_by": [
+    "War Strider"
+   ]
+  },
+  {
+   "base_en": "Warp Pack",
+   "zh": "传送背包",
+   "used_by": [
+    "LIFT-182 Warp Pack"
+   ]
+  },
+  {
+   "base_en": "Warrant",
+   "zh": "法令",
+   "used_by": [
+    "P-92 Warrant"
+   ]
+  }
+ ]
+}

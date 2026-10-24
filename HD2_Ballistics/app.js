@@ -23,7 +23,15 @@
       "error.velocity": "速度继承参数无效：总速率须为有限非负数，水平方向角和上下倾角须为有限数，上下倾角须在 -90° 到 90° 之间；输入不能为空。", "chart.unavailable3d": "3D 查看器未加载，请刷新页面；数值结果仍可查看。",
       "solution.unique": "唯一解", "solution.low": "低抛", "solution.high": "高抛", "solution.other": "其他",
       "chart.trajectory": "弹道轨迹", "chart.flight": "飞行轨迹", "chart.horizontal": "水平距离 X (m)", "chart.height": "高度 Y (m)", "chart.damageTitle": "普通伤害与累计路程", "chart.damage": "普通伤害", "chart.floor": "公式下限 25%", "chart.path": "累计路程 (m)", "chart.rangeCurve": "水平射程", "chart.target": "目标 {range} m", "chart.solution": "求解点", "chart.angleRange": "仰角与水平射程", "chart.launchAngle": "发射仰角 (°)", "chart.landingX": "水平落点 X (m)", "chart.impactTrajectory": "命中轨迹（首个可达目标）", "chart.noTrajectory": "没有可显示的命中轨迹", "chart.aimTarget": "目标 X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
-      "error.time": "时间参数无效：更新频率须为有限正数，寿命须为有限非负数；轨迹模式的模拟时长也须为有限正数。", "error.steps": "模拟步数过大，请降低模拟时长或更新频率。", "error.parameters": "输入参数无效，请检查数值和单位。", "error.generic": "发生未预期的计算错误。", "error.physics.positive": "{field} 必须是有限正数。", "error.physics.nonNegative": "{field} 必须是有限非负数。", "error.physics.sweepBudget": "仰角采样数过大（{count} > 上限 {cap}），请增大仰角粗扫步长 angleStepDeg。", "footer.text": "物理模型说明：", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
+      "error.time": "时间参数无效：更新频率须为有限正数，寿命须为有限非负数；轨迹模式的模拟时长也须为有限正数。", "error.steps": "模拟步数过大，请降低模拟时长或更新频率。", "error.parameters": "输入参数无效，请检查数值和单位。", "error.generic": "发生未预期的计算错误。", "error.physics.positive": "{field} 必须是有限正数。", "error.physics.nonNegative": "{field} 必须是有限非负数。", "error.physics.sweepBudget": "仰角采样数过大（{count} > 上限 {cap}），请增大仰角粗扫步长 angleStepDeg。", "import.advanced": "高级：手动导入游戏 JSON",
+      "preset.eyebrow": "武器目录", "preset.title": "武器预设", "preset.category": "武器类别", "preset.weapon": "武器", "preset.attack": "攻击 / 射击模式",
+      "preset.cat.primary": "主手武器", "preset.cat.secondary": "副手武器", "preset.cat.support": "支援武器",
+      "preset.choose": "—— 请选择 ——", "preset.loading": "正在加载武器目录…",
+      "preset.failed": "武器目录加载失败，预设已隐藏；下方手动导入仍可使用。", "preset.badSchema": "武器目录格式不符合预期，预设已隐藏；下方手动导入仍可使用。",
+      "preset.badge.rawdata": "RawData v{version}（{date}）", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "弹丸数 ×{num}",
+      "preset.numNote": "多弹丸武器：各弹丸弹道相同，伤害按单弹丸展示，不叠加。", "preset.ready": "已按预设填充参数。发射者移动、枪口仰角等场景参数仍由你输入。",
+      "preset.unsupported.entry": "当前弹道模型不支持该武器：{reason}", "preset.unsupported.kind": "当前弹道模型不支持「{kind}」类攻击",
+      "preset.unresolved": "该攻击的射弹参数无法唯一确认（候选：{candidates}）。已回退到手动模式。", "preset.mismatch": "⚠ Wiki 与 RawData 数值不一致：{fields}", "preset.manualFallback": "已展开下方手动导入，可自行填写参数。", "footer.text": "物理模型说明：", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     },
     en: {
       "brand.title": "Helldivers 2 · Ballistics Simulator", "brand.subtitle": "A local projectile-configuration and trajectory research tool", "locale.label": "Switch language",
@@ -45,7 +53,15 @@
       "error.velocity": "Invalid velocity inheritance: total speed must be finite and non-negative, azimuth and elevation must be finite, and elevation must be between -90° and 90°; inputs cannot be empty.", "chart.unavailable3d": "The 3D viewer did not load. Refresh the page; numerical results remain available.",
       "solution.unique": "Unique", "solution.low": "Low arc", "solution.high": "High arc", "solution.other": "Other",
       "chart.trajectory": "Projectile trajectory", "chart.flight": "Flight path", "chart.horizontal": "Horizontal distance X (m)", "chart.height": "Height Y (m)", "chart.damageTitle": "Normal damage vs. cumulative path", "chart.damage": "Normal damage", "chart.floor": "Formula floor 25%", "chart.path": "Cumulative path (m)", "chart.rangeCurve": "Horizontal range", "chart.target": "Target {range} m", "chart.solution": "Solutions", "chart.angleRange": "Launch angle vs. horizontal range", "chart.launchAngle": "Launch elevation (°)", "chart.landingX": "Landing X (m)", "chart.impactTrajectory": "Impact trajectories (first reachable target)", "chart.noTrajectory": "No reachable trajectory to display", "chart.aimTarget": "Target X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
-      "error.time": "Invalid time settings: update rate must be finite and positive, lifetime must be finite and non-negative, and trajectory duration must be finite and positive.", "error.steps": "Too many simulation steps. Reduce the duration or update rate.", "error.parameters": "Invalid input. Check parameter values and units.", "error.generic": "An unexpected calculation error occurred.", "error.physics.positive": "{field} must be a finite positive number.", "error.physics.nonNegative": "{field} must be a finite non-negative number.", "error.physics.sweepBudget": "Elevation sweep sample count too large ({count} > cap {cap}). Increase the coarse angle step (angleStepDeg).", "footer.text": "Physics model: ", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
+      "error.time": "Invalid time settings: update rate must be finite and positive, lifetime must be finite and non-negative, and trajectory duration must be finite and positive.", "error.steps": "Too many simulation steps. Reduce the duration or update rate.", "error.parameters": "Invalid input. Check parameter values and units.", "error.generic": "An unexpected calculation error occurred.", "error.physics.positive": "{field} must be a finite positive number.", "error.physics.nonNegative": "{field} must be a finite non-negative number.", "error.physics.sweepBudget": "Elevation sweep sample count too large ({count} > cap {cap}). Increase the coarse angle step (angleStepDeg).", "import.advanced": "Advanced: manually import game JSON",
+      "preset.eyebrow": "Weapon catalog", "preset.title": "Weapon presets", "preset.category": "Category", "preset.weapon": "Weapon", "preset.attack": "Attack / fire mode",
+      "preset.cat.primary": "Primary weapons", "preset.cat.secondary": "Secondary weapons", "preset.cat.support": "Support weapons",
+      "preset.choose": "—— Choose ——", "preset.loading": "Loading weapon catalog…",
+      "preset.failed": "Weapon catalog failed to load; presets are hidden. Manual import below still works.", "preset.badSchema": "Weapon catalog has an unexpected format; presets are hidden. Manual import below still works.",
+      "preset.badge.rawdata": "RawData v{version} ({date})", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "projectiles ×{num}",
+      "preset.numNote": "Multi-projectile weapon: trajectories are identical; damage is shown per single projectile, not summed.", "preset.ready": "Parameters filled from preset. Scenario inputs (shooter movement, muzzle angle, targets) remain yours to set.",
+      "preset.unsupported.entry": "The current ballistic model does not support this weapon: {reason}", "preset.unsupported.kind": "The current ballistic model does not support {kind} attacks",
+      "preset.unresolved": "Projectile parameters for this attack could not be uniquely resolved (candidates: {candidates}). Manual mode is available below.", "preset.mismatch": "⚠ Wiki/RawData value mismatch: {fields}", "preset.manualFallback": "Manual import below has been expanded; fill parameters by hand.", "footer.text": "Physics model: ", "footer.link": "HD2_PROJECTILE_PHYSICS.md"
     }
   };
 
@@ -585,6 +601,235 @@
       } finally { button.disabled = false; }
     }, 20);
   });
+
+  // ---------------- 武器预设（HD2_Ballistics/data/equipment_catalog.json） ----------------
+  const PRESET_CATEGORIES = ["primary", "secondary", "support"];
+  const presetState = { catalog: null };
+
+  function validateCatalog(data) {
+    if (!data || typeof data !== "object" || data.schema_version !== 1) return false;
+    const cats = data.categories || {};
+    for (const key of PRESET_CATEGORIES) {
+      if (!Array.isArray(cats[key])) return false;
+      for (const entry of cats[key]) {
+        if (!entry || typeof entry.id !== "string" || !Array.isArray(entry.attacks)) return false;
+        for (const attack of entry.attacks) {
+          if (!attack || typeof attack.id !== "string" || typeof attack.kind !== "string") return false;
+          if (attack.status === "ready") {
+            const params = attack.params, damage = attack.damage;
+            if (!params || !damage) return false;
+            for (const field of ["calibreMm", "massG", "vConfig", "dragCoeff", "gravityMultiplier"]) {
+              if (!Number.isFinite(Number(params[field]))) return false;
+            }
+            if (!Number.isFinite(Number(damage.normal))) return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  function presetOptionLabel(entry) {
+    return locale === "en" ? (entry.name_en || entry.name || entry.id) : (entry.name || entry.name_en || entry.id);
+  }
+
+  function renderPresetSelects() {
+    if (!presetState.catalog) return;
+    const categorySelect = $("preset-category");
+    if (!categorySelect.value) categorySelect.value = PRESET_CATEGORIES[0];
+    for (const option of categorySelect.children) {
+      if (option.value) option.textContent = t(`preset.cat.${option.value}`);
+    }
+    const firstOption = categorySelect.children[0];
+    if (firstOption && !firstOption.value) firstOption.textContent = t("preset.choose");
+    renderPresetWeapons();
+  }
+
+  function renderPresetWeapons() {
+    const weaponSelect = $("preset-weapon");
+    const previous = weaponSelect.value;
+    weaponSelect.replaceChildren();
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = t("preset.choose");
+    weaponSelect.append(placeholder);
+    const category = $("preset-category").value;
+    const rows = presetState.catalog ? (presetState.catalog.categories[category] || []) : [];
+    const sorted = rows.slice().sort((a, b) => presetOptionLabel(a).localeCompare(presetOptionLabel(b)));
+    for (const entry of sorted) {
+      const option = document.createElement("option");
+      option.value = entry.id;
+      option.textContent = presetOptionLabel(entry);
+      weaponSelect.append(option);
+    }
+    weaponSelect.value = rows.some((entry) => entry.id === previous) ? previous : "";
+    renderPresetAttacks();
+  }
+
+  function renderPresetAttacks() {
+    const attackSelect = $("preset-attack");
+    const previous = attackSelect.value;
+    attackSelect.replaceChildren();
+    const entry = findPresetEntry();
+    const projectileAttacks = entry ? entry.attacks.filter((attack) => attack.kind === "projectile") : [];
+    const show = projectileAttacks.length > 1;
+    $("preset-attack-field").hidden = !show;   // 折叠整行 label（含 select）
+    if (show) {
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = t("preset.choose");
+      attackSelect.append(placeholder);
+      for (const attack of projectileAttacks) {
+        const option = document.createElement("option");
+        option.value = attack.id;
+        option.textContent = attack.name || attack.id;
+        attackSelect.append(option);
+      }
+      attackSelect.value = projectileAttacks.some((attack) => attack.id === previous) ? previous : "";
+    } else if (projectileAttacks.length === 1) {
+      attackSelect.value = projectileAttacks[0].id;
+    } else {
+      attackSelect.value = "";
+    }
+    applyPresetSelection();
+  }
+
+  function findPresetEntry() {
+    if (!presetState.catalog) return null;
+    const category = $("preset-category").value;
+    const weaponId = $("preset-weapon").value;
+    return (presetState.catalog.categories[category] || []).find((entry) => entry.id === weaponId) || null;
+  }
+
+  function findPresetAttack(entry) {
+    if (!entry) return null;
+    const attackId = $("preset-attack").value;
+    return entry.attacks.find((attack) => attack.id === attackId)
+      || (entry.attacks.length === 1 ? entry.attacks[0] : null);
+  }
+
+  function setPresetStatus(key, values = {}, kind = "") {
+    const node = $("preset-status");
+    node.className = `import-meta${kind ? ` ${kind}` : ""}`;
+    node.textContent = t(key, values);
+  }
+
+  function setPresetError(message) {
+    const node = $("preset-error");
+    if (!message) { node.hidden = true; node.textContent = ""; return; }
+    node.hidden = false;
+    node.textContent = message;
+  }
+
+  function setPresetBadges(items) {
+    const host = $("preset-badges");
+    host.replaceChildren();
+    for (const item of items) {
+      const badge = document.createElement("span");
+      badge.className = `preset-badge${item.warn ? " warn" : ""}`;
+      badge.textContent = item.text;
+      host.append(badge);
+    }
+    host.classList.toggle("show", items.length > 0);
+  }
+
+  function applyPresetSelection() {
+    const entry = findPresetEntry();
+    const attack = findPresetAttack(entry);
+    clearSimulationResult();
+    setPresetError("");
+    $("run").disabled = false;
+    if (!entry || !attack) {
+      setPresetStatus("preset.choose", {}, "");
+      setPresetBadges([]);
+      return;
+    }
+    if (attack.status !== "ready") {
+      // 不支持/未解析：清结果、禁止运行、展开高级手动导入兜底
+      const kindLabel = t(`preset.kind.${attack.kind}`, { kind: attack.kind });
+      const reason = attack.status === "unsupported"
+        ? t("preset.unsupported.kind", { kind: kindLabel })
+        : t("preset.unresolved", { candidates: (attack.candidates || []).join(", ") || "—" });
+      setPresetError(reason);
+      setPresetStatus("preset.manualFallback", {}, "error");
+      setPresetBadges([]);
+      $("run").disabled = true;
+      const advanced = $("panel-advanced");
+      if (advanced && "open" in advanced) advanced.open = true;
+      return;
+    }
+    const params = attack.params, damage = attack.damage;
+    const values = { caliberMm: params.calibreMm, massG: params.massG, vConfig: params.vConfig,
+                     dragCoeff: params.dragCoeff, gravityMultiplier: params.gravityMultiplier,
+                     lifeTime: params.lifeTime };
+    for (const [id, value] of Object.entries(values)) {
+      const node = $(id);
+      node.value = String(value);
+      node.dispatchEvent({ type: "input" });
+    }
+    $("ignoreTerminalVelocity").checked = !!params.ignoreTerminalVelocity;
+    $("ignoreTerminalVelocity").dispatchEvent({ type: "change" });
+    const inherit = $("inheritVelocity");
+    inherit.checked = !!params.inheritVelocity;
+    inherit.dispatchEvent({ type: "change" });
+    $("normalDamage").value = String(damage.normal);
+    $("durableDamage").value = String(damage.durable);
+    const badges = [];
+    const upstream = (presetState.catalog.upstream || {});
+    if (upstream.game_version) {
+      badges.push({ text: t("preset.badge.rawdata", { version: upstream.game_version, date: upstream.patch_date || "" }) });
+    }
+    const wikiInfo = (presetState.catalog.wiki || {});
+    const wikiStamp = wikiInfo.weapons_updated_at || wikiInfo.stratagems_updated_at;
+    if (wikiStamp) badges.push({ text: t("preset.badge.wiki", { date: String(wikiStamp).slice(0, 10) }) });
+    if (attack.projectile_type != null) badges.push({ text: t("preset.badge.type", { type: attack.projectile_type }) });
+    const numProjectiles = Number(params.numProjectiles);
+    if (Number.isFinite(numProjectiles) && numProjectiles > 1) {
+      badges.push({ text: t("preset.badge.num", { num: numProjectiles }) });
+      setPresetStatus("preset.numNote", {}, "");
+    } else {
+      setPresetStatus("preset.ready", {}, "ok");
+    }
+    const mismatches = (attack.wiki_check || {}).mismatches || [];
+    if (mismatches.length) {
+      badges.push({ text: t("preset.mismatch", { fields: mismatches.join(", ") }), warn: true });
+    }
+    setPresetBadges(badges);
+  }
+
+  async function loadPresetCatalog() {
+    if (typeof fetch !== "function") return;   // 测试桩或极旧环境：保持面板隐藏
+    let text;
+    try {
+      const response = await fetch("./data/equipment_catalog.json", { cache: "no-cache" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      text = await response.text();
+    } catch (error) {
+      console.warn(`[ballistics] 武器目录加载失败（保持隐藏，手动模式可用）:`, error);
+      return;
+    }
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      console.warn(`[ballistics] 武器目录 JSON 解析失败:`, error);
+      return;
+    }
+    if (!validateCatalog(data)) {
+      console.warn("[ballistics] 武器目录 schema 校验失败，预设保持隐藏");
+      return;
+    }
+    presetState.catalog = data;
+    $("panel-preset").hidden = false;
+    setPresetStatus("preset.loading", {}, "");
+    renderPresetSelects();
+  }
+
+  $("preset-category").addEventListener("change", () => { renderPresetWeapons(); });
+  $("preset-weapon").addEventListener("change", () => { renderPresetAttacks(); });
+  $("preset-attack").addEventListener("change", () => { applyPresetSelection(); });
+  $("locale-toggle").addEventListener("click", () => { renderPresetSelects(); });
+  loadPresetCatalog();
 
   updateInheritanceInputs();
   setLocale(locale);
