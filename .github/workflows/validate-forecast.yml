@@ -33,6 +33,7 @@ jobs:
       - run: node scripts/tests/ownership-changes-check.mjs
       - run: node scripts/tests/reinforcement-share-check.mjs
       - run: node scripts/tests/dss-donations-check.mjs
+      - run: node scripts/tests/mo-equipment-check.mjs
       # 弹道模拟器（HD2_Ballistics）：核心物理无需游戏数据；导入/DOM 用例在缺数据时自动 skip
       - run: node --test HD2_Ballistics/tests/velocity-inheritance.test.cjs
       - run: node --test HD2_Ballistics/tests/import-and-charts.test.cjs
