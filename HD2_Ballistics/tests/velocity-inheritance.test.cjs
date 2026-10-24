@@ -395,3 +395,61 @@ test('close targets below the first coarse sweep angle still get low-arc solutio
     for (const solution of target.solutions) close(solution.landingX, target.range, 1e-2);
   }
 });
+
+// ---- 2026-10-24 审查回归：物理参数校验与仿真预算（PR#36 内联意见）----
+test('physics entry rejects non-finite or non-positive caliber/mass/rho/drag/damage', () => {
+  const cases = [
+    ['caliberMm', 0], ['caliberMm', -5], ['caliberMm', NaN], ['caliberMm', Infinity],
+    ['massG', 0], ['massG', NaN], ['massG', Infinity],
+    ['dragCoeff', -0.1], ['dragCoeff', NaN],
+    ['normalDamage', NaN], ['normalDamage', Infinity], ['normalDamage', -1],
+    ['durableDamage', NaN], ['durableDamage', -1],
+    ['vConfig', 0], ['vConfig', -1], ['vConfig', NaN],
+    ['gravityMultiplier', NaN], ['gravityMultiplier', -1],
+  ];
+  for (const [field, value] of cases) {
+    assert.throws(() => simulateTrajectory({ ...base, [field]: value }),
+      (error) => error.message.includes('必须是有限'),
+      `simulateTrajectory 应拒绝 ${field}=${value}`);
+    assert.throws(() => simulateImpact(base.launchAngleDeg, { ...base, [field]: value }),
+      (error) => error.message.includes('必须是有限'),
+      `simulateImpact 应拒绝 ${field}=${value}`);
+  }
+  // rho 缺省 1.2：显式 0 / 负数也要被拒
+  for (const run of [(opts) => simulateTrajectory(opts),
+                     (opts) => simulateImpact(base.launchAngleDeg, opts)]) {
+    assert.throws(() => run({ ...base, rho: 0 }), (error) => error.message.includes('rho'));
+  }
+});
+
+test('physics entry rejects empty-string and null-ish damage instead of coercing silently', () => {
+  // 空串会被 Number() 折算，但 NaN 类输入必须被拒；null 耐久伤害按 0 处理属既有语义
+  const ok = simulateTrajectory(base);
+  assert.ok(ok.records.length > 0, '合法参数仍应正常出结果');
+  assert.throws(() => simulateTrajectory({ ...base, normalDamage: 'abc' }),
+    (error) => error.message.includes('normalDamage'));
+});
+
+test('integration and sweep budgets are hard-capped instead of freezing the browser', () => {
+  // stepHz=1e9 且 totalTime=1：maxSteps 是安全整数但会尝试分配十亿条记录
+  assert.throws(() => simulateTrajectory({ ...base, stepHz: 1e9, totalTime: 1 }),
+    (error) => error.message.includes('模拟步数过大'));
+  // aim 路径同样受步数上限约束
+  assert.throws(() => simulateImpact(base.launchAngleDeg, { ...base, stepHz: 1e9, totalTime: 1 }),
+    (error) => error.message.includes('模拟步数过大'));
+  // angleStepDeg 极小正数：采样数超上限直接报错，不进入扫描
+  assert.throws(() => solveAim({ ...base, targetHorizontalRanges: [50], angleStepDeg: 1e-9 }),
+    (error) => error.message.includes('仰角采样数过大'));
+  // 正常步长不受影响
+  const aim = solveAim({ ...base, targetHorizontalRanges: [30], angleStepDeg: 0.5 });
+  assert.ok(aim, '常规步长的瞄准求解仍可用');
+});
+
+test('non-positive caliber/mass produce the parameter error instead of NaN pseudo results', () => {
+  for (const extra of [{ massG: 0 }, { caliberMm: 0 }]) {
+    assert.throws(() => simulateTrajectory({ ...base, ...extra }),
+      (error) => error.message.includes('必须是有限正数'));
+    assert.throws(() => simulateImpact(base.launchAngleDeg, { ...base, ...extra }),
+      (error) => error.message.includes('必须是有限正数'));
+  }
+});

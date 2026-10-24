@@ -4,6 +4,38 @@
 (function (global) {
   "use strict";
 
+  // 仿真预算硬上限（2026-10-24 审查）：防止 stepHz=1e9、angleStepDeg=1e-9 这类
+  // “数值合法但计算量爆炸”的输入把浏览器卡死。超过即抛错，不做静默截断。
+  const MAX_TOTAL_STEPS = 250000;
+  const MAX_ANGLE_SAMPLES = 3600;
+
+  function validatePhysicsParams(opts) {
+    // 公共入口统一拒绝会产生 NaN/Infinity 伪结果的参数（2026-10-24 审查 P1：
+    // massG=0 时 K=Infinity，页面此前仍显示“完成”但整表都是 NaN）。
+    const requirePositive = (value, label) => {
+      if (!Number.isFinite(value) || value <= 0) throw new Error(label + " 必须是有限正数");
+    };
+    const requireNonNegative = (value, label) => {
+      if (!Number.isFinite(value) || value < 0) throw new Error(label + " 必须是有限非负数");
+    };
+    requirePositive(opts.caliberMm, "caliberMm");
+    requirePositive(opts.massG, "massG");
+    requirePositive(opts.rho ?? 1.2, "rho");
+    requireNonNegative(opts.dragCoeff, "dragCoeff");
+    requirePositive(opts.vConfig, "vConfig");
+    requireNonNegative(opts.g0 ?? 9.81, "g0");
+    requireNonNegative(opts.gravityMultiplier, "gravityMultiplier");
+    requireNonNegative(opts.normalDamage, "normalDamage");
+    requireNonNegative(opts.durableDamage == null ? 0 : opts.durableDamage, "durableDamage");
+  }
+
+  function assertStepBudget(maxSteps) {
+    if (!Number.isSafeInteger(maxSteps) || maxSteps > MAX_TOTAL_STEPS) {
+      throw new Error("模拟步数过大（" + maxSteps + " > 上限 " + MAX_TOTAL_STEPS
+        + "），请减小时间上限或更新频率");
+    }
+  }
+
   function calculateDragConstant(caliberMm, massG, dragCoeff, rho) {
     const massKg = massG / 1000.0;
     const area = Math.PI * Math.pow(caliberMm / 2000.0, 2);
@@ -133,6 +165,7 @@
     } = opts;
 
     validateSimulationTime(stepHz, lifeTime);
+    validatePhysicsParams(opts);
     if (!Number.isFinite(totalTime) || totalTime <= 0) {
       throw new Error("total_time（模拟截断时间）必须是有限正数");
     }
@@ -170,9 +203,7 @@
     const distanceHits = [];
     const timeCap = lifeTime > 0 ? Math.min(totalTime, lifeTime) : totalTime;
     const maxSteps = Math.ceil(timeCap / dt);
-    if (!Number.isSafeInteger(maxSteps)) {
-      throw new Error("模拟步数过大，请减小时间上限或更新频率");
-    }
+    assertStepBudget(maxSteps);
     const initiallyExpired = !ignoreTerminalVelocity && initialVelocity.speed <= 0.1 * vConfig;
     let endReason = initiallyExpired ? "initial_destroyed" : "time_cap";
 
@@ -328,6 +359,7 @@
     } = opts;
 
     validateSimulationTime(stepHz, lifeTime);
+    validatePhysicsParams(opts);
     const initialVelocity = calculateInitialVelocity(launchAngleDeg, opts, launchAzimuthDeg);
     const gravity = g0 * gravityMultiplier;
     const dragConstant = calculateDragConstant(caliberMm, massG, dragCoeff, rho);
@@ -349,9 +381,7 @@
     const estimatedTime = (2.5 * initialVelocity.speed) / Math.abs(gravity) + 5.0;
     const timeBudget = lifeTime > 0 ? lifeTime : estimatedTime;
     const maxSteps = Math.ceil(timeBudget / dt);
-    if (!Number.isSafeInteger(maxSteps)) {
-      throw new Error("模拟步数过大，请减小时间上限或更新频率");
-    }
+    assertStepBudget(maxSteps);
 
     function finishImpact(tau, ax, ay, az) {
       const impactX = x + vx * tau + 0.5 * ax * tau ** 2;
@@ -436,17 +466,29 @@
   }
 
   function sweep(opts, angleStep) {
+    // 预算先于分配：angleStepDeg 极小（如 1e-9）时下面的循环会试图构建
+    // 890 亿个采样点，先算清采样数再动手，超限直接报错（2026-10-24 审查 P1）。
+    const inheritScan = opts.inheritVelocity && (opts.shooterSpeed ?? 0) > 0;
+    const plannedSamples = 1 + 2 * Math.floor(89 / angleStep) + (inheritScan ? 2 + Math.floor(89 / angleStep) : 0);
+    if (!Number.isSafeInteger(plannedSamples) || plannedSamples > MAX_ANGLE_SAMPLES) {
+      throw new Error("仰角采样数过大（" + plannedSamples + " > 上限 " + MAX_ANGLE_SAMPLES
+        + "），请增大仰角粗扫步长 angleStepDeg");
+    }
     let angles = [0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3];
     for (let i = 1; i <= Math.floor(89 / angleStep); i++) {
       angles.push(i * angleStep);
     }
-    if (opts.inheritVelocity && (opts.shooterSpeed ?? 0) > 0) {
+    if (inheritScan) {
       angles.push(-89, 0, 89);
       for (let i = 1; i <= Math.floor(89 / angleStep); i++) angles.push(-i * angleStep);
     }
     angles = [...new Set(angles.map((a) => Math.round(a * 1e6) / 1e6))].sort(
       (a, b) => a - b
     );
+    if (angles.length > MAX_ANGLE_SAMPLES) {
+      throw new Error("仰角采样数过大（" + angles.length + " > 上限 " + MAX_ANGLE_SAMPLES
+        + "），请增大仰角粗扫步长 angleStepDeg");
+    }
     const segments = [];
     let segment = [];
     let previousAngle = null;

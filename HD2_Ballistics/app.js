@@ -357,6 +357,9 @@
   function translateError(error) {
     const message = error && error.message ? error.message : String(error);
     if (message === "NO_TARGETS") return t("results.noTargets");
+    // 2026-10-24 审查：物理参数校验错误直接透传原始消息（含具体字段名），
+    // 让用户知道是哪个输入非法；其余未知错误仍走通用文案。
+    if (/必须是有限(正|非负)数|仰角采样数过大/.test(message)) return message;
     if (/shooter|direction|inherit|velocity|射手|方向|继承/i.test(message)) return t("error.velocity");
     if (message.includes("step_hz") || message.includes("life_time") || message.includes("total_time")) return t("error.time");
     if (message.includes("步数过大") || message.includes("Too many simulation steps")) return t("error.steps");

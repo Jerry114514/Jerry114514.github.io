@@ -12,8 +12,13 @@ const web = path.resolve(__dirname, '..');
 const root = path.resolve(web, '..');
 const sources = Object.fromEntries(['index.html', 'ballistics.js', 'trajectory3d.js', 'app.js'].map((name) =>
   [name, fs.readFileSync(path.join(web, name), 'utf8')]));
-const rawProjectile = fs.readFileSync(path.join(root, 'data', 'generated_projectile_settings.json'), 'utf8');
-const rawDamage = fs.readFileSync(path.join(root, 'data', 'generated_damage_settings.json'), 'utf8');
+// 游戏数据文件（data/generated_*.json）只存在于本地工作区，不随站点部署。
+// 缺失时依赖真实数据的用例整组 skip，纯 DOM/物理用例照常在 CI 运行（2026-10-24 审查 P2）。
+const dataDir = path.join(root, 'data');
+const gameDataFiles = ['generated_projectile_settings.json', 'generated_damage_settings.json'];
+const hasGameData = gameDataFiles.every((name) => fs.existsSync(path.join(dataDir, name)));
+const rawProjectile = hasGameData ? fs.readFileSync(path.join(dataDir, 'generated_projectile_settings.json'), 'utf8') : '[]';
+const rawDamage = hasGameData ? fs.readFileSync(path.join(dataDir, 'generated_damage_settings.json'), 'utf8') : '[]';
 const projectileData = JSON.parse(rawProjectile);
 const damageData = JSON.parse(rawDamage);
 const projectileItems = projectileData.flatMap((item) => item.ProjectileSettings?.items ?? []);
@@ -28,6 +33,8 @@ const file = (name, text) => ({ name, async text() { return text; } });
 const jsonFile = (name, data) => file(name, JSON.stringify(data));
 const realProjectile = () => file('generated_projectile_settings.json', rawProjectile);
 const realDamage = () => file('generated_damage_settings.json', rawDamage);
+const SKIP_NO_GAME_DATA = '本地缺少 data/generated_projectile_settings.json / generated_damage_settings.json（游戏数据不随站点部署）';
+const dataTest = (name, fn) => test(name, { skip: hasGameData ? false : SKIP_NO_GAME_DATA }, fn);
 
 class Element {
   constructor(tagName, attributes = {}) {
@@ -257,8 +264,21 @@ function deferredFile(name) {
   return { file: { name, text: () => promise }, resolve, reject };
 }
 
+// 2026-10-24 审查 P1 回归（纯 DOM，不依赖游戏 JSON）：非法物理参数（如 massG=0）
+// 必须以计算错误呈现，而不是静默产出 NaN/Infinity 伪结果（旧表现：状态“完成”、表格满屏 —）。
+test('invalid physics parameters surface a calculation error instead of NaN pseudo results', () => {
+  const h = harness();
+  h.setDamage(90, 0);
+  h.input('massG', 0);
+  h.run('traj', { error: true });
+  assert.match(h.get('status').textContent, /massG/);
+  h.input('massG', 8);
+  h.run('traj');
+  assert.ok(h.get('status').dataset.state === 'done', '修正参数后同一会话应正常完成');
+});
+
 // These assertions also pin the real dataset assumptions used by the regressions.
-test('real fixtures: record counts, target mappings, and six missing type-0 references', () => {
+dataTest('real fixtures: record counts, target mappings, and six missing type-0 references', () => {
   assert.equal(projectileItems.length, 355);
   assert.equal(damageItems.length, 661);
   assert.equal(projectile(291).damage_info_type, '244 <=> DamageInfoType_Unknown_244');
@@ -270,7 +290,7 @@ test('real fixtures: record counts, target mappings, and six missing type-0 refe
 });
 
 for (const order of ['projectile-first', 'damage-first']) {
-  test(`real files, ${order}: 291 -> 244, 131 -> 70, metadata, button and Enter`, async () => {
+  dataTest(`real files, ${order}: 291 -> 244, 131 -> 70, metadata, button and Enter`, async () => {
     const h = harness();
     h.setDamage();
     if (order === 'projectile-first') {
@@ -302,7 +322,7 @@ for (const order of ['projectile-first', 'damage-first']) {
 }
 
 for (const [id, expected] of [[91, [0, 0]], [163, [5, 0]]]) {
-  test(`real projectile ${id}: zero damage components import successfully`, async () => {
+  dataTest(`real projectile ${id}: zero damage components import successfully`, async () => {
     const h = await loaded();
     h.setDamage();
     h.import(id);
@@ -311,7 +331,7 @@ for (const [id, expected] of [[91, [0, 0]], [163, [5, 0]]]) {
   });
 }
 
-test('all six real projectile references to absent damage type 0 preserve current damage and report it', async () => {
+dataTest('all six real projectile references to absent damage type 0 preserve current damage and report it', async () => {
   const h = await loaded();
   const references = projectileItems.filter((p) => p.damage_info_type === '0 <=> DamageInfoType_Unknown_0');
   assert.equal(references.length, 6);
@@ -327,7 +347,7 @@ test('all six real projectile references to absent damage type 0 preserve curren
 });
 
 for (const family of ['projectile', 'damage']) {
-  test(`${family}: duplicate type across separate roots is rejected without changing inputs`, async () => {
+  dataTest(`${family}: duplicate type across separate roots is rejected without changing inputs`, async () => {
     const h = await loaded();
     h.import(131);
     const before = snapshot(h);
@@ -350,7 +370,7 @@ const invalidDamage = [
   ['nested array', [[20], 2]], ['object component', [20, {}]],
 ];
 for (const [label, values] of invalidDamage) {
-  test(`invalid damage array (${label}) preserves both current damage fields`, async () => {
+  dataTest(`invalid damage array (${label}) preserves both current damage fields`, async () => {
     const h = await loaded();
     h.import(291);
     h.setDamage();
@@ -361,7 +381,7 @@ for (const [label, values] of invalidDamage) {
   });
 }
 for (const values of ['[1e400,2]', '[20,1e400]']) {
-  test(`non-finite JSON damage ${values} is rejected`, async () => {
+  dataTest(`non-finite JSON damage ${values} is rejected`, async () => {
     const h = await loaded();
     h.import(291);
     h.setDamage();
@@ -381,7 +401,7 @@ for (const family of ['projectile', 'damage']) {
     [{ [section]: { items: [{ type: `244 <=> ${family === 'projectile' ? 'ProjectileType' : 'DamageInfoType'}_Unknown_235` }] } }],
   ];
   for (const [index, structure] of structures.entries()) {
-    test(`${family}: invalid structure #${index + 1} reports error and invalidates old file`, async () => {
+    dataTest(`${family}: invalid structure #${index + 1} reports error and invalidates old file`, async () => {
       const h = await loaded();
       h.import(291);
       const before = snapshot(h);
@@ -402,7 +422,7 @@ for (const family of ['projectile', 'damage']) {
     ['malformed JSON', file('broken.json', '{ broken')],
     ['file read rejection', { name: 'unreadable.json', text: () => Promise.reject(new Error('read failed')) }],
   ]) {
-    test(`${family}: ${label} reports error, preserves values, and recovers on valid file`, async () => {
+    dataTest(`${family}: ${label} reports error, preserves values, and recovers on valid file`, async () => {
       const h = await loaded();
       h.import(291);
       const before = snapshot(h);
@@ -418,7 +438,7 @@ for (const family of ['projectile', 'damage']) {
 }
 
 for (const id of ['', '-1', '1.5', '1e2', 'NaN', '9007199254740992', '999999']) {
-  test(`invalid or absent projectile type ${JSON.stringify(id)} preserves all inputs`, async () => {
+  dataTest(`invalid or absent projectile type ${JSON.stringify(id)} preserves all inputs`, async () => {
     const h = await loaded();
     h.import(291);
     const before = snapshot(h);
@@ -428,7 +448,7 @@ for (const id of ['', '-1', '1.5', '1e2', 'NaN', '9007199254740992', '999999']) 
   });
 }
 
-test('invalid projectile ballistic record and damage reference preserve the appropriate fields', async () => {
+dataTest('invalid projectile ballistic record and damage reference preserve the appropriate fields', async () => {
   const h = await loaded();
   h.import(131);
   const before = snapshot(h);
@@ -447,7 +467,7 @@ test('invalid projectile ballistic record and damage reference preserve the appr
 
 for (const family of ['projectile', 'damage']) {
   for (const staleOutcome of ['valid', 'invalid-json', 'rejected']) {
-    test(`${family}: stale ${staleOutcome} completion cannot overwrite newer success`, async () => {
+    dataTest(`${family}: stale ${staleOutcome} completion cannot overwrite newer success`, async () => {
       const h = await loaded();
       h.import(291);
       const old = deferredFile('old.json');
@@ -471,7 +491,7 @@ for (const family of ['projectile', 'damage']) {
       else assert.deepEqual(h.damages(), [321, 45]);
     });
   }
-  test(`${family}: stale completion while newer read is pending cannot change reading state or enable import`, async () => {
+  dataTest(`${family}: stale completion while newer read is pending cannot change reading state or enable import`, async () => {
     const h = await loaded();
     h.import(291);
     const old = deferredFile('old.json');
@@ -489,7 +509,7 @@ for (const family of ['projectile', 'damage']) {
     h.import(131);
     assert.deepEqual(h.damages(), [200, 100]);
   });
-  test(`${family}: newer failed read cannot be replaced by an older successful result`, async () => {
+  dataTest(`${family}: newer failed read cannot be replaced by an older successful result`, async () => {
     const h = await loaded();
     h.import(291);
     const old = deferredFile('old-valid.json');
@@ -507,7 +527,7 @@ for (const family of ['projectile', 'damage']) {
     assert.match(h.message(statusFamily), family === 'projectile' ? /请先选择/ : /未加载伤害 JSON/);
     assert.deepEqual(h.damages(), [1500, 1500]);
   });
-  test(`${family}: clearing file selection invalidates a pending async read`, async () => {
+  dataTest(`${family}: clearing file selection invalidates a pending async read`, async () => {
     const h = await loaded();
     h.import(291);
     const old = deferredFile('old.json');
@@ -523,7 +543,7 @@ for (const family of ['projectile', 'damage']) {
   });
 }
 
-test('switching projectile file clears previous selection so later damage reload cannot overwrite manual values', async () => {
+dataTest('switching projectile file clears previous selection so later damage reload cannot overwrite manual values', async () => {
   const h = await loaded();
   h.import(291);
   h.setDamage();
@@ -535,7 +555,7 @@ test('switching projectile file clears previous selection so later damage reload
   assert.deepEqual(h.damages(), [200, 100]);
 });
 
-test('language toggle translates ready, success, metadata, missing, duplicate, invalid and JSON error messages', async () => {
+dataTest('language toggle translates ready, success, metadata, missing, duplicate, invalid and JSON error messages', async () => {
   const h = harness();
   await h.load('projectile', realProjectile());
   await h.load('damage', realDamage());
@@ -574,7 +594,7 @@ test('language toggle translates ready, success, metadata, missing, duplicate, i
   assert.match(h.message('import'), /无法解析 JSON 文件/);
 });
 
-test('language toggle during both async reads keeps loading messages translated through completion', async () => {
+dataTest('language toggle during both async reads keeps loading messages translated through completion', async () => {
   const h = harness();
   const p = deferredFile('projectile.json');
   const d = deferredFile('damage.json');
@@ -654,7 +674,7 @@ test('direction arrows have bilingual accessible labels and preserve movement el
   assert.ok(directionIds.every((id) => h.get(id).getAttribute('aria-pressed') === 'false'));
 });
 
-test('real inherit_velocity flags import as booleans and retain manually entered movement', async () => {
+dataTest('real inherit_velocity flags import as booleans and retain manually entered movement', async () => {
   const h = await loaded();
   h.setMovement(25, -135, 40);
   for (const flag of [1, 0, 1]) {
@@ -671,7 +691,7 @@ for (const [label, flag] of [
   ['missing', undefined], ['null', null], ['true', true], ['false', false],
   ['string zero', '0'], ['string one', '1'], ['negative', -1], ['two', 2], ['object', {}],
 ]) {
-  test(`invalid imported inherit_velocity (${label}) preserves every input and linked damage`, async () => {
+  dataTest(`invalid imported inherit_velocity (${label}) preserves every input and linked damage`, async () => {
     const h = await loaded();
     h.import(131);
     h.check('inheritVelocity', true);
@@ -873,7 +893,7 @@ function assertChart(chart) {
 }
 
 for (const mode of ['traj', 'aim']) {
-  test(`${mode} charts from real simulation: nearest/intersect:false, X/Y tooltip, translated redraw and visibility`, async () => {
+  dataTest(`${mode} charts from real simulation: nearest/intersect:false, X/Y tooltip, translated redraw and visibility`, async () => {
     const h = await loaded();
     h.import(131);
     h.get('totalTime').value = '0.5';
@@ -1028,7 +1048,7 @@ test('missing 3D viewer shows translated fallback and still renders damage chart
   assert.equal(h.get('status').textContent, 'Complete');
 });
 
-test('trajectory to aim rerun destroys the viewer and restores two-chart layout', async () => {
+dataTest('trajectory to aim rerun destroys the viewer and restores two-chart layout', async () => {
   const h = await loaded();
   h.import(131);
   h.get('totalTime').value = '0.1';
@@ -1048,7 +1068,7 @@ test('trajectory to aim rerun destroys the viewer and restores two-chart layout'
   assert.ok(h.charts.slice(0, -2).every((chart) => chart.destroyed));
 });
 
-test('late successful damage link clears stale simulation output', async () => {
+dataTest('late successful damage link clears stale simulation output', async () => {
   const h = harness();
   await h.load('projectile', realProjectile());
   h.import(131);
