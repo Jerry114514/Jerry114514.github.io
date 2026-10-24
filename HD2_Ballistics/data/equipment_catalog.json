@@ -2315,6 +2315,49 @@
     ],
     "rawdata_name": "VG-70 Variable (Model)",
     "status": "ready"
+   },
+   {
+    "id": "r_40_sightliner",
+    "name": "R-40 视界者",
+    "name_en": "R-40 Sightliner",
+    "category": "primary",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/R-40_%E8%A7%86%E7%95%8C%E8%80%85",
+    "wiki_source": {
+     "pageid": 5100,
+     "revid": 14845,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "r_40_sightliner:projectile",
+      "name": "R-40 视界者射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 8,
+       "massG": 11,
+       "vConfig": 950,
+       "dragCoeff": 0.2,
+       "gravityMultiplier": 1,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 350,
+       "durable": 205
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ],
   "secondary": [
@@ -3262,6 +3305,49 @@
     ],
     "rawdata_name": "SG-22 Bushwhacker (Model)",
     "status": "ready"
+   },
+   {
+    "id": "p_44_mist",
+    "name": "P-44 迷雾",
+    "name_en": "P-44 Mist",
+    "category": "secondary",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/P-44_%E8%BF%B7%E9%9B%BE",
+    "wiki_source": {
+     "pageid": 5097,
+     "revid": 14360,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "p_44_mist:projectile",
+      "name": "P-44 迷雾射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 9,
+       "massG": 7,
+       "vConfig": 375,
+       "dragCoeff": 1.2,
+       "gravityMultiplier": 1,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 110,
+       "durable": 18
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ],
   "support": [
@@ -4857,6 +4943,126 @@
     ],
     "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
     "status": "unsupported"
+   },
+   {
+    "id": "amw_20_apex",
+    "name": "AMW-20 尖峰",
+    "name_en": "AMW-20 Apex",
+    "category": "support",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/AMW-20_%E5%B0%96%E5%B3%B0",
+    "wiki_source": {
+     "pageid": 5090,
+     "revid": 14836,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "amw_20_apex:projectile",
+      "name": "AMW-20 尖峰射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 60,
+       "massG": 70,
+       "vConfig": 1500,
+       "dragCoeff": 0.1,
+       "gravityMultiplier": 0.35,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1550,
+       "durable": 930
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
+   },
+   {
+    "id": "las_44_nova",
+    "name": "LAS-44 新星",
+    "name_en": "LAS-44 Nova",
+    "category": "support",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/LAS-44_%E6%96%B0%E6%98%9F",
+    "wiki_source": {
+     "pageid": 5091,
+     "revid": 14832,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "las_44_nova:projectile",
+      "name": "LAS-44 新星射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 10,
+       "massG": 8,
+       "vConfig": 1500,
+       "dragCoeff": 0,
+       "gravityMultiplier": 0,
+       "lifeTime": 6,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 880,
+       "durable": 880
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
+   }
+  ],
+  "throwable": [
+   {
+    "id": "g_11_caltrops",
+    "name": "G-11 铁蒺藜",
+    "name_en": "G-11 Caltrops",
+    "category": "throwable",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/G-11_%E9%93%81%E8%92%BA%E8%97%9C",
+    "wiki_source": {
+     "pageid": 5102,
+     "revid": 14371,
+     "game_version": "1.007.200"
+    },
+    "status": "unsupported",
+    "reason": "该攻击是无初速的感应爆炸与眩晕雷区，不属于当前单射弹弹道模型",
+    "reason_en": "This is a zero-velocity triggered explosion and stun minefield, not a single-projectile trajectory.",
+    "attacks": [
+     {
+      "id": "g_11_caltrops:explosion",
+      "name": "G-11 铁蒺藜爆炸",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "该攻击是无初速的感应爆炸与眩晕雷区，不属于当前单射弹弹道模型",
+      "reason_en": "This is a zero-velocity triggered explosion and stun minefield, not a single-projectile trajectory.",
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ]
  },
@@ -4937,8 +5143,26 @@
   }
  ],
  "stats": {
-  "ready": 91,
-  "unsupported": 77,
+  "ready": 95,
+  "unsupported": 78,
   "unresolved": 8
+ },
+ "wiki_supplements": {
+  "source": "Helldivers 中文 Wiki 详细武器数据（1.007.200）",
+  "count": 5,
+  "items": [
+   "r_40_sightliner",
+   "p_44_mist",
+   "amw_20_apex",
+   "las_44_nova",
+   "g_11_caltrops"
+  ],
+  "review": {
+   "rawdata_main_checked": "d7bb0b0205d7e5448a81708d319039958fb5da34",
+   "rawdata_game_version": "1.007.100",
+   "rawdata_missing_items": true,
+   "fields_source": "Wiki 详细武器数据表（口径、质量、初速、阻力、重力、寿命、伤害）",
+   "inherit_velocity": "直射射弹按游戏引擎继承发射者速度；G-11 为无初速雷区，不进入弹道推演"
+  }
  }
 }

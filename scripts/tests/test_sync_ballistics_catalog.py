@@ -206,6 +206,82 @@ class BuildCatalogTests(unittest.TestCase):
             self.assertIn(key, upstream)
         self.assertEqual(upstream["repo"], "Darctor/Helldivers2_RawData")
 
+    def test_wiki_supplements_add_ready_and_unsupported_entries(self):
+        weapons, stratagems = mini_wiki()
+        supplements = {
+            "source": "test wiki",
+            "items": [
+                {
+                    "id": "r_40_sightliner", "name": "R-40 视界者",
+                    "name_en": "R-40 Sightliner", "category": "primary",
+                    "wiki_source": {"game_version": "1.007.200", "revid": 1},
+                    "status": "ready",
+                    "attacks": [{
+                        "id": "r_40:projectile", "name": "R-40 projectile",
+                        "kind": "projectile", "status": "ready",
+                        "params": {
+                            "calibreMm": 8, "massG": 11, "vConfig": 950,
+                            "dragCoeff": 0.2, "gravityMultiplier": 1,
+                            "lifeTime": 0, "ignoreTerminalVelocity": False,
+                            "inheritVelocity": True, "numProjectiles": 1,
+                        },
+                        "damage": {"normal": 350, "durable": 205},
+                        "sources": ["wiki"],
+                    }],
+                },
+                {
+                    "id": "g_11_caltrops", "name": "G-11 铁蒺藜",
+                    "name_en": "G-11 Caltrops", "category": "throwable",
+                    "wiki_source": {"game_version": "1.007.200", "revid": 2},
+                    "status": "unsupported",
+                    "attacks": [{
+                        "id": "g_11:explosion", "name": "G-11 explosion",
+                        "kind": "explosion", "status": "unsupported",
+                        "reason": "not a projectile", "sources": ["wiki"],
+                    }],
+                },
+            ],
+        }
+        catalog = sync.build_catalog(
+            weapons, stratagems, upstream_with_files(), {}, {"aliases": {}}, supplements)
+        rows = {entry["id"]: entry for values in catalog["categories"].values() for entry in values}
+        self.assertEqual(rows["r_40_sightliner"]["attacks"][0]["params"]["vConfig"], 950)
+        self.assertEqual(rows["r_40_sightliner"]["attacks"][0]["damage"]["durable"], 205)
+        self.assertEqual(rows["g_11_caltrops"]["category"], "throwable")
+        self.assertEqual(rows["g_11_caltrops"]["status"], "unsupported")
+        self.assertEqual(catalog["wiki_supplements"]["count"], 2)
+        self.assertEqual(catalog["stats"], {"ready": 5, "unsupported": 2, "unresolved": 1})
+
+    def test_wiki_supplement_never_duplicates_existing_id(self):
+        weapons, stratagems = mini_wiki()
+        supplements = {"items": [{
+            "id": "ar_23_liberator", "category": "primary", "status": "ready",
+            "attacks": [{"id": "duplicate", "kind": "projectile", "status": "unsupported"}],
+        }]}
+        catalog = sync.build_catalog(
+            weapons, stratagems, upstream_with_files(), {}, {"aliases": {}}, supplements)
+        ids = [entry["id"] for values in catalog["categories"].values() for entry in values]
+        self.assertEqual(ids.count("ar_23_liberator"), 1)
+        self.assertEqual(catalog["wiki_supplements"]["count"], 0)
+
+    def test_checked_in_wiki_supplements_cover_all_five_new_items(self):
+        weapons, stratagems = mini_wiki()
+        supplements = json.loads(Path(sync.SUPPLEMENT_FILE).read_text(encoding="utf-8"))
+        catalog = sync.build_catalog(
+            weapons, stratagems, upstream_with_files(), {}, {"aliases": {}}, supplements)
+        rows = {entry["id"]: entry for values in catalog["categories"].values() for entry in values}
+        expected = {
+            "r_40_sightliner": ("primary", "ready"),
+            "p_44_mist": ("secondary", "ready"),
+            "amw_20_apex": ("support", "ready"),
+            "las_44_nova": ("support", "ready"),
+            "g_11_caltrops": ("throwable", "unsupported"),
+        }
+        self.assertEqual(catalog["wiki_supplements"]["count"], 5)
+        for item_id, (category, status) in expected.items():
+            self.assertEqual(rows[item_id]["category"], category)
+            self.assertEqual(rows[item_id]["status"], status)
+
 
 class UpstreamValidationTests(unittest.TestCase):
     def _write(self, directory, name, content):
@@ -314,6 +390,7 @@ class UpstreamValidationTests(unittest.TestCase):
             catalog_file.write_text(json.dumps(old), encoding="utf-8")
             with mock.patch.object(sync, "CATALOG_FILE", str(catalog_file)), \
                  mock.patch.object(sync, "MANIFEST_FILE", str(manifest_file)), \
+                 mock.patch.object(sync, "SUPPLEMENT_FILE", str(Path(tmp) / "missing-supplements.json")), \
                  mock.patch.object(sync, "resolve_head_sha", return_value="c" * 40), \
                  mock.patch.object(sync, "download_upstream",
                                    side_effect=AssertionError("同 commit 不得重新下载")),                  mock.patch("sys.argv", ["sync_ballistics_catalog.py"]):

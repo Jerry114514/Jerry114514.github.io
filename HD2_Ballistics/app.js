@@ -25,10 +25,10 @@
       "chart.trajectory": "弹道轨迹", "chart.flight": "飞行轨迹", "chart.horizontal": "水平距离 X (m)", "chart.height": "高度 Y (m)", "chart.damageTitle": "普通伤害与累计路程", "chart.damage": "普通伤害", "chart.floor": "公式下限 25%", "chart.path": "累计路程 (m)", "chart.rangeCurve": "水平射程", "chart.target": "目标 {range} m", "chart.solution": "求解点", "chart.angleRange": "仰角与水平射程", "chart.launchAngle": "发射仰角 (°)", "chart.landingX": "水平落点 X (m)", "chart.impactTrajectory": "命中轨迹（首个可达目标）", "chart.noTrajectory": "没有可显示的命中轨迹", "chart.aimTarget": "目标 X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
       "error.time": "时间参数无效：更新频率须为有限正数，寿命须为有限非负数；轨迹模式的模拟时长也须为有限正数。", "error.steps": "模拟步数过大，请降低模拟时长或更新频率。", "error.parameters": "输入参数无效，请检查数值和单位。", "error.generic": "发生未预期的计算错误。", "error.physics.positive": "{field} 必须是有限正数。", "error.physics.nonNegative": "{field} 必须是有限非负数。", "error.physics.sweepBudget": "仰角采样数过大（{count} > 上限 {cap}），请增大仰角粗扫步长 angleStepDeg。", "import.advanced": "高级：手动导入游戏 JSON",
       "preset.eyebrow": "武器目录", "preset.title": "武器预设", "preset.category": "武器类别", "preset.weapon": "武器", "preset.attack": "攻击 / 射击模式",
-      "preset.cat.primary": "主手武器", "preset.cat.secondary": "副手武器", "preset.cat.support": "支援武器",
+      "preset.cat.primary": "主手武器", "preset.cat.secondary": "副手武器", "preset.cat.support": "支援武器", "preset.cat.throwable": "投掷物",
       "preset.choose": "—— 请选择 ——", "preset.loading": "正在加载武器目录…",
       "preset.failed": "武器目录加载失败，预设已隐藏；下方手动导入仍可使用。", "preset.badSchema": "武器目录格式不符合预期，预设已隐藏；下方手动导入仍可使用。",
-      "preset.badge.rawdata": "RawData v{version}（{date}）", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "弹丸数 ×{num}",
+      "preset.badge.rawdata": "RawData v{version}（{date}）", "preset.badge.wiki": "Wiki {date}", "preset.badge.wikiItem": "Wiki v{version} · revid {revid}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "弹丸数 ×{num}",
       "preset.numNote": "多弹丸武器：各弹丸弹道相同，伤害按单弹丸展示，不叠加。", "preset.ready": "已按预设填充参数。发射者移动、枪口仰角等场景参数仍由你输入。",
       "preset.notes": "预设来自站点武器目录（RawData 上游自动同步）。发射者移动、枪口仰角、目标距离等场景参数仍由你在下方按需输入。",
       "preset.unsupported.entry": "当前弹道模型不支持该武器：{reason}", "preset.unsupported.kind": "当前弹道模型不支持「{kind}」类攻击",
@@ -56,10 +56,10 @@
       "chart.trajectory": "Projectile trajectory", "chart.flight": "Flight path", "chart.horizontal": "Horizontal distance X (m)", "chart.height": "Height Y (m)", "chart.damageTitle": "Normal damage vs. cumulative path", "chart.damage": "Normal damage", "chart.floor": "Formula floor 25%", "chart.path": "Cumulative path (m)", "chart.rangeCurve": "Horizontal range", "chart.target": "Target {range} m", "chart.solution": "Solutions", "chart.angleRange": "Launch angle vs. horizontal range", "chart.launchAngle": "Launch elevation (°)", "chart.landingX": "Landing X (m)", "chart.impactTrajectory": "Impact trajectories (first reachable target)", "chart.noTrajectory": "No reachable trajectory to display", "chart.aimTarget": "Target X = {range} m", "chart.targetTrajectory": "{range} m · {solution} · {angle}°",
       "error.time": "Invalid time settings: update rate must be finite and positive, lifetime must be finite and non-negative, and trajectory duration must be finite and positive.", "error.steps": "Too many simulation steps. Reduce the duration or update rate.", "error.parameters": "Invalid input. Check parameter values and units.", "error.generic": "An unexpected calculation error occurred.", "error.physics.positive": "{field} must be a finite positive number.", "error.physics.nonNegative": "{field} must be a finite non-negative number.", "error.physics.sweepBudget": "Elevation sweep sample count too large ({count} > cap {cap}). Increase the coarse angle step (angleStepDeg).", "import.advanced": "Advanced: manually import game JSON",
       "preset.eyebrow": "Weapon catalog", "preset.title": "Weapon presets", "preset.category": "Category", "preset.weapon": "Weapon", "preset.attack": "Attack / fire mode",
-      "preset.cat.primary": "Primary weapons", "preset.cat.secondary": "Secondary weapons", "preset.cat.support": "Support weapons",
+      "preset.cat.primary": "Primary weapons", "preset.cat.secondary": "Secondary weapons", "preset.cat.support": "Support weapons", "preset.cat.throwable": "Throwables",
       "preset.choose": "—— Choose ——", "preset.loading": "Loading weapon catalog…",
       "preset.failed": "Weapon catalog failed to load; presets are hidden. Manual import below still works.", "preset.badSchema": "Weapon catalog has an unexpected format; presets are hidden. Manual import below still works.",
-      "preset.badge.rawdata": "RawData v{version} ({date})", "preset.badge.wiki": "Wiki {date}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "projectiles ×{num}",
+      "preset.badge.rawdata": "RawData v{version} ({date})", "preset.badge.wiki": "Wiki {date}", "preset.badge.wikiItem": "Wiki v{version} · revid {revid}", "preset.badge.type": "projectile type {type}", "preset.badge.num": "projectiles ×{num}",
       "preset.numNote": "Multi-projectile weapon: trajectories are identical; damage is shown per single projectile, not summed.", "preset.ready": "Parameters filled from preset. Scenario inputs (shooter movement, muzzle angle, targets) remain yours to set.",
       "preset.notes": "Presets come from the site weapon catalog (automatically synced from RawData upstream). Scenario inputs such as shooter movement, muzzle angle, and target distance remain yours to set below.",
       "preset.unsupported.entry": "The current ballistic model does not support this weapon: {reason}", "preset.unsupported.kind": "The current ballistic model does not support {kind} attacks",
@@ -605,7 +605,7 @@
   });
 
   // ---------------- 武器预设（HD2_Ballistics/data/equipment_catalog.json） ----------------
-  const PRESET_CATEGORIES = ["primary", "secondary", "support"];
+  const PRESET_CATEGORIES = ["primary", "secondary", "support", "throwable"];
   const presetState = { catalog: null };
 
   function validateCatalog(data) {
@@ -757,8 +757,9 @@
     if (attack.status !== "ready") {
       // 不支持/未解析：清结果、禁止运行、展开高级手动导入兜底
       const kindLabel = t(`preset.kind.${attack.kind}`, { kind: attack.kind });
+      const suppliedReason = locale === "en" ? attack.reason_en : attack.reason;
       const reason = attack.status === "unsupported"
-        ? t("preset.unsupported.kind", { kind: kindLabel })
+        ? (suppliedReason || t("preset.unsupported.kind", { kind: kindLabel }))
         : t("preset.unresolved", { candidates: (attack.candidates || []).join(", ") || "—" });
       setPresetError(reason);
       setPresetStatus("preset.manualFallback", {}, "error");
@@ -783,13 +784,23 @@
     $("normalDamage").value = String(damage.normal);
     $("durableDamage").value = String(damage.durable);
     const badges = [];
+    const attackSources = attack.sources || [];
     const upstream = (presetState.catalog.upstream || {});
-    if (upstream.game_version) {
+    if (attackSources.includes("rawdata") && upstream.game_version) {
       badges.push({ text: t("preset.badge.rawdata", { version: upstream.game_version, date: upstream.patch_date || "" }) });
     }
-    const wikiInfo = (presetState.catalog.wiki || {});
-    const wikiStamp = wikiInfo.weapons_updated_at || wikiInfo.stratagems_updated_at;
-    if (wikiStamp) badges.push({ text: t("preset.badge.wiki", { date: String(wikiStamp).slice(0, 10) }) });
+    if (attackSources.includes("wiki")) {
+      const wikiSource = attack.wiki_source || entry.wiki_source || {};
+      if (wikiSource.game_version) {
+        badges.push({ text: t("preset.badge.wikiItem", {
+          version: wikiSource.game_version, revid: wikiSource.revid || "—",
+        }) });
+      } else {
+        const wikiInfo = (presetState.catalog.wiki || {});
+        const wikiStamp = wikiInfo.weapons_updated_at || wikiInfo.stratagems_updated_at;
+        if (wikiStamp) badges.push({ text: t("preset.badge.wiki", { date: String(wikiStamp).slice(0, 10) }) });
+      }
+    }
     if (attack.projectile_type != null) badges.push({ text: t("preset.badge.type", { type: attack.projectile_type }) });
     const numProjectiles = Number(params.numProjectiles);
     if (Number.isFinite(numProjectiles) && numProjectiles > 1) {

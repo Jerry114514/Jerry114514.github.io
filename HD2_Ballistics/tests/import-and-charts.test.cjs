@@ -1154,7 +1154,7 @@ const presetCatalog = () => JSON.stringify({
         attacks: [{ id: 'spray_rifle_x:jet', name: 'SPRAY JET S', kind: 'spray', status: 'unsupported',
                     reason: '当前弹道模型不支持 spray 类攻击' }] },
     ],
-    secondary: [], support: [],
+    secondary: [], support: [], throwable: [],
   },
   unresolved: [],
   stats: { ready: 3, unsupported: 1, unresolved: 0 },
@@ -1181,6 +1181,54 @@ test('AR-2 Coyote preset applies every Wiki/RawData parameter', async () => {
   assert.doesNotMatch(h.get('preset-notes').textContent, /^preset\.notes$/);
   assert.match(h.get('preset-notes').textContent, /预设来自站点武器目录/);
   h.run('traj');
+});
+
+test('new Wiki-only weapon presets fill all five entries and label their source', async () => {
+  const h = harness({ catalogText: equipmentCatalogText });
+  await h.flush();
+
+  h.get('preset-weapon').value = 'r_40_sightliner';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.deepEqual([
+    h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+    h.get('dragCoeff').value, h.get('gravityMultiplier').value,
+    h.get('normalDamage').value, h.get('durableDamage').value,
+  ], ['8', '11', '950', '0.2', '1', '350', '205']);
+  assert.match(h.get('preset-badges').textContent, /Wiki v1\.007\.200 · revid 14845/);
+  assert.doesNotMatch(h.get('preset-badges').textContent, /RawData/);
+
+  h.get('preset-category').value = 'secondary';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  h.get('preset-weapon').value = 'p_44_mist';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.deepEqual([
+    h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+    h.get('dragCoeff').value, h.get('normalDamage').value, h.get('durableDamage').value,
+  ], ['9', '7', '375', '1.2', '110', '18']);
+
+  h.get('preset-category').value = 'support';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  for (const [id, expected] of [
+    ['amw_20_apex', ['60', '70', '1500', '0.1', '0.35', '1550', '930']],
+    ['las_44_nova', ['10', '8', '1500', '0', '0', '880', '880']],
+  ]) {
+    h.get('preset-weapon').value = id;
+    h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+    assert.deepEqual([
+      h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+      h.get('dragCoeff').value, h.get('gravityMultiplier').value,
+      h.get('normalDamage').value, h.get('durableDamage').value,
+    ], expected);
+  }
+  assert.equal(h.get('lifeTime').value, '6');
+
+  h.get('preset-category').value = 'throwable';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  assert.ok(h.get('preset-weapon').children.some((option) => option.value === 'g_11_caltrops'));
+  h.get('preset-weapon').value = 'g_11_caltrops';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.equal(h.get('run').disabled, true);
+  assert.match(h.get('preset-error').textContent, /不属于当前单射弹弹道模型/);
 });
 
 test('weapon presets load, autofill AR-23 and render source badges', async () => {

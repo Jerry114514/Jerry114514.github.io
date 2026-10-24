@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """弹道模拟器武器目录同步（HD2_Ballistics/data/equipment_catalog.json）
 
-数据源：上游主仓库 Darctor/Helldivers2_RawData（不要用 Jerry114514 fork——已停更）。
+数据源：上游主仓库 Darctor/Helldivers2_RawData（不要用 Jerry114514 fork——已停更），
+以及人工复核、RawData 尚未导出的中文 Wiki 详细武器补充表。
 流程：解析 main HEAD SHA → 按 SHA 下载 5 个数据文件（临时目录，不入 Git）→ 结构校验
 → 与 HD2_Wiki 装备数据关联 → 生成精简目录 + manifest → 写盘。
 
@@ -18,6 +19,7 @@
                                                        # 仍会解析 HEAD SHA 记录版本
 """
 import argparse
+import copy
 import csv
 import hashlib
 import io
@@ -35,6 +37,7 @@ CATALOG_FILE = os.path.join(OUT_DIR, "equipment_catalog.json")
 MANIFEST_FILE = os.path.join(OUT_DIR, "rawdata_manifest.json")
 ALIAS_FILE = os.path.join(OUT_DIR, "equipment_aliases.json")
 GAME_TEXT_FILE = os.path.join(OUT_DIR, "game_text_names.json")
+SUPPLEMENT_FILE = os.path.join(OUT_DIR, "equipment_supplements.json")
 WIKI_WEAPONS = os.path.join(BASE_DIR, "HD2_Wiki", "data", "wiki", "zh", "weapons.json")
 WIKI_STRATAGEMS = os.path.join(BASE_DIR, "HD2_Wiki", "data", "wiki", "zh", "stratagems_full.json")
 
@@ -50,7 +53,7 @@ UPSTREAM_FILES = [
 SCHEMA_VERSION = 1
 MAX_TOTAL_STEPS_SAFE = 1_000_000  # 上游异常保护：items 数超过即判结构异常
 
-EXCLUDED_CATEGORIES = {"throwables", "orbital", "eagle", "vehicle", "deployable", "backpack", "mission", "civilian"}
+EXCLUDED_CATEGORIES = {"orbital", "eagle", "vehicle", "deployable", "backpack", "mission", "civilian"}
 
 
 def log(msg):
@@ -143,6 +146,16 @@ def sha256_of(path):
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def output_newline(path):
+    """Preserve the checked-in line-ending style for generated JSON."""
+    if os.path.exists(path):
+        with open(path, "rb") as f:
+            sample = f.read(4096)
+        if b"\r\n" in sample:
+            return "\r\n"
+    return "\n"
 
 
 def load_and_validate_upstream(paths):
@@ -308,7 +321,8 @@ def apply_aliases(equipment_id, attack_name, aliases):
 
 # ---------------- 目录生成 ----------------
 
-def build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names, aliases):
+def build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names, aliases,
+                  supplements=None):
     """纯函数：输入已解析的 wiki/rawdata/别名数据 -> catalog dict（不碰文件系统/网络）"""
     by_name, by_norm, by_punct = index_components(upstream["weapon_components"])
     projectiles, damages = upstream["projectiles"], upstream["damages"]
@@ -331,7 +345,7 @@ def build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names, alia
         },
         "wiki": {"weapons_updated_at": (wiki_weapons.get("updated_at") or ""),
                  "stratagems_updated_at": (wiki_stratems_updated_at(wiki_stratagems))},
-        "categories": {"primary": [], "secondary": [], "support": []},
+        "categories": {"primary": [], "secondary": [], "support": [], "throwable": []},
         "unresolved": [],
     }
 
@@ -467,6 +481,103 @@ def build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names, alia
             catalog["categories"][category].append(entry)
 
     catalog["stats"] = dict(stats)
+    return apply_supplements(catalog, supplements)
+
+
+def apply_supplements(catalog, supplements):
+    """Append reviewed Wiki-only entries that RawData does not export yet.
+
+    Existing IDs always win, so a future RawData/Wiki sync automatically
+    replaces a supplement instead of creating a duplicate. Invalid supplement
+    data fails the sync rather than producing a half-usable preset.
+    """
+
+    if not supplements:
+        return catalog
+    items = supplements.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError("equipment_supplements.json 缺少 items 数组")
+    for category in ("primary", "secondary", "support", "throwable"):
+        catalog["categories"].setdefault(category, [])
+
+    # The static supplement file is authoritative for Wiki-only entries.
+    # Rebuild them on every run so corrections are not frozen in an old catalog.
+    for category, rows in catalog["categories"].items():
+        catalog["categories"][category] = [
+            entry for entry in rows
+            if not (entry.get("wiki_only") or entry.get("wiki_source"))
+        ]
+    existing = {
+        entry.get("id")
+        for rows in catalog["categories"].values()
+        for entry in rows
+    }
+    added = []
+    allowed_params = (
+        "calibreMm", "massG", "vConfig", "dragCoeff", "gravityMultiplier",
+        "lifeTime", "ignoreTerminalVelocity", "inheritVelocity", "numProjectiles",
+    )
+    for raw_entry in items:
+        if not isinstance(raw_entry, dict):
+            raise RuntimeError("补充目录条目必须是对象")
+        entry = copy.deepcopy(raw_entry)
+        entry_id = entry.get("id")
+        category = entry.get("category")
+        attacks = entry.get("attacks")
+        if not isinstance(entry_id, str) or not entry_id:
+            raise RuntimeError("补充目录条目缺少 id")
+        if category not in catalog["categories"]:
+            raise RuntimeError(f"补充目录 {entry_id} 的分类无效: {category!r}")
+        if not isinstance(attacks, list) or not attacks:
+            raise RuntimeError(f"补充目录 {entry_id} 缺少 attacks")
+        if entry_id in existing:
+            continue
+        for attack in attacks:
+            if not isinstance(attack, dict) or not attack.get("id") or not attack.get("kind"):
+                raise RuntimeError(f"补充目录 {entry_id} 存在无效攻击")
+            status = attack.get("status")
+            if status not in {"ready", "unsupported", "unresolved"}:
+                raise RuntimeError(f"补充目录 {entry_id} 攻击状态无效: {status!r}")
+            if status == "ready":
+                params = attack.get("params") or {}
+                damage = attack.get("damage") or {}
+                for field in allowed_params:
+                    if field not in params:
+                        raise RuntimeError(f"补充目录 {entry_id} 缺少参数 {field}")
+                for field in ("calibreMm", "massG", "vConfig", "dragCoeff",
+                              "gravityMultiplier", "lifeTime"):
+                    if not isinstance(params[field], (int, float)):
+                        raise RuntimeError(f"补充目录 {entry_id} 参数 {field} 必须是数字")
+                for field in ("normal", "durable"):
+                    if not isinstance(damage.get(field), (int, float)):
+                        raise RuntimeError(f"补充目录 {entry_id} 伤害 {field} 必须是数字")
+        entry.setdefault("sources", ["wiki"])
+        entry["wiki_only"] = True
+        catalog["categories"][category].append(entry)
+        existing.add(entry_id)
+        added.append(entry_id)
+
+    stats = {"ready": 0, "unsupported": 0, "unresolved": 0}
+    for rows in catalog["categories"].values():
+        for entry in rows:
+            attacks = entry.get("attacks") or []
+            if not attacks:
+                status = entry.get("status") or "unsupported"
+                if status in stats:
+                    stats[status] += 1
+                continue
+            for attack in attacks:
+                status = attack.get("status")
+                if status in stats:
+                    stats[status] += 1
+    catalog["stats"] = stats
+    catalog["wiki_supplements"] = {
+        "source": supplements.get("source") or "",
+        "count": len(added),
+        "items": added,
+    }
+    if supplements.get("review"):
+        catalog["wiki_supplements"]["review"] = supplements["review"]
     return catalog
 
 
@@ -485,17 +596,40 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="同步弹道模拟器武器目录")
     parser.add_argument("--dry-run", action="store_true", help="只统计不写盘")
     parser.add_argument("--force", action="store_true", help="上游 commit 未变化也强制重新生成")
+    parser.add_argument("--supplements-only", action="store_true",
+                        help="不访问上游，只把人工审核的 Wiki 补充目录应用到现有 catalog")
     parser.add_argument("--rawdata-dir", default="", help="本地已下载的上游文件目录（离线/测试）")
     parser.add_argument("--cache-dir", default="", help="上游下载缓存目录（默认临时目录）")
     args = parser.parse_args(argv)
 
     token = os.environ.get("GITHUB_TOKEN", "") or os.environ.get("GH_TOKEN", "")
 
+    supplements = read_json(SUPPLEMENT_FILE) if os.path.exists(SUPPLEMENT_FILE) else {}
+    supplement_sha = sha256_of(SUPPLEMENT_FILE) if os.path.exists(SUPPLEMENT_FILE) else ""
+    if args.supplements_only:
+        catalog = read_json(CATALOG_FILE)
+        catalog = apply_supplements(catalog, supplements)
+        manifest = read_json(MANIFEST_FILE) if os.path.exists(MANIFEST_FILE) else {}
+        manifest["catalog_stats"] = catalog["stats"]
+        manifest["supplements_sha256"] = supplement_sha
+        manifest["supplements_count"] = (catalog.get("wiki_supplements") or {}).get("count", 0)
+        for path, data in ((CATALOG_FILE, catalog), (MANIFEST_FILE, manifest)):
+            tmp = path + ".tmp"
+            with open(tmp, "w", encoding="utf-8", newline=output_newline(path)) as f:
+                json.dump(data, f, ensure_ascii=False, indent=1)
+                f.write("\n")
+            os.replace(tmp, path)
+        log(f"补充目录已应用: ready={catalog['stats']['ready']} "
+            f"unsupported={catalog['stats']['unsupported']} unresolved={catalog['stats']['unresolved']}")
+        return
+
     sha = resolve_head_sha(token)
     log(f"上游 {UPSTREAM_REPO} main HEAD = {sha}")
 
     manifest = read_json(MANIFEST_FILE) if os.path.exists(MANIFEST_FILE) else {}
-    if (manifest.get("upstream") or {}).get("commit") == sha and not args.force and not args.dry_run:
+    if ((manifest.get("upstream") or {}).get("commit") == sha
+            and (manifest.get("supplements_sha256") or "") == supplement_sha
+            and not args.force and not args.dry_run):
         log(f"上游 commit 未变化（{sha[:12]}），目录已是最新，无事可做")
         return
 
@@ -521,8 +655,8 @@ def main(argv=None):
     wiki_stratagems = read_json(WIKI_STRATAGEMS)
     game_text_names = read_json(GAME_TEXT_FILE) if os.path.exists(GAME_TEXT_FILE) else {}
     aliases = read_json(ALIAS_FILE) if os.path.exists(ALIAS_FILE) else {}
-
-    catalog = build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names, aliases)
+    catalog = build_catalog(wiki_weapons, wiki_stratagems, upstream, game_text_names,
+                            aliases, supplements)
     stats = catalog["stats"]
     log(f"目录统计: ready={stats['ready']} unsupported={stats['unsupported']} unresolved={stats['unresolved']}")
 
@@ -557,11 +691,13 @@ def main(argv=None):
                   "sha256": upstream["files_sha256"],
                   "paths": UPSTREAM_FILES},
         "catalog_stats": stats,
+        "supplements_sha256": supplement_sha,
+        "supplements_count": (catalog.get("wiki_supplements") or {}).get("count", 0),
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     for path, data in ((CATALOG_FILE, catalog), (MANIFEST_FILE, manifest)):
         tmp = path + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
+        with open(tmp, "w", encoding="utf-8", newline=output_newline(path)) as f:
             json.dump(data, f, ensure_ascii=False, indent=1)
             f.write("\n")
         os.replace(tmp, path)
