@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17221e" />
+  <title>HD2 弹道模拟器</title>
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="vendor/three.min.js"></script>
+  <link rel="stylesheet" href="trajectory3d.css" />
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #edf1ee;
+      --surface: #ffffff;
+      --surface-soft: #f5f7f5;
+      --ink: #17211d;
+      --muted: #626f68;
+      --line: #d7dfd9;
+      --forest: #245c47;
+      --forest-dark: #183e31;
+      --copper: #c66a3d;
+      --red: #a63e36;
+      --green: #31714f;
+      --radius: 8px;
+      --shadow: 0 10px 30px rgba(23, 33, 29, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--page); font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif; line-height: 1.5; }
+    [hidden] { display: none !important; }
+    .field, .hint, .import-meta, .import-notes { overflow-wrap: anywhere; }
+    .file-field .button { width: 100%; text-align: left; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .topbar { color: #f3f6f3; background: #17221e; border-bottom: 3px solid var(--copper); }
+    .topbar-inner { max-width: 1440px; min-height: 76px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+    .brand { min-width: 0; }
+    .brand h1 { margin: 0; font-size: 1.25rem; line-height: 1.25; font-weight: 700; }
+    .brand p { margin: 0.25rem 0 0; color: #b5c1ba; font-size: 0.82rem; }
+    .locale-button, .button, .mode-tab { min-height: 40px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); cursor: pointer; transition: background 120ms ease, border-color 120ms ease; }
+    .locale-button { flex: 0 0 auto; padding: 0.45rem 0.8rem; color: #fff; border-color: #52635a; background: #28362f; }
+    .locale-button:hover { background: #35473e; }
+    main { max-width: 1440px; margin: 0 auto; padding: 1.2rem 1.5rem 2.5rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .panel { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.05rem 1.15rem 1.15rem; }
+    .panel-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .panel h2 { margin: 0; font-size: 1rem; font-weight: 700; }
+    .eyebrow { color: var(--forest); font-size: 0.72rem; text-transform: uppercase; font-weight: 750; }
+    .hint, .subtle { color: var(--muted); font-size: 0.84rem; }
+    .hint { margin: 0.65rem 0 0; }
+    .mode-layout { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .mode-tabs { display: inline-flex; flex: 0 0 auto; gap: 0.3rem; padding: 0.25rem; border-radius: 7px; background: #e9eeea; }
+    .mode-tab { border-color: transparent; padding: 0.5rem 0.8rem; background: transparent; font-weight: 650; }
+    .mode-tab:hover { background: #f7f9f7; }
+    .mode-tab.active { color: #fff; background: var(--forest); border-color: var(--forest); }
+    .mode-hint { max-width: 680px; margin: 0; }
+    .import-layout { display: grid; grid-template-columns: minmax(220px, 1.1fr) minmax(220px, 1.1fr) minmax(140px, 0.7fr) auto; gap: 0.75rem; align-items: end; }
+    .import-layout .projectile-file-field { grid-column: 1 / 2; }
+    .import-layout .damage-file-field { grid-column: 2 / 3; }
+    .import-layout .type-field { grid-column: 3 / 4; }
+    .import-layout .import-action { grid-column: 4 / 5; }
+    .import-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin-top: 0.75rem; align-items: baseline; }
+    .import-meta.ok { color: var(--green); }
+    .import-meta.error { color: var(--red); }
+    .import-notes { margin: 0.45rem 0 0; color: var(--muted); font-size: 0.8rem; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)); gap: 0.8rem 0.9rem; }
+    label.field { display: flex; min-width: 0; flex-direction: column; gap: 0.3rem; color: var(--muted); font-size: 0.78rem; font-weight: 600; }
+    label.wide { grid-column: 1 / -1; }
+    input[type="text"], input[type="number"], input[type="file"] { width: 100%; min-width: 0; min-height: 40px; padding: 0.48rem 0.62rem; color: var(--ink); background: #fff; border: 1px solid #cbd5ce; border-radius: 5px; }
+    input[type="file"] { padding: 0.3rem; font-size: 0.78rem; }
+    input:focus-visible, button:focus-visible { outline: 3px solid rgba(198, 106, 61, 0.3); outline-offset: 2px; border-color: var(--copper); }
+    .check-field { min-height: 40px; display: flex; align-items: center; gap: 0.55rem; padding-top: 1.15rem; color: var(--ink); font-size: 0.8rem; }
+    .check-field input { width: 17px; height: 17px; accent-color: var(--forest); }
+    .button { padding: 0.5rem 0.9rem; font-weight: 650; }
+    .button:hover { border-color: #93a49a; background: var(--surface-soft); }
+    .button.primary { color: #fff; border-color: var(--forest); background: var(--forest); }
+    .button.primary:hover { background: var(--forest-dark); }
+    .button:disabled { cursor: wait; opacity: 0.55; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    .status { min-height: 1.3em; color: var(--muted); font-size: 0.84rem; }
+    .status.error { color: var(--red); }
+    .status.ok { color: var(--green); }
+    .mode-only { display: none; }
+    .mode-only.show { display: block; }
+    #results { display: none; }
+    #results.visible { display: block; }
+    .result-meta { margin: 0.5rem 0 1rem; color: var(--muted); font-size: 0.86rem; }
+    .result-block + .result-block { margin-top: 1.2rem; }
+    .result-block h3 { margin: 0 0 0.45rem; font-size: 0.91rem; }
+    .table-wrap { max-height: 390px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th, td { padding: 0.48rem 0.55rem; text-align: right; white-space: nowrap; border-bottom: 1px solid #e3e8e4; }
+    th:first-child, td:first-child { text-align: left; }
+    th { position: sticky; z-index: 1; top: 0; color: #34453c; background: #eaf0eb; font-weight: 700; }
+    tbody tr:nth-child(even) { background: #f8faf8; }
+    .charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin-top: 1rem; }
+    .chart-box { position: relative; min-width: 0; height: 330px; padding: 0.6rem; background: #fbfcfb; border: 1px solid var(--line); border-radius: 6px; }
+    .chart-box.tall { height: 390px; }
+    .inheritance-grid { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .inheritance-directions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.8rem; }
+    .inheritance-directions .subtle { margin-right: 0.35rem; }
+    .direction-button { min-width: 40px; padding: 0.35rem 0.65rem; font-size: 1.2rem; }
+    .direction-button[aria-pressed="true"] { color: #fff; background: var(--forest); border-color: var(--forest); }
+    .direction-button:disabled { cursor: default; }
+    .velocity-output { display: block; margin-top: 0.65rem; font-variant-numeric: tabular-nums; }
+    .velocity-output.error { color: var(--red); }
+    input:disabled { background: var(--surface-soft); color: var(--muted); }
+    .charts.trajectory-layout { grid-template-columns: minmax(0, 1fr); }
+    #trajectory3d-wrap { min-width: 0; }
+    .charts.trajectory-layout #chart2-wrap { height: 330px; }
+    footer { max-width: 1440px; margin: 0 auto; padding: 0 1.5rem 1.5rem; color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--forest); font-weight: 650; }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+      .mode-layout { align-items: flex-start; flex-direction: column; gap: 0.7rem; }
+      .charts { grid-template-columns: minmax(0, 1fr); }
+      .import-layout { grid-template-columns: minmax(0, 1fr) auto; }
+      .import-layout .file-field { grid-column: 1 / -1; }
+      .import-layout .type-field { grid-column: 1 / 2; }
+      .import-layout .import-action { grid-column: 2 / 3; }
+    }
+    @media (max-width: 600px) {
+      .topbar-inner { min-height: 68px; padding: 0.75rem 0.9rem; }
+      .brand h1 { font-size: 1.08rem; }
+      .brand p { max-width: 36ch; font-size: 0.76rem; }
+      main { padding: 0.8rem 0.65rem 1.5rem; gap: 0.7rem; }
+      .panel { padding: 0.85rem; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+      .import-layout { grid-template-columns: minmax(0, 1fr) minmax(100px, 0.6fr); }
+      .import-layout .file-field { grid-column: 1 / -1; }
+      .import-layout .type-field { grid-column: 1 / 2; }
+      .import-layout .import-action { grid-column: 2 / 3; width: 100%; }
+      .mode-tabs { width: 100%; }
+      .mode-tab { flex: 1 1 50%; padding: 0.48rem 0.35rem; font-size: 0.78rem; }
+      .chart-box, .chart-box.tall { height: 290px; }
+      .check-field { grid-column: 1 / -1; padding-top: 0.2rem; }
+      footer { padding: 0 0.8rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><h1 data-i18n="brand.title">绝地潜兵 2 · 弹道模拟器</h1><p data-i18n="brand.subtitle">基于射弹配置的本地弹道研究工具</p></div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <a class="locale-button" href="../HD2-Galatic_war-Map/index.html" style="text-decoration:none;" aria-label="返回战况面板">◀ 战况面板</a>
+        <button class="locale-button" type="button" id="locale-toggle" aria-label="切换语言">EN</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="mode.eyebrow">计算方式</div><h2 data-i18n="mode.title">模拟模式</h2></div></div>
+      <div class="mode-layout">
+        <div class="mode-tabs" role="tablist" aria-label="模拟模式">
+          <button type="button" class="mode-tab active" data-mode="traj" id="tab-traj" role="tab" aria-selected="true" aria-controls="panel-traj" data-i18n="mode.traj">轨迹模式</button>
+          <button type="button" class="mode-tab" data-mode="aim" id="tab-aim" role="tab" aria-selected="false" aria-controls="panel-aim" data-i18n="mode.aim">水平瞄准</button>
+        </div>
+        <p class="hint mode-hint" id="mode-hint"></p>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="import-title">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="import.eyebrow">本地数据</div><h2 id="import-title" data-i18n="import.title">导入射弹配置</h2></div></div>
+      <div class="import-layout">
+        <div class="field file-field projectile-file-field"><button class="button" id="choose-projectile-file" type="button" data-i18n="import.file">选择 generated_projectile_settings.json</button><input id="projectile-file" type="file" accept=".json,application/json" hidden /></div>
+        <div class="field file-field damage-file-field"><button class="button" id="choose-damage-file" type="button" data-i18n="damage.file">选择 generated_damage_settings.json</button><input id="damage-file" type="file" accept=".json,application/json" hidden /></div>
+        <label class="field type-field" for="projectile-type"><span data-i18n="import.type">射弹 type 编号</span><input id="projectile-type" type="number" min="0" step="1" inputmode="numeric" placeholder="286" /></label>
+        <button class="button primary import-action" type="button" id="import-projectile" data-i18n="import.action">导入参数</button>
+      </div>
+      <div class="import-meta" id="import-status" role="status" aria-live="polite"><span data-i18n="import.waiting">请选择本地 JSON 文件。</span></div>
+      <div class="import-meta" id="damage-status" role="status" aria-live="polite"><span data-i18n="damage.waiting">可选择伤害 JSON，按 damage_info_type 自动填入普通和耐久伤害。</span></div>
+      <p class="import-notes" id="import-notes" data-i18n="import.notes">两个文件仅在本机读取。伤害按 damage_info_type 关联；simulation_steps 和寿命随机性不会由此工具应用。</p>
+    </section>
+    <section class="panel" aria-labelledby="common-title">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="common.eyebrow">射弹与环境</div><h2 id="common-title" data-i18n="common.title">共用参数</h2></div></div>
+      <div class="grid" id="common-params">
+        <label class="field" for="caliberMm"><span data-i18n="field.caliber">口径 calibre (mm)</span><input type="number" id="caliberMm" value="5.5" step="any" /></label>
+        <label class="field" for="massG"><span data-i18n="field.mass">质量 mass (g)</span><input type="number" id="massG" value="4.5" step="any" /></label>
+        <label class="field" for="vConfig"><span data-i18n="field.speed">配置速度 v_config (m/s)</span><input type="number" id="vConfig" value="900" step="any" /></label>
+        <label class="field" for="dragCoeff"><span data-i18n="field.drag">阻力系数 drag</span><input type="number" id="dragCoeff" value="0.3" step="any" /></label>
+        <label class="field" for="gravityMultiplier"><span data-i18n="field.gravityMultiplier">重力倍率 gravity_multiplier</span><input type="number" id="gravityMultiplier" value="1" step="any" /></label>
+        <label class="field" for="g0"><span data-i18n="field.gravity">基准重力 g0 (m/s²)</span><input type="number" id="g0" value="9.81" step="any" /></label>
+        <label class="field" for="stepHz"><span data-i18n="field.stepHz">模拟更新频率 step_hz (Hz)</span><input type="number" id="stepHz" value="60" step="1" min="1" /></label>
+        <label class="field" id="label-lifeTime" for="lifeTime"><span data-i18n="field.lifeTime">射弹寿命 life_time (s)，0=无上限</span><input type="number" id="lifeTime" value="0" step="any" min="0" /></label>
+        <label class="field" id="label-totalTime" for="totalTime"><span data-i18n="field.totalTime">模拟时长 total_time (s)</span><input type="number" id="totalTime" value="5" step="any" min="0.000001" required /></label>
+        <label class="field" for="normalDamage"><span data-i18n="field.normalDamage">配置普通伤害 normal_damage</span><input type="number" id="normalDamage" value="90" step="any" /></label>
+        <label class="field" for="durableDamage"><span data-i18n="field.durableDamage">配置耐久伤害 durable_damage</span><input type="number" id="durableDamage" value="0" step="any" /></label>
+        <label class="field" for="rho"><span data-i18n="field.rho">空气密度 ρ (kg/m³)</span><input type="number" id="rho" value="1.2" step="any" /></label>
+        <label class="check-field" for="ignoreTerminalVelocity"><input type="checkbox" id="ignoreTerminalVelocity" /><span data-i18n="field.ignoreTerminalVelocity">忽略低速销毁线（配置速度的10%）</span></label>
+        <label class="check-field" for="showPlot"><input type="checkbox" id="showPlot" checked /><span data-i18n="field.showPlot">显示图表</span></label>
+      </div>
+      <div class="grid inheritance-grid">
+        <label class="check-field" for="inheritVelocity"><input type="checkbox" id="inheritVelocity" /><span data-i18n="field.inheritVelocity">继承发射者速度 inherit_velocity</span></label>
+        <label class="field" for="shooterSpeed"><span data-i18n="field.shooterSpeed">发射者总速率 shooter_speed (m/s)</span><input type="number" id="shooterSpeed" value="0" step="any" min="0" required disabled /></label>
+        <label class="field" for="shooterAzimuthDeg"><span data-i18n="field.shooterAzimuth">移动水平方向角 (°)，0 前 / 90 右</span><input type="number" id="shooterAzimuthDeg" value="0" step="any" required disabled /></label>
+        <label class="field" for="shooterElevationDeg"><span data-i18n="field.shooterElevation">移动上下倾角 (°)，-90..90，正上负下</span><input type="number" id="shooterElevationDeg" value="0" step="any" min="-90" max="90" required disabled /></label>
+      </div>
+      <div class="inheritance-directions" role="group" aria-labelledby="shooter-directions-label">
+        <span class="subtle" id="shooter-directions-label" data-i18n="inherit.directions">移动方向快捷选择</span>
+        <button type="button" class="button direction-button" id="shooter-forward" data-shooter-azimuth="0" title="前 / Forward (0°)" aria-label="前 / Forward (0°)" aria-pressed="false" disabled>↑</button>
+        <button type="button" class="button direction-button" id="shooter-forward-right" data-shooter-azimuth="45" title="右前 / Forward-right (45°)" aria-label="右前 / Forward-right (45°)" aria-pressed="false" disabled>↗</button>
+        <button type="button" class="button direction-button" id="shooter-right" data-shooter-azimuth="90" title="右 / Right (90°)" aria-label="右 / Right (90°)" aria-pressed="false" disabled>→</button>
+        <button type="button" class="button direction-button" id="shooter-backward-right" data-shooter-azimuth="135" title="右后 / Backward-right (135°)" aria-label="右后 / Backward-right (135°)" aria-pressed="false" disabled>↘</button>
+        <button type="button" class="button direction-button" id="shooter-backward" data-shooter-azimuth="180" title="后 / Backward (180°)" aria-label="后 / Backward (180°)" aria-pressed="false" disabled>↓</button>
+        <button type="button" class="button direction-button" id="shooter-backward-left" data-shooter-azimuth="-135" title="左后 / Backward-left (-135°)" aria-label="左后 / Backward-left (-135°)" aria-pressed="false" disabled>↙</button>
+        <button type="button" class="button direction-button" id="shooter-left" data-shooter-azimuth="-90" title="左 / Left (-90°)" aria-label="左 / Left (-90°)" aria-pressed="false" disabled>←</button>
+        <button type="button" class="button direction-button" id="shooter-forward-left" data-shooter-azimuth="-45" title="左前 / Forward-left (-45°)" aria-label="左前 / Forward-left (-45°)" aria-pressed="false" disabled>↖</button>
+      </div>
+      <output class="hint velocity-output" id="shooter-velocity-output" for="shooterSpeed shooterAzimuthDeg shooterElevationDeg inheritVelocity" role="status" aria-live="polite"></output>
+      <p class="hint" data-i18n="inherit.hint">世界坐标：X 前、Y 上、Z 右。移动水平方向角 0° 前、90° 右、180° 后、-90° 左，可按 360° 周期输入；上下倾角 0° 水平、±90° 竖直。移动方向独立于枪口仰角。快捷按钮只更改水平方向角。继承只改变出膛速度，配置速度仍用于伤害与低速销毁判定。</p>
+    </section>
+    <section class="panel mode-only show" id="panel-traj" role="tabpanel" aria-labelledby="tab-traj">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="traj.eyebrow">给定发射角</div><h2 data-i18n="traj.title">轨迹计算参数</h2></div></div>
+      <div class="grid">
+        <label class="field" for="launchAngleDeg"><span data-i18n="traj.angle">发射仰角 (°)，正上负下</span><input type="number" id="launchAngleDeg" value="0.018" step="any" /></label>
+        <label class="field wide" for="targetDistances"><span data-i18n="traj.distances">累计飞行路程节点 (m)，逗号分隔</span><input type="text" id="targetDistances" value="10, 25, 50, 100, 150, 200" /></label>
+        <label class="field" for="printEveryNSteps"><span data-i18n="traj.printEvery">结果表每隔 N 步采样</span><input type="number" id="printEveryNSteps" value="1" step="1" min="1" /></label>
+      </div>
+    </section>
+    <section class="panel mode-only" id="panel-aim" role="tabpanel" aria-labelledby="tab-aim">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="aim.eyebrow">给定目标距离</div><h2 data-i18n="aim.title">水平瞄准参数</h2></div></div>
+      <p class="hint" data-i18n="aim.hint">假设枪口与目标同高，扫描仰角以求命中解。life_time 限制射弹寿命；为0时使用内部估算的计算预算。</p>
+      <div class="grid">
+        <label class="field wide" for="targetHorizontalRanges"><span data-i18n="aim.ranges">目标水平距离 (m)，逗号分隔</span><input type="text" id="targetHorizontalRanges" value="10, 25, 50, 100" /></label>
+        <label class="field" for="angleStepDeg"><span data-i18n="aim.angleStep">仰角粗扫步长 (°)</span><input type="number" id="angleStepDeg" value="0.5" step="any" min="0.01" /></label>
+      </div>
+    </section>
+    <section class="panel"><div class="actions"><button class="button primary" type="button" id="run" data-i18n="action.run">运行模拟</button><span class="status" id="status" role="status" aria-live="polite"></span></div></section>
+    <section class="panel" id="results" aria-labelledby="results-title">
+      <div class="panel-heading"><div><div class="eyebrow" data-i18n="results.eyebrow">输出</div><h2 id="results-title" data-i18n="results.title">模拟结果</h2></div></div>
+      <div class="result-meta" id="result-meta"></div><p class="result-meta" id="initial-state" role="status"></p>
+      <div class="charts" id="charts"><div id="trajectory3d-wrap" style="display:none"></div><div class="chart-box tall" id="chart1-wrap" style="display:none"><canvas id="chart1"></canvas></div><div class="chart-box" id="chart2-wrap" style="display:none"><canvas id="chart2"></canvas></div></div>
+      <div id="result-tables"></div>
+    </section>
+  </main>
+  <footer><span data-i18n="footer.text">使用说明与物理模型：</span> <a href="./README.md" data-i18n="footer.link">README.md</a></footer>
+  <script src="ballistics.js"></script><script src="trajectory3d.js"></script><script src="app.js"></script>
+</body>
+</html>
