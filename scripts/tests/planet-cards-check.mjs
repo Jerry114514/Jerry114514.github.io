@@ -408,3 +408,25 @@ check("index.html 内联脚本仍可解析", () => {
 });
 
 console.log(`${checks} planet-card regression cases passed.`);
+
+// ---- 2026-10-26 效果描述占位符替换（fillEffectTemplate）----
+{
+  const F = FX.fillEffectTemplate;
+  assert.ok(typeof F === "function", "fillEffectTemplate 必须导出");
+  const a = F("<i=1>#V_ONE</i>战略配备可供所有绝地潜兵使用。", "ARSENAL AUGMENTATION: RS-422 RAILGUN",
+    (en) => en === "RS-422 RAILGUN" ? "RS-422 磁轨枪" : "");
+  assert.ok(a.text.includes("RS-422 磁轨枪") && !a.text.includes("#"), "ARSENAL #V_ONE 应替换为配备中文名");
+  assert.equal(a.named, true); assert.equal(a.dynamic, false);
+  const b = F("The #V_ONE stratagem is available.", "ARSENAL AUGMENTATION: AC-8 AUTOCANNON");
+  assert.ok(b.text.includes("AC-8 AUTOCANNON") && !b.text.includes("#"));
+  const c = F("撤离所需时间延长#V_TWO秒。", "PILOT SHORTAGE");
+  assert.ok(c.text.includes("[动态值]") && !c.text.includes("#V_TWO"));
+  assert.equal(c.dynamic, true); assert.equal(c.named, false);
+  const d = F("所有星球上的战场拾取物中将<i=1>增加#AMOUNT%</i>的弹药。", "MORE BATTLEFIELD AMMO");
+  assert.ok(d.text.includes("[动态值]") && !d.text.includes("#"));
+  const e = F("绝地潜兵部署时携带弹匣数减少<i=1>#V_ONE%</i>。", "AMMO SHORTAGE");
+  assert.ok(e.text.includes("[动态值]") && !e.text.includes("#"));
+  const f0 = F("撤离时间额外延迟 30 秒。", "FLIGHT DELAY");
+  assert.equal(f0.text, "撤离时间额外延迟 30 秒。"); assert.equal(f0.dynamic, false);
+}
+console.log("planet-cards-check: fillEffectTemplate assertions passed");

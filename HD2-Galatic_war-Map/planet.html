@@ -375,6 +375,7 @@
 
   <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
+  <script src="./js/planet-card-effects.js?v=20261026a"></script>
   <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
@@ -499,7 +500,8 @@
 
   /* ---- 数据状态 ---- */
   let DATA = null, PL_CN = {}, PL_SEC = {}, SEC_CN = {}, WAY = {}, REG_TABLE = {}, REG_ZH = {}, BIOME_IDX = null,
-      BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, EFFECT_VAR = {}, EFFECT_VAR_ORDER = [], HISTORY = null, P = null, STATS = null;
+      BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, EFFECT_VAR = {}, EFFECT_VAR_ORDER = [], STRAT_CN = {},
+      HISTORY = null, P = null, STATS = null;
 
   const jget = async (url, soft) => {
     try {
@@ -533,12 +535,13 @@
     if (!P) { fail("星球序号 " + index + " 不在当前战况数据里。"); return; }
 
     // 并发拉取静态表（任一失败都不阻断主流程）
-    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, hist] = await Promise.all([
+    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, strat, hist] = await Promise.all([
       soft("./tables/starmap.json"), soft("./tables/waypoints.json"),
       soft("./tables/planet_regions.json?v=20261007b"), soft("./tables/planet_regions_zh.json?v=20261007b"),
       soft("./assets/biomes/index.json"), soft("./tables/planet_biomes.json"),
       soft("./tables/effect_id_cn.json"), soft("./tables/galactic_effects.json"),
-      soft("./tables/hd2_variables.json"), soft("./data/history/player_distribution.json"),
+      soft("./tables/hd2_variables.json"), soft("./tables/stratagems_full.json"),
+      soft("./data/history/player_distribution.json"),
     ]);
     WAY = (way && way.waypoints) || {};
     REG_TABLE = (reg && reg.planets) || {};
@@ -568,6 +571,12 @@
       });
     }
     STATS = ((DATA.war_stats || {}).planets_stats || []).find((s) => s.planetIndex === index) || null;
+    // 配备名 EN→CN（stratagems_full）：ARSENAL AUGMENTATION 系词条的 #V_ONE 占位符
+    // 在游戏运行时填的就是配备名——effect 英文名冒号后即是，属确定性替换（非猜测）；
+    // 该映射只用于把替换出的英文名翻成站内中文名。
+    (strat && strat.stratagems || []).forEach((x) => {
+      if (x && x.name_en && x.name) STRAT_CN[String(x.name_en).toUpperCase()] = x.name;
+    });
 
     document.title = plCn() + "（" + (P.name || "") + "）星球资料 - 绝地潜兵2 真理部";
     setMeta();
@@ -1023,15 +1032,30 @@
         id,
         cn: cn || ("效果 #" + id),
         known: !!cn,
-        desc: (v && v.desc) || "",                      // 中文描述（hd2_variables）
+        // 中文描述链：hd2_variables（行动变量表）→ galactic_effects.description_cn（2026-10-26
+        // 补：该字段此前被漏读，导致 1363 等词条只剩英文模板）
+        desc: (v && v.desc) || (meta.description_cn || ""),
         en: (v && v.en) || meta.name || "",
         enDesc: meta.description || "",                 // 英文描述（galactic_effects，补充用）
         group: v ? v.group : null,
       });
     });
-    const fxCard = (f) => `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
-          <div class="fxd">效果 ID <b>${f.id}</b>${f.en ? ` · EN <b>${esc(f.en)}</b>` : ""}
-          ${f.desc ? `<br>${esc(f.desc)}` : f.enDesc ? `<br><span class="mini">${esc(f.enDesc)}</span>` : "<br>（站内表未收录该效果说明）"}</div></details>`;
+    // 占位符替换（#V_ONE/#V_TWO/#AMOUNT）：配备名类（ARSENAL AUGMENTATION）确定性替换为
+    // 配备名（优先站内中文名）；数值类替换为 [动态值]——公开数据源均未下发实值，不猜。
+    const fxLook = (en) => STRAT_CN[String(en).toUpperCase()] || "";
+    const fillFx = (text, enName) => (window.HD2PlanetCardEffects && window.HD2PlanetCardEffects.fillEffectTemplate)
+      ? window.HD2PlanetCardEffects.fillEffectTemplate(text, enName, fxLook)
+      : { text: text, dynamic: false };
+    const fxCard = (f) => {
+      const zh = fillFx(f.desc, f.en);
+      const en2 = fillFx(f.enDesc, f.en);
+      const note = (zh.dynamic || en2.dynamic)
+        ? `<div class="mini" style="margin-top:4px">注：[动态值] 为游戏运行时参数（撤离秒数 / 弹药百分比等），官方接口与公开数据源均未提供具体数值，本站不做猜测。</div>` : "";
+      const descHtml = zh.text ? `<br>${esc(zh.text)}`
+        : (en2.text ? `<br><span class="mini">${esc(en2.text)}</span>` : "<br>（站内表未收录该效果说明）");
+      return `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
+          <div class="fxd">效果 ID <b>${f.id}</b>${f.en ? ` · EN <b>${esc(f.en)}</b>` : ""}${descHtml}${note}</div></details>`;
+    };
     // 分组（2026-10-26 用户口径）：只给「变种类」与「作战限制」两组保留分组标题；
     // 其余词条（深域惧像/环境条件/设施与场所/DSS战略行动/入侵等级等）不分类，
     // 平铺在最下方，不再加组头。
@@ -1067,7 +1091,9 @@
         <div>${tags}</div>
         <p class="note" style="margin-top:10px">词条与中文说明优先取 <code>tables/hd2_variables.json</code>（行动变量对照表，
         自带分组：终结族特殊个体 / 深域惧像 / 作战限制 / 环境条件 / 设施与场所等）；中文名兜底 <code>tables/effect_id_cn.json</code>；
-        英文名与英文说明取 <code>tables/galactic_effects.json</code>。三级都未收录的 id 照实显示原始编号，不猜测名称。</p>
+        英文名与中文/英文说明取 <code>tables/galactic_effects.json</code>（其 <code>description_cn</code> 为官方中文描述）。
+        三级都未收录的 id 照实显示原始编号，不猜测名称。描述中的 <code>#V_ONE/#V_TWO/#AMOUNT</code> 为游戏运行时占位符：
+        配备名类（ARSENAL AUGMENTATION）确定性替换为配备名，数值类标为 [动态值]（公开数据源未下发实值，不猜测）。</p>
       </div></div>`;
   }
 
