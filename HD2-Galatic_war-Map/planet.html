@@ -358,7 +358,7 @@
 
   <nav class="sectnav" aria-label="区块导航">
     <a href="#sec-war">战役与战略</a><a href="#sec-stats">星球统计</a><a href="#sec-regions">下属区域</a>
-    <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">全服趋势</a><a href="#sec-src">数据口径</a>
+    <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">星球趋势</a><a href="#sec-src">数据口径</a>
   </nav>
 
   <main id="app"></main>
@@ -501,7 +501,7 @@
   /* ---- 数据状态 ---- */
   let DATA = null, PL_CN = {}, PL_SEC = {}, SEC_CN = {}, WAY = {}, REG_TABLE = {}, REG_ZH = {}, BIOME_IDX = null,
       BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, EFFECT_VAR = {}, EFFECT_VAR_ORDER = [], STRAT_CN = {},
-      EFFECT_VALS = {}, HISTORY = null, P = null, STATS = null;
+      EFFECT_VALS = {}, HISTORY = null, P = null, STATS = null, PLANET_HIST = null;
 
   const jget = async (url, soft) => {
     try {
@@ -537,13 +537,14 @@
     if (!P) { fail("星球序号 " + index + " 不在当前战况数据里。"); return; }
 
     // 并发拉取静态表（任一失败都不阻断主流程）
-    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, strat, evalues, hist] = await Promise.all([
+    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, strat, evalues, hist, phist] = await Promise.all([
       soft("./tables/starmap.json"), soft("./tables/waypoints.json"),
       soft("./tables/planet_regions.json?v=20261007b"), soft("./tables/planet_regions_zh.json?v=20261007b"),
       soft("./assets/biomes/index.json"), soft("./tables/planet_biomes.json"),
       soft("./tables/effect_id_cn.json"), soft("./tables/galactic_effects.json"),
       soft("./tables/hd2_variables.json"), soft("./tables/stratagems_full.json"),
       soft("./tables/effect_values.json"), soft("./data/history/player_distribution.json"),
+      soft("https://jerry114514.github.io/hd2-planet-history/history.json"),
     ]);
     WAY = (way && way.waypoints) || {};
     REG_TABLE = (reg && reg.planets) || {};
@@ -574,6 +575,10 @@
     }
     STATS = ((DATA.war_stats || {}).planets_stats || []).find((s) => s.planetIndex === index) || null;
     if (window.HD2Boot) HD2Boot.setMsg("🪖 正在生成星球指挥台…");
+
+    // 本星球人数/血量历史（hd2-planet-history 仓库，每 5 分钟采样，7 天滚动）：
+    // 拿不到不影响页面，趋势图退回全服分布。
+    PLANET_HIST = (phist && phist.planets && phist.planets[String(P.index)]) || null;
     // 效果数值表（tables/effect_values.json，游戏 GalacticEffectSetting 透传）：
     // #V_ONE/#V_TWO/#AMOUNT 占位符的实值来源（官方 API 只回 id；详见该文件 _meta）。
     EFFECT_VALS = (evalues && evalues.effects) || {};
@@ -690,7 +695,7 @@
         </div>
         <div class="col-m">
           <section class="card" id="sec-trend" aria-labelledby="h-trend">
-            <h2 id="h-trend">全服趋势 <span class="en">GALAXY TREND · 非单星球历史</span></h2>
+            <h2 id="h-trend">星球趋势 <span class="en">PLANET TREND</span></h2>
             <div class="body">${trendHtml(camp, isDef)}</div>
           </section>
           <section class="card" id="sec-regions" aria-labelledby="h-regions">
@@ -722,6 +727,7 @@
     $("foot-note").innerHTML = `${esc(plCn())}（${esc(P.name)}）· 序号 ${P.index} · 页面生成于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
     bindRegions();
     paintTrend();
+    paintPlanetTrend();
   }
 
   /* ---- A. Command Hero：身份（左）+ 解放环（中）+ Quick Intel（右）+ 细粒度进度条 ---- */
@@ -898,21 +904,35 @@
     const h = HISTORY && HISTORY.history;
     const sum = camp
       ? `<b>战役 #${esc(camp.id)}</b> · ${isDef ? "防御战" : "解放战"} · ${esc(OWN_CN[camp.faction] || camp.faction || "—")} · 进度见左栏「战略态势」`
-      : `当前无进行中战役 · 全服战线分布如下`;
-    if (!h || !h.length) return `<div class="trend-sum">${sum}</div><p class="empty">没有全服历史数据（<code>data/history/player_distribution.json</code>）。</p>`;
-    return `<div class="trend-sum">${sum}</div>
+      : `当前无进行中战役`;
+    // 有单星球历史 → 渲染本星球人数/解放度趋势
+    const ph = PLANET_HIST;
+    if (ph && ph.length >= 2) {
+      return `<div class="trend-sum">${sum}</div>
+        <canvas id="ptrend" class="chart" width="720" height="300" role="img"
+          aria-label="${esc(plCn())}在线人数与解放度趋势，${ph.length} 个采样点"></canvas>
+        <div class="legend">
+          <span><i style="background:var(--blue)"></i>在线人数（左轴）</span>
+          <span><i style="background:var(--yellow)"></i>解放进度（右轴）</span>
+          <span style="color:var(--mute)">共 ${ph.length} 个采样点</span>
+        </div>
+        <p class="note" style="margin-top:8px">本星球<b>专属</b>的人数与解放度趋势（7 天滚动窗口，5 分钟采样）。
+        解放度 = 1 − health / maxHealth（己方星球按 100%）；归属变化时曲线出现跳变。</p>`;
+    }
+    // 无单星球历史 → 退回全服趋势
+    if (!h || !h.length) return `<div class="trend-sum">${sum}</div><p class="empty">暂无趋势数据（单星球历史正在积累中）。</p>`;
+    return `<div class="trend-sum">${sum} · <span style="color:var(--mute)">单星球历史积累中，暂显示全服分布</span></div>
       <canvas id="trend" class="chart" width="720" height="300" role="img"
-        aria-label="全服在线玩家按阵营分布的趋势折线图，最近 ${Math.min(h.length, 72)} 个采样点"></canvas>
+        aria-label="全服在线玩家按阵营分布的趋势折线图"></canvas>
       <div class="legend">
         <span><i style="background:var(--humans)"></i>超级地球</span>
         <span><i style="background:var(--terminids)"></i>终结族</span>
         <span><i style="background:var(--automaton)"></i>机器人</span>
         <span><i style="background:var(--illuminate)"></i>光能者</span>
         <span class="dash"><i></i>全服合计</span>
-        <span style="color:var(--mute)">共 ${h.length} 个采样点</span>
       </div>
-      <p class="note" style="margin-top:8px">这是<b>全服</b>在线玩家按战线的分布趋势（最近若干小时），<b>不是这颗星球的历史曲线</b> ——
-      官方 API 不提供单星球的历史曲线，只有当前快照。虚线为四阵营之和。</p>`;
+      <p class="note" style="margin-top:8px">这是<b>全服</b>分布趋势，<b>不是这颗星球的历史</b>。
+      单星球专属趋势正在积累中（hd2-planet-history 每 5 分钟采样）。</p>`;
   }
 
   function paintTrend() {
@@ -1207,6 +1227,53 @@
   }
 
   /* ---- I. 数据口径（折叠） ---- */
+  /* ---- 单星球趋势：人数（左轴）+ 解放度（右轴）双轴折线 ---- */
+  function paintPlanetTrend() {
+    const cv = $("ptrend"); if (!cv || !cv.getContext) return;
+    const raw = PLANET_HIST || [];
+    if (raw.length < 2) return;
+    const ctx = cv.getContext("2d");
+    const W = cv.width, H = cv.height, padL = 50, padR = 50, padT = 14, padB = 24;
+    const maxHealth = P.maxHealth || 1;
+    const isHuman = String(P.currentOwner || "").toLowerCase() === "humans";
+    const pts = raw.map((e) => ({
+      t: e[0], players: e[1], health: e[2], owner: e[3],
+      lib: (isHuman || e[3] === 1) ? 100 : Math.max(0, Math.min(100, (1 - e[2] / maxHealth) * 100)),
+    }));
+    const maxP = Math.max(...pts.map((p) => p.players)) || 1;
+    const t0 = pts[0].t, t1 = pts[pts.length - 1].t, dt = Math.max(1, t1 - t0);
+    const X = (t) => padL + (W - padL - padR) * (t - t0) / dt;
+    const Yp = (v) => padT + (H - padT - padB) * (1 - v / maxP);
+    const Yl = (v) => padT + (H - padT - padB) * (1 - v / 100);
+    ctx.clearRect(0, 0, W, H);
+    // 网格 + 左轴（人数，蓝）
+    ctx.strokeStyle = "#242424"; ctx.lineWidth = 1;
+    ctx.fillStyle = "#5BA3D0"; ctx.font = "11px sans-serif"; ctx.textAlign = "right";
+    for (let g = 0; g <= 4; g++) {
+      const v = maxP * g / 4, y = Yp(v);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+      ctx.fillText(Math.round(v / 100) / 10 + "k", padL - 6, y + 4);
+    }
+    // 右轴（解放度，黄）
+    ctx.fillStyle = "#F5C518"; ctx.textAlign = "left";
+    for (let g = 0; g <= 4; g++) {
+      ctx.fillText(Math.round(100 * g / 4) + "%", W - padR + 6, Yl(100 * g / 4) + 4);
+    }
+    // 人数线（蓝色实线）
+    ctx.beginPath(); ctx.strokeStyle = "#5BA3D0"; ctx.lineWidth = 2;
+    pts.forEach((p, i) => { if (i === 0) ctx.moveTo(X(p.t), Yp(p.players)); else ctx.lineTo(X(p.t), Yp(p.players)); });
+    ctx.stroke();
+    // 解放度线（黄色虚线）
+    ctx.beginPath(); ctx.strokeStyle = "#F5C518"; ctx.lineWidth = 1.5; ctx.setLineDash([5, 3]);
+    pts.forEach((p, i) => { if (i === 0) ctx.moveTo(X(p.t), Yl(p.lib)); else ctx.lineTo(X(p.t), Yl(p.lib)); });
+    ctx.stroke(); ctx.setLineDash([]);
+    // 时间轴
+    const d0 = new Date(t0), d1 = new Date(t1);
+    ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif";
+    ctx.textAlign = "left"; ctx.fillText(d0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), padL, H - 6);
+    ctx.textAlign = "right"; ctx.fillText(d1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), W - padR, H - 6);
+  }
+
   function srcHtml() {
     const w = (DATA && DATA.war) || {};
     const rows = [
