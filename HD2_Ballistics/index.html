@@ -143,11 +143,14 @@
       footer { padding: 0 0.8rem 1.2rem; }
     }
   </style>
+  <link rel="stylesheet" href="../HD2-Galatic_war-Map/css/boot-splash.css?v=20261026a">
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand"><h1 data-i18n="brand.title">绝地潜兵 2 · 弹道模拟器</h1><p data-i18n="brand.subtitle">基于射弹配置的本地弹道研究工具</p></div>
+      <div class="brand"><h1 data-i18n="brand.title">绝地潜兵 2 · 弹道模拟器</h1><p data-i18n="brand.subtitle">基于射弹配置的本地弹道研究工具</p>
+        <p style="color:#8a9a8a;font-size:.72rem;margin-top:4px">作者：<a href="https://github.com/Darctor" target="_blank" rel="noopener" style="color:#5BA3D0">@Darctor</a>
+          · <a href="https://space.bilibili.com/300385406" target="_blank" rel="noopener" style="color:#5BA3D0">哔哩哔哩</a></p></div>
       <div style="display:flex; gap:8px; align-items:center;">
         <a class="locale-button" href="../HD2-Galatic_war-Map/index.html" style="text-decoration:none;" aria-label="返回战况面板">◀ 战况面板</a>
         <button class="locale-button" type="button" id="locale-toggle" aria-label="切换语言">EN</button>
@@ -173,6 +176,7 @@
             <option value="primary"></option>
             <option value="secondary"></option>
             <option value="support"></option>
+            <option value="throwable"></option>
           </select>
         </label>
         <label class="field preset-weapon-field" for="preset-weapon"><span data-i18n="preset.weapon">武器</span>
@@ -263,6 +267,9 @@
     </section>
   </main>
   <footer><span data-i18n="footer.text">使用说明与物理模型：</span> <a href="./README.md" data-i18n="footer.link">README.md</a></footer>
-  <script src="ballistics.js"></script><script src="trajectory3d.js"></script><script src="app.js?v=20261025a"></script>
+  <script src="../HD2-Galatic_war-Map/js/boot-splash.js?v=20261026a"></script>
+  <script>if (window.HD2Boot) { HD2Boot.mount({ assetPrefix: "../HD2-Galatic_war-Map/" }); HD2Boot.setMsg("🎯 正在校准弹道参数…"); }</script>
+  <script src="ballistics.js"></script><script src="trajectory3d.js"></script><script src="app.js?v=20261025b"></script>
+  <script>if (window.HD2Boot) HD2Boot.done();</script>
 </body>
 </html>

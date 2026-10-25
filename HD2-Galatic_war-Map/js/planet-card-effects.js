@@ -108,6 +108,50 @@
       .replace(/'/g, "&#39;");
   }
 
+  /* ------------------------------------------------ 效果描述占位符替换 ----
+     galactic_effects 的部分描述带游戏运行时占位符（#V_ONE / #V_TWO / #AMOUNT，
+     实测 106 处）。公开数据源（官方 API 只回 effect id；RawData 未导出
+     GalacticEffect 参数表；helldivers-2/json 只有名字与模板）都拿不到实值，
+     因此分两类处理，绝不猜数：
+       · 配备名类：effect 英文名形如 "ARSENAL AUGMENTATION: RS-422 RAILGUN" 时，
+         #V_ONE 确定性地等于冒号后的配备名（游戏运行时填的也是它）→ 原文替换，
+         可选 lookup(EN)->CN 做中文译名；
+       · 数值类（撤离秒数 / 弹药百分比 / 治疗剂数等）→ 替换为 [动态值] 并置
+         dynamic=true，由调用方追加「接口未下发」的说明。
+     2026-10-26：修复极光湾 #1363「撤离所需时间延长#V_TWO秒。」裸占位符问题。 */
+  var PLACEHOLDER_RE = /#[A-Z][A-Z0-9_]+/g;
+  /* values 表（tables/effect_values.json，id → {t,vt,v}）：游戏 GalacticEffectSetting
+     数值透传。取值规则（实测归纳）：#V_ONE=v[0]，#V_TWO=v[1]，#AMOUNT=v[1]；
+     显示 |值|（方向词由模板自带，如「延长/缩短」），v 槽位为 0 视为实例未定不替换。 */
+  function fillEffectTemplate(text, enName, lookup, valuesRow) {
+    if (!text) return { text: text, dynamic: false, named: false };
+    // 游戏富文本标签（<i=N>强调</i> 等）在纯文本展示层剥离，保留内文
+    if (/<[a-z]=\d+>|<\/[a-z]>/i.test(text)) text = text.replace(/<\/?[a-z]=?\d*>/gi, "");
+    if (text.indexOf("#") < 0) return { text: text, dynamic: false, named: false };
+    let named = false, dynamic = false;
+    const arsenal = /^ARSENAL AUGMENTATION:\s*(.+)$/.exec(String(enName || ""));
+    const val = (row, slot) => {
+      const v = row && row.v;
+      if (!v) return null;
+      const raw = v[slot];
+      return Number.isFinite(raw) && raw !== 0 ? Math.abs(raw) : null;
+    };
+    const out = String(text).replace(PLACEHOLDER_RE, (ph) => {
+      if (arsenal && ph === "#V_ONE") {
+        named = true;
+        const item = arsenal[1].trim();
+        const cn = lookup ? lookup(item) : "";
+        return cn || item;
+      }
+      const n = ph === "#V_ONE" ? val(valuesRow, 0)
+        : (ph === "#V_TWO" || ph === "#AMOUNT") ? val(valuesRow, 1) : null;
+      if (n != null) return String(n);
+      dynamic = true;
+      return "[动态值]";
+    });
+    return { text: out, dynamic: dynamic, named: named };
+  }
+
   function shortLabel(cn) {
     const t = String(cn || "").replace(/\s+/g, "");
     return t.length > SHORT_MAX ? t.slice(0, SHORT_MAX) + "…" : t;
@@ -126,12 +170,15 @@
     const details = (ctx && ctx.details) || {};
     const v = vars[id], det = details[id];
     const cn = (icon && icon.cn) || (v && v.cn) || names[id] || (det && det.name) || ("效果 #" + id);
-    const desc = (v && v.desc) || (det && (det.description_cn || det.description)) || "";
+    const descRaw = (v && v.desc) || (det && (det.description_cn || det.description)) || "";
+    const descFill = fillEffectTemplate(descRaw, det && det.name, ctx && ctx.lookup, ctx && ctx.values && ctx.values[id]);
+    const desc = descFill.text;
     const cat = (v && v.cat) || "";
     return {
       id,
       cn,
       desc,
+      descDynamic: descFill.dynamic,
       cat,
       neg: cat === "作战限制" || cat === "combat_restriction",
       icon: icon ? icon.icon : "",
@@ -476,6 +523,7 @@
     hydrate,
     init,
     // 供检查脚本读取的纯函数（页面不用）
-    _internals: { infoOf, shortLabel, pctText, esc },
+    fillEffectTemplate,
+    _internals: { infoOf, shortLabel, pctText, esc, fillEffectTemplate },
   };
 })(typeof window !== "undefined" ? window : this);

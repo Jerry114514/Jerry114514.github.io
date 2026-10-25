@@ -13,6 +13,19 @@ const root = path.resolve(web, '..');
 const sources = Object.fromEntries(['index.html', 'ballistics.js', 'trajectory3d.js', 'app.js'].map((name) =>
   [name, fs.readFileSync(path.join(web, name), 'utf8')]));
 const equipmentCatalogText = fs.readFileSync(path.join(web, 'data', 'equipment_catalog.json'), 'utf8');
+// UI 用 presetInputValue 做展示归一（如 drag 0.30000001192 → '0.3'），
+// 数值断言一律用容差比较，展示形态不进契约。
+const approxEq = (a, b, eps = 1e-6) => Math.abs(Number(a) - Number(b)) <= eps * Math.max(1, Math.abs(Number(b)));
+// 目录随上游补丁自动同步（sync-ballistics-catalog）：期望值一律从目录自身推导，
+// 不再硬编码 type/参数 —— 数据版本更新后本用例无需人工同步（口径同 README 纪律）。
+const equipmentCatalog = JSON.parse(equipmentCatalogText);
+const catalogAttack = (id) => {
+  for (const rows of Object.values(equipmentCatalog.categories || {})) {
+    const entry = (rows || []).find((e) => e.id === id);
+    if (entry) return (entry.attacks || []).find((a) => a.status === 'ready') || null;
+  }
+  return null;
+};
 // 游戏数据文件（data/generated_*.json）只存在于本地工作区，不随站点部署。
 // 缺失时依赖真实数据的用例整组 skip，纯 DOM/物理用例照常在 CI 运行（2026-10-24 审查 P2）。
 const dataDir = path.join(root, 'data');
@@ -1154,33 +1167,83 @@ const presetCatalog = () => JSON.stringify({
         attacks: [{ id: 'spray_rifle_x:jet', name: 'SPRAY JET S', kind: 'spray', status: 'unsupported',
                     reason: '当前弹道模型不支持 spray 类攻击' }] },
     ],
-    secondary: [], support: [],
+    secondary: [], support: [], throwable: [],
   },
   unresolved: [],
   stats: { ready: 3, unsupported: 1, unresolved: 0 },
 });
 
 test('AR-2 Coyote preset applies every Wiki/RawData parameter', async () => {
+  const atk = catalogAttack('ar_2_coyote');
+  assert.ok(atk, '目录里必须存在 ready 的 AR-2 Coyote 攻击');
   const h = harness({ catalogText: equipmentCatalogText });
   await h.flush();
   h.get('preset-weapon').value = 'ar_2_coyote';
   h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('preset-attack-field').hidden, true);
-  assert.equal(h.get('caliberMm').value, '7');
-  assert.equal(h.get('massG').value, '8');
-  assert.equal(h.get('vConfig').value, '650');
-  assert.equal(h.get('dragCoeff').value, '0.3');
-  assert.equal(h.get('gravityMultiplier').value, '1');
-  assert.equal(h.get('lifeTime').value, '0');
-  assert.equal(h.get('normalDamage').value, '75');
-  assert.equal(h.get('durableDamage').value, '10');
-  assert.equal(h.get('inheritVelocity').checked, true);
-  assert.equal(h.get('ignoreTerminalVelocity').checked, false);
-  assert.match(h.get('preset-badges').textContent, /projectile type 138/);
+  assert.ok(approxEq(h.get('caliberMm').value, atk.params.calibreMm), 'caliberMm 应等于目录值');
+  assert.ok(approxEq(h.get('massG').value, atk.params.massG), 'massG 应等于目录值');
+  assert.ok(approxEq(h.get('vConfig').value, atk.params.vConfig), 'vConfig 应等于目录值');
+  assert.ok(approxEq(h.get('dragCoeff').value, atk.params.dragCoeff), 'dragCoeff 应等于目录值');
+  assert.ok(approxEq(h.get('gravityMultiplier').value, atk.params.gravityMultiplier), 'gravityMultiplier 应等于目录值');
+  assert.ok(approxEq(h.get('lifeTime').value, atk.params.lifeTime), 'lifeTime 应等于目录值');
+  assert.ok(approxEq(h.get('normalDamage').value, atk.damage.normal), 'normalDamage 应等于目录值');
+  assert.ok(approxEq(h.get('durableDamage').value, atk.damage.durable), 'durableDamage 应等于目录值');
+  assert.equal(h.get('inheritVelocity').checked, !!atk.params.inheritVelocity);
+  assert.equal(h.get('ignoreTerminalVelocity').checked, !!atk.params.ignoreTerminalVelocity);
+  assert.match(h.get('preset-badges').textContent, new RegExp('projectile type ' + atk.projectile_type));
   assert.match(h.get('preset-status').textContent, /已按预设填充参数/);
   assert.doesNotMatch(h.get('preset-notes').textContent, /^preset\.notes$/);
   assert.match(h.get('preset-notes').textContent, /预设来自站点武器目录/);
   h.run('traj');
+});
+
+test('new Wiki-only weapon presets fill all five entries and label their source', async () => {
+  const h = harness({ catalogText: equipmentCatalogText });
+  await h.flush();
+
+  h.get('preset-weapon').value = 'r_40_sightliner';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.deepEqual([
+    h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+    h.get('dragCoeff').value, h.get('gravityMultiplier').value,
+    h.get('normalDamage').value, h.get('durableDamage').value,
+  ], ['8', '11', '950', '0.2', '1', '350', '205']);
+  assert.match(h.get('preset-badges').textContent, /Wiki v1\.007\.200 · revid 14845/);
+  assert.doesNotMatch(h.get('preset-badges').textContent, /RawData/);
+
+  h.get('preset-category').value = 'secondary';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  h.get('preset-weapon').value = 'p_44_mist';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.deepEqual([
+    h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+    h.get('dragCoeff').value, h.get('normalDamage').value, h.get('durableDamage').value,
+  ], ['9', '7', '375', '1.2', '110', '18']);
+
+  h.get('preset-category').value = 'support';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  for (const [id, expected] of [
+    ['amw_20_apex', ['60', '70', '1500', '0.1', '0.35', '1550', '930']],
+    ['las_44_nova', ['10', '8', '1500', '0', '0', '880', '880']],
+  ]) {
+    h.get('preset-weapon').value = id;
+    h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+    assert.deepEqual([
+      h.get('caliberMm').value, h.get('massG').value, h.get('vConfig').value,
+      h.get('dragCoeff').value, h.get('gravityMultiplier').value,
+      h.get('normalDamage').value, h.get('durableDamage').value,
+    ], expected);
+  }
+  assert.equal(h.get('lifeTime').value, '6');
+
+  h.get('preset-category').value = 'throwable';
+  h.get('preset-category').dispatchEvent(new DOMEvent('change'));
+  assert.ok(h.get('preset-weapon').children.some((option) => option.value === 'g_11_caltrops'));
+  h.get('preset-weapon').value = 'g_11_caltrops';
+  h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
+  assert.equal(h.get('run').disabled, true);
+  assert.match(h.get('preset-error').textContent, /不属于当前单射弹弹道模型/);
 });
 
 test('weapon presets load, autofill AR-23 and render source badges', async () => {

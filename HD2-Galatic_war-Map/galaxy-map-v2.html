@@ -90,20 +90,53 @@
   .maplibregl-canvas{outline:none}
   .maplibregl-ctrl-attrib{display:none!important}
 
-  /* 载入遮罩 */
+  /* 载入遮罩（2026-10-26 重设计：徽标脉冲 + 分段进度条，军事风格） */
   #boot{
-    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:14px;
-    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);
+    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:18px;
+    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#121212,#0A0A0A 70%);
     transition:opacity .5s ease;
   }
   #boot.gone{opacity:0;pointer-events:none}
-  #boot .ring{
-    width:46px;height:46px;border-radius:50%;border:3px solid rgba(245,197,24,.18);
-    border-top-color:var(--yellow);animation:spin 1s linear infinite;
+  #boot .emblem{
+    width:88px;height:88px;opacity:.9;
+    animation:bootpulse 2.4s steps(3) infinite;
   }
-  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes bootpulse{
+    0%{opacity:.28;transform:scale(1.06)}
+    33%{opacity:.75;transform:scale(1)}
+    66%{opacity:.5;transform:scale(1.03)}
+    100%{opacity:.28;transform:scale(1.06)}
+  }
+  #boot .segments{
+    display:flex;gap:2px;height:10px;width:220px;padding:3px;
+    border:1px solid rgba(245,197,24,.3);
+  }
+  #boot .segments i{
+    flex:1;background:rgba(245,197,24,.1);
+    animation:bootfill 1.4s steps(1) infinite;
+  }
+  #boot .segments i:nth-child(1){animation-delay:0s}
+  #boot .segments i:nth-child(2){animation-delay:.15s}
+  #boot .segments i:nth-child(3){animation-delay:.3s}
+  #boot .segments i:nth-child(4){animation-delay:.45s}
+  #boot .segments i:nth-child(5){animation-delay:.6s}
+  #boot .segments i:nth-child(6){animation-delay:.75s}
+  #boot .segments i:nth-child(7){animation-delay:.9s}
+  #boot .segments i:nth-child(8){animation-delay:1.05s}
+  #boot .segments i:nth-child(9){animation-delay:1.2s}
+  #boot .segments i:nth-child(10){animation-delay:1.35s}
+  @keyframes bootfill{
+    0%{background:var(--yellow);box-shadow:0 0 6px rgba(245,197,24,.6)}
+    50%{background:var(--yellow)}
+    51%{background:rgba(245,197,24,.1);box-shadow:none}
+    100%{background:rgba(245,197,24,.1)}
+  }
   #boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}
   #boot .msg small{color:var(--text-mute);font-size:.76rem}
+  @media (prefers-reduced-motion: reduce){
+    #boot .emblem,#boot .segments i{animation:none}
+    #boot .segments i{background:rgba(245,197,24,.35)}
+  }
   #tac-empty{
     position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;
     background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);
@@ -511,8 +544,9 @@
     <div id="planet-card"></div>
     <div id="wheel"></div>
     <div id="boot">
-      <div class="ring"></div>
-      <div class="msg" id="bootmsg">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
+      <img class="emblem" src="./assets/ui-icons/super_earth_flag.svg" alt="超级地球徽标" decoding="async">
+      <div class="segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="msg" id="bootmsg" role="status" aria-live="polite">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
     </div>
   </div>
   <div id="aside-backdrop"></div>
@@ -568,6 +602,7 @@
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script src="./js/dss-donations.js?v=20261014b"></script>
+<script src="./js/boot-splash.js?v=20261026a"></script>
 <script>
 "use strict";
 /* ============================================================================
@@ -1066,7 +1101,20 @@ const LAYER_ON = { territory:true, supply:true, attack:true, heat:false, labels:
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
 async function boot() {
-  const setMsg = (h) => { $("bootmsg").innerHTML = h; };
+  const setMsg = (h) => {
+    const b = $("bootmsg"); if (b) b.innerHTML = h;
+    // 真实加载消息之间穿插 lore / 军情速报（复用 boot-splash 共享池）
+    if (window._hd2LoreTimer) clearInterval(window._hd2LoreTimer);
+    const lore = (window.HD2Boot && HD2Boot._lorePool) || [];
+    let i = 0;
+    window._hd2LoreTimer = setInterval(() => {
+      const boot = document.getElementById("boot");
+      if (!lore.length || !boot || boot.classList.contains("gone")) { clearInterval(window._hd2LoreTimer); return; }
+      i++;
+      if (b) { b.style.opacity = "0"; setTimeout(() => { if (b) { b.innerHTML = lore[i % lore.length]; b.style.opacity = "1"; } }, 150); }
+    }, 3400);
+    if (b) { b.style.transition = "opacity .15s ease"; b.style.opacity = "1"; }
+  };
   paintBackdrop();
   window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
 

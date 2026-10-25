@@ -1,0 +1,68 @@
+/* ==============================================================
+   全站载入遮罩样式（boot-splash.js 配套）
+   视觉与 galaxy-map-v2 内联版一致：徽标脉冲 + 分段进度条。
+   #hd2-boot 为 JS 注入的顶层节点（全屏 fixed 遮罩）。
+   ============================================================== */
+#hd2-boot{
+  position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;gap:18px;
+  align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 45%,#121212,#0A0A0A 70%);
+  opacity:0;pointer-events:all;transition:opacity .4s ease;
+}
+#hd2-boot.visible{opacity:1}
+#hd2-boot.gone{opacity:0;pointer-events:none}
+
+#hd2-boot .emblem{
+  width:88px;height:88px;opacity:.9;
+  animation:hd2boot-pulse 2.4s steps(3) infinite;
+}
+@keyframes hd2boot-pulse{
+  0%{opacity:.28;transform:scale(1.06)}
+  33%{opacity:.75;transform:scale(1)}
+  66%{opacity:.5;transform:scale(1.03)}
+  100%{opacity:.28;transform:scale(1.06)}
+}
+
+#hd2-boot .segments{
+  display:flex;gap:2px;height:10px;width:220px;padding:3px;
+  border:1px solid rgba(245,197,24,.3);
+}
+#hd2-boot .segments i{
+  flex:1;background:rgba(245,197,24,.1);
+  animation:hd2boot-fill 1.4s steps(1) infinite;
+}
+#hd2-boot .segments i:nth-child(1){animation-delay:0s}
+#hd2-boot .segments i:nth-child(2){animation-delay:.15s}
+#hd2-boot .segments i:nth-child(3){animation-delay:.3s}
+#hd2-boot .segments i:nth-child(4){animation-delay:.45s}
+#hd2-boot .segments i:nth-child(5){animation-delay:.6s}
+#hd2-boot .segments i:nth-child(6){animation-delay:.75s}
+#hd2-boot .segments i:nth-child(7){animation-delay:.9s}
+#hd2-boot .segments i:nth-child(8){animation-delay:1.05s}
+#hd2-boot .segments i:nth-child(9){animation-delay:1.2s}
+#hd2-boot .segments i:nth-child(10){animation-delay:1.35s}
+@keyframes hd2boot-fill{
+  0%{background:var(--yellow,#F5C518);box-shadow:0 0 6px rgba(245,197,24,.6)}
+  50%{background:var(--yellow,#F5C518)}
+  51%{background:rgba(245,197,24,.1);box-shadow:none}
+  100%{background:rgba(245,197,24,.1)}
+}
+
+#hd2-boot .msg{
+  color:var(--dim,var(--text-dim,#A8A8A8));font-size:.84rem;text-align:center;line-height:1.7;
+  max-width:420px;padding:0 20px;
+  min-height:3.2em;
+}
+#hd2-boot .msg .line{
+  display:block;transition:opacity .15s ease;
+  overflow-wrap:anywhere;
+}
+#hd2-boot .msg .sub{
+  display:block;color:var(--mute,var(--text-mute,#6E6E6E));font-size:.76rem;margin-top:2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  #hd2-boot .emblem,#hd2-boot .segments i{animation:none}
+  #hd2-boot .segments i{background:rgba(245,197,24,.35)}
+  #hd2-boot .msg .line{transition:none}
+}

@@ -2,16 +2,16 @@
  "schema_version": 1,
  "upstream": {
   "repo": "Darctor/Helldivers2_RawData",
-  "commit": "d7bb0b0205d7e5448a81708d319039958fb5da34",
-  "game_version": "1.007.100",
-  "patch_date": "2026-09-22",
-  "fetched_at": "2026-10-24T15:08:32Z",
+  "commit": "d1e4206a7007f5828241b04e5330d7c6a850067e",
+  "game_version": "1.007.200",
+  "patch_date": "2026-10-20",
+  "fetched_at": "2026-10-25T08:25:57Z",
   "files": {
-   "generated_projectile_settings.json": "d2ad3e82382cf77cb338e05dd405eefa2955facfe3528254839ad0b841dd781f",
-   "generated_damage_settings.json": "689a0befc5d51f3d5cba59093f99762c56542b18555af0ddfa1fbbd276ca5296",
-   "ProjectileWeaponComponentData.json": "b33459bbe2e66f3eaa526d1d55c83bb57cab1d0dc76ff095c66a84ca312f2c9d",
-   "EntityComponentMap.json": "cfd640849b02eacb1b1b24819ad33a251028f7e61279a4461dab76bf3e03885c",
-   "Hash.csv": "26a302301b054503d23e7b6ddff637e5b2fb5978e7cfd6361a92ba85602c17ea"
+   "generated_projectile_settings.json": "fcccccb3f49e94357ee9566d25ab52ade5d706db88ff26ce1fd37a6d0ca930a2",
+   "generated_damage_settings.json": "69e3069eb44f8ed91ae0cd0dd6fea9e68865262200a221c78ff9c8ee7670e527",
+   "ProjectileWeaponComponentData.json": "6d30e3bdaa69fef4d6161bc31d9a0fa18db1210986d20087f9f359aef023a1dd",
+   "EntityComponentMap.json": "381e2e031d9c8394a4af7da87845992c6e3f0c2168fc3f780ae3e650acb7c5a0",
+   "Hash.csv": "fdc5eac848602d7ec660328e566f8e4aa6b932b7199de262e2376ad4ea9c7b7f"
   }
  },
  "wiki": {
@@ -31,7 +31,7 @@
       "name": "AR-2 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 138,
+      "projectile_type": 140,
       "params": {
        "calibreMm": 7.0,
        "massG": 8.0,
@@ -46,7 +46,7 @@
       "damage": {
        "normal": 75,
        "durable": 10,
-       "damage_info_type": 118,
+       "damage_info_type": 126,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -86,7 +86,7 @@
       "name": "5.5x50mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 276,
+      "projectile_type": 281,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -101,7 +101,7 @@
       "damage": {
        "normal": 90,
        "durable": 22,
-       "damage_info_type": 108,
+       "damage_info_type": 116,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -131,7 +131,7 @@
       "name": "5.5x50mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 276,
+      "projectile_type": 281,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -146,7 +146,7 @@
       "damage": {
        "normal": 90,
        "durable": 22,
-       "damage_info_type": 108,
+       "damage_info_type": 116,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -176,7 +176,7 @@
       "name": "5.5x50mm EXPLOSIVE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 310,
+      "projectile_type": 315,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -191,7 +191,7 @@
       "damage": {
        "normal": 75,
        "durable": 35,
-       "damage_info_type": 107,
+       "damage_info_type": 115,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -221,7 +221,7 @@
       "name": "5.5x50mm PENETRATOR P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 7,
+      "projectile_type": 8,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -236,7 +236,7 @@
       "damage": {
        "normal": 65,
        "durable": 15,
-       "damage_info_type": 105,
+       "damage_info_type": 113,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -276,7 +276,7 @@
       "name": "5.5x50mm SUBSONIC P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 139,
+      "projectile_type": 141,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -291,7 +291,7 @@
       "damage": {
        "normal": 80,
        "durable": 20,
-       "damage_info_type": 114,
+       "damage_info_type": 122,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -321,7 +321,7 @@
       "name": "AR-61 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 44,
+      "projectile_type": 45,
       "params": {
        "calibreMm": 8.0,
        "massG": 11.0,
@@ -336,7 +336,7 @@
       "damage": {
        "normal": 105,
        "durable": 30,
-       "damage_info_type": 135,
+       "damage_info_type": 143,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -366,7 +366,7 @@
       "name": "AR/GL-21 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 334,
+      "projectile_type": 339,
       "params": {
        "calibreMm": 8.0,
        "massG": 11.0,
@@ -381,7 +381,7 @@
       "damage": {
        "normal": 95,
        "durable": 24,
-       "damage_info_type": 132,
+       "damage_info_type": 140,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -403,10 +403,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       85,
-       263
+       87,
+       267
       ],
-      "component_projectile_type": 334,
+      "component_projectile_type": 339,
       "wiki": {
        "mass_g": 50.0,
        "speed_mps": 100.0,
@@ -445,7 +445,7 @@
       "name": "8x60mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 135,
+      "projectile_type": 137,
       "params": {
        "calibreMm": 8.0,
        "massG": 11.0,
@@ -460,7 +460,7 @@
       "damage": {
        "normal": 95,
        "durable": 23,
-       "damage_info_type": 134,
+       "damage_info_type": 142,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -490,7 +490,7 @@
       "name": "CB-9 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 249,
+      "projectile_type": 253,
       "params": {
        "calibreMm": 15.0,
        "massG": 100.0,
@@ -505,7 +505,7 @@
       "damage": {
        "normal": 270,
        "durable": 50,
-       "damage_info_type": 208,
+       "damage_info_type": 218,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -542,7 +542,7 @@
       "name": "DBS-2 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 317,
+      "projectile_type": 322,
       "params": {
        "calibreMm": 8.0,
        "massG": 6.0,
@@ -557,7 +557,7 @@
       "damage": {
        "normal": 70,
        "durable": 35,
-       "damage_info_type": 159,
+       "damage_info_type": 168,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -614,7 +614,7 @@
       "name": "15x100mm STANDARD ROCKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 177,
+      "projectile_type": 180,
       "params": {
        "calibreMm": 15.0,
        "massG": 100.0,
@@ -629,7 +629,7 @@
       "damage": {
        "normal": 275,
        "durable": 90,
-       "damage_info_type": 153,
+       "damage_info_type": 162,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -687,7 +687,7 @@
       "name": "LASER P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 149,
+      "projectile_type": 151,
       "params": {
        "calibreMm": 10.0,
        "massG": 12.0,
@@ -702,7 +702,7 @@
       "damage": {
        "normal": 60,
        "durable": 6,
-       "damage_info_type": 48,
+       "damage_info_type": 55,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -732,7 +732,7 @@
       "name": "LASER P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 149,
+      "projectile_type": 151,
       "params": {
        "calibreMm": 10.0,
        "massG": 12.0,
@@ -747,7 +747,7 @@
       "damage": {
        "normal": 60,
        "durable": 6,
-       "damage_info_type": 48,
+       "damage_info_type": 55,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -767,7 +767,7 @@
       "name": "LASER P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 185,
+      "projectile_type": 189,
       "params": {
        "calibreMm": 10.0,
        "massG": 12.0,
@@ -782,7 +782,7 @@
       "damage": {
        "normal": 55,
        "durable": 5,
-       "damage_info_type": 50,
+       "damage_info_type": 57,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -804,10 +804,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       25,
-       219
+       26,
+       222
       ],
-      "component_projectile_type": 149,
+      "component_projectile_type": 151,
       "wiki": {
        "mass_g": 12.0,
        "speed_mps": 1300.0,
@@ -822,10 +822,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       25,
-       219
+       26,
+       222
       ],
-      "component_projectile_type": 149,
+      "component_projectile_type": 151,
       "wiki": {
        "mass_g": 12.0,
        "speed_mps": 1300.0,
@@ -848,7 +848,7 @@
       "name": "M7S P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 340,
+      "projectile_type": 345,
       "params": {
        "calibreMm": 9.0,
        "massG": 7.0,
@@ -863,7 +863,7 @@
       "damage": {
        "normal": 90,
        "durable": 18,
-       "damage_info_type": 71,
+       "damage_info_type": 78,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -902,40 +902,21 @@
       "id": "ma5c_assault_rifle:ma5c-p",
       "name": "MA5C P",
       "kind": "projectile",
-      "status": "ready",
-      "projectile_type": 119,
-      "params": {
-       "calibreMm": 8.0,
-       "massG": 11.0,
-       "vConfig": 820.0,
-       "dragCoeff": 0.30000001192092896,
-       "gravityMultiplier": 1.0,
-       "lifeTime": 0.0,
-       "ignoreTerminalVelocity": false,
-       "inheritVelocity": true,
-       "numProjectiles": 1
-      },
-      "damage": {
-       "normal": 90,
-       "durable": 16,
-       "damage_info_type": 136,
-       "source": "rawdata"
-      },
-      "wiki_check": {
+      "status": "unresolved",
+      "reason": "组件 projectile_type=121 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[90, 20]）",
+      "candidates": [],
+      "component_projectile_type": 121,
+      "wiki": {
        "mass_g": 11.0,
        "speed_mps": 820.0,
        "damage_standard": 90.0,
-       "damage_durable": 16.0,
-       "mismatches": []
-      },
-      "sources": [
-       "wiki",
-       "rawdata"
-      ]
+       "damage_durable": 16.0
+      }
      }
     ],
     "rawdata_name": "MA5C Assault Rifle (Model)",
-    "status": "ready"
+    "status": "unresolved",
+    "reason": "存在无法唯一确认的射弹攻击（详见 attacks 与 unresolved 清单）"
    },
    {
     "id": "mp_98_knight",
@@ -948,7 +929,7 @@
       "name": "9x20mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 215,
+      "projectile_type": 218,
       "params": {
        "calibreMm": 9.0,
        "massG": 7.0,
@@ -963,7 +944,7 @@
       "damage": {
        "normal": 90,
        "durable": 18,
-       "damage_info_type": 74,
+       "damage_info_type": 82,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -993,7 +974,7 @@
       "name": "MEDIUM PLASMA BOLT P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 142,
+      "projectile_type": 144,
       "params": {
        "calibreMm": 20.0,
        "massG": 25.0,
@@ -1008,7 +989,7 @@
       "damage": {
        "normal": 100,
        "durable": 50,
-       "damage_info_type": 56,
+       "damage_info_type": 63,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1045,7 +1026,7 @@
       "name": "MEDIUM PLASMA BOLT P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 155,
+      "projectile_type": 157,
       "params": {
        "calibreMm": 20.0,
        "massG": 25.0,
@@ -1060,7 +1041,7 @@
       "damage": {
        "normal": 250,
        "durable": 125,
-       "damage_info_type": 308,
+       "damage_info_type": 318,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1097,9 +1078,9 @@
       "name": "LARGE PLASMA BOLT P",
       "kind": "projectile",
       "status": "unresolved",
-      "reason": "组件 projectile_type=296 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
+      "reason": "组件 projectile_type=301 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
       "candidates": [],
-      "component_projectile_type": 296,
+      "component_projectile_type": 301,
       "wiki": {
        "mass_g": 25.0,
        "speed_mps": 350.0,
@@ -1112,7 +1093,7 @@
       "name": "VOLATILE PLASMA BOLT P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 129,
+      "projectile_type": 131,
       "params": {
        "calibreMm": 20.0,
        "massG": 25.0,
@@ -1127,7 +1108,7 @@
       "damage": {
        "normal": 200,
        "durable": 100,
-       "damage_info_type": 63,
+       "damage_info_type": 70,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1171,7 +1152,7 @@
       "name": "R-2 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 327,
+      "projectile_type": 332,
       "params": {
        "calibreMm": 8.0,
        "massG": 20.0,
@@ -1186,7 +1167,7 @@
       "damage": {
        "normal": 200,
        "durable": 50,
-       "damage_info_type": 138,
+       "damage_info_type": 147,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1216,7 +1197,7 @@
       "name": "9x70mm FULL METAL JACKET P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 207,
+      "projectile_type": 210,
       "params": {
        "calibreMm": 9.0,
        "massG": 20.0,
@@ -1231,7 +1212,7 @@
       "damage": {
        "normal": 220,
        "durable": 45,
-       "damage_info_type": 142,
+       "damage_info_type": 151,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1261,7 +1242,7 @@
       "name": "R-6 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 299,
+      "projectile_type": 304,
       "params": {
        "calibreMm": 8.0,
        "massG": 20.0,
@@ -1276,7 +1257,7 @@
       "damage": {
        "normal": 300,
        "durable": 100,
-       "damage_info_type": 139,
+       "damage_info_type": 148,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1306,7 +1287,7 @@
       "name": "15x100mm HIGH EXPLOSIVE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 40,
+      "projectile_type": 41,
       "params": {
        "calibreMm": 15.0,
        "massG": 100.0,
@@ -1321,7 +1302,7 @@
       "damage": {
        "normal": 230,
        "durable": 115,
-       "damage_info_type": 149,
+       "damage_info_type": 158,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1348,7 +1329,7 @@
       "name": "SHRAPNEL P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 201,
+      "projectile_type": 204,
       "params": {
        "calibreMm": 10.0,
        "massG": 100.0,
@@ -1363,7 +1344,7 @@
       "damage": {
        "normal": 110,
        "durable": 35,
-       "damage_info_type": 189,
+       "damage_info_type": 198,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1393,7 +1374,7 @@
       "name": "9x70mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 305,
+      "projectile_type": 310,
       "params": {
        "calibreMm": 9.0,
        "massG": 20.0,
@@ -1408,7 +1389,7 @@
       "damage": {
        "normal": 165,
        "durable": 45,
-       "damage_info_type": 141,
+       "damage_info_type": 150,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1438,7 +1419,7 @@
       "name": "9x70mm HIGH VELOCITY P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 241,
+      "projectile_type": 245,
       "params": {
        "calibreMm": 9.0,
        "massG": 20.0,
@@ -1453,7 +1434,7 @@
       "damage": {
        "normal": 200,
        "durable": 50,
-       "damage_info_type": 143,
+       "damage_info_type": 152,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1483,7 +1464,7 @@
       "name": "8x60mm SUBSONIC P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 325,
+      "projectile_type": 330,
       "params": {
        "calibreMm": 8.0,
        "massG": 20.0,
@@ -1498,7 +1479,7 @@
       "damage": {
        "normal": 165,
        "durable": 45,
-       "damage_info_type": 130,
+       "damage_info_type": 138,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1528,7 +1509,7 @@
       "name": "R-2124 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 282,
+      "projectile_type": 287,
       "params": {
        "calibreMm": 8.0,
        "massG": 20.0,
@@ -1543,7 +1524,7 @@
       "damage": {
        "normal": 180,
        "durable": 50,
-       "damage_info_type": 137,
+       "damage_info_type": 145,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1573,7 +1554,7 @@
       "name": "R/40-K P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 86,
+      "projectile_type": 88,
       "params": {
        "calibreMm": 10.0,
        "massG": 10.0,
@@ -1588,7 +1569,7 @@
       "damage": {
        "normal": 275,
        "durable": 40,
-       "damage_info_type": 510,
+       "damage_info_type": 522,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1628,7 +1609,7 @@
       "name": "LARGE PLASMA BOLT P3",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 57,
+      "projectile_type": 58,
       "params": {
        "calibreMm": 20.0,
        "massG": 100.0,
@@ -1643,7 +1624,7 @@
       "damage": {
        "normal": 0,
        "durable": 0,
-       "damage_info_type": 57,
+       "damage_info_type": 64,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1680,7 +1661,7 @@
       "name": "10g RIFLED SLUGS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 240,
+      "projectile_type": 244,
       "params": {
        "calibreMm": 18.0,
        "massG": 50.0,
@@ -1695,7 +1676,7 @@
       "damage": {
        "normal": 330,
        "durable": 90,
-       "damage_info_type": 176,
+       "damage_info_type": 185,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1725,7 +1706,7 @@
       "name": "10g FLECHETTES P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 183,
+      "projectile_type": 187,
       "params": {
        "calibreMm": 8.0,
        "massG": 6.0,
@@ -1740,7 +1721,7 @@
       "damage": {
        "normal": 35,
        "durable": 10,
-       "damage_info_type": 166,
+       "damage_info_type": 175,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1760,7 +1741,7 @@
       "name": "10g STUN ROUNDS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 191,
+      "projectile_type": 195,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -1775,7 +1756,7 @@
       "damage": {
        "normal": 6,
        "durable": 2,
-       "damage_info_type": 175,
+       "damage_info_type": 184,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1814,40 +1795,21 @@
       "id": "sg_225_breaker:12g-buckshot-p",
       "name": "12g BUCKSHOT P",
       "kind": "projectile",
-      "status": "ready",
-      "projectile_type": 179,
-      "params": {
-       "calibreMm": 8.0,
-       "massG": 4.0,
-       "vConfig": 360.0,
-       "dragCoeff": 0.5,
-       "gravityMultiplier": 1.0,
-       "lifeTime": 0.0,
-       "ignoreTerminalVelocity": false,
-       "inheritVelocity": true,
-       "numProjectiles": 11
-      },
-      "damage": {
-       "normal": 30,
-       "durable": 6,
-       "damage_info_type": 179,
-       "source": "rawdata"
-      },
-      "wiki_check": {
+      "status": "unresolved",
+      "reason": "组件 projectile_type=183 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[36, 8]）",
+      "candidates": [],
+      "component_projectile_type": 183,
+      "wiki": {
        "mass_g": 4.0,
        "speed_mps": 360.0,
        "damage_standard": 30.0,
-       "damage_durable": 6.0,
-       "mismatches": []
-      },
-      "sources": [
-       "wiki",
-       "rawdata"
-      ]
+       "damage_durable": 6.0
+      }
      }
     ],
     "rawdata_name": "SG-225 Breaker (Model)",
-    "status": "ready"
+    "status": "unresolved",
+    "reason": "存在无法唯一确认的射弹攻击（详见 attacks 与 unresolved 清单）"
    },
    {
     "id": "sg_225ie_breaker_incendiary",
@@ -1860,7 +1822,7 @@
       "name": "12g LIBERTY FIRE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 314,
+      "projectile_type": 319,
       "params": {
        "calibreMm": 8.0,
        "massG": 2.0,
@@ -1875,7 +1837,7 @@
       "damage": {
        "normal": 20,
        "durable": 10,
-       "damage_info_type": 182,
+       "damage_info_type": 191,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1904,40 +1866,21 @@
       "id": "sg_225sp_breaker_spray_pray:12g-birdshot-p",
       "name": "12g BIRDSHOT P",
       "kind": "projectile",
-      "status": "ready",
-      "projectile_type": 174,
-      "params": {
-       "calibreMm": 3.0,
-       "massG": 1.0,
-       "vConfig": 250.0,
-       "dragCoeff": 0.5,
-       "gravityMultiplier": 1.0,
-       "lifeTime": 0.0,
-       "ignoreTerminalVelocity": false,
-       "inheritVelocity": true,
-       "numProjectiles": 16
-      },
-      "damage": {
-       "normal": 15,
-       "durable": 4,
-       "damage_info_type": 178,
-       "source": "rawdata"
-      },
-      "wiki_check": {
+      "status": "unresolved",
+      "reason": "组件 projectile_type=177 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[18, 5]）",
+      "candidates": [],
+      "component_projectile_type": 177,
+      "wiki": {
        "mass_g": 1.0,
        "speed_mps": 250.0,
        "damage_standard": 15.0,
-       "damage_durable": 4.0,
-       "mismatches": []
-      },
-      "sources": [
-       "wiki",
-       "rawdata"
-      ]
+       "damage_durable": 4.0
+      }
      }
     ],
     "rawdata_name": "SG-225SP Breaker Spray&Pray (Model)",
-    "status": "ready"
+    "status": "unresolved",
+    "reason": "存在无法唯一确认的射弹攻击（详见 attacks 与 unresolved 清单）"
    },
    {
     "id": "sg_451_cookout",
@@ -1950,7 +1893,7 @@
       "name": "SG-451 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 347,
+      "projectile_type": 352,
       "params": {
        "calibreMm": 8.0,
        "massG": 2.0,
@@ -1965,7 +1908,7 @@
       "damage": {
        "normal": 16,
        "durable": 3,
-       "damage_info_type": 164,
+       "damage_info_type": 173,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -1995,7 +1938,7 @@
       "name": "12x25mm FULL METAL JACKET P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 123,
+      "projectile_type": 125,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2010,7 +1953,7 @@
       "damage": {
        "normal": 140,
        "durable": 32,
-       "damage_info_type": 96,
+       "damage_info_type": 104,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2055,7 +1998,7 @@
       "damage": {
        "normal": 110,
        "durable": 22,
-       "damage_info_type": 83,
+       "damage_info_type": 91,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2085,7 +2028,7 @@
       "name": "SMG-72 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 157,
+      "projectile_type": 159,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2100,7 +2043,7 @@
       "damage": {
        "normal": 85,
        "durable": 17,
-       "damage_info_type": 90,
+       "damage_info_type": 98,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2130,7 +2073,7 @@
       "name": "9x20mm HIGH VELOCITY P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 76,
+      "projectile_type": 78,
       "params": {
        "calibreMm": 9.0,
        "massG": 7.0,
@@ -2145,7 +2088,7 @@
       "damage": {
        "normal": 65,
        "durable": 13,
-       "damage_info_type": 77,
+       "damage_info_type": 85,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2175,7 +2118,7 @@
       "name": "12x25mm FULL METAL JACKET P3",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 38,
+      "projectile_type": 39,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2190,7 +2133,7 @@
       "damage": {
        "normal": 130,
        "durable": 30,
-       "damage_info_type": 97,
+       "damage_info_type": 105,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2237,7 +2180,7 @@
       "name": "5.5x50mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 276,
+      "projectile_type": 281,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -2252,7 +2195,7 @@
       "damage": {
        "normal": 90,
        "durable": 22,
-       "damage_info_type": 108,
+       "damage_info_type": 116,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2282,7 +2225,7 @@
       "name": "VG-70 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 94,
+      "projectile_type": 96,
       "params": {
        "calibreMm": 9.0,
        "massG": 7.0,
@@ -2297,7 +2240,7 @@
       "damage": {
        "normal": 85,
        "durable": 23,
-       "damage_info_type": 76,
+       "damage_info_type": 84,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2315,6 +2258,49 @@
     ],
     "rawdata_name": "VG-70 Variable (Model)",
     "status": "ready"
+   },
+   {
+    "id": "r_40_sightliner",
+    "name": "R-40 视界者",
+    "name_en": "R-40 Sightliner",
+    "category": "primary",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/R-40_%E8%A7%86%E7%95%8C%E8%80%85",
+    "wiki_source": {
+     "pageid": 5100,
+     "revid": 14845,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "r_40_sightliner:projectile",
+      "name": "R-40 视界者射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 8,
+       "massG": 11,
+       "vConfig": 950,
+       "dragCoeff": 0.2,
+       "gravityMultiplier": 1,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 350,
+       "durable": 205
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ],
   "secondary": [
@@ -2391,7 +2377,7 @@
       "name": "GP-20 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 103,
+      "projectile_type": 105,
       "params": {
        "calibreMm": 80.0,
        "massG": 500.0,
@@ -2406,7 +2392,7 @@
       "damage": {
        "normal": 1000,
        "durable": 1000,
-       "damage_info_type": 27,
+       "damage_info_type": 34,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2443,7 +2429,7 @@
       "name": "40mm HEAT GRENADE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 263,
+      "projectile_type": 267,
       "params": {
        "calibreMm": 40.0,
        "massG": 50.0,
@@ -2458,7 +2444,7 @@
       "damage": {
        "normal": 250,
        "durable": 250,
-       "damage_info_type": 225,
+       "damage_info_type": 235,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2504,7 +2490,7 @@
       "name": "LASER P4",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 144,
+      "projectile_type": 146,
       "params": {
        "calibreMm": 10.0,
        "massG": 12.0,
@@ -2519,7 +2505,7 @@
       "damage": {
        "normal": 200,
        "durable": 20,
-       "damage_info_type": 54,
+       "damage_info_type": 61,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2549,7 +2535,7 @@
       "name": "M6C/SOCOM P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 308,
+      "projectile_type": 313,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2564,7 +2550,7 @@
       "damage": {
        "normal": 125,
        "durable": 28,
-       "damage_info_type": 93,
+       "damage_info_type": 101,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2593,40 +2579,21 @@
       "id": "p_2_peacemaker:9x20mm-hollow-point-p",
       "name": "9x20mm HOLLOW POINT P",
       "kind": "projectile",
-      "status": "ready",
-      "projectile_type": 337,
-      "params": {
-       "calibreMm": 9.0,
-       "massG": 7.0,
-       "vConfig": 320.0,
-       "dragCoeff": 1.2000000476837158,
-       "gravityMultiplier": 1.0,
-       "lifeTime": 0.0,
-       "ignoreTerminalVelocity": false,
-       "inheritVelocity": true,
-       "numProjectiles": 1
-      },
-      "damage": {
-       "normal": 100,
-       "durable": 32,
-       "damage_info_type": 75,
-       "source": "rawdata"
-      },
-      "wiki_check": {
+      "status": "unresolved",
+      "reason": "没有找到与 Wiki 数值+伤害同时匹配的射弹",
+      "candidates": [],
+      "component_projectile_type": null,
+      "wiki": {
        "mass_g": 7.0,
        "speed_mps": 320.0,
        "damage_standard": 100.0,
-       "damage_durable": 32.0,
-       "mismatches": []
-      },
-      "sources": [
-       "wiki",
-       "rawdata"
-      ]
+       "damage_durable": 32.0
+      }
      }
     ],
     "rawdata_name": "P-2 Peacemaker (Model)",
-    "status": "ready"
+    "status": "unresolved",
+    "reason": "存在无法唯一确认的射弹攻击（详见 attacks 与 unresolved 清单）"
    },
    {
     "id": "p_4_senator",
@@ -2659,7 +2626,7 @@
       "name": "9x20mm FULL METAL JACKET P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 291,
+      "projectile_type": 296,
       "params": {
        "calibreMm": 9.0,
        "massG": 7.0,
@@ -2674,7 +2641,7 @@
       "damage": {
        "normal": 70,
        "durable": 12,
-       "damage_info_type": 73,
+       "damage_info_type": 80,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2704,7 +2671,7 @@
       "name": "Guided P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 152,
+      "projectile_type": 154,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2719,7 +2686,7 @@
       "damage": {
        "normal": 1000,
        "durable": 1000,
-       "damage_info_type": 95,
+       "damage_info_type": 103,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2739,7 +2706,7 @@
       "name": "Non-Guided P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 152,
+      "projectile_type": 154,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2754,7 +2721,7 @@
       "damage": {
        "normal": 1000,
        "durable": 1000,
-       "damage_info_type": 95,
+       "damage_info_type": 103,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2801,7 +2768,7 @@
       "name": "P-35 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 343,
+      "projectile_type": 348,
       "params": {
        "calibreMm": 1.0,
        "massG": 10.0,
@@ -2816,7 +2783,7 @@
       "damage": {
        "normal": 60,
        "durable": 10,
-       "damage_info_type": 67,
+       "damage_info_type": 74,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2853,7 +2820,7 @@
       "name": "15x100mm STANDARD ROCKET P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 237,
+      "projectile_type": 241,
       "params": {
        "calibreMm": 12.0,
        "massG": 7.0,
@@ -2868,7 +2835,7 @@
       "damage": {
        "normal": 105,
        "durable": 35,
-       "damage_info_type": 92,
+       "damage_info_type": 100,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2915,7 +2882,7 @@
       "name": "Guided P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 326,
+      "projectile_type": 331,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2930,7 +2897,7 @@
       "damage": {
        "normal": 80,
        "durable": 20,
-       "damage_info_type": 94,
+       "damage_info_type": 102,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2950,7 +2917,7 @@
       "name": "Non-Guided P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 326,
+      "projectile_type": 331,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -2965,7 +2932,7 @@
       "damage": {
        "normal": 80,
        "durable": 20,
-       "damage_info_type": 94,
+       "damage_info_type": 102,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -2995,7 +2962,7 @@
       "name": "12x25mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 15,
+      "projectile_type": 16,
       "params": {
        "calibreMm": 12.0,
        "massG": 15.0,
@@ -3010,7 +2977,7 @@
       "damage": {
        "normal": 140,
        "durable": 32,
-       "damage_info_type": 91,
+       "damage_info_type": 99,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3040,7 +3007,7 @@
       "name": "P/40-K P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 202,
+      "projectile_type": 205,
       "params": {
        "calibreMm": 15.0,
        "massG": 100.0,
@@ -3055,7 +3022,7 @@
       "damage": {
        "normal": 325,
        "durable": 115,
-       "damage_info_type": 156,
+       "damage_info_type": 165,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3093,7 +3060,7 @@
       "name": "SMALL PLASMA BOLT P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 171,
+      "projectile_type": 174,
       "params": {
        "calibreMm": 10.0,
        "massG": 10.0,
@@ -3108,7 +3075,7 @@
       "damage": {
        "normal": 100,
        "durable": 50,
-       "damage_info_type": 56,
+       "damage_info_type": 63,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3128,7 +3095,7 @@
       "name": "SMALL PLASMA BOLT P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 70,
+      "projectile_type": 72,
       "params": {
        "calibreMm": 20.0,
        "massG": 25.0,
@@ -3143,7 +3110,7 @@
       "damage": {
        "normal": 150,
        "durable": 75,
-       "damage_info_type": 62,
+       "damage_info_type": 69,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3163,7 +3130,7 @@
       "name": "SMALL PLASMA BOLT P2",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 341,
+      "projectile_type": 346,
       "params": {
        "calibreMm": 20.0,
        "massG": 25.0,
@@ -3178,7 +3145,7 @@
       "damage": {
        "normal": 150,
        "durable": 75,
-       "damage_info_type": 62,
+       "damage_info_type": 69,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3228,40 +3195,64 @@
       "id": "sg_22_bushwhacker:buckshot-p1",
       "name": "BUCKSHOT P1",
       "kind": "projectile",
-      "status": "ready",
-      "projectile_type": 260,
-      "params": {
-       "calibreMm": 8.0,
-       "massG": 6.0,
-       "vConfig": 385.0,
-       "dragCoeff": 0.5,
-       "gravityMultiplier": 1.0,
-       "lifeTime": 0.0,
-       "ignoreTerminalVelocity": false,
-       "inheritVelocity": true,
-       "numProjectiles": 9
-      },
-      "damage": {
-       "normal": 45,
-       "durable": 12,
-       "damage_info_type": 163,
-       "source": "rawdata"
-      },
-      "wiki_check": {
+      "status": "unresolved",
+      "reason": "没有找到与 Wiki 数值+伤害同时匹配的射弹",
+      "candidates": [],
+      "component_projectile_type": null,
+      "wiki": {
        "mass_g": 6.0,
        "speed_mps": 385.0,
        "damage_standard": 45.0,
-       "damage_durable": 12.0,
-       "mismatches": []
-      },
-      "sources": [
-       "wiki",
-       "rawdata"
-      ]
+       "damage_durable": 12.0
+      }
      }
     ],
     "rawdata_name": "SG-22 Bushwhacker (Model)",
-    "status": "ready"
+    "status": "unresolved",
+    "reason": "存在无法唯一确认的射弹攻击（详见 attacks 与 unresolved 清单）"
+   },
+   {
+    "id": "p_44_mist",
+    "name": "P-44 迷雾",
+    "name_en": "P-44 Mist",
+    "category": "secondary",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/P-44_%E8%BF%B7%E9%9B%BE",
+    "wiki_source": {
+     "pageid": 5097,
+     "revid": 14360,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "p_44_mist:projectile",
+      "name": "P-44 迷雾射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 9,
+       "massG": 7,
+       "vConfig": 375,
+       "dragCoeff": 1.2,
+       "gravityMultiplier": 1,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 110,
+       "durable": 18
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ],
   "support": [
@@ -3293,7 +3284,7 @@
       "name": "12.5mm EIT ROUNDS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 226,
+      "projectile_type": 230,
       "params": {
        "calibreMm": 12.5,
        "massG": 52.0,
@@ -3308,7 +3299,7 @@
       "damage": {
        "normal": 450,
        "durable": 225,
-       "damage_info_type": 206,
+       "damage_info_type": 215,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3372,7 +3363,7 @@
       "name": "75mm HEAT GRENADE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 132,
+      "projectile_type": 134,
       "params": {
        "calibreMm": 75.0,
        "massG": 2500.0,
@@ -3387,7 +3378,7 @@
       "damage": {
        "normal": 2000,
        "durable": 2000,
-       "damage_info_type": 227,
+       "damage_info_type": 237,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3424,7 +3415,7 @@
       "name": "EAT-411 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 34,
+      "projectile_type": 35,
       "params": {
        "calibreMm": 80.0,
        "massG": 500.0,
@@ -3439,7 +3430,7 @@
       "damage": {
        "normal": 1000,
        "durable": 1000,
-       "damage_info_type": 454,
+       "damage_info_type": 466,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3476,7 +3467,7 @@
       "name": "EAT-700 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 259,
+      "projectile_type": 263,
       "params": {
        "calibreMm": 75.0,
        "massG": 2500.0,
@@ -3491,7 +3482,7 @@
       "damage": {
        "normal": 500,
        "durable": 500,
-       "damage_info_type": 274,
+       "damage_info_type": 284,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3518,7 +3509,7 @@
       "name": "20mm FLAK ROUNDS P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 224,
+      "projectile_type": 227,
       "params": {
        "calibreMm": 85.0,
        "massG": 3000.0,
@@ -3533,7 +3524,7 @@
       "damage": {
        "normal": 200,
        "durable": 200,
-       "damage_info_type": 275,
+       "damage_info_type": 285,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3587,7 +3578,7 @@
       "name": "40mm HE GRENADE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 89,
+      "projectile_type": 91,
       "params": {
        "calibreMm": 40.0,
        "massG": 50.0,
@@ -3602,7 +3593,7 @@
       "damage": {
        "normal": 0,
        "durable": 0,
-       "damage_info_type": 30,
+       "damage_info_type": 37,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3639,7 +3630,7 @@
       "name": "GL-52 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 222,
+      "projectile_type": 225,
       "params": {
        "calibreMm": 40.0,
        "massG": 50.0,
@@ -3654,7 +3645,7 @@
       "damage": {
        "normal": 20,
        "durable": 2,
-       "damage_info_type": 32,
+       "damage_info_type": 39,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3715,7 +3706,7 @@
       "name": "LASER P5",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 133,
+      "projectile_type": 135,
       "params": {
        "calibreMm": 10.0,
        "massG": 12.0,
@@ -3730,7 +3721,7 @@
       "damage": {
        "normal": 2000,
        "durable": 2000,
-       "damage_info_type": 383,
+       "damage_info_type": 393,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3767,7 +3758,7 @@
       "name": "5.5x50mm FULL METAL JACKET P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 276,
+      "projectile_type": 281,
       "params": {
        "calibreMm": 5.5,
        "massG": 4.5,
@@ -3782,7 +3773,7 @@
       "damage": {
        "normal": 90,
        "durable": 22,
-       "damage_info_type": 108,
+       "damage_info_type": 116,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3812,7 +3803,7 @@
       "name": "12.5mm BCHP RIFLE ROUNDS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 275,
+      "projectile_type": 280,
       "params": {
        "calibreMm": 12.5,
        "massG": 52.0,
@@ -3827,7 +3818,7 @@
       "damage": {
        "normal": 150,
        "durable": 35,
-       "damage_info_type": 205,
+       "damage_info_type": 214,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3857,7 +3848,7 @@
       "name": "8x60mm FULL METAL JACKET P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 148,
+      "projectile_type": 150,
       "params": {
        "calibreMm": 8.0,
        "massG": 11.0,
@@ -3872,7 +3863,7 @@
       "damage": {
        "normal": 90,
        "durable": 23,
-       "damage_info_type": 125,
+       "damage_info_type": 133,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3902,7 +3893,7 @@
       "name": "MGX-42 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 61,
+      "projectile_type": 62,
       "params": {
        "calibreMm": 9.0,
        "massG": 4.5,
@@ -3917,7 +3908,7 @@
       "damage": {
        "normal": 100,
        "durable": 25,
-       "damage_info_type": 117,
+       "damage_info_type": 125,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -3947,7 +3938,7 @@
       "name": "66mm MISSILE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 245,
+      "projectile_type": 249,
       "params": {
        "calibreMm": 66.0,
        "massG": 350.0,
@@ -3962,7 +3953,7 @@
       "damage": {
        "normal": 1100,
        "durable": 1100,
-       "damage_info_type": 237,
+       "damage_info_type": 247,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4023,7 +4014,7 @@
       "name": "LARGE PLASMA BOLT P1",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 165,
+      "projectile_type": 168,
       "params": {
        "calibreMm": 20.0,
        "massG": 100.0,
@@ -4038,7 +4029,7 @@
       "damage": {
        "normal": 400,
        "durable": 200,
-       "damage_info_type": 58,
+       "damage_info_type": 65,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4058,9 +4049,9 @@
       "name": "LARGE PLASMA BOLT P2",
       "kind": "projectile",
       "status": "unresolved",
-      "reason": "组件 projectile_type=165 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
+      "reason": "组件 projectile_type=168 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
       "candidates": [],
-      "component_projectile_type": 165,
+      "component_projectile_type": 168,
       "wiki": {
        "mass_g": 100.0,
        "speed_mps": 250.0,
@@ -4104,7 +4095,7 @@
       "name": "RAILGUN ROUND P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 186,
+      "projectile_type": 190,
       "params": {
        "calibreMm": 10.0,
        "massG": 50.0,
@@ -4119,7 +4110,7 @@
       "damage": {
        "normal": 600,
        "durable": 225,
-       "damage_info_type": 64,
+       "damage_info_type": 71,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4163,7 +4154,7 @@
       "name": "S-11 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 125,
+      "projectile_type": 127,
       "params": {
        "calibreMm": 10.0,
        "massG": 100.0,
@@ -4178,7 +4169,7 @@
       "damage": {
        "normal": 650,
        "durable": 275,
-       "damage_info_type": 65,
+       "damage_info_type": 72,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4232,7 +4223,7 @@
       "name": "20mm APHET ROUNDS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 115,
+      "projectile_type": 117,
       "params": {
        "calibreMm": 20.0,
        "massG": 120.0,
@@ -4247,7 +4238,7 @@
       "damage": {
        "normal": 325,
        "durable": 260,
-       "damage_info_type": 213,
+       "damage_info_type": 223,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4267,7 +4258,7 @@
       "name": "20mm FLAK ROUNDS P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 284,
+      "projectile_type": 289,
       "params": {
        "calibreMm": 40.0,
        "massG": 130.0,
@@ -4282,7 +4273,7 @@
       "damage": {
        "normal": 150,
        "durable": 150,
-       "damage_info_type": 202,
+       "damage_info_type": 211,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4316,7 +4307,7 @@
       "name": "SHRAPNEL P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 201,
+      "projectile_type": 204,
       "params": {
        "calibreMm": 10.0,
        "massG": 100.0,
@@ -4331,7 +4322,7 @@
       "damage": {
        "normal": 110,
        "durable": 35,
-       "damage_info_type": 189,
+       "damage_info_type": 198,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4378,7 +4369,7 @@
       "name": "HOMING GROUND MISSILE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 225,
+      "projectile_type": 229,
       "params": {
        "calibreMm": 66.0,
        "massG": 350.0,
@@ -4393,7 +4384,7 @@
       "damage": {
        "normal": 4000,
        "durable": 4000,
-       "damage_info_type": 245,
+       "damage_info_type": 255,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4430,7 +4421,7 @@
       "name": "GL-28 P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 89,
+      "projectile_type": 91,
       "params": {
        "calibreMm": 40.0,
        "massG": 50.0,
@@ -4445,7 +4436,7 @@
       "damage": {
        "normal": 0,
        "durable": 0,
-       "damage_info_type": 30,
+       "damage_info_type": 37,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4482,7 +4473,7 @@
       "name": "85mm HEAT GRENADE P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 153,
+      "projectile_type": 155,
       "params": {
        "calibreMm": 85.0,
        "massG": 3300.0,
@@ -4497,7 +4488,7 @@
       "damage": {
        "normal": 3200,
        "durable": 3200,
-       "damage_info_type": 228,
+       "damage_info_type": 238,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4519,10 +4510,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       36,
-       350
+       37,
+       355
       ],
-      "component_projectile_type": 153,
+      "component_projectile_type": 155,
       "wiki": {
        "mass_g": 3300.0,
        "speed_mps": 250.0,
@@ -4559,7 +4550,7 @@
       "name": "8x60mm HIGH VELOCITY P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 306,
+      "projectile_type": 311,
       "params": {
        "calibreMm": 8.0,
        "massG": 11.0,
@@ -4574,7 +4565,7 @@
       "damage": {
        "normal": 80,
        "durable": 18,
-       "damage_info_type": 127,
+       "damage_info_type": 135,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4604,7 +4595,7 @@
       "name": "Artillery P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 330,
+      "projectile_type": 335,
       "params": {
        "calibreMm": 1.0,
        "massG": 11.0,
@@ -4619,7 +4610,7 @@
       "damage": {
        "normal": 20,
        "durable": 2,
-       "damage_info_type": 32,
+       "damage_info_type": 39,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4639,7 +4630,7 @@
       "name": "Burst P",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 43,
+      "projectile_type": 44,
       "params": {
        "calibreMm": 1.0,
        "massG": 11.0,
@@ -4654,7 +4645,7 @@
       "damage": {
        "normal": 200,
        "durable": 200,
-       "damage_info_type": 244,
+       "damage_info_type": 254,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4698,7 +4689,7 @@
       "name": "20mm FLAK ROUNDS P2",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 312,
+      "projectile_type": 317,
       "params": {
        "calibreMm": 85.0,
        "massG": 3300.0,
@@ -4713,7 +4704,7 @@
       "damage": {
        "normal": 350,
        "durable": 350,
-       "damage_info_type": 380,
+       "damage_info_type": 390,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4733,7 +4724,7 @@
       "name": "CLUSTER BOMB P2",
       "kind": "projectile",
       "status": "ready",
-      "projectile_type": 312,
+      "projectile_type": 317,
       "params": {
        "calibreMm": 85.0,
        "massG": 3300.0,
@@ -4748,7 +4739,7 @@
       "damage": {
        "normal": 350,
        "durable": 350,
-       "damage_info_type": 380,
+       "damage_info_type": 390,
        "source": "rawdata"
       },
       "wiki_check": {
@@ -4784,10 +4775,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       78,
-       233
+       80,
+       237
       ],
-      "component_projectile_type": 312,
+      "component_projectile_type": 317,
       "wiki": {
        "mass_g": 100.0,
        "speed_mps": 25.0,
@@ -4802,10 +4793,10 @@
       "status": "unresolved",
       "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
       "candidates": [
-       78,
-       233
+       80,
+       237
       ],
-      "component_projectile_type": 312,
+      "component_projectile_type": 317,
       "wiki": {
        "mass_g": 100.0,
        "speed_mps": 25.0,
@@ -4857,6 +4848,126 @@
     ],
     "reason": "未能在 RawData ProjectileWeaponComponentData 中找到该装备（名称归一化未命中）",
     "status": "unsupported"
+   },
+   {
+    "id": "amw_20_apex",
+    "name": "AMW-20 尖峰",
+    "name_en": "AMW-20 Apex",
+    "category": "support",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/AMW-20_%E5%B0%96%E5%B3%B0",
+    "wiki_source": {
+     "pageid": 5090,
+     "revid": 14836,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "amw_20_apex:projectile",
+      "name": "AMW-20 尖峰射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 60,
+       "massG": 70,
+       "vConfig": 1500,
+       "dragCoeff": 0.1,
+       "gravityMultiplier": 0.35,
+       "lifeTime": 0,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 1550,
+       "durable": 930
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
+   },
+   {
+    "id": "las_44_nova",
+    "name": "LAS-44 新星",
+    "name_en": "LAS-44 Nova",
+    "category": "support",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/LAS-44_%E6%96%B0%E6%98%9F",
+    "wiki_source": {
+     "pageid": 5091,
+     "revid": 14832,
+     "game_version": "1.007.200"
+    },
+    "status": "ready",
+    "attacks": [
+     {
+      "id": "las_44_nova:projectile",
+      "name": "LAS-44 新星射弹",
+      "kind": "projectile",
+      "status": "ready",
+      "params": {
+       "calibreMm": 10,
+       "massG": 8,
+       "vConfig": 1500,
+       "dragCoeff": 0,
+       "gravityMultiplier": 0,
+       "lifeTime": 6,
+       "ignoreTerminalVelocity": false,
+       "inheritVelocity": true,
+       "numProjectiles": 1
+      },
+      "damage": {
+       "normal": 880,
+       "durable": 880
+      },
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
+   }
+  ],
+  "throwable": [
+   {
+    "id": "g_11_caltrops",
+    "name": "G-11 铁蒺藜",
+    "name_en": "G-11 Caltrops",
+    "category": "throwable",
+    "source_url": "https://helldivers.wiki.gg/zh/wiki/G-11_%E9%93%81%E8%92%BA%E8%97%9C",
+    "wiki_source": {
+     "pageid": 5102,
+     "revid": 14371,
+     "game_version": "1.007.200"
+    },
+    "status": "unsupported",
+    "reason": "该攻击是无初速的感应爆炸与眩晕雷区，不属于当前单射弹弹道模型",
+    "reason_en": "This is a zero-velocity triggered explosion and stun minefield, not a single-projectile trajectory.",
+    "attacks": [
+     {
+      "id": "g_11_caltrops:explosion",
+      "name": "G-11 铁蒺藜爆炸",
+      "kind": "explosion",
+      "status": "unsupported",
+      "reason": "该攻击是无初速的感应爆炸与眩晕雷区，不属于当前单射弹弹道模型",
+      "reason_en": "This is a zero-velocity triggered explosion and stun minefield, not a single-projectile trajectory.",
+      "sources": [
+       "wiki"
+      ]
+     }
+    ],
+    "sources": [
+     "wiki"
+    ],
+    "wiki_only": true
    }
   ]
  },
@@ -4867,8 +4978,8 @@
    "attack_name": "40mm HEAT GRENADE P",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    85,
-    263
+    87,
+    267
    ]
   },
   {
@@ -4877,8 +4988,8 @@
    "attack_name": "LASER P2",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    25,
-    219
+    26,
+    222
    ]
   },
   {
@@ -4887,22 +4998,57 @@
    "attack_name": "LASER P3",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    25,
-    219
+    26,
+    222
    ]
+  },
+  {
+   "equipment_id": "ma5c_assault_rifle",
+   "equipment_name": "MA5C 突击步枪",
+   "attack_name": "MA5C P",
+   "reason": "组件 projectile_type=121 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[90, 20]）",
+   "candidates": []
   },
   {
    "equipment_id": "plas_101_purifier",
    "equipment_name": "PLAS-101 净化者",
    "attack_name": "LARGE PLASMA BOLT P",
-   "reason": "组件 projectile_type=296 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
+   "reason": "组件 projectile_type=301 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[200, 100]）",
+   "candidates": []
+  },
+  {
+   "equipment_id": "sg_225_breaker",
+   "equipment_name": "SG-225 破裂者",
+   "attack_name": "12g BUCKSHOT P",
+   "reason": "组件 projectile_type=183 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[36, 8]）",
+   "candidates": []
+  },
+  {
+   "equipment_id": "sg_225sp_breaker_spray_pray",
+   "equipment_name": "SG-225SP 千发百中破裂者",
+   "attack_name": "12g BIRDSHOT P",
+   "reason": "组件 projectile_type=177 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[18, 5]）",
+   "candidates": []
+  },
+  {
+   "equipment_id": "p_2_peacemaker",
+   "equipment_name": "P-2 和平制造者",
+   "attack_name": "9x20mm HOLLOW POINT P",
+   "reason": "没有找到与 Wiki 数值+伤害同时匹配的射弹",
+   "candidates": []
+  },
+  {
+   "equipment_id": "sg_22_bushwhacker",
+   "equipment_name": "SG-22 游击兵",
+   "attack_name": "BUCKSHOT P1",
+   "reason": "没有找到与 Wiki 数值+伤害同时匹配的射弹",
    "candidates": []
   },
   {
    "equipment_id": "support_plas_45_epoch",
    "equipment_name": "PLAS-45 纪元",
    "attack_name": "LARGE PLASMA BOLT P2",
-   "reason": "组件 projectile_type=165 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
+   "reason": "组件 projectile_type=168 的数值/伤害与 Wiki 攻击数值不一致（RawData damage=[400, 200]）",
    "candidates": []
   },
   {
@@ -4911,8 +5057,8 @@
    "attack_name": "85mm HIGH-EXPLOSIVE GRENADE P",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    36,
-    350
+    37,
+    355
    ]
   },
   {
@@ -4921,8 +5067,8 @@
    "attack_name": "CLUSTER BOMB P1",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    78,
-    233
+    80,
+    237
    ]
   },
   {
@@ -4931,14 +5077,32 @@
    "attack_name": "CLUSTER BOMB P3",
    "reason": "数值与伤害匹配到 2 个候选射弹，无法唯一确认",
    "candidates": [
-    78,
-    233
+    80,
+    237
    ]
   }
  ],
  "stats": {
-  "ready": 91,
-  "unsupported": 77,
-  "unresolved": 8
+  "ready": 90,
+  "unsupported": 78,
+  "unresolved": 13
+ },
+ "wiki_supplements": {
+  "source": "Helldivers 中文 Wiki 详细武器数据（1.007.200）",
+  "count": 5,
+  "items": [
+   "r_40_sightliner",
+   "p_44_mist",
+   "amw_20_apex",
+   "las_44_nova",
+   "g_11_caltrops"
+  ],
+  "review": {
+   "rawdata_main_checked": "d7bb0b0205d7e5448a81708d319039958fb5da34",
+   "rawdata_game_version": "1.007.100",
+   "rawdata_missing_items": true,
+   "fields_source": "Wiki 详细武器数据表（口径、质量、初速、阻力、重力、寿命、伤害）",
+   "inherit_velocity": "直射射弹按游戏引擎继承发射者速度；G-11 为无初速雷区，不进入弹道推演"
+  }
  }
 }

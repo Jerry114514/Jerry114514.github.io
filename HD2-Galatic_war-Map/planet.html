@@ -23,12 +23,19 @@
   <meta name="twitter:description" content="绝地潜兵2 星球资料页：解放度与在线玩家、战役与战略分析、下属区域、星球统计、环境条件与补给线。">
   <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
   <style>
+    /* ============================================================
+       星球指挥台（2026-10-25 重构）
+       信息层级参考社区站点的“战场指挥台”分区方式（首屏强态势 + 左中右），
+       视觉沿用本站黑金 HUD；所有数字与公式与重构前完全一致。
+       断点：≥1280 三栏指挥台 / 900–1279 两栏 / 700–899 单栏+横向 KPI / <600 完整单列
+       ============================================================ */
     :root{
       --bg:#0A0A0A; --bg-2:#101010; --card:#121212; --line:#242424; --line-2:#333;
       --text:#EDEDED; --dim:#A8A8A8; --mute:#6E6E6E;
       --yellow:#F5C518; --blue:#5BA3D0; --red:#FF4D2E; --green:#1FA84A;
       --humans:#5BA3D0; --terminids:#F5C518; --automaton:#D6806D; --illuminate:#CF64F8;
       --fcd:var(--yellow);
+      --stripe:repeating-linear-gradient(45deg,rgba(245,197,24,.10) 0 6px,transparent 6px 12px);
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -39,6 +46,7 @@
     }
     a{color:var(--blue);text-decoration:none}
     a:hover{color:var(--yellow)}
+    :is(a,button,summary,[tabindex]):focus-visible{outline:2px solid var(--fcd);outline-offset:2px}
     /* ---- 顶栏 ---- */
     .topbar{
       position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;
@@ -52,87 +60,245 @@
     .topbar .back:hover{border-color:var(--yellow);color:var(--yellow)}
     .topbar .brand{font-size:.82rem;color:var(--yellow);letter-spacing:.08em;font-weight:700}
     .topbar .stamp{margin-left:auto;font-size:.7rem;color:var(--mute);white-space:nowrap}
-    /* ---- 布局：移动端单列，桌面两列 ---- */
-    main{max-width:1080px;margin:0 auto;padding:14px 14px 40px}
-    .cols{display:grid;gap:14px}
-    @media (min-width:900px){ .cols{grid-template-columns:minmax(0,1fr) 340px;align-items:start} }
-    .card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-    .card > h2{
+    /* ---- 区块导航（窄屏横向滚动） ---- */
+    .sectnav{
+      display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;
+      border-bottom:1px solid var(--line);background:var(--bg-2);
+      scroll-snap-type:x proximity;
+    }
+    .sectnav a{
+      font-size:.76rem;color:var(--dim);border:1px solid var(--line);border-radius:999px;
+      padding:4px 10px;white-space:nowrap;scroll-snap-align:start;
+    }
+    .sectnav a:hover{border-color:var(--yellow);color:var(--yellow)}
+    @media (max-width:600px){
+      .sectnav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+    }
+    /* ---- 来源徽标 ---- */
+    .srcbadges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:8px 0 2px}
+    .sbadge{
+      display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;
+      border:1px solid var(--line-2);font-size:.68rem;color:var(--dim);letter-spacing:.04em;
+    }
+    .sbadge i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+    .sbadge.calc i{background:var(--yellow)}
+    /* ---- 主布局 ---- */
+    main{max-width:1400px;margin:0 auto;padding:12px 14px 40px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+    section.card{scroll-margin-top:64px}
+    .card > h2, .card > .chead{
       margin:0;padding:10px 14px;font-size:.82rem;letter-spacing:.1em;color:var(--yellow);
       border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:8px;
     }
-    .card > h2 .en{color:var(--mute);font-size:.68rem;font-weight:400;letter-spacing:.14em}
+    .card .chead{border-top:1px solid var(--fc, var(--line-2));background:var(--stripe)}
+    .card > h2 .en, .chead .en{color:var(--mute);font-size:.68rem;font-weight:400;letter-spacing:.14em}
     .card .body{padding:12px 14px}
-    /* ---- 头部（星球） ---- */
-    .hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-    .hero .names{min-width:0;flex:1 1 220px}
-    .hero .nm{font-size:1.9rem;line-height:1.15;font-weight:700}
-    .hero .en{color:var(--mute);font-size:.86rem;letter-spacing:.1em;margin-top:2px}
-    .hero .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    /* ============================================================
+       A. COMMAND HERO
+       ============================================================ */
+    .hero{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;
+      background:radial-gradient(120% 140% at 20% 0%,#141414 0%,#0B0B0B 60%);min-width:0}
+    .hero-media{position:absolute;inset:0;z-index:0;pointer-events:none}
+    .hero-media .bg{width:100%;height:100%;object-fit:cover;opacity:.9}
+    /* 暗化 + 渐变遮罩：保证文字对比度（验收项） */
+    .hero-media::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(6,6,6,.62) 0%,rgba(6,6,6,.78) 55%,rgba(6,6,6,.92) 100%),
+                 radial-gradient(90% 120% at 12% 10%,rgba(6,6,6,.15) 0%,rgba(6,6,6,.72) 78%);
+    }
+    .hero-media .icon{display:none}
+    .hero-media.no-bio .bg{display:none}
+    .hero-media.no-bio .icon{
+      display:block;width:min(44%,340px);height:auto;
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      opacity:.5;filter:saturate(.9);
+    }
+    .hero-media.no-img .icon{display:none}
+    .hero-in{position:relative;z-index:1;padding:18px 18px 14px}
+    .eyebrow{font-size:.66rem;letter-spacing:.22em;color:var(--fcd);text-transform:uppercase;font-weight:700}
+    .hero-grid{display:grid;gap:14px}
+    .hid .nm{font-size:2rem;line-height:1.12;font-weight:700;margin:4px 0 0}
+    .hid .en{color:var(--dim);font-size:.84rem;letter-spacing:.12em;margin-top:3px}
+    .hid .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
     .chip{
       display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;
       border:1px solid var(--line-2);font-size:.74rem;color:var(--dim);
+      background:rgba(10,10,10,.45);
     }
     .chip .dot{width:8px;height:8px;border-radius:50%}
-    .chip.ok{color:var(--green);border-color:rgba(31,168,74,.5)}
-    .chip.def{color:var(--red);border-color:rgba(255,77,46,.5)}
-    .chip.warn{color:var(--yellow);border-color:rgba(245,197,24,.5)}
-    /* 环形进度 */
-    .ring{position:relative;width:132px;height:132px;flex:0 0 132px}
-    .ring svg{transform:rotate(-90deg)}
+    .chip.ok{color:var(--green);border-color:rgba(31,168,74,.55)}
+    .chip.def{color:var(--red);border-color:rgba(255,77,46,.55)}
+    .chip.warn{color:var(--yellow);border-color:rgba(245,197,24,.55)}
+    /* 中部：解放进度环 */
+    .hmid{display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:center}
+    .ring{position:relative;width:168px;height:168px}
+    .ring svg circle.arc{transition:stroke-dasharray .6s ease}
     .ring .val{
       position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      font-variant-numeric:tabular-nums;
+      font-variant-numeric:tabular-nums;text-align:center;
     }
-    .ring .val b{font-size:1.5rem;line-height:1}
-    .ring .val span{font-size:.66rem;color:var(--mute);letter-spacing:.1em;margin-top:3px}
-    /* 进度条 */
+    .ring .val b{font-size:1.9rem;line-height:1}
+    .ring .val span{font-size:.64rem;color:var(--dim);letter-spacing:.12em;margin-top:4px}
+    .hpv{font-size:.76rem;color:var(--dim);font-variant-numeric:tabular-nums;text-align:center}
+    .hpv b{color:var(--text)}
+    /* 右部：Quick Intel */
+    .hright{display:flex;flex-direction:column;gap:0;border:1px solid var(--line-2);border-radius:10px;
+      background:rgba(8,8,8,.55);overflow:hidden}
+    .hright .qt{font-size:.64rem;letter-spacing:.18em;color:var(--fcd);padding:7px 10px;border-bottom:1px solid var(--line-2);background:var(--stripe)}
+    .qi{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+      padding:6px 10px;border-bottom:1px solid rgba(36,36,36,.7);font-size:.76rem}
+    .qi:last-child{border-bottom:0}
+    .qi .k{color:var(--mute)}
+    .qi .v{font-variant-numeric:tabular-nums;color:var(--text);text-align:right}
+    .qi .v small{color:var(--mute);font-size:.68rem;margin-left:3px}
+    /* 首屏下方的细粒度进度条 + 速率方向 */
+    .hero-strip{position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(8,8,8,.6);padding:10px 16px}
     .bar{position:relative;height:12px;background:#1a1a1a;border:1px solid var(--line);border-radius:999px;overflow:hidden}
     .bar > i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1FA84A,#7ddc9a)}
+    .bar > i.defo{background:linear-gradient(90deg,#2b6f94,#5BA3D0)}
     .bar > .mk{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--yellow)}
-    .rate{display:flex;gap:12px;flex-wrap:wrap;font-size:.78rem;color:var(--dim);margin-top:8px}
-    .rate b{color:var(--text);font-variant-numeric:tabular-nums}
+    .strip-rate{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:.78rem;color:var(--dim);margin-top:8px}
+    .strip-rate b{color:var(--text);font-variant-numeric:tabular-nums}
     .up{color:var(--green)} .down{color:var(--red)}
-    /* KPI 网格 */
-    .kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line)}
-    @media (min-width:620px){ .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} }
-    .kpi{background:var(--card);padding:10px 12px}
-    .kpi .k{font-size:.7rem;color:var(--mute);letter-spacing:.06em}
-    .kpi .v{font-size:1.05rem;font-variant-numeric:tabular-nums;margin-top:3px}
-    .kpi .v small{font-size:.72rem;color:var(--dim);margin-left:4px}
-    /* 通用小表格 / 列表 */
-    .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
-    .row:last-child{border-bottom:0}
-    .row .grow{flex:1;min-width:0}
-    .row .t{font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .row .s{font-size:.72rem;color:var(--mute);margin-top:2px}
-    .row .n{font-variant-numeric:tabular-nums;font-size:.86rem;white-space:nowrap}
-    .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.82rem}
-    .kv dt{color:var(--mute)}
-    .kv dd{margin:0;font-variant-numeric:tabular-nums;text-align:right}
-    .note{font-size:.72rem;color:var(--mute);line-height:1.7}
-    .biome{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#0d0d0d}
-    .biome img{display:block;width:100%;height:auto}
-    .biome .cap{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font-size:.76rem;background:linear-gradient(transparent,rgba(0,0,0,.85))}
-    .tag{display:inline-flex;gap:6px;align-items:center;padding:3px 9px;border:1px solid var(--line-2);border-radius:999px;font-size:.74rem;color:var(--dim);margin:0 6px 6px 0}
-    .empty{color:var(--mute);font-size:.8rem}
-    /* 趋势图 */
-    .chart{width:100%;height:150px;display:block}
+    /* ============================================================
+       指挥台三栏（≥1280：4 / 5 / 3；900–1279：两栏；以下单栏）
+       ============================================================ */
+    .cmd-grid{display:grid;gap:14px;margin-top:14px;align-items:start}
+    .col-l,.col-m,.col-r{display:flex;flex-direction:column;gap:14px;min-width:0}
+    @media (min-width:900px){
+      .cmd-grid{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
+      .col-l{grid-column:1}
+      .col-m{grid-column:1}
+      .col-r{grid-column:2;grid-row:1 / span 2}
+    }
+    @media (min-width:1280px){
+      .cmd-grid{grid-template-columns:minmax(0,4fr) minmax(0,5fr) minmax(0,3fr)}
+      .col-l{grid-column:1;grid-row:auto}
+      .col-m{grid-column:2;grid-row:auto}
+      .col-r{grid-column:3;grid-row:auto}
+    }
+    @media (min-width:900px){
+      .hero-grid{grid-template-columns:minmax(0,1.15fr) auto minmax(0,.95fr);align-items:center}
+    }
+    /* ============================================================
+       B. 战略态势卡（左栏）
+       ============================================================ */
+    .sit{display:flex;flex-direction:column;gap:8px}
+    .sit .line{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.8rem}
+    .sit .line:last-child{border-bottom:0}
+    .sit .line .k{color:var(--mute)}
+    .sit .line .v{font-variant-numeric:tabular-nums;text-align:right;color:var(--text)}
+    .sit .line .v.ok{color:var(--green)} .sit .line .v.bad{color:var(--red)}
+    .sit .line .v small{display:block;color:var(--mute);font-size:.68rem;margin-top:2px}
+    .sit .hint{border:1px dashed var(--line-2);border-radius:8px;padding:8px 10px;font-size:.74rem;color:var(--dim);line-height:1.6}
+    /* ============================================================
+       C. 全服趋势（中栏主图）
+       ============================================================ */
+    .trend-sum{font-size:.78rem;color:var(--dim);line-height:1.7;margin-bottom:8px}
+    .trend-sum b{color:var(--text)}
+    .chart{width:100%;height:280px;display:block}
     .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.72rem;color:var(--dim);margin-top:6px}
     .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
-    /* 区域展开 */
-    .rg{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid var(--line);
-        color:inherit;font:inherit;text-align:left;padding:10px 0;min-height:44px;cursor:pointer}
-    .rg:last-of-type{border-bottom:0}
-    .rg.on{background:#161205}
-    .rg .rgd{font-size:.76rem;color:var(--dim);padding:6px 0 10px;line-height:1.7;border-bottom:1px solid var(--line)}
-    .rgd .mini{color:var(--mute);font-size:.72rem}
+    .legend .dash i{background:transparent;border-top:2px dashed #EDEDED;border-radius:0;height:0}
+    /* ============================================================
+       D. 星球统计 KPI 卡（右栏）
+       ============================================================ */
+    .pcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    @media (min-width:700px) and (max-width:1279.5px){ .pcards{grid-template-columns:repeat(3,minmax(0,1fr))} }
+    @media (min-width:1280px){ .pcards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    .pc{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#0E0E0E;min-width:0}
+    .pc .k{font-size:.66rem;color:var(--mute);letter-spacing:.06em}
+    .pc .v{font-size:1.06rem;font-variant-numeric:tabular-nums;margin-top:3px;overflow-wrap:anywhere}
+    .pc .v small{font-size:.7rem;color:var(--dim);margin-left:3px}
+    .pc .s{font-size:.66rem;color:var(--mute);margin-top:2px}
+    .pc.hero-v{border-color:var(--fc,var(--line-2))}
+    .pgrp{font-size:.66rem;letter-spacing:.16em;color:var(--yellow);text-transform:uppercase;margin:10px 0 6px}
+    .pgrp:first-child{margin-top:0}
+    details.note-det{border:1px solid var(--line);border-radius:8px;margin-top:10px}
+    details.note-det > summary{
+      cursor:pointer;padding:7px 10px;font-size:.72rem;color:var(--dim);list-style:none;min-height:36px;
+      display:flex;align-items:center;gap:6px;
+    }
+    details.note-det > summary::before{content:"▸";color:var(--mute)}
+    details.note-det[open] > summary::before{content:"▾"}
+    details.note-det > .note{padding:2px 10px 10px}
+    /* ============================================================
+       E. 环境与词条
+       ============================================================ */
+    .env-grid{display:grid;gap:14px}
+    @media (min-width:700px){ .env-grid{grid-template-columns:minmax(0,320px) minmax(0,1fr)} }
+    .biome{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#0d0d0d}
+    .biome img{display:block;width:100%;height:auto}
+    .biome .cap{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font-size:.76rem;
+      background:linear-gradient(transparent,rgba(0,0,0,.85))}
+    .biome.noimg{padding:18px;text-align:center;color:var(--mute);font-size:.8rem}
+    .fxlist{display:flex;flex-direction:column;gap:6px}
+    details.fx{border:1px solid var(--line-2);border-radius:999px;background:#0E0E0E}
+    details.fx > summary{
+      cursor:pointer;list-style:none;padding:4px 12px;font-size:.74rem;color:var(--dim);
+      display:inline-flex;align-items:center;gap:6px;min-height:30px;
+    }
+    details.fx > summary::-webkit-details-marker{display:none}
+    details.fx > summary::after{content:"▾";font-size:.6rem;color:var(--mute)}
+    details.fx[open]{border-radius:10px}
+    details.fx[open] > summary::after{content:"▴"}
+    details.fx .fxd{padding:2px 12px 10px;font-size:.7rem;color:var(--mute);line-height:1.7;overflow-wrap:anywhere}
+    details.fx .fxd b{color:var(--dim)}
+    .tag{display:inline-flex;gap:6px;align-items:center;padding:3px 9px;border:1px solid var(--line-2);
+      border-radius:999px;font-size:.74rem;color:var(--dim);margin:0 6px 6px 0}
+    /* ============================================================
+       F. 区域（紧凑行 + 展开）
+       ============================================================ */
+    .rghead,.rgc{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr) 64px 74px 84px;gap:8px;align-items:center}
+    .rghead{font-size:.66rem;color:var(--mute);letter-spacing:.08em;padding:2px 4px 6px;text-transform:uppercase}
+    .rgc{
+      width:100%;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;
+      text-align:left;padding:9px 4px;min-height:44px;cursor:pointer;
+    }
+    .rgc:hover{background:#151515}
+    .rgc[aria-expanded="true"]{background:#161205}
+    .rgc .rgn{font-size:.84rem;min-width:0}
+    .rgc .rgn .sub{display:block;color:var(--mute);font-size:.68rem;margin-top:1px;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rgc .rgt{font-size:.72rem;color:var(--dim)}
+    .rgc .num{font-variant-numeric:tabular-nums;font-size:.78rem;text-align:right}
+    .rgc .num.hi{color:var(--text);font-weight:600}
+    .rgc .num.ok{color:var(--green)} .rgc .num.warn{color:var(--yellow)}
     .stars{color:var(--yellow);letter-spacing:-1px}
-    /* ════ 表格家族 ════
-       设计取自站内维基的表头规范（HD2_Wiki/assets/css/hud-skin.css 的
-       `.info-table / .part-table / .stats-table / .section table` 家族）：
-       表头 = 琥珀斜纹底 + 琥珀粗体大写 + 字距；数据行 = 细横线 + 偶数行压深；
-       首列弱化；`.table-wrap` 横向滚动壳（窄屏不挤压，移动端可横滑）。 */
+    .rgd{font-size:.76rem;color:var(--dim);padding:6px 4px 12px;line-height:1.7;border-top:1px dashed var(--line);
+      border-bottom:1px solid var(--line)}
+    .rgd[hidden]{display:none}
+    .rgd .mini{color:var(--mute);font-size:.72rem}
+    @media (max-width:700px){
+      /* 窄屏：行内只留 名称/归属/进度，其余并入展开区 */
+      .rghead{display:none}
+      .rgc{grid-template-columns:minmax(0,1fr) 70px 64px}
+      .rgc .rgt,.rgc .num.eta,.rgc .num.net{display:none}
+    }
+    /* ============================================================
+       G. 补给线（紧凑行）
+       ============================================================ */
+    .lk{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:8px 0;border-bottom:1px solid var(--line)}
+    .lk:last-child{border-bottom:0}
+    .lk .nm{font-size:.82rem;min-width:0}
+    .lk .nm .sub{display:block;color:var(--mute);font-size:.68rem;margin-top:1px}
+    .lk .st{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+    .lk .pct{font-variant-numeric:tabular-nums;font-size:.82rem;color:var(--text)}
+    .stchip{display:inline-flex;align-items:center;gap:5px;font-size:.66rem;color:var(--dim);
+      border:1px solid var(--line-2);border-radius:999px;padding:1px 8px;white-space:nowrap}
+    .stchip i{width:6px;height:6px;border-radius:50%}
+    /* ============================================================
+       I. 数据口径（底部折叠）
+       ============================================================ */
+    details.srcbox{border:1px solid var(--line);border-radius:10px;background:var(--card);margin-top:14px}
+    details.srcbox > summary{
+      cursor:pointer;list-style:none;padding:10px 14px;font-size:.82rem;letter-spacing:.1em;color:var(--yellow);
+      display:flex;align-items:baseline;gap:8px;min-height:40px;
+    }
+    details.srcbox > summary::-webkit-details-marker{display:none}
+    details.srcbox > summary::before{content:"▸";color:var(--mute)}
+    details.srcbox[open] > summary::before{content:"▾"}
+    /* ════ 表格家族（保留：数据口径等低频对比仍用表格） ════ */
     .table-wrap{position:relative;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
     table.wtbl{border-collapse:collapse;width:100%}
     table.wtbl th{
@@ -140,50 +306,62 @@
       border:1px solid #33270A;color:var(--yellow);font-size:.72rem;letter-spacing:.1em;
       text-transform:uppercase;text-align:left;padding:6px 9px;white-space:nowrap;font-weight:700;
     }
-    table.wtbl td{border-bottom:1px solid var(--line-2);padding:7px 9px;color:var(--text-dim);font-size:.82rem;vertical-align:top}
-    table.wtbl td:first-child{color:var(--text-mute)}
+    table.wtbl td{border-bottom:1px solid var(--line-2);padding:7px 9px;color:var(--dim);font-size:.82rem;vertical-align:top}
+    table.wtbl td:first-child{color:var(--mute)}
     table.wtbl tr:nth-child(even) td{background:#0D0D0D}
     table.wtbl td.num,table.wtbl th.num{text-align:right;font-variant-numeric:tabular-nums}
     table.wtbl td.hi{color:var(--text);font-weight:600}
     table.wtbl td.dim{color:var(--mute);font-size:.74rem}
-    table.wtbl tr.grp td{
-      background:#161205;color:var(--yellow);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
-      border-bottom:1px solid #33270A;border-top:1px solid #33270A;padding:5px 9px;
-    }
-    table.wtbl tr.click{cursor:pointer}
-    table.wtbl tr.click:hover td{background:#151515}
-    table.wtbl tr.on td{background:#161205}
-    table.wtbl tr.det td{background:#0D0D0D;color:var(--text-dim);font-size:.78rem;line-height:1.75;padding:9px}
-    table.wtbl tr.det[hidden]{display:none}
     table.wtbl .sub{display:block;color:var(--mute);font-size:.72rem;margin-top:3px}
-    table.wtbl .mini{color:var(--mute);font-size:.72rem}
-    @media (max-width:620px){ table.wtbl.minwide{min-width:32em} }
-    /* 加载 / 错误 */
+    /* 通用 */
+    .note{font-size:.72rem;color:var(--mute);line-height:1.7}
+    .empty{color:var(--mute);font-size:.8rem}
+    .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.82rem}
+    .kv dt{color:var(--mute)}
+    .kv dd{margin:0;font-variant-numeric:tabular-nums;text-align:right}
     .loading,.error{padding:32px 14px;text-align:center;color:var(--mute);font-size:.86rem}
     .error{color:var(--red)}
-    footer{max-width:1080px;margin:0 auto;padding:0 14px 32px;color:var(--mute);font-size:.72rem;line-height:1.8}
+    footer{max-width:1400px;margin:0 auto;padding:0 14px 32px;color:var(--mute);font-size:.72rem;line-height:1.8}
     footer a{color:var(--dim)}
-    .sectnav{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg-2)}
-    .sectnav a{font-size:.76rem;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
-    .sectnav a:hover{border-color:var(--yellow);color:var(--yellow)}
-    @media (max-width:600px){
-      .hero{flex-direction:column;align-items:flex-start}
-      .ring{align-self:center}
-      .hero .nm{font-size:1.55rem}
+    /* ---- 响应式：<900 Hero 纵排、环居中；<600 KPI 两列 / 图表 240px ---- */
+    @media (max-width:899.5px){
+      .hero-grid{grid-template-columns:1fr}
+      .hmid{order:0}
+      .hid{order:1}
+      .hright{order:2}
     }
+    @media (max-width:600px){
+      main{padding:10px 10px 32px}
+      .hid .nm{font-size:1.5rem}
+      .hmid{align-items:center}
+      .ring{width:148px;height:148px}
+      .chart{height:240px}
+      .cmd-grid{gap:10px}
+      .pcards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    /* 动效仅用于进度环/图表/悬停；用户偏好减少动效时关闭 */
+    @media (prefers-reduced-motion: reduce){
+      .ring svg circle.arc{transition:none}
+      *{scroll-behavior:auto}
+    }
+    @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
   </style>
   <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
+  <link rel="stylesheet" href="./css/boot-splash.css?v=20261026a">
 </head>
 <body>
   <header class="topbar">
     <a class="back" href="./galaxy-map-v2.html">← 银河星图</a>
-    <span class="brand">真理部 · 星球资料</span>
+    <span class="brand">真理部 · 星球指挥台</span>
     <span class="stamp" id="stamp"></span>
   </header>
 
-  <main id="app">
-    <div class="loading" id="loading">🛰️ 正在载入星球资料…</div>
-  </main>
+  <nav class="sectnav" aria-label="区块导航">
+    <a href="#sec-war">战役与战略</a><a href="#sec-stats">星球统计</a><a href="#sec-regions">下属区域</a>
+    <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">星球趋势</a><a href="#sec-src">数据口径</a>
+  </nav>
+
+  <main id="app"></main>
 
   <footer>
     <div id="foot-note"></div>
@@ -196,15 +374,21 @@
 
   <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
+  <script src="./js/planet-card-effects.js?v=20261026a"></script>
+  <script src="./js/boot-splash.js?v=20261026a"></script>
   <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
   /* ============================================================================
-     星球资料页（2026-09-25 新增，设计参考 helldiverscompanion.com hellpad 的星球页分区）
-     目标：把原来全塞在星图右栏的星球信息，做成**独立、可分栏、可分享、移动端友好**的页面。
-       · 入口：星图里点星球 → 轻量预览卡 → 「完整资料」→ planet.html?idx=N
-       · 数据：与星图同一份 data.json + tables/*，公式与星图完全一致（口径统一，避免两处数字打架）
-       · 定位：可索引页（动态 title/description/canonical + JSON-LD），也是分享落地页
+     星球指挥台（2026-10-25 由“两栏报表”重构为“首屏强态势 + 左中右指挥台”）
+     信息层级参考 helldiverscompanion hellpad 星球页的分区方式，但代码 / 图片 / 文案 /
+     运行时数据全部为本站自有，公式与数据口径与重构前完全一致：
+       · 入口：星图 → 星球预览卡 → 「完整资料」→ planet.html?idx=N
+       · 数据：data.json + tables/*（与星图同源同公式，口径统一）
+       · 布局：≥1280 左(战略+补给线 4) / 中(趋势+区域 5) / 右(统计 3)；900–1279 两栏；
+               700–899 单栏+横向 KPI；<600 完整单列
+       · 锚点 #sec-war/#sec-stats/#sec-regions/#sec-env/#sec-links/#sec-trend/#sec-src 保持不变
+     未接入（仓库内无可靠静态数据，不抓取 Companion）：POI / 行星剧情 / 战术行动卡。
      ============================================================================ */
 
   const $ = (id) => document.getElementById(id);
@@ -213,7 +397,7 @@
   const fmt = (n) => (n == null ? "—" : Number(n).toLocaleString("en-US"));
   const pct = (v, d) => (v == null || isNaN(v) ? "—" : v.toFixed(d == null ? 2 : d) + "%");
 
-  /* ---- 与星图同源的常量与公式 ---- */
+  /* ---- 与星图同源的常量与公式（重构前后一字未改） ---- */
   const OWNER_COLOR = { Humans: "#5BA3D0", Terminids: "#F5C518", Automaton: "#D6806D", Illuminate: "#CF64F8" };
   const OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
   const RACE_CN = { 1: "超级地球", 2: "终结族", 3: "机器人", 4: "光能者" };
@@ -304,11 +488,8 @@
     return parts.length ? parts.slice(0, 3).join(" ") : Math.max(1, Math.floor(ms / 1000)) + " 秒";
   }
 
-  /* ---- 表格助手（模块级：warHtml/statsHtml/regionsHtml/linksHtml/srcHtml 都要用）----
-     结构与站内维基的 `.info-table` 家族一致（表头琥珀斜纹 + 大写 + 字距、数据行细线、偶数行压深），
-     `.table-wrap` 是唯一的横向滚动壳（窄屏可横滑，不挤压列）。 */
+  /* ---- 表格助手（数据口径等低频对比表仍用表格；结构沿用站内维基 .info-table 家族） ---- */
   const T = {
-    // 第三个参数是可选的 title（悬停说明）；旧调用只传两个参数，行为不变
     t: (v, cls, title) => `<td${cls ? ` class="${cls}"` : ""}${title ? ` title="${esc(title)}"` : ""}>${v}</td>`,
     r: (cells, cls, attrs) => `<tr${cls ? ` class="${cls}"` : ""}${attrs || ""}>${cells.join("")}</tr>`,
     grp: (label, span) => `<tr class="grp"><td colspan="${span}">${esc(label)}</td></tr>`,
@@ -319,7 +500,8 @@
 
   /* ---- 数据状态 ---- */
   let DATA = null, PL_CN = {}, PL_SEC = {}, SEC_CN = {}, WAY = {}, REG_TABLE = {}, REG_ZH = {}, BIOME_IDX = null,
-      BIOME_FB = null, EFFECT_CN = {}, HISTORY = null, P = null, STATS = null;
+      BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, EFFECT_VAR = {}, EFFECT_VAR_ORDER = [], STRAT_CN = {},
+      EFFECT_VALS = {}, HISTORY = null, P = null, STATS = null, PLANET_HIST = null;
 
   const jget = async (url, soft) => {
     try {
@@ -331,6 +513,7 @@
   const soft = (u) => jget(u, true);
 
   async function boot() {
+    if (window.HD2Boot) { HD2Boot.mount({ assetPrefix: "./" }); HD2Boot.setMsg("🛰️ 正在定位星球坐标…"); }
     const q = new URLSearchParams(location.search);
     let idx = q.get("idx");
     if (idx == null || idx === "") {
@@ -342,6 +525,7 @@
     }
     const index = Number(idx);
     try {
+      if (window.HD2Boot) HD2Boot.setMsg("📡 正在接收战况数据…");
       DATA = await jget("./data.json");
     } catch (e) { fail("战况数据载入失败：" + esc(e.message) + "（data.json 由 CI 每 5 分钟生成，稍后重试）"); return; }
 
@@ -353,16 +537,32 @@
     if (!P) { fail("星球序号 " + index + " 不在当前战况数据里。"); return; }
 
     // 并发拉取静态表（任一失败都不阻断主流程）
-    const [sm, way, reg, regZh, bioIdx, bioFb, eff, hist] = await Promise.all([
+    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, strat, evalues, hist, phist] = await Promise.all([
       soft("./tables/starmap.json"), soft("./tables/waypoints.json"),
       soft("./tables/planet_regions.json?v=20261007b"), soft("./tables/planet_regions_zh.json?v=20261007b"),
       soft("./assets/biomes/index.json"), soft("./tables/planet_biomes.json"),
-      soft("./tables/effect_id_cn.json"), soft("./data/history/player_distribution.json"),
+      soft("./tables/effect_id_cn.json"), soft("./tables/galactic_effects.json"),
+      soft("./tables/hd2_variables.json"), soft("./tables/stratagems_full.json"),
+      soft("./tables/effect_values.json"), soft("./data/history/player_distribution.json"),
+      soft("https://jerry114514.github.io/hd2-planet-history/history.json"),
     ]);
     WAY = (way && way.waypoints) || {};
     REG_TABLE = (reg && reg.planets) || {};
     REG_ZH = (regZh && regZh.planets) || {};
-    BIOME_IDX = bioIdx || {}; BIOME_FB = bioFb || {}; EFFECT_CN = eff || {}; HISTORY = hist || null;
+    BIOME_IDX = bioIdx || {}; BIOME_FB = bioFb || {}; EFFECT_CN = eff || {}; EFFECT_DESC = effDesc || {}; HISTORY = hist || null;
+    // 行动变量表（tables/hd2_variables.json）：**词条权威源**——按 effect_ids 建索引，
+    // 自带 中文名 cn / 中文描述 desc / 所属分组（终结族特殊个体/深域惧像/作战限制/环境条件…）。
+    // 覆盖 82 个行星词条 effect id；此前只查 effect_id_cn（名无述）+ galactic_effects（英文名述），
+    // 会漏掉「补给不足/缺少飞行员」这类只有该表收录的中文描述（2026-10-26 用户指出后修正）。
+    (vars && vars.categories || []).forEach((c) => {
+      const g = { cn: c.name || "", en: c.name_en || "" };
+      EFFECT_VAR_ORDER.push(g);
+      (c.entries || []).forEach((e) => {
+        (e.effect_ids || []).forEach((i) => {
+          EFFECT_VAR[i] = { cn: e.cn || e.name || "", desc: e.desc || "", en: e.name || "", group: g };
+        });
+      });
+    });
     if (sm && sm.systems) {
       sm.systems.forEach((s) => {
         if (s.name_en && s.name) SEC_CN[String(s.name_en).toUpperCase()] = s.name;
@@ -374,6 +574,20 @@
       });
     }
     STATS = ((DATA.war_stats || {}).planets_stats || []).find((s) => s.planetIndex === index) || null;
+    if (window.HD2Boot) HD2Boot.setMsg("🪖 正在生成星球指挥台…");
+
+    // 本星球人数/血量历史（hd2-planet-history 仓库，每 5 分钟采样，7 天滚动）：
+    // 拿不到不影响页面，趋势图退回全服分布。
+    PLANET_HIST = (phist && phist.planets && phist.planets[String(P.index)]) || null;
+    // 效果数值表（tables/effect_values.json，游戏 GalacticEffectSetting 透传）：
+    // #V_ONE/#V_TWO/#AMOUNT 占位符的实值来源（官方 API 只回 id；详见该文件 _meta）。
+    EFFECT_VALS = (evalues && evalues.effects) || {};
+    // 配备名 EN→CN（stratagems_full）：ARSENAL AUGMENTATION 系词条的 #V_ONE 占位符
+    // 在游戏运行时填的就是配备名——effect 英文名冒号后即是，属确定性替换（非猜测）；
+    // 该映射只用于把替换出的英文名翻成站内中文名。
+    (strat && strat.stratagems || []).forEach((x) => {
+      if (x && x.name_en && x.name) STRAT_CN[String(x.name_en).toUpperCase()] = x.name;
+    });
 
     document.title = plCn() + "（" + (P.name || "") + "）星球资料 - 绝地潜兵2 真理部";
     setMeta();
@@ -399,6 +613,8 @@
     if (!v) return null;
     return typeof v === "string" ? v : (v.file || v.img || v.image || null);
   }
+  // 星球徽标（assets/planet-icons/<英文名>.png，空格/标点转下划线；缺失时由 onerror 兜底隐藏）
+  const iconFile = () => "./assets/planet-icons/" + String(P.name || "").toUpperCase().replace(/[^A-Z0-9]+/g, "_") + ".png";
   const warDeadline = (warTime) => {                 // warTime(秒) → 本地绝对时刻
     const w = (DATA && DATA.war) || {};
     if (!w.time || !DATA.fetchedAt || !warTime) return null;
@@ -431,14 +647,14 @@
   }
 
   function fail(msg) {
-    const l = $("loading"); if (l) l.remove();
+    if (window.HD2Boot) HD2Boot.done();
     $("app").innerHTML = `<div class="card"><div class="error">⚠️ ${msg}</div></div>`
       + `<p class="note" style="padding:0 4px">可以回到 <a href="./galaxy-map-v2.html">银河星图</a> 或 <a href="./index.html">主站面板</a>。</p>`;
   }
 
   /* ---------------- 渲染 ---------------- */
   function render() {
-    const l = $("loading"); if (l) l.remove();
+    if (window.HD2Boot) HD2Boot.done();
     const owner = P.currentOwner || "Humans";
     const color = OWNER_COLOR[owner] || "#64748b";
     const camp = (DATA.campaigns || []).find((c) => c.planet && c.planet.index === P.index) || null;
@@ -462,172 +678,302 @@
       : { cn: "无战役 · 待命", cls: "" };
 
     document.documentElement.style.setProperty("--fcd", color);
-    $("stamp").textContent = "更新于 " + (DATA.fetchedAt ? new Date(DATA.fetchedAt).toLocaleString("zh-CN", { hour12: false }) : "—");
-
-    // 环形进度弧长
-    const R = 54, C = 2 * Math.PI * R;
-    const dash = C * Math.min(100, Math.max(0, lib)) / 100;
-
-    const kpiRows = [
-      ["在线玩家", fmt(P.players), share ? "占全服 " + share.toFixed(2) + "%" : "—"],
-      [defense ? "防守进度" : "解放进度", lib.toFixed(2) + "%", defense ? "战役事件防守进度" : showLib ? "超级地球控制中" : "1 − health / maxHealth"],
-      ...(defense ? [
-        ["敌方入侵进度", defense.atk == null ? "—" : defense.atk.toFixed(2) + "%", "敌方固定时间进度"],
-        ["防守速率", defense.rate == null ? "—" : defense.rate.toFixed(3) + "%/h", defense.source],
-        ["预期进度", defense.expected == null ? "—" : defense.expected.toFixed(2) + "%", "时间基准"],
-        ["截止时预计防守进度", defense.projected == null ? "—" : defense.projected.toFixed(2) + "%", "保持当前防守节奏"],
-        ["预计战役结果", defense.win === true ? "预计守住" : defense.win === false ? "预计失守" : "数据不足", "条件预测"],
-        ["预计完成防守", HD2Forecast.duration(defense.etaH), defense.source],
-      ] : [
-      ["施加影响", "+" + rm.gross.toFixed(3) + "%/h",
-        rm.measured ? "实测反推：净推进 + 抵抗度" : "推演：在线玩家 × 影响系数"],
-      ["抵抗度", rm.res != null ? rm.res.toFixed(2) + "%" : "—",
-        "敌方抵抗（%/h）；等效抵抗度 " + rm.resEq.toFixed(2) + "%（100 万血基准）"],
-      ["净速率", (r >= 0 ? "+" : "") + r.toFixed(3) + "%/h", rm.src],
-      // 等效推进速率（2026-09-26 新增）：把"血厚"这件事折回百分比，才会与体感一致。
-      // 血量 = 基准时与净速率完全相同；血量 3 倍时只有净速率的 1/3（同一份绝对投入摊到 3 倍血池上）。
-      ["等效推进速率", (eqRate >= 0 ? "+" : "") + eqRate.toFixed(3) + "%/h",
-        "百万血基准：净速率 × " + hpRatio.toFixed(2) + " 倍血量"],
-      ["预计解放", eta == null ? (r < 0 ? "不会解放（净速率为负）" : "—") : fmtHours(eta),
-        rm.measured ? "按实测净速率线性外推" : "按推演净速率线性外推"],
-      ]),
-      ["血量", fmt(P.health) + " / " + fmt(P.maxHealth),
-        hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"],
-      ["星区", secCn(), PL_SEC[String(P.name || "").toUpperCase()] ? "取自 tables/starmap.json"
-        : (P.sector ? "hd2dev 分区：" + P.sector : "—")],
-      ["所属阵营", OWN_CN[owner] || owner, owner],
-    ].map(([k, v, s]) => T.r([T.t(esc(k)), T.t(esc(v), "num hi"), T.t(esc(s), "dim")])).join("");
-    const kpis = T.table([{ t: "指标" }, { t: "数值", cls: "num" }, { t: "说明" }], [kpiRows], "minwide");
 
     $("app").innerHTML = `
-      <div class="cols">
-        <div>
-          <!-- ① 星球头部 -->
-          <section class="card" style="border-top:3px solid ${color}">
-            <div class="body">
-              <div class="hero">
-                <div class="names">
-                  <div class="nm">${esc(plCn())}</div>
-                  <div class="en">${esc(P.name || "")}</div>
-                  <div class="meta">
-                    <span class="chip ${status.cls}">${esc(status.cn)}</span>
-                    <span class="chip"><i class="dot" style="background:${color}"></i>${esc(OWN_CN[owner] || owner)}</span>
-                    <span class="chip">${esc(secCn())} 星区</span>
-                    ${P.attacking ? `<span class="chip def">遭受进攻</span>` : ""}
-                  </div>
-                </div>
-                <div class="ring">
-                  <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
-                    <circle cx="66" cy="66" r="${R}" fill="none" stroke="#1e1e1e" stroke-width="12"/>
-                    <circle cx="66" cy="66" r="${R}" fill="none" stroke="${showLib ? "#1FA84A" : color}" stroke-width="12"
-                      stroke-linecap="round" stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"/>
-                  </svg>
-                  <div class="val"><b>${lib.toFixed(1)}%</b><span>${defense ? "防守进度" : showLib ? "已解放" : "解放进度"}</span></div>
-                </div>
-              </div>
-              <div style="margin-top:14px">
-                <div class="bar"><i style="width:${Math.min(100, lib).toFixed(2)}%"></i><span class="mk" style="left:${Math.min(100, lib).toFixed(2)}%"></span></div>
-                <div class="rate">
-                  ${defense ? HD2Forecast.defenseHtml(camp, DATA, P) : showLib ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
-                            + (hpRatio > 1.001
-                               ? `<span>等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准</span>`
-                               : "")
-                    : `<span>净速率 <b class="${r >= 0 ? "up" : "down"}">${r >= 0 ? "▲" : "▼"} ${Math.abs(r).toFixed(3)}%/h</b> · 推演${
-                        // 只有"血比基准厚"时才补这一句：基准球上两者数值相同，写出来是噪音
-                        hpRatio > 1.001 ? `（等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准）` : ""}</span>
-                       ${eta != null ? `<span>预计 <b>${fmtHours(eta)}</b> 后解放</span>` : ""}`}
-                  ${!defense && !showLib ? window.HD2Forecast?.reinforcementHtml(DATA, P) || "" : ""}
-                </div>
-              </div>
-            </div>
-            <div class="sectnav">
-              <a href="#sec-war">战役与战略</a><a href="#sec-stats">星球统计</a><a href="#sec-regions">下属区域</a>
-              <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">全服趋势</a><a href="#sec-src">数据口径</a>
-            </div>
+      ${heroHtml({ color, status, camp, ev, isDef, showLib, defense, lib, rm, r, eta, eqRate, hpRatio, share })}
+      ${badgesHtml(rm)}
+      <div class="cmd-grid">
+        <div class="col-l">
+          <section class="card" id="sec-war" aria-labelledby="h-war">
+            <h2 id="h-war">战役与战略态势 <span class="en">STRATEGIC SITUATION</span></h2>
+            <div class="body">${warHtml(camp, ev, color, { rm, r, eta, defense, isDef, showLib })}</div>
           </section>
-
-          <!-- ② 关键指标 -->
-          <section class="card" style="margin-top:14px">
-            <h2>关键指标 <span class="en">KEY METRICS</span></h2>
-            <div class="body" style="padding-top:10px">${kpis}</div>
-          </section>
-
-          <!-- ③ 战役与战略 -->
-          <section class="card" id="sec-war" style="margin-top:14px">
-            <h2>战役与战略分析 <span class="en">STRATEGIC ANALYSIS</span></h2>
-            <div class="body">${warHtml(camp, ev, color)}</div>
-          </section>
-
-          <!-- ④ 星球统计 -->
-          <section class="card" id="sec-stats" style="margin-top:14px">
-            <h2>星球统计 <span class="en">PLANET STATISTICS</span></h2>
-            <div class="body">${statsHtml()}</div>
-          </section>
-
-          <!-- ⑤ 下属区域 -->
-          <section class="card" id="sec-regions" style="margin-top:14px">
-            <h2>下属区域（城市 / 超大型工厂） <span class="en">REGIONS</span></h2>
-            <div class="body" id="rg-body">${regionsHtml()}</div>
-          </section>
-
-          <!-- ⑥ 环境与词条 -->
-          <section class="card" id="sec-env" style="margin-top:14px">
-            <h2>环境与词条 <span class="en">OPERATIONAL PARAMETERS</span></h2>
-            <div class="body">${envHtml()}</div>
-          </section>
-        </div>
-
-        <div>
-          <!-- 补给线 -->
-          <section class="card" id="sec-links">
-            <h2>补给线 / 相邻星球 <span class="en">LINKED PLANETS</span></h2>
+          <section class="card" id="sec-links" aria-labelledby="h-links">
+            <h2 id="h-links">补给线 / 相邻星球 <span class="en">LINKED PLANETS</span></h2>
             <div class="body">${linksHtml()}</div>
           </section>
-          <!-- 全服趋势 -->
-          <section class="card" id="sec-trend" style="margin-top:14px">
-            <h2>全服趋势 <span class="en">GALAXY TREND</span></h2>
-            <div class="body">${trendHtml()}</div>
+        </div>
+        <div class="col-m">
+          <section class="card" id="sec-trend" aria-labelledby="h-trend">
+            <h2 id="h-trend">星球趋势 <span class="en">PLANET TREND</span></h2>
+            <div class="body">${trendHtml(camp, isDef)}</div>
           </section>
-          <!-- 数据口径 -->
-          <section class="card" id="sec-src" style="margin-top:14px">
-            <h2>数据口径 <span class="en">SOURCES</span></h2>
-            <div class="body note">${srcHtml()}</div>
+          <section class="card" id="sec-regions" aria-labelledby="h-regions">
+            <h2 id="h-regions">下属区域（城市 / 超大型工厂） <span class="en">REGIONS</span></h2>
+            <div class="body" id="rg-body">${regionsHtml()}</div>
           </section>
         </div>
-      </div>`;
+        <div class="col-r">
+          <section class="card" id="sec-stats" aria-labelledby="h-stats">
+            <h2 id="h-stats">星球统计 <span class="en">PLANET STATISTICS</span></h2>
+            <div class="body">${statsHtml()}</div>
+          </section>
+        </div>
+      </div>
 
+      <!-- ⑥ 环境与词条 -->
+      <section class="card" id="sec-env" style="margin-top:14px" aria-labelledby="h-env">
+        <h2 id="h-env">环境与作战参数 <span class="en">OPERATIONAL PARAMETERS</span></h2>
+        <div class="body">${envHtml()}</div>
+      </section>
+
+      <!-- ⑨ 数据口径（默认折叠；POI / 行星剧情 / 战术行动未接入） -->
+      <details class="srcbox" id="sec-src">
+        <summary>数据口径 <span class="en">SOURCES</span></summary>
+        <div class="body note">${srcHtml()}</div>
+      </details>`;
+
+    $("stamp").textContent = "更新于 " + (DATA.fetchedAt ? new Date(DATA.fetchedAt).toLocaleString("zh-CN", { hour12: false }) : "—");
     $("foot-note").innerHTML = `${esc(plCn())}（${esc(P.name)}）· 序号 ${P.index} · 页面生成于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
     bindRegions();
-    bindLinkRows();
     paintTrend();
+    paintPlanetTrend();
   }
 
-  function warHtml(camp, ev, color) {
-    const rows = [];
-    if (camp) {
-      rows.push(T.r([
-        T.t("当前战役"),
-        T.t(`战役 #${esc(camp.id)} · 类型 ${esc(camp.campaignType || "—")}`),
-        T.t(`<span style="color:${OWNER_COLOR[camp.faction] || color}">${esc(OWN_CN[camp.faction] || camp.faction || "—")}</span>`, "num hi"),
-      ]));
-    }
-    if (ev) {
+  /* ---- A. Command Hero：身份（左）+ 解放环（中）+ Quick Intel（右）+ 细粒度进度条 ---- */
+  function heroHtml(o) {
+    const { color, status, camp, ev, isDef, showLib, defense, lib, rm, r, eta, eqRate, hpRatio, share } = o;
+    const bFile = biomeFile();
+    const ringLabel = (defense ? "防守进度 " : showLib ? "已解放 " : "解放进度 ") + lib.toFixed(1) + "%";
+    // 环形进度弧长（168px 环，R=76）
+    const R = 76, SZ = 168, C = 2 * Math.PI * R;
+    const dash = C * Math.min(100, Math.max(0, lib)) / 100;
+    const ringColor = showLib ? "#1FA84A" : (defense ? "#5BA3D0" : color);
+    const updatedAt = DATA.fetchedAt ? new Date(DATA.fetchedAt).toLocaleString("zh-CN", { hour12: false }) : "—";
+    const rateState = defense
+      ? { tag: "战役数据", src: defense.source }
+      : { tag: rm.measured ? "实测帧" : "推演", src: rm.src };
+    const etaTxt = defense
+      ? (defense.win === true ? "预计守住" : defense.win === false ? "预计失守" : "数据不足")
+      : (eta != null ? fmtHours(eta) : "当前速率下无法推演");
+
+    return `
+      <section class="hero" id="cmd-hero" aria-label="星球指挥概览">
+        <div class="hero-media${bFile ? "" : " no-bio"}" aria-hidden="true">
+          ${bFile ? `<img class="bg" src="./assets/biomes/${esc(bFile)}" alt="" loading="eager" decoding="async"
+                       onerror="this.parentElement.classList.add('no-bio')">` : ""}
+          <img class="icon" src="${esc(iconFile())}" alt="" loading="eager" decoding="async"
+               onerror="this.parentElement.classList.add('no-img')">
+        </div>
+        <div class="hero-in">
+          <div class="hero-grid">
+            <div class="hid">
+              <div class="eyebrow">Planet Command · 星球指挥台</div>
+              <h1 class="nm">${esc(plCn())}</h1>
+              <div class="en">${esc(P.name || "")} · 序号 #${P.index}</div>
+              <div class="meta">
+                <span class="chip ${status.cls}">${esc(status.cn)}</span>
+                <span class="chip"><i class="dot" style="background:${color}"></i>${esc(OWN_CN[owner0()] || owner0())}</span>
+                <span class="chip">${esc(secCn())} 星区</span>
+                ${P.attacking ? `<span class="chip def">遭受进攻</span>` : ""}
+              </div>
+            </div>
+            <div class="hmid">
+              <div class="ring" role="img" aria-label="${esc(ringLabel)}，血量 ${fmt(P.health)} / ${fmt(P.maxHealth)}">
+                <svg width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}" aria-hidden="true">
+                  <circle cx="${SZ / 2}" cy="${SZ / 2}" r="${R}" fill="none" stroke="#1c1c1c" stroke-width="13"/>
+                  <circle class="arc" cx="${SZ / 2}" cy="${SZ / 2}" r="${R}" fill="none" stroke="${ringColor}" stroke-width="13"
+                    stroke-linecap="round" stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"/>
+                </svg>
+                <div class="val"><b>${lib.toFixed(1)}%</b><span>${defense ? "防守进度" : showLib ? "已解放" : "解放进度"}</span></div>
+              </div>
+              <div class="hpv"><b>${fmt(P.health)}</b> / ${fmt(P.maxHealth)} 血量
+                · ${hpRatio === 1 ? "基准档（100 万）" : "基准球的 " + hpRatio.toFixed(2) + " 倍"}</div>
+            </div>
+            <div class="hright" aria-label="Quick Intel 快报">
+              <div class="qt">Quick Intel · 快报</div>
+              <div class="qi"><span class="k">在线玩家</span><span class="v">${fmt(P.players)}<small>${share ? "占全服 " + share.toFixed(2) + "%" : ""}</small></span></div>
+              <div class="qi"><span class="k">${defense ? "防守进度" : "解放进度"}</span><span class="v">${lib.toFixed(2)}%</span></div>
+              <div class="qi"><span class="k">血量倍数</span><span class="v">×${hpRatio.toFixed(2)}<small>100 万血基准</small></span></div>
+              <div class="qi"><span class="k">净速率</span><span class="v ${r >= 0 ? "up" : "down"}">${r >= 0 ? "+" : ""}${r.toFixed(3)}%/h</span></div>
+              <div class="qi"><span class="k">当前生态</span><span class="v">${esc(biomeName() || "—")}</span></div>
+              <div class="qi"><span class="k">数据状态</span><span class="v">${esc(rateState.tag)}<small>${esc(rateState.src.slice(0, 18))}…</small></span></div>
+              <div class="qi"><span class="k">预计${defense ? "结果" : "解放"}</span><span class="v">${esc(etaTxt)}</span></div>
+              <div class="qi"><span class="k">更新时间</span><span class="v">${esc(updatedAt)}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-strip">
+          <div class="bar" role="img" aria-label="${defense ? "防守" : "解放"}进度条 ${lib.toFixed(2)}%">
+            <i class="${defense ? "defo" : ""}" style="width:${Math.min(100, lib).toFixed(2)}%"></i>
+            <span class="mk" style="left:${Math.min(100, lib).toFixed(2)}%"></span>
+          </div>
+          <div class="strip-rate">
+            ${defense ? HD2Forecast.defenseHtml(camp, DATA, P) : showLib
+              ? `<span>超级地球持有，进度恒为 100%（官方 API 对己方星球报满血，故不显示速率）</span>`
+                + (hpRatio > 1.001 ? `<span>等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准</span>` : "")
+              : `<span>净速率 <b class="${r >= 0 ? "up" : "down"}">${r >= 0 ? "▲" : "▼"} ${Math.abs(r).toFixed(3)}%/h</b> · ${esc(rm.measured ? "实测" : "推演")}${
+                  hpRatio > 1.001 ? `（等效推进 <b>${(eqRate >= 0 ? "+" : "") + eqRate.toFixed(3)}%/h</b> · 百万血基准）` : ""}</span>
+                 <span>预计${eta != null ? ` <b>${fmtHours(eta)}</b> 后解放` : `：<b class="down">当前速率下无法推演</b>${r <= 0 ? "（净速率 ≤ 0）" : "（超出 30 天上限）"}`}</span>`}
+            ${!defense && !showLib ? window.HD2Forecast?.reinforcementHtml(DATA, P) || "" : ""}
+          </div>
+        </div>
+      </section>`;
+  }
+  const owner0 = () => P.currentOwner || "Humans";
+
+  /* ---- 顶部来源徽标（完整口径在页底 #sec-src） ---- */
+  function badgesHtml(rm) {
+    const calc = rm.measured ? "实测帧" : "推演";
+    return `
+      <div class="srcbadges" aria-label="数据来源徽标">
+        <span class="sbadge"><i></i>官方战况 API</span>
+        <span class="sbadge calc"><i></i>速率：${esc(calc)}</span>
+        <span class="sbadge calc"><i></i>静态表：星图 / 区域 / 补给线 / 词条</span>
+      </div>`;
+  }
+
+  /* ---- B. 战略态势：终点线 / 抵抗 / 净速率 / 每小时回血 / 是否足够 / 实测or推演 ---- */
+  function warHtml(camp, ev, color, ctx) {
+    const { rm, r, eta, defense, isDef, showLib } = ctx;
+    const L = (k, v, sub, cls) => `<div class="line"><span class="k">${k}</span>
+      <span class="v${cls ? " " + cls : ""}">${v}${sub ? `<small>${sub}</small>` : ""}</span></div>`;
+    let out = "";
+
+    if (defense) {
+      out += L("当前战役", `战役 #${esc(camp.id)} · 防御战`, `入侵方 ${esc(OWN_CN[camp.faction] || camp.faction || "—")}`);
+      out += L("终点线（防守进度）", defense.def == null ? "—" : defense.def.toFixed(2) + "%", "战役事件防守进度，非星球本体血量");
+      out += L("敌方入侵进度", defense.atk == null ? "—" : defense.atk.toFixed(2) + "%", "敌方固定时间进度");
+      out += L("防守速率", defense.rate == null ? "—" : defense.rate.toFixed(3) + "%/h", esc(defense.source));
+      out += L("所需防守速率", defense.requiredRate == null ? "—" : defense.requiredRate.toFixed(3) + "%/h", "守住所需的最低速率");
+      out += L("截止时预计", defense.projected == null ? "—" : defense.projected.toFixed(2) + "%",
+        "预计战役结果：" + (defense.win === true ? "守住" : defense.win === false ? "失守" : "数据不足"),
+        defense.win === true ? "ok" : defense.win === false ? "bad" : "");
+      out += L("预计完成防守", HD2Forecast.duration(defense.etaH), esc(defense.source));
+      out += `<div>${HD2Forecast.defenseHtml(camp, DATA, P)}</div>`;
+    } else if (camp) {
+      out += L("当前战役", `战役 #${esc(camp.id)} · 解放战`, `对阵 ${esc(OWN_CN[camp.faction] || camp.faction || "—")}`);
+      out += L("终点线（解放进度）", libPct(P).toFixed(2) + "%", `血量 ${fmt(P.health)} / ${fmt(P.maxHealth)}`);
+      out += L("敌方抵抗", rm.res != null ? rm.res.toFixed(2) + "%/h" : "—",
+        "等效抵抗度 " + rm.resEq.toFixed(2) + "%（100 万血基准）");
+      out += L("净速率", (r >= 0 ? "+" : "") + r.toFixed(3) + "%/h", esc(rm.src), r > 0.0005 ? "ok" : "bad");
+      out += L("每小时回血", fmt(rm.res / 100 * (P.maxHealth || 0)) + " HP/h", "抵抗度% × 血量（推演口径的绝对值）");
+      out += L("当前速率是否足够",
+        eta != null ? "足够" : "不足",
+        eta != null ? "预计 " + fmtHours(eta) + " 后解放" : "净速率 ≤ 0 或预计超出 30 天",
+        eta != null ? "ok" : "bad");
+    } else if (ev) {
       const dl = warDeadline(ev.expireTime);
       const left = dl ? Math.max(0, dl - Date.now()) : null;
       const prog = ev.maxHealth > 0 ? Math.max(0, Math.min(100, (1 - ev.health / ev.maxHealth) * 100)) : null;
-      rows.push(T.r([
-        T.t("星球事件"),
-        T.t(`${ev.eventType === 1 ? "防御战 · 入侵" : "事件类型 " + ev.eventType} · 发起方 ${esc(RACE_CN[ev.race] || ev.race || "—")}`
-            + (left != null ? `<span class="sub">剩余 ${fmtHours(left / 3600000)}</span>` : "")
-            + (prog != null ? `<div class="bar" style="margin-top:8px;max-width:260px"><i style="width:${prog.toFixed(2)}%"></i></div>` : "")),
-        T.t(prog != null ? prog.toFixed(2) + "%" : "—", "num hi"),
-      ]));
+      out += L("星球事件", `${ev.eventType === 1 ? "防御战 · 入侵" : "事件类型 " + ev.eventType}`,
+        `发起方 ${esc(RACE_CN[ev.race] || ev.race || "—")}`);
+      out += L("终点线", prog == null ? "—" : prog.toFixed(2) + "%", `血量 ${fmt(ev.health)} / ${fmt(ev.maxHealth)}`);
+      if (left != null) out += L("剩余时间", fmtHours(left / 3600000));
+    } else {
+      out += `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
+      out += L("敌方抵抗", rm.res != null ? rm.res.toFixed(2) + "%/h" : "—", "无战役时仍存在的回血能力（推演口径）");
     }
-    if (!rows.length) return `<p class="empty">该星球当前没有进行中的战役或事件（无战役 · 待命）。</p>`;
-    return (window.HD2Forecast?.isDefense(camp) ? HD2Forecast.defenseHtml(camp, DATA, P) : "") + T.table([{ t: "项目" }, { t: "详情" }, { t: "数值", cls: "num" }], rows) +
-      `<p class="note" style="margin-top:10px">防御战使用战役事件的防守进度，不使用己方星球本体血量。预测优先采用实测防守速率，缺失时采用开战以来平均速率；解放战采用实测优先、推演兜底的净推进速率。</p>`;
+
+    // 补给线战略提示：仅当能从 waypoints + 归属 + 战役表**确定**时显示，否则不渲染
+    const hint = supplyHint();
+    if (hint) out += `<div class="hint">⇄ ${hint}</div>`;
+
+    out += `<p class="note" style="margin-top:10px">防御战使用战役事件的防守进度，不使用己方星球本体血量。预测优先采用实测防守速率，缺失时采用开战以来平均速率；解放战采用实测优先、推演兜底的净推进速率。</p>`;
+    return `<div class="sit">${out}</div>`;
   }
 
+  /* 补给线提示（可推导才显示）：
+     1) 本星球为敌方控制、无战役，且相邻星球全部为敌方控制 → 无法发动解放战役（需先打通相邻星球）。
+     2) 本星球有战役，且相邻存在「敌方控制且有战役」的星球 → 相邻战线提示（只列事实，不预测因果）。 */
+  function supplyHint() {
+    const ns = WAY[String(P.index)] || WAY[P.index] || [];
+    if (!ns.length) return "";
+    const byIdx = (i) => (DATA.planets || []).find((x) => x.index === i) || null;
+    const isHuman = (i) => { const q = byIdx(i); return q && String(q.currentOwner || "").toLowerCase() === "humans"; };
+    const hasCamp = (i) => (DATA.campaigns || []).some((c) => c.planet && c.planet.index === i);
+    const ours = String(P.currentOwner || "").toLowerCase() === "humans";
+    const campHere = (DATA.campaigns || []).some((c) => c.planet && c.planet.index === P.index);
+    if (!ours && !campHere && !(DATA.planet_events || []).some((e) => e.planetIndex === P.index)
+        && ns.length && !ns.some((i) => isHuman(i))) {
+      const names = ns.slice(0, 3).map((i) => { const q = byIdx(i); return q ? (PL_CN[String(q.name || "").toUpperCase()] || q.name) : ("#" + i); });
+      return `该星球当前没有我方补给线连接（相邻 ${ns.length} 颗均为敌方控制，如 ${names.join("、")}），无法对其发动解放战役——需先解放相邻星球打通补给线。`;
+    }
+    if (campHere) {
+      const hot = ns.filter((i) => { const q = byIdx(i); return q && !isHuman(i) && hasCamp(i); });
+      if (hot.length) {
+        const names = hot.slice(0, 3).map((i) => { const q = byIdx(i); return q ? (PL_CN[String(q.name || "").toUpperCase()] || q.name) : ("#" + i); });
+        return `相邻星球中 ${hot.length} 颗当前也有战役（${names.join("、")}${hot.length > 3 ? " 等" : ""}）——多线作战时注意分配兵力。`;
+      }
+    }
+    return "";
+  }
+
+  /* ---- C. 全服趋势：当前战役摘要 + 主图 + 口径 ---- */
+  function trendHtml(camp, isDef) {
+    const h = HISTORY && HISTORY.history;
+    const sum = camp
+      ? `<b>战役 #${esc(camp.id)}</b> · ${isDef ? "防御战" : "解放战"} · ${esc(OWN_CN[camp.faction] || camp.faction || "—")} · 进度见左栏「战略态势」`
+      : `当前无进行中战役`;
+    // 有单星球历史 → 渲染本星球人数/解放度趋势
+    const ph = PLANET_HIST;
+    if (ph && ph.length >= 2) {
+      return `<div class="trend-sum">${sum}</div>
+        <canvas id="ptrend" class="chart" width="720" height="300" role="img"
+          aria-label="${esc(plCn())}在线人数与解放度趋势，${ph.length} 个采样点"></canvas>
+        <div class="legend">
+          <span><i style="background:var(--blue)"></i>在线人数（左轴）</span>
+          <span><i style="background:var(--yellow)"></i>解放进度（右轴）</span>
+          <span style="color:var(--mute)">共 ${ph.length} 个采样点</span>
+        </div>
+        <p class="note" style="margin-top:8px">本星球<b>专属</b>的人数与解放度趋势（24 小时滚动窗口，15 分钟采样）。
+        解放度 = 1 − health / maxHealth（己方星球按 100%）；归属变化时曲线出现跳变。</p>`;
+    }
+    // 无单星球历史 → 退回全服趋势
+    if (!h || !h.length) return `<div class="trend-sum">${sum}</div><p class="empty">暂无趋势数据（单星球历史正在积累中）。</p>`;
+    return `<div class="trend-sum">${sum} · <span style="color:var(--mute)">单星球历史积累中，暂显示全服分布</span></div>
+      <canvas id="trend" class="chart" width="720" height="300" role="img"
+        aria-label="全服在线玩家按阵营分布的趋势折线图"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--humans)"></i>超级地球</span>
+        <span><i style="background:var(--terminids)"></i>终结族</span>
+        <span><i style="background:var(--automaton)"></i>机器人</span>
+        <span><i style="background:var(--illuminate)"></i>光能者</span>
+        <span class="dash"><i></i>全服合计</span>
+      </div>
+      <p class="note" style="margin-top:8px">这是<b>全服</b>分布趋势，<b>不是这颗星球的历史</b>。
+      单星球专属趋势正在积累中（hd2-planet-history 每 15 分钟采样）。</p>`;
+  }
+
+  function paintTrend() {
+    const cv = $("trend"); if (!cv || !cv.getContext) return;
+    const h = ((HISTORY && HISTORY.history) || []).slice(-72);
+    if (h.length < 2) return;
+    const ctx = cv.getContext("2d");
+    const W = cv.width, H = cv.height, padL = 44, padR = 10, padT = 12, padB = 22;
+    const keys = [["Humans", "#5BA3D0"], ["Terminids", "#F5C518"], ["Automaton", "#D6806D"], ["Illuminate", "#CF64F8"]];
+    let max = 0;
+    h.forEach((s) => { let t = 0; keys.forEach(([k]) => { t += (s.factions || {})[k] || 0; }); max = Math.max(max, s.totalPlayers || t, t); });
+    max = max || 1;
+    const X = (i) => padL + (W - padL - padR) * i / (h.length - 1);
+    const Y = (v) => padT + (H - padT - padB) * (1 - v / max);
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = "#242424"; ctx.lineWidth = 1;
+    for (let g = 0; g <= 4; g++) {
+      const v = max * g / 4, y = Y(v);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+      ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif"; ctx.textAlign = "right";
+      ctx.fillText(Math.round(v / 1000) + "k", padL - 6, y + 4);
+    }
+    // 颜色之外再加线型区分（可访问性）：终结族/光能者用虚线变体
+    const dashOf = { Humans: [], Terminids: [7, 3], Automaton: [2, 3], Illuminate: [10, 4, 2, 4] };
+    keys.forEach(([k, color]) => {
+      ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.setLineDash(dashOf[k] || []);
+      h.forEach((s, i) => { const v = (s.factions || {})[k] || 0; if (i === 0) ctx.moveTo(X(i), Y(v)); else ctx.lineTo(X(i), Y(v)); });
+      ctx.stroke(); ctx.setLineDash([]);
+    });
+    ctx.beginPath(); ctx.strokeStyle = "#EDEDED"; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
+    h.forEach((s, i) => { const v = s.totalPlayers || 0; if (i === 0) ctx.moveTo(X(i), Y(v)); else ctx.lineTo(X(i), Y(v)); });
+    ctx.stroke(); ctx.setLineDash([]);
+    const t0 = h[0].timestamp ? new Date(h[0].timestamp) : null, t1 = h[h.length - 1].timestamp ? new Date(h[h.length - 1].timestamp) : null;
+    if (t0 && t1) {
+      ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif";
+      ctx.textAlign = "left"; ctx.fillText(t0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), padL, H - 6);
+      ctx.textAlign = "right"; ctx.fillText(t1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), W - padR, H - 6);
+    }
+  }
+
+  /* ---- D. 星球统计：KPI 卡片组（长口径折叠） ---- */
   function statsHtml() {
     if (!STATS) return `<p class="empty">该星球暂无累计统计（官方 <code>war_stats.planets_stats</code> 里没有这一条；通常是从未被打过的星球）。</p>`;
     const s = STATS;
@@ -639,7 +985,7 @@
     //   星球三年里反复易主，所以机器人星球上也会留下当年打终结族的旧账
     //   （实测 300 颗星球里 210 颗三个阵营都有击杀；三类击杀之和恰好等于全服总数）。
     //   companion 的做法是**只显示与控制方对应的那一类**（MARFARK 只显示 Dead Automatons），
-    //   本页照此办理：主打一行 + 其余历史累计压成一条弱化说明 —— 既对齐 companion，
+    //   本页照此办理：主打一张卡 + 其余历史累计折叠 —— 既对齐 companion，
     //   也不会让人误以为"机器人星球上在打虫子"。
     const kills = [
       { key: "terminids", cn: "终结族", v: s.bugKills || 0 },
@@ -650,44 +996,140 @@
     const ownerMatch = kills.find((k) => k.key === ownerKey) || null;
     const mainKill = ownerMatch || kills.slice().sort((a, b) => b.v - a.v)[0];
     const otherKills = kills.filter((k) => k !== mainKill && k.v > 0);
-    const killNote = ownerMatch ? "当前控制方" : "该星球历史主要交战阵营（现由" + (OWN_CN[P.currentOwner] || P.currentOwner || "未知") + "控制）";
-    const rows = [
-      T.grp("任务", 3),
-      T.r([T.t("任务完成"), T.t(fmt(won), "num hi"), T.t(tot ? "成功率 " + rate.toFixed(1) + "%" : "—", "num dim")]),
-      T.r([T.t("任务失败"), T.t(fmt(lost), "num hi"), T.t(tot ? "占 " + (100 - rate).toFixed(1) + "%" : "—", "num dim")]),
-      T.r([T.t("累计任务时长"), T.t(fmtDuration(s.missionTime), "num"),
-           T.t("全部玩家累计（官方毫秒字段 ÷1000）", "dim")]),
-      T.grp("火力", 3),
-      T.r([T.t("开火"), T.t(fmt(shots), "num"), T.t("累计发数", "dim")]),
-      T.r([T.t("命中"), T.t(fmt(hits), "num"), T.t(shots ? "命中率 " + (hits / shots * 100).toFixed(1) + "%" : "—", "num dim")]),
-      T.grp("战果（击杀为该星球累计；跨阵营数字的成因见下方口径说明）", 3),
-      T.r([T.t(mainKill.cn + "击杀"), T.t(fmt(mainKill.v), "num hi"), T.t(killNote, "dim")]),
-      otherKills.length
-        ? T.r([T.t("其他阵营历史累计"), T.t(otherKills.map((k) => k.cn + " " + fmt(k.v)).join(" · "), "dim"),
-               T.t("", "num dim")])
-        : "",
-      T.grp("伤亡", 3),
-      T.r([T.t("阵亡绝地潜兵"), T.t(fmt(deaths), "num hi"), T.t("", "dim")]),
-      T.r([T.t("误伤"), T.t(fmt(accident), "num"), T.t(deaths ? "占阵亡 " + (accident / Math.max(1, deaths) * 100).toFixed(1) + "%" : "—", "num dim")]),
-      T.r([T.t("复活"), T.t(fmt(s.revives || 0), "num"), T.t("", "dim")]),
-    ].filter(Boolean);
-    return T.table([{ t: "指标" }, { t: "数值", cls: "num" }, { t: "备注", cls: "num" }], rows, "minwide") +
-      `<p class="note" style="margin-top:10px">口径：与官方 API <code>war_stats.planets_stats</code> 一致（本场战争开战以来累计），
-      与 companion 的星球统计**同源**。**击杀按星球累计、不按阵营归属**，所以一颗星球上会同时留下多个阵营的数字
-      （实测 300 颗星球里 210 颗三个阵营都有击杀，且三类之和恰好等于全服总数）。
-      ⚠ 这类「跨阵营」数字的成因**尚未定论**：既可能是历史上反复易主留下的旧账，
-      也有人反馈存在异常刷怪（如修改客户端刷怪）导致某一类数字被推高，**全部星球都可见这种现象**。
-      本站照实呈现原始数据、不做归属推断，也不修正。主行只取与控制方对应的那一类，
-      其余压成一条弱化说明。「命中率 &gt; 100%」是官方原始数据的特征（多弹丸武器按发/弹计数口径不同），照实呈现不修正；
-      时间字段单位是毫秒。</p>`;
+    const killNote = ownerMatch ? "当前控制方" : "历史主要交战阵营（现由" + (OWN_CN[P.currentOwner] || P.currentOwner || "未知") + "控制）";
+    const pc = (k, v, s2, hero) => `<div class="pc${hero ? " hero-v" : ""}"><div class="k">${k}</div><div class="v">${v}</div>${s2 ? `<div class="s">${s2}</div>` : ""}</div>`;
+    return `
+      <div class="pgrp">任务</div>
+      <div class="pcards">
+        ${pc("任务完成", fmt(won), tot ? "成功率 " + rate.toFixed(1) + "%" : "—")}
+        ${pc("任务失败", fmt(lost), tot ? "占 " + (100 - rate).toFixed(1) + "%" : "—")}
+        ${pc("成功率", rate.toFixed(1) + "%", tot ? fmt(tot) + " 场" : "无任务记录")}
+        ${pc("累计任务时长", fmtDuration(s.missionTime), "全部玩家累计")}
+      </div>
+      <div class="pgrp">火力</div>
+      <div class="pcards">
+        ${pc("开火", fmt(shots), "累计发数")}
+        ${pc("命中", fmt(hits), "累计")}
+        ${pc("命中 / 开火", shots ? (hits / shots * 100).toFixed(1) + "%" : "—", shots ? fmt(hits) + " / " + fmt(shots) : "无开火记录")}
+      </div>
+      <div class="pgrp">战果</div>
+      <div class="pcards">
+        ${pc(mainKill.cn + "击杀", fmt(mainKill.v), killNote, true)}
+        ${pc("其他阵营历史累计", otherKills.length ? otherKills.map((k) => k.cn + " " + fmt(k.v)).join(" · ") : "—", "跨阵营数字成因见下方口径")}
+      </div>
+      <div class="pgrp">伤亡</div>
+      <div class="pcards">
+        ${pc("阵亡绝地潜兵", fmt(deaths))}
+        ${pc("误伤", fmt(accident), deaths ? "占阵亡 " + (accident / Math.max(1, deaths) * 100).toFixed(1) + "%" : "—")}
+        ${pc("误伤比例", deaths ? (accident / Math.max(1, deaths) * 100).toFixed(1) + "%" : "—")}
+        ${pc("复活", fmt(s.revives || 0))}
+      </div>
+      <details class="note-det">
+        <summary>口径说明（跨阵营击杀 / 命中率 &gt;100% / 时间单位）</summary>
+        <div class="note">口径：与官方 API <code>war_stats.planets_stats</code> 一致（本场战争开战以来累计），与 companion 的星球统计同源。
+        <b>击杀按星球累计、不按阵营归属</b>，所以一颗星球上会同时留下多个阵营的数字
+        （实测 300 颗星球里 210 颗三个阵营都有击杀，且三类之和恰好等于全服总数）。
+        ⚠ 这类「跨阵营」数字的成因<b>尚未定论</b>：既可能是历史上反复易主留下的旧账，
+        也有人反馈存在异常刷怪（如修改客户端刷怪）导致某一类数字被推高，全部星球都可见这种现象。
+        本站照实呈现原始数据、不做归属推断，也不修正。主卡只取与控制方对应的那一类，其余折叠展示。
+        「命中率 &gt; 100%」是官方原始数据的特征（多弹丸武器按发/弹计数口径不同），照实呈现不修正；时间字段单位是毫秒。</div>
+      </details>`;
   }
 
+  /* ---- E. 环境与作战参数：环境视觉卡 + 词条（短标签 + 可展开详情） ---- */
+  function envHtml() {
+    const file = biomeFile();
+    const img = file
+      ? `<div class="biome"><img src="./assets/biomes/${esc(file)}" alt="${esc(biomeName())}环境图" loading="lazy" decoding="async"
+             onerror="this.parentElement.classList.add('noimg');this.remove()"><div class="cap">${esc(biomeName() || "环境")}</div></div>`
+      : `<div class="biome noimg">${esc(biomeName() || "未知环境")}（无环境图）</div>`;
+    // 词条权威链（2026-10-26 修正）：hd2_variables（中文名+中文描述+分组，82 id）
+    //   → effect_id_cn（中文名，191 id）→ galactic_effects（英文名/英文描述）
+    //   → 原始 id。多个 id 映射同一词条时取链上第一个命中并去重（如霸王虫 1307/1308）。
+    const seen = {};
+    const fx = [];
+    (P.activeEffects || []).forEach((id) => {
+      const v = EFFECT_VAR[id];
+      const cn = (v && v.cn) || EFFECT_CN[String(id)] || "";
+      if (cn && seen[cn]) return;
+      if (cn) seen[cn] = true;
+      const meta = EFFECT_DESC[String(id)] || {};
+      fx.push({
+        id,
+        cn: cn || ("效果 #" + id),
+        known: !!cn,
+        // 中文描述链：hd2_variables（行动变量表）→ galactic_effects.description_cn（2026-10-26
+        // 补：该字段此前被漏读，导致 1363 等词条只剩英文模板）
+        desc: (v && v.desc) || (meta.description_cn || ""),
+        en: (v && v.en) || meta.name || "",
+        enDesc: meta.description || "",                 // 英文描述（galactic_effects，补充用）
+        group: v ? v.group : null,
+      });
+    });
+    // 占位符替换（#V_ONE/#V_TWO/#AMOUNT）：配备名类（ARSENAL AUGMENTATION）确定性替换为
+    // 配备名（优先站内中文名）；数值类替换为 [动态值]——公开数据源均未下发实值，不猜。
+    const fxLook = (en) => STRAT_CN[String(en).toUpperCase()] || "";
+    const fillFx = (text, enName, id) => (window.HD2PlanetCardEffects && window.HD2PlanetCardEffects.fillEffectTemplate)
+      ? window.HD2PlanetCardEffects.fillEffectTemplate(text, enName, fxLook, EFFECT_VALS[String(id)])
+      : { text: text, dynamic: false };
+    const fxCard = (f) => {
+      const zh = fillFx(f.desc, f.en, f.id);
+      const en2 = fillFx(f.enDesc, f.en, f.id);
+      const note = (zh.dynamic || en2.dynamic)
+        ? `<div class="mini" style="margin-top:4px">注：[动态值] 为游戏运行时参数（撤离秒数 / 弹药百分比等），官方接口与公开数据源均未提供具体数值，本站不做猜测。</div>` : "";
+      const descHtml = zh.text ? `<br>${esc(zh.text)}`
+        : (en2.text ? `<br><span class="mini">${esc(en2.text)}</span>` : "<br>（站内表未收录该效果说明）");
+      return `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
+          <div class="fxd">效果 ID <b>${f.id}</b>${f.en ? ` · EN <b>${esc(f.en)}</b>` : ""}${descHtml}${note}</div></details>`;
+    };
+    // 分组（2026-10-26 用户口径）：只给「变种类」与「作战限制」两组保留分组标题；
+    // 其余词条（深域惧像/环境条件/设施与场所/DSS战略行动/入侵等级等）不分类，
+    // 平铺在最下方，不再加组头。
+    const VARIANT_GROUPS = new Set([
+      "终结族变种", "终结族特殊个体", "机器人军团", "机器人特殊单位", "机器人辅助军团",
+      "友军火力", "光能者宗派",
+    ]);
+    const keepGroup = (g) => g && (VARIANT_GROUPS.has(g.cn) || g.cn === "作战限制");
+    const groups = [];
+    EFFECT_VAR_ORDER.forEach((g) => {
+      if (!keepGroup(g)) return;
+      const rows = fx.filter((f) => f.group && f.group.cn === g.cn);
+      if (rows.length) groups.push({ cn: g.cn, en: g.en, rows });
+    });
+    const rest = fx.filter((f) => !keepGroup(f.group));
+    const groupHtml = groups.map((g) => `
+          <div style="margin-bottom:10px">
+            <div class="k" style="font-size:.7rem;color:var(--yellow);letter-spacing:.1em;margin-bottom:6px">${esc(g.cn)}${g.en ? ` <span style="color:var(--mute);letter-spacing:.14em">${esc(g.en)}</span>` : ""}</div>
+            <div class="fxlist">${g.rows.map(fxCard).join("")}</div>
+          </div>`).join("");
+    const restHtml = rest.length
+      ? `<div class="fxlist" style="margin-bottom:6px">${rest.map(fxCard).join("")}</div>`
+      : "";
+    const tags = (groups.length || rest.length)
+      ? groupHtml + restHtml
+      : `<p class="empty">当前没有生效中的星球效果（词条）。</p>`;
+    return `<div class="env-grid">
+      <div>${img}
+        <p class="note" style="margin-top:8px">环境图来自 <code>assets/biomes/</code>（随仓库提交）；生态名优先取官方 API 的 <code>biome</code>，
+        缺失时回退 <code>tables/planet_biomes.json</code>。</p></div>
+      <div>
+        <div class="k" style="font-size:.72rem;color:var(--mute);margin-bottom:8px">生效效果 / 词条（点开看 ID 与说明）</div>
+        <div>${tags}</div>
+        <p class="note" style="margin-top:10px">词条与中文说明优先取 <code>tables/hd2_variables.json</code>（行动变量对照表，
+        自带分组：终结族特殊个体 / 深域惧像 / 作战限制 / 环境条件 / 设施与场所等）；中文名兜底 <code>tables/effect_id_cn.json</code>；
+        英文名与中文/英文说明取 <code>tables/galactic_effects.json</code>（其 <code>description_cn</code> 为官方中文描述）。
+        三级都未收录的 id 照实显示原始编号，不猜测名称。描述中的 <code>#V_ONE/#V_TWO/#AMOUNT</code> 为游戏运行时占位符：
+        配备名类（ARSENAL AUGMENTATION）确定性替换为配备名；数值类优先取 <code>tables/effect_values.json</code>
+        （游戏 GalacticEffectSetting 数值透传，#V_ONE=values[0]、#V_TWO/#AMOUNT=values[1]，显示绝对值），无值时标为 [动态值]。</p>
+      </div></div>`;
+  }
+
+  /* ---- F. 下属区域：紧凑行 + 展开（保留原有交互与速率口径） ---- */
   function regionsHtml() {
-    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
+    if (!window.HD2Regions) return `<p class="empty">区域信息暂不可用</p>`;
     const st = REG_TABLE[String(P.index)];
     if (!st || !st.regions || !st.regions.length) return `<p class="empty">静态表里没有这颗星球的区域数据（<code>tables/planet_regions.json</code> 覆盖 84 颗有城市/工厂的星球）。</p>`;
     const zhMap = REG_ZH[String(P.index)] || {};
-    const live = P.regions || [];
     const rows = [];
     st.regions.forEach((rg, k) => {
       const lv = HD2Regions.live(P, k);
@@ -716,32 +1158,33 @@
         else if (h != null) rEta = "超过 30 天";
         else { rEta = "不会解放"; rEtaCls = "warn"; }
       }
-      rows.push(T.r([
-        T.t(`${typeOf === "Megafactory" ? "🏭" : "🏙"} ${esc(zh || rg.name)}` +
-            (zh ? `<span class="sub">${esc(rg.name)}</span>` : "")),
-        T.t(`${esc(typeCn)} <span class="stars">${"★".repeat(stars)}</span>`),
-        T.t(esc(ownerCn) + (lv && lv.isAvailable ? `<span class="sub">可部署</span>` : "")),
-        T.t(lv && lv.players ? fmt(lv.players) : "—", "num"),
-        T.t(p == null ? "—" : p.toFixed(2) + "%", "num hi"),
-        T.t(rr ? rr.res.toFixed(2) + "%/h" : "—", "num",
-            rr ? `区域抵抗度（每小时回复量相对本区域血池）；等效 ${rr.resEq.toFixed(2)}%/h（100 万血基准）`
-              + (rr.measured ? "· 实测" : `· 推演${rr.why === "capped" ? "（满血顶格，实测看不到变化 → 净速率 ≤ 0）" : ""}`) : ""),
-        T.t(rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h" : "—", "num " + (rr && rr.net > 0.0005 ? "ok" : "warn"),
-            rr ? (rr.measured ? "实测：社区 CDN 15 分钟帧的首尾血量差" : "推演：区域玩家 × 影响系数 × K ÷ 区域血量 − 区域抵抗度") : ""),
-        T.t(rEta, "num " + rEtaCls),
-       ], "click rg-row", ` data-d="${k}"`) + `<tr><td colspan="8">${HD2Regions.html(HD2Regions.info(P, k, rg, DATA))}</td></tr><tr class="det" data-d="${k}" hidden><td colspan="8">`
-        + (rg.desc ? esc(rg.desc) : "<span class='mini'>（该区域没有说明文本）</span>")
-        + `<div class="mini" style="margin-top:6px">类型 ${esc(typeCn)}（上游 <code>${esc(rg.size || rg.region_type || "—")}</code>）· 血量 ${fmt(lv ? lv.health : null)} / ${fmt(lv ? lv.maxHealth : null)}</div></td></tr>`);
-      rows.push("");
+      rows.push(`
+        <button type="button" class="rgc" data-d="${k}" aria-expanded="false">
+          <span class="rgn">${typeOf === "Megafactory" ? "🏭" : "🏙"} ${esc(zh || rg.name)}${zh ? `<span class="sub">${esc(rg.name)}</span>` : ""}</span>
+          <span class="rgt">${esc(ownerCn)} · ${esc(typeCn)} <span class="stars">${"★".repeat(stars)}</span></span>
+          <span class="num" title="在线玩家">${lv && lv.players ? fmt(lv.players) : "—"}</span>
+          <span class="num hi" title="已解放（己方控制 = 100%）">${p == null ? "—" : p.toFixed(2) + "%"}</span>
+          <span class="num eta ${rEtaCls}" title="${rr ? "抵抗 " + rr.res.toFixed(2) + "%/h · " + (rr.measured ? "实测" : "推演") + "净推进 " + (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h" : "无区域战役"}">
+            ${rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(2) + "%/h · " + rEta : "—"}</span>
+        </button>
+        <div class="rgd" data-d="${k}" hidden>
+          ${rg.desc ? esc(rg.desc) : "<span class='mini'>（该区域没有说明文本）</span>"}
+          ${HD2Regions.html(HD2Regions.info(P, k, rg, DATA))}
+          <div class="mini" style="margin-top:6px">类型 ${esc(typeCn)}（上游 <code>${esc(rg.size || rg.region_type || "—")}</code>）
+            · 血量 ${fmt(lv ? lv.health : null)} / ${fmt(lv ? lv.maxHealth : null)}
+            · 抵抗度 ${rr ? rr.res.toFixed(2) + "%/h（等效 " + rr.resEq.toFixed(2) + "%/h，100 万血基准）" : "—"}
+            · 实际推进 ${rr ? (rr.net >= 0 ? "+" : "") + rr.net.toFixed(3) + "%/h（" + (rr.measured ? "实测：社区 CDN 15 分钟帧首尾差" : "推演：区域玩家 × 影响系数 × K ÷ 区域血量 − 区域抵抗度") + "）" : "—"}
+            · 预计解放 ${rEta}${lv && lv.isAvailable ? " · 可部署" : ""}</div>
+        </div>`);
     });
-    return T.table([{ t: "区域" }, { t: "类型" }, { t: "归属" }, { t: "玩家", cls: "num" }, { t: "已解放", cls: "num" },
-                    { t: "抵抗度", cls: "num" }, { t: "实际推进", cls: "num" }, { t: "预计解放", cls: "num" }],
-                   rows.filter(Boolean)) +
-      `<p class="note" style="margin-top:10px">点任意行展开该区域的说明与血量。区域进度与星图同口径（己方控制 = 100%）；
-       速率**实测优先**（社区 CDN 15 分钟帧），拿不到才用推演公式，鼠标悬停看每格说明。</p>`;
+    return `
+      <div class="rghead" aria-hidden="true"><span>区域</span><span>归属 · 类型</span><span style="text-align:right">玩家</span><span style="text-align:right">已解放</span><span style="text-align:right">推进 · 预计</span></div>
+      ${rows.join("")}
+      <p class="note" style="margin-top:10px">点任意行展开该区域的说明、规则与血量。区域进度与星图同口径（己方控制 = 100%）；
+      速率<b>实测优先</b>（社区 CDN 15 分钟帧），拿不到才用推演公式，展开后有逐项说明。</p>`;
   }
 
-  /* 区域速率：实测优先，拿不到退回推演。已归我方的区域没有"推进"可言 → 返回 null。 */
+  /* 区域速率：实测优先，拿不到退回推演。已归我方的区域没有"推进"可言 → 返回 null。（与重构前一致） */
   function regionRateOf(lv) {
     if (!lv || !(lv.maxHealth > 0)) return null;
     if (String(lv.owner || "").toLowerCase() === "humans") return null;
@@ -760,26 +1203,7 @@
     };
   }
 
-  function envHtml() {
-    const file = biomeFile();
-    const img = file
-      ? `<div class="biome"><img src="./assets/biomes/${esc(file)}" alt="${esc(biomeName())}" loading="lazy"><div class="cap">${esc(biomeName() || "环境")}</div></div>`
-      : `<div class="biome" style="padding:18px;text-align:center" class="empty">${esc(biomeName() || "未知环境")}（无环境图）</div>`;
-    // 同一效果可能有多个 id 映射到同一个中文名（实测 MARFARK 的 activeEffects=[1248,1249]
-    // 都是「炽灼部队」）→ 按名字去重，避免同一词条显示两遍
-    const fx = [];
-    (P.activeEffects || []).forEach((id) => {
-      const n = EFFECT_CN[String(id)] || ("效果 #" + id);
-      if (fx.indexOf(n) < 0) fx.push(n);
-    });
-    const tags = fx.length ? fx.map((n) => `<span class="tag">⚡ ${esc(n)}</span>`).join("")
-      : `<p class="empty">当前没有生效中的星球效果（词条）。</p>`;
-    return `${img}
-      <div style="margin-top:12px"><div class="k" style="font-size:.72rem;color:var(--mute);margin-bottom:6px">生效效果 / 词条</div>${tags}</div>
-      <p class="note" style="margin-top:10px">环境图来自 <code>assets/biomes/</code>（随仓库提交）；生态名优先取官方 API 的 <code>biome</code>，
-      缺失时回退 <code>tables/planet_biomes.json</code>。词条名取 <code>tables/effect_id_cn.json</code>（190 条），未收录显示原始 id。</p>`;
-  }
-
+  /* ---- G. 补给线：紧凑行 + 由现有字段推导状态 ---- */
   function linksHtml() {
     const ns = WAY[String(P.index)] || WAY[P.index] || [];
     if (!ns.length) return `<p class="empty">该星球没有登记补给线（<code>tables/waypoints.json</code> 覆盖 186 颗星球 / 341 条连接）。</p>`;
@@ -788,65 +1212,131 @@
       const cn = PL_CN[String(q.name || "").toUpperCase()] || q.name;
       const o = q.currentOwner || "None";
       const l = libShowOf(o, q.health, q.maxHealth);
-      return T.r([
-        T.t(`<a href="./planet.html?idx=${i}">${esc(cn)}</a><span class="sub">#${i} · ${esc(q.name || "")}</span>`),
-        T.t(`<span style="color:${OWNER_COLOR[o] || "#94a3b8"}">${esc(OWN_CN[o] || o || "未知")}</span>`),
-        T.t(l == null ? "—" : l.toFixed(1) + "%", "num hi"),
-      ], "click link-row");
-    });
-    return T.table([{ t: "星球" }, { t: "归属" }, { t: "已解放", cls: "num" }], rows) +
-      `<p class="note" style="margin-top:10px">补给线两端同为超级地球时可用于跨星球支援；点任意行进入它的资料页。</p>`;
+      const hasCamp = (DATA.campaigns || []).some((c) => c.planet && c.planet.index === i);
+      // 状态只从已有字段推导：超级地球控制 / 敌方控制 / 当前有战役（叠加显示，不引入社区站点的中转站语义）
+      const chips = [];
+      if (String(o).toLowerCase() === "humans") chips.push(`<span class="stchip"><i style="background:var(--humans)"></i>超级地球控制</span>`);
+      else if (o !== "None") chips.push(`<span class="stchip"><i style="background:${OWNER_COLOR[o] || "#94a3b8"}"></i>${esc(OWN_CN[o] || o)}</span>`);
+      if (hasCamp) chips.push(`<span class="stchip" style="color:var(--yellow);border-color:rgba(245,197,24,.5)"><i style="background:var(--yellow)"></i>当前有战役</span>`);
+      return `<div class="lk">
+        <div class="nm"><a href="./planet.html?idx=${i}">⇄ ${esc(cn)}</a><span class="sub">#${i} · ${esc(q.name || "")}</span></div>
+        <div class="st"><span class="pct">${l == null ? "—" : l.toFixed(1) + "%"}</span><span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${chips.join("")}</span></div>
+      </div>`;
+    }).join("");
+    return rows + `<p class="note" style="margin-top:10px">补给线两端同为超级地球时可用于跨星球支援；点星球名进入它的资料页。状态仅由当前归属与战役表推导。</p>`;
   }
 
-  function trendHtml() {
-    const h = HISTORY && HISTORY.history;
-    if (!h || !h.length) return `<p class="empty">没有全服历史数据（<code>data/history/player_distribution.json</code>）。</p>`;
-    return `<canvas id="trend" class="chart" width="640" height="300"></canvas>
-      <div class="legend">
-        <span><i style="background:var(--humans)"></i>超级地球</span>
-        <span><i style="background:var(--terminids)"></i>终结族</span>
-        <span><i style="background:var(--automaton)"></i>机器人</span>
-        <span><i style="background:var(--illuminate)"></i>光能者</span>
-        <span style="color:var(--mute)">共 ${h.length} 个采样点</span>
-      </div>
-      <p class="note" style="margin-top:8px">全服在线玩家按战线的分布趋势（最近若干小时）。这是**全服**数据，不是这颗星球的专属统计 ——
-      官方 API 不提供单星球的历史曲线，只有当前快照。</p>`;
-  }
+  /* ---- I. 数据口径（折叠） ---- */
+  /* ---- 单星球趋势：人数（左轴）+ 解放度（右轴）双轴折线（带 hover 十字线 + tooltip） ---- */
+  const PT_STATE = { pts: [], X: null, Yp: null, Yl: null, W: 0, H: 0, padL: 0, padR: 0, padT: 0, padB: 0, maxP: 1 };
 
-  function paintTrend() {
-    const cv = $("trend"); if (!cv || !cv.getContext) return;
-    const h = ((HISTORY && HISTORY.history) || []).slice(-72);
-    if (h.length < 2) return;
+  function paintPlanetTrend() {
+    const cv = $("ptrend"); if (!cv || !cv.getContext) return;
+    const raw = PLANET_HIST || [];
+    if (raw.length < 2) return;
     const ctx = cv.getContext("2d");
-    const W = cv.width, H = cv.height, padL = 44, padR = 10, padT = 12, padB = 22;
-    const keys = [["Humans", "#5BA3D0"], ["Terminids", "#F5C518"], ["Automaton", "#D6806D"], ["Illuminate", "#CF64F8"]];
-    let max = 0;
-    h.forEach((s) => { let t = 0; keys.forEach(([k]) => { t += (s.factions || {})[k] || 0; }); max = Math.max(max, s.totalPlayers || t, t); });
-    max = max || 1;
-    const X = (i) => padL + (W - padL - padR) * i / (h.length - 1);
-    const Y = (v) => padT + (H - padT - padB) * (1 - v / max);
-    ctx.clearRect(0, 0, W, H);
+    const W = cv.width, H = cv.height, padL = 50, padR = 50, padT = 14, padB = 24;
+    const maxHealth = P.maxHealth || 1;
+    const isHuman = String(P.currentOwner || "").toLowerCase() === "humans";
+    const pts = raw.map((e) => ({
+      t: e[0], players: e[1], health: e[2], owner: e[3],
+      lib: (isHuman || e[3] === 1) ? 100 : Math.max(0, Math.min(100, (1 - e[2] / maxHealth) * 100)),
+    }));
+    const maxP = Math.max(...pts.map((p) => p.players)) || 1;
+    const t0 = pts[0].t, t1 = pts[pts.length - 1].t, dt = Math.max(1, t1 - t0);
+    const X = (t) => padL + (W - padL - padR) * (t - t0) / dt;
+    const Yp = (v) => padT + (H - padT - padB) * (1 - v / maxP);
+    const Yl = (v) => padT + (H - padT - padB) * (1 - v / 100);
+    Object.assign(PT_STATE, { pts, X, Yp, Yl, W, H, padL, padR, padT, padB, maxP });
+    drawPlanetTrend(ctx);
+    bindPlanetTrendHover(cv);
+  }
+
+  function drawPlanetTrend(ctx, hover) {
+    const S = PT_STATE;
+    if (!S.pts.length) return;
+    ctx.clearRect(0, 0, S.W, S.H);
     ctx.strokeStyle = "#242424"; ctx.lineWidth = 1;
+    ctx.fillStyle = "#5BA3D0"; ctx.font = "11px sans-serif"; ctx.textAlign = "right";
     for (let g = 0; g <= 4; g++) {
-      const v = max * g / 4, y = Y(v);
-      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
-      ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif"; ctx.textAlign = "right";
-      ctx.fillText(Math.round(v / 1000) + "k", padL - 6, y + 4);
+      const v = S.maxP * g / 4, y = S.Yp(v);
+      ctx.beginPath(); ctx.moveTo(S.padL, y); ctx.lineTo(S.W - S.padR, y); ctx.stroke();
+      ctx.fillText(Math.round(v / 100) / 10 + "k", S.padL - 6, y + 4);
     }
-    keys.forEach(([k, color]) => {
-      ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2;
-      h.forEach((s, i) => { const v = (s.factions || {})[k] || 0; if (i === 0) ctx.moveTo(X(i), Y(v)); else ctx.lineTo(X(i), Y(v)); });
-      ctx.stroke();
-    });
-    ctx.beginPath(); ctx.strokeStyle = "#EDEDED"; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
-    h.forEach((s, i) => { const v = s.totalPlayers || 0; if (i === 0) ctx.moveTo(X(i), Y(v)); else ctx.lineTo(X(i), Y(v)); });
+    ctx.fillStyle = "#F5C518"; ctx.textAlign = "left";
+    for (let g = 0; g <= 4; g++) {
+      ctx.fillText(Math.round(100 * g / 4) + "%", S.W - S.padR + 6, S.Yl(100 * g / 4) + 4);
+    }
+    ctx.beginPath(); ctx.strokeStyle = "#5BA3D0"; ctx.lineWidth = 2;
+    S.pts.forEach((p, i) => { if (i === 0) ctx.moveTo(S.X(p.t), S.Yp(p.players)); else ctx.lineTo(S.X(p.t), S.Yp(p.players)); });
+    ctx.stroke();
+    ctx.beginPath(); ctx.strokeStyle = "#F5C518"; ctx.lineWidth = 1.5; ctx.setLineDash([5, 3]);
+    S.pts.forEach((p, i) => { if (i === 0) ctx.moveTo(S.X(p.t), S.Yl(p.lib)); else ctx.lineTo(S.X(p.t), S.Yl(p.lib)); });
     ctx.stroke(); ctx.setLineDash([]);
-    const t0 = h[0].timestamp ? new Date(h[0].timestamp) : null, t1 = h[h.length - 1].timestamp ? new Date(h[h.length - 1].timestamp) : null;
-    if (t0 && t1) {
-      ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif";
-      ctx.textAlign = "left"; ctx.fillText(t0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), padL, H - 6);
-      ctx.textAlign = "right"; ctx.fillText(t1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), W - padR, H - 6);
+    const d0 = new Date(S.pts[0].t), d1 = new Date(S.pts[S.pts.length - 1].t);
+    ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif";
+    ctx.textAlign = "left"; ctx.fillText(d0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), S.padL, S.H - 6);
+    ctx.textAlign = "right"; ctx.fillText(d1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), S.W - S.padR, S.H - 6);
+    if (hover && hover.pt) {
+      const px = S.X(hover.pt.t);
+      ctx.strokeStyle = "rgba(245,197,24,.4)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, S.padT); ctx.lineTo(px, S.H - S.padB); ctx.stroke();
+      ctx.fillStyle = "#5BA3D0";
+      ctx.beginPath(); ctx.arc(px, S.Yp(hover.pt.players), 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#F5C518";
+      ctx.beginPath(); ctx.arc(px, S.Yl(hover.pt.lib), 4, 0, Math.PI * 2); ctx.fill();
     }
+  }
+
+  function bindPlanetTrendHover(cv) {
+    if (cv._hd2hover) return;
+    cv._hd2hover = true;
+    const wrap = cv.parentElement;
+    wrap.style.position = "relative";
+    const tip = document.createElement("div");
+    tip.style.cssText = "position:absolute;z-index:5;pointer-events:none;display:none;"
+      + "background:rgba(0,0,0,.92);border:1px solid #334155;border-radius:4px;"
+      + "padding:6px 10px;font-size:.72rem;line-height:1.6;color:#EDEDED;"
+      + "font-family:Consolas,monospace;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.5)";
+    wrap.appendChild(tip);
+    const OWNER = { 1: "\u8d85\u7ea7\u5730\u7403", 2: "\u7ec8\u7ed3\u65cf", 3: "\u673a\u5668\u4eba", 4: "\u5149\u80fd\u8005" };
+    const fmtTime = (ms) => new Date(ms).toLocaleString("zh-CN",
+      { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+    cv.addEventListener("mousemove", (ev) => {
+      const S = PT_STATE;
+      if (!S.pts.length) return;
+      const rect = cv.getBoundingClientRect();
+      const scaleX = cv.width / rect.width;
+      const mx = (ev.clientX - rect.left) * scaleX;
+      if (mx < S.padL || mx > S.W - S.padR) { tip.style.display = "none"; return; }
+      let best = null, bestD = Infinity;
+      for (const p of S.pts) {
+        const d = Math.abs(S.X(p.t) - mx);
+        if (d < bestD) { bestD = d; best = p; }
+      }
+      if (!best) { tip.style.display = "none"; return; }
+      drawPlanetTrend(cv.getContext("2d"), { pt: best });
+      const owner = OWNER[best.owner] || "\u672a\u77e5";
+      const lines = [
+        '<span style="color:#F5C518">' + esc(fmtTime(best.t)) + "</span>",
+        '<span style="color:#5BA3D0">\u25cf</span> \u5728\u7ebf <b>' + fmt(best.players) + "</b> \u4eba",
+        '<span style="color:#F5C518">\u25cf</span> \u89e3\u653e <b>' + best.lib.toFixed(2) + "%</b>",
+        "HP " + fmt(best.health) + " \u00b7 " + esc(owner),
+      ];
+      tip.innerHTML = lines.join("<br>");
+      tip.style.display = "block";
+      const wrapRect = wrap.getBoundingClientRect();
+      const tx = ev.clientX - wrapRect.left + 14;
+      const ty = ev.clientY - wrapRect.top - 10;
+      tip.style.left = Math.min(tx, wrapRect.width - tip.offsetWidth - 8) + "px";
+      tip.style.top = Math.max(4, Math.min(ty, wrapRect.height - tip.offsetHeight - 4)) + "px";
+      cv.style.cursor = "crosshair";
+    });
+    cv.addEventListener("mouseleave", () => {
+      tip.style.display = "none";
+      cv.style.cursor = "default";
+      drawPlanetTrend(cv.getContext("2d"), null);
+    });
   }
 
   function srcHtml() {
@@ -861,34 +1351,26 @@
       ["等效推进速率", `净速率 × 血量倍数，基准球 = 100 万血（2026-09-26 两个快照里都是 273 颗中的 181 颗）`],
       ["抵抗度", "敌方回血换算成该星球血量的百分比／小时（绝对值 = 抵抗度% × 血量 ÷ 3600）"],
       ["累计统计", "官方 <code>war_stats.planets_stats</code>（时间字段单位＝毫秒）"],
+      ["POI / 行星剧情 / 战术行动卡", "尚未接入：仓库内没有可靠的静态数据源，本站不抓取社区站点的对应内容，也不伪造卡片"],
     ].map(([k, v]) => T.r([T.t(esc(k)), T.t(v, "hi")]));
     return T.table([{ t: "项目" }, { t: "口径 / 取值" }], rows) +
       `<p class="note" style="margin-top:10px">本页与 <a href="./galaxy-map-v2.html">银河星图</a> 使用同一份数据与同一套公式；
       两处数字若不一致，请以页面顶部的「更新于」判断谁更新。星球统计与 companion 同源。</p>`;
   }
 
+  /* ---- 交互：区域展开（键盘可达：button + aria-expanded） ---- */
   function bindRegions() {
     const body = $("rg-body"); if (!body) return;
     body.addEventListener("click", (ev) => {
-      const row = ev.target.closest ? ev.target.closest("tr.rg-row") : null;
+      const row = ev.target.closest ? ev.target.closest("button.rgc") : null;
       if (!row) return;
       const k = row.getAttribute("data-d");
-      const d = body.querySelector(`tr.det[data-d="${k}"]`);
+      const d = body.querySelector(`.rgd[data-d="${k}"]`);
       if (!d) return;
       const on = d.hidden;
-      body.querySelectorAll("tr.rg-row").forEach((b) => b.classList.remove("on"));
+      body.querySelectorAll("button.rgc").forEach((b) => b.setAttribute("aria-expanded", "false"));
       d.hidden = !on;
-      if (on) row.classList.add("on");
-    });
-  }
-
-  function bindLinkRows() {
-    const box = $("sec-links"); if (!box) return;
-    box.addEventListener("click", (ev) => {
-      const row = ev.target.closest ? ev.target.closest("tr.link-row") : null;
-      if (!row || (ev.target.closest && ev.target.closest("a"))) return;
-      const a = row.querySelector("a[href]");
-      if (a) location.href = a.getAttribute("href");
+      row.setAttribute("aria-expanded", String(on));
     });
   }
 

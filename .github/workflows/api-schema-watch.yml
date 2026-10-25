@@ -1,0 +1,109 @@
+name: API Schema Watch
+
+# 信息源 API 结构变更侦测（**只读 API + 只写本仓基线**）
+# --------------------------------------------------------------
+# 每天一次，比对 8 个信息源端点的 schema（字段名+类型）与仓库基线：
+#   有差异 → 创建/刷新 issue 报告 + 更新基线（同一变更不重复报告）
+#   无差异 → 静默退出
+#
+# 与 upstream-watch.yml 的区别：那个盯 wiki.gg 页面**内容**；
+# 本工作流盯游戏 API 的**结构**（字段增删/改名/类型变更）。
+# 上游加字段不改旧字段时站点不会报错但会漏数据，只能靠此侦测发现。
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 每天 22:00 UTC（次日 06:00 北京时间）
+    - cron: '0 10 * * *'   # 每天 10:00 UTC（18:00 北京时间）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: api-schema-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Check API schema
+        id: check
+        run: |
+          python scripts/check_api_schema.py --report /tmp/schema_report.md
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+        env:
+          PYTHONIOENCODING: utf-8
+        continue-on-error: true
+
+      - name: Has changes
+        if: steps.check.outputs.exit_code == '2'
+        run: |
+          echo "::notice::API schema 变更 detected"
+          cat /tmp/schema_report.md || echo "(report file not found)"
+
+      # 有变更 → 刷新常驻 issue（标题带时间戳，同标题只刷新不重复开）
+      - name: Report issue
+        if: steps.check.outputs.exit_code == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('/tmp/schema_report.md', 'utf8');
+            const title = '🔔 API 信息源结构变更报告';
+            const body = report + '\n\n---\n基线已同步更新（下次运行不会重复报告此变更）。\n'
+              + '生成时间：' + new Date().toISOString();
+
+            // 查找已有同名 issue（未关闭的）
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'api-schema-watch'
+            });
+            const existing = issues.data.find(i => i.title === title);
+
+            if (existing) {
+              // 已有 → 刷新正文
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: body
+              });
+              console.log('Updated issue #' + existing.number);
+            } else {
+              // 不存在 → 新建
+              const created = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['api-schema-watch', 'ci-alert']
+              });
+              console.log('Created issue #' + created.data.number);
+            }
+
+      # 有变更 → 提交更新的基线（下次运行才不会重复报告）
+      - name: Commit baseline update
+        if: steps.check.outputs.exit_code == '2'
+        run: |
+          git config user.name "Jerry Jiang"
+          git config user.email "69064950+Jerry114514@users.noreply.github.com"
+          git add data/api_schema_baseline.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: API schema 基线更新 ($(date -u '+%Y-%m-%d %H:%M'))"
+            git push
+          fi
+
+      - name: No changes
+        if: steps.check.outputs.exit_code != '2'
+        run: echo "无结构变更"

@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3966,
+   "published_at": "2026-10-25T08:01:18Z",
+   "source": "dispatch",
+   "original": "ARSENAL BOOST High Command has authorized high-volume use of the Orbital Railcannon Stratagem on the Automaton warfront. For operations on that warfront, the mandated waiting period between salvos has been lowered by 120 seconds for the next 72 hours.",
+   "translated": "军械库增强：最高指挥部已批准在机器人战线大规模使用轨道炮攻击战略配备。未来 72 小时内，该战线的作战中，两轮齐射之间的强制等待时间缩短 120 秒。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 84975052,
+   "official_message": "<i=3>ARSENAL BOOST</i> High Command has authorized high-volume use of the <i=1>Orbital Railcannon Stratagem</i> on the Automaton warfront. For operations on that warfront, the mandated waiting period between salvos has been lowered by <i=1>120 seconds</i> for the next 72 hours.",
+   "translated_at": "2026-10-25T09:46:50Z"
+  },
+  {
    "id": 3965,
    "published_at": "2026-10-24T11:42:22Z",
    "source": "dispatch",
@@ -126,17 +139,6 @@
    "mt": false,
    "published_war_seconds": 84212202,
    "official_message": "<i=3>控制中心提示</i>\n\n绝地潜兵完成本次战役后，将会永久获得<i=1>DSS“飞鹰”毒气风暴战术行动</i>的使用权限。\n\n此在<i=1>控制中心</i>工作并将这项绩效激励误标为<i=1>战略配备</i>的技术人员，已承诺会与其直系亲属一同参与深化再教育研讨会，彻底理解<i=1>战术行动</i>与<i=1>战略配备</i>之间的区别。"
-  },
-  {
-   "id": 3956,
-   "original": "MAJOR ORDER ADJUSTMENT\n\nOngoing analysis of current major order has identified a reprioritization of objectives. Helldivers are called to immediately assist SEAF in the defense of Senge-23 by culling huge swaths of illuminates. The target for mission operations is deprioritized.",
-   "translated": "重要指令调整\n\n对当前重要指令的持续分析显示，目标优先级已重新排序。绝地潜兵即刻驰援SEAF，协防Senge-23，大规模清剿光能者。原定作战任务目标优先级下调。",
-   "published_at": "2026-10-15T15:08:59Z",
-   "translated_at": "2026-10-15T19:44:11Z",
-   "source": "dispatch",
-   "engine": "deepseek-chat",
-   "text_source": "machine_translation",
-   "mt": true
   }
  ],
  "strategic": {
@@ -146,7 +148,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-24T13:52:15Z",
+  "computed_at": "2026-10-25T19:56:47Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -211,6 +213,87 @@
    "expires_at_war_seconds": 85333870,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501082,
+   "id32": 2224135745,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85234240,
+   "text_source": "official_untranslated",
+   "mt": false
   }
- ]
+ ],
+ "source_status": {
+  "source": "arrowhead_official",
+  "language": "zh-Hans",
+  "source_version": "2026-10-25T19:56:45Z",
+  "war_id": 801,
+  "war_time_seconds": 85017970,
+  "last_success_at": "2026-10-25T19:56:45Z",
+  "stale": false
+ },
+ "tasks": {
+  "id32": 568917260,
+  "source": "arrowhead_official",
+  "source_version": "2026-10-25T19:56:45Z",
+  "retrieved_at": "2026-10-25T19:56:45Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 300000000,
+    "progress": 24849219,
+    "requirement": {
+     "type": "equipment",
+     "id": 3827587060,
+     "en": "HMG EMPLACEMENT",
+     "name": "重机枪部署支架",
+     "name_source": "site_terms(short_form)"
+    }
+   },
+   {
+    "index": 1,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 4,
+    "faction_name": "光能者",
+    "goal": 65000000,
+    "progress": 10259521,
+    "requirement": {
+     "type": "equipment",
+     "id": 376960160,
+     "en": "Anti-Materiel Rifle",
+     "name": "反器材步枪",
+     "name_source": "site_terms(prefix_stripped)"
+    }
+   },
+   {
+    "index": 2,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 3,
+    "faction_name": "机器人",
+    "goal": 50000000,
+    "progress": 17275869,
+    "requirement": {
+     "type": "equipment",
+     "id": 2197477188,
+     "en": "ORBITAL RAILCANNON STRIKE",
+     "name": "轨道炮攻击",
+     "name_source": "site_terms"
+    }
+   }
+  ]
+ }
 }

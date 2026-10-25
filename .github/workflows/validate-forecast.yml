@@ -29,6 +29,7 @@ jobs:
           node-version: '22'
       - run: node scripts/tests/forecast-check.mjs
       - run: node scripts/tests/regions-check.mjs
+      - run: node scripts/tests/planet-page-check.mjs
       - run: node scripts/tests/planet-cards-check.mjs
       - run: node scripts/tests/ownership-changes-check.mjs
       - run: node scripts/tests/reinforcement-share-check.mjs

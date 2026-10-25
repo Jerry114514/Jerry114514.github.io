@@ -12,6 +12,8 @@
 
 3D 视图使用本地 Three.js 0.160.1，二维图表使用本地 Chart.js，均无需联网。3D 需要浏览器支持 WebGL；不可用时会提示，数值表和伤害图仍可使用。第三方许可证见 [`vendor/three.LICENSE.txt`](./vendor/three.LICENSE.txt)。
 
+上游 RawData 尚未导出的新装备，会从 [`data/equipment_supplements.json`](./data/equipment_supplements.json) 合并人工复核的中文 Wiki 详细武器数据。此类条目只显示 `Wiki v… · revid …` 来源徽标，不会冒充 RawData；仍无完整射弹数据的装备会明确标为不支持，而不是用默认值猜参数。
+
 ## 网页的任意方向速度继承
 
 勾选 `inherit_velocity`，输入有限非负的发射者总速率 `shooterSpeed`（m/s）、移动水平方向角 `shooterAzimuthDeg` 和移动上下倾角 `shooterElevationDeg`（均为度，默认 0）。世界坐标固定为 **X 前方、Y 上方、Z 右侧**。水平方向角 **0° 前、90° 右、180° 后、-90° 左**，任意有限角度可按 360° 周期输入；上下倾角必须在 **-90° 到 90°** 之间，0° 水平、90° 向上、-90° 向下。例如总速率 `5`、水平方向角 `45°`、上下倾角 `0°` 代表水平右前方移动，合成总速率仍是 5 m/s。八个箭头快捷按钮仅修改水平方向角，保留当前上下倾角和枪口仰角。
