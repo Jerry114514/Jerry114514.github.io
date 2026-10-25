@@ -13,6 +13,19 @@ const root = path.resolve(web, '..');
 const sources = Object.fromEntries(['index.html', 'ballistics.js', 'trajectory3d.js', 'app.js'].map((name) =>
   [name, fs.readFileSync(path.join(web, name), 'utf8')]));
 const equipmentCatalogText = fs.readFileSync(path.join(web, 'data', 'equipment_catalog.json'), 'utf8');
+// UI 用 presetInputValue 做展示归一（如 drag 0.30000001192 → '0.3'），
+// 数值断言一律用容差比较，展示形态不进契约。
+const approxEq = (a, b, eps = 1e-6) => Math.abs(Number(a) - Number(b)) <= eps * Math.max(1, Math.abs(Number(b)));
+// 目录随上游补丁自动同步（sync-ballistics-catalog）：期望值一律从目录自身推导，
+// 不再硬编码 type/参数 —— 数据版本更新后本用例无需人工同步（口径同 README 纪律）。
+const equipmentCatalog = JSON.parse(equipmentCatalogText);
+const catalogAttack = (id) => {
+  for (const rows of Object.values(equipmentCatalog.categories || {})) {
+    const entry = (rows || []).find((e) => e.id === id);
+    if (entry) return (entry.attacks || []).find((a) => a.status === 'ready') || null;
+  }
+  return null;
+};
 // 游戏数据文件（data/generated_*.json）只存在于本地工作区，不随站点部署。
 // 缺失时依赖真实数据的用例整组 skip，纯 DOM/物理用例照常在 CI 运行（2026-10-24 审查 P2）。
 const dataDir = path.join(root, 'data');
@@ -1161,22 +1174,24 @@ const presetCatalog = () => JSON.stringify({
 });
 
 test('AR-2 Coyote preset applies every Wiki/RawData parameter', async () => {
+  const atk = catalogAttack('ar_2_coyote');
+  assert.ok(atk, '目录里必须存在 ready 的 AR-2 Coyote 攻击');
   const h = harness({ catalogText: equipmentCatalogText });
   await h.flush();
   h.get('preset-weapon').value = 'ar_2_coyote';
   h.get('preset-weapon').dispatchEvent(new DOMEvent('change'));
   assert.equal(h.get('preset-attack-field').hidden, true);
-  assert.equal(h.get('caliberMm').value, '7');
-  assert.equal(h.get('massG').value, '8');
-  assert.equal(h.get('vConfig').value, '650');
-  assert.equal(h.get('dragCoeff').value, '0.3');
-  assert.equal(h.get('gravityMultiplier').value, '1');
-  assert.equal(h.get('lifeTime').value, '0');
-  assert.equal(h.get('normalDamage').value, '75');
-  assert.equal(h.get('durableDamage').value, '10');
-  assert.equal(h.get('inheritVelocity').checked, true);
-  assert.equal(h.get('ignoreTerminalVelocity').checked, false);
-  assert.match(h.get('preset-badges').textContent, /projectile type 138/);
+  assert.ok(approxEq(h.get('caliberMm').value, atk.params.calibreMm), 'caliberMm 应等于目录值');
+  assert.ok(approxEq(h.get('massG').value, atk.params.massG), 'massG 应等于目录值');
+  assert.ok(approxEq(h.get('vConfig').value, atk.params.vConfig), 'vConfig 应等于目录值');
+  assert.ok(approxEq(h.get('dragCoeff').value, atk.params.dragCoeff), 'dragCoeff 应等于目录值');
+  assert.ok(approxEq(h.get('gravityMultiplier').value, atk.params.gravityMultiplier), 'gravityMultiplier 应等于目录值');
+  assert.ok(approxEq(h.get('lifeTime').value, atk.params.lifeTime), 'lifeTime 应等于目录值');
+  assert.ok(approxEq(h.get('normalDamage').value, atk.damage.normal), 'normalDamage 应等于目录值');
+  assert.ok(approxEq(h.get('durableDamage').value, atk.damage.durable), 'durableDamage 应等于目录值');
+  assert.equal(h.get('inheritVelocity').checked, !!atk.params.inheritVelocity);
+  assert.equal(h.get('ignoreTerminalVelocity').checked, !!atk.params.ignoreTerminalVelocity);
+  assert.match(h.get('preset-badges').textContent, new RegExp('projectile type ' + atk.projectile_type));
   assert.match(h.get('preset-status').textContent, /已按预设填充参数/);
   assert.doesNotMatch(h.get('preset-notes').textContent, /^preset\.notes$/);
   assert.match(h.get('preset-notes').textContent, /预设来自站点武器目录/);
