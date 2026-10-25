@@ -916,7 +916,7 @@
           <span><i style="background:var(--yellow)"></i>解放进度（右轴）</span>
           <span style="color:var(--mute)">共 ${ph.length} 个采样点</span>
         </div>
-        <p class="note" style="margin-top:8px">本星球<b>专属</b>的人数与解放度趋势（7 天滚动窗口，5 分钟采样）。
+        <p class="note" style="margin-top:8px">本星球<b>专属</b>的人数与解放度趋势（24 小时滚动窗口，15 分钟采样）。
         解放度 = 1 − health / maxHealth（己方星球按 100%）；归属变化时曲线出现跳变。</p>`;
     }
     // 无单星球历史 → 退回全服趋势
@@ -932,7 +932,7 @@
         <span class="dash"><i></i>全服合计</span>
       </div>
       <p class="note" style="margin-top:8px">这是<b>全服</b>分布趋势，<b>不是这颗星球的历史</b>。
-      单星球专属趋势正在积累中（hd2-planet-history 每 5 分钟采样）。</p>`;
+      单星球专属趋势正在积累中（hd2-planet-history 每 15 分钟采样）。</p>`;
   }
 
   function paintTrend() {
