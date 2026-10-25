@@ -1227,7 +1227,9 @@
   }
 
   /* ---- I. 数据口径（折叠） ---- */
-  /* ---- 单星球趋势：人数（左轴）+ 解放度（右轴）双轴折线 ---- */
+  /* ---- 单星球趋势：人数（左轴）+ 解放度（右轴）双轴折线（带 hover 十字线 + tooltip） ---- */
+  const PT_STATE = { pts: [], X: null, Yp: null, Yl: null, W: 0, H: 0, padL: 0, padR: 0, padT: 0, padB: 0, maxP: 1 };
+
   function paintPlanetTrend() {
     const cv = $("ptrend"); if (!cv || !cv.getContext) return;
     const raw = PLANET_HIST || [];
@@ -1245,33 +1247,96 @@
     const X = (t) => padL + (W - padL - padR) * (t - t0) / dt;
     const Yp = (v) => padT + (H - padT - padB) * (1 - v / maxP);
     const Yl = (v) => padT + (H - padT - padB) * (1 - v / 100);
-    ctx.clearRect(0, 0, W, H);
-    // 网格 + 左轴（人数，蓝）
+    Object.assign(PT_STATE, { pts, X, Yp, Yl, W, H, padL, padR, padT, padB, maxP });
+    drawPlanetTrend(ctx);
+    bindPlanetTrendHover(cv);
+  }
+
+  function drawPlanetTrend(ctx, hover) {
+    const S = PT_STATE;
+    if (!S.pts.length) return;
+    ctx.clearRect(0, 0, S.W, S.H);
     ctx.strokeStyle = "#242424"; ctx.lineWidth = 1;
     ctx.fillStyle = "#5BA3D0"; ctx.font = "11px sans-serif"; ctx.textAlign = "right";
     for (let g = 0; g <= 4; g++) {
-      const v = maxP * g / 4, y = Yp(v);
-      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
-      ctx.fillText(Math.round(v / 100) / 10 + "k", padL - 6, y + 4);
+      const v = S.maxP * g / 4, y = S.Yp(v);
+      ctx.beginPath(); ctx.moveTo(S.padL, y); ctx.lineTo(S.W - S.padR, y); ctx.stroke();
+      ctx.fillText(Math.round(v / 100) / 10 + "k", S.padL - 6, y + 4);
     }
-    // 右轴（解放度，黄）
     ctx.fillStyle = "#F5C518"; ctx.textAlign = "left";
     for (let g = 0; g <= 4; g++) {
-      ctx.fillText(Math.round(100 * g / 4) + "%", W - padR + 6, Yl(100 * g / 4) + 4);
+      ctx.fillText(Math.round(100 * g / 4) + "%", S.W - S.padR + 6, S.Yl(100 * g / 4) + 4);
     }
-    // 人数线（蓝色实线）
     ctx.beginPath(); ctx.strokeStyle = "#5BA3D0"; ctx.lineWidth = 2;
-    pts.forEach((p, i) => { if (i === 0) ctx.moveTo(X(p.t), Yp(p.players)); else ctx.lineTo(X(p.t), Yp(p.players)); });
+    S.pts.forEach((p, i) => { if (i === 0) ctx.moveTo(S.X(p.t), S.Yp(p.players)); else ctx.lineTo(S.X(p.t), S.Yp(p.players)); });
     ctx.stroke();
-    // 解放度线（黄色虚线）
     ctx.beginPath(); ctx.strokeStyle = "#F5C518"; ctx.lineWidth = 1.5; ctx.setLineDash([5, 3]);
-    pts.forEach((p, i) => { if (i === 0) ctx.moveTo(X(p.t), Yl(p.lib)); else ctx.lineTo(X(p.t), Yl(p.lib)); });
+    S.pts.forEach((p, i) => { if (i === 0) ctx.moveTo(S.X(p.t), S.Yl(p.lib)); else ctx.lineTo(S.X(p.t), S.Yl(p.lib)); });
     ctx.stroke(); ctx.setLineDash([]);
-    // 时间轴
-    const d0 = new Date(t0), d1 = new Date(t1);
+    const d0 = new Date(S.pts[0].t), d1 = new Date(S.pts[S.pts.length - 1].t);
     ctx.fillStyle = "#6E6E6E"; ctx.font = "11px sans-serif";
-    ctx.textAlign = "left"; ctx.fillText(d0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), padL, H - 6);
-    ctx.textAlign = "right"; ctx.fillText(d1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), W - padR, H - 6);
+    ctx.textAlign = "left"; ctx.fillText(d0.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), S.padL, S.H - 6);
+    ctx.textAlign = "right"; ctx.fillText(d1.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit" }), S.W - S.padR, S.H - 6);
+    if (hover && hover.pt) {
+      const px = S.X(hover.pt.t);
+      ctx.strokeStyle = "rgba(245,197,24,.4)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, S.padT); ctx.lineTo(px, S.H - S.padB); ctx.stroke();
+      ctx.fillStyle = "#5BA3D0";
+      ctx.beginPath(); ctx.arc(px, S.Yp(hover.pt.players), 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#F5C518";
+      ctx.beginPath(); ctx.arc(px, S.Yl(hover.pt.lib), 4, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function bindPlanetTrendHover(cv) {
+    if (cv._hd2hover) return;
+    cv._hd2hover = true;
+    const wrap = cv.parentElement;
+    wrap.style.position = "relative";
+    const tip = document.createElement("div");
+    tip.style.cssText = "position:absolute;z-index:5;pointer-events:none;display:none;"
+      + "background:rgba(0,0,0,.92);border:1px solid #334155;border-radius:4px;"
+      + "padding:6px 10px;font-size:.72rem;line-height:1.6;color:#EDEDED;"
+      + "font-family:Consolas,monospace;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.5)";
+    wrap.appendChild(tip);
+    const OWNER = { 1: "\u8d85\u7ea7\u5730\u7403", 2: "\u7ec8\u7ed3\u65cf", 3: "\u673a\u5668\u4eba", 4: "\u5149\u80fd\u8005" };
+    const fmtTime = (ms) => new Date(ms).toLocaleString("zh-CN",
+      { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+    cv.addEventListener("mousemove", (ev) => {
+      const S = PT_STATE;
+      if (!S.pts.length) return;
+      const rect = cv.getBoundingClientRect();
+      const scaleX = cv.width / rect.width;
+      const mx = (ev.clientX - rect.left) * scaleX;
+      if (mx < S.padL || mx > S.W - S.padR) { tip.style.display = "none"; return; }
+      let best = null, bestD = Infinity;
+      for (const p of S.pts) {
+        const d = Math.abs(S.X(p.t) - mx);
+        if (d < bestD) { bestD = d; best = p; }
+      }
+      if (!best) { tip.style.display = "none"; return; }
+      drawPlanetTrend(cv.getContext("2d"), { pt: best });
+      const owner = OWNER[best.owner] || "\u672a\u77e5";
+      const lines = [
+        '<span style="color:#F5C518">' + esc(fmtTime(best.t)) + "</span>",
+        '<span style="color:#5BA3D0">\u25cf</span> \u5728\u7ebf <b>' + fmt(best.players) + "</b> \u4eba",
+        '<span style="color:#F5C518">\u25cf</span> \u89e3\u653e <b>' + best.lib.toFixed(2) + "%</b>",
+        "HP " + fmt(best.health) + " \u00b7 " + esc(owner),
+      ];
+      tip.innerHTML = lines.join("<br>");
+      tip.style.display = "block";
+      const wrapRect = wrap.getBoundingClientRect();
+      const tx = ev.clientX - wrapRect.left + 14;
+      const ty = ev.clientY - wrapRect.top - 10;
+      tip.style.left = Math.min(tx, wrapRect.width - tip.offsetWidth - 8) + "px";
+      tip.style.top = Math.max(4, Math.min(ty, wrapRect.height - tip.offsetHeight - 4)) + "px";
+      cv.style.cursor = "crosshair";
+    });
+    cv.addEventListener("mouseleave", () => {
+      tip.style.display = "none";
+      cv.style.cursor = "default";
+      drawPlanetTrend(cv.getContext("2d"), null);
+    });
   }
 
   function srcHtml() {
