@@ -602,6 +602,7 @@
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script src="./js/dss-donations.js?v=20261014b"></script>
+<script src="./js/boot-splash.js?v=20261026a"></script>
 <script>
 "use strict";
 /* ============================================================================
@@ -1100,7 +1101,20 @@ const LAYER_ON = { territory:true, supply:true, attack:true, heat:false, labels:
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
 async function boot() {
-  const setMsg = (h) => { $("bootmsg").innerHTML = h; };
+  const setMsg = (h) => {
+    const b = $("bootmsg"); if (b) b.innerHTML = h;
+    // 真实加载消息之间穿插 lore / 军情速报（复用 boot-splash 共享池）
+    if (window._hd2LoreTimer) clearInterval(window._hd2LoreTimer);
+    const lore = (window.HD2Boot && HD2Boot._lorePool) || [];
+    let i = 0;
+    window._hd2LoreTimer = setInterval(() => {
+      const boot = document.getElementById("boot");
+      if (!lore.length || !boot || boot.classList.contains("gone")) { clearInterval(window._hd2LoreTimer); return; }
+      i++;
+      if (b) { b.style.opacity = "0"; setTimeout(() => { if (b) { b.innerHTML = lore[i % lore.length]; b.style.opacity = "1"; } }, 150); }
+    }, 3400);
+    if (b) { b.style.transition = "opacity .15s ease"; b.style.opacity = "1"; }
+  };
   paintBackdrop();
   window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
 

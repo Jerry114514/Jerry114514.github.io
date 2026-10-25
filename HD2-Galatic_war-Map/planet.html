@@ -347,6 +347,7 @@
     @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
   </style>
   <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
+  <link rel="stylesheet" href="./css/boot-splash.css?v=20261026a">
 </head>
 <body>
   <header class="topbar">
@@ -360,9 +361,7 @@
     <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">全服趋势</a><a href="#sec-src">数据口径</a>
   </nav>
 
-  <main id="app">
-    <div class="loading" id="loading">🛰️ 正在载入星球资料…</div>
-  </main>
+  <main id="app"></main>
 
   <footer>
     <div id="foot-note"></div>
@@ -376,6 +375,7 @@
   <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
   <script src="./js/planet-card-effects.js?v=20261026a"></script>
+  <script src="./js/boot-splash.js?v=20261026a"></script>
   <script src="./js/rate-source.js"></script>
   <script>
   "use strict";
@@ -513,6 +513,7 @@
   const soft = (u) => jget(u, true);
 
   async function boot() {
+    if (window.HD2Boot) { HD2Boot.mount({ assetPrefix: "./" }); HD2Boot.setMsg("🛰️ 正在定位星球坐标…"); }
     const q = new URLSearchParams(location.search);
     let idx = q.get("idx");
     if (idx == null || idx === "") {
@@ -524,6 +525,7 @@
     }
     const index = Number(idx);
     try {
+      if (window.HD2Boot) HD2Boot.setMsg("📡 正在接收战况数据…");
       DATA = await jget("./data.json");
     } catch (e) { fail("战况数据载入失败：" + esc(e.message) + "（data.json 由 CI 每 5 分钟生成，稍后重试）"); return; }
 
@@ -571,6 +573,7 @@
       });
     }
     STATS = ((DATA.war_stats || {}).planets_stats || []).find((s) => s.planetIndex === index) || null;
+    if (window.HD2Boot) HD2Boot.setMsg("🪖 正在生成星球指挥台…");
     // 效果数值表（tables/effect_values.json，游戏 GalacticEffectSetting 透传）：
     // #V_ONE/#V_TWO/#AMOUNT 占位符的实值来源（官方 API 只回 id；详见该文件 _meta）。
     EFFECT_VALS = (evalues && evalues.effects) || {};
@@ -639,14 +642,14 @@
   }
 
   function fail(msg) {
-    const l = $("loading"); if (l) l.remove();
+    if (window.HD2Boot) HD2Boot.done();
     $("app").innerHTML = `<div class="card"><div class="error">⚠️ ${msg}</div></div>`
       + `<p class="note" style="padding:0 4px">可以回到 <a href="./galaxy-map-v2.html">银河星图</a> 或 <a href="./index.html">主站面板</a>。</p>`;
   }
 
   /* ---------------- 渲染 ---------------- */
   function render() {
-    const l = $("loading"); if (l) l.remove();
+    if (window.HD2Boot) HD2Boot.done();
     const owner = P.currentOwner || "Humans";
     const color = OWNER_COLOR[owner] || "#64748b";
     const camp = (DATA.campaigns || []).find((c) => c.planet && c.planet.index === P.index) || null;

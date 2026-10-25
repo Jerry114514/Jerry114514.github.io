@@ -26,6 +26,7 @@
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
   <link rel="stylesheet" href="./css/home.css?v=20261021b">
+  <link rel="stylesheet" href="./css/boot-splash.css?v=20261026a">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
   <!-- 多源兜底加载 Chart.js -->
@@ -322,6 +323,7 @@
   <script src="./js/ownership-changes.js?v=20261014a"></script>
   <script src="./js/data-source.js"></script>
   <script src="./js/rate-source.js"></script>
+  <script src="./js/boot-splash.js?v=20261026a"></script>
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
@@ -3537,6 +3539,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
   async function refresh() {
     try {
       const data = await fetchAll();
+      if (window.HD2Boot) HD2Boot.done();   // 首次数据就绪 → 遮罩淡出
       currentData = data;
       // 抓取时间基准（fetchedAt / warTime 基准）必须先设：所有倒计时都从它算绝对截止时刻
       setTimeBase(data);
@@ -3764,6 +3767,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
 
   // 启动
   document.addEventListener("DOMContentLoaded", () => {
+    if (window.HD2Boot) { HD2Boot.mount({ assetPrefix: "./" }); HD2Boot.setMsg("📡 正在接收战况数据…"); }
     startCountdownEngine();   // 全局单例：所有 data-cd 节点由它每秒推进
     // 星球卡图标层：SVG 补全 + 说明浮层 + 统一折叠区（城市列表 + 详情）的键盘/触屏交互
     window.HD2PlanetCardEffects?.init();
