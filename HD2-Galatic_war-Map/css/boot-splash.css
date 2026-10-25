@@ -6,7 +6,7 @@
 #hd2-boot{
   position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;gap:18px;
   align-items:center;justify-content:center;
-  background:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);
+  background:radial-gradient(circle at 50% 45%,#121212,#0A0A0A 70%);
   opacity:0;pointer-events:all;transition:opacity .4s ease;
 }
 #hd2-boot.visible{opacity:1}
@@ -49,7 +49,7 @@
 }
 
 #hd2-boot .msg{
-  color:var(--text-dim,#A8B8C8);font-size:.84rem;text-align:center;line-height:1.7;
+  color:var(--dim,var(--text-dim,#A8A8A8));font-size:.84rem;text-align:center;line-height:1.7;
   max-width:420px;padding:0 20px;
   min-height:3.2em;
 }
@@ -58,7 +58,7 @@
   overflow-wrap:anywhere;
 }
 #hd2-boot .msg .sub{
-  display:block;color:var(--text-mute,#6B7A89);font-size:.76rem;margin-top:2px;
+  display:block;color:var(--mute,var(--text-mute,#6E6E6E));font-size:.76rem;margin-top:2px;
 }
 
 @media (prefers-reduced-motion: reduce){
