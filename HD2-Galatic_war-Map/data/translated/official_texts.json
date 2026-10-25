@@ -2,10 +2,10 @@
  "source": "arrowhead_official",
  "language": "zh-Hans",
  "war_id": 801,
- "retrieved_at": "2026-10-25T19:56:45Z",
- "war_time_seconds": 85017970,
+ "retrieved_at": "2026-10-25T22:15:45Z",
+ "war_time_seconds": 85026310,
  "source_urls": {
-  "news": "https://api.live.prod.thehelldiversgame.com/api/NewsFeed/801?fromTimestamp=83808370&maxEntries=100",
+  "news": "https://api.live.prod.thehelldiversgame.com/api/NewsFeed/801?fromTimestamp=83816710&maxEntries=100",
   "events": "https://api.live.prod.thehelldiversgame.com/api/WarSeason/801/Status",
   "assignments": "https://api.live.prod.thehelldiversgame.com/api/v2/Assignment/War/801"
  },
@@ -139,16 +139,6 @@
    "original": "MAJOR ORDER WON\n\nThanks to the Helldivers' steadfast obedience, the chemical safety demonstration on SENGE 23 has concluded with the successful defense of the planet from further Illuminate interference. \n\nAdditionally, a complete recalibration of SEAF aerosol payloads has resulted in Class A retirees happily reporting an immediate improvement to their well-deserved scenic views, and an abundance of pristine, pine-scented air.",
    "translated": "重要指令已完成\n\n多亏了绝地潜兵的坚定服从，我方在新戈23抵御了光能者的进一步干涉，在这里进行的化学安全演示已经圆满结束。\n\n此外，对SEAF气溶胶弹头的彻底重新校准已完成，A级退休人员愉快地报告称，他们应得的美景得到了立竿见影的改善，空气也变得干净清爽，还带着松香味。",
    "official_zh": true
-  },
-  {
-   "id": 3953,
-   "type": 0,
-   "published_war_seconds": 83812042,
-   "published_at": "2026-10-11T20:57:57Z",
-   "raw_message": "<i=3>战略指令未完成</i>\n\n尽管绝地潜兵在<i=1>玛尔法克</i>击败了机器人，但这些冷酷无情的铁罐头在<i=1>库楼三</i>仍掌控着邪恶的集权主义宣传阵列，散布无耻的谎言，抹黑SEAF化学维和行动的安全性。\n\n真理部已主动暂停所有民用广播，直到言论自由再次回到正确的方向，而且已将遭到该信号毒害的所有公民护送至自愿听觉再教育设施。",
-   "original": "STRATEGIC DIRECTIVE FAILED\n\nDespite the Helldivers overcoming the Automatons on MARFARK, the heartless machines retained their foul communist propaganda arrays on MENKENT, broadcasting obscene lies regarding the safety of SEAF chemical peacekeeping operations.\n\nThe Ministry of Truth has proactively suspended all civilian broadcasts until speech is correctly free once more, and has escorted any citizen cruelly exposed to the signal to voluntary acoustic re-education facilities.",
-   "translated": "战略指令未完成\n\n尽管绝地潜兵在玛尔法克击败了机器人，但这些冷酷无情的铁罐头在库楼三仍掌控着邪恶的集权主义宣传阵列，散布无耻的谎言，抹黑SEAF化学维和行动的安全性。\n\n真理部已主动暂停所有民用广播，直到言论自由再次回到正确的方向，而且已将遭到该信号毒害的所有公民护送至自愿听觉再教育设施。",
-   "official_zh": true
   }
  ],
  "assignments": [
@@ -243,11 +233,11 @@
     }
    ],
    "progress": [
-    24849219,
-    10259521,
-    17275869
+    26698655,
+    10517972,
+    20800876
    ],
-   "expires_in": 313028
+   "expires_in": 304698
   }
  ],
  "global_events": [
@@ -325,13 +315,6 @@
   }
  ],
  "english_news": [
-  {
-   "id": 3953,
-   "published": 83812042,
-   "type": 0,
-   "tagIds": [],
-   "message": "<i=3>STRATEGIC DIRECTIVE FAILED</i>\n\nDespite the Helldivers overcoming the Automatons on <i=1>MARFARK</i>, the heartless machines retained their foul communist propaganda arrays on <i=1>MENKENT</i>, broadcasting obscene lies regarding the safety of SEAF chemical peacekeeping operations.\n\nThe Ministry of Truth has proactively suspended all civilian broadcasts until speech is correctly free once more, and has escorted any citizen cruelly exposed to the signal to voluntary acoustic re-education facilities."
-  },
   {
    "id": 3954,
    "published": 83959248,
@@ -428,10 +411,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-25T19:56:45Z",
+  "source_version": "2026-10-25T22:15:45Z",
   "war_id": 801,
-  "war_time_seconds": 85017970,
-  "last_success_at": "2026-10-25T19:56:45Z",
+  "war_time_seconds": 85026310,
+  "last_success_at": "2026-10-25T22:15:45Z",
   "stale": false
  }
 }
