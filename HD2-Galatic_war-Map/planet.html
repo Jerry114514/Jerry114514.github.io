@@ -1032,20 +1032,31 @@
     const fxCard = (f) => `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
           <div class="fxd">效果 ID <b>${f.id}</b>${f.en ? ` · EN <b>${esc(f.en)}</b>` : ""}
           ${f.desc ? `<br>${esc(f.desc)}` : f.enDesc ? `<br><span class="mini">${esc(f.enDesc)}</span>` : "<br>（站内表未收录该效果说明）"}</div></details>`;
-    // 分组：行动变量表自带可靠分组 → 按表内顺序分组渲染；无分组的（表未收录）归入「其他词条」。
+    // 分组（2026-10-26 用户口径）：只给「变种类」与「作战限制」两组保留分组标题；
+    // 其余词条（深域惧像/环境条件/设施与场所/DSS战略行动/入侵等级等）不分类，
+    // 平铺在最下方，不再加组头。
+    const VARIANT_GROUPS = new Set([
+      "终结族变种", "终结族特殊个体", "机器人军团", "机器人特殊单位", "机器人辅助军团",
+      "友军火力", "光能者宗派",
+    ]);
+    const keepGroup = (g) => g && (VARIANT_GROUPS.has(g.cn) || g.cn === "作战限制");
     const groups = [];
     EFFECT_VAR_ORDER.forEach((g) => {
+      if (!keepGroup(g)) return;
       const rows = fx.filter((f) => f.group && f.group.cn === g.cn);
       if (rows.length) groups.push({ cn: g.cn, en: g.en, rows });
     });
-    const rest = fx.filter((f) => !f.group);
-    if (rest.length) groups.push({ cn: "其他词条", en: "", rows: rest });
-    const tags = groups.length
-      ? groups.map((g) => `
+    const rest = fx.filter((f) => !keepGroup(f.group));
+    const groupHtml = groups.map((g) => `
           <div style="margin-bottom:10px">
             <div class="k" style="font-size:.7rem;color:var(--yellow);letter-spacing:.1em;margin-bottom:6px">${esc(g.cn)}${g.en ? ` <span style="color:var(--mute);letter-spacing:.14em">${esc(g.en)}</span>` : ""}</div>
             <div class="fxlist">${g.rows.map(fxCard).join("")}</div>
-          </div>`).join("")
+          </div>`).join("");
+    const restHtml = rest.length
+      ? `<div class="fxlist" style="margin-bottom:6px">${rest.map(fxCard).join("")}</div>`
+      : "";
+    const tags = (groups.length || rest.length)
+      ? groupHtml + restHtml
       : `<p class="empty">当前没有生效中的星球效果（词条）。</p>`;
     return `<div class="env-grid">
       <div>${img}
@@ -1053,7 +1064,7 @@
         缺失时回退 <code>tables/planet_biomes.json</code>。</p></div>
       <div>
         <div class="k" style="font-size:.72rem;color:var(--mute);margin-bottom:8px">生效效果 / 词条（点开看 ID 与说明）</div>
-        <div class="fxlist">${tags}</div>
+        <div>${tags}</div>
         <p class="note" style="margin-top:10px">词条与中文说明优先取 <code>tables/hd2_variables.json</code>（行动变量对照表，
         自带分组：终结族特殊个体 / 深域惧像 / 作战限制 / 环境条件 / 设施与场所等）；中文名兜底 <code>tables/effect_id_cn.json</code>；
         英文名与英文说明取 <code>tables/galactic_effects.json</code>。三级都未收录的 id 照实显示原始编号，不猜测名称。</p>
