@@ -20,6 +20,7 @@ assert.ok(html.includes('* LIB_RATE_K / p.maxHealth * 100'), '推演速率公式
 assert.ok(html.includes('function etaOfNet'), 'ETA 计算必须保留');
 assert.ok(html.includes('rateModel(p)'), '实测优先的 rateModel 必须保留');
 assert.ok(html.includes('HD2Recent.load'), '实测帧加载必须保留');
+assert.ok(html.includes('hd2_variables.json'), '词条必须接入行动变量表（中文描述权威源）');
 
 // ---- 3) 依赖模块与 SEO 基建 ----
 for (const src of ['./js/forecast.js', './js/regions.js', './js/rate-source.js', './css/forecast.css']) {

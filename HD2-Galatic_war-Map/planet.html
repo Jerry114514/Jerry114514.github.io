@@ -499,7 +499,7 @@
 
   /* ---- 数据状态 ---- */
   let DATA = null, PL_CN = {}, PL_SEC = {}, SEC_CN = {}, WAY = {}, REG_TABLE = {}, REG_ZH = {}, BIOME_IDX = null,
-      BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, HISTORY = null, P = null, STATS = null;
+      BIOME_FB = null, EFFECT_CN = {}, EFFECT_DESC = {}, EFFECT_VAR = {}, EFFECT_VAR_ORDER = [], HISTORY = null, P = null, STATS = null;
 
   const jget = async (url, soft) => {
     try {
@@ -533,17 +533,30 @@
     if (!P) { fail("星球序号 " + index + " 不在当前战况数据里。"); return; }
 
     // 并发拉取静态表（任一失败都不阻断主流程）
-    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, hist] = await Promise.all([
+    const [sm, way, reg, regZh, bioIdx, bioFb, eff, effDesc, vars, hist] = await Promise.all([
       soft("./tables/starmap.json"), soft("./tables/waypoints.json"),
       soft("./tables/planet_regions.json?v=20261007b"), soft("./tables/planet_regions_zh.json?v=20261007b"),
       soft("./assets/biomes/index.json"), soft("./tables/planet_biomes.json"),
       soft("./tables/effect_id_cn.json"), soft("./tables/galactic_effects.json"),
-      soft("./data/history/player_distribution.json"),
+      soft("./tables/hd2_variables.json"), soft("./data/history/player_distribution.json"),
     ]);
     WAY = (way && way.waypoints) || {};
     REG_TABLE = (reg && reg.planets) || {};
     REG_ZH = (regZh && regZh.planets) || {};
     BIOME_IDX = bioIdx || {}; BIOME_FB = bioFb || {}; EFFECT_CN = eff || {}; EFFECT_DESC = effDesc || {}; HISTORY = hist || null;
+    // 行动变量表（tables/hd2_variables.json）：**词条权威源**——按 effect_ids 建索引，
+    // 自带 中文名 cn / 中文描述 desc / 所属分组（终结族特殊个体/深域惧像/作战限制/环境条件…）。
+    // 覆盖 82 个行星词条 effect id；此前只查 effect_id_cn（名无述）+ galactic_effects（英文名述），
+    // 会漏掉「补给不足/缺少飞行员」这类只有该表收录的中文描述（2026-10-26 用户指出后修正）。
+    (vars && vars.categories || []).forEach((c) => {
+      const g = { cn: c.name || "", en: c.name_en || "" };
+      EFFECT_VAR_ORDER.push(g);
+      (c.entries || []).forEach((e) => {
+        (e.effect_ids || []).forEach((i) => {
+          EFFECT_VAR[i] = { cn: e.cn || e.name || "", desc: e.desc || "", en: e.name || "", group: g };
+        });
+      });
+    });
     if (sm && sm.systems) {
       sm.systems.forEach((s) => {
         if (s.name_en && s.name) SEC_CN[String(s.name_en).toUpperCase()] = s.name;
@@ -995,33 +1008,55 @@
       ? `<div class="biome"><img src="./assets/biomes/${esc(file)}" alt="${esc(biomeName())}环境图" loading="lazy" decoding="async"
              onerror="this.parentElement.classList.add('noimg');this.remove()"><div class="cap">${esc(biomeName() || "环境")}</div></div>`
       : `<div class="biome noimg">${esc(biomeName() || "未知环境")}（无环境图）</div>`;
-    // 同一效果可能有多个 id 映射到同一个中文名（实测 MARFARK 的 activeEffects=[1248,1249]
-    // 都是「炽灼部队」）→ 按名字去重，避免同一词条显示两遍。
-    // 分组（环境/战术/后勤）无法从现有表可靠推导 → 按规范保持单组，不硬猜。
+    // 词条权威链（2026-10-26 修正）：hd2_variables（中文名+中文描述+分组，82 id）
+    //   → effect_id_cn（中文名，191 id）→ galactic_effects（英文名/英文描述）
+    //   → 原始 id。多个 id 映射同一词条时取链上第一个命中并去重（如霸王虫 1307/1308）。
     const seen = {};
     const fx = [];
     (P.activeEffects || []).forEach((id) => {
-      const cn = EFFECT_CN[String(id)] || ("效果 #" + id);
-      if (seen[cn]) return;
-      seen[cn] = true;
+      const v = EFFECT_VAR[id];
+      const cn = (v && v.cn) || EFFECT_CN[String(id)] || "";
+      if (cn && seen[cn]) return;
+      if (cn) seen[cn] = true;
       const meta = EFFECT_DESC[String(id)] || {};
-      fx.push({ id, cn, en: meta.name || "", desc: meta.description || "" });
+      fx.push({
+        id,
+        cn: cn || ("效果 #" + id),
+        known: !!cn,
+        desc: (v && v.desc) || "",                      // 中文描述（hd2_variables）
+        en: (v && v.en) || meta.name || "",
+        enDesc: meta.description || "",                 // 英文描述（galactic_effects，补充用）
+        group: v ? v.group : null,
+      });
     });
-    const tags = fx.length
-      ? fx.map((f) => `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
+    const fxCard = (f) => `<details class="fx"><summary>⚡ ${esc(f.cn)}</summary>
           <div class="fxd">效果 ID <b>${f.id}</b>${f.en ? ` · EN <b>${esc(f.en)}</b>` : ""}
-          ${f.desc ? `<br>${esc(f.desc)}` : "<br>（站内表未收录该效果说明）"}</div></details>`).join("")
+          ${f.desc ? `<br>${esc(f.desc)}` : f.enDesc ? `<br><span class="mini">${esc(f.enDesc)}</span>` : "<br>（站内表未收录该效果说明）"}</div></details>`;
+    // 分组：行动变量表自带可靠分组 → 按表内顺序分组渲染；无分组的（表未收录）归入「其他词条」。
+    const groups = [];
+    EFFECT_VAR_ORDER.forEach((g) => {
+      const rows = fx.filter((f) => f.group && f.group.cn === g.cn);
+      if (rows.length) groups.push({ cn: g.cn, en: g.en, rows });
+    });
+    const rest = fx.filter((f) => !f.group);
+    if (rest.length) groups.push({ cn: "其他词条", en: "", rows: rest });
+    const tags = groups.length
+      ? groups.map((g) => `
+          <div style="margin-bottom:10px">
+            <div class="k" style="font-size:.7rem;color:var(--yellow);letter-spacing:.1em;margin-bottom:6px">${esc(g.cn)}${g.en ? ` <span style="color:var(--mute);letter-spacing:.14em">${esc(g.en)}</span>` : ""}</div>
+            <div class="fxlist">${g.rows.map(fxCard).join("")}</div>
+          </div>`).join("")
       : `<p class="empty">当前没有生效中的星球效果（词条）。</p>`;
     return `<div class="env-grid">
       <div>${img}
         <p class="note" style="margin-top:8px">环境图来自 <code>assets/biomes/</code>（随仓库提交）；生态名优先取官方 API 的 <code>biome</code>，
         缺失时回退 <code>tables/planet_biomes.json</code>。</p></div>
       <div>
-        <div class="k" style="font-size:.72rem;color:var(--mute);margin-bottom:8px">生效效果 / 词条（点开看 ID 与官方英文说明）</div>
+        <div class="k" style="font-size:.72rem;color:var(--mute);margin-bottom:8px">生效效果 / 词条（点开看 ID 与说明）</div>
         <div class="fxlist">${tags}</div>
-        <p class="note" style="margin-top:10px">词条名取 <code>tables/effect_id_cn.json</code>（190 条中文名）；英文说明取
-        <code>tables/galactic_effects.json</code>。未收录的 id 照实显示原始编号，不猜测名称。
-        环境类/战术类/后勤类分组暂无可靠依据，保持单组呈现。</p>
+        <p class="note" style="margin-top:10px">词条与中文说明优先取 <code>tables/hd2_variables.json</code>（行动变量对照表，
+        自带分组：终结族特殊个体 / 深域惧像 / 作战限制 / 环境条件 / 设施与场所等）；中文名兜底 <code>tables/effect_id_cn.json</code>；
+        英文名与英文说明取 <code>tables/galactic_effects.json</code>。三级都未收录的 id 照实显示原始编号，不猜测名称。</p>
       </div></div>`;
   }
 
