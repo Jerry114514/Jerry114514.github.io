@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技术详解 - 绝地潜兵2 真理部</title>
+  <meta name="description" content="绝地潜兵2 真理部技术详解：站内每个功能板块的实现方式、数据来源、计算口径与缓存策略，供二次开发与数据投稿者参考。">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://jerry114514.github.io/HD2-Galatic_war-Map/tech.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="绝地潜兵2 · 真理部">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="技术详解 - 绝地潜兵2 真理部">
+  <meta property="og:description" content="站内每个功能板块的实现方式、数据来源、计算口径与缓存策略。">
+  <meta property="og:url" content="https://jerry114514.github.io/HD2-Galatic_war-Map/tech.html">
+  <meta property="og:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="技术详解 - 绝地潜兵2 真理部">
+  <meta name="twitter:description" content="站内每个功能板块的实现方式、数据来源、计算口径与缓存策略。">
+  <style>
+    /* ============================================================
+       技术详解页（2026-10-26）
+       视觉严格沿用主站黑金 HUD（tokens.css 单点真相）：
+       零圆角 · 零阴影 · 零毛玻璃 · 硬描边分层 · 琥珀强调
+       本页为纯静态文档，不抓取任何数据，离线可用。
+       ============================================================ */
+    :root{
+      --bg:#0A0A0A; --bg-2:#101010; --card:#121212; --panel:#0F0F0F;
+      --line:#1F1F1F; --line-2:#242424; --line-3:#333;
+      --text:#F2F2F2; --dim:#A8A8A8; --mute:#6E6E6E;
+      --yellow:#FFB000; --yellow-2:#FFC94A; --brass:#C8862A; --blue:#5BA3D0;
+      --ok:#1FA84A; --red:#FF4D2E;
+      --font-body:"SourceHanSans","Microsoft YaHei","PingFang SC",sans-serif;
+      --font-title:"ZZZ-thick","SourceHanSans","Microsoft YaHei",sans-serif;
+      --stripe:repeating-linear-gradient(45deg,rgba(255,176,0,.10) 0 6px,transparent 6px 12px);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:76px}
+    body{
+      margin:0;background:var(--bg);color:var(--text);
+      font-family:var(--font-body);font-size:15px;line-height:1.75;
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{color:var(--yellow-2);text-decoration:underline}
+    code{
+      font-family:var(--font-body);background:var(--panel);border:1px solid var(--line);
+      padding:1px 6px;color:var(--yellow-2);font-size:.92em;white-space:nowrap;
+    }
+    /* ---------- 顶栏 ---------- */
+    .topbar{
+      position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;
+      padding:10px 20px;background:var(--bg-2);border-bottom:1px solid var(--line-2);
+    }
+    .topbar .back{color:var(--dim);font-size:.9rem;flex:none}
+    .topbar .back:hover{color:var(--yellow)}
+    .topbar .brand{font-family:var(--font-title);letter-spacing:.06em;color:var(--yellow);font-size:1.02rem}
+    .topbar .stamp{margin-left:auto;color:var(--mute);font-size:.78rem}
+    /* ---------- 锚点导航（目录） ---------- */
+    .sectnav{
+      display:flex;flex-wrap:wrap;gap:6px;padding:12px 20px;
+      background:var(--panel);border-bottom:1px solid var(--line);
+    }
+    .sectnav a{
+      color:var(--dim);font-size:.8rem;padding:3px 10px;
+      border:1px solid var(--line-2);background:var(--card);
+    }
+    .sectnav a:hover{color:var(--yellow);border-color:var(--brass);text-decoration:none}
+    /* ---------- 主体 ---------- */
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+    .page-head{
+      border:1px solid var(--line-2);border-left:4px solid var(--yellow);
+      background:var(--card);padding:18px 22px;margin-bottom:26px;
+    }
+    .page-head h1{
+      margin:0 0 6px;font-family:var(--font-title);font-size:1.5rem;
+      letter-spacing:.04em;color:var(--yellow);
+    }
+    .page-head p{margin:0;color:var(--dim);font-size:.9rem}
+    section.panel{
+      border:1px solid var(--line-2);background:var(--card);
+      padding:0;margin:0 0 22px;
+    }
+    section.panel > h2{
+      margin:0;padding:12px 20px;font-family:var(--font-title);
+      font-size:1.12rem;letter-spacing:.05em;color:var(--yellow);
+      border-bottom:1px solid var(--line-2);background:
+        linear-gradient(90deg,rgba(255,176,0,.08),transparent 55%);
+    }
+    section.panel > h2 .no{color:var(--brass);margin-right:8px}
+    .panel-body{padding:16px 20px 20px}
+    h3{
+      font-size:1rem;color:var(--yellow-2);margin:20px 0 8px;
+      padding-left:10px;border-left:3px solid var(--brass);
+    }
+    h3:first-child{margin-top:0}
+    p{margin:8px 0;color:var(--text)}
+    p.note{color:var(--dim);font-size:.88rem}
+    ul,ol{margin:8px 0;padding-left:22px}
+    li{margin:4px 0}
+    /* ---------- 表格：硬描边战术表 ---------- */
+    .tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line-2)}
+    table{border-collapse:collapse;width:100%;min-width:520px;font-size:.88rem}
+    th,td{border:1px solid var(--line-2);padding:7px 12px;text-align:left;vertical-align:top}
+    thead th{
+      background:var(--panel);color:var(--yellow);font-weight:600;white-space:nowrap;
+      border-bottom:1px solid var(--brass);
+    }
+    tbody tr:nth-child(even){background:var(--bg-2)}
+    td code{white-space:normal}
+    /* ---------- 代码 / 图 / 公式块 ---------- */
+    pre{
+      margin:12px 0;padding:14px 16px;overflow-x:auto;
+      background:var(--panel);border:1px solid var(--line-2);
+      border-left:3px solid var(--brass);
+      font-family:Consolas,"Courier New",monospace;font-size:.84rem;line-height:1.6;
+      color:#D8D2C0;
+    }
+    pre b{color:var(--yellow);font-weight:600}
+    pre i{color:var(--mute);font-style:normal}
+    /* ---------- 强调框 ---------- */
+    .callout{
+      border:1px solid var(--brass);border-left:4px solid var(--yellow);
+      background:var(--panel);padding:12px 16px;margin:14px 0;
+    }
+    .callout.red{border-color:#7A1F0E;border-left-color:var(--red);background:repeating-linear-gradient(45deg,rgba(255,77,46,.05) 0 6px,transparent 6px 12px),var(--panel)}
+    .callout .t{color:var(--yellow);font-weight:600;margin-right:6px}
+    .callout.red .t{color:var(--red)}
+    /* ---------- 徽标 chip ---------- */
+    .chip{
+      display:inline-block;padding:1px 8px;border:1px solid var(--line-2);
+      background:var(--panel);color:var(--dim);font-size:.78rem;margin:0 2px;
+    }
+    .chip.gold{color:var(--yellow);border-color:var(--brass)}
+    .chip.blue{color:var(--blue)}
+    /* ---------- 页脚 ---------- */
+    footer{
+      border-top:1px solid var(--line-2);background:var(--bg-2);
+      padding:18px 20px;color:var(--mute);font-size:.8rem;text-align:center;
+    }
+    footer a{color:var(--dim)}
+    footer .lnk{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:8px}
+    /* ---------- 断点 ---------- */
+    @media (max-width:768px){
+      .topbar{padding:8px 12px;gap:10px}
+      .topbar .stamp{display:none}
+      .wrap{padding:18px 12px 40px}
+      .panel-body{padding:12px 14px 16px}
+      section.panel > h2{padding:10px 14px}
+      body{font-size:14px}
+    }
+  </style>
+  <link rel="stylesheet" href="./css/boot-splash.css?v=20261026a">
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="./index.html">← 返回战况面板</a>
+    <span class="brand">真理部 · 技术详解</span>
+    <span class="stamp">文档版本 2026-10-26 · 数值口径以页面「更新于」为准</span>
+  </header>
+
+  <nav class="sectnav" aria-label="章节目录">
+    <a href="#sec-arch">数据架构</a><a href="#sec-data">战况主数据</a><a href="#sec-mo">重要指令</a>
+    <a href="#sec-planet">星球指挥台</a><a href="#sec-map">银河星图</a><a href="#sec-regions">下属区域</a>
+    <a href="#sec-rate">解放速率</a><a href="#sec-dss">DSS</a><a href="#sec-trend">趋势</a>
+    <a href="#sec-ownership">归属变化</a><a href="#sec-effects">环境与词条</a><a href="#sec-supply">补给线</a>
+    <a href="#sec-ballistics">弹道模拟器</a><a href="#sec-trans">翻译链路</a><a href="#sec-ci">CI 与自动化</a>
+    <a href="#sec-truth">数据真实性边界</a>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-head">
+      <h1>HD2-Galatic_war-Map 技术详解</h1>
+      <p>本文详解站内每个功能板块的实现方式、数据来源、计算口径与缓存策略，供二次开发与数据投稿者参考；数值口径以本文为准，两处数字若不一致以页面顶部的「更新于」判断谁更新。</p>
+    </div>
+
+    <!-- ============ 1 数据架构总览 ============ -->
+    <section class="panel" id="sec-arch">
+      <h2><span class="no">01</span>数据架构总览</h2>
+      <div class="panel-body">
+        <h3>数据流</h3>
+<pre>
+官方游戏 API (api.live.prod.thehelldiversgame.com)
+  │
+  ├─ GitHub Actions 每 5 分钟（fetch-data.yml）
+  │    → scripts/fetch_site_data.py 抓取 + 合并翻译 + 落盘
+  │    → HD2-Galatic_war-Map/data.json（主数据，约 300KB）
+  │    → HD2-Galatic_war-Map/data/recent/（实测帧，15 分钟粒度）
+  │
+  ├─ 翻译仓库（HD2Web-Trans，每 15 分钟）
+  │    → 官方 zh-Hans API 采集新闻/MO/事件正文
+  │    → 缺官中时 DeepSeek 机翻兜底
+  │    → 推送 TransNews.json 到本仓 data/translated/
+  │    → 触发本仓 merge_translations.py 合并进 data.json
+  │
+  ├─ 星球历史仓库（hd2-planet-history，每 15 分钟）
+  │    → 记录全部 273 颗星球的 {players, health, owner}
+  │    → 24h 滚动窗口，GitHub Pages 供星球详情页 fetch
+  │
+  └─ API Schema Watch（每天 2 次，UTC 22:00 / 10:00）
+       → 比对 8 个信息源的 schema（字段名+类型）
+       → 有变更开 Issue 报告 + 更新基线
+</pre>
+        <h3>页面数据源优先级</h3>
+        <div class="tw"><table>
+          <thead><tr><th>优先级</th><th>来源</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><code>data.json</code></td><td>主数据，CI 每 5 分钟更新</td></tr>
+            <tr><td>2</td><td><code>data/recent/</code> 实测帧</td><td>15 分钟粒度差分（解放速率 / MO 速率）</td></tr>
+            <tr><td>3</td><td><code>data/translated/</code></td><td>翻译仓库产物（TransNews / official_texts / campaign_zh）</td></tr>
+            <tr><td>4</td><td><code>tables/</code> 静态表</td><td>星图 / 区域 / 补给线 / 词条 / 效果对照表</td></tr>
+            <tr><td>5</td><td><code>hd2-planet-history</code></td><td>单星球人数 / 血量历史（24h 窗口）</td></tr>
+            <tr><td>6</td><td>官方 API 直连</td><td>最后兜底（口径可能与主站不一致）</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- ============ 2 战况主数据 ============ -->
+    <section class="panel" id="sec-data">
+      <h2><span class="no">02</span>战况主数据（data.json）</h2>
+      <div class="panel-body">
+        <p><b>生成</b>：<code>scripts/fetch_site_data.py</code>，GitHub Actions <code>fetch-data.yml</code> 每 5 分钟。</p>
+        <p><b>来源</b>：官方 <code>api.live.prod.thehelldiversgame.com</code>（需 <code>X-Super-Client</code> 头），companion 兜底。</p>
+        <h3>关键字段</h3>
+        <div class="tw"><table>
+          <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td><code>fetchedAt</code></td><td>str ISO</td><td>抓取时刻（页面时间基准）</td></tr>
+            <tr><td><code>planets[]</code></td><td>array</td><td>273 颗星球：index/name/sector/currentOwner/health/maxHealth/players/resistance/activeEffects/regions</td></tr>
+            <tr><td><code>campaigns[]</code></td><td>array</td><td>当前战役：liberation（planet.health→解放度）/ defense（defendersProgress/attackersProgress/attackersRate/remainingTime）</td></tr>
+            <tr><td><code>assignments</code></td><td>dict</td><td>当前 MO：briefing/tasks/progress/deadline/startedAt</td></tr>
+            <tr><td><code>dispatches[]</code></td><td>array</td><td>30 条原始新闻（英文）</td></tr>
+            <tr><td><code>news[]</code></td><td>array</td><td>最新 10 条（带翻译仓库中文译文）</td></tr>
+            <tr><td><code>major_order</code></td><td>dict</td><td>MO 简报：brief/translated_brief/translated_at</td></tr>
+            <tr><td><code>dss</code></td><td>dict</td><td>DSS：planetIndex/activeEffectIds/tacticalActions（含捐献进度）/electionEnd</td></tr>
+            <tr><td><code>player_distribution</code></td><td>dict</td><td>total/humans/terminids/automatons/illuminate</td></tr>
+            <tr><td><code>ownership_history</code></td><td>dict</td><td>events/defenseEvents（归属变化检测）</td></tr>
+            <tr><td><code>active_campaign</code></td><td>dict</td><td>战役剧情（title_cn/description_cn/phases 中文）</td></tr>
+            <tr><td><code>strategic</code></td><td>dict</td><td>战略机遇：active/status_cn/dispatch_id</td></tr>
+            <tr><td><code>impactMultiplier</code></td><td>float</td><td>解放速率推演用影响系数</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout"><span class="t">翻译字段解耦</span><code>fetch_site_data.py</code> 不覆盖 <code>news</code> / <code>major_order</code> / <code>strategic</code>——这三个字段由翻译仓库通过 <code>merge_translations.py</code> 单一写入。</div>
+      </div>
+    </section>
+
+    <!-- ============ 3 重要指令 ============ -->
+    <section class="panel" id="sec-mo">
+      <h2><span class="no">03</span>重要指令（Major Order）</h2>
+      <div class="panel-body">
+        <h3>数据来源</h3>
+        <ul>
+          <li>进度：<code>data.json → assignments</code>（官方 API <code>v2/Assignment/War/801</code>）</li>
+          <li>中文简报：<code>major_order.translated_brief</code>（翻译仓库官方 zh-Hans 采集）</li>
+          <li>限定装备：<code>major_order.tasks</code>（按 <code>setting.tasks[].valueTypes</code> 解析：<span class="chip">1=阵营</span><span class="chip">3=数量</span><span class="chip">5=装备 ID</span>）</li>
+        </ul>
+        <h3>任务预测口径（<code>js/forecast.js</code>）</h3>
+<pre>
+rate = current / 全程已历小时
+projected = clamp((current + rate × 剩余小时) / goal × 100, 0, 100)
+etaH = (goal - current) / rate
+win = etaH ≤ remainingH
+</pre>
+        <ul>
+          <li>速率来源优先级：实测帧全程均速 → 近 1 小时实测 → 推演均速</li>
+          <li>type 11（占领标记）不做线性外推（进度是 0/1 跳变）</li>
+          <li>type 13（驻守）只判当前是否满足条件</li>
+        </ul>
+        <h3>装备限定（限定装备官中名）</h3>
+<pre>
+setting.tasks[].values[5]（装备 ID）
+  → scripts/order_items_en.json（社区提取的官方英文串）
+  → 站点图鉴 terms.json（官方简中名）
+  → en_fallback（明确标记英文名回退）
+  → unresolved（只保留 raw ID，不猜名）
+</pre>
+      </div>
+    </section>
+
+    <!-- ============ 4 星球指挥台 ============ -->
+    <section class="panel" id="sec-planet">
+      <h2><span class="no">04</span>星球详情页（星球指挥台）</h2>
+      <div class="panel-body">
+        <p><b>文件</b>：<code>HD2-Galatic_war-Map/planet.html</code></p>
+        <h3>信息架构（桌面 ≥1280px 三栏指挥台）</h3>
+<pre>
+┌─────────────────── Command Hero（全宽）───────────────────┐
+│  左：身份          中：168px 解放进度环      右：Quick Intel │
+│  （中/英/序号/      （aria-label + 文本值）    （在线/占比/   │
+│   星区/归属/状态）                                  净速率/…）│
+├──────────────┬──────────────────────┬──────────────────────┤
+│ 左 4 栏       │ 中 5 栏               │ 右 3 栏              │
+│ 战略态势      │ 星球趋势（主图）       │ 星球统计              │
+│ 补给线        │ 下属区域              │ （13 张 KPI 卡）     │
+├──────────────┴──────────────────────┴──────────────────────┤
+│ 环境与作战参数（全宽）                                        │
+├──────────────────────────────────────────────────────────────┤
+│ 数据口径（折叠 details）                                      │
+└──────────────────────────────────────────────────────────────┘
+</pre>
+        <h3>关键公式（与星图完全一致）</h3>
+        <div class="tw"><table>
+          <thead><tr><th>公式</th><th>表达式</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>解放进度</td><td><code>1 − health / maxHealth</code></td><td>己方星球按 100% 显示（官方报满血）</td></tr>
+            <tr><td>推演速率</td><td><code>在线玩家 × impactMultiplier × LIB_RATE_K ÷ 血量 − 抵抗度</code></td><td>LIB_RATE_K = 90</td></tr>
+            <tr><td>等效推进速率</td><td><code>净速率 × 血量倍数</code>（基准球=100 万血）</td><td>让「血厚」折回百分比体感</td></tr>
+            <tr><td>抵抗度</td><td><code>regenPerSecond / maxHealth × 100</code> (%/h)</td><td></td></tr>
+            <tr><td>每小时回血</td><td><code>抵抗度% × maxHealth / 100</code> (HP/h)</td><td>推演口径绝对值</td></tr>
+          </tbody>
+        </table></div>
+        <h3>词条权威链</h3>
+<pre>
+hd2_variables.json（行动变量表，82 个 effect id，中文名+描述+分组）
+  → galactic_effects.json（description_cn 官方中文 + description 英文）
+  → effect_id_cn.json（中文名兜底，191 条）
+  → 效果 #原始ID（照实显示，不猜名）
+</pre>
+        <p>占位符替换（<code>fillEffectTemplate</code>，共享模块 <code>js/planet-card-effects.js</code>）：</p>
+        <ul>
+          <li><code>#V_ONE</code> 配备名类（ARSENAL AUGMENTATION）→ 确定性替换为 <code>stratagems_full</code> 站内中文名</li>
+          <li><code>#V_ONE</code> / <code>#V_TWO</code> / <code>#AMOUNT</code> 数值类 → 查 <code>tables/effect_values.json</code>（galacticWarEffects 309 条）替换实值</li>
+          <li>槽位为 0 → <code>[动态值]</code> 标注（不猜）</li>
+        </ul>
+        <h3>词条分组</h3>
+        <p>保留分组：<b>变种类</b>（终结族变种 / 特殊个体 / 机器人军团 / …）+ <b>作战限制</b>。其余（深域惧像 / 环境条件 / 设施与场所等）不分组平铺底部。</p>
+        <h3>单星球趋势图</h3>
+        <p>数据来自 <code>hd2-planet-history</code> 仓库（GitHub Pages）：</p>
+        <ul>
+          <li>双轴折线：左轴=在线人数（蓝实线），右轴=解放度（黄虚线）</li>
+          <li>hover 十字线 + tooltip（时间 / 人数 / 解放度 / HP / 归属）</li>
+          <li>无历史时退回全服分布趋势</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 5 银河星图 ============ -->
+    <section class="panel" id="sec-map">
+      <h2><span class="no">05</span>银河星图</h2>
+      <div class="panel-body">
+        <p><b>文件</b>：<code>HD2-Galatic_war-Map/galaxy-map-v2.html</code>（约 3100 行单文件 SPA）</p>
+        <p><b>技术栈</b>：MapLibre GL（本地 <code>js/libs/maplibre/</code>）+ 原生 JS，无框架无构建。</p>
+        <h3>图层</h3>
+        <ul>
+          <li>星球圆点：按阵营着色（<code>--c-humans/terminids/automaton/illuminate</code>）</li>
+          <li>补给线：<code>tables/waypoints.json</code>（186 星球 / 341 条连接）</li>
+          <li>星球图标：<code>assets/planet-icons/&lt;英文名&gt;.png</code>（273 个，本地）</li>
+        </ul>
+        <p><b>星球卡</b>：<code>js/planet-card-effects.js</code> 共享模块——行动变量图标 + 统一折叠区（城市列表 + 详情），主页与星图共用。</p>
+        <p><b>载入遮罩</b>：<code>js/boot-splash.js</code> + <code>css/boot-splash.css</code>（旗帜徽标脉冲 + 分段进度条 + lore 轮换），五页面统一。</p>
+      </div>
+    </section>
+
+    <!-- ============ 6 下属区域 ============ -->
+    <section class="panel" id="sec-regions">
+      <h2><span class="no">06</span>下属区域（城市 / 超大型工厂）</h2>
+      <div class="panel-body">
+        <h3>数据源</h3>
+        <ul>
+          <li>静态表 <code>tables/planet_regions.json</code>（84 颗有城市/工厂的星球，来自 wiki Lua 模块）</li>
+          <li>中文名 <code>tables/planet_regions_zh.json</code>（游戏内文本解包的官方简中）</li>
+          <li>运行时 <code>data.json → planets[].regions[]</code>（官方实时数据）</li>
+        </ul>
+        <p><b>区域速率</b>：实测优先（<code>data/recent/planet_regions.json</code> 帧差分），推演兜底（区域玩家 × impactMultiplier × K ÷ 区域血量 − 区域抵抗度）。</p>
+        <h3>区域规则（<code>js/regions.js</code>）</h3>
+        <ul>
+          <li>开放条件 = <code>入侵进度 ≥ (1 − availabilityFactor) × 100</code> 或 <code>主星球解放 ≥ 阈值</code></li>
+          <li>解放贡献 = <code>区域满血 × damageMultiplier / 母星球血池 × 100</code>（个百分点）</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 7 解放速率与实测帧 ============ -->
+    <section class="panel" id="sec-rate">
+      <h2><span class="no">07</span>解放速率与实测帧</h2>
+      <div class="panel-body">
+        <div class="callout"><span class="t">全站统一口径</span>实测优先、推演兜底。</div>
+        <h3>实测帧</h3>
+        <ul>
+          <li>来源：<code>data/recent/</code>（CDN 15 分钟一帧，由采集脚本落盘）</li>
+          <li>文件：<code>index.json</code>（清单）、<code>planet_&lt;idx&gt;.json</code>（单星球血量帧）、<code>assignments.json</code>（MO 进度帧）、<code>planet_regions.json</code>（区域帧）</li>
+          <li><b>断更保护</b>：清单生成时间超 3 小时 → 整块停用实测，自动回退推演</li>
+        </ul>
+        <h3>差分公式</h3>
+<pre>
+实测净推进 %/h = −(末帧血量 − 首帧血量) ÷ 满血 × 100 ÷ 帧间隔小时
+施加 / 纯产出   = 实测净推进 + 抵抗度
+等效抵抗度     = regenPerSecond × 3600 ÷ 1,000,000 × 100（100 万血基准）
+</pre>
+        <p><b>满血顶格拒绝</b>：窗口首尾帧都 ≥ 满血（容差 0.05%）时不产出实测（Δ=0 不代表净速率为 0，必须交推演兜底）。</p>
+        <p><b>易主拒绝</b>：窗口内星球归属发生变化时不产出实测。</p>
+      </div>
+    </section>
+
+    <!-- ============ 8 DSS ============ -->
+    <section class="panel" id="sec-dss">
+      <h2><span class="no">08</span>DSS 民主空间站</h2>
+      <div class="panel-body">
+        <p><b>数据源</b>：<code>data.json → dss</code>（官方 <code>spaceStations</code> + <code>tacticalActions</code>）</p>
+        <h3>捐献进度（<code>js/dss-donations.js</code> 口径）</h3>
+        <ul>
+          <li>进度 = <code>cost[0].current / cost[0].target × 100</code>（只在筹集期展示）</li>
+          <li>资源映射：<code>itemMixId</code> → 普通样本 / 稀有样本 / 申购点</li>
+          <li>每人限额 = <code>maxDonation</code> / <code>maxDonationPeriodSec</code></li>
+        </ul>
+        <p><b>生效效果</b>：<code>activeEffectIds</code> → 对照表（<code>HD2行动变量对照表.md</code> TACTICAL ACTION 段）→ 中文名 + 描述</p>
+      </div>
+    </section>
+
+    <!-- ============ 9 趋势 ============ -->
+    <section class="panel" id="sec-trend">
+      <h2><span class="no">09</span>全服趋势与单星球趋势</h2>
+      <div class="panel-body">
+        <h3>全服趋势（主面板 index.html）</h3>
+        <ul>
+          <li>数据：<code>data/history/player_distribution.json</code>（CI 每 5 分钟追加）</li>
+          <li>Chart.js 折线：四阵营各一条 + 全服合计虚线</li>
+          <li><b>这不是单星球历史</b>——官方 API 不提供单星球历史曲线</li>
+        </ul>
+        <h3>单星球趋势（planet.html）</h3>
+        <ul>
+          <li>数据：<code>hd2-planet-history</code> 仓库 GitHub Pages</li>
+          <li>采样：每 15 分钟（与主站同步），24h 滚动窗口</li>
+          <li>去重：与最后一条 <code>{players, health, owner}</code> 完全相同则跳过</li>
+          <li>格式：<code>{"planets": {"&lt;idx&gt;": [[epoch_ms, players, health, owner_id], ...]}}</code></li>
+          <li>渲染：原生 canvas 双轴折线 + hover 十字线 + tooltip</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 10 归属变化 ============ -->
+    <section class="panel" id="sec-ownership">
+      <h2><span class="no">10</span>星图归属变化</h2>
+      <div class="panel-body">
+        <p><b>数据源</b>：<code>data.json → ownership_history</code></p>
+        <h3>字段</h3>
+        <ul>
+          <li><code>events[]</code>：归属变化事件（<code>detectedAt / planetIndex / fromOwner / toOwner / previousSeenAt</code>）</li>
+          <li><code>defenseEvents[]</code>：防守成功事件（<code>detectedAt / planetIndex / attacker</code>）</li>
+        </ul>
+        <h3>展示（<code>js/ownership-changes.js</code>）</h3>
+        <ul>
+          <li>按时间窗口（24h / 48h / 7d）筛选</li>
+          <li>星球聚合：多场变化串成链（如 超级地球→终结族→超级地球）</li>
+          <li><code>previousSeenAt</code> 早于窗口起点 → 标注「范围待确认」</li>
+          <li>覆盖率：标注实际覆盖时长（数据积累中可能不满窗口）</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 11 环境与词条 ============ -->
+    <section class="panel" id="sec-effects">
+      <h2><span class="no">11</span>环境与词条（行动变量）</h2>
+      <div class="panel-body">
+        <h3>数据源（三级权威链）</h3>
+        <ol>
+          <li><code>tables/hd2_variables.json</code> — 行动变量对照表（82 个 effect id，含中文名/中文描述/分组/效果 ID 数组）</li>
+          <li><code>tables/galactic_effects.json</code> — 217 条（含 <code>description_cn</code> 官方中文 + <code>description</code> 英文 + <code>name</code> 英文名）</li>
+          <li><code>tables/effect_id_cn.json</code> — 191 条中文名兜底</li>
+        </ol>
+        <p><b>分组</b>：保留分组：变种类 + 作战限制；其余不分组平铺底部。</p>
+        <p><b>占位符替换</b>：见<a href="#sec-planet">星球指挥台 § 词条权威链</a>。</p>
+        <p><b>效果数值表</b>：<code>tables/effect_values.json</code>（309 条，来源 companion live API <code>galacticWarEffects</code>——游戏 GalacticEffectSetting 透传，非文案创作内容）。</p>
+      </div>
+    </section>
+
+    <!-- ============ 12 补给线 ============ -->
+    <section class="panel" id="sec-supply">
+      <h2><span class="no">12</span>补给线 / 相邻星球</h2>
+      <div class="panel-body">
+        <p><b>数据源</b>：<code>tables/waypoints.json</code>（来自 helldivers2.dev，186 星球 / 341 条连接）</p>
+        <p><b>展示</b>：相邻星球列表 + 状态 chip：<span class="chip blue">超级地球控制</span><span class="chip">敌方控制（阵营色）</span><span class="chip gold">当前有战役</span></p>
+        <p><b>战略提示</b>（仅可推导时显示）：</p>
+        <ul>
+          <li>本星球敌方控制 + 无战役 + 相邻全部敌方 → 「无法发动解放战役」</li>
+          <li>本星球有战役 + 相邻也有战役 → 「多线作战」</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 13 弹道模拟器 ============ -->
+    <section class="panel" id="sec-ballistics">
+      <h2><span class="no">13</span>弹道模拟器</h2>
+      <div class="panel-body">
+        <p><b>文件</b>：<code>HD2_Ballistics/</code>（纯前端离线，无第三方依赖）</p>
+        <p><b>作者</b>：<a href="https://github.com/Darctor" target="_blank" rel="noopener">@Darctor</a> · <a href="https://space.bilibili.com/300385406" target="_blank" rel="noopener">哔哩哔哩</a></p>
+        <h3>物理模型（<code>ballistics.js</code>）</h3>
+        <ul>
+          <li>各向同性二次空气阻力：<code>a_drag = -K·|v|·v</code>，<code>K = 0.5·ρ·Cd·A/m</code></li>
+          <li>恒定重力（可乘 gravity_multiplier）</li>
+          <li>伤害公式：<code>伤害比例 = 25% + 75%·(v/v_config)²</code></li>
+          <li>速度继承：发射者移动矢量按世界坐标（X前/Y上/Z右）合成到出膛初速</li>
+        </ul>
+        <h3>武器目录（<code>HD2_Ballistics/data/equipment_catalog.json</code>）</h3>
+        <ul>
+          <li>上游来源：<code>Darctor/Helldivers2_RawData</code>（按 HEAD SHA 绑定 URL）</li>
+          <li>同步频率：每天（<code>sync-ballistics-catalog.yml</code>）</li>
+          <li>关联规则：Wiki 装备名 → PWC 组件名（精确归一→标点归一）→ 射弹（组件直配→伤害+数值确定性搜索）</li>
+        </ul>
+        <p><b>预算上限</b>：MAX_TOTAL_STEPS=250000（积分步数）、MAX_ANGLE_SAMPLES=3600（扫描采样数），超限直接报错。</p>
+      </div>
+    </section>
+
+    <!-- ============ 14 翻译链路 ============ -->
+    <section class="panel" id="sec-trans">
+      <h2><span class="no">14</span>翻译链路（HD2Web-Trans）</h2>
+      <div class="panel-body">
+        <p><b>独立仓库</b>（私密）：<code>Jerry114514/HD2Web-Trans</code></p>
+        <p><b>主同步频率</b>：每 15 分钟（cron <code>*/15</code>）</p>
+        <h3>数据流</h3>
+<pre>
+官方 API zh-Hans（新闻/MO/事件正文）
+  → 官中缺失时 DeepSeek 机翻兜底
+  → TransNews.json / official_texts.json
+  → repository_dispatch 触发 Push TransNews to Page
+  → merge_push_page.py 合并进主仓 data.json
+  → Pages 重建
+</pre>
+        <p><b>合并优先级</b>：人工译文（manual:true）&gt; 官方中文（official_zh）&gt; 机翻（machine_translation）&gt; 英文原文（official_untranslated）</p>
+      </div>
+    </section>
+
+    <!-- ============ 15 CI 与自动化 ============ -->
+    <section class="panel" id="sec-ci">
+      <h2><span class="no">15</span>CI 与自动化</h2>
+      <div class="panel-body">
+        <div class="tw"><table>
+          <thead><tr><th>Workflow</th><th>频率</th><th>功能</th></tr></thead>
+          <tbody>
+            <tr><td><code>fetch-data.yml</code></td><td>每 5 分钟</td><td>抓取官方 API → data.json + 实测帧</td></tr>
+            <tr><td><code>sync-ballistics-catalog.yml</code></td><td>每天</td><td>武器目录同步（RawData 上游）</td></tr>
+            <tr><td><code>upstream-watch.yml</code></td><td>每天</td><td>wiki.gg 页面内容变更侦测</td></tr>
+            <tr><td><code>api-schema-watch.yml</code></td><td>每天 2 次</td><td>API 信息源结构变更侦测 + Issue 报告</td></tr>
+            <tr><td><code>validate-data.yml</code></td><td>PR / push</td><td>社区投稿数据校验</td></tr>
+            <tr><td><code>validate-forecast.yml</code></td><td>PR / push</td><td>物理模型 / 前端回归测试</td></tr>
+            <tr><td><code>sync-tables.yml</code></td><td>—</td><td>静态表同步</td></tr>
+            <tr><td><code>fetch-patchnotes.yml</code></td><td>—</td><td>版本公告发现</td></tr>
+          </tbody>
+        </table></div>
+        <h3>API Schema Watch</h3>
+        <ul>
+          <li>监控 8 个信息源端点的<b>结构</b>（字段名 + 类型）</li>
+          <li>与仓库基线 <code>data/api_schema_baseline.json</code> 比对（542 个字段路径）</li>
+          <li>有变更 → 刷新常驻 Issue（label: <code>api-schema-watch</code>）+ 自动更新基线</li>
+          <li>来源不可达 → 保留旧基线不误报</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 数据真实性边界 ============ -->
+    <section class="panel" id="sec-truth">
+      <h2><span class="no">⚖</span>数据真实性边界</h2>
+      <div class="panel-body">
+        <div class="callout red">
+          <span class="t">底线</span>缺失数据显示「—」「暂无区域数据」「尚未接入」，<b>不得填入示例值</b>；未收录 effect id 照实显示原始编号，<b>不猜测名称</b>。
+        </div>
+        <ul>
+          <li>缺失数据显示「—」「暂无区域数据」「尚未接入」，<b>不得填入示例值</b></li>
+          <li>未收录 effect id 照实显示原始编号，<b>不猜测名称</b></li>
+          <li>槽位为 0 的效果数值保持 <code>[动态值]</code> 标注，<b>不猜值</b></li>
+          <li>击杀按星球累计不按阵营归属，照实呈现不修正</li>
+          <li>「命中率 &gt; 100%」是官方原始数据特征，照实呈现不修正</li>
+          <li>全服趋势<b>不是</b>单星球历史，页面明确标注</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="lnk">
+      <a href="./index.html">⚔️ 战况面板</a>
+      <a href="./galaxy-map-v2.html">🌌 银河星图</a>
+      <a href="../HD2_Wiki/wiki.html">📚 科学部数据中心</a>
+      <a href="../HD2_Ballistics/index.html">🎯 弹道模拟器</a>
+    </div>
+    <div>技术详解 · 与 <a href="https://github.com/Jerry114514/Jerry114514.github.io/blob/main/docs/%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3.md" target="_blank" rel="noopener">docs/技术详解.md</a> 同源维护 ·
+      © 2026 Helldivers2 真理部 · 本站非官方项目，与 Arrowhead Game Studios 无任何隶属关系</div>
+  </footer>
+
+  <script src="./js/boot-splash.js?v=20261026a"></script>
+  <script>
+    /* 纯静态文档页：遮罩只做全站统一的短暂过渡，不抓数据 */
+    HD2Boot.mount();
+    HD2Boot.setMsg("正在调取真理部技术档案…");
+    document.addEventListener("DOMContentLoaded", function () {
+      HD2Boot.done();
+    });
+  </script>
+</body>
+</html>
