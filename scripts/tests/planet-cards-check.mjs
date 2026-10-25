@@ -419,13 +419,32 @@ console.log(`${checks} planet-card regression cases passed.`);
   assert.equal(a.named, true); assert.equal(a.dynamic, false);
   const b = F("The #V_ONE stratagem is available.", "ARSENAL AUGMENTATION: AC-8 AUTOCANNON");
   assert.ok(b.text.includes("AC-8 AUTOCANNON") && !b.text.includes("#"));
-  const c = F("撤离所需时间延长#V_TWO秒。", "PILOT SHORTAGE");
-  assert.ok(c.text.includes("[动态值]") && !c.text.includes("#V_TWO"));
-  assert.equal(c.dynamic, true); assert.equal(c.named, false);
-  const d = F("所有星球上的战场拾取物中将<i=1>增加#AMOUNT%</i>的弹药。", "MORE BATTLEFIELD AMMO");
-  assert.ok(d.text.includes("[动态值]") && !d.text.includes("#"));
+  // 数值类·有值：effect_values 行替换（极光湾 #1363：values=[0,30] → 30 秒）
+  const c = F("撤离所需时间延长#V_TWO秒。", "PILOT SHORTAGE", null, { t: 21, vt: [3, 1], v: [0, 30] });
+  assert.ok(c.text.includes("延长30秒"), "#V_TWO 应替换为 values[1] 绝对值: " + c.text);
+  assert.ok(!c.text.includes("#")); assert.equal(c.dynamic, false);
+  // 负值（缩短）：1182 values=[0,-90] → 90，方向词模板自带
+  const c2 = F("撤离所需时间缩短#V_TWO秒。", "AERIAL DOMINANCE", null, { t: 21, vt: [3, 1], v: [0, -90] });
+  assert.ok(c2.text.includes("缩短90秒"), c2.text);
+  // #V_ONE 用 values[0]（1370 SLOWER EAGLE REARM：[15,0] → 15%）
+  const c3 = F("重新武装的时间减慢#V_ONE%。", "SLOWER EAGLE REARM", null, { t: 23, vt: [1, 0], v: [15, 0] });
+  assert.ok(c3.text.includes("15%"), c3.text);
+  // #AMOUNT 用 values[1]（87 MORE BATTLEFIELD AMMO：[1,10] → 10%）
+  const c4 = F("战场拾取物中将增加#AMOUNT%的弹药。", "MORE BATTLEFIELD AMMO", null, { t: 56, vt: [1, 1], v: [1, 10] });
+  assert.ok(c4.text.includes("10%"), c4.text);
+  // 数值行缺失 → [动态值]（不猜）
+  const c5 = F("撤离所需时间延长#V_TWO秒。", "PILOT SHORTAGE");
+  assert.ok(c5.text.includes("[动态值]") && !c5.text.includes("#V_TWO"));
+  assert.equal(c5.dynamic, true);
+  // 槽位为 0 → 视为实例未定，同样 [动态值]
+  const c6 = F("携带弹匣数减少#V_ONE%。", "AMMO SHORTAGE", null, { t: 25, vt: [2, 0], v: [0, 0] });
+  assert.ok(c6.text.includes("[动态值]"), c6.text);
   const e = F("绝地潜兵部署时携带弹匣数减少<i=1>#V_ONE%</i>。", "AMMO SHORTAGE");
   assert.ok(e.text.includes("[动态值]") && !e.text.includes("#"));
+  // 游戏富文本标签剥离（保留内文）
+  const g1 = F("战场拾取物中将<i=1>减少10%</i>的弹药。", "LESS BATTLEFIELD AMMO");
+  assert.ok(!g1.text.includes("<"), "富文本标签应剥离: " + g1.text);
+  assert.ok(g1.text.includes("减少10%"), g1.text);
   const f0 = F("撤离时间额外延迟 30 秒。", "FLIGHT DELAY");
   assert.equal(f0.text, "撤离时间额外延迟 30 秒。"); assert.equal(f0.dynamic, false);
 }
