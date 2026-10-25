@@ -239,6 +239,7 @@
     }
   </style>
   <link rel="stylesheet" href="./assets/css/hud-skin.css?v=20260918a">
+  <link rel="stylesheet" href="../HD2-Galatic_war-Map/css/boot-splash.css?v=20261026a">
 </head>
 <body>
   <header class="wiki-header">
@@ -269,7 +270,7 @@
   </div>
 
   <div class="wiki-grid" id="wiki-grid">
-    <div class="loading">正在加载维基数据…</div>
+    
   </div>
 
   <div class="wiki-grid">
@@ -573,6 +574,15 @@
       if (window.requestIdleCallback) { window.requestIdleCallback(prefetch, { timeout: 4000 }); }
       else { window.setTimeout(prefetch, 2500); }
     });
+  </script>
+  <script src="../HD2-Galatic_war-Map/js/boot-splash.js?v=20261026a"></script>
+  <script>
+    if (window.HD2Boot) {
+      HD2Boot.mount({ assetPrefix: "../HD2-Galatic_war-Map/" });
+      HD2Boot.setMsg("📚 正在调取科学部数据库…");
+      // wiki 数据为静态 JSON（本地部署几乎即时），1 秒后淡出
+      setTimeout(function () { HD2Boot.done(); }, 800);
+    }
   </script>
 </body>
 </html>
