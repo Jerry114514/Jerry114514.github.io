@@ -148,7 +148,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-25T22:15:45Z",
+  "computed_at": "2026-10-26T00:30:41Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -225,22 +225,58 @@
    "expires_at_war_seconds": 85234240,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501083,
+   "id32": 3024757915,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85115331,
+   "text_source": "official_untranslated",
+   "mt": false
+  },
+  {
+   "event_id": 1501084,
+   "id32": 4101411329,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85115331,
+   "text_source": "official_untranslated",
+   "mt": false
+  },
+  {
+   "event_id": 1501085,
+   "id32": 2126005334,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85115336,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-25T22:15:45Z",
+  "source_version": "2026-10-26T00:30:41Z",
   "war_id": 801,
-  "war_time_seconds": 85026310,
-  "last_success_at": "2026-10-25T22:15:45Z",
+  "war_time_seconds": 85034410,
+  "last_success_at": "2026-10-26T00:30:41Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-25T22:15:45Z",
-  "retrieved_at": "2026-10-25T22:15:45Z",
+  "source_version": "2026-10-26T00:30:41Z",
+  "retrieved_at": "2026-10-26T00:30:41Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -251,7 +287,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 300000000,
-    "progress": 26698655,
+    "progress": 28161456,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -268,7 +304,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 65000000,
-    "progress": 10517972,
+    "progress": 10738595,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
@@ -285,7 +321,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 50000000,
-    "progress": 20800876,
+    "progress": 23762723,
     "requirement": {
      "type": "equipment",
      "id": 2197477188,
