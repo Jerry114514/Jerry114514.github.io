@@ -46,7 +46,8 @@
     a:hover{color:var(--yellow-2);text-decoration:underline}
     code{
       font-family:var(--font-body);background:var(--panel);border:1px solid var(--line);
-      padding:1px 6px;color:var(--yellow-2);font-size:.92em;white-space:nowrap;
+      padding:1px 6px;color:var(--yellow-2);font-size:.92em;
+      white-space:normal;overflow-wrap:anywhere;
     }
     /* ---------- 顶栏 ---------- */
     .topbar{
@@ -134,6 +135,23 @@
     }
     .chip.gold{color:var(--yellow);border-color:var(--brass)}
     .chip.blue{color:var(--blue)}
+    /* ---------- 技术示意图 ---------- */
+    figure.diagram{
+      margin:16px 0 20px;border:1px solid var(--line-2);
+      background:#07111C;
+    }
+    figure.diagram a{display:block}
+    figure.diagram img{
+      display:block;width:100%;height:auto;background:#07111C;
+      border-bottom:1px solid var(--line-2);
+    }
+    figure.diagram figcaption{
+      padding:9px 12px;color:var(--dim);font-size:.82rem;line-height:1.6;
+      background:var(--panel);
+    }
+    .map-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+    .map-legend > div{border:1px solid var(--line-2);background:var(--panel);padding:8px 10px;font-size:.84rem}
+    .map-legend b{display:block;color:var(--yellow-2);margin-bottom:2px}
     /* ---------- 页脚 ---------- */
     footer{
       border-top:1px solid var(--line-2);background:var(--bg-2);
@@ -148,6 +166,7 @@
       .wrap{padding:18px 12px 40px}
       .panel-body{padding:12px 14px 16px}
       section.panel > h2{padding:10px 14px}
+      .map-legend{grid-template-columns:1fr}
       body{font-size:14px}
     }
   </style>
@@ -350,6 +369,99 @@ hd2_variables.json（行动变量表，82 个 effect id，中文名+描述+分�
         </ul>
         <p><b>星球卡</b>：<code>js/planet-card-effects.js</code> 共享模块——行动变量图标 + 统一折叠区（城市列表 + 详情），主页与星图共用。</p>
         <p><b>载入遮罩</b>：<code>js/boot-splash.js</code> + <code>css/boot-splash.css</code>（旗帜徽标脉冲 + 分段进度条 + lore 轮换），五页面统一。</p>
+
+        <h3>为什么星区边界看起来像“类矩形”</h3>
+        <p>游戏没有向公开接口提供可直接使用的星区多边形。当前星图不连接真实星球坐标生成自由多边形，而是把银河盘面切成一套<b>极坐标格网</b>，先判定每个格属于哪个星区，再沿不同星区之间的格边提取并集轮廓。</p>
+        <div class="callout">
+          <span class="t">核心口径</span>
+          一周 <b>24</b> 个楔形，每格 <b>15°</b>；径向 <b>10</b> 环，每环 <b>0.1</b>。整张图固定为
+          <code>24 × 10 = 240</code> 格。每条边只能是径向直线或同心弧，所以多格合并后会像几块大小不一、略带弧度的倾斜矩形。
+        </div>
+        <p class="note">这些边界是社区按星球分布推断出的可视化范围，不是官方行政区划。格网尺度直接决定观感：过粗会出现大台阶，过细又会失去游戏里的“大块领土”轮廓。</p>
+
+        <h3>1. 输入：位置、星区与归属</h3>
+        <div class="tw"><table>
+          <thead><tr><th>输入</th><th>用途</th><th>是否影响几何</th></tr></thead>
+          <tbody>
+            <tr><td><code>planets[].position</code></td><td>归一化银河平面坐标 <code>(x,y)</code>，半径约 0–1</td><td>是，决定星球所在格和空格补齐</td></tr>
+            <tr><td><code>secCnByPlanet(planet)</code></td><td>按 <code>starmap</code> 权威映射取得中文星区名</td><td>是，格子的归属标签</td></tr>
+            <tr><td><code>currentOwner</code></td><td>星区底色、势力统计</td><td>否，换阵营不改边界形状</td></tr>
+          </tbody>
+        </table></div>
+
+        <h3>2. 把星球投到 15° × 0.1 的格网</h3>
+        <p>角度从屏幕上方向开始编号，同时把右手系坐标旋转 90°，使编号方向与站内星图一致。格键写作 <code>w:r</code>：</p>
+<pre>
+θ  = normalize(atan2(y, x) + 90°)
+w  = floor(θ / 15°)             <i>// 0..23</i>
+r  = floor(hypot(x, y) × 10)    <i>// 0..9</i>
+id = w + ":" + r
+</pre>
+        <p><code>w=23</code> 的下一个角向格回到 <code>w=0</code>，因此所有角向邻接都做 24 取模。半径两端会钳制到合法范围，避免浮点误差产生 <code>r=-1</code> 或 <code>r=10</code>。</p>
+
+        <h3>3. 用星球决定每格归属</h3>
+        <figure class="diagram">
+          <a href="../docs/images/sector-grid-assignment.svg" target="_blank" rel="noopener">
+            <img src="../docs/images/sector-grid-assignment.svg" alt="星区极坐标格网、同格投票和空格最近星球归属示意图" loading="lazy" decoding="async">
+          </a>
+          <figcaption>图 1：格网归属的局部语义示意。真实数据固定为 24 个 15° 楔形 × 10 个径向环。</figcaption>
+        </figure>
+        <ol>
+          <li><b>星球认领自己的格</b>：按上式计算 <code>cellId</code>，把星球加入该格。</li>
+          <li><b>一格多星时投票</b>：统计格内星球所属星区，星区数量最多者获胜。</li>
+          <li><b>票数相同看距离</b>：比较星球到格心的欧氏距离，最近的星球所属星区获胜。这样可避免“这颗星球长在别人家色块里”。</li>
+          <li><b>空格寻找最近星球</b>：对没有星球的格，以其格心为查询点，选择全图欧氏距离最近的星球，并继承该星球的星区。</li>
+        </ol>
+        <p>完成后得到完整的 <code>cellOwner[w:r]</code>。当前数据里 240 格全部有归属，没有未分配空洞；星区边界只能落在格线上，不会穿过某一格。</p>
+        <div class="callout red">
+          <span class="t">底色不是边界</span>
+          星区是否存在敌占星球只影响填充颜色。即使整片星区都归超级地球，边界线仍照常存在；几何与当前阵营是两套独立状态。
+        </div>
+
+        <h3>4. 从 240 个格中提取共享边</h3>
+        <p>若逐格描边，每格的四个边都会重复绘制，半透明填充下会出现发丝缝和叠色。现行实现把整个格网看成一张平面图：</p>
+        <ol>
+          <li>对每个格检查内弧、外弧、顺时针径向边、逆时针径向边。</li>
+          <li>只有“当前格星区 ≠ 邻格星区”的边才进入轮廓。</li>
+          <li>轮廓边按逆时针方向登记：内弧沿 <code>+w</code>、右径向沿 <code>+r</code>、外弧沿 <code>-w</code>、左径向沿 <code>-r</code>。</li>
+          <li>角点记为 <code>w:r</code>；全部轮廓边先合并成无向边表。</li>
+          <li>在度数不等于 2 的 junction 处切链。两个 junction 之间的连续边形成一条<b>共享边链</b>，相邻星区以正、反方向共同引用。</li>
+        </ol>
+        <p>这一步同时处理两个容易出错的情况：相邻星区必须得到完全相同的折线，不能各自简化；两个格只接触一个角点时，该角可能“2 进 2 出”，所以程序保存的是有向边列表，而不是每个角点的唯一后继。</p>
+
+        <h3>5. 只合并同向共线点，保留直角拐点</h3>
+        <figure class="diagram">
+          <a href="../docs/images/sector-contour-weld.svg" target="_blank" rel="noopener">
+            <img src="../docs/images/sector-contour-weld.svg" alt="星区共享边链、共线点合并、走环和 MultiPolygon 输出示意图" loading="lazy" decoding="async">
+          </a>
+          <figcaption>图 2：共享边链只导出一次；简化只删除同向共线中间点，最后走环并输出 MultiPolygon。</figcaption>
+        </figure>
+        <p>早期版本尝试用 Douglas–Peucker 把细密台阶压成直线，边界会更平滑，但会变成任意角度的斜多边形，失去游戏观感。现行算法只删除<b>连续、同向且叉积近似为零</b>的中间点：</p>
+        <ul>
+          <li>径向边继续是直线；</li>
+          <li>同心弧按 <code>1.25°</code> 一段取样，避免长弧退化成一根弦；</li>
+          <li>所有 90° 型拐点保留，形状严格留在原始格网坐标上。</li>
+        </ul>
+        <p>共享链先统一简化，再供两侧星区共同使用，所以相邻填充之间不会因为两条不同的简化折线而裂开。</p>
+
+        <h3>6. 走环、识别洞并输出 MultiPolygon</h3>
+        <ol>
+          <li>从任一未使用的有向边开始；走到共享链时，一次性复用整条链的折线。</li>
+          <li>在 junction 选择“最左转”出口。这是平面图追踪面的标准做法，也能把对角相接的两格拆成两个独立面。</li>
+          <li>回到起始边视为闭合。步数上限 <code>5000</code> 防止异常数据卡死；未能闭合的环会被跳过并在控制台告警。</li>
+          <li>用有符号面积区分外环和内环（洞）。外环、内环分别整理成 RFC 7946 要求的绕向。</li>
+          <li>若某星区被另一星区完整包围，以射线法做点在多边形内测试，寻找最小宿主外环并挂入对应洞。</li>
+          <li>每个星区输出一个 GeoJSON <code>Feature</code>，几何为 <code>MultiPolygon</code>，属性包括星区名、星球数、描边色和底色。</li>
+        </ol>
+        <p>填充与描边最终复用同一份 GeoJSON，不需要为每格单独建面。这样既消除格间缝，也降低重复面片数量和 GPU 绘制开销。</p>
+
+        <h3>7. 复杂度、稳定性与边界</h3>
+        <div class="map-legend">
+          <div><b>归属计算</b>空格最近星球需要约 <code>240 × N</code> 次距离比较，<code>N</code> 为当前星球数。</div>
+          <div><b>几何稳定</b>星球坐标和星区映射不变时，边界是确定性的；只有阵营颜色会随实时战况变化。</div>
+          <div><b>重算时机</b>修改 <code>WED/RING</code>、新增星球或修正星区映射后才需要重新生成。</div>
+        </div>
+        <p class="note">它是“像游戏”的推断边界，而不是官方数据解密结果。若按真实世界法律、剧情或游戏后台区划理解，会得到错误结论；本页描述的是当前 <code>galaxy-map-v2.html</code> 实际执行的渲染算法。</p>
       </div>
     </section>
 
