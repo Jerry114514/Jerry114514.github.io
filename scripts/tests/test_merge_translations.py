@@ -77,6 +77,28 @@ class MergeTranslationsTests(unittest.TestCase):
         out = self._run_merge(data, trans)
         self.assertNotIn("tasks", out["major_order"], "跨指令旧 tasks 不得合并到新指令")
 
+    def test_matching_prev_tasks_reused_when_new_tasks_stale(self):
+        prev_tasks = {"id32": 42, "items": TASKS["items"]}
+        data = {"major_order": {"id32": 42, "tasks": prev_tasks}, "news": []}
+        trans = {"mo_brief": {"id32": 42, "translated": "新简报"}, "items": [],
+                 "tasks": {"id32": 568917260, "items": TASKS["items"]}}
+        out = self._run_merge(data, trans)
+        self.assertEqual(out["major_order"]["tasks"]["id32"], 42)
+
+    def test_mismatched_prev_tasks_not_reused(self):
+        data = {
+            "major_order": {
+                "id32": 42,
+                "tasks": {"id32": 41, "items": TASKS["items"]},
+            },
+            "news": [],
+        }
+        trans = {"mo_brief": {"id32": 42, "translated": "新简报"}, "items": [],
+                 "tasks": {"id32": 568917260, "items": TASKS["items"]}}
+        out = self._run_merge(data, trans)
+        self.assertNotIn("tasks", out["major_order"],
+                         "旧 tasks 自身也不匹配当前 MO 时必须降级，不能沿用")
+
     def test_transnews_missing_degrades_cleanly(self):
         with tempfile.TemporaryDirectory() as tmp:
             data_p = Path(tmp) / "data.json"

@@ -19,8 +19,11 @@
 
   /* major_order.tasks -> { id(str): {name, name_source, en} }（按 requirement.id 索引，
      与任务顺序无关，防止流水线与前端任务数组顺序漂移） */
-  function nameById(moTasks) {
+  function nameById(moTasks, orderId) {
     const out = {};
+    const taskId = moTasks && moTasks.id32;
+    if (taskId != null && taskId !== "" && orderId != null && orderId !== ""
+        && String(taskId) !== String(orderId)) return out;
     const items = moTasks && Array.isArray(moTasks.items) ? moTasks.items : [];
     for (const mt of items) {
       const req = mt && mt.requirement;

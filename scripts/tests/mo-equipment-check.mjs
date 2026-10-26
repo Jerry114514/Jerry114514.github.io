@@ -24,10 +24,13 @@ const tasks = {
   ],
 };
 
-const names = E.nameById(tasks);
+const names = E.nameById(tasks, tasks.id32);
 assert.equal(names['3827587060'].name, '重机枪部署支架');
 assert.equal(names['376960160'].name, '反器材步枪');
 assert.equal(names['2197477188'].name, '轨道炮攻击');
+assert.deepEqual(E.nameById(tasks, 999), {}, '跨指令 tasks 不得参与装备名查找');
+assert.equal(E.nameById({ items: tasks.items }, tasks.id32)['3827587060'].name,
+  '重机枪部署支架', '缺少 tasks.id32 时保留旧数据兼容');
 
 // 端到端行渲染：三条「使用：……」与游戏一致
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -67,7 +70,8 @@ assert.ok(!E.line(1, evil, esc).includes('<script>'));
 // index.html 已接线（script 引入 + 调用点）
 const html = fs.readFileSync(path.join(root, 'HD2-Galatic_war-Map/index.html'), 'utf8');
 assert.ok(html.includes('js/mo-equipment.js'), 'index.html 应引入 mo-equipment.js');
-assert.ok(html.includes('HD2MoEquipment.nameById(mo.tasks)'), 'index.html 应构建装备名查找表');
+assert.ok(html.includes('HD2MoEquipment.nameById(mo.tasks, mo.id32)'),
+  'index.html 应带 MO id 构建装备名查找表');
 assert.ok(html.includes('HD2MoEquipment.line(decoded.itemID'), '任务行应输出「使用：」');
 
 // merge_translations.py 已支持 tasks（旧 TransNews 兼容在 python 单测覆盖）

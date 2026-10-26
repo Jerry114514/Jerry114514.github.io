@@ -33,8 +33,18 @@ def load_json(path):
         return None
 
 
+def _tasks_match_order(tasks, order_id, *, require_both=False):
+    """判断结构化任务是否属于当前 MO；禁止在身份不足时把旧任务挂到新指令上。"""
+    if not isinstance(tasks, dict) or not isinstance(tasks.get("items"), list):
+        return False
+    task_id = tasks.get("id32")
+    if require_both and (not task_id or not order_id):
+        return False
+    return not task_id or not order_id or str(task_id) == str(order_id)
+
+
 def merge_mo(trans, prev_mo=None):
-    """MO 翻译层 + 结构化任务。跨指令保护：tasks.id32 与 mo.id32 不一致时沿用 prev 的 tasks。"""
+    """MO 翻译层 + 结构化任务，并在跨指令窗口内阻止旧 tasks 串入新指令。"""
     mb = trans.get("mo_brief") or {}
     mo = {
         "title": mb.get("title", ""),
@@ -48,15 +58,18 @@ def merge_mo(trans, prev_mo=None):
         mo["text_source"] = mb.get("text_source")
     tasks = trans.get("tasks")
     if isinstance(tasks, dict) and isinstance(tasks.get("items"), list):
-        if not tasks.get("id32") or not mo.get("id32") or \
-                str(mo.get("id32")) == str(tasks.get("id32")):
+        if _tasks_match_order(tasks, mo.get("id32")):
             mo["tasks"] = tasks
         else:
             prev_tasks = (prev_mo or {}).get("tasks")
-            if prev_tasks is not None:
+            # 只有旧 tasks 能严格证明属于当前 MO 时才沿用；否则宁可降级为 raw ID。
+            if _tasks_match_order(prev_tasks, mo.get("id32"), require_both=True):
                 mo["tasks"] = prev_tasks
+                outcome = "沿用匹配的旧 tasks"
+            else:
+                outcome = "丢弃不合并"
             print(f"[merge] tasks.id32={tasks.get('id32')} 与 mo.id32={mo.get('id32')} 不一致，"
-                  f"{'沿用旧 tasks' if prev_tasks is not None else '丢弃不合并'}")
+                  f"{outcome}")
     return mo
 
 

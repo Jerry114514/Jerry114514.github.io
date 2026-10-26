@@ -1228,7 +1228,8 @@ function renderPlayers(data) {
     // MO 限定装备官中名（2026-10-24）：major_order.tasks 由 HD2Web-Trans 解析写入
     //（itemMixId -> 官方英文索引 -> 站点权威图鉴官方简中，见 js/mo-equipment.js）。
     // 旧数据没有 tasks 时表为空，任务行自动降级为 raw ID 展示，其余不受影响。
-    const equipNames = window.HD2MoEquipment ? window.HD2MoEquipment.nameById(mo.tasks) : {};
+    const equipNames = window.HD2MoEquipment
+      ? window.HD2MoEquipment.nameById(mo.tasks, mo.id32) : {};
 
     const moW = moWindowOf(data);
     const mw = window.HD2Recent?.moWindows(a, DATA_FETCH_MS);
