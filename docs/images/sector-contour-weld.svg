@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="contourTitle contourDesc">
+  <title id="contourTitle">星区共享边链与轮廓输出</title>
+  <desc id="contourDesc">相邻网格只在星区变化处向外取边，共享边链导出一次，再按最左转规则走环并输出闭合多边形。</desc>
+  <defs>
+    <marker id="cArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f3c74f"/>
+    </marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#2b5870" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="620" rx="22" fill="#07111c"/>
+  <rect x="24" y="24" width="1152" height="572" rx="16" fill="#0b1d2b" stroke="#25465a"/>
+  <text x="62" y="72" fill="#edf7fb" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="28" font-weight="700">共享边链 → 去缝 → MultiPolygon</text>
+  <text x="62" y="101" fill="#83a8b8" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="14">填充与描边复用同一组坐标，相邻星区不会各自简化出两条略有差异的线</text>
+
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif">
+    <rect x="58" y="132" width="330" height="398" rx="14" fill="#081722" stroke="#28526a"/>
+    <text x="84" y="168" fill="#56d8f4" font-size="16" font-weight="700">① 只保留外露边</text>
+    <text x="84" y="193" fill="#83a8b8" font-size="13">四邻星区不同 → 生成有向边</text>
+
+    <g transform="translate(96 228)">
+      <rect width="76" height="76" rx="3" fill="#3b82f6" fill-opacity=".28" stroke="#274d62"/>
+      <rect x="76" width="76" height="76" rx="3" fill="#3b82f6" fill-opacity=".28" stroke="#274d62"/>
+      <rect x="152" width="76" height="76" rx="3" fill="#f59e0b" fill-opacity=".25" stroke="#274d62"/>
+      <rect y="76" width="76" height="76" rx="3" fill="#3b82f6" fill-opacity=".28" stroke="#274d62"/>
+      <rect x="76" y="76" width="76" height="76" rx="3" fill="#22c55e" fill-opacity=".22" stroke="#274d62"/>
+      <rect x="152" y="76" width="76" height="76" rx="3" fill="#f59e0b" fill-opacity=".25" stroke="#274d62"/>
+      <rect y="152" width="76" height="76" rx="3" fill="#3b82f6" fill-opacity=".28" stroke="#274d62"/>
+      <rect x="76" y="152" width="76" height="76" rx="3" fill="#3b82f6" fill-opacity=".28" stroke="#274d62"/>
+      <rect x="152" y="152" width="76" height="76" rx="3" fill="#f59e0b" fill-opacity=".25" stroke="#274d62"/>
+
+      <path d="M76 0 H152 V152 H0 V76 H76 Z" fill="none" stroke="#f3c74f" stroke-width="4" marker-start="url(#cArrow)" marker-end="url(#cArrow)"/>
+      <path d="M152 0 H228 V228 H76" fill="none" stroke="#fb923c" stroke-width="3" stroke-dasharray="7 6"/>
+      <text x="45" y="55" fill="#dbeafe" font-size="15" font-weight="700">A</text>
+      <text x="208" y="198" fill="#ffedd5" font-size="15" font-weight="700">B</text>
+    </g>
+
+    <text x="84" y="445" fill="#b9d4df" font-size="13">共享边只登记一次；</text>
+    <text x="84" y="468" fill="#b9d4df" font-size="13">相邻星区以正反方向引用。</text>
+    <text x="84" y="501" fill="#648b9c" font-size="12">橙色虚线 = 共享边链</text>
+
+    <path d="M408 328 C434 328 436 328 460 328" fill="none" stroke="#f3c74f" stroke-width="3" marker-end="url(#cArrow)"/>
+
+    <rect x="478" y="132" width="300" height="398" rx="14" fill="#081722" stroke="#28526a"/>
+    <text x="504" y="168" fill="#56d8f4" font-size="16" font-weight="700">② 只并同向共线点</text>
+    <text x="504" y="193" fill="#83a8b8" font-size="13">禁止斜切台阶，保留 90° 拐角</text>
+
+    <path d="M526 250 H586 V310 H646 V370 H706 V430" fill="none" stroke="#315d74" stroke-width="8" stroke-linecap="square"/>
+    <circle cx="526" cy="250" r="6" fill="#83a8b8"/>
+    <circle cx="586" cy="250" r="6" fill="#83a8b8"/>
+    <circle cx="586" cy="310" r="6" fill="#83a8b8"/>
+    <circle cx="646" cy="310" r="6" fill="#83a8b8"/>
+    <circle cx="646" cy="370" r="6" fill="#83a8b8"/>
+    <circle cx="706" cy="370" r="6" fill="#83a8b8"/>
+    <circle cx="706" cy="430" r="6" fill="#83a8b8"/>
+
+    <path d="M526 270 H586 V310 H646 V348 H706 V430" fill="none" stroke="#56d8f4" stroke-width="4"/>
+    <circle cx="526" cy="270" r="5" fill="#56d8f4"/>
+    <circle cx="586" cy="270" r="5" fill="#56d8f4"/>
+    <circle cx="586" cy="310" r="5" fill="#56d8f4"/>
+    <circle cx="646" cy="310" r="5" fill="#56d8f4"/>
+    <circle cx="646" cy="348" r="5" fill="#56d8f4"/>
+    <circle cx="706" cy="348" r="5" fill="#56d8f4"/>
+    <circle cx="706" cy="430" r="5" fill="#56d8f4"/>
+    <text x="504" y="477" fill="#b9d4df" font-size="13">弧段按 1.25° 采样；</text>
+    <text x="504" y="501" fill="#648b9c" font-size="12">仅叉积≈0 且同向的中间点被删除。</text>
+
+    <path d="M795 328 C823 328 829 328 854 328" fill="none" stroke="#f3c74f" stroke-width="3" marker-end="url(#cArrow)"/>
+
+    <rect x="872" y="132" width="252" height="398" rx="14" fill="#081722" stroke="#28526a"/>
+    <text x="899" y="168" fill="#56d8f4" font-size="16" font-weight="700">③ 走环并闭合</text>
+    <text x="899" y="193" fill="#83a8b8" font-size="13">junction 处选择“最左转”</text>
+
+    <path d="M930 238 L1046 254 L1070 350 L1014 442 L916 414 L890 318 Z" fill="#3b82f6" fill-opacity=".24" stroke="#60a5fa" stroke-width="4"/>
+    <path d="M930 238 L1046 254" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+    <path d="M1046 254 L1070 350" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+    <path d="M1070 350 L1014 442" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+    <path d="M1014 442 L916 414" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+    <path d="M916 414 L890 318" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+    <path d="M890 318 L930 238" stroke="#f3c74f" stroke-width="5" marker-end="url(#cArrow)"/>
+
+    <circle cx="930" cy="238" r="6" fill="#f8fafc"/>
+    <circle cx="1046" cy="254" r="6" fill="#f8fafc"/>
+    <circle cx="1070" cy="350" r="6" fill="#f8fafc"/>
+    <circle cx="1014" cy="442" r="6" fill="#f8fafc"/>
+    <circle cx="916" cy="414" r="6" fill="#f8fafc"/>
+    <circle cx="890" cy="318" r="6" fill="#f8fafc"/>
+
+    <text x="899" y="477" fill="#b9d4df" font-size="13">有符号面积判外环/洞；</text>
+    <text x="899" y="501" fill="#648b9c" font-size="12">最终输出 RFC 7946 MultiPolygon。</text>
+  </g>
+</svg>
