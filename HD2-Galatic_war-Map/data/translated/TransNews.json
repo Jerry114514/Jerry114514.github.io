@@ -148,24 +148,12 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-26T05:17:01Z",
+  "computed_at": "2026-10-26T11:20:33Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
  "mo_state": "active",
  "global_events": [
-  {
-   "event_id": 1501077,
-   "id32": 801008704,
-   "title": "失败",
-   "message": "某些领土理应回归自由的怀抱，却受到了敌人侵略的阻碍。他们贪婪的物质欲望榨干了各个星球的原始资源，窃取了民主子民的未来，玷污了为保护他们而战死沙场的英雄们的英名。\n\n<i=1>麦拉芬蒙河纪念碑与人权审讯中心</i>项目举步维艰，毫无疑问，民主的敌人们正在为此幸灾乐祸。只要敌人仍在窃取我们的资源，就是对牺牲英雄的极大侮辱。",
-   "plain_text": "某些领土理应回归自由的怀抱，却受到了敌人侵略的阻碍。他们贪婪的物质欲望榨干了各个星球的原始资源，窃取了民主子民的未来，玷污了为保护他们而战死沙场的英雄们的英名。\n\n麦拉芬蒙河纪念碑与人权审讯中心项目举步维艰，毫无疑问，民主的敌人们正在为此幸灾乐祸。只要敌人仍在窃取我们的资源，就是对牺牲英雄的极大侮辱。",
-   "message_id32": 3628546790,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 85065624,
-   "text_source": "official_zh",
-   "mt": false
-  },
   {
    "event_id": 1501078,
    "id32": 1905875691,
@@ -266,17 +254,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-26T05:17:00Z",
+  "source_version": "2026-10-26T11:20:31Z",
   "war_id": 801,
-  "war_time_seconds": 85051580,
-  "last_success_at": "2026-10-26T05:17:00Z",
+  "war_time_seconds": 85073400,
+  "last_success_at": "2026-10-26T11:20:31Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-26T05:17:00Z",
-  "retrieved_at": "2026-10-26T05:17:00Z",
+  "source_version": "2026-10-26T11:20:31Z",
+  "retrieved_at": "2026-10-26T11:20:31Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -287,7 +275,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 300000000,
-    "progress": 31050423,
+    "progress": 33160629,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -304,7 +292,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 65000000,
-    "progress": 11164943,
+    "progress": 11461251,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
@@ -321,7 +309,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 50000000,
-    "progress": 30212614,
+    "progress": 35209388,
     "requirement": {
      "type": "equipment",
      "id": 2197477188,
