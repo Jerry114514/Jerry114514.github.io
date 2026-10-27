@@ -101,4 +101,13 @@
       --c-res-mid:  #1FA84A;   /* 中 = 绿 */
       --c-res-high: #F59E0B;   /* 高 = 橙 */
       --c-res-max:  #FF4D2E;   /* 极高 = 红 */
+
+      /* ---- 重要指令播报（2026-10-28）----
+         冷蓝来电体系：只用于 #mo-alert-layer 与 .mo-replay-btn，不动琥珀主色。
+         --mo-blue 通知文字冷蓝 / --mo-yellow 高亮数据 / --mo-place 关键地名 */
+      --mo-blue:      #6BB7EA;
+      --mo-blue-dim:  rgba(107, 183, 234, .35);
+      --mo-blue-bg:   rgba(12, 22, 34, .72);
+      --mo-yellow:    #F5C518;
+      --mo-place:     #5BA3D0;
 }

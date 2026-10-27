@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Federation Seal">
+  <!-- 超级地球联邦徽 · 冷银配色（重要指令播报专用，本地素材，无外部热链接） -->
+  <circle cx="32" cy="32" r="30" fill="rgba(10,16,24,.35)" stroke="#9FB2C4" stroke-width="2.4"/>
+  <circle cx="32" cy="32" r="24.5" fill="none" stroke="#5E748A" stroke-width="1"/>
+  <!-- 环面刻点 -->
+  <g fill="#7E93A8">
+    <circle cx="32" cy="5.4" r="1"/><circle cx="41.8" cy="7.1" r="1"/><circle cx="50.2" cy="12.2" r="1"/>
+    <circle cx="56.2" cy="20.2" r="1"/><circle cx="58.6" cy="29.6" r="1"/><circle cx="56.2" cy="39" r="1"/>
+    <circle cx="50.2" cy="47" r="1"/><circle cx="41.8" cy="52.1" r="1"/><circle cx="32" cy="53.8" r="1"/>
+    <circle cx="22.2" cy="52.1" r="1"/><circle cx="13.8" cy="47" r="1"/><circle cx="7.8" cy="39" r="1"/>
+    <circle cx="5.4" cy="29.6" r="1"/><circle cx="7.8" cy="20.2" r="1"/><circle cx="13.8" cy="12.2" r="1"/>
+    <circle cx="22.2" cy="7.1" r="1"/>
+  </g>
+  <!-- 地球：经纬线 -->
+  <circle cx="32" cy="32" r="15.5" fill="#101C29" stroke="#C9D4DE" stroke-width="1.5"/>
+  <ellipse cx="32" cy="32" rx="6.8" ry="15.5" fill="none" stroke="#C9D4DE" stroke-width="1"/>
+  <path d="M17 27.2h30M17 36.8h30" stroke="#C9D4DE" stroke-width="1" fill="none"/>
+  <path d="M19.6 21.6h24.8M19.6 42.4h24.8" stroke="#7E93A8" stroke-width=".8" fill="none"/>
+  <!-- 北极星 -->
+  <path d="M32 1.6l1.7 3.5 3.9.55-2.8 2.75.65 3.9L32 10.45l-3.45 1.8.65-3.9-2.8-2.75 3.9-.55z" fill="#C9D4DE"/>
+  <!-- 桂冠弧 -->
+  <path d="M9.5 42.5c4.6 9.4 13 14.4 22.5 14.4s17.9-5 22.5-14.4" fill="none" stroke="#7E93A8" stroke-width="1.6" stroke-linecap="round"/>
+</svg>
