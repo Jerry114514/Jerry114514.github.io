@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3969,
+   "published_at": "2026-10-27T14:43:21Z",
+   "source": "dispatch",
+   "original": "SCAVENGER RAMPAGE\n\nSignificantly higher Scavenger numbers have been observed on the Terminid warfront.",
+   "translated": "食腐虫暴动\n\n在终结族战线，已观测到食腐虫数量显著上升。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 85171965,
+   "official_message": "<i=1>SCAVENGER RAMPAGE</i>\n\nSignificantly higher <i=1>Scavenger</i> numbers have been observed on the <i=1>Terminid</i> warfront.",
+   "translated_at": "2026-10-27T18:02:09Z"
+  },
+  {
    "id": 3968,
    "published_at": "2026-10-27T08:22:36Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "mt": false,
    "published_war_seconds": 84547199,
    "official_message": "<i=3>新重要指令</i>\n\n为了缅怀阵亡将士，政府已批准建造<i=1>麦拉芬蒙河纪念碑与人权审讯中心</i>。然而，敌人的侵略正威胁着该项目。\n\n他们占领了超级地球的领土，那里富含稀有金属、原油和放射性同位素等资源，无异于窃取全人类的繁荣。简直是对我们逝去英雄的侮辱。绝地潜兵奉命解放<i=1>费里、艾斯克尔和泽亚鲁戈西亚</i>。"
-  },
-  {
-   "id": 3959,
-   "original": "STRATEGIC ALERT\n\nThe Automaton Incineration Corps has been reported on VINDEMITARIX PRIME.",
-   "translated": "战略警告\n\n据报告，文德米塔里克斯主星上出现了机器人炽灼部队。",
-   "published_at": "2026-10-19T17:48:39Z",
-   "translated_at": "2026-10-21T10:41:35Z",
-   "source": "dispatch",
-   "engine": "arrowhead-official",
-   "text_source": "official_zh",
-   "mt": false,
-   "published_war_seconds": 84491967,
-   "official_message": "<i=3>战略警告</i>\n\n据报告，<i=1>文德米塔里克斯主星</i>上出现了机器人<i=1>炽灼部队</i>。"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-27T12:14:32Z",
+  "computed_at": "2026-10-27T18:02:09Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -237,22 +237,34 @@
    "expires_at_war_seconds": 85321913,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501089,
+   "id32": 1548832078,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85344477,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-27T12:14:30Z",
+  "source_version": "2026-10-27T18:02:06Z",
   "war_id": 801,
-  "war_time_seconds": 85163030,
-  "last_success_at": "2026-10-27T12:14:30Z",
+  "war_time_seconds": 85183890,
+  "last_success_at": "2026-10-27T18:02:06Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-27T12:14:30Z",
-  "retrieved_at": "2026-10-27T12:14:30Z",
+  "source_version": "2026-10-27T18:02:06Z",
+  "retrieved_at": "2026-10-27T18:02:06Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -263,7 +275,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 300000000,
-    "progress": 56657056,
+    "progress": 63224948,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -280,7 +292,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 65000000,
-    "progress": 16480800,
+    "progress": 18793331,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
