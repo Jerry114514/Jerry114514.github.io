@@ -170,7 +170,7 @@
       body{font-size:14px}
     }
   </style>
-  <link rel="stylesheet" href="./css/boot-splash.css?v=20261026a">
+  <link rel="stylesheet" href="./css/boot-splash.css?v=20261027b">
 </head>
 <body>
   <header class="topbar">
@@ -368,7 +368,7 @@ hd2_variables.json（行动变量表，82 个 effect id，中文名+描述+分�
           <li>星球图标：<code>assets/planet-icons/&lt;英文名&gt;.png</code>（273 个，本地）</li>
         </ul>
         <p><b>星球卡</b>：<code>js/planet-card-effects.js</code> 共享模块——行动变量图标 + 统一折叠区（城市列表 + 详情），主页与星图共用。</p>
-        <p><b>载入遮罩</b>：<code>js/boot-splash.js</code> + <code>css/boot-splash.css</code>（旗帜徽标脉冲 + 分段进度条 + lore 轮换），五页面统一。</p>
+        <p><b>载入遮罩</b>：<code>js/boot-splash.js</code> + <code>css/boot-splash.css</code>（银河链路启动屏、四阶段进度、lore 轮换与失败态），五页面统一。</p>
 
         <h3>为什么星区边界看起来像“类矩形”</h3>
         <p>游戏没有向公开接口提供可直接使用的星区多边形。当前星图不连接真实星球坐标生成自由多边形，而是把银河盘面切成一套<b>极坐标格网</b>，先判定每个格属于哪个星区，再沿不同星区之间的格边提取并集轮廓。</p>
@@ -692,7 +692,7 @@ id = w + ":" + r
       © 2026 Helldivers2 真理部 · 本站非官方项目，与 Arrowhead Game Studios 无任何隶属关系</div>
   </footer>
 
-  <script src="./js/boot-splash.js?v=20261026a"></script>
+  <script src="./js/boot-splash.js?v=20261027b"></script>
   <script>
     /* 纯静态文档页：遮罩只做全站统一的短暂过渡，不抓数据 */
     HD2Boot.mount();

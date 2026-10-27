@@ -1,68 +1,197 @@
 /* ==============================================================
-   全站载入遮罩样式（boot-splash.js 配套）
-   视觉与 galaxy-map-v2 内联版一致：徽标脉冲 + 分段进度条。
-   #hd2-boot 为 JS 注入的顶层节点（全屏 fixed 遮罩）。
+   超级地球 · 银河链路启动屏
+   #hd2-boot：全站 JS 注入的全屏遮罩；#boot：星图内联遮罩。
+   动画只使用 transform / opacity，避免逐格跳变与持续重绘。
    ============================================================== */
-#hd2-boot{
-  position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;gap:18px;
-  align-items:center;justify-content:center;
-  background:radial-gradient(circle at 50% 45%,#121212,#0A0A0A 70%);
-  opacity:0;pointer-events:all;transition:opacity .4s ease;
+:is(#hd2-boot, #boot) {
+  --boot-accent: var(--yellow, #FFB000);
+  --boot-dim: var(--text-dim, #A8A8A8);
+  --boot-mute: var(--text-mute, #6E6E6E);
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 44%, #151510 0, #0A0A0A 68%);
+  color: var(--boot-dim);
+  pointer-events: all;
+  transition: opacity .32s cubic-bezier(.22, .61, .36, 1);
 }
-#hd2-boot.visible{opacity:1}
-#hd2-boot.gone{opacity:0;pointer-events:none}
+#hd2-boot { position: fixed; z-index: 9999; opacity: 0; }
+#boot { position: absolute; z-index: 30; opacity: 1; }
+#hd2-boot.visible { opacity: 1; }
+:is(#hd2-boot, #boot).gone { opacity: 0; pointer-events: none; }
 
-#hd2-boot .emblem{
-  width:88px;height:88px;opacity:.9;
-  animation:hd2boot-pulse 2.4s steps(3) infinite;
+/* 静态战术网格：只提供空间层次，不做持续绘制。 */
+:is(#hd2-boot, #boot)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .055;
+  background-image:
+    linear-gradient(rgba(255, 176, 0, .5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 176, 0, .5) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
-@keyframes hd2boot-pulse{
-  0%{opacity:.28;transform:scale(1.06)}
-  33%{opacity:.75;transform:scale(1)}
-  66%{opacity:.5;transform:scale(1.03)}
-  100%{opacity:.28;transform:scale(1.06)}
+:is(#hd2-boot, #boot) > * { position: relative; }
+
+.boot-visual { width: 120px; height: 120px; display: grid; place-items: center; }
+.boot-frame {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left top / 18px 1px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left top / 1px 18px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right top / 18px 1px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right top / 1px 18px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left bottom / 18px 1px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left bottom / 1px 18px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right bottom / 18px 1px no-repeat,
+    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right bottom / 1px 18px no-repeat;
+}
+.boot-frame::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 176, 0, .13);
+  pointer-events: none;
+}
+:is(#hd2-boot, #boot) .emblem {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  opacity: .82;
+  will-change: transform, opacity;
+  animation: hd2boot-emblem 3s ease-in-out infinite;
+}
+.scan-line {
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  top: 50%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--boot-accent) 35%, #FFF0B0 50%, var(--boot-accent) 65%, transparent);
+  will-change: transform, opacity;
+  animation: hd2boot-scan 2.35s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+@keyframes hd2boot-emblem {
+  0%, 100% { opacity: .68; transform: scale(.985); }
+  50% { opacity: 1; transform: scale(1.015); }
+}
+@keyframes hd2boot-scan {
+  0% { opacity: 0; transform: translateY(-39px); }
+  14%, 82% { opacity: .72; }
+  50% { opacity: .95; }
+  100% { opacity: 0; transform: translateY(39px); }
 }
 
-#hd2-boot .segments{
-  display:flex;gap:2px;height:10px;width:220px;padding:3px;
-  border:1px solid rgba(245,197,24,.3);
+.boot-stage {
+  width: min(240px, 70vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -9px;
+  color: var(--boot-mute);
+  font: 600 10px/1.2 var(--font-mono, "Consolas", monospace);
+  letter-spacing: .16em;
 }
-#hd2-boot .segments i{
-  flex:1;background:rgba(245,197,24,.1);
-  animation:hd2boot-fill 1.4s steps(1) infinite;
+.stage-count { color: var(--boot-accent); font-variant-numeric: tabular-nums; }
+:is(#hd2-boot, #boot) .segments {
+  position: relative;
+  width: min(240px, 70vw);
+  height: 12px;
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 176, 0, .28);
 }
-#hd2-boot .segments i:nth-child(1){animation-delay:0s}
-#hd2-boot .segments i:nth-child(2){animation-delay:.15s}
-#hd2-boot .segments i:nth-child(3){animation-delay:.3s}
-#hd2-boot .segments i:nth-child(4){animation-delay:.45s}
-#hd2-boot .segments i:nth-child(5){animation-delay:.6s}
-#hd2-boot .segments i:nth-child(6){animation-delay:.75s}
-#hd2-boot .segments i:nth-child(7){animation-delay:.9s}
-#hd2-boot .segments i:nth-child(8){animation-delay:1.05s}
-#hd2-boot .segments i:nth-child(9){animation-delay:1.2s}
-#hd2-boot .segments i:nth-child(10){animation-delay:1.35s}
-@keyframes hd2boot-fill{
-  0%{background:var(--yellow,#F5C518);box-shadow:0 0 6px rgba(245,197,24,.6)}
-  50%{background:var(--yellow,#F5C518)}
-  51%{background:rgba(245,197,24,.1);box-shadow:none}
-  100%{background:rgba(245,197,24,.1)}
+.segments i { display: block; height: 4px; overflow: hidden; background: rgba(255, 176, 0, .10); }
+.segments i b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--boot-accent);
+  opacity: .9;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .34s cubic-bezier(.22, .61, .36, 1), opacity .2s ease;
+}
+.segments i.current b { transform: scaleX(1); opacity: .28; }
+.segments i.done b { transform: scaleX(1); opacity: .9; }
+.segments::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 28%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 202, 74, .85), transparent);
+  will-change: transform, opacity;
+  animation: hd2boot-sweep 1.9s ease-in-out infinite;
+}
+.segments[data-mode="determinate"]::after { display: none; }
+@keyframes hd2boot-sweep {
+  0% { opacity: 0; transform: translateX(-110%); }
+  18%, 78% { opacity: .8; }
+  100% { opacity: 0; transform: translateX(370%); }
 }
 
-#hd2-boot .msg{
-  color:var(--dim,var(--text-dim,#A8A8A8));font-size:.84rem;text-align:center;line-height:1.7;
-  max-width:420px;padding:0 20px;
-  min-height:3.2em;
+:is(#hd2-boot, #boot) .msg {
+  max-width: min(460px, calc(100vw - 40px));
+  min-height: 5.8em;
+  padding: 0 20px;
+  color: var(--boot-dim);
+  font-size: .84rem;
+  line-height: 1.65;
+  text-align: center;
 }
-#hd2-boot .msg .line{
-  display:block;transition:opacity .15s ease;
-  overflow-wrap:anywhere;
+:is(#hd2-boot, #boot) .msg :is(.line, .sub, .lore) {
+  display: block;
+  overflow-wrap: anywhere;
+  transition: opacity .16s ease, transform .16s ease;
 }
-#hd2-boot .msg .sub{
-  display:block;color:var(--mute,var(--text-mute,#6E6E6E));font-size:.76rem;margin-top:2px;
+:is(#hd2-boot, #boot) .msg :is(.line, .sub, .lore).changing { opacity: 0; transform: translateY(-4px); }
+:is(#hd2-boot, #boot) .msg .line { color: var(--boot-dim); }
+:is(#hd2-boot, #boot) .msg .sub {
+  margin-top: 2px;
+  color: var(--boot-mute);
+  font: 400 .68rem/1.6 var(--font-mono, "Consolas", monospace);
+  letter-spacing: .04em;
 }
+:is(#hd2-boot, #boot) .msg .lore { min-height: 1.65em; margin-top: 8px; color: var(--boot-mute); font-size: .72rem; }
 
-@media (prefers-reduced-motion: reduce){
-  #hd2-boot .emblem,#hd2-boot .segments i{animation:none}
-  #hd2-boot .segments i{background:rgba(245,197,24,.35)}
-  #hd2-boot .msg .line{transition:none}
+:is(#hd2-boot, #boot).complete .emblem { animation: none; opacity: 1; transform: scale(1); }
+:is(#hd2-boot, #boot).complete .scan-line { animation: none; opacity: 0; }
+:is(#hd2-boot, #boot).error .emblem { animation: none; opacity: .45; }
+:is(#hd2-boot, #boot).error .scan-line,
+:is(#hd2-boot, #boot).error .segments::after { display: none; }
+:is(#hd2-boot, #boot).error .boot-stage,
+:is(#hd2-boot, #boot).error .stage-count { color: var(--warn, #FF4D2E); }
+:is(#hd2-boot, #boot).error .segments i b { background: var(--warn, #FF4D2E); }
+
+@media (max-width: 520px) {
+  .boot-visual { width: 108px; height: 108px; }
+  .boot-frame { width: 96px; height: 96px; }
+  :is(#hd2-boot, #boot) .emblem { width: 56px; height: 56px; }
+  :is(#hd2-boot, #boot) .msg { min-height: 6.4em; padding: 0 12px; }
+  :is(#hd2-boot, #boot) .msg .lore { font-size: .68rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(#hd2-boot, #boot),
+  :is(#hd2-boot, #boot) *,
+  :is(#hd2-boot, #boot) *::before,
+  :is(#hd2-boot, #boot) *::after { animation: none !important; transition: none !important; }
+  .scan-line, .segments::after { display: none; }
+  :is(#hd2-boot, #boot) .emblem { opacity: .9; transform: none; }
+  .segments i.current b { opacity: .65; }
 }

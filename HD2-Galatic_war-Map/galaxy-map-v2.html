@@ -90,53 +90,7 @@
   .maplibregl-canvas{outline:none}
   .maplibregl-ctrl-attrib{display:none!important}
 
-  /* 载入遮罩（2026-10-26 重设计：徽标脉冲 + 分段进度条，军事风格） */
-  #boot{
-    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:18px;
-    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#121212,#0A0A0A 70%);
-    transition:opacity .5s ease;
-  }
-  #boot.gone{opacity:0;pointer-events:none}
-  #boot .emblem{
-    width:88px;height:88px;opacity:.9;
-    animation:bootpulse 2.4s steps(3) infinite;
-  }
-  @keyframes bootpulse{
-    0%{opacity:.28;transform:scale(1.06)}
-    33%{opacity:.75;transform:scale(1)}
-    66%{opacity:.5;transform:scale(1.03)}
-    100%{opacity:.28;transform:scale(1.06)}
-  }
-  #boot .segments{
-    display:flex;gap:2px;height:10px;width:220px;padding:3px;
-    border:1px solid rgba(245,197,24,.3);
-  }
-  #boot .segments i{
-    flex:1;background:rgba(245,197,24,.1);
-    animation:bootfill 1.4s steps(1) infinite;
-  }
-  #boot .segments i:nth-child(1){animation-delay:0s}
-  #boot .segments i:nth-child(2){animation-delay:.15s}
-  #boot .segments i:nth-child(3){animation-delay:.3s}
-  #boot .segments i:nth-child(4){animation-delay:.45s}
-  #boot .segments i:nth-child(5){animation-delay:.6s}
-  #boot .segments i:nth-child(6){animation-delay:.75s}
-  #boot .segments i:nth-child(7){animation-delay:.9s}
-  #boot .segments i:nth-child(8){animation-delay:1.05s}
-  #boot .segments i:nth-child(9){animation-delay:1.2s}
-  #boot .segments i:nth-child(10){animation-delay:1.35s}
-  @keyframes bootfill{
-    0%{background:var(--yellow);box-shadow:0 0 6px rgba(245,197,24,.6)}
-    50%{background:var(--yellow)}
-    51%{background:rgba(245,197,24,.1);box-shadow:none}
-    100%{background:rgba(245,197,24,.1)}
-  }
-  #boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}
-  #boot .msg small{color:var(--text-mute);font-size:.76rem}
-  @media (prefers-reduced-motion: reduce){
-    #boot .emblem,#boot .segments i{animation:none}
-    #boot .segments i{background:rgba(245,197,24,.35)}
-  }
+  /* 启动屏样式由 css/boot-splash.css 统一提供，HD2Boot.attach 接管内联 #boot。 */
   #tac-empty{
     position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;
     background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);
@@ -518,6 +472,7 @@
     #wheel{width:160px;height:160px}
   }
 </style>
+<link rel="stylesheet" href="./css/boot-splash.css?v=20261027b">
 <!-- HUD 皮肤层：必须在内联 <style> 之后（同特异度即可覆盖） -->
 <link rel="stylesheet" href="./css/map-hud.css?v=20260924a">
 <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
@@ -545,9 +500,13 @@
     <div id="planet-card"></div>
     <div id="wheel"></div>
     <div id="boot">
-      <img class="emblem" src="./assets/ui-icons/super_earth_flag.svg" alt="超级地球徽标" decoding="async">
-      <div class="segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="msg" id="bootmsg" role="status" aria-live="polite">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>
+      <div class="boot-visual" aria-hidden="true"><div class="boot-frame">
+        <img class="emblem" src="./assets/ui-icons/super_earth_flag.svg" alt="" decoding="async">
+        <span class="scan-line"></span>
+      </div></div>
+      <div class="boot-stage" aria-hidden="true"><span class="stage-code">UPLINK</span><span class="stage-count">01 / 04</span></div>
+      <div class="segments" data-mode="determinate" aria-hidden="true"><i class="current"><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+      <div class="msg" id="bootmsg"><span class="line" role="status" aria-live="polite">正在建立银河链路…</span><small class="sub">MapLibre · 中文字体 · 战况数据</small><small class="lore" aria-hidden="true"></small></div>
     </div>
   </div>
   <div id="aside-backdrop"></div>
@@ -603,7 +562,7 @@
 <script src="./js/libs/maplibre/maplibre-gl-csp.js"></script>
 <script src="./js/tactical.js"></script>
 <script src="./js/dss-donations.js?v=20261014b"></script>
-<script src="./js/boot-splash.js?v=20261026a"></script>
+<script src="./js/boot-splash.js?v=20261027b"></script>
 <script>
 "use strict";
 /* ============================================================================
@@ -709,13 +668,6 @@ async function fetchImageBitmap(url, crossOrigin) {
   if (img.decode) { try { await img.decode(); } catch (_) {} }
   return img;
 }
-async function loadBitmapWithFallback(url) {
-  try { return await fetchImageBitmap(url, true); }
-  catch (_) {}
-  try { return await fetchImageBitmap(url, false); }   // 无 CORS：能显示但纹理可能被污染
-  catch (_) { return null; }
-}
-
 // 读 PNG 头部取像素尺寸（IHDR 位于固定偏移）。
 // 必要性：planet-icons 并非同尺寸 —— 实测 139 个 64px、122 个 48px（另有少数 47~65px）。
 // 若统一按 pixelRatio:2 注册，48px 图标在同一 icon-size 下会比 64px 小约 33%，
@@ -730,18 +682,28 @@ function pngSizeFromBuffer(buf) {
   return (w > 0 && h > 0) ? { w, h } : null;
 }
 
-// 载入图标：返回 { image, pixelRatio }，pixelRatio 归一化到 32 CSS px 基准
-// （64px → 2，48px → 1.5），使所有图标在同一 icon-size 下视觉尺寸一致。
+// 单次请求完成尺寸读取与解码：返回 { image, pixelRatio }，pixelRatio 归一化到 32 CSS px。
+// 旧流程先 fetch PNG 头、再用 Image 请求同一路径；这里复用同一份 Blob，避免重复请求。
 async function loadPlanetIcon(url) {
-  let dim = null;
   try {
     const r = await fetch(url, { cache: "force-cache" });
-    if (r.ok) dim = pngSizeFromBuffer(await r.arrayBuffer());
-  } catch (_) { /* 读头失败则退回按 64px 假设 */ }
-  const img = await loadBitmapWithFallback(url);
-  if (!img) return null;
-  const w = (dim && dim.w) || img.naturalWidth || img.width || 64;
-  return { image: img, pixelRatio: w / 32 };
+    if (!r.ok) return null;
+    const buf = await r.arrayBuffer();
+    const dim = pngSizeFromBuffer(buf);
+    const blob = new Blob([buf], { type: r.headers.get("content-type") || "image/png" });
+    let img = null;
+    if (window.createImageBitmap) {
+      try { img = await createImageBitmap(blob); } catch (_) { /* 旧浏览器走 Image 兜底 */ }
+    }
+    if (!img) {
+      const objectUrl = URL.createObjectURL(blob);
+      try { img = await fetchImageBitmap(objectUrl, false); }
+      finally { URL.revokeObjectURL(objectUrl); }
+    }
+    if (!img) return null;
+    const w = (dim && dim.w) || img.naturalWidth || img.width || 64;
+    return { image: img, pixelRatio: w / 32 };
+  } catch (_) { return null; }
 }
 async function pool(items, limit, worker) {
   let i = 0, active = 0;
@@ -1102,44 +1064,61 @@ const LAYER_ON = { territory:true, supply:true, attack:true, heat:false, labels:
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
 async function boot() {
-  const setMsg = (h) => {
-    const b = $("bootmsg"); if (b) b.innerHTML = h;
-    // 真实加载消息之间穿插 lore / 军情速报（复用 boot-splash 共享池）
-    if (window._hd2LoreTimer) clearInterval(window._hd2LoreTimer);
-    const lore = (window.HD2Boot && HD2Boot._lorePool) || [];
-    let i = 0;
-    window._hd2LoreTimer = setInterval(() => {
-      const boot = document.getElementById("boot");
-      if (!lore.length || !boot || boot.classList.contains("gone")) { clearInterval(window._hd2LoreTimer); return; }
-      i++;
-      if (b) { b.style.opacity = "0"; setTimeout(() => { if (b) { b.innerHTML = lore[i % lore.length]; b.style.opacity = "1"; } }, 150); }
-    }, 3400);
-    if (b) { b.style.transition = "opacity .15s ease"; b.style.opacity = "1"; }
+  const bootUI = window.HD2Boot || null;
+  if (bootUI) bootUI.attach($("boot"));
+  const nextPaint = () => new Promise(resolve =>
+    requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  const setMsg = (line, sub, stage) => {
+    if (bootUI) {
+      if (stage) bootUI.setStage(stage, 4);
+      bootUI.setMsg(line, sub || "");
+    } else {
+      const b = $("bootmsg");
+      if (b) b.innerHTML = esc(line) + (sub ? "<br><small>" + esc(sub) + "</small>" : "");
+    }
   };
+  const finishBoot = () => {
+    if (bootUI) { bootUI.done(); return; }
+    const b = $("boot");
+    if (b) b.classList.add("gone");
+    setTimeout(() => { const n = $("boot"); if (n) n.style.display = "none"; }, 420);
+  };
+  const failBoot = (line, sub) => {
+    if (bootUI) { bootUI.fail(line, sub); return; }
+    const b = $("bootmsg");
+    if (b) b.innerHTML = esc(line) + "<br><small>" + esc(sub) + "</small>";
+  };
+  setMsg("正在建立银河链路…", "中文字体 · 战况数据 · 补给线", 1);
   paintBackdrop();
   window.addEventListener("resize", () => { clearTimeout(window.__rt); window.__rt = setTimeout(paintBackdrop, 250); });
 
-  // ---- 0) 字体：必须在建图前把思源黑体登记进 document.fonts ----
-  // MapLibre 的 localIdeographFontFamily 走 canvas 2D 取字形，canvas 只能用到已加载的字体；
-  // 若字体未就绪就建图，CJK 标签会先用后备字体渲染且不会自动重绘。
-  setMsg("正在加载中文字体…<br><small>思源黑体 · HD2_Wiki/assets/fonts</small>");
-  try {
-    const ff = new FontFace("SourceHanSans", "url('../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
-    await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
-  } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
-
-  // ---- 1) 数据 ----
-  setMsg("正在加载战况数据…<br><small>data.json · waypoints.json</small>");
-  let data, wpRaw;
-  try {
-    [data, wpRaw] = await Promise.all([
+  // ---- 0+1) 字体与核心数据并行 ----
+  // MapLibre 建图前仍需字体就绪，但下载字体时不必让战况数据一起空等。
+  const fontTask = (async () => {
+    try {
+      const ff = new FontFace("SourceHanSans", "url('../HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
+      await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
+    } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
+  })();
+  const dataTask = (async () => {
+    const [d, w] = await Promise.all([
       (await fetch("./data.json?t=" + Date.now(), { cache: "no-store" })).json(),
       (await fetch("./tables/waypoints.json?t=" + Date.now(), { cache: "no-store" })).json(),
     ]);
+    return { data: d, wpRaw: w };
+  })();
+  let data, wpRaw;
+  try {
+    const core = await dataTask;
+    await fontTask;
+    data = core.data;
+    wpRaw = core.wpRaw;
   } catch (e) {
-    setMsg("⚠️ 数据加载失败<br><small>" + esc(e.message) + "</small>");
+    failBoot("数据加载失败", e.message || "请检查网络连接后刷新重试");
     return;
   }
+  setMsg("正在同步星图资料…", "区域 · 星区 · 行动变量", 2);
+  await nextPaint();
   // 星球图标索引（assets/planet-icons/index.json；缺失时全量回退纯色圆点，不致命）
   try {
     ICON_INDEX = await (await fetch("./assets/planet-icons/index.json?t=" + Date.now(), { cache: "no-store" })).json();
@@ -1239,7 +1218,8 @@ async function boot() {
   }
 
   // ---- 2) 战术目标（复用现有 tactical.js） ----
-  setMsg("正在计算战术目标…<br><small>tactical.js</small>");
+  setMsg("正在计算战术目标…", "补给线 · 战役状态 · 战略目标", 3);
+  await nextPaint();
   try {
     if (window.Tactical) {
       // nameOf / sectorCnOf 必须返回**中文名**，否则战术词条正文里会混入英文原名
@@ -1257,8 +1237,12 @@ async function boot() {
         },
         sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,   // 已是中文星区名时原样返回
       };
-      for (const k of Object.keys(WP)) {
+      const wpKeys = Object.keys(WP);
+      for (let i = 0; i < wpKeys.length; i++) {
+        const k = wpKeys[i];
         try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
+        // 每 24 个节点让出主线程，避免长任务把加载动画和状态切换卡住。
+        if ((i + 1) % 24 === 0) await nextPaint();
       }
     }
   } catch (_) { /* 词条失败不影响星图 */ }
@@ -1875,7 +1859,8 @@ async function boot() {
     `<span><b>更新</b> ${(data.fetchedAt || "").slice(5, 16).replace("T", " ")}</span>`;
 
   // ---- 5) 地图 ----
-  setMsg("正在构建星图图层…<br><small>MapLibre GL · WebGL</small>");
+  setMsg("正在部署星图图层…", "MapLibre GL · WebGL · 首帧渲染", 4);
+  await nextPaint();
   maplibregl.setWorkerUrl("./js/libs/maplibre/maplibre-gl-csp-worker.js");
 
   MAP = new maplibregl.Map({
@@ -2214,10 +2199,7 @@ async function boot() {
   let mapLoaded = false;
   const loadGuard = setTimeout(() => {
     if (mapLoaded) return;
-    const b = $("boot");
-    if (!b) return;
-    b.innerHTML = '<div class="msg" style="color:#f59e0b">⚠️ 星图加载超时<br>' +
-      '<small>图层样式可能未通过校验，请查看控制台（[MapLibre] 前缀）后刷新重试</small></div>';
+    failBoot("星图加载超时", "图层样式可能未通过校验，请查看控制台后刷新重试");
     console.error("[星图] map load 事件超时未触发 —— 请检查图层样式表达式是否合法");
   }, 25000);
 
@@ -2267,32 +2249,45 @@ async function boot() {
         paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, "bg");
     } catch (e) { console.warn("[星空] raster 挂载失败", e); }
 
-    // 预载星球图标（本地 planet-icons 缓存）
+    // 星球图标改为后台渐进部署：核心地图先开放，未就绪的图标继续使用圆点。
     const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
-    let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
-    if (files.length) {
-      setMsg("正在加载星球图标…<br><small>本地 planet-icons · " + files.length + " 个</small>");
+    let ok = 0, bad = 0;
+    let repaintQueued = false;
+    const requestIconRepaint = () => {
+      if (repaintQueued) return;
+      repaintQueued = true;
+      requestAnimationFrame(() => {
+        repaintQueued = false;
+        if (MAP) MAP.triggerRepaint();
+      });
+    };
+    (async () => {
+      if (!files.length) {
+        $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
+        return;
+      }
+      $("srcnote").textContent = "图标：正在分批部署 " + files.length + " 个星球图标…";
       await pool(files, 6, async (file) => {
-        // 同源：无 CORS/纹理污染问题；pixelRatio 按各图实际宽度归一化
         const res = await loadPlanetIcon(ICON_DIR + file);
         if (!res) { bad++; return; }
-        try { if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio }); ok++; }
-        catch (_) { bad++; }
+        try {
+          if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio });
+          ok++;
+          requestIconRepaint();
+        } catch (_) { bad++; }
       });
       $("srcnote").innerHTML =
         "图标：wiki.gg 命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（本地缓存，缺失的以纯色圆点显示）" +
         "<br>星球图标 © <a href='https://helldivers.wiki.gg/' target='_blank' rel='noopener noreferrer' style='color:var(--blue)'>helldivers.wiki.gg</a>（CC BY-NC-SA 4.0）";
       console.info("[图标] 命中", ok, "缺失", bad, "共", files.length);
-    } else {
-      $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
-    }
+    })().catch(e => {
+      console.warn("[图标] 渐进部署中断", e);
+      $("srcnote").textContent = "部分星球图标未能部署，已保留圆点显示";
+    });
 
-    // 补给线已改为「我方蓝 → 阵营代表色」纯渐变（不再叠加流光层），
-    // 故原先驱动 supply-flow 的相位定时器一并移除。
-
-    $("boot").classList.add("gone");
-    setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
-
+    // 等待地图样式更新后的下一帧再退场；不等待全部星球图标。
+    await nextPaint();
+    finishBoot();
     initFXLayer(planetFC);
   });
 
@@ -3331,12 +3326,11 @@ window.__map = MAP;                        // 地图实例（自检用：图层/
 }
 
 /* ---------------------------------------------------------------- 启动 ---- */
-try {
-  boot();
-} catch (e) {
-  $("bootmsg").innerHTML = "⚠️ 初始化异常<br><small>" + esc(e.message) + "</small>";
+boot().catch(e => {
+  if (window.HD2Boot) HD2Boot.fail("初始化异常", e.message || "请刷新重试");
+  else $("bootmsg").innerHTML = "初始化异常<br><small>" + esc(e.message) + "</small>";
   console.error(e);
-}
+});
 </script>
 </body>
 </html>
