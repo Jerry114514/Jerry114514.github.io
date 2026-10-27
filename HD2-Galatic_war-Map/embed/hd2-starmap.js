@@ -2687,7 +2687,7 @@ function bindUI(data, planets) {
         const act = g.getAttribute("data-act");
         hideWheel();
         if (act === "detail") { window.open(planetWikiUrl(index), "_blank", "noopener"); }
-        else if (act === "dss") { window.open(WIKI_ZH_BASE + encodeURIComponent("民主空间站"), "_blank", "noopener"); }
+        else if (act === "dss") { showDssPanel(index); openAside(); }
       });
     });
   }

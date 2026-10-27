@@ -214,12 +214,6 @@ JS = must_replace(
     'if (act === "detail") { window.open(B + "planet.html?idx=" + index, "_blank", "noopener"); }',
     'if (act === "detail") { window.open(planetWikiUrl(index), "_blank", "noopener"); }',
     count=1, tag="轮盘详情跳转")
-# 轮盘下半「DSS 效果」→ 直达 zh 站「民主空间站」页面
-JS = must_replace(
-    JS,
-    'else if (act === "dss") { showDssPanel(index); openAside(); }',
-    'else if (act === "dss") { window.open(WIKI_ZH_BASE + encodeURIComponent("民主空间站"), "_blank", "noopener"); }',
-    count=1, tag="轮盘DSS跳转")
 
 # --- loadPlanetIcon：单次 fetch 解码版 → 多 URL 依序尝试版 ---
 JS = must_replace(
