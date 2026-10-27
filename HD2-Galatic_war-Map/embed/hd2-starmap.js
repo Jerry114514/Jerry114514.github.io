@@ -326,19 +326,6 @@ function planetIconFile(name) {
   return "";
 }
 
-// 星球 → wiki.gg 中文站页面（zh 站星球页标题为英文 Title Case，映射见 embed/wiki-planet-links.json）
-let WIKI_PLANET_MAP = {};    // 星球大写原名 -> zh 站规范标题
-const WIKI_ZH_BASE = "https://helldivers.wiki.gg/zh/wiki/";
-function planetWikiUrl(index) {
-  const p = BYIDX[index];
-  const en = String((p && p.name) || "").trim().toUpperCase();
-  const title = WIKI_PLANET_MAP[en];
-  if (title) return WIKI_ZH_BASE + encodeURIComponent(title.replace(/ /g, "_"));
-  // 未收录：回退 zh 站搜索（精确命中时 MediaWiki 会直达页面）
-  const q = en || (p && p.name) || ("#" + index);
-  return "https://helldivers.wiki.gg/zh/index.php?search=" + encodeURIComponent(q);
-}
-
 /* ------------------------------------------------------ 阵营图标（SVG） ---- */
 // 取自 helldivers.wiki.gg 的 Faction Icons，本地同源缓存（assets/faction-icons/）。
 // ⚠ 2026-09 修复「预览面板阵营图标是纯黑剪影」：
@@ -657,9 +644,6 @@ async function boot() {
   try {
     WIKI_ICON_MAP = await (await fetch(B + "embed/wiki-icon-map.json?t=" + Date.now(), { cache: "no-store" })).json();
   } catch (_) { WIKI_ICON_MAP = {}; }
-  try {
-    WIKI_PLANET_MAP = await (await fetch(B + "embed/wiki-planet-links.json?t=" + Date.now(), { cache: "no-store" })).json();
-  } catch (_) { WIKI_PLANET_MAP = {}; }
   // 行动变量表（tables/hd2_variables.json；含作战限制红 Tag 判定）
   await loadVariables();
   // 星球下属区域（城市/超大型工厂）静态表（2026-09-24 demo）：名字/类型/描述 + 中文名覆盖
@@ -2058,7 +2042,7 @@ function bindUI(data, planets) {
       `<div class="hit" data-i="${p.index}"><span class="dot" style="background:${colorOf(p.owner)}"></span>` +
       `<span>${esc(p.nameCn || p.name)}</span><span class="own">${OWN_CN[p.owner] || p.owner || ""} · ${p.lib.toFixed(0)}%</span>` +
       // 内链：每个结果都能直接进资料页（2026-09-25）。点这一格不应触发行点击（focusPlanet）
-      `<a class="hit-wiki" target="_blank" rel="noopener" href="${planetWikiUrl(p.index)}" title="打开中文维基星球页" ` +
+      `<a class="hit-wiki" target="_blank" rel="noopener" href="https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=${p.index}" title="打开资料页" ` +
       `onclick="event.stopPropagation()">📄</a></div>`).join("");
   }
   function performSearch(term) {
@@ -2236,7 +2220,7 @@ function bindUI(data, planets) {
       // 2026-09-25：行动变量 / 词条 / 维基链接这些「重内容」已搬到独立资料页 planet.html，
       // 侧栏只留一眼能看完的摘要 + 两个入口，避免右栏又变成信息堆（用户反馈的正是这个）。
       `<div class="pc-actions">` +
-        `<a class="btn primary" target="_blank" rel="noopener" href="${planetWikiUrl(index)}">📄 中文维基</a>` +
+        `<a class="btn primary" target="_blank" rel="noopener" href="https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=${index}">📄 完整资料</a>` +
         `<button class="btn" onclick="window.HD2StarMap.focusPlanet(${index})">🎯 聚焦</button>` +
       `</div>`;
   }
@@ -2542,7 +2526,7 @@ function bindUI(data, planets) {
       `</div>` +
       (regionsHtml || "") +
       `<div class="pc-actions">` +
-        `<a class="btn primary" target="_blank" rel="noopener" href="${planetWikiUrl(index)}">📄 中文维基</a>` +
+        `<a class="btn primary" target="_blank" rel="noopener" href="https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=${index}">📄 完整资料</a>` +
         `<button type="button" class="btn" data-act="wheel">🎡 轮盘</button>` +
       `</div>`;
   }
@@ -2612,7 +2596,7 @@ function bindUI(data, planets) {
       (showLiberated ? "" : window.HD2Forecast?.reinforcementHtml(DATA, p) || "") +
       regionsHtml +
       `<div class="pc-actions">` +
-        `<a class="btn primary" target="_blank" rel="noopener" href="${planetWikiUrl(index)}">📄 中文维基</a>` +
+        `<a class="btn primary" target="_blank" rel="noopener" href="https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=${index}">📄 完整资料</a>` +
         `<button type="button" class="btn" data-act="wheel">🎡 轮盘</button>` +
       `</div>`;
     }
@@ -2686,7 +2670,7 @@ function bindUI(data, planets) {
         ev.stopPropagation();
         const act = g.getAttribute("data-act");
         hideWheel();
-        if (act === "detail") { window.open(planetWikiUrl(index), "_blank", "noopener"); }
+        if (act === "detail") { window.open(B + "planet.html?idx=" + index, "_blank", "noopener"); }
         else if (act === "dss") { showDssPanel(index); openAside(); }
       });
     });
