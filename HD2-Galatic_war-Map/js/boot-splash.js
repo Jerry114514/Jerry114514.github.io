@@ -1,30 +1,14 @@
 "use strict";
 /* ==============================================================
-   全站载入遮罩（boot-splash）· 2026-10-26
-   --------------------------------------------------------------
-   功能：
-     1. 全屏载入遮罩：旗帜徽标脉冲 + 分段进度条 + 轮换信息行
-     2. 信息轮换：在真实加载消息之间穿插 lore / 军情速报 / 提示，
-        每 2.8s 切换一条（带淡入），让等待不再只是干等
-     3. 各页面真实进度消息通过 HD2Boot.setMsg() 推入，
-        轮换池按时间片均匀分配真实与穿插内容
-   用法（页面底部，DOMContentLoaded 之前引入即可）：
-     <link rel="stylesheet" href="./css/boot-splash.css">
-     <script src="./js/boot-splash.js"></script>
-     <script>
-       HD2Boot.mount();                // 挂载遮罩（body 末尾插入节点）
-       HD2Boot.setMsg("正在加载星图数据…"); // 推入真实进度
-       HD2Boot.done();                 // 数据就绪 → 淡出移除
-     </script>
-   星图页（galaxy-map-v2）保留原有内联版本以避免双遮罩；
-   其余页面通过本模块统一。
+   超级地球 · 银河链路启动屏（2026-10-27）
+   - 真实状态与 lore 分行显示，互不覆盖。
+   - setStage(current, total) 显示真实阶段；未设置时保持不确定扫描。
+   - mount() 用于全站页面；attach() 接管星图已有的内联遮罩。
    ============================================================== */
 (function (global) {
   "use strict";
 
-  var PREFIX = "./";  // 相对当前页面的资源基址（emblem 图标）
-
-  // 穿插信息池（lore / 军情 / 提示），与真实进度消息交替显示
+  var PREFIX = "./";
   var LORE = [
     "🪖 超级地球武装力量正在为您准备战况简报…",
     "📡 真理部广播：民主的火种需要每一个公民的守护。",
@@ -37,100 +21,218 @@
     "🎖️ 在您等待的这几秒里，已有 3,741 名绝地潜兵完成了任务。",
     "🚀 超级驱逐舰编队已完成第 1,042 次轨道部署。",
   ];
-
+  var motionQuery = global.matchMedia ? global.matchMedia("(prefers-reduced-motion: reduce)") : null;
   var state = {
     mounted: false,
+    attached: false,
     node: null,
     msgEl: null,
-    realMsg: "",
+    subEl: null,
+    loreEl: null,
+    stageCodeEl: null,
+    stageCountEl: null,
+    segmentsEl: null,
     loreIdx: 0,
     timer: null,
     gone: false,
   };
 
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
+  function reducedMotion() { return !!(motionQuery && motionQuery.matches); }
+
+  function segmentsMarkup() {
+    var out = "";
+    for (var i = 0; i < 10; i++) out += "<i><b></b></i>";
+    return out;
+  }
+
+  function visualMarkup() {
+    return '<div class="boot-visual" aria-hidden="true"><div class="boot-frame">'
+      + '<img class="emblem" src="' + PREFIX + 'assets/ui-icons/super_earth_flag.svg" alt="" decoding="async">'
+      + '<span class="scan-line"></span></div></div>';
+  }
+
+  function messageMarkup() {
+    return '<div class="msg"><span class="line" role="status" aria-live="polite"></span>'
+      + '<small class="sub"></small><small class="lore" aria-hidden="true"></small></div>';
   }
 
   function build() {
-    var seg = "";
-    for (var i = 1; i <= 10; i++) seg += "<i></i>";
     var el = document.createElement("div");
     el.id = "hd2-boot";
-    el.setAttribute("role", "status");
-    el.setAttribute("aria-live", "polite");
     el.setAttribute("aria-label", "正在加载");
-    el.innerHTML =
-      '<img class="emblem" src="' + PREFIX + 'assets/ui-icons/super_earth_flag.svg" alt="" decoding="async">'
-      + '<div class="segments" aria-hidden="true">' + seg + "</div>"
-      + '<div class="msg"><span class="line"></span><small class="sub"></small></div>';
+    el.innerHTML = visualMarkup()
+      + '<div class="boot-stage" aria-hidden="true"><span class="stage-code">UPLINK</span><span class="stage-count">SYNC</span></div>'
+      + '<div class="segments" data-mode="indeterminate" aria-hidden="true">' + segmentsMarkup() + "</div>"
+      + messageMarkup();
     document.body.appendChild(el);
-    state.node = el;
-    state.msgEl = el.querySelector(".msg .line");
-    state.subEl = el.querySelector(".msg .sub");
     return el;
   }
 
-  function tick() {
-    if (state.gone) return;
-    // 交替显示：真实消息 → lore → 真实消息 → lore…
-    var useReal = (state.loreIdx % 2 === 0) && state.realMsg;
-    var text = useReal ? state.realMsg : LORE[state.loreIdx % LORE.length];
-    if (!text) text = LORE[state.loreIdx % LORE.length];
-    state.loreIdx++;
-    if (state.msgEl) {
-      state.msgEl.style.opacity = "0";
-      setTimeout(function () {
-        if (state.msgEl) {
-          state.msgEl.textContent = text;
-          state.msgEl.style.opacity = "1";
-        }
-      }, 150);
+  function cacheNode(el) {
+    state.node = el;
+    state.msgEl = el.querySelector(".msg .line");
+    state.subEl = el.querySelector(".msg .sub");
+    state.loreEl = el.querySelector(".msg .lore");
+    state.stageCodeEl = el.querySelector(".stage-code");
+    state.stageCountEl = el.querySelector(".stage-count");
+    state.segmentsEl = el.querySelector(".segments");
+  }
+
+  function clearSwap(el) {
+    if (!el) return;
+    if (el._hd2SwapTimer) clearTimeout(el._hd2SwapTimer);
+    el._hd2SwapTimer = null;
+  }
+
+  function swapText(el, text, immediate) {
+    if (!el) return;
+    text = String(text == null ? "" : text);
+    clearSwap(el);
+    if (immediate || reducedMotion()) {
+      el.textContent = text;
+      el.classList.remove("changing");
+      return;
     }
+    if (el.textContent === text) { el.classList.remove("changing"); return; }
+    el.classList.add("changing");
+    el._hd2SwapTimer = setTimeout(function () {
+      el._hd2SwapTimer = null;
+      if (!el.isConnected) return;
+      el.textContent = text;
+      el.classList.remove("changing");
+    }, 140);
+  }
+
+  function tick() {
+    if (state.gone || !LORE.length) return;
+    swapText(state.loreEl, LORE[state.loreIdx % LORE.length], false);
+    state.loreIdx++;
+  }
+
+  function startLore() {
+    if (state.timer) clearInterval(state.timer);
+    if (!LORE.length || state.gone) return;
+    swapText(state.loreEl, LORE[state.loreIdx % LORE.length], true);
+    state.loreIdx++;
+    if (!reducedMotion()) state.timer = setInterval(tick, 4200);
+  }
+
+  function clearAsync() {
+    if (state.timer) clearInterval(state.timer);
+    state.timer = null;
+    clearSwap(state.msgEl);
+    clearSwap(state.subEl);
+    clearSwap(state.loreEl);
+  }
+
+  function renderStage(current, total) {
+    if (!state.node) return;
+    total = Math.max(1, Number(total) || 1);
+    current = Math.min(total, Math.max(1, Number(current) || 1));
+    if (state.stageCountEl) {
+      state.stageCountEl.textContent = String(current).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+    }
+    if (!state.segmentsEl) return;
+    state.segmentsEl.dataset.mode = "determinate";
+    var completed = Math.floor((current - 1) / total * 10);
+    Array.prototype.forEach.call(state.segmentsEl.children, function (seg, i) {
+      seg.classList.toggle("done", i < completed);
+      seg.classList.toggle("current", i === completed);
+    });
+  }
+
+  function completeSegments() {
+    if (!state.segmentsEl) return;
+    state.segmentsEl.dataset.mode = "determinate";
+    Array.prototype.forEach.call(state.segmentsEl.children, function (seg) {
+      seg.classList.add("done");
+      seg.classList.remove("current");
+    });
   }
 
   var HD2Boot = {
     mount: function (opts) {
-      if (state.mounted) return;
+      if (state.mounted) return HD2Boot;
       state.mounted = true;
+      state.attached = false;
       if (opts && opts.assetPrefix) PREFIX = opts.assetPrefix;
       var el = build();
-      // 请求下一帧再添加 visible 类，让 transition 生效
+      cacheNode(el);
       requestAnimationFrame(function () {
-        requestAnimationFrame(function () { el.classList.add("visible"); });
+        requestAnimationFrame(function () { if (!state.gone && el.isConnected) el.classList.add("visible"); });
       });
-      tick();
-      state.timer = setInterval(tick, 2800);
+      startLore();
       return HD2Boot;
     },
-    setMsg: function (msg) {
-      state.realMsg = String(msg || "");
-      if (state.msgEl && !state.gone) {
-        state.msgEl.style.opacity = "0";
-        setTimeout(function () {
-          if (state.msgEl) {
-            state.msgEl.textContent = state.realMsg;
-            state.msgEl.style.opacity = "1";
-          }
-        }, 150);
-      }
+
+    attach: function (el) {
+      if (!el) return HD2Boot;
+      if (state.mounted && state.node !== el) return HD2Boot;
+      state.mounted = true;
+      state.attached = true;
+      cacheNode(el);
+      el.classList.add("visible");
+      startLore();
       return HD2Boot;
     },
+
+    setMsg: function (msg, sub) {
+      if (state.gone) return HD2Boot;
+      // 阶段计数是即时更新的；主状态也必须同步落字，否则快速启动时会短暂显示“03/04 + 正在建立链路”。
+      swapText(state.msgEl, msg, true);
+      if (sub !== undefined) swapText(state.subEl, sub, true);
+      return HD2Boot;
+    },
+
+    setStage: function (current, total, code) {
+      if (state.gone) return HD2Boot;
+      if (code && state.stageCodeEl) state.stageCodeEl.textContent = String(code);
+      renderStage(current, total);
+      return HD2Boot;
+    },
+
     done: function () {
-      if (state.gone) return;
+      if (state.gone) return HD2Boot;
       state.gone = true;
-      if (state.timer) clearInterval(state.timer);
-      if (state.node) {
-        state.node.classList.add("gone");
-        var n = state.node;
-        setTimeout(function () { if (n && n.parentNode) n.parentNode.removeChild(n); }, 600);
+      clearAsync();
+      var n = state.node;
+      if (!n) return HD2Boot;
+      swapText(state.msgEl, "链路已建立 · FOR SUPER EARTH", true);
+      swapText(state.loreEl, "", true);
+      if (state.stageCountEl) state.stageCountEl.textContent = "READY";
+      completeSegments();
+      n.classList.remove("error");
+      n.classList.add("complete");
+      requestAnimationFrame(function () { if (n.isConnected) n.classList.add("gone"); });
+      setTimeout(function () {
+        if (!n.isConnected) return;
+        if (state.attached) n.style.display = "none";
+        else if (n.parentNode) n.parentNode.removeChild(n);
+      }, 420);
+      return HD2Boot;
+    },
+
+    fail: function (msg, sub) {
+      state.gone = true;
+      clearAsync();
+      var n = state.node;
+      if (!n) return HD2Boot;
+      n.style.display = "flex";
+      n.classList.remove("gone", "complete");
+      n.classList.add("error");
+      if (state.stageCodeEl) state.stageCodeEl.textContent = "LINK ERROR";
+      if (state.stageCountEl) state.stageCountEl.textContent = "HALT";
+      if (state.segmentsEl) {
+        state.segmentsEl.dataset.mode = "determinate";
+        Array.prototype.forEach.call(state.segmentsEl.children, function (seg) { seg.classList.remove("done", "current"); });
       }
+      swapText(state.msgEl, msg || "链路建立失败", true);
+      swapText(state.subEl, sub || "请检查网络连接后刷新重试", true);
+      swapText(state.loreEl, "", true);
       return HD2Boot;
     },
   };
 
-  HD2Boot._lorePool = LORE;   // 供内联遮罩页（如星图）复用穿插文案
+  HD2Boot._lorePool = LORE; // 保留给旧页面查询；消息轮换不再覆盖真实状态。
   global.HD2Boot = HD2Boot;
 })(typeof window !== "undefined" ? window : globalThis);
