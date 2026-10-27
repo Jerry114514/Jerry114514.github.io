@@ -173,16 +173,47 @@ function planetIconFile(name) {
   const local = ICON_INDEX[key];
   if (local) { ICON_URL[local] = ICON_DIR + local; return local; }
   return "";
+}
+
+// 星球 → wiki.gg 中文站页面（zh 站星球页标题为英文 Title Case，映射见 embed/wiki-planet-links.json）
+let WIKI_PLANET_MAP = {};    // 星球大写原名 -> zh 站规范标题
+const WIKI_ZH_BASE = "https://helldivers.wiki.gg/zh/wiki/";
+function planetWikiUrl(index) {
+  const p = BYIDX[index];
+  const en = String((p && p.name) || "").trim().toUpperCase();
+  const title = WIKI_PLANET_MAP[en];
+  if (title) return WIKI_ZH_BASE + encodeURIComponent(title.replace(/ /g, "_"));
+  // 未收录：回退 zh 站搜索（精确命中时 MediaWiki 会直达页面）
+  const q = en || (p && p.name) || ("#" + index);
+  return "https://helldivers.wiki.gg/zh/index.php?search=" + encodeURIComponent(q);
 }""", tag="planetIconFile")
 
-# 图标索引加载：补 wiki-icon-map.json
+# 图标索引加载：补 wiki-icon-map.json 与 wiki-planet-links.json
 m = re.search(r'( *)try \{\n *ICON_INDEX = await \(await fetch\(B \+ "assets/planet-icons/index\.json\?t=" \+ Date\.now\(\), \{ cache: "no-store" \}\)\)\.json\(\);\n *\} catch \(_\) \{ ICON_INDEX = \{\}; \}',
               JS)
 if not m:
     raise SystemExit("[build] ICON_INDEX 加载块未找到（源文件可能已变化）")
 JS = JS[:m.start()] + m.group(0) + \
-    '\n  try {\n    WIKI_ICON_MAP = await (await fetch(B + "embed/wiki-icon-map.json?t=" + Date.now(), { cache: "no-store" })).json();\n  } catch (_) { WIKI_ICON_MAP = {}; }' + \
+    '\n  try {\n    WIKI_ICON_MAP = await (await fetch(B + "embed/wiki-icon-map.json?t=" + Date.now(), { cache: "no-store" })).json();\n  } catch (_) { WIKI_ICON_MAP = {}; }\n' \
+    '  try {\n    WIKI_PLANET_MAP = await (await fetch(B + "embed/wiki-planet-links.json?t=" + Date.now(), { cache: "no-store" })).json();\n  } catch (_) { WIKI_PLANET_MAP = {}; }' + \
     JS[m.end():]
+
+# --- 星球详情入口 → wiki.gg 中文站星球页（3 处「完整资料」+ 检索 📄 + 轮盘） ---
+JS = must_replace(
+    JS,
+    'target="_blank" rel="noopener" href="' + B + 'planet.html?idx=${index}">📄 完整资料</a>',
+    'target="_blank" rel="noopener" href="${planetWikiUrl(index)}">📄 中文维基</a>',
+    count=3, tag="完整资料链接")
+JS = must_replace(
+    JS,
+    'target="_blank" rel="noopener" href="' + B + 'planet.html?idx=${p.index}" title="打开资料页"',
+    'target="_blank" rel="noopener" href="${planetWikiUrl(p.index)}" title="打开中文维基星球页"',
+    count=1, tag="检索资料链接")
+JS = must_replace(
+    JS,
+    'if (act === "detail") { window.open(B + "planet.html?idx=" + index, "_blank", "noopener"); }',
+    'if (act === "detail") { window.open(planetWikiUrl(index), "_blank", "noopener"); }',
+    count=1, tag="轮盘详情跳转")
 
 # --- loadPlanetIcon：单次 fetch 解码版 → 多 URL 依序尝试版 ---
 JS = must_replace(
