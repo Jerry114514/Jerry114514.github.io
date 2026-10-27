@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3968,
+   "published_at": "2026-10-27T08:22:36Z",
+   "source": "dispatch",
+   "original": "ARSENAL AUGMENTATION\n\nTo bolster war efforts, the Shield Generator Relay Stratagem has been made freely available for all Helldiver deployments on the Illuminate warfront, for the next 48 hours.",
+   "translated": "军械扩充\n\n为了增强战斗力，在接下来的48小时内，防护罩生成中继器战略配备会免费提供给部署至Illuminate战争前线的所有绝地潜兵。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85149116,
+   "official_message": "<i=3>军械扩充</i>\n\n为了增强战斗力，在接下来的48小时内，<i=1>防护罩生成中继器</i>战略配备会免费提供给部署至<i=1>Illuminate战争前线</i>的所有绝地潜兵。",
+   "translated_at": "2026-10-27T12:14:31Z"
+  },
+  {
    "id": 3967,
    "published_at": "2026-10-26T19:45:11Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "mt": false,
    "published_war_seconds": 84491967,
    "official_message": "<i=3>战略警告</i>\n\n据报告，<i=1>文德米塔里克斯主星</i>上出现了机器人<i=1>炽灼部队</i>。"
-  },
-  {
-   "id": 3958,
-   "original": "MAJOR ORDER WON\n\nThanks to the Helldivers’ philanthropic bravery and altruistic lethality, the AIR (Anti-Illuminate Restitution) initiative has been funded to its maximum level. Every revered Class A orbital retirement facility affected by recent Illuminate interference has now received a heavily subsidised upgrade to their respiratory fortification package.\n\nWith regional real estate futures fully stabilized and all corporate liabilities mitigated, the Helldivers stand triumphant.",
-   "translated": "重要指令已完成\n\n感谢绝地潜兵充满慈善精神的英勇善举，以对敌人的无私讨伐，AIR（反光能者补偿）计划已获得最高级别的资金支持。在近期受到光能者干扰影响的每一座荣耀A级轨道退休设施，都已获得高额补贴，对其呼吸强化系统进行了升级。\n\n区域房地产期货逐步走向完全稳定，而且所有企业债务有所减轻，绝地潜兵昂首告捷。",
-   "published_at": "2026-10-19T15:50:51Z",
-   "translated_at": "2026-10-21T10:41:35Z",
-   "source": "dispatch",
-   "engine": "arrowhead-official",
-   "text_source": "official_zh",
-   "mt": false,
-   "published_war_seconds": 84484899,
-   "official_message": "<i=3>重要指令已完成</i>\n\n感谢绝地潜兵充满慈善精神的英勇善举，以对敌人的无私讨伐，AIR（反光能者补偿）计划已获得最高级别的资金支持。在近期受到光能者干扰影响的每一座荣耀A级轨道退休设施，都已获得高额补贴，对其呼吸强化系统进行了升级。\n\n区域房地产期货逐步走向完全稳定，而且所有企业债务有所减轻，绝地潜兵昂首告捷。"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3906,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-27T06:14:17Z",
+  "computed_at": "2026-10-27T12:14:32Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -225,22 +225,34 @@
    "expires_at_war_seconds": 85276425,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501088,
+   "id32": 3589949480,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85321913,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-27T06:14:16Z",
+  "source_version": "2026-10-27T12:14:30Z",
   "war_id": 801,
-  "war_time_seconds": 85141420,
-  "last_success_at": "2026-10-27T06:14:16Z",
+  "war_time_seconds": 85163030,
+  "last_success_at": "2026-10-27T12:14:30Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-27T06:14:16Z",
-  "retrieved_at": "2026-10-27T06:14:16Z",
+  "source_version": "2026-10-27T12:14:30Z",
+  "retrieved_at": "2026-10-27T12:14:30Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -251,7 +263,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 300000000,
-    "progress": 53089894,
+    "progress": 56657056,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -268,7 +280,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 65000000,
-    "progress": 15401333,
+    "progress": 16480800,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
