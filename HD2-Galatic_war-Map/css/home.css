@@ -2101,18 +2101,18 @@
     .mo-incoming-notice {
       position: absolute;
       display: none;
-      align-items: center; justify-content: center; gap: 14px;
-      max-width: 680px; height: 40px; padding: 0 20px;
+      align-items: center; justify-content: center; gap: 18px;
+      max-width: 860px; height: 56px; padding: 0 30px;
       background: rgba(4, 8, 12, .82);
       border: 1px solid var(--mo-blue-dim);
     }
     .mo-incoming-notice.is-active { display: flex; animation: moIncomingPulse 1s cubic-bezier(.8, .1, .2, .9) forwards; }
     .mo-notice-text {
       color: var(--mo-blue);
-      font-weight: 800; letter-spacing: .14em;
-      font-size: 16px; white-space: nowrap;
+      font-weight: 800; letter-spacing: .18em;
+      font-size: 22px; white-space: nowrap;
     }
-    .mo-notice-seal { width: 20px; height: 20px; flex: none; }
+    .mo-notice-seal { width: 30px; height: 30px; flex: none; }
     @keyframes moIncomingPulse {
       0%   { opacity: 0; transform: scale(0); }
       16%  { opacity: 1; transform: scaleY(.92); }
@@ -2206,7 +2206,9 @@
     @media (max-width: 720px) {
       .mo-head-actions { width: 100%; margin-left: 0; justify-content: flex-end; }
       .mo-head-actions .block-meta { width: auto; }
-      .mo-notice-text { font-size: 13px; }
+      .mo-incoming-notice { max-width: 680px; height: 40px; padding: 0 16px; gap: 12px; }
+      .mo-notice-text { font-size: 13px; letter-spacing: .14em; }
+      .mo-notice-seal { width: 20px; height: 20px; }
       .mo-order-body { font-size: 15px; line-height: 19px; padding: 12px 14px 14px; }
       .mo-order-head h2 { font-size: 19px; }
     }
