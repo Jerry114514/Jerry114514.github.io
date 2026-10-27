@@ -24,9 +24,8 @@ var HD2SM_RT = 0;
 var HD2SM_STATE = { planetR: null, focusPlanet: null, dbg: null };
 var CURRENT = { el: null, root: null, map: null };
 var CSS_TOKEN = "hd2sm-style";
-var SCRIPT_SRCS = ["./js/forecast.js?v=20261013b", "./js/regions.js", "./js/libs/maplibre/maplibre-gl-csp.js", "./js/tactical.js", "./js/dss-donations.js?v=20261014b", "./js/boot-splash.js?v=20261027b"];
 
-var SCOPED_CSS = "/* ===== 内联样式 ===== */\n.hd2sm-root{\n    --bg-deep:#080B12; --bg-mid:#0E1420; --panel:rgba(14,20,32,.86);\n    --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);\n    --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;\n    --yellow:#f5c518; --blue:#3b82f6;\n    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;\n    --radius:12px; --radius-s:8px;\n  }\n.hd2sm-root, .hd2sm-root *, .hd2sm-root *::before, .hd2sm-root *::after{margin:0;padding:0;box-sizing:border-box}\n.hd2sm-root{height:100%;height:100dvh}\n/* 正文/标签字体：复用 wiki 侧思源黑体（不经 CDN）。\n     该字体同时供下方 MapLibre 的 localIdeographFontFamily 使用 ——\n     MapLibre 用 canvas 2D + TinySDF 走系统/本地字体渲染 CJK，故 @font-face 对地图标签同样生效。*/\n@font-face{\n    font-family:\"SourceHanSans\";\n    src:url(\"https://jerry114514.github.io/HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf\") format(\"opentype\");\n    font-display:swap;\n  }\n.hd2sm-root{\n    display:flex;flex-direction:column;background:var(--bg-deep);color:var(--text);overflow:hidden;\n    font-family:\"SourceHanSans\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;\n  }\n/* ---------- 顶栏 ---------- */\n.hd2sm-root header{\n    display:flex;align-items:center;gap:14px;padding:9px 18px;z-index:20;\n    border-bottom:1px solid var(--border);background:var(--bg-mid);\n  }\n.hd2sm-root header h1{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:1.05rem;color:var(--yellow);white-space:nowrap}\n.hd2sm-root .tag{background:var(--yellow);color:#1a1a00;font-weight:700;border-radius:999px;padding:2px 10px;font-size:.68rem;white-space:nowrap}\n.hd2sm-root .tag.v2{background:var(--blue);color:#fff}\n.hd2sm-root header .stats{margin-left:auto;color:var(--text-mute);font-size:.74rem;display:flex;gap:13px;flex-wrap:wrap;align-items:center}\n.hd2sm-root header .stats b{color:var(--text-dim);font-weight:600}\n.hd2sm-root header button, .hd2sm-root header .btn{\n    background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-dim);\n    border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.76rem;font-family:inherit;white-space:nowrap;\n  }\n.hd2sm-root header button:hover, .hd2sm-root header .btn:hover{border-color:var(--blue);color:var(--blue)}\n.hd2sm-root header a.btn{text-decoration:none;display:inline-block}\n/* ---------- 主区 ---------- */\n.hd2sm-root main{flex:1;display:flex;min-height:0;position:relative}\n.hd2sm-root #hd2sm-stage{flex:1;position:relative;overflow:hidden;cursor:grab}\n.hd2sm-root #hd2sm-stage.dragging{cursor:grabbing}\n.hd2sm-root #hd2sm-stars{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}\n.hd2sm-root #hd2sm-map{position:absolute;inset:0;z-index:1;background:transparent!important}\n.hd2sm-root .maplibregl-canvas{outline:none}\n.hd2sm-root .maplibregl-ctrl-attrib{display:none!important}\n/* 启动屏样式由 css/boot-splash.css 统一提供，HD2Boot.attach 接管内联 #hd2sm-boot。 */\n.hd2sm-root #hd2sm-tac-empty{\n    position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;\n    background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);\n    border-radius:999px;padding:7px 16px;font-size:.78rem;\n  }\n/* tooltip */\n.hd2sm-root #hd2sm-tip{\n    position:absolute;z-index:15;pointer-events:none;display:none;\n    background:rgba(10,14,26,.95);border:1px solid #334155;border-radius:var(--radius-s);\n    padding:9px 12px;font-size:.76rem;line-height:1.6;min-width:170px;max-width:250px;\n    box-shadow:0 8px 26px rgba(0,0,0,.6);\n  }\n.hd2sm-root #hd2sm-tip .n{font-weight:700;color:var(--yellow);margin-bottom:2px}\n.hd2sm-root #hd2sm-tip .r{color:var(--text-dim)}\n.hd2sm-root #hd2sm-tip .r span{color:var(--text)}\n.hd2sm-root #hd2sm-tip .bar{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:6px;overflow:hidden}\n.hd2sm-root #hd2sm-tip .bar i{display:block;height:100%;background:var(--yellow)}\n/* ---------- 侧栏 ---------- */\n.hd2sm-root aside{\n    width:326px;flex-shrink:0;border-left:1px solid var(--border);background:var(--bg-mid);\n    overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;\n    transition:width .26s ease,padding .26s ease,opacity .2s ease;\n  }\n/* 可收缩侧栏：收起后只留一条窄边条（点击恢复） */\n.hd2sm-root.aside-collapsed aside{width:0;padding:0;opacity:0;pointer-events:none;border-left:none}\n.hd2sm-root #hd2sm-aside-rail{\n    display:none;position:absolute;top:0;right:0;bottom:0;width:22px;z-index:19;cursor:pointer;\n    background:linear-gradient(90deg,rgba(14,20,32,0),rgba(14,20,32,.9));\n    border-left:1px solid var(--border);align-items:center;justify-content:center;\n  }\n.hd2sm-root.aside-collapsed #hd2sm-aside-rail{display:flex}\n.hd2sm-root #hd2sm-aside-rail span{color:var(--text-dim);font-size:.9rem}\n.hd2sm-root #hd2sm-aside-rail:hover span{color:var(--blue)}\n/* 抽屉遮罩：桌面端始终关闭（桌面用窄边条展开），仅移动端媒体查询里启用。\n     注意它必须比 aside(z25) 低 —— 否则会像旧的 #hd2sm-aside-rail 那样变成\n     一张盖住整屏、无法与星图交互的透明玻璃。 */\n.hd2sm-root #hd2sm-aside-backdrop{display:none;position:absolute;inset:0;z-index:24;background:rgba(3,6,14,.5)}\n/* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */\n.hd2sm-root #hd2sm-sector-card{\n    position:absolute;left:14px;top:14px;z-index:14;display:none;min-width:206px;max-width:288px;\n    background:rgba(10,14,26,.93);border:1px solid #334155;border-radius:var(--radius);\n    padding:10px 13px;box-shadow:0 8px 26px rgba(0,0,0,.6);\n  }\n.hd2sm-root #hd2sm-sector-card.on{display:flex;gap:11px;align-items:flex-start}\n.hd2sm-root #hd2sm-sector-card .ficon{width:38px;height:38px;flex-shrink:0;margin-top:2px}\n.hd2sm-root #hd2sm-sector-card .ficon svg, .hd2sm-root #hd2sm-sector-card .ficon img{width:100%;height:100%;display:block}\n.hd2sm-root #hd2sm-sector-card .sec-name{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:.98rem;color:var(--text);line-height:1.2}\n.hd2sm-root #hd2sm-sector-card .presence{font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:uppercase}\n.hd2sm-root #hd2sm-sector-card .librow{font-size:.82rem;color:var(--text-dim);margin-top:5px}\n.hd2sm-root #hd2sm-sector-card .librow b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}\n.hd2sm-root #hd2sm-sector-card .bar{height:4px;border-radius:2px;background:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}\n.hd2sm-root #hd2sm-sector-card .bar i{display:block;height:100%;background:var(--blue);transition:width .25s ease}\n.hd2sm-root #hd2sm-sector-card .sub{font-size:.68rem;color:var(--text-mute);margin-top:5px}\n/* 敌军阵营：改为带阵营色的胶囊，取代原先挤在一起、不易读的「敌军：A、B」纯文本 */\n.hd2sm-root #hd2sm-sector-card .enemy-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}\n.hd2sm-root #hd2sm-sector-card .enemy-chip{\n    display:inline-flex;align-items:center;gap:4px;font-size:.68rem;line-height:1;\n    padding:3px 7px;border-radius:999px;border:1px solid currentColor;\n    background:color-mix(in srgb, currentColor 14%, transparent);white-space:nowrap;\n  }\n.hd2sm-root #hd2sm-sector-card .enemy-chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}\n/* 无 color-mix 支持时退回半透明底，避免胶囊看不见 */\n@supports not (background: color-mix(in srgb, red 10%, transparent)){.hd2sm-root #hd2sm-sector-card .enemy-chip{background:rgba(255,255,255,.07)}}\n/* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */\n/* --fx-size / --fx-img / --fx-gap 由 buildFXNodes 的 sync() 按当前 zoom 写入，\n     使图标随星球本体一起缩放（低缩放下不再盖住星球）。 */\n.hd2sm-root #hd2sm-fx-layer{\n    position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;\n    --fx-size:34px;--fx-img:24px;--fx-gap:42px;\n  }\n.hd2sm-root .fx-cluster{\n    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;\n    transform:translate(-50%,-50%);will-change:transform;\n  }\n.hd2sm-root .fx-i{\n    width:var(--fx-size);height:var(--fx-size);\n    display:flex;align-items:center;justify-content:center;\n    border-radius:8px;background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);\n    box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:auto;\n  }\n/* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */\n.hd2sm-root .fx-i svg, .hd2sm-root .fx-i img{width:var(--fx-img);height:var(--fx-img);display:block}\n.hd2sm-root .fx-i svg{fill:currentColor}\n/* 描边类图标（DSS 战术行动：dss_orbital_blockade / dss_heavy_ordnance / dss_eagle_storm 等）\n     在 viewBox=256 里只写 stroke-width:2.2，缩到 --fx-img(24px) 显示后实际描边不足 0.3px →\n     渲染出来几乎是黑糊（用户反馈「DSS 效果的图片过黑」）。\n     non-scaling-stroke 让描边宽度按设备像素解释，2.2 即约 2.2px，清晰可见。 */\n.hd2sm-root .fx-i svg *{vector-effect:non-scaling-stroke}\n.hd2sm-root .fx-i img{object-fit:contain;border-radius:2px}\n.hd2sm-root .fx-more{\n    font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);\n    background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);\n  }\n@media (max-width:767px){.hd2sm-root .fx-cluster{gap:2px}}\n.hd2sm-root .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}\n.hd2sm-root aside h2{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}\n.hd2sm-root .search{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:var(--radius-s);\n    color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;outline:none}\n.hd2sm-root .search:focus{border-color:var(--blue)}\n.hd2sm-root .chips{display:flex;flex-wrap:wrap;gap:6px}\n.hd2sm-root .chip{\n    border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:.73rem;cursor:pointer;\n    color:var(--text-dim);background:rgba(255,255,255,.03);user-select:none;transition:.15s;\n  }\n.hd2sm-root .chip:hover{border-color:var(--border-h);color:var(--text)}\n.hd2sm-root .chip.on{border-color:currentColor;background:rgba(255,255,255,.09);color:var(--text)}\n.hd2sm-root .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}\n.hd2sm-root .legend{font-size:.75rem;color:var(--text-dim);line-height:1.95}\n.hd2sm-root .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}\n.hd2sm-root .legend .ln{display:inline-block;width:20px;height:0;border-top:2px solid;margin-right:8px;vertical-align:middle}\n.hd2sm-root .muted{color:var(--text-mute);font-size:.73rem;line-height:1.7}\n.hd2sm-root #hd2sm-detail .kv{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}\n.hd2sm-root #hd2sm-detail .cell{background:rgba(255,255,255,.035);border-radius:var(--radius-s);padding:6px 9px}\n.hd2sm-root #hd2sm-detail .cell .k{color:var(--text-mute);font-size:.68rem}\n.hd2sm-root #hd2sm-detail .cell .v{font-size:.86rem;margin-top:2px}\n.hd2sm-root #hd2sm-detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blue);background:rgba(59,130,246,.1);\n    border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}\n.hd2sm-root #hd2sm-detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}\n/* ---------- 行动变量 chip（含作战限制的红色 Tag） ---------- */\n.hd2sm-root #hd2sm-detail .var-wrap{margin-top:11px;padding-top:9px;border-top:1px dashed rgba(255,255,255,.12)}\n.hd2sm-root #hd2sm-detail .var-title{font-size:.7rem;color:var(--text-mute);margin-bottom:6px;letter-spacing:.04em}\n.hd2sm-root #hd2sm-detail .var-chips{display:flex;flex-wrap:wrap;gap:5px}\n.hd2sm-root #hd2sm-detail .var-chip{\n    display:inline-flex;align-items:center;gap:4px;font-size:.7rem;line-height:1;\n    padding:3px 8px;border-radius:999px;border:1px solid var(--border);\n    background:rgba(255,255,255,.045);color:var(--text-dim);\n  }\n/* 作战限制：红色 Tag（与主站 .pd-chip-neg 同款语义） */\n.hd2sm-root #hd2sm-detail .var-chip.neg{\n    border-color:rgba(231,76,60,.6);color:#E74C3C;\n    background:rgba(231,76,60,.09);font-weight:600;\n  }\n.hd2sm-root #hd2sm-detail .var-chip .warn{font-size:.72rem}\n/* ---------- 图鉴链接：链接型行（区别于下方「聚焦到该星球」按钮） ---------- */\n.hd2sm-root .pd-wiki{\n    display:flex;align-items:center;gap:7px;margin-top:10px;\n    padding:7px 10px;border-radius:var(--radius-s);\n    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.035);\n    color:var(--text-dim);font-size:.74rem;text-decoration:none;\n    transition:border-color .15s,background .15s,color .15s;\n  }\n.hd2sm-root .pd-wiki:hover{border-color:currentColor;background:rgba(255,255,255,.07)}\n.hd2sm-root .pd-wiki .ic{font-size:.8rem;flex-shrink:0}\n.hd2sm-root .pd-wiki .badge{\n    padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;\n    border:1px solid currentColor;\n    background:color-mix(in srgb, currentColor 16%, transparent);\n  }\n@supports not (background: color-mix(in srgb, red 10%, transparent)){.hd2sm-root .pd-wiki .badge{background:rgba(255,255,255,.08)}}\n.hd2sm-root .pd-wiki .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.hd2sm-root .pd-wiki .go{flex-shrink:0;opacity:.65;font-size:.78rem;transition:transform .15s,opacity .15s}\n.hd2sm-root .pd-wiki:hover .go{opacity:1;transform:translate(1px,-1px)}\n/* 配色：变种=黄、阵营=紫、我方=蓝，与星球归属/效果图标语义一致 */\n.hd2sm-root .pd-wiki.strain{color:var(--yellow)}\n.hd2sm-root .pd-wiki.faction{color:var(--c-illuminate)}\n.hd2sm-root .pd-wiki.humans{color:var(--c-humans)}\n.hd2sm-root #hd2sm-hits{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}\n.hd2sm-root #hd2sm-hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:.76rem}\n.hd2sm-root #hd2sm-hits .hit:hover{background:rgba(255,255,255,.07)}\n.hd2sm-root #hd2sm-hits .hit .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}\n.hd2sm-root #hd2sm-hits .hit .own{margin-left:auto;color:var(--text-mute);font-size:.68rem}\n.hd2sm-root #hd2sm-hits .hit .hit-wiki{text-decoration:none;color:var(--blue);font-size:.72rem;padding:0 4px;border:1px solid transparent;border-radius:4px}\n.hd2sm-root #hd2sm-hits .hit .hit-wiki:hover{color:var(--yellow);border-color:var(--yellow)}\n.hd2sm-root ::-webkit-scrollbar{width:8px;height:8px}\n.hd2sm-root ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}\n.hd2sm-root ::-webkit-scrollbar-track{background:transparent}\n/* ---------- 移动端适配 ---------- */\n.hd2sm-root #hd2sm-aside-toggle{display:none}\n/* 桌面用顶栏按钮 */\n@media (max-width:900px){.hd2sm-root aside{width:270px;padding:10px}\n.hd2sm-root header h1{font-size:.92rem}\n.hd2sm-root header .stats{display:none}\n.hd2sm-root #hd2sm-sector-card{left:10px;top:10px;min-width:0;max-width:calc(100% - 20px)}\n.hd2sm-root #hd2sm-sector-card .ficon{width:30px;height:30px}}\n@media (max-width:767px){/* 顶栏：只保留标题与侧栏开关 */\n.hd2sm-root header{padding:8px 10px;gap:8px;flex-wrap:nowrap}\n.hd2sm-root header .tag, .hd2sm-root header #hd2sm-btn-reset, .hd2sm-root header #hd2sm-btn-mode, .hd2sm-root header .btn.opt{display:none}\n.hd2sm-root header h1{font-size:.86rem}\n.hd2sm-root #hd2sm-aside-toggle{display:inline-block}\n/* 移动端：侧栏改为右侧抽屉浮层，不占地图宽度。\n       ⚠ 层叠陷阱：媒体查询里的 `aside{}` 特异度只有 (0,0,1)，会被通用的\n       `body.aside-collapsed aside{}` (0,1,1) 压过 —— 所以这里不能只靠\n       「默认隐藏」，必须用同等或更高特异度显式声明可见态，否则抽屉永远停在屏幕外。 */\n.hd2sm-root aside{\n      position:absolute;top:0;bottom:0;right:0;width:min(84vw,320px);\n      box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;\n      transform:translateX(105%);transition:transform .24s ease;\n    }\n/* 抽屉打开 = 未收起。这样 ☰ 的语义在桌面/移动端保持一致：\n       桌面收成窄边条、移动端收进屏幕外，都是同一个「收起」。 */\n.hd2sm-root:not(.aside-collapsed) aside{transform:translateX(0)}\n/* 关键修复：旧规则把窄边条拉成 100%×100% 的半透明整屏，\n       侧栏一收起就变成盖住整个星图、点不动任何东西的玻璃板。\n       移动端横向空间本就不够，展开侧栏改由顶栏 ☰ / 遮罩负责。 */\n.hd2sm-root #hd2sm-aside-rail{display:none !important}\n/* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点 */\n.hd2sm-root #hd2sm-aside-toggle{\n      position:absolute;top:7px;right:9px;z-index:27;\n      padding:4px 10px;line-height:1.25;font-size:1.02rem;\n      box-shadow:0 2px 10px rgba(0,0,0,.55);\n    }\n.hd2sm-root:not(.aside-collapsed) #hd2sm-aside-toggle{color:var(--yellow);border-color:var(--yellow)}\n/* 抽屉遮罩（仅移动端存在）：铺在地图上、位于抽屉之下，点它即收起。\n       不透明度只用 .5 —— 否则地图变暗后会被误认为「点不动」。 */\n.hd2sm-root #hd2sm-aside-backdrop{\n      display:block;position:absolute;inset:0;z-index:24;\n      background:rgba(3,6,14,.5);backdrop-filter:blur(2px);\n    }\n.hd2sm-root.aside-collapsed #hd2sm-aside-backdrop{display:none}\n/* 移动端：地图铺满，控件缩小 */\n.hd2sm-root .maplibregl-ctrl-bottom-right{bottom:8px;right:6px}\n.hd2sm-root .maplibregl-ctrl-bottom-left{display:none}\n.hd2sm-root #hd2sm-sector-card{font-size:.92em}\n.hd2sm-root #hd2sm-tac-empty{font-size:.7rem;left:10px;right:10px}\n.hd2sm-root #hd2sm-tip{min-width:0;width:206px;max-width:206px;font-size:.72rem;padding:7px 10px}}\n/* ════════════════════════════════════════════════════════════\n     2026-09-15：点击星球 → 星球**正上方**信息卡（不再直接弹侧栏）\n                 再次点击 → 轮盘（星球详细信息 / DSS 效果）\n     参考 helldiverscompanion.com/#hd2sm-map 的交互与信息组织\n     ════════════════════════════════════════════════════════════ */\n/* ---- 侧栏手风琴（2026-09-25 用户裁定：三栏滤镜保留但不默认展开）----\n     检索 / 阵营筛选 / 图层 默认 .collapsed（markup 里写死），点标题展开；星球详情与图例默认展开。 */\n.hd2sm-root aside .sec > h2{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}\n.hd2sm-root aside .sec > h2::after{content:\"▾\";margin-left:auto;font-size:.7rem;color:var(--text-mute);transition:transform .15s}\n.hd2sm-root aside .sec.collapsed > h2::after{transform:rotate(-90deg)}\n.hd2sm-root aside .sec.collapsed > .card{display:none}\n/* 信息卡上的「完整资料 / 聚焦」按钮组 */\n.hd2sm-root .pc-actions{display:flex;gap:6px;margin-top:9px}\n.hd2sm-root .pc-actions .btn{flex:1;font-size:.74rem;text-align:center;text-decoration:none;line-height:1.5}\n.hd2sm-root .pc-actions .btn.primary{border-color:var(--yellow);color:var(--yellow)}\n/* 移动端：信息卡改成底部抽屉（positionOverlays 写的是行内 left/top，用 !important 压过）\n     ⚠ 2026-09-26 修（用户反馈：手机上卡片跑到左上角、还渲染出界）：\n       旧规则只压了 left/top，**漏了行内 `transform: translate(-50%,-100%)`** ——\n       那条 transform 是为\"桌面端贴在星球正上方\"设计的：卡片变全宽后，\n       `-100%` 会把它整体**向上抬整整一个卡片高度**，于是从底部抽屉跑到屏幕外／左上角。\n       根治办法不是再加一条 patch，而是**桌面端别再写死坐标**（见 positionOverlays 的 isMobile 分支），\n       这里同时把 transform 归零，双保险。 */\n@media (max-width:767px){.hd2sm-root #hd2sm-planet-card{left:0 !important;right:0;bottom:0;top:auto !important;width:auto;max-height:66vh;overflow:auto;\n      border-left:none;border-right:none;border-bottom:none;\n      transform:none !important}\n.hd2sm-root #hd2sm-planet-card::after{display:none}\n.hd2sm-root .pc-actions .btn{min-height:40px;display:flex;align-items:center;justify-content:center}}\n.hd2sm-root #hd2sm-planet-card{\n    position:absolute;z-index:18;display:none;width:322px;\n    background:var(--panel);border:1px solid var(--line-2);\n    border-top:3px solid var(--pc-color,var(--yellow));\n    cursor:pointer;\n  }\n.hd2sm-root #hd2sm-planet-card.on{display:block}\n.hd2sm-root #hd2sm-planet-card::after{                       /* 指向星球的小三角 */\n    content:\"\";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);\n    width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;\n    border-top:7px solid var(--pc-color,var(--yellow));\n  }\n.hd2sm-root #hd2sm-planet-card .hd{\n    display:flex;align-items:center;gap:8px;padding:4px 9px;\n    background:var(--stripe);border-bottom:1px solid #33270A;\n  }\n.hd2sm-root #hd2sm-planet-card .kind{font-family:var(--font-mono);font-size:.66rem;font-weight:700;\n    color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}\n.hd2sm-root #hd2sm-planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}\n.hd2sm-root #hd2sm-planet-card .eta.lose{color:#FF4D2E;font-weight:700}\n.hd2sm-root #hd2sm-planet-card .kind.ok{color:#1FA84A;font-size:.7rem}\n.hd2sm-root #hd2sm-planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}\n.hd2sm-root #hd2sm-planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}\n.hd2sm-root #hd2sm-planet-card .ficon svg, .hd2sm-root #hd2sm-planet-card .ficon img{width:100%;height:100%;display:block}\n.hd2sm-root #hd2sm-planet-card .names{min-width:0;line-height:1.25}\n.hd2sm-root #hd2sm-planet-card .nm{display:block;font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;\n    font-size:.94rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .en{display:block;font-family:var(--font-mono);font-size:.62rem;color:var(--text-mute);\n    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .sec{display:block;font-size:.66rem;color:var(--text-dim);margin-top:2px}\n.hd2sm-root #hd2sm-planet-card .biome{position:relative;height:72px;overflow:hidden;\n    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:#0D0D0D}\n.hd2sm-root #hd2sm-planet-card .biome img{width:100%;height:100%;object-fit:cover;display:block}\n.hd2sm-root #hd2sm-planet-card .biome .noimg{display:grid;place-items:center;height:100%;font-size:.66rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .buffs{display:flex;flex-wrap:wrap;gap:3px;padding:4px 9px;background:#0B0B0B;min-height:24px;align-items:center}\n.hd2sm-root #hd2sm-planet-card .bi{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--line-2);\n    background:#141414;display:grid;place-items:center}\n.hd2sm-root #hd2sm-planet-card .bi svg, .hd2sm-root #hd2sm-planet-card .bi img{width:14px;height:14px;display:block}\n.hd2sm-root #hd2sm-planet-card .bar{position:relative;height:11px;margin:8px 9px 0;background:#1A1A1A;\n    border:1px solid var(--line-2);overflow:hidden}\n.hd2sm-root #hd2sm-planet-card .bar i{display:block;height:100%;background:var(--pc-color,var(--yellow))}\n.hd2sm-root #hd2sm-planet-card .bar .mk{position:absolute;top:-2px;width:2px;height:15px;background:#fff;opacity:.85}\n.hd2sm-root #hd2sm-planet-card .lib{display:flex;align-items:baseline;gap:8px;padding:5px 9px 0}\n.hd2sm-root #hd2sm-planet-card .lib b{font-family:var(--font-mono);font-size:1rem;color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .lib .st{font-size:.68rem;color:var(--text-dim)}\n.hd2sm-root #hd2sm-planet-card .rate{margin-left:auto;font-family:var(--font-mono);font-size:.74rem;font-weight:700}\n.hd2sm-root #hd2sm-planet-card .rate .m{font-size:.6rem;font-weight:400;color:var(--text-mute);margin-left:3px}\n.hd2sm-root #hd2sm-planet-card .stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;\n    padding:6px 9px;margin-top:6px;border-top:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .st2{font-size:.68rem;color:var(--text-mute);white-space:nowrap}\n.hd2sm-root #hd2sm-planet-card .st2 b{font-family:var(--font-mono);color:var(--text);font-weight:700}\n.hd2sm-root #hd2sm-planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mute);\n    font-family:var(--font-mono);border-top:1px solid #161616}\n/* ── 防御战（入侵）卡片（2026-09-24 新增）──────────────────────────────\n     被入侵星球不再显示「已解放 100%」，改用与主页一致的**双进度条 + 战况**，\n     但视觉沿用星图这套（直角条 + 等宽数字 + 斜纹头）。\n     ⚠ P0 铁律（交接文档 §11.1-7）：双条**顺序固定为上=超级地球、下=入侵方**，\n       且超级地球那条**恒为蓝**；卡片外框/顶部色表达\"谁在打\"（入侵方），两者必须解耦。 */\n.hd2sm-root #hd2sm-planet-card .kind.def{color:#FF6A4A}\n.hd2sm-root #hd2sm-planet-card.def .ficon{color:var(--c-humans)}\n/* 星球归属仍是超级地球，图标不吃卡片威胁色 */\n.hd2sm-root #hd2sm-planet-card .def-race{padding:8px 9px 2px;display:grid;gap:5px}\n.hd2sm-root #hd2sm-planet-card .def-row{display:grid;grid-template-columns:62px 1fr 54px;align-items:center;gap:6px}\n.hd2sm-root #hd2sm-planet-card .def-row .lbl{font-size:.66rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .def-row .val{font-family:var(--font-mono);font-size:.68rem;color:var(--text);text-align:right}\n.hd2sm-root #hd2sm-planet-card .def-row .track{position:relative;height:9px;background:#1A1A1A;border:1px solid var(--line-2);overflow:hidden}\n.hd2sm-root #hd2sm-planet-card .def-row .track i{display:block;height:100%}\n.hd2sm-root #hd2sm-planet-card .def-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;\n    padding:4px 9px 0;font-size:.66rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .def-meta b{font-family:var(--font-mono);color:var(--text);font-weight:700}\n.hd2sm-root #hd2sm-planet-card .def-meta .st-win{color:#1FA84A}\n.hd2sm-root #hd2sm-planet-card .def-meta .st-lose{color:#FF4D2E}\n/* ── 星球下属区域：城市 / 超大型工厂（2026-09-24 demo）─────────────────\n     对应游戏内「点开星球 → 左栏列城市/超大型工厂」，命名与类型取 wiki 的静态数据，\n     进度取 companion 的 warStatus.planetRegions（真实运行时）。 */\n.hd2sm-root #hd2sm-planet-card .regions{margin-top:6px;border-top:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .rg-hd{display:flex;align-items:baseline;gap:6px;padding:5px 9px 3px;\n    font-size:.7rem;color:var(--yellow);font-family:var(--font-mono)}\n.hd2sm-root #hd2sm-planet-card .rg-hd b{color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .rg-tip{margin-left:auto;font-size:.6rem;color:var(--text-mute);font-family:inherit}\n.hd2sm-root #hd2sm-planet-card .rg-list{display:grid;gap:1px;padding:0 5px 5px}\n.hd2sm-root #hd2sm-planet-card .rg-row{display:grid;grid-template-columns:16px 1fr 76px 50px;align-items:center;gap:5px;\n    padding:3px 4px;background:none;border:1px solid transparent;color:var(--text);\n    font:inherit;text-align:left;cursor:pointer}\n.hd2sm-root #hd2sm-planet-card .rg-row:hover{border-color:var(--line-2);background:#121212}\n.hd2sm-root #hd2sm-planet-card .rg-row.on{border-color:var(--yellow);background:#161205}\n.hd2sm-root #hd2sm-planet-card .rg-ico{font-size:.72rem;text-align:center}\n.hd2sm-root #hd2sm-planet-card .rg-name{font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .rg-name i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}\n.hd2sm-root #hd2sm-planet-card .rg-type{font-size:.6rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .rg-type em{font-style:normal;color:var(--yellow);margin-left:2px;font-size:.55rem}\n.hd2sm-root #hd2sm-planet-card .rg-lib{font-family:var(--font-mono);font-size:.66rem;color:var(--text);text-align:right}\n.hd2sm-root #hd2sm-planet-card .rg-detail{margin:2px 9px 8px;padding:6px 7px;background:#0D0D0D;border:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .rg-d-hd{font-size:.72rem;color:var(--yellow);margin-bottom:3px}\n.hd2sm-root #hd2sm-planet-card .rg-d-hd i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}\n.hd2sm-root #hd2sm-planet-card .rg-d-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.62rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .rg-d-meta b{font-family:var(--font-mono);color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .rg-d-desc{margin-top:4px;font-size:.64rem;line-height:1.55;color:var(--text-dim)}\n.hd2sm-root #hd2sm-planet-card .rg-d-act{margin-top:4px;font-size:.62rem;line-height:1.5;color:var(--text-mute);\n    border-top:1px solid #1a1a1a;padding-top:4px}\n/* 轮盘 */\n.hd2sm-root #hd2sm-wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;\n    transform:translate(-50%,-50%);cursor:pointer}\n.hd2sm-root #hd2sm-wheel.on{display:block}\n.hd2sm-root #hd2sm-wheel svg{width:100%;height:100%;display:block;overflow:visible}\n.hd2sm-root #hd2sm-wheel .sect path{fill:rgba(12,12,12,.94);stroke:var(--line-2);stroke-width:1}\n.hd2sm-root #hd2sm-wheel .sect:hover path{fill:#1A1200;stroke:var(--yellow)}\n.hd2sm-root #hd2sm-wheel .sect text{fill:var(--text-dim);font-size:10.5px;font-family:var(--font-mono);\n    pointer-events:none;letter-spacing:.04em}\n.hd2sm-root #hd2sm-wheel .sect:hover text{fill:var(--yellow)}\n.hd2sm-root #hd2sm-wheel .sect text.sub{font-size:8.5px;fill:var(--text-mute)}\n.hd2sm-root #hd2sm-wheel .ctr circle{fill:#0B0B0B;stroke:var(--yellow);stroke-width:2}\n.hd2sm-root #hd2sm-wheel .ctr:hover circle{fill:#1A1200}\n.hd2sm-root #hd2sm-wheel .ctr text{fill:var(--yellow);font-size:9px;font-family:var(--font-mono);\n    text-anchor:middle;pointer-events:none;letter-spacing:.06em}\n@media (max-width:767px){.hd2sm-root #hd2sm-planet-card{width:min(300px,calc(100% - 16px))}\n.hd2sm-root #hd2sm-wheel{width:160px;height:160px}}\n\n/* ===== map-hud.css ===== */\n/* ============================================================\n   银河星图（galaxy-map-v2） · HUD 皮肤层\n   Diegetic Tactical HUD / Diesel Punk —— 与主站 hud-skin.css 同源同规则\n   ------------------------------------------------------------\n   加载顺序：`<style>`（本文件第 25–310 行的内联样式）→ maplibre-gl.css → **本文件**\n   星图的样式全部内联在页面里（284 行），本层插在其后，同特异度即可覆盖。\n   ⚠ 第①节用 !important 一次性压制历史写法；新增组件请直接写规范样式。\n   ============================================================ */\n/* ════════════════ ① 反模式清零 ════════════════ */\n.hd2sm-root, .hd2sm-root *, .hd2sm-root *::before, .hd2sm-root *::after{\n  border-radius: 0 !important;\n  box-shadow: none !important;\n  backdrop-filter: none !important;\n  -webkit-backdrop-filter: none !important;\n  text-shadow: none !important;\n}\n/* ════════════════ ② 令牌：与主站对齐 ════════════════ */\n.hd2sm-root{\n  --bg-deep: #0A0A0A;\n  --bg-mid: #101010;\n  --panel: #111111;\n  --panel-2: #0F0F0F;\n  --border: #1F1F1F;\n  --border-h: #3A2A00;\n  --line-2: #2A2A2A;\n  --text: #F2F2F2;\n  --text-dim: #A8A8A8;\n  --text-mute: #6E6E6E;\n  --yellow: #FFB000;\n  --yellow-2: #FFC94A;\n  --brass: #C8862A;\n  --blue: #3B82F6;\n  --ok: #1FA84A;\n  --warn: #FF4D2E;\n  --radius: 0;\n  --radius-s: 0;\n  --blur: none;\n  --stripe: repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);\n  --font-mono: \"Rajdhani\",\"Orbitron\",\"Consolas\",\"Courier New\",monospace;\n  /* 阵营色：超级地球 = 蓝 #5BA3D0（2026-09-24 用户要求，与主页 tokens.css 的 --c-humans 同值；\n     2026-09-18~09-24 曾用黄 #ffe800，与终结族黄 #F5C518 在星图上难以分辨）；\n     其余三阵营保留不动（辨识度优先）。本层在内联 <style> 之后加载，故这里是**实际生效**的值 ——\n     改星图阵营色必须改这一行，只改 galaxy-map-v2.html 的内联 <style> 不生效。 */\n  --c-humans: #5BA3D0; --c-terminids: #F5C518; --c-automaton: #D6806D; --c-illuminate: #CF64F8;\n}\n.hd2sm-root{ background: var(--bg-deep); color: var(--text); font-size: 14px; }\n/* 战术数据一律等宽 */\n.hd2sm-root header .stats, .hd2sm-root #hd2sm-tip .r span, .hd2sm-root #hd2sm-sector-card .librow b, .hd2sm-root #hd2sm-detail .cell .v, .hd2sm-root .pd-wiki .badge, .hd2sm-root .legend, .hd2sm-root #hd2sm-hits .hit .own, .hd2sm-root #hd2sm-sector-card .sub{ font-family: var(--font-mono); }\n/* ════════════════ ③ 顶栏 ════════════════ */\n.hd2sm-root header{\n  background: var(--bg-deep);\n  border-bottom: 1px solid var(--border);\n  position: relative;\n  padding: 8px 16px;\n}\n/* 顶栏下沿的琥珀斜纹带（与主站导航同款） */\n.hd2sm-root header::after{\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;\n  background: var(--stripe); border-top: 1px solid #241B00; pointer-events: none; z-index: 21;\n}\n.hd2sm-root header h1{ color: var(--text); letter-spacing: .05em; padding-left: 10px; border-left: 4px solid var(--yellow); }\n.hd2sm-root .tag{ background: var(--yellow); color: #000; border: 1px solid var(--yellow); padding: 2px 7px;\n  font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .66rem; }\n.hd2sm-root .tag.v2{ background: var(--blue); color: #fff; border-color: var(--blue); }\n.hd2sm-root header .stats{ color: var(--text-mute); font-size: .72rem; }\n.hd2sm-root header .stats b{ color: var(--text-dim); }\n.hd2sm-root header button, .hd2sm-root header .btn{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  border-top: 2px solid var(--brass);\n  color: var(--text-dim);\n  padding: 4px 10px;\n  font-weight: 700;\n  letter-spacing: .05em;\n  font-size: .74rem;\n}\n.hd2sm-root header button:hover, .hd2sm-root header .btn:hover{\n  border-color: var(--yellow); border-top-color: var(--yellow);\n  color: var(--yellow); background: #1A1200;\n}\n.hd2sm-root:not(.aside-collapsed) #hd2sm-aside-toggle{ color: var(--yellow); border-color: var(--yellow); }\n/* ════════════════ ④ 载入遮罩 / 提示浮层 ════════════════ */\n.hd2sm-root #hd2sm-boot{ background: var(--bg-deep); }\n/* 转圈改「扫描方框」：方角 + 只有顶边是琥珀 */\n.hd2sm-root #hd2sm-boot .ring{\n  width: 42px; height: 42px;\n  border: 2px solid var(--line-2);\n  border-top-color: var(--yellow);\n  animation: hd2sm-spin 1s linear infinite;\n}\n.hd2sm-root #hd2sm-boot .msg{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-boot .msg small{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-tac-empty{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--yellow);\n  color: var(--text-dim);\n  padding: 6px 14px;\n  font-size: .76rem;\n}\n.hd2sm-root #hd2sm-tip{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-top: 2px solid var(--yellow);\n  color: var(--text-dim);\n  padding: 8px 11px;\n}\n.hd2sm-root #hd2sm-tip .n{ color: var(--yellow); }\n.hd2sm-root #hd2sm-tip .r{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-tip .r span{ color: var(--text); }\n.hd2sm-root #hd2sm-tip .bar{ height: 5px; background: #1A1A1A; border: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-tip .bar i{ background: var(--yellow); }\n/* ════════════════ ⑤ 侧栏 ════════════════ */\n.hd2sm-root aside{\n  background: var(--panel-2);\n  border-left: 1px solid var(--border);\n  padding: 12px;\n  gap: 10px;\n}\n.hd2sm-root #hd2sm-aside-rail{\n  background: var(--panel);\n  border-left: 1px solid var(--line-2);\n}\n.hd2sm-root #hd2sm-aside-rail:hover{ background: #1A1200; }\n.hd2sm-root #hd2sm-aside-rail:hover span{ color: var(--yellow); }\n.hd2sm-root #hd2sm-aside-backdrop{ background: rgba(0,0,0,.72); }\n.hd2sm-root #hd2sm-aside-toggle{ background: var(--panel); border: 1px solid var(--line-2); border-top: 2px solid var(--brass); color: var(--text-dim); }\n/* 侧栏小节标题：复刻 DSS 小节标题（斜纹底 + 琥珀字 + 硬描边） */\n.hd2sm-root aside h2{\n  font-size: .78rem;\n  color: var(--yellow);\n  letter-spacing: .12em;\n  text-transform: uppercase;\n  background: var(--stripe);\n  border: 1px solid #33270A;\n  border-left: 3px solid var(--yellow);\n  padding: 5px 9px;\n}\n.hd2sm-root .card{\n  background: var(--panel);\n  border: 1px solid var(--border);\n  border-top: 2px solid var(--brass);\n  padding: 10px 12px;\n}\n.hd2sm-root .search{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--brass);\n  color: var(--text);\n  padding: 6px 9px;\n}\n.hd2sm-root .search:focus{ border-color: var(--yellow); border-left-color: var(--yellow); }\n/* 筛选 chip：方角 + 硬描边 */\n.hd2sm-root .chip{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  color: var(--text-dim);\n  padding: 3px 10px;\n  font-size: .72rem;\n}\n.hd2sm-root .chip:hover{ border-color: var(--brass); color: var(--text); }\n.hd2sm-root .chip.on{ border-color: var(--yellow); background: #1A1200; color: var(--yellow); font-weight: 700; }\n.hd2sm-root .chip .dot{ width: 7px; height: 7px; }\n.hd2sm-root .legend{ color: var(--text-dim); font-size: .73rem; }\n.hd2sm-root .legend i{ width: 9px; height: 9px; }\n.hd2sm-root .muted{ color: var(--text-mute); }\n/* ════════════════ ⑥ 星区信息卡（悬停星球） ════════════════ */\n.hd2sm-root #hd2sm-sector-card{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-top: 3px solid var(--yellow);\n  padding: 9px 12px;\n}\n.hd2sm-root #hd2sm-sector-card .sec-name{ color: var(--text); }\n.hd2sm-root #hd2sm-sector-card .librow{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-sector-card .librow b{ color: var(--text); }\n.hd2sm-root #hd2sm-sector-card .bar{ height: 6px; background: rgba(255,77,46,.55); border: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-sector-card .bar i{ background: var(--c-humans); }\n.hd2sm-root #hd2sm-sector-card .sub{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-sector-card .enemy-chip{\n  border: 1px solid currentColor;\n  background: rgba(255,255,255,.05);\n  padding: 2px 6px;\n  font-size: .66rem;\n}\n.hd2sm-root #hd2sm-sector-card .enemy-chip .dot{ width: 6px; height: 6px; }\n/* ════════════════ ⑦ 效果图标浮层 ════════════════ */\n.hd2sm-root .fx-i{\n  background: rgba(10,10,10,.92);\n  border: 1px solid var(--line-2);\n}\n.hd2sm-root .fx-i:hover{ border-color: var(--yellow); }\n.hd2sm-root .fx-i img{ border-radius: 0; }\n.hd2sm-root .fx-more{\n  background: rgba(10,10,10,.92);\n  border: 1px solid var(--line-2);\n  color: var(--text-dim);\n}\n/* ════════════════ ⑧ 详情面板（右栏下半） ════════════════ */\n.hd2sm-root #hd2sm-detail .kv{ gap: 6px; }\n.hd2sm-root #hd2sm-detail .cell{\n  background: var(--panel-2);\n  border: 1px solid var(--border);\n  border-left: 2px solid var(--line-2);\n  padding: 5px 8px;\n}\n.hd2sm-root #hd2sm-detail .cell .k{ color: var(--text-mute); font-size: .66rem; letter-spacing: .06em; }\n.hd2sm-root #hd2sm-detail .cell .v{ color: var(--text); }\n.hd2sm-root #hd2sm-detail .tac{\n  border: 1px solid var(--blue);\n  background: rgba(59,130,246,.10);\n  color: var(--blue);\n  padding: 2px 8px;\n  font-size: .7rem;\n}\n.hd2sm-root #hd2sm-detail .tacTxt{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-detail .var-wrap{ border-top: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-detail .var-title{ color: var(--text-mute); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }\n.hd2sm-root #hd2sm-detail .var-chip{\n  border: 1px solid var(--line-2);\n  border-left: 2px solid var(--brass);\n  background: var(--panel-2);\n  color: var(--text-dim);\n  padding: 2px 7px;\n  font-size: .68rem;\n}\n.hd2sm-root #hd2sm-detail .var-chip.neg{\n  border-color: var(--warn); border-left-color: var(--warn);\n  background: rgba(255,77,46,.09); color: var(--warn); font-weight: 600;\n}\n/* 图鉴链接行 */\n.hd2sm-root .pd-wiki{\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--brass);\n  background: var(--panel-2);\n  color: var(--text-dim);\n  padding: 6px 9px;\n}\n.hd2sm-root .pd-wiki:hover{ border-color: currentColor; border-left-color: currentColor; background: #1A1200; }\n.hd2sm-root .pd-wiki .badge{\n  border: 1px solid currentColor;\n  background: rgba(255,255,255,.05);\n  padding: 1px 7px;\n  font-size: .68rem;\n}\n.hd2sm-root .pd-wiki.strain{ color: var(--yellow); }\n.hd2sm-root .pd-wiki.faction{ color: var(--c-illuminate); }\n.hd2sm-root .pd-wiki.humans{ color: var(--c-humans); }\n/* 搜索命中列表 */\n.hd2sm-root #hd2sm-hits .hit{ padding: 4px 8px; border-left: 2px solid transparent; font-size: .74rem; color: var(--text-dim); }\n.hd2sm-root #hd2sm-hits .hit:hover{ background: #1A1200; border-left-color: var(--yellow); color: var(--text); }\n.hd2sm-root #hd2sm-hits .hit .dot{ width: 7px; height: 7px; }\n.hd2sm-root #hd2sm-hits .hit .own{ color: var(--text-mute); }\n/* ════════════════ ⑨ 滚动条 ════════════════ */\n.hd2sm-root ::-webkit-scrollbar{ width: 8px; height: 8px; }\n.hd2sm-root ::-webkit-scrollbar-thumb{ background: #2A2A2A; }\n.hd2sm-root ::-webkit-scrollbar-thumb:hover{ background: var(--brass); }\n.hd2sm-root ::-webkit-scrollbar-track{ background: #0D0D0D; }\n/* ════════════════ ⑩ 移动端密度 ════════════════ */\n@media (max-width: 900px){.hd2sm-root aside{ width: min(84vw, 300px); background: var(--panel); border-left: 1px solid var(--line-2); }\n.hd2sm-root header h1{ font-size: .88rem; }}\n@media (max-width: 767px){.hd2sm-root header{ padding: 7px 10px; }\n.hd2sm-root header h1{ font-size: .82rem; padding-left: 8px; border-left-width: 3px; }\n.hd2sm-root #hd2sm-tip{ font-size: .7rem; }\n.hd2sm-root #hd2sm-sector-card{ border-top-width: 2px; }}\n\n/* ===== boot-splash.css ===== */\n/* ==============================================================\n   超级地球 · 银河链路启动屏\n   #hd2-boot：全站 JS 注入的全屏遮罩；#hd2sm-boot：星图内联遮罩。\n   动画只使用 transform / opacity，避免逐格跳变与持续重绘。\n   ============================================================== */\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot){\n  --boot-accent: var(--yellow, #FFB000);\n  --boot-dim: var(--text-dim, #A8A8A8);\n  --boot-mute: var(--text-mute, #6E6E6E);\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 14px;\n  overflow: hidden;\n  background: radial-gradient(circle at 50% 44%, #151510 0, #0A0A0A 68%);\n  color: var(--boot-dim);\n  pointer-events: all;\n  transition: opacity .32s cubic-bezier(.22, .61, .36, 1);\n}\n.hd2sm-root #hd2-boot{ position: fixed; z-index: 9999; opacity: 0; }\n.hd2sm-root #hd2sm-boot{ position: absolute; z-index: 30; opacity: 1; }\n.hd2sm-root #hd2-boot.visible{ opacity: 1; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).gone{ opacity: 0; pointer-events: none; }\n/* 静态战术网格：只提供空间层次，不做持续绘制。 */\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot)::before{\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n  opacity: .055;\n  background-image:\n    linear-gradient(rgba(255, 176, 0, .5) 1px, transparent 1px),\n    linear-gradient(90deg, rgba(255, 176, 0, .5) 1px, transparent 1px);\n  background-size: 48px 48px;\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) > *{ position: relative; }\n.hd2sm-root .boot-visual{ width: 120px; height: 120px; display: grid; place-items: center; }\n.hd2sm-root .boot-frame{\n  position: relative;\n  width: 104px;\n  height: 104px;\n  display: grid;\n  place-items: center;\n  background:\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left top / 18px 1px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left top / 1px 18px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right top / 18px 1px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right top / 1px 18px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left bottom / 18px 1px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) left bottom / 1px 18px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right bottom / 18px 1px no-repeat,\n    linear-gradient(rgba(255, 176, 0, .55), rgba(255, 176, 0, .55)) right bottom / 1px 18px no-repeat;\n}\n.hd2sm-root .boot-frame::before{\n  content: \"\";\n  position: absolute;\n  inset: 10px;\n  border: 1px solid rgba(255, 176, 0, .13);\n  pointer-events: none;\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .emblem{\n  width: 64px;\n  height: 64px;\n  object-fit: contain;\n  opacity: .82;\n  will-change: transform, opacity;\n  animation: hd2boot-emblem 3s ease-in-out infinite;\n}\n.hd2sm-root .scan-line{\n  position: absolute;\n  left: 13px;\n  right: 13px;\n  top: 50%;\n  height: 1px;\n  pointer-events: none;\n  background: linear-gradient(90deg, transparent, var(--boot-accent) 35%, #FFF0B0 50%, var(--boot-accent) 65%, transparent);\n  will-change: transform, opacity;\n  animation: hd2boot-scan 2.35s cubic-bezier(.45, 0, .55, 1) infinite;\n}\n@keyframes hd2boot-emblem{\n  0%, 100% { opacity: .68; transform: scale(.985); }\n  50% { opacity: 1; transform: scale(1.015); }\n}\n@keyframes hd2boot-scan{\n  0% { opacity: 0; transform: translateY(-39px); }\n  14%, 82% { opacity: .72; }\n  50% { opacity: .95; }\n  100% { opacity: 0; transform: translateY(39px); }\n}\n.hd2sm-root .boot-stage{\n  width: min(240px, 70vw);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  margin-bottom: -9px;\n  color: var(--boot-mute);\n  font: 600 10px/1.2 var(--font-mono, \"Consolas\", monospace);\n  letter-spacing: .16em;\n}\n.hd2sm-root .stage-count{ color: var(--boot-accent); font-variant-numeric: tabular-nums; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .segments{\n  position: relative;\n  width: min(240px, 70vw);\n  height: 12px;\n  padding: 3px;\n  display: grid;\n  grid-template-columns: repeat(10, 1fr);\n  gap: 3px;\n  overflow: hidden;\n  border: 1px solid rgba(255, 176, 0, .28);\n}\n.hd2sm-root .segments i{ display: block; height: 4px; overflow: hidden; background: rgba(255, 176, 0, .10); }\n.hd2sm-root .segments i b{\n  display: block;\n  width: 100%;\n  height: 100%;\n  background: var(--boot-accent);\n  opacity: .9;\n  transform: scaleX(0);\n  transform-origin: left center;\n  transition: transform .34s cubic-bezier(.22, .61, .36, 1), opacity .2s ease;\n}\n.hd2sm-root .segments i.current b{ transform: scaleX(1); opacity: .28; }\n.hd2sm-root .segments i.done b{ transform: scaleX(1); opacity: .9; }\n.hd2sm-root .segments::after{\n  content: \"\";\n  position: absolute;\n  left: 0;\n  top: 3px;\n  bottom: 3px;\n  width: 28%;\n  pointer-events: none;\n  background: linear-gradient(90deg, transparent, rgba(255, 202, 74, .85), transparent);\n  will-change: transform, opacity;\n  animation: hd2boot-sweep 1.9s ease-in-out infinite;\n}\n.hd2sm-root .segments[data-mode=\"determinate\"]::after{ display: none; }\n@keyframes hd2boot-sweep{\n  0% { opacity: 0; transform: translateX(-110%); }\n  18%, 78% { opacity: .8; }\n  100% { opacity: 0; transform: translateX(370%); }\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg{\n  max-width: min(460px, calc(100vw - 40px));\n  min-height: 5.8em;\n  padding: 0 20px;\n  color: var(--boot-dim);\n  font-size: .84rem;\n  line-height: 1.65;\n  text-align: center;\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg :is(.line, .sub, .lore){\n  display: block;\n  overflow-wrap: anywhere;\n  transition: opacity .16s ease, transform .16s ease;\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg :is(.line, .sub, .lore).changing{ opacity: 0; transform: translateY(-4px); }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg .line{ color: var(--boot-dim); }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg .sub{\n  margin-top: 2px;\n  color: var(--boot-mute);\n  font: 400 .68rem/1.6 var(--font-mono, \"Consolas\", monospace);\n  letter-spacing: .04em;\n}\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg .lore{ min-height: 1.65em; margin-top: 8px; color: var(--boot-mute); font-size: .72rem; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).complete .emblem{ animation: none; opacity: 1; transform: scale(1); }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).complete .scan-line{ animation: none; opacity: 0; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .emblem{ animation: none; opacity: .45; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .scan-line, .hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .segments::after{ display: none; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .boot-stage, .hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .stage-count{ color: var(--warn, #FF4D2E); }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot).error .segments i b{ background: var(--warn, #FF4D2E); }\n@media (max-width: 520px){.hd2sm-root .boot-visual{ width: 108px; height: 108px; }\n.hd2sm-root .boot-frame{ width: 96px; height: 96px; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .emblem{ width: 56px; height: 56px; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg{ min-height: 6.4em; padding: 0 12px; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .msg .lore{ font-size: .68rem; }}\n@media (prefers-reduced-motion: reduce){.hd2sm-root :is(#hd2-boot, #hd2sm-boot), .hd2sm-root :is(#hd2-boot, #hd2sm-boot) *, .hd2sm-root :is(#hd2-boot, #hd2sm-boot) *::before, .hd2sm-root :is(#hd2-boot, #hd2sm-boot) *::after{ animation: none !important; transition: none !important; }\n.hd2sm-root .scan-line, .hd2sm-root .segments::after{ display: none; }\n.hd2sm-root :is(#hd2-boot, #hd2sm-boot) .emblem{ opacity: .9; transform: none; }\n.hd2sm-root .segments i.current b{ opacity: .65; }}\n\n/* ===== forecast.css ===== */\n.hd2sm-root .campaign-forecast{ margin: 8px 0; font-size: .78rem; line-height: 1.65; overflow-wrap: anywhere; }\n.hd2sm-root .campaign-forecast .good{ color: var(--ok); }\n.hd2sm-root .campaign-forecast .bad{ color: var(--warn); }\n.hd2sm-root .reinforcement-forecast{ margin-top: 6px; font-size: .75rem; line-height: 1.6; overflow-wrap: anywhere; }\n.hd2sm-root .reinforcement-forecast .good{ color: var(--ok); }\n.hd2sm-root .reinforcement-forecast .bad{ color: var(--warn); }\n.hd2sm-root #hd2sm-planet-card > .reinforcement-forecast{ margin: 8px 9px; font-size: .68rem; }\n.hd2sm-root .forecast-source{ opacity: .7; font-size: .7rem; }\n.hd2sm-root #hd2sm-planet-card .campaign-forecast{ margin: 8px 9px; font-size: .68rem; }\n.hd2sm-root .region-rules{ font-size: .72rem; line-height: 1.6; margin: 3px 0 8px; color: var(--text-dim); overflow-wrap: anywhere; }\n.hd2sm-root .region-rules b{ color: var(--text, #e6edf3); }\n.hd2sm-root .mo-hold-bar{ height: auto; min-height: 22px; background: transparent; border: 1px dashed var(--blue, #55aaff); }\n.hd2sm-root .mo-hold-status{ display: block; padding: 2px 8px; color: var(--blue, #55aaff); font-size: .72rem; line-height: 1.5; }\n/* ===== 挂载根节点补充（build_embed.py） ===== */\n.hd2sm-root{position:relative;height:var(--hd2sm-h,70vh);min-height:480px;isolation:isolate}\n";
+var SCOPED_CSS = ".hd2sm-root{\n    --bg-deep:#080B12; --bg-mid:#0E1420; --panel:rgba(14,20,32,.86);\n    --border:rgba(255,255,255,.10); --border-h:rgba(255,255,255,.20);\n    --text:#e2e8f0; --text-dim:#94a3b8; --text-mute:#64748b;\n    --yellow:#f5c518; --blue:#3b82f6;\n    --c-humans:#5BA3D0; --c-terminids:#F5C518; --c-automaton:#D6806D; --c-illuminate:#CF64F8;\n    --radius:12px; --radius-s:8px;\n  }\n.hd2sm-root, .hd2sm-root *, .hd2sm-root *::before, .hd2sm-root *::after{margin:0;padding:0;box-sizing:border-box}\n.hd2sm-root{height:100%;height:100dvh}\n/* 正文/标签字体：复用 wiki 侧思源黑体（不经 CDN）。\n     该字体同时供下方 MapLibre 的 localIdeographFontFamily 使用 ——\n     MapLibre 用 canvas 2D + TinySDF 走系统/本地字体渲染 CJK，故 @font-face 对地图标签同样生效。*/\n@font-face{\n    font-family:\"SourceHanSans\";\n    src:url(\"https://jerry114514.github.io/HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf\") format(\"opentype\");\n    font-display:swap;\n  }\n.hd2sm-root{\n    display:flex;flex-direction:column;background:var(--bg-deep);color:var(--text);overflow:hidden;\n    font-family:\"SourceHanSans\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;\n  }\n/* ---------- 顶栏 ---------- */\n.hd2sm-root header{\n    display:flex;align-items:center;gap:14px;padding:9px 18px;z-index:20;\n    border-bottom:1px solid var(--border);background:var(--bg-mid);\n  }\n.hd2sm-root header h1{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:1.05rem;color:var(--yellow);white-space:nowrap}\n.hd2sm-root .tag{background:var(--yellow);color:#1a1a00;font-weight:700;border-radius:999px;padding:2px 10px;font-size:.68rem;white-space:nowrap}\n.hd2sm-root .tag.v2{background:var(--blue);color:#fff}\n.hd2sm-root header .stats{margin-left:auto;color:var(--text-mute);font-size:.74rem;display:flex;gap:13px;flex-wrap:wrap;align-items:center}\n.hd2sm-root header .stats b{color:var(--text-dim);font-weight:600}\n.hd2sm-root header button, .hd2sm-root header .btn{\n    background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-dim);\n    border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.76rem;font-family:inherit;white-space:nowrap;\n  }\n.hd2sm-root header button:hover, .hd2sm-root header .btn:hover{border-color:var(--blue);color:var(--blue)}\n.hd2sm-root header a.btn{text-decoration:none;display:inline-block}\n/* ---------- 主区 ---------- */\n.hd2sm-root main{flex:1;display:flex;min-height:0;position:relative}\n.hd2sm-root #hd2sm-stage{flex:1;position:relative;overflow:hidden;cursor:grab}\n.hd2sm-root #hd2sm-stage.dragging{cursor:grabbing}\n.hd2sm-root #hd2sm-stars{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}\n.hd2sm-root #hd2sm-map{position:absolute;inset:0;z-index:1;background:transparent!important}\n.hd2sm-root .maplibregl-canvas{outline:none}\n.hd2sm-root .maplibregl-ctrl-attrib{display:none!important}\n/* 载入遮罩 */\n.hd2sm-root #hd2sm-boot{\n    position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;gap:14px;\n    align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,#131C30,#080B12 70%);\n    transition:opacity .5s ease;\n  }\n.hd2sm-root #hd2sm-boot.gone{opacity:0;pointer-events:none}\n.hd2sm-root #hd2sm-boot .ring{\n    width:46px;height:46px;border-radius:50%;border:3px solid rgba(245,197,24,.18);\n    border-top-color:var(--yellow);animation:hd2sm-spin 1s linear infinite;\n  }\n@keyframes hd2sm-spin{to{transform:rotate(360deg)}}\n.hd2sm-root #hd2sm-boot .msg{color:var(--text-dim);font-size:.84rem;text-align:center;line-height:1.7}\n.hd2sm-root #hd2sm-boot .msg small{color:var(--text-mute);font-size:.76rem}\n.hd2sm-root #hd2sm-tac-empty{\n    position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;white-space:nowrap;\n    background:rgba(14,20,32,.92);border:1px solid rgba(245,197,24,.45);color:var(--text-dim);\n    border-radius:999px;padding:7px 16px;font-size:.78rem;\n  }\n/* tooltip */\n.hd2sm-root #hd2sm-tip{\n    position:absolute;z-index:15;pointer-events:none;display:none;\n    background:rgba(10,14,26,.95);border:1px solid #334155;border-radius:var(--radius-s);\n    padding:9px 12px;font-size:.76rem;line-height:1.6;min-width:170px;max-width:250px;\n    box-shadow:0 8px 26px rgba(0,0,0,.6);\n  }\n.hd2sm-root #hd2sm-tip .n{font-weight:700;color:var(--yellow);margin-bottom:2px}\n.hd2sm-root #hd2sm-tip .r{color:var(--text-dim)}\n.hd2sm-root #hd2sm-tip .r span{color:var(--text)}\n.hd2sm-root #hd2sm-tip .bar{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:6px;overflow:hidden}\n.hd2sm-root #hd2sm-tip .bar i{display:block;height:100%;background:var(--yellow)}\n/* ---------- 侧栏 ---------- */\n.hd2sm-root aside{\n    width:326px;flex-shrink:0;border-left:1px solid var(--border);background:var(--bg-mid);\n    overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:11px;z-index:10;\n    transition:width .26s ease,padding .26s ease,opacity .2s ease;\n  }\n/* 可收缩侧栏：收起后只留一条窄边条（点击恢复） */\n.hd2sm-root.aside-collapsed aside{width:0;padding:0;opacity:0;pointer-events:none;border-left:none}\n.hd2sm-root #hd2sm-aside-rail{\n    display:none;position:absolute;top:0;right:0;bottom:0;width:22px;z-index:19;cursor:pointer;\n    background:linear-gradient(90deg,rgba(14,20,32,0),rgba(14,20,32,.9));\n    border-left:1px solid var(--border);align-items:center;justify-content:center;\n  }\n.hd2sm-root.aside-collapsed #hd2sm-aside-rail{display:flex}\n.hd2sm-root #hd2sm-aside-rail span{color:var(--text-dim);font-size:.9rem}\n.hd2sm-root #hd2sm-aside-rail:hover span{color:var(--blue)}\n/* 抽屉遮罩：桌面端始终关闭（桌面用窄边条展开），仅移动端媒体查询里启用。\n     注意它必须比 aside(z25) 低 —— 否则会像旧的 #hd2sm-aside-rail 那样变成\n     一张盖住整屏、无法与星图交互的透明玻璃。 */\n.hd2sm-root #hd2sm-aside-backdrop{display:none;position:absolute;inset:0;z-index:24;background:rgba(3,6,14,.5)}\n/* ---------- 左上角星区信息卡（悬停星球时显示） ---------- */\n.hd2sm-root #hd2sm-sector-card{\n    position:absolute;left:14px;top:14px;z-index:14;display:none;min-width:206px;max-width:288px;\n    background:rgba(10,14,26,.93);border:1px solid #334155;border-radius:var(--radius);\n    padding:10px 13px;box-shadow:0 8px 26px rgba(0,0,0,.6);\n  }\n.hd2sm-root #hd2sm-sector-card.on{display:flex;gap:11px;align-items:flex-start}\n.hd2sm-root #hd2sm-sector-card .ficon{width:38px;height:38px;flex-shrink:0;margin-top:2px}\n.hd2sm-root #hd2sm-sector-card .ficon svg, .hd2sm-root #hd2sm-sector-card .ficon img{width:100%;height:100%;display:block}\n.hd2sm-root #hd2sm-sector-card .sec-name{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:.98rem;color:var(--text);line-height:1.2}\n.hd2sm-root #hd2sm-sector-card .presence{font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:uppercase}\n.hd2sm-root #hd2sm-sector-card .librow{font-size:.82rem;color:var(--text-dim);margin-top:5px}\n.hd2sm-root #hd2sm-sector-card .librow b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}\n.hd2sm-root #hd2sm-sector-card .bar{height:4px;border-radius:2px;background:rgba(239,68,68,.75);margin-top:6px;overflow:hidden}\n.hd2sm-root #hd2sm-sector-card .bar i{display:block;height:100%;background:var(--blue);transition:width .25s ease}\n.hd2sm-root #hd2sm-sector-card .sub{font-size:.68rem;color:var(--text-mute);margin-top:5px}\n/* 敌军阵营：改为带阵营色的胶囊，取代原先挤在一起、不易读的「敌军：A、B」纯文本 */\n.hd2sm-root #hd2sm-sector-card .enemy-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}\n.hd2sm-root #hd2sm-sector-card .enemy-chip{\n    display:inline-flex;align-items:center;gap:4px;font-size:.68rem;line-height:1;\n    padding:3px 7px;border-radius:999px;border:1px solid currentColor;\n    background:color-mix(in srgb, currentColor 14%, transparent);white-space:nowrap;\n  }\n.hd2sm-root #hd2sm-sector-card .enemy-chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}\n/* 无 color-mix 支持时退回半透明底，避免胶囊看不见 */\n@supports not (background: color-mix(in srgb, red 10%, transparent)){.hd2sm-root #hd2sm-sector-card .enemy-chip{background:rgba(255,255,255,.07)}}\n/* ---------- 星球效果图标（浮动在地图上方，随地图移动） ---------- */\n/* --fx-size / --fx-img / --fx-gap 由 buildFXNodes 的 sync() 按当前 zoom 写入，\n     使图标随星球本体一起缩放（低缩放下不再盖住星球）。 */\n.hd2sm-root #hd2sm-fx-layer{\n    position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;\n    --fx-size:34px;--fx-img:24px;--fx-gap:42px;\n  }\n.hd2sm-root .fx-cluster{\n    position:absolute;left:0;top:0;display:flex;align-items:center;gap:3px;\n    transform:translate(-50%,-50%);will-change:transform;\n  }\n.hd2sm-root .fx-i{\n    width:var(--fx-size);height:var(--fx-size);\n    display:flex;align-items:center;justify-content:center;\n    border-radius:8px;background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.38);\n    box-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:auto;\n  }\n/* SVG 图标随 .fx-i 的 color 着色；PNG 图标保留原配色 */\n.hd2sm-root .fx-i svg, .hd2sm-root .fx-i img{width:var(--fx-img);height:var(--fx-img);display:block}\n.hd2sm-root .fx-i svg{fill:currentColor}\n/* 描边类图标（DSS 战术行动：dss_orbital_blockade / dss_heavy_ordnance / dss_eagle_storm 等）\n     在 viewBox=256 里只写 stroke-width:2.2，缩到 --fx-img(24px) 显示后实际描边不足 0.3px →\n     渲染出来几乎是黑糊（用户反馈「DSS 效果的图片过黑」）。\n     non-scaling-stroke 让描边宽度按设备像素解释，2.2 即约 2.2px，清晰可见。 */\n.hd2sm-root .fx-i svg *{vector-effect:non-scaling-stroke}\n.hd2sm-root .fx-i img{object-fit:contain;border-radius:2px}\n.hd2sm-root .fx-more{\n    font-size:.72rem;line-height:1;padding:8px 6px;border-radius:8px;color:var(--text-dim);\n    background:rgba(8,11,18,.9);border:1px solid rgba(255,255,255,.28);\n  }\n@media (max-width:767px){.hd2sm-root .fx-cluster{gap:2px}}\n.hd2sm-root .card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}\n.hd2sm-root aside h2{font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;font-size:.92rem;color:var(--yellow);display:flex;align-items:center;gap:7px}\n.hd2sm-root .search{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:var(--radius-s);\n    color:var(--text);padding:7px 10px;font-size:.78rem;font-family:inherit;outline:none}\n.hd2sm-root .search:focus{border-color:var(--blue)}\n.hd2sm-root .chips{display:flex;flex-wrap:wrap;gap:6px}\n.hd2sm-root .chip{\n    border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:.73rem;cursor:pointer;\n    color:var(--text-dim);background:rgba(255,255,255,.03);user-select:none;transition:.15s;\n  }\n.hd2sm-root .chip:hover{border-color:var(--border-h);color:var(--text)}\n.hd2sm-root .chip.on{border-color:currentColor;background:rgba(255,255,255,.09);color:var(--text)}\n.hd2sm-root .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}\n.hd2sm-root .legend{font-size:.75rem;color:var(--text-dim);line-height:1.95}\n.hd2sm-root .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}\n.hd2sm-root .legend .ln{display:inline-block;width:20px;height:0;border-top:2px solid;margin-right:8px;vertical-align:middle}\n.hd2sm-root .muted{color:var(--text-mute);font-size:.73rem;line-height:1.7}\n.hd2sm-root #hd2sm-detail .kv{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}\n.hd2sm-root #hd2sm-detail .cell{background:rgba(255,255,255,.035);border-radius:var(--radius-s);padding:6px 9px}\n.hd2sm-root #hd2sm-detail .cell .k{color:var(--text-mute);font-size:.68rem}\n.hd2sm-root #hd2sm-detail .cell .v{font-size:.86rem;margin-top:2px}\n.hd2sm-root #hd2sm-detail .tac{border:1px solid rgba(59,130,246,.6);color:var(--blue);background:rgba(59,130,246,.1);\n    border-radius:999px;padding:3px 10px;font-size:.72rem;display:inline-block;margin:3px 4px 0 0}\n.hd2sm-root #hd2sm-detail .tacTxt{font-size:.74rem;color:var(--text-dim);line-height:1.6;margin-top:6px}\n/* ---------- 行动变量 chip（含作战限制的红色 Tag） ---------- */\n.hd2sm-root #hd2sm-detail .var-wrap{margin-top:11px;padding-top:9px;border-top:1px dashed rgba(255,255,255,.12)}\n.hd2sm-root #hd2sm-detail .var-title{font-size:.7rem;color:var(--text-mute);margin-bottom:6px;letter-spacing:.04em}\n.hd2sm-root #hd2sm-detail .var-chips{display:flex;flex-wrap:wrap;gap:5px}\n.hd2sm-root #hd2sm-detail .var-chip{\n    display:inline-flex;align-items:center;gap:4px;font-size:.7rem;line-height:1;\n    padding:3px 8px;border-radius:999px;border:1px solid var(--border);\n    background:rgba(255,255,255,.045);color:var(--text-dim);\n  }\n/* 作战限制：红色 Tag（与主站 .pd-chip-neg 同款语义） */\n.hd2sm-root #hd2sm-detail .var-chip.neg{\n    border-color:rgba(231,76,60,.6);color:#E74C3C;\n    background:rgba(231,76,60,.09);font-weight:600;\n  }\n.hd2sm-root #hd2sm-detail .var-chip .warn{font-size:.72rem}\n/* ---------- 图鉴链接：链接型行（区别于下方「聚焦到该星球」按钮） ---------- */\n.hd2sm-root .pd-wiki{\n    display:flex;align-items:center;gap:7px;margin-top:10px;\n    padding:7px 10px;border-radius:var(--radius-s);\n    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.035);\n    color:var(--text-dim);font-size:.74rem;text-decoration:none;\n    transition:border-color .15s,background .15s,color .15s;\n  }\n.hd2sm-root .pd-wiki:hover{border-color:currentColor;background:rgba(255,255,255,.07)}\n.hd2sm-root .pd-wiki .ic{font-size:.8rem;flex-shrink:0}\n.hd2sm-root .pd-wiki .badge{\n    padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;\n    border:1px solid currentColor;\n    background:color-mix(in srgb, currentColor 16%, transparent);\n  }\n@supports not (background: color-mix(in srgb, red 10%, transparent)){.hd2sm-root .pd-wiki .badge{background:rgba(255,255,255,.08)}}\n.hd2sm-root .pd-wiki .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.hd2sm-root .pd-wiki .go{flex-shrink:0;opacity:.65;font-size:.78rem;transition:transform .15s,opacity .15s}\n.hd2sm-root .pd-wiki:hover .go{opacity:1;transform:translate(1px,-1px)}\n/* 配色：变种=黄、阵营=紫、我方=蓝，与星球归属/效果图标语义一致 */\n.hd2sm-root .pd-wiki.strain{color:var(--yellow)}\n.hd2sm-root .pd-wiki.faction{color:var(--c-illuminate)}\n.hd2sm-root .pd-wiki.humans{color:var(--c-humans)}\n.hd2sm-root #hd2sm-hits{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}\n.hd2sm-root #hd2sm-hits .hit{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:.76rem}\n.hd2sm-root #hd2sm-hits .hit:hover{background:rgba(255,255,255,.07)}\n.hd2sm-root #hd2sm-hits .hit .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}\n.hd2sm-root #hd2sm-hits .hit .own{margin-left:auto;color:var(--text-mute);font-size:.68rem}\n.hd2sm-root #hd2sm-hits .hit .hit-wiki{text-decoration:none;color:var(--blue);font-size:.72rem;padding:0 4px;border:1px solid transparent;border-radius:4px}\n.hd2sm-root #hd2sm-hits .hit .hit-wiki:hover{color:var(--yellow);border-color:var(--yellow)}\n.hd2sm-root ::-webkit-scrollbar{width:8px;height:8px}\n.hd2sm-root ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}\n.hd2sm-root ::-webkit-scrollbar-track{background:transparent}\n/* ---------- 移动端适配 ---------- */\n.hd2sm-root #hd2sm-aside-toggle{display:none}\n/* 桌面用顶栏按钮 */\n@media (max-width:900px){.hd2sm-root aside{width:270px;padding:10px}\n.hd2sm-root header h1{font-size:.92rem}\n.hd2sm-root header .stats{display:none}\n.hd2sm-root #hd2sm-sector-card{left:10px;top:10px;min-width:0;max-width:calc(100% - 20px)}\n.hd2sm-root #hd2sm-sector-card .ficon{width:30px;height:30px}}\n@media (max-width:767px){/* 顶栏：只保留标题与侧栏开关 */\n.hd2sm-root header{padding:8px 10px;gap:8px;flex-wrap:nowrap}\n.hd2sm-root header .tag, .hd2sm-root header #hd2sm-btn-reset, .hd2sm-root header #hd2sm-btn-mode, .hd2sm-root header .btn.opt{display:none}\n.hd2sm-root header h1{font-size:.86rem}\n.hd2sm-root #hd2sm-aside-toggle{display:inline-block}\n/* 移动端：侧栏改为右侧抽屉浮层，不占地图宽度。\n       ⚠ 层叠陷阱：媒体查询里的 `aside{}` 特异度只有 (0,0,1)，会被通用的\n       `body.aside-collapsed aside{}` (0,1,1) 压过 —— 所以这里不能只靠\n       「默认隐藏」，必须用同等或更高特异度显式声明可见态，否则抽屉永远停在屏幕外。 */\n.hd2sm-root aside{\n      position:absolute;top:0;bottom:0;right:0;width:min(84vw,320px);\n      box-shadow:-10px 0 30px rgba(0,0,0,.55);z-index:25;\n      transform:translateX(105%);transition:transform .24s ease;\n    }\n/* 抽屉打开 = 未收起。这样 ☰ 的语义在桌面/移动端保持一致：\n       桌面收成窄边条、移动端收进屏幕外，都是同一个「收起」。 */\n.hd2sm-root:not(.aside-collapsed) aside{transform:translateX(0)}\n/* 关键修复：旧规则把窄边条拉成 100%×100% 的半透明整屏，\n       侧栏一收起就变成盖住整个星图、点不动任何东西的玻璃板。\n       移动端横向空间本就不够，展开侧栏改由顶栏 ☰ / 遮罩负责。 */\n.hd2sm-root #hd2sm-aside-rail{display:none !important}\n/* 抽屉打开时抽屉会盖住顶栏，所以把 ☰ 浮到抽屉之上，始终可点 */\n.hd2sm-root #hd2sm-aside-toggle{\n      position:absolute;top:7px;right:9px;z-index:27;\n      padding:4px 10px;line-height:1.25;font-size:1.02rem;\n      box-shadow:0 2px 10px rgba(0,0,0,.55);\n    }\n.hd2sm-root:not(.aside-collapsed) #hd2sm-aside-toggle{color:var(--yellow);border-color:var(--yellow)}\n/* 抽屉遮罩（仅移动端存在）：铺在地图上、位于抽屉之下，点它即收起。\n       不透明度只用 .5 —— 否则地图变暗后会被误认为「点不动」。 */\n.hd2sm-root #hd2sm-aside-backdrop{\n      display:block;position:absolute;inset:0;z-index:24;\n      background:rgba(3,6,14,.5);backdrop-filter:blur(2px);\n    }\n.hd2sm-root.aside-collapsed #hd2sm-aside-backdrop{display:none}\n/* 移动端：地图铺满，控件缩小 */\n.hd2sm-root .maplibregl-ctrl-bottom-right{bottom:8px;right:6px}\n.hd2sm-root .maplibregl-ctrl-bottom-left{display:none}\n.hd2sm-root #hd2sm-sector-card{font-size:.92em}\n.hd2sm-root #hd2sm-tac-empty{font-size:.7rem;left:10px;right:10px}\n.hd2sm-root #hd2sm-tip{min-width:0;width:206px;max-width:206px;font-size:.72rem;padding:7px 10px}}\n/* ════════════════════════════════════════════════════════════\n     2026-09-15：点击星球 → 星球**正上方**信息卡（不再直接弹侧栏）\n                 再次点击 → 轮盘（星球详细信息 / DSS 效果）\n     参考 helldiverscompanion.com/#hd2sm-map 的交互与信息组织\n     ════════════════════════════════════════════════════════════ */\n/* ---- 侧栏手风琴（2026-09-25 用户裁定：三栏滤镜保留但不默认展开）----\n     检索 / 阵营筛选 / 图层 默认 .collapsed（markup 里写死），点标题展开；星球详情与图例默认展开。 */\n.hd2sm-root aside .sec > h2{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}\n.hd2sm-root aside .sec > h2::after{content:\"▾\";margin-left:auto;font-size:.7rem;color:var(--text-mute);transition:transform .15s}\n.hd2sm-root aside .sec.collapsed > h2::after{transform:rotate(-90deg)}\n.hd2sm-root aside .sec.collapsed > .card{display:none}\n/* 信息卡上的「完整资料 / 聚焦」按钮组 */\n.hd2sm-root .pc-actions{display:flex;gap:6px;margin-top:9px}\n.hd2sm-root .pc-actions .btn{flex:1;font-size:.74rem;text-align:center;text-decoration:none;line-height:1.5}\n.hd2sm-root .pc-actions .btn.primary{border-color:var(--yellow);color:var(--yellow)}\n/* 移动端：信息卡改成底部抽屉（positionOverlays 写的是行内 left/top，用 !important 压过）\n     ⚠ 2026-09-26 修（用户反馈：手机上卡片跑到左上角、还渲染出界）：\n       旧规则只压了 left/top，**漏了行内 `transform: translate(-50%,-100%)`** ——\n       那条 transform 是为\"桌面端贴在星球正上方\"设计的：卡片变全宽后，\n       `-100%` 会把它整体**向上抬整整一个卡片高度**，于是从底部抽屉跑到屏幕外／左上角。\n       根治办法不是再加一条 patch，而是**桌面端别再写死坐标**（见 positionOverlays 的 isMobile 分支），\n       这里同时把 transform 归零，双保险。 */\n@media (max-width:767px){.hd2sm-root #hd2sm-planet-card{left:0 !important;right:0;bottom:0;top:auto !important;width:auto;max-height:66vh;overflow:auto;\n      border-left:none;border-right:none;border-bottom:none;\n      transform:none !important}\n.hd2sm-root #hd2sm-planet-card::after{display:none}\n.hd2sm-root .pc-actions .btn{min-height:40px;display:flex;align-items:center;justify-content:center}}\n.hd2sm-root #hd2sm-planet-card{\n    position:absolute;z-index:18;display:none;width:322px;\n    background:var(--panel);border:1px solid var(--line-2);\n    border-top:3px solid var(--pc-color,var(--yellow));\n    cursor:pointer;\n  }\n.hd2sm-root #hd2sm-planet-card.on{display:block}\n.hd2sm-root #hd2sm-planet-card::after{                       /* 指向星球的小三角 */\n    content:\"\";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);\n    width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;\n    border-top:7px solid var(--pc-color,var(--yellow));\n  }\n.hd2sm-root #hd2sm-planet-card .hd{\n    display:flex;align-items:center;gap:8px;padding:4px 9px;\n    background:var(--stripe);border-bottom:1px solid #33270A;\n  }\n.hd2sm-root #hd2sm-planet-card .kind{font-family:var(--font-mono);font-size:.66rem;font-weight:700;\n    color:var(--yellow);letter-spacing:.1em;text-transform:uppercase}\n.hd2sm-root #hd2sm-planet-card .eta{margin-left:auto;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);white-space:nowrap}\n.hd2sm-root #hd2sm-planet-card .eta.lose{color:#FF4D2E;font-weight:700}\n.hd2sm-root #hd2sm-planet-card .kind.ok{color:#1FA84A;font-size:.7rem}\n.hd2sm-root #hd2sm-planet-card .title{display:flex;align-items:center;gap:9px;padding:7px 9px 6px}\n.hd2sm-root #hd2sm-planet-card .ficon{width:30px;height:30px;flex:0 0 30px;color:var(--pc-color)}\n.hd2sm-root #hd2sm-planet-card .ficon svg, .hd2sm-root #hd2sm-planet-card .ficon img{width:100%;height:100%;display:block}\n.hd2sm-root #hd2sm-planet-card .names{min-width:0;line-height:1.25}\n.hd2sm-root #hd2sm-planet-card .nm{display:block;font-family:\"ZZZ-thick\",\"SourceHanSans\",sans-serif;\n    font-size:.94rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .en{display:block;font-family:var(--font-mono);font-size:.62rem;color:var(--text-mute);\n    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .sec{display:block;font-size:.66rem;color:var(--text-dim);margin-top:2px}\n.hd2sm-root #hd2sm-planet-card .biome{position:relative;height:72px;overflow:hidden;\n    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:#0D0D0D}\n.hd2sm-root #hd2sm-planet-card .biome img{width:100%;height:100%;object-fit:cover;display:block}\n.hd2sm-root #hd2sm-planet-card .biome .noimg{display:grid;place-items:center;height:100%;font-size:.66rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .buffs{display:flex;flex-wrap:wrap;gap:3px;padding:4px 9px;background:#0B0B0B;min-height:24px;align-items:center}\n.hd2sm-root #hd2sm-planet-card .bi{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--line-2);\n    background:#141414;display:grid;place-items:center}\n.hd2sm-root #hd2sm-planet-card .bi svg, .hd2sm-root #hd2sm-planet-card .bi img{width:14px;height:14px;display:block}\n.hd2sm-root #hd2sm-planet-card .bar{position:relative;height:11px;margin:8px 9px 0;background:#1A1A1A;\n    border:1px solid var(--line-2);overflow:hidden}\n.hd2sm-root #hd2sm-planet-card .bar i{display:block;height:100%;background:var(--pc-color,var(--yellow))}\n.hd2sm-root #hd2sm-planet-card .bar .mk{position:absolute;top:-2px;width:2px;height:15px;background:#fff;opacity:.85}\n.hd2sm-root #hd2sm-planet-card .lib{display:flex;align-items:baseline;gap:8px;padding:5px 9px 0}\n.hd2sm-root #hd2sm-planet-card .lib b{font-family:var(--font-mono);font-size:1rem;color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .lib .st{font-size:.68rem;color:var(--text-dim)}\n.hd2sm-root #hd2sm-planet-card .rate{margin-left:auto;font-family:var(--font-mono);font-size:.74rem;font-weight:700}\n.hd2sm-root #hd2sm-planet-card .rate .m{font-size:.6rem;font-weight:400;color:var(--text-mute);margin-left:3px}\n.hd2sm-root #hd2sm-planet-card .stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;\n    padding:6px 9px;margin-top:6px;border-top:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .st2{font-size:.68rem;color:var(--text-mute);white-space:nowrap}\n.hd2sm-root #hd2sm-planet-card .st2 b{font-family:var(--font-mono);color:var(--text);font-weight:700}\n.hd2sm-root #hd2sm-planet-card .tail{padding:3px 9px 6px;font-size:.6rem;color:var(--text-mute);\n    font-family:var(--font-mono);border-top:1px solid #161616}\n/* ── 防御战（入侵）卡片（2026-09-24 新增）──────────────────────────────\n     被入侵星球不再显示「已解放 100%」，改用与主页一致的**双进度条 + 战况**，\n     但视觉沿用星图这套（直角条 + 等宽数字 + 斜纹头）。\n     ⚠ P0 铁律（交接文档 §11.1-7）：双条**顺序固定为上=超级地球、下=入侵方**，\n       且超级地球那条**恒为蓝**；卡片外框/顶部色表达\"谁在打\"（入侵方），两者必须解耦。 */\n.hd2sm-root #hd2sm-planet-card .kind.def{color:#FF6A4A}\n.hd2sm-root #hd2sm-planet-card.def .ficon{color:var(--c-humans)}\n/* 星球归属仍是超级地球，图标不吃卡片威胁色 */\n.hd2sm-root #hd2sm-planet-card .def-race{padding:8px 9px 2px;display:grid;gap:5px}\n.hd2sm-root #hd2sm-planet-card .def-row{display:grid;grid-template-columns:62px 1fr 54px;align-items:center;gap:6px}\n.hd2sm-root #hd2sm-planet-card .def-row .lbl{font-size:.66rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .def-row .val{font-family:var(--font-mono);font-size:.68rem;color:var(--text);text-align:right}\n.hd2sm-root #hd2sm-planet-card .def-row .track{position:relative;height:9px;background:#1A1A1A;border:1px solid var(--line-2);overflow:hidden}\n.hd2sm-root #hd2sm-planet-card .def-row .track i{display:block;height:100%}\n.hd2sm-root #hd2sm-planet-card .def-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;\n    padding:4px 9px 0;font-size:.66rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .def-meta b{font-family:var(--font-mono);color:var(--text);font-weight:700}\n.hd2sm-root #hd2sm-planet-card .def-meta .st-win{color:#1FA84A}\n.hd2sm-root #hd2sm-planet-card .def-meta .st-lose{color:#FF4D2E}\n/* ── 星球下属区域：城市 / 超大型工厂（2026-09-24 demo）─────────────────\n     对应游戏内「点开星球 → 左栏列城市/超大型工厂」，命名与类型取 wiki 的静态数据，\n     进度取 companion 的 warStatus.planetRegions（真实运行时）。 */\n.hd2sm-root #hd2sm-planet-card .regions{margin-top:6px;border-top:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .rg-hd{display:flex;align-items:baseline;gap:6px;padding:5px 9px 3px;\n    font-size:.7rem;color:var(--yellow);font-family:var(--font-mono)}\n.hd2sm-root #hd2sm-planet-card .rg-hd b{color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .rg-tip{margin-left:auto;font-size:.6rem;color:var(--text-mute);font-family:inherit}\n.hd2sm-root #hd2sm-planet-card .rg-list{display:grid;gap:1px;padding:0 5px 5px}\n.hd2sm-root #hd2sm-planet-card .rg-row{display:grid;grid-template-columns:16px 1fr 76px 50px;align-items:center;gap:5px;\n    padding:3px 4px;background:none;border:1px solid transparent;color:var(--text);\n    font:inherit;text-align:left;cursor:pointer}\n.hd2sm-root #hd2sm-planet-card .rg-row:hover{border-color:var(--line-2);background:#121212}\n.hd2sm-root #hd2sm-planet-card .rg-row.on{border-color:var(--yellow);background:#161205}\n.hd2sm-root #hd2sm-planet-card .rg-ico{font-size:.72rem;text-align:center}\n.hd2sm-root #hd2sm-planet-card .rg-name{font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .rg-name i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}\n.hd2sm-root #hd2sm-planet-card .rg-type{font-size:.6rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.hd2sm-root #hd2sm-planet-card .rg-type em{font-style:normal;color:var(--yellow);margin-left:2px;font-size:.55rem}\n.hd2sm-root #hd2sm-planet-card .rg-lib{font-family:var(--font-mono);font-size:.66rem;color:var(--text);text-align:right}\n.hd2sm-root #hd2sm-planet-card .rg-detail{margin:2px 9px 8px;padding:6px 7px;background:#0D0D0D;border:1px solid var(--line-2)}\n.hd2sm-root #hd2sm-planet-card .rg-d-hd{font-size:.72rem;color:var(--yellow);margin-bottom:3px}\n.hd2sm-root #hd2sm-planet-card .rg-d-hd i{font-style:normal;color:var(--text-mute);font-size:.6rem;margin-left:4px}\n.hd2sm-root #hd2sm-planet-card .rg-d-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.62rem;color:var(--text-mute)}\n.hd2sm-root #hd2sm-planet-card .rg-d-meta b{font-family:var(--font-mono);color:var(--text)}\n.hd2sm-root #hd2sm-planet-card .rg-d-desc{margin-top:4px;font-size:.64rem;line-height:1.55;color:var(--text-dim)}\n.hd2sm-root #hd2sm-planet-card .rg-d-act{margin-top:4px;font-size:.62rem;line-height:1.5;color:var(--text-mute);\n    border-top:1px solid #1a1a1a;padding-top:4px}\n/* 轮盘 */\n.hd2sm-root #hd2sm-wheel{position:absolute;z-index:19;display:none;width:186px;height:186px;\n    transform:translate(-50%,-50%);cursor:pointer}\n.hd2sm-root #hd2sm-wheel.on{display:block}\n.hd2sm-root #hd2sm-wheel svg{width:100%;height:100%;display:block;overflow:visible}\n.hd2sm-root #hd2sm-wheel .sect path{fill:rgba(12,12,12,.94);stroke:var(--line-2);stroke-width:1}\n.hd2sm-root #hd2sm-wheel .sect:hover path{fill:#1A1200;stroke:var(--yellow)}\n.hd2sm-root #hd2sm-wheel .sect text{fill:var(--text-dim);font-size:10.5px;font-family:var(--font-mono);\n    pointer-events:none;letter-spacing:.04em}\n.hd2sm-root #hd2sm-wheel .sect:hover text{fill:var(--yellow)}\n.hd2sm-root #hd2sm-wheel .sect text.sub{font-size:8.5px;fill:var(--text-mute)}\n.hd2sm-root #hd2sm-wheel .ctr circle{fill:#0B0B0B;stroke:var(--yellow);stroke-width:2}\n.hd2sm-root #hd2sm-wheel .ctr:hover circle{fill:#1A1200}\n.hd2sm-root #hd2sm-wheel .ctr text{fill:var(--yellow);font-size:9px;font-family:var(--font-mono);\n    text-anchor:middle;pointer-events:none;letter-spacing:.06em}\n@media (max-width:767px){.hd2sm-root #hd2sm-planet-card{width:min(300px,calc(100% - 16px))}\n.hd2sm-root #hd2sm-wheel{width:160px;height:160px}}\n\n/* ===== 以下为 map-hud.css（HUD 皮肤层，同源规则） ===== */\n\n/* ============================================================\n   银河星图（galaxy-map-v2） · HUD 皮肤层\n   Diegetic Tactical HUD / Diesel Punk —— 与主站 hud-skin.css 同源同规则\n   ------------------------------------------------------------\n   加载顺序：`<style>`（本文件第 25–310 行的内联样式）→ maplibre-gl.css → **本文件**\n   星图的样式全部内联在页面里（284 行），本层插在其后，同特异度即可覆盖。\n   ⚠ 第①节用 !important 一次性压制历史写法；新增组件请直接写规范样式。\n   ============================================================ */\n/* ════════════════ ① 反模式清零 ════════════════ */\n.hd2sm-root, .hd2sm-root *, .hd2sm-root *::before, .hd2sm-root *::after{\n  border-radius: 0 !important;\n  box-shadow: none !important;\n  backdrop-filter: none !important;\n  -webkit-backdrop-filter: none !important;\n  text-shadow: none !important;\n}\n/* ════════════════ ② 令牌：与主站对齐 ════════════════ */\n.hd2sm-root{\n  --bg-deep: #0A0A0A;\n  --bg-mid: #101010;\n  --panel: #111111;\n  --panel-2: #0F0F0F;\n  --border: #1F1F1F;\n  --border-h: #3A2A00;\n  --line-2: #2A2A2A;\n  --text: #F2F2F2;\n  --text-dim: #A8A8A8;\n  --text-mute: #6E6E6E;\n  --yellow: #FFB000;\n  --yellow-2: #FFC94A;\n  --brass: #C8862A;\n  --blue: #3B82F6;\n  --ok: #1FA84A;\n  --warn: #FF4D2E;\n  --radius: 0;\n  --radius-s: 0;\n  --blur: none;\n  --stripe: repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px);\n  --font-mono: \"Rajdhani\",\"Orbitron\",\"Consolas\",\"Courier New\",monospace;\n  /* 阵营色：超级地球 = 蓝 #5BA3D0（2026-09-24 用户要求，与主页 tokens.css 的 --c-humans 同值；\n     2026-09-18~09-24 曾用黄 #ffe800，与终结族黄 #F5C518 在星图上难以分辨）；\n     其余三阵营保留不动（辨识度优先）。本层在内联 <style> 之后加载，故这里是**实际生效**的值 ——\n     改星图阵营色必须改这一行，只改 galaxy-map-v2.html 的内联 <style> 不生效。 */\n  --c-humans: #5BA3D0; --c-terminids: #F5C518; --c-automaton: #D6806D; --c-illuminate: #CF64F8;\n}\n.hd2sm-root{ background: var(--bg-deep); color: var(--text); font-size: 14px; }\n/* 战术数据一律等宽 */\n.hd2sm-root header .stats, .hd2sm-root #hd2sm-tip .r span, .hd2sm-root #hd2sm-sector-card .librow b, .hd2sm-root #hd2sm-detail .cell .v, .hd2sm-root .pd-wiki .badge, .hd2sm-root .legend, .hd2sm-root #hd2sm-hits .hit .own, .hd2sm-root #hd2sm-sector-card .sub{ font-family: var(--font-mono); }\n/* ════════════════ ③ 顶栏 ════════════════ */\n.hd2sm-root header{\n  background: var(--bg-deep);\n  border-bottom: 1px solid var(--border);\n  position: relative;\n  padding: 8px 16px;\n}\n/* 顶栏下沿的琥珀斜纹带（与主站导航同款） */\n.hd2sm-root header::after{\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;\n  background: var(--stripe); border-top: 1px solid #241B00; pointer-events: none; z-index: 21;\n}\n.hd2sm-root header h1{ color: var(--text); letter-spacing: .05em; padding-left: 10px; border-left: 4px solid var(--yellow); }\n.hd2sm-root .tag{ background: var(--yellow); color: #000; border: 1px solid var(--yellow); padding: 2px 7px;\n  font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .66rem; }\n.hd2sm-root .tag.v2{ background: var(--blue); color: #fff; border-color: var(--blue); }\n.hd2sm-root header .stats{ color: var(--text-mute); font-size: .72rem; }\n.hd2sm-root header .stats b{ color: var(--text-dim); }\n.hd2sm-root header button, .hd2sm-root header .btn{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  border-top: 2px solid var(--brass);\n  color: var(--text-dim);\n  padding: 4px 10px;\n  font-weight: 700;\n  letter-spacing: .05em;\n  font-size: .74rem;\n}\n.hd2sm-root header button:hover, .hd2sm-root header .btn:hover{\n  border-color: var(--yellow); border-top-color: var(--yellow);\n  color: var(--yellow); background: #1A1200;\n}\n.hd2sm-root:not(.aside-collapsed) #hd2sm-aside-toggle{ color: var(--yellow); border-color: var(--yellow); }\n/* ════════════════ ④ 载入遮罩 / 提示浮层 ════════════════ */\n.hd2sm-root #hd2sm-boot{ background: var(--bg-deep); }\n/* 转圈改「扫描方框」：方角 + 只有顶边是琥珀 */\n.hd2sm-root #hd2sm-boot .ring{\n  width: 42px; height: 42px;\n  border: 2px solid var(--line-2);\n  border-top-color: var(--yellow);\n  animation: hd2sm-spin 1s linear infinite;\n}\n.hd2sm-root #hd2sm-boot .msg{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-boot .msg small{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-tac-empty{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--yellow);\n  color: var(--text-dim);\n  padding: 6px 14px;\n  font-size: .76rem;\n}\n.hd2sm-root #hd2sm-tip{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-top: 2px solid var(--yellow);\n  color: var(--text-dim);\n  padding: 8px 11px;\n}\n.hd2sm-root #hd2sm-tip .n{ color: var(--yellow); }\n.hd2sm-root #hd2sm-tip .r{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-tip .r span{ color: var(--text); }\n.hd2sm-root #hd2sm-tip .bar{ height: 5px; background: #1A1A1A; border: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-tip .bar i{ background: var(--yellow); }\n/* ════════════════ ⑤ 侧栏 ════════════════ */\n.hd2sm-root aside{\n  background: var(--panel-2);\n  border-left: 1px solid var(--border);\n  padding: 12px;\n  gap: 10px;\n}\n.hd2sm-root #hd2sm-aside-rail{\n  background: var(--panel);\n  border-left: 1px solid var(--line-2);\n}\n.hd2sm-root #hd2sm-aside-rail:hover{ background: #1A1200; }\n.hd2sm-root #hd2sm-aside-rail:hover span{ color: var(--yellow); }\n.hd2sm-root #hd2sm-aside-backdrop{ background: rgba(0,0,0,.72); }\n.hd2sm-root #hd2sm-aside-toggle{ background: var(--panel); border: 1px solid var(--line-2); border-top: 2px solid var(--brass); color: var(--text-dim); }\n/* 侧栏小节标题：复刻 DSS 小节标题（斜纹底 + 琥珀字 + 硬描边） */\n.hd2sm-root aside h2{\n  font-size: .78rem;\n  color: var(--yellow);\n  letter-spacing: .12em;\n  text-transform: uppercase;\n  background: var(--stripe);\n  border: 1px solid #33270A;\n  border-left: 3px solid var(--yellow);\n  padding: 5px 9px;\n}\n.hd2sm-root .card{\n  background: var(--panel);\n  border: 1px solid var(--border);\n  border-top: 2px solid var(--brass);\n  padding: 10px 12px;\n}\n.hd2sm-root .search{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--brass);\n  color: var(--text);\n  padding: 6px 9px;\n}\n.hd2sm-root .search:focus{ border-color: var(--yellow); border-left-color: var(--yellow); }\n/* 筛选 chip：方角 + 硬描边 */\n.hd2sm-root .chip{\n  background: var(--panel-2);\n  border: 1px solid var(--line-2);\n  color: var(--text-dim);\n  padding: 3px 10px;\n  font-size: .72rem;\n}\n.hd2sm-root .chip:hover{ border-color: var(--brass); color: var(--text); }\n.hd2sm-root .chip.on{ border-color: var(--yellow); background: #1A1200; color: var(--yellow); font-weight: 700; }\n.hd2sm-root .chip .dot{ width: 7px; height: 7px; }\n.hd2sm-root .legend{ color: var(--text-dim); font-size: .73rem; }\n.hd2sm-root .legend i{ width: 9px; height: 9px; }\n.hd2sm-root .muted{ color: var(--text-mute); }\n/* ════════════════ ⑥ 星区信息卡（悬停星球） ════════════════ */\n.hd2sm-root #hd2sm-sector-card{\n  background: var(--panel);\n  border: 1px solid var(--line-2);\n  border-top: 3px solid var(--yellow);\n  padding: 9px 12px;\n}\n.hd2sm-root #hd2sm-sector-card .sec-name{ color: var(--text); }\n.hd2sm-root #hd2sm-sector-card .librow{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-sector-card .librow b{ color: var(--text); }\n.hd2sm-root #hd2sm-sector-card .bar{ height: 6px; background: rgba(255,77,46,.55); border: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-sector-card .bar i{ background: var(--c-humans); }\n.hd2sm-root #hd2sm-sector-card .sub{ color: var(--text-mute); }\n.hd2sm-root #hd2sm-sector-card .enemy-chip{\n  border: 1px solid currentColor;\n  background: rgba(255,255,255,.05);\n  padding: 2px 6px;\n  font-size: .66rem;\n}\n.hd2sm-root #hd2sm-sector-card .enemy-chip .dot{ width: 6px; height: 6px; }\n/* ════════════════ ⑦ 效果图标浮层 ════════════════ */\n.hd2sm-root .fx-i{\n  background: rgba(10,10,10,.92);\n  border: 1px solid var(--line-2);\n}\n.hd2sm-root .fx-i:hover{ border-color: var(--yellow); }\n.hd2sm-root .fx-i img{ border-radius: 0; }\n.hd2sm-root .fx-more{\n  background: rgba(10,10,10,.92);\n  border: 1px solid var(--line-2);\n  color: var(--text-dim);\n}\n/* ════════════════ ⑧ 详情面板（右栏下半） ════════════════ */\n.hd2sm-root #hd2sm-detail .kv{ gap: 6px; }\n.hd2sm-root #hd2sm-detail .cell{\n  background: var(--panel-2);\n  border: 1px solid var(--border);\n  border-left: 2px solid var(--line-2);\n  padding: 5px 8px;\n}\n.hd2sm-root #hd2sm-detail .cell .k{ color: var(--text-mute); font-size: .66rem; letter-spacing: .06em; }\n.hd2sm-root #hd2sm-detail .cell .v{ color: var(--text); }\n.hd2sm-root #hd2sm-detail .tac{\n  border: 1px solid var(--blue);\n  background: rgba(59,130,246,.10);\n  color: var(--blue);\n  padding: 2px 8px;\n  font-size: .7rem;\n}\n.hd2sm-root #hd2sm-detail .tacTxt{ color: var(--text-dim); }\n.hd2sm-root #hd2sm-detail .var-wrap{ border-top: 1px solid var(--line-2); }\n.hd2sm-root #hd2sm-detail .var-title{ color: var(--text-mute); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }\n.hd2sm-root #hd2sm-detail .var-chip{\n  border: 1px solid var(--line-2);\n  border-left: 2px solid var(--brass);\n  background: var(--panel-2);\n  color: var(--text-dim);\n  padding: 2px 7px;\n  font-size: .68rem;\n}\n.hd2sm-root #hd2sm-detail .var-chip.neg{\n  border-color: var(--warn); border-left-color: var(--warn);\n  background: rgba(255,77,46,.09); color: var(--warn); font-weight: 600;\n}\n/* 图鉴链接行 */\n.hd2sm-root .pd-wiki{\n  border: 1px solid var(--line-2);\n  border-left: 3px solid var(--brass);\n  background: var(--panel-2);\n  color: var(--text-dim);\n  padding: 6px 9px;\n}\n.hd2sm-root .pd-wiki:hover{ border-color: currentColor; border-left-color: currentColor; background: #1A1200; }\n.hd2sm-root .pd-wiki .badge{\n  border: 1px solid currentColor;\n  background: rgba(255,255,255,.05);\n  padding: 1px 7px;\n  font-size: .68rem;\n}\n.hd2sm-root .pd-wiki.strain{ color: var(--yellow); }\n.hd2sm-root .pd-wiki.faction{ color: var(--c-illuminate); }\n.hd2sm-root .pd-wiki.humans{ color: var(--c-humans); }\n/* 搜索命中列表 */\n.hd2sm-root #hd2sm-hits .hit{ padding: 4px 8px; border-left: 2px solid transparent; font-size: .74rem; color: var(--text-dim); }\n.hd2sm-root #hd2sm-hits .hit:hover{ background: #1A1200; border-left-color: var(--yellow); color: var(--text); }\n.hd2sm-root #hd2sm-hits .hit .dot{ width: 7px; height: 7px; }\n.hd2sm-root #hd2sm-hits .hit .own{ color: var(--text-mute); }\n/* ════════════════ ⑨ 滚动条 ════════════════ */\n.hd2sm-root ::-webkit-scrollbar{ width: 8px; height: 8px; }\n.hd2sm-root ::-webkit-scrollbar-thumb{ background: #2A2A2A; }\n.hd2sm-root ::-webkit-scrollbar-thumb:hover{ background: var(--brass); }\n.hd2sm-root ::-webkit-scrollbar-track{ background: #0D0D0D; }\n/* ════════════════ ⑩ 移动端密度 ════════════════ */\n@media (max-width: 900px){.hd2sm-root aside{ width: min(84vw, 300px); background: var(--panel); border-left: 1px solid var(--line-2); }\n.hd2sm-root header h1{ font-size: .88rem; }}\n@media (max-width: 767px){.hd2sm-root header{ padding: 7px 10px; }\n.hd2sm-root header h1{ font-size: .82rem; padding-left: 8px; border-left-width: 3px; }\n.hd2sm-root #hd2sm-tip{ font-size: .7rem; }\n.hd2sm-root #hd2sm-sector-card{ border-top-width: 2px; }}\n/* ===== 挂载根节点补充（build_embed.py） ===== */\n.hd2sm-root{position:relative;height:var(--hd2sm-h,70vh);min-height:480px;isolation:isolate}\n";
 
 function injectCss() {
   if (document.getElementById(CSS_TOKEN)) return;
@@ -40,26 +39,136 @@ function injectCss() {
   document.head.appendChild(link);
 }
 
-function loadScript(src) {
-  return new Promise(function (res, rej) {
+var maplibrePromise = null;
+function loadMaplibre() {
+  if (window.maplibregl) return Promise.resolve();
+  if (maplibrePromise) return maplibrePromise;
+  maplibrePromise = new Promise(function (res, rej) {
     var s = document.createElement("script");
-    s.src = src;
+    s.src = B + "js/libs/maplibre/maplibre-gl-csp.js";
     s.onload = res;
-    s.onerror = function () { rej(new Error("依赖加载失败: " + src)); };
+    s.onerror = function () { maplibrePromise = null; rej(new Error("MapLibre 加载失败")); };
     document.head.appendChild(s);
   });
+  return maplibrePromise;
 }
 
-function loadDependencies() {
-  var p = Promise.resolve();
-  SCRIPT_SRCS.forEach(function (rel) {
-    p = p.then(function () {
-      if (rel.indexOf("js/libs/maplibre/maplibre-gl-csp.js") !== -1 && window.maplibregl) return null;
-      return loadScript(rel.charAt(0) === "/" ? rel : B + rel);
+/* ============================================================
+   战术目标计算模块（原 js/tactical.js 内联，window.Tactical → 模块内 const）
+   ============================================================ */
+"use strict";
+/* ============================================================
+   战术目标计算模块（Tactical Objectives）
+   复刻 helldiverscompanion 的 optional objectives 拓扑逻辑：
+   依据星球归属 + 补给线邻接（tables/waypoints.json，冻结文件只读复用）
+   实时计算四类词条，由 index.html 以蓝色词条（.pd-chip-tac）渲染：
+     · 天体包围圈 / 双重围攻 —— 解放本星将孤立 1~N 个仅剩本星补给线的星球
+     · 被围攻 —— 本星全部补给线邻星均我方，敌方抵抗失效
+     · 星域解放 —— 解放本星即全星区易主
+     · 对弈点 —— 解放本星将立即终结我方防御星上的敌方战役
+   与 companion 的简化差异（见《HD2重构检查计划表.md》记录）：
+     · "被围攻"不再要求 impactPctEnemy<=0（拓扑即状态，与用户机制描述一致）
+     · "对弈点"用邻接表推导敌军来源，不依赖 isDefenseOrigin
+   ============================================================ */
+const Tactical = (function () {
+  const FACTION_CN = {
+    Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者",
+    Super_Earth: "超级地球", "Super Earth": "超级地球",
+  };
+  const OWN_CN = { Humans: "超级地球", Terminids: "终结族", Automaton: "机器人", Illuminate: "光能者" };
+
+  function computeFor(index, ctx) {
+    const { planets, campaigns, waypoints, nameOf, sectorCnOf } = ctx;
+    // waypoints.json 顶层为包裹对象 {description, waypoints, ...}，邻接表在 .waypoints 子键
+    const rawWp = waypoints || {};
+    const wp = rawWp.waypoints || rawWp;
+    const nbs = wp[String(index)] || [];
+    if (!nbs.length) return [];              // 不可达星球不参与词条
+
+    const planetBy = {};
+    (planets || []).forEach(p => { planetBy[p.index] = p; });
+    const self = planetBy[index];
+    if (!self) return [];
+    const isOurs = i => (planetBy[i] && planetBy[i].currentOwner) === "Humans";
+    const defPlanets = new Set((campaigns || [])
+      .filter(c => c.campaignType === "defense").map(c => c.planet.index));
+    const libPlanets = new Set((campaigns || [])
+      .filter(c => c.campaignType === "liberation").map(c => c.planet.index));
+    if (!libPlanets.has(index)) return [];   // 仅"我方正在解放"的星球显示目标词条
+
+    const ownerCn = OWN_CN[self.currentOwner] || self.currentOwner || "敌方";
+    const selfName = nameOf(index);
+    // 补给线为有向连接（A→B），邻接判定按 companion 的 allWays 双向视角（出向 ∪ 入向）
+    const rev = {};
+    Object.keys(wp).forEach(k => {
+      const from = +k;
+      (wp[k] || []).forEach(to => { (rev[to] = rev[to] || []).push(from); });
     });
-  });
-  return p;
-}
+    const outW = i => wp[String(i)] || [];
+    const allWays = i => [...new Set([...outW(i), ...(rev[i] || [])])];
+    const enemyNeighbors = i => allWays(i).filter(n => !isOurs(n) || defPlanets.has(n));
+    const tags = [];
+
+    // A) 被围攻：全部补给线邻星（双向）均为我方
+    if (allWays(index).every(n => isOurs(n))) {
+      tags.push({
+        key: "besieged", title: "被围攻",
+        text: `${ownerCn}的部队在${selfName}已被包围，无法再阻挡解放进度。`,
+      });
+    }
+
+    // B) 天体包围圈 / 双重围攻：解放本星后将孤立的目标星球
+    //    目标候选 = 本星出向补给线邻居（companion e.routes），条件 = 该目标非我方或正在防御战，
+    //    且其全部（双向）敌方补给线仅剩本星一条
+    const circTargets = outW(index).filter(n =>
+      (!isOurs(n) || defPlanets.has(n)) &&
+      enemyNeighbors(n).length === 1 && enemyNeighbors(n)[0] === index);
+    if (circTargets.length) {
+      const tNames = circTargets.map(n => nameOf(n)).join("、");
+      const races = [...new Set(circTargets.map(n => OWN_CN[(planetBy[n] || {}).currentOwner] || ""))].filter(Boolean).join("/");
+      const raceCn = races === "超级地球" ? "攻城敌军" : races;
+      const title = circTargets.length === 2 ? "双重围攻"
+        : (circTargets.length > 2 ? "多重围攻" : "天体包围圈");
+      tags.push({
+        key: "circumvallation", title,
+        targets: circTargets.map(n => n),
+        text: `解放${selfName}将对${tNames}的${raceCn}形成包围，切断其支援与增援。` +
+              `固守该星可开启${circTargets.length}处围攻解放，降低当地敌方抵抗度。`,
+      });
+    }
+
+    // C) 对弈点：解放本星将立即终结我方防御星上的敌方战役
+    const gambits = allWays(index).filter(n =>
+      isOurs(n) && defPlanets.has(n) &&
+      enemyNeighbors(n).length === 1 && enemyNeighbors(n)[0] === index);
+    if (gambits.length) {
+      const gNames = gambits.map(n => nameOf(n)).join("、");
+      tags.push({
+        key: "gambit", title: "对弈点",
+        targets: gambits.map(n => n),
+        text: `解放${selfName}将立即结束${gNames}上的敌方战役，守军无需再坚守防线。`,
+      });
+    }
+
+    // D) 星域解放：同星区其余星球全部为我方
+    const sector = self.sector || "";
+    if (sector) {
+      const sibs = (planets || []).filter(x => (x.sector || "") === sector && x.index !== index);
+      if (sibs.length && sibs.every(x => x.currentOwner === "Humans")) {
+        const secCn = sectorCnOf ? sectorCnOf(sector) : sector;
+        tags.push({
+          key: "libsector", title: "星域解放",
+          // 注意：sectorCnOf 只返回星区名本身（不带「星区」二字），故后缀在此补齐
+          text: `解放${selfName}将使超级地球完全掌控${secCn}星区，并在大片星图上清除${ownerCn}的视觉标识。`,
+        });
+      }
+    }
+
+    return tags;
+  }
+
+  return { computeFor };
+})();
 
 /* ============================================================
    星图主逻辑（原 galaxy-map-v2.html 内联脚本，挂载化改造）
@@ -167,6 +276,13 @@ async function fetchImageBitmap(url, crossOrigin) {
   if (img.decode) { try { await img.decode(); } catch (_) {} }
   return img;
 }
+async function loadBitmapWithFallback(url) {
+  try { return await fetchImageBitmap(url, true); }
+  catch (_) {}
+  try { return await fetchImageBitmap(url, false); }   // 无 CORS：能显示但纹理可能被污染
+  catch (_) { return null; }
+}
+
 // 读 PNG 头部取像素尺寸（IHDR 位于固定偏移）。
 // 必要性：planet-icons 并非同尺寸 —— 实测 139 个 64px、122 个 48px（另有少数 47~65px）。
 // 若统一按 pixelRatio:2 注册，48px 图标在同一 icon-size 下会比 64px 小约 33%，
@@ -182,27 +298,20 @@ function pngSizeFromBuffer(buf) {
 }
 
 // 载入图标：按 URL 顺序尝试（wiki.gg 直连优先，主仓本地兜底）。
-// 单次请求完成尺寸读取与解码（复用同一份 Blob，避免重复请求）；
-// fetch 失败（CORS/404/网络）直接换下一个 URL —— 污染纹理进不了 WebGL（addImage 会抛错）。
+// fetch 失败（CORS/404/网络）直接换下一个 URL —— 不做无 CORS 的 <img> 兜底：
+// 污染纹理进不了 WebGL（addImage 会抛错），不如尽快落到真正可用的源。
 // pixelRatio 归一化到 32 CSS px 基准（64px → 2，48px → 1.5）。
 async function loadPlanetIcon(urls) {
   const list = Array.isArray(urls) ? urls : [urls];
   for (const url of list) {
     try {
-      const r = await fetch(url, { cache: "force-cache" });
-      if (!r.ok) continue;
-      const buf = await r.arrayBuffer();
-      const dim = pngSizeFromBuffer(buf);
-      const blob = new Blob([buf], { type: r.headers.get("content-type") || "image/png" });
-      let img = null;
-      if (window.createImageBitmap) {
-        try { img = await createImageBitmap(blob); } catch (_) { /* 旧浏览器走 Image 兜底 */ }
-      }
-      if (!img) {
-        const objectUrl = URL.createObjectURL(blob);
-        try { img = await fetchImageBitmap(objectUrl, false); }
-        finally { URL.revokeObjectURL(objectUrl); }
-      }
+      let dim = null;
+      try {
+        const r = await fetch(url, { cache: "force-cache" });
+        if (!r.ok) continue;
+        dim = pngSizeFromBuffer(await r.arrayBuffer());
+      } catch (_) { continue; }
+      const img = await loadBitmapWithFallback(url);
       if (!img) continue;
       const w = (dim && dim.w) || img.naturalWidth || img.width || 64;
       return { image: img, pixelRatio: w / 32 };
@@ -451,7 +560,7 @@ const EFFECT_COLOR = {
 const DSS_ACTION_ICON = {
   // 1425 与 1209 是上游重新登记的同一条「飞鹰风暴」效果（四组描述 hash 完全一致），
   // 2026-10 毒气改版后上游改用 1425；两个 id 都保留映射。
-  1425:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰毒气风暴" },
+  1425:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1209:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1212:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
   1216:{ icon:"dss_eagle_storm.svg",          cn:"飞鹰风暴" },
@@ -582,62 +691,32 @@ const LAYER_ON = { territory:true, supply:true, attack:true, heat:false, labels:
 const HOME = { center: [0, 0.0163], zoom: 8.6, pitch: 48, bearing: 0 };
 
 async function boot() {
-  const bootUI = window.HD2Boot || null;
-  if (bootUI) bootUI.attach($("boot"));
-  const nextPaint = () => new Promise(resolve =>
-    requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  const setMsg = (line, sub, stage) => {
-    if (bootUI) {
-      if (stage) bootUI.setStage(stage, 4);
-      bootUI.setMsg(line, sub || "");
-    } else {
-      const b = $("bootmsg");
-      if (b) b.innerHTML = esc(line) + (sub ? "<br><small>" + esc(sub) + "</small>" : "");
-    }
-  };
-  const finishBoot = () => {
-    if (bootUI) { bootUI.done(); return; }
-    const b = $("boot");
-    if (b) b.classList.add("gone");
-    setTimeout(() => { const n = $("boot"); if (n) n.style.display = "none"; }, 420);
-  };
-  const failBoot = (line, sub) => {
-    if (bootUI) { bootUI.fail(line, sub); return; }
-    const b = $("bootmsg");
-    if (b) b.innerHTML = esc(line) + "<br><small>" + esc(sub) + "</small>";
-  };
-  setMsg("正在建立银河链路…", "中文字体 · 战况数据 · 补给线", 1);
+  const setMsg = (h) => { $("bootmsg").innerHTML = h; };
   paintBackdrop();
   window.addEventListener("resize", () => { clearTimeout(HD2SM_RT); HD2SM_RT = setTimeout(paintBackdrop, 250); });
 
-  // ---- 0+1) 字体与核心数据并行 ----
-  // MapLibre 建图前仍需字体就绪，但下载字体时不必让战况数据一起空等。
-  const fontTask = (async () => {
-    try {
-      const ff = new FontFace("SourceHanSans", "url('https://jerry114514.github.io/HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
-      await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
-    } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
-  })();
-  const dataTask = (async () => {
-    const [d, w] = await Promise.all([
+  // ---- 0) 字体：必须在建图前把思源黑体登记进 document.fonts ----
+  // MapLibre 的 localIdeographFontFamily 走 canvas 2D 取字形，canvas 只能用到已加载的字体；
+  // 若字体未就绪就建图，CJK 标签会先用后备字体渲染且不会自动重绘。
+  setMsg("正在加载中文字体…<br><small>思源黑体 · HD2_Wiki/assets/fonts</small>");
+  try {
+    const ff = new FontFace("SourceHanSans", "url('https://jerry114514.github.io/HD2_Wiki/assets/fonts/SourceHanSansCN-Medium.otf') format('opentype')");
+    await Promise.race([ff.load().then(f => document.fonts.add(f)), sleep(4000)]);
+  } catch (_) { /* 字体失败退后备系统字体，不阻塞建图 */ }
+
+  // ---- 1) 数据 ----
+  setMsg("正在加载战况数据…<br><small>data.json · waypoints.json</small>");
+  let data, wpRaw;
+  try {
+    [data, wpRaw] = await Promise.all([
       (await fetch(B + "data.json?t=" + Date.now(), { cache: "no-store" })).json(),
       (await fetch(B + "tables/waypoints.json?t=" + Date.now(), { cache: "no-store" })).json(),
     ]);
-    return { data: d, wpRaw: w };
-  })();
-  let data, wpRaw;
-  try {
-    const core = await dataTask;
-    await fontTask;
-    data = core.data;
-    wpRaw = core.wpRaw;
   } catch (e) {
-    failBoot("数据加载失败", e.message || "请检查网络连接后刷新重试");
+    setMsg("⚠️ 数据加载失败<br><small>" + esc(e.message) + "</small>");
     return;
   }
-  setMsg("正在同步星图资料…", "区域 · 星区 · 行动变量", 2);
-  await nextPaint();
-  // 星球图标索引（assets/planet-icons/index.json；缺失时全量回退纯色圆点，不致命）
+  // 星球图标索引：主仓本地兜底 + wiki.gg 规范名映射（缺失时回退纯色圆点，不致命）
   try {
     ICON_INDEX = await (await fetch(B + "assets/planet-icons/index.json?t=" + Date.now(), { cache: "no-store" })).json();
   } catch (_) { ICON_INDEX = {}; }
@@ -739,10 +818,9 @@ async function boot() {
   }
 
   // ---- 2) 战术目标（复用现有 tactical.js） ----
-  setMsg("正在计算战术目标…", "补给线 · 战役状态 · 战略目标", 3);
-  await nextPaint();
+  setMsg("正在计算战术目标…<br><small>tactical.js</small>");
   try {
-    if (window.Tactical) {
+    if (Tactical) {
       // nameOf / sectorCnOf 必须返回**中文名**，否则战术词条正文里会混入英文原名
       // （如「解放HEETH将对BRILLIANCE的…」）。PL_CN/SEC_CN 已在上方由 starmap.json 填充。
       const ctx = {
@@ -758,12 +836,8 @@ async function boot() {
         },
         sectorCnOf: (s) => SEC_CN[String(s || "").toUpperCase()] || s,   // 已是中文星区名时原样返回
       };
-      const wpKeys = Object.keys(WP);
-      for (let i = 0; i < wpKeys.length; i++) {
-        const k = wpKeys[i];
-        try { const t = window.Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
-        // 每 24 个节点让出主线程，避免长任务把加载动画和状态切换卡住。
-        if ((i + 1) % 24 === 0) await nextPaint();
+      for (const k of Object.keys(WP)) {
+        try { const t = Tactical.computeFor(+k, ctx); if (t && t.length) TACBY[+k] = t; } catch (_) {}
       }
     }
   } catch (_) { /* 词条失败不影响星图 */ }
@@ -947,313 +1021,29 @@ async function boot() {
                   players: p.players || 0 },
   })));
 
-  /* 星区领土：游戏 / companion 同一套极坐标网格 —— 24 个 15° 楔形 × 10 个 0.1 半径环。
-     每格 = 两条径向直边 + 两条环弧（环弧就是游戏里那圈「曲边」的来源）；星球落进哪格就属于哪个星区，
-     空格用最近星球补齐。分组键仍走 secCnByPlanet（starmap 权威中文星区名）。
-     ⚠ 格子大小**就是观感**（2026-10-16 用户要求「几块矩形拼起来」）：格子取游戏口径 15°×0.1，
-       星区的边就只有径向直边和同心弧两种方向、拐角是直角，拼出来像几块倾斜的矩形；
-       格子放大到 72×36 时边会碎成细密台阶，再抽稀就会切成斜线（两头都不是那个味道）。 */
-  const WED = 24, RING = 10;                                  // 与游戏同口径：15° × 0.1
-  const countBySector = {}, bySector = {}, ownerTally = {};
-  planets.forEach(p => {
-    const sec = secCnByPlanet(p);
-    (bySector[sec] = bySector[sec] || []).push(p);
-    countBySector[sec] = (countBySector[sec] || 0) + 1;
-    ownerTally[sec] = ownerTally[sec] || {};
-    ownerTally[sec][p.currentOwner] = (ownerTally[sec][p.currentOwner] || 0) + 1;
-  });
-  const dominantOwner = (sec) => {
-    const t = ownerTally[sec] || {};
-    return Object.keys(t).sort((a, b) => t[b] - t[a])[0] || "Humans";
-  };
-  const ownerColorOf = sec => OWNER_COLOR[dominantOwner(sec)] || "#64748b";
-  // 底色：**只要星区里有一颗星球被敌方占领，整片星区就上敌方色**（2026-10-17 用户要求：
-  //   塞提亚、赤血这类敌占星球所在的星区必须渲染成光能者色，不能因为「我方星球更多」而留透明）。
-  //   敌方有多个阵营时，取敌方星球最多的那个阵营；一颗敌方星球都没有（全员我方）→ 不上底色。
-  //   边界线不受影响，所有星区都照常描边。
-  const sectorFillOf = sec => {
-    const t = ownerTally[sec] || {};
-    const enemy = Object.keys(t).filter(o => o !== "Humans" && OWNER_COLOR[o])
-      .sort((a, b) => t[b] - t[a])[0];
-    return enemy ? OWNER_COLOR[enemy] : "rgba(0,0,0,0)";
-  };
-  // 格子归属：① 格子里有星球 → 这格归该星球所在星区（同格多颗取多数，平手取离格心最近的：
-  //   否则会出现「这颗星球长在别人家块里」）；② 空格 → 归最近星球所在的星区。
-  // 这样星区边界随星球分布自然变得大小不一，但每条边都落在 15°×0.1 的格子线上。
-  const cellOwner = {};
-  {
-    const W = 360 / WED;
-    const cellOf = (x, y) => Math.min(WED - 1, Math.floor((((Math.atan2(y, x) * 180 / Math.PI + 90) % 360) + 360) % 360 / W)) +
-      ":" + Math.min(RING - 1, Math.floor(Math.hypot(x, y) * RING));
-    const claim = {};
-    planets.forEach(p => (claim[cellOf(p.position.x, p.position.y)] = claim[cellOf(p.position.x, p.position.y)] || []).push(p));
-    Object.entries(claim).forEach(([k, list]) => {
-      const parts = k.split(":"), w = +parts[0], r = +parts[1];
-      const th = ((w + .5) * W - 90) * Math.PI / 180, rad = (r + .5) / RING;
-      const cx = rad * Math.cos(th), cy = rad * Math.sin(th), tally = {};
-      list.forEach(p => {
-        const s = secCnByPlanet(p), t = tally[s] = tally[s] || { n: 0, d: Infinity };
-        t.n++; t.d = Math.min(t.d, Math.hypot(p.position.x - cx, p.position.y - cy));
-      });
-      cellOwner[k] = Object.keys(tally).sort((a, b) => tally[b].n - tally[a].n || tally[a].d - tally[b].d)[0];
-    });
-    for (let w = 0; w < WED; w++) for (let r = 0; r < RING; r++) {
-      if (cellOwner[w + ":" + r]) continue;
-      const th = ((w + .5) * W - 90) * Math.PI / 180, rad = (r + .5) / RING;
-      const mx = rad * Math.cos(th), my = rad * Math.sin(th);
-      let best = null, bestD = Infinity;
-      for (const p of planets) {
-        const dx = p.position.x - mx, dy = p.position.y - my, d = dx * dx + dy * dy;
-        if (d < bestD) { bestD = d; best = p; }
-      }
-      if (best) cellOwner[w + ":" + r] = secCnByPlanet(best);
-    }
-  }
-  const polarPt = (w, rad) => {
-    const th = (w * (360 / WED) - 90) * Math.PI / 180;
-    return [rad * Math.cos(th), rad * Math.sin(th)];
-  };
-  const ownerAt = (w, r) => (r < 0 || r >= RING ? "OUT" :
-    (cellOwner[((w % WED) + WED) % WED + ":" + r] || "OUT"));
-
-  /* ── 星区轮廓（2026-10-16）：把同属一个星区的细格**并成一整块**，沿格子边界走出一圈轮廓 ──
-     逐格填充时，格与格之间会留下缝（半透明下更明显），而且每个星区被拆成上百个小面；
-     改成「并集轮廓」后，一个星区就是一整块面，形状严格贴格子（径向直边 + 同心弧，直角拐角），
-     也就是游戏/companion 那种「几块矩形拼起来」的观感。
-     ⚠ 抽稀必须**按共享的边界链做**（不是每个星区各抽各的）：一个星区的边同时也是邻格的边，
-       两边各自抽稀会得到两条不同的折线 → 半透明填充之间裂出细缝（或叠色）。
-       所以先把整张边界图拆成「链」（度=2 的中间点串起来、junction 处断开），每条链只抽稀一次；
-       相邻星区引用同一条链（一正一反）→ 填充严丝合缝、描边与填充共用同一条线。 */
-  // 角点 KP(w,r)＝角度索引 w × 半径索引 r；r=0 的一整圈在几何上就是圆心，统一塌成节点 "C"。
-  const KP = (w, r) => (r <= 0 ? "C" : (((w % WED) + WED) % WED) + ":" + r);
-  const nodeRC = (k) => (k === "C" ? [0, 0] : k.split(":").map(Number));
-  const nodePt = (k) => { const rc = nodeRC(k); return polarPt(rc[0], rc[1] / RING); };
-
-  // 第 1 步：每格只出「与邻格归属不同」的边，统一按逆时针定向
-  // （下边 +w、右边 +r、上边 -w、左边 -r）→ 每个角点恰好 1 进 1 出，顺着走必然闭合。
-  // 半径最小那一圈的下边退化成圆心一个点，跳过（圆心附近单独处理，见下）。
-  // ⚠ 边存成**有向边表**（而不是「角点 → 唯一后继」）：同一个星区的两格若只共用一个角
-  //   （对角相碰），那个角点就是 2 进 2 出，用「每角点一个后继」的 Map 会把边覆盖掉、
-  //   走环再也回不到起点（2026-10-16 踩过：页面会卡在加载遮罩上）。
-  const edgesOf = new Map();                              // 星区 -> [[角点, 后继角点], ...]
-  const dirAdd = (S, a, b) => { let l = edgesOf.get(S); if (!l) edgesOf.set(S, l = []); l.push([a, b]); };
-  for (let w = 0; w < WED; w++) for (let r = 0; r < RING; r++) {
-    const S = ownerAt(w, r);
-    if (r > 0 && ownerAt(w, r - 1) !== S) dirAdd(S, KP(w, r), KP(w + 1, r));          // 下边（弧）
-    if (r > 0 && ownerAt(w + 1, r) !== S) dirAdd(S, KP(w + 1, r), KP(w + 1, r + 1));  // 右边（径向）
-    if (ownerAt(w, r + 1) !== S) dirAdd(S, KP(w + 1, r + 1), KP(w, r + 1));           // 上边（弧）
-    if (r > 0 && ownerAt(w - 1, r) !== S) dirAdd(S, KP(w, r + 1), KP(w, r));          // 左边（径向）
-  }
-  // 圆心那一圈：一个星区在 r=0 上的每个连续段 → 一段「穿圆心」的跳线 KP(w0,1) → KP(w1+1,1)
-  // （真实数据里整圈 r=0 同属太阳系 → 没有任何跳线；这里只是保证换数据也不会走崩）
-  const centerOver = new Map();                           // 星区 -> Map(起点角点 -> 终点角点)
-  {
-    const r0 = Array.from({ length: WED }, (_, w) => ownerAt(w, 0));
-    const oneRing = r0.every(s => s === r0[0]);
-    if (!oneRing) for (let w0 = 0; w0 < WED; w0++) {
-      if (r0[w0] === r0[(w0 - 1 + WED) % WED]) continue;      // 只在段首出跳线
-      let len = 0; while (len < WED && r0[(w0 + len) % WED] === r0[w0]) len++;
-      let m = centerOver.get(r0[w0]);
-      if (!m) centerOver.set(r0[w0], m = new Map());
-      m.set(KP(w0, 1), KP(w0 + len, 1));
-    }
-  }
-  // 出边表（一个角点可能有多条出边，见上）
-  const outOf = new Map();                                // 星区 -> Map(角点 -> [后继角点, ...])
-  edgesOf.forEach((list, S) => {
-    const m = new Map();
-    list.forEach(([a, b]) => { const l = m.get(a); if (l) l.push(b); else m.set(a, [b]); });
-    outOf.set(S, m);
-  });
-
-  // 第 2 步：全局边界图（无向）→ 拆成链。径向边 r≥1、弧向边 1≤r≤RING（含最外圈）。
-  const adj = new Map(), bEdges = [];
-  const edgeKey = (a, b) => (a < b ? a + "|" + b : b + "|" + a);
-  const addEdge = (a, b) => {
-    if (a === b) return;
-    if (!adj.has(a)) adj.set(a, []);
-    if (!adj.has(b)) adj.set(b, []);
-    adj.get(a).push(b); adj.get(b).push(a); bEdges.push([a, b]);
-  };
-  for (let w = 0; w < WED; w++) {
-    for (let r = 1; r < RING; r++) if (ownerAt(w - 1, r) !== ownerAt(w, r)) addEdge(KP(w, r), KP(w, r + 1));
-    for (let r = 1; r <= RING; r++) if (ownerAt(w, r - 1) !== ownerAt(w, r)) addEdge(KP(w, r), KP(w + 1, r));
-  }
-  const chains = [], usedEdge = new Set();
-  for (const [a0, b0] of bEdges) {
-    if (usedEdge.has(edgeKey(a0, b0))) continue;
-    usedEdge.add(edgeKey(a0, b0));
-    const nodes = [a0, b0];
-    let closed = false;
-    for (const dir of [1, -1]) {
-      if (closed) break;
-      let prev = dir > 0 ? a0 : b0, cur = dir > 0 ? b0 : a0;
-      while (adj.get(cur).length === 2) {
-        const nb = adj.get(cur), nx = nb[0] === prev ? nb[1] : nb[0];
-        const back = dir > 0 ? nodes[0] : nodes[nodes.length - 1];
-        if (nx === back) { closed = true; break; }
-        if (usedEdge.has(edgeKey(cur, nx))) break;
-        usedEdge.add(edgeKey(cur, nx));
-        if (dir > 0) nodes.push(nx); else nodes.unshift(nx);
-        prev = cur; cur = nx;
-      }
-    }
-    chains.push({ nodes, closed });
-  }
-
-  // 第 3 步：**不做斜切抽稀**，只把「同向共线」的相邻点并掉。
-  // ⚠ 这里踩过一次坑（2026-10-16）：最初照交接文档用 Douglas–Peucker（容差 0.9 个细格）把台阶
-  //   压成长直边，台阶是被压平了，但压出来的是任意角度的斜线，星区变成歪扭的多边形 —— 用户要的是
-  //   「几块矩形拼起来」：形状**严格贴格子**（径向直边 + 同心弧，拐角是直角），台阶就在格子尺度上。
-  //   所以现在：连续同角度的径向边并成一条长直线、同半径的弧边并成一条长弧，拐角一个都不动。
-  // 弧边按角度取样（约 1.25° 一段）。格子是 15° 的粗格，若只取两三个点，长弧会变成折线、
-  // 圆盘外缘也会被切成多边形；取样够密，弧看起来就是弧。
-  const ARC_STEP_DEG = 1.25;
-  const arcSamples = (a, b) => {
-    const [wa, ra] = nodeRC(a), [wb, rb] = nodeRC(b);
-    if (ra !== rb || wa === wb) return [nodePt(a), nodePt(b)];
-    let dw = wb - wa; if (dw > 1) dw = -1; else if (dw < -1) dw = 1;
-    const n = Math.max(2, Math.ceil(Math.abs(dw) * (360 / WED) / ARC_STEP_DEG));
-    const out = [];
-    for (let i = 0; i <= n; i++) out.push(polarPt(wa + dw * i / n, ra / RING));
-    return out;
-  };
-  // 同向判定：p 处拐没拐弯（叉积为 0 且点积 > 0 才算「还是那条直线」）。
-  // 阈值取 1e-6 的正弦值 ≈ 0.00006°，弧上每 1/6 格的取样点也有 ~0.83° 的方向变化，绝不会被误并。
-  const straightAt = (o, p, q) => {
-    const ax = p[0] - o[0], ay = p[1] - o[1], bx = q[0] - p[0], by = q[1] - p[1];
-    const la = Math.hypot(ax, ay), lb = Math.hypot(bx, by);
-    if (la < 1e-12 || lb < 1e-12) return true;
-    return Math.abs((ax * by - ay * bx) / (la * lb)) < 1e-6 && (ax * bx + ay * by) > 0;
-  };
-  const weldStraight = (pts) => {                         // 去重复点 + 去「共线同向」的中间点（形状不变）
-    const uniq = [];
-    for (const p of pts) {
-      const l = uniq[uniq.length - 1];
-      if (!l || l[0] !== p[0] || l[1] !== p[1]) uniq.push(p);
-    }
-    const out = [];
-    for (let i = 0; i < uniq.length; i++) {
-      if (out.length && i + 1 < uniq.length && straightAt(out[out.length - 1], uniq[i], uniq[i + 1])) continue;
-      out.push(uniq[i]);                                 // 首尾两点永远保留（它们是 junction）
-    }
-    return out;
-  };
-  chains.forEach(ch => {
-    const pts = [];
-    const seq = ch.closed ? ch.nodes.concat([ch.nodes[0]]) : ch.nodes;
-    for (let i = 0; i < seq.length - 1; i++) {
-      const seg = arcSamples(seq[i], seq[i + 1]);
-      for (let k = 0; k < seg.length - 1; k++) pts.push(seg[k]);
-    }
-    pts.push(nodePt(seq[seq.length - 1]));
-    ch.simp = weldStraight(pts);
-  });
-
-  // 第 4 步：顺着第 1 步的有向边走环。链的入口只有两个方向：从链首进（顺着读）或从链尾进（倒着读），
-  // 所以走到链端点就把整条链的折线一次吐完（相邻星区共用这条折线 → 填充严丝合缝）。
-  const entryOf = new Map();                              // "角点|后继" -> {i, fwd}
-  chains.forEach((ch, i) => {
-    const n = ch.nodes, last = n.length - 1;
-    if (last < 1) return;
-    entryOf.set(n[0] + "|" + n[1], { i, fwd: true });
-    // ⚠ 只有两个角点的短链（= 一条边）也必须登记反向入口，否则反向走时会当成「单边」处理，
-    //   弧边就退化成一条弦（2026-10-16 踩过：整盘面积少 0.75%，症状是弧被拉直）
-    entryOf.set(n[last] + "|" + n[last - 1], { i, fwd: false });
-  });
-  const ringArea = (r) => { let s = 0; for (let i = 0; i < r.length - 1; i++) s += r[i][0] * r[i + 1][1] - r[i + 1][0] * r[i][1]; return s / 2; };
-  const inRing = (p, rg) => {                              // 射线法：点是否在某环内
-    let hit = false;
-    for (let i = 0, j = rg.length - 2; i < rg.length - 1; j = i++) {
-      const yi = rg[i][1], yj = rg[j][1];
-      if ((yi > p[1]) !== (yj > p[1]) &&
-          p[0] < (rg[j][0] - rg[i][0]) * (p[1] - yi) / (yj - yi) + rg[i][0]) hit = !hit;
-    }
-    return hit;
-  };
-  // 网格步方向（±w / ±r），用来判「下一个出口往哪拐」
-  const stepDir = (a, b) => {
-    const A = nodeRC(a), B = nodeRC(b);
-    let dw = B[0] - A[0];
-    if (dw > 1) dw = -1; else if (dw < -1) dw = 1;
-    return [dw, B[1] - A[1]];
-  };
-  // 从 cur 出发，来向是 din，挑下一条出边：**尽量左转**（平面图追面的标准做法）。
-  // 星区两格对角相碰的角点上有 2 进 2 出，靠这条规则两块各走各的，不会串成一个蝴蝶结。
-  const nextAfter = (din, cur, outs, over) => {
-    if (over) { const f = over.get(cur); if (f) return f; }       // 穿圆心的跳线优先
-    const list = outs.get(cur);
-    if (!list || !list.length) return null;
-    if (list.length === 1 || !din || cur === "C") return list[0];
-    let best = null, bestAng = -Infinity;
-    for (const d of list) {
-      const dd = stepDir(cur, d);
-      if (dd[0] === -din[0] && dd[1] === -din[1]) continue;       // 不走回头路
-      const ang = Math.atan2(din[0] * dd[1] - din[1] * dd[0], din[0] * dd[0] + din[1] * dd[1]);
-      if (ang > bestAng) { bestAng = ang; best = d; }
-    }
-    return best || list[0];
-  };
-  const sectorFC = fc([...outOf.entries()].map(([name, outs]) => {
-    const over = centerOver.get(name) || null;
-    const used = new Set(), rings = [];
-    for (const [a0, list] of outs) for (const b0 of list) {
-      if (used.has(edgeKey(a0, b0))) continue;
-      if (!entryOf.has(a0 + "|" + b0)) continue;            // 只从链端点起步，保证整条链一次吐完
-      // 每一步处理一条「边」（cur → nxt）：边若属于某条链，就把整条链的折线一次吐完并跳到链的另一端
-      const pts = [nodePt(a0)], seen = new Set();
-      let cur = a0, nxt = b0, din = null, guard = 0, closed = false;
-      while (nxt != null && guard++ < 5000) {               // 兜底：数据异常也别把页面卡死
-        used.add(edgeKey(cur, nxt));
-        const en = entryOf.get(cur + "|" + nxt);
-        if (en) {
-          const ch = chains[en.i], seq = en.fwd ? ch.simp : ch.simp.slice().reverse();
-          for (let k = 1; k < seq.length; k++) pts.push(seq[k]);
-          for (const n of ch.nodes) seen.add(n);
-          for (let k = 0; k + 1 < ch.nodes.length; k++) used.add(edgeKey(ch.nodes[k], ch.nodes[k + 1]));
-          const end = ch.closed ? ch.nodes[0] : (en.fwd ? ch.nodes[ch.nodes.length - 1] : ch.nodes[0]);
-          const from = ch.closed ? ch.nodes[ch.nodes.length - 1] : (en.fwd ? ch.nodes[ch.nodes.length - 2] : ch.nodes[1]);
-          din = stepDir(from, end); cur = end;
-        } else {
-          // 没成链的单边（正常情况下不该出现，兜底用）：弧边也要按弧取样，别退化成弦
-          const seg = arcSamples(cur, nxt);
-          if (over && over.get(cur) === nxt) pts.push([0, 0]);      // 穿圆心
-          for (let k = 1; k < seg.length; k++) pts.push(seg[k]);
-          din = stepDir(cur, nxt); cur = nxt;
-        }
-        if (cur === a0 && nextAfter(din, a0, outs, over) === b0) { closed = true; break; }  // 回到起始边 → 闭合
-        const adv = nextAfter(din, cur, outs, over);
-        if (adv == null) break;
-        // 回到起始角点不算「重访」（下一步如果是起始边就是闭合，见上）；其它重复角点说明自触 → 在此收环
-        if (adv !== a0 && seen.has(adv)) break;
-        seen.add(adv); nxt = adv;
-      }
-      if (!closed) console.warn(`[星区] ${name} 的轮廓没有闭合，已跳过这一圈（数据可能异常）`);
-      const clean = pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
-      if (clean.length >= 4 && Math.abs(ringArea(clean)) > 1e-12) rings.push(ring(clean));
-    }
-    // 走环方向与 (x,y) 里的手性相反（网格平面中是逆时针 → 平面上是顺时针）：
-    // 外环反向一次即 RFC 7946 的「外环逆时针」，空腔反过来（顺时针）。当前数据没有空腔，
-    // 但它是数据驱动的 —— 万一某星区被另一个星区整个包住，空腔必须挂到包住它的那个外环上。
-    const outers = [], holes = [];
-    rings.forEach(r => (ringArea(r) < 0 ? outers : holes).push(r));
-    outers.sort((a, b) => Math.abs(ringArea(b)) - Math.abs(ringArea(a)));
-    const host = (h) => {
-      const c = h.slice(0, -1).reduce((a, p) => [a[0] + p[0], a[1] + p[1]], [0, 0]).map(v => v / (h.length - 1));
-      return outers.filter(o => inRing(c, o)).pop() || null;     // 最小的那个包住它的外环
-    };
-    const polys = outers.map(o => [o.slice().reverse()]);
-    for (const h of holes) {
-      const o = host(h), hr = h.slice().reverse();
-      if (o) polys[outers.indexOf(o)].push(hr); else polys.push([hr]);   // 兜底：找不到宿主就当独立外环
-    }
-    return { type: "Feature", geometry: { type: "MultiPolygon", coordinates: polys },
-             properties: { name, count: countBySector[name] || 0, color: ownerColorOf(name), fill: sectorFillOf(name) } };
-  }));
+  // 星区领土（近似凸包）——按星区聚合
+  // ⚠ 分组键必须走 secCnByPlanet（starmap 权威中文星区名）；用 p.sector 会把 152 颗空值星球
+  //   全塞进一个假分组「UNKNOWN」，在银河中心糊出一大片不属于任何星区的凸包。
+  const bySector = {};
+  planets.forEach(p => { const s = secCnByPlanet(p); (bySector[s] = bySector[s] || []).push(p); });
+  const sectorFC = fc(Object.entries(bySector)
+    .filter(([, list]) => list.length >= 3)
+    .map(([name, list]) => ({
+      type: "Feature",
+      geometry: { type: "Polygon", coordinates: [ring(expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.16))] },
+      properties: { name, count: list.length },
+    })));
 
   // 势力领土（近似凸包，仅非我方阵营绘制，作为大色块）
-  // 势力凸包弃用：改用上面的星区轮廓直接上色（游戏/companion 的同一思路）
-  const factionFC = fc([]);
+  const factionFC = fc(FACTION_KEYS
+    .filter(k => k !== "Humans")
+    .map(k => {
+      const list = planets.filter(p => p.currentOwner === k);
+      if (list.length < 3) return null;
+      const hull = expandHull(convexHull(list.map(p => [p.position.x, p.position.y])), 1.20);
+      return { type: "Feature", geometry: { type: "Polygon", coordinates: [ring(hull)] },
+               properties: { owner: k, color: OWNER_COLOR[k], ownerCn: OWN_CN[k], count: list.length } };
+    }).filter(Boolean));
 
   // 星区名不再绘制在地图上（改由左上角星区卡呈现，详见 showSectorCard）
 
@@ -1380,8 +1170,7 @@ async function boot() {
     `<span><b>更新</b> ${(data.fetchedAt || "").slice(5, 16).replace("T", " ")}</span>`;
 
   // ---- 5) 地图 ----
-  setMsg("正在部署星图图层…", "MapLibre GL · WebGL · 首帧渲染", 4);
-  await nextPaint();
+  setMsg("正在构建星图图层…<br><small>MapLibre GL · WebGL</small>");
   maplibregl.setWorkerUrl(HD2SM_WORKER_URL);
 
   MAP = new maplibregl.Map({
@@ -1428,14 +1217,11 @@ async function boot() {
             "circle-stroke-opacity": .7,
           } },
 
-        // 星区：按该星区的主导阵营上色；**超级地球的星区不上底色**（fill 属性直接是透明色，
-        // 见 sectorFillOf）。轮廓是「格子并集」的结果（逐格填充已弃用），
-        // 所以填充边缘与下面的描边是同一条折线，不会裂缝。
+        // 星区（细虚线，弱）
         { id: "sector-fill", type: "fill", source: "sector",
-          paint: { "fill-color": ["get", "fill"], "fill-opacity": .3, "fill-antialias": false } },
-        // 描边跟着同一份轮廓走（游戏内观感：少量长直边 / 长弧，内部没有格线）
+          paint: { "fill-color": "rgba(255,255,255,.014)" } },
         { id: "sector-line", type: "line", source: "sector",
-          paint: { "line-color": "rgba(235,242,250,.5)", "line-width": .9 } },
+          paint: { "line-color": "rgba(255,255,255,.10)", "line-width": .8, "line-dasharray": [4, 4] } },
 
         // 势力领土（大色块）
         { id: "faction-fill", type: "fill", source: "faction",
@@ -1720,7 +1506,10 @@ async function boot() {
   let mapLoaded = false;
   const loadGuard = setTimeout(() => {
     if (mapLoaded) return;
-    failBoot("星图加载超时", "图层样式可能未通过校验，请查看控制台后刷新重试");
+    const b = $("boot");
+    if (!b) return;
+    b.innerHTML = '<div class="msg" style="color:#f59e0b">⚠️ 星图加载超时<br>' +
+      '<small>图层样式可能未通过校验，请查看控制台（[MapLibre] 前缀）后刷新重试</small></div>';
     console.error("[星图] map load 事件超时未触发 —— 请检查图层样式表达式是否合法");
   }, 60000);
 
@@ -1770,45 +1559,32 @@ async function boot() {
         paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, "bg");
     } catch (e) { console.warn("[星空] raster 挂载失败", e); }
 
-    // 星球图标改为后台渐进部署：核心地图先开放，未就绪的图标继续使用圆点。
+    // 预载星球图标（wiki.gg 直连优先，主仓本地缓存兜底）
     const files = [...new Set(planetFC.features.map(f => f.properties.icon).filter(Boolean))];
-    let ok = 0, bad = 0;
-    let repaintQueued = false;
-    const requestIconRepaint = () => {
-      if (repaintQueued) return;
-      repaintQueued = true;
-      requestAnimationFrame(() => {
-        repaintQueued = false;
-        if (MAP) MAP.triggerRepaint();
-      });
-    };
-    (async () => {
-      if (!files.length) {
-        $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
-        return;
-      }
-      $("srcnote").textContent = "图标：正在分批部署 " + files.length + " 个星球图标…";
+    let ok = 0, bad = 0;                       // 声明在 if 之外：下方提示需要读取
+    if (files.length) {
+      setMsg("正在加载星球图标…<br><small>wiki.gg planet-icons · " + files.length + " 个</small>");
       await pool(files, 6, async (file) => {
+        // pixelRatio 按各图实际宽度归一化
         const res = await loadPlanetIcon([ICON_URL[file], ICON_FALLBACK[file]].filter(Boolean));
         if (!res) { bad++; return; }
-        try {
-          if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio });
-          ok++;
-          requestIconRepaint();
-        } catch (_) { bad++; }
+        try { if (!MAP.hasImage(file)) MAP.addImage(file, res.image, { pixelRatio: res.pixelRatio }); ok++; }
+        catch (_) { bad++; }
       });
       $("srcnote").innerHTML =
         "图标命中 <b>" + ok + "</b> / 缺 <b>" + bad + "</b>（wiki.gg 直连优先，缺失回退主仓本地缓存，仍缺以纯色圆点显示）" +
         "<br>星球图标 © <a href='https://helldivers.wiki.gg/' target='_blank' rel='noopener noreferrer' style='color:var(--blue)'>helldivers.wiki.gg</a>（CC BY-NC-SA 4.0）";
       console.info("[图标] 命中", ok, "缺失", bad, "共", files.length);
-    })().catch(e => {
-      console.warn("[图标] 渐进部署中断", e);
-      $("srcnote").textContent = "部分星球图标未能部署，已保留圆点显示";
-    });
+    } else {
+      $("srcnote").textContent = "图标：未启用（纯色圆点渲染）";
+    }
 
-    // 等待地图样式更新后的下一帧再退场；不等待全部星球图标。
-    await nextPaint();
-    finishBoot();
+    // 补给线已改为「我方蓝 → 阵营代表色」纯渐变（不再叠加流光层），
+    // 故原先驱动 supply-flow 的相位定时器一并移除。
+
+    $("boot").classList.add("gone");
+    setTimeout(() => { const b = $("boot"); if (b) b.style.display = "none"; }, 600);
+
     initFXLayer(planetFC);
   });
 
@@ -2284,10 +2060,9 @@ function bindUI(data, planets) {
       `<span class="rg-ico">${o.megafactory ? "🏭" : "🏙"}</span>` +
       `<span class="rg-name">${esc(o.zh || o.en || "区域 " + o.i)}${o.zh && o.en ? "<i>" + esc(o.en) + "</i>" : ""}</span>` +
       `<span class="rg-type">${esc(o.type)}${stars ? "<em>" + stars + "</em>" : ""}</span>` +
-      `<span class="rg-lib">${pct}</span></button>${o.rules || ""}`;
+      `<span class="rg-lib">${pct}</span></button>`;
   }
   function buildRegionsHtml(p, index) {
-    if (!window.HD2Regions) return "<div class=region-rules>区域信息暂不可用</div>";
     const st = REGIONS[String(index)];
     if (!st || !st.regions || !st.regions.length) return "";
     const zhMap = REGIONS_ZH[String(index)] || {};
@@ -2306,8 +2081,7 @@ function bindUI(data, planets) {
       stars: { Settlement: 1, Town: 2, City: 3, MegaCity: 4 }[regionTypeOf(r)] || 0,
       megafactory: regionTypeOf(r) === "Megafactory",
       zh: zhMap[r.name] || "", en: r.name,
-      pct: pctOf(HD2Regions.live(p, k), r),
-      rules: HD2Regions.html(HD2Regions.info(p, k, r, DATA)),
+      pct: pctOf((p.regions || [])[k], r),
     }));
     return `<div class="regions"><div class="rg-hd">🏙 区域 <b>${st.regions.length}</b>` +
       `<span class="rg-tip">城市 / 超大型工厂 · 点一行看详情</span></div>` +
@@ -2315,7 +2089,7 @@ function bindUI(data, planets) {
       `<div class="rg-detail" id="hd2sm-pc-rgdetail" hidden></div></div>`;
   }
   function regionDetailHtml(p, index, meta, k) {
-    const live = HD2Regions.live(p, k);
+    const live = (p.regions || [])[k] || null;
     const zhMap = REGIONS_ZH[String(index)] || {};
     const pct = regionLibPct(live, meta);
     // 归属 = 当前控制方（运行时 owner；无运行时数据时退回 wiki 的静态 owner 字段）
@@ -2425,17 +2199,11 @@ function bindUI(data, planets) {
         if (narrow) {
           // 底部抽屉由 CSS 定位：清掉可能残留的行内值，避免 resize 跨断点后错位
           el.style.left = ""; el.style.top = ""; el.style.transform = "";
-          el.style.maxHeight = ""; el.style.overflowY = "";
         } else {
           const pt = MAP.project([p.position.x, p.position.y]);
-          const stage = $("stage");
-          el.style.maxHeight = Math.max(80, stage.clientHeight - 16) + "px";
-          el.style.overflowY = "auto";
-          const left = Math.max(8, Math.min(stage.clientWidth - el.offsetWidth - 8, pt.x - el.offsetWidth / 2));
-          const top = Math.max(8, Math.min(stage.clientHeight - el.offsetHeight - 8, pt.y - off - el.offsetHeight));
-          el.style.left = left.toFixed(1) + "px";
-          el.style.top = top.toFixed(1) + "px";
-          el.style.transform = "none";
+          el.style.left = pt.x.toFixed(1) + "px";
+          el.style.top = (pt.y - off).toFixed(1) + "px";
+          el.style.transform = "translate(-50%,-100%)";
         }
       }
     }
@@ -2489,10 +2257,19 @@ function bindUI(data, planets) {
     const atkColor = FACTION_COLOR[atkF] || "#E74C3C";
     const atk = camp.attackersProgress != null ? Number(camp.attackersProgress) : null;
     const def = camp.defendersProgress != null ? Number(camp.defendersProgress) : null;
-    const aR = camp.attackersRate;
-    const forecast = window.HD2Forecast?.defense(camp) || { rate: null, win: null }, pace = forecast.rate;
-    const st = forecast.win === true ? "优势" : forecast.win === false ? "劣势" : "数据不足";
-    const cls = forecast.win === true ? "st-win" : forecast.win === false ? "st-lose" : "";
+    const aR = camp.attackersRate, dR = camp.defendersRate;
+    const remainH = (camp.remainingTime || 0) / 3600;
+    // 我方均速：优先取实测差值；否则用「进度 ÷ 已历时间」（已历时间 = 入侵进度 ÷ 固定速率）
+    const elapsedH = (aR > 0 && atk > 0) ? atk / aR : 0;
+    const pace = (dR != null && dR > 0) ? dR : ((elapsedH > 0 && def != null) ? def / elapsedH : null);
+    // 战况：剩余时间内能打满 = 优势（与主页同判据）
+    let st, cls;
+    if (pace != null && def != null && remainH > 0) {
+      const win = pace * remainH >= (100 - def);
+      st = win ? "优势" : "劣势"; cls = win ? "st-win" : "st-lose";
+    } else if (def != null && atk != null) {
+      st = def >= atk ? "优势" : "劣势"; cls = def >= atk ? "st-win" : "st-lose";
+    } else { st = "数据不足"; cls = ""; }
     const row = (label, pct, bg) => {
       const known = pct != null && isFinite(pct);
       const w = known ? Math.max(0, Math.min(100, pct)).toFixed(2) : "0.00";
@@ -2507,8 +2284,8 @@ function bindUI(data, planets) {
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
         `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
       `</span></div>` +
-      `<div class="biome" id="hd2sm-pc-biome"><div class="noimg">载入生态图…</div></div>` +
-      `<div class="buffs" id="hd2sm-pc-buffs"><span class="st2">载入增益…</span></div>` +
+      `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
+      `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
       `<div class="def-race">` +
         row("超级地球", def, "var(--c-humans)") +
         row(atkLabel, atk, atkColor) +
@@ -2516,7 +2293,6 @@ function bindUI(data, planets) {
       `<div class="def-meta"><span>进攻 <b>${aR != null ? Number(aR).toFixed(3) : "--"}%</b>/h` +
         ` · 防守 <b>${pace != null ? pace.toFixed(3) : "--"}%</b>/h</span>` +
         `<span style="margin-left:auto">战况 <b class="${cls}">${esc(st)}</b></span></div>` +
-      (window.HD2Forecast?.defenseHtml(camp, DATA, p) || "<div class=campaign-forecast>预测模块未加载</div>") +
       (camp.invasionLevel != null
         ? `<div class="def-meta"><span>⚔️ 入侵等级 <b>${esc(camp.invasionLevel)}</b></span>` +
           `<span>等级越高敌方兵力越强</span></div>` : "") +
@@ -2580,8 +2356,8 @@ function bindUI(data, planets) {
         `<span class="nm">${esc(plCn(p) || p.name || "#" + index)}</span>` +
         `<span class="sec">${esc(secCn(p))} 星区 · 归属 ${esc(OWN_CN[owner] || owner)}</span>` +
       `</span></div>` +
-      `<div class="biome" id="hd2sm-pc-biome"><div class="noimg">载入生态图…</div></div>` +
-      `<div class="buffs" id="hd2sm-pc-buffs"><span class="st2">载入增益…</span></div>` +
+      `<div class="biome" id="pc-biome"><div class="noimg">载入生态图…</div></div>` +
+      `<div class="buffs" id="pc-buffs"><span class="st2">载入增益…</span></div>` +
       `<div class="bar"><i style="width:${libShow.toFixed(2)}%"></i><span class="mk" style="left:${libShow.toFixed(2)}%"></span></div>` +
       `<div class="lib"><b>${libShow.toFixed(4)}%</b><span class="st">${showLiberated ? "已解放 · 超级地球控制中" : "已解放"}</span>` +
         (showLiberated ? "" :
@@ -2593,7 +2369,6 @@ function bindUI(data, planets) {
         `<span class="st2">抵抗度 <b>${p.resistance != null ? (+p.resistance).toFixed(2) + "%" : "—"}</b></span>` +
         `<span class="st2">血量 <b>${fmt(p.health)}</b>/${fmt(p.maxHealth)}</span>` +
       `</div>` +
-      (showLiberated ? "" : window.HD2Forecast?.reinforcementHtml(DATA, p) || "") +
       regionsHtml +
       `<div class="pc-actions">` +
         `<a class="btn primary" target="_blank" rel="noopener" href="https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=${index}">📄 完整资料</a>` +
@@ -2636,7 +2411,6 @@ function bindUI(data, planets) {
         if (s) s.innerHTML = html || `<span class="st2">无星球增益 / 减益</span>`;
       }
     } catch (_) {}
-    if (alive()) positionOverlays();
   }
 
   /* ---- 轮盘：上=星球详细信息，下=DSS 效果，中心=关闭 ---- */
@@ -2708,11 +2482,12 @@ function bindUI(data, planets) {
       return;
     }
     const ST = { 1: ["募捐中", "#f5c518"], 2: ["已激活", "#1FA84A"], 3: ["冷却中", "#FF4D2E"] };
-    const acts = (dss.tacticalActions || []).filter(ta => [1, 2, 3].includes(ta.status));
+    const acts = dss.tacticalActions || [];
     const rows = acts.map(ta => {
-      const meta = (ta.effectIds || []).includes(1425) ? DSS_ACTION_ICON[1425] : (DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {});
+      const meta = DSS_ACTION_ICON[(ta.effectIds || [])[0]] || {};
       const s = ST[ta.status] || ["未知", "#94a3b8"];
-      const prog = HD2DssDonations.progress(ta);
+      const c0 = (ta.cost && ta.cost[0]) || null;
+      const prog = (c0 && c0.target) ? Math.min(100, (c0.current || 0) / c0.target * 100) : null;
       return `<div style="margin:6px 0;padding:6px 8px;border:1px solid var(--line-2);background:#0D0D0D">` +
         `<div style="display:flex;align-items:center;gap:6px">` +
           `<span style="color:${s[1]};font-size:.64rem;font-family:var(--font-mono)">${s[0]}</span>` +
@@ -2720,13 +2495,11 @@ function bindUI(data, planets) {
           (prog != null ? `<span style="margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${prog.toFixed(1)}%</span>` : "") +
         `</div>` +
         (prog != null ? `<div style="height:5px;background:#1A1A1A;margin-top:5px"><i style="display:block;height:100%;width:${prog.toFixed(1)}%;background:${s[1]}"></i></div>` +
-          `<div class="muted" style="margin-top:3px">募捐进度 ${prog.toFixed(1)}%</div>` : "") +
-        `<div class="muted" style="margin-top:3px">${esc(HD2DssDonations.resourceLines(ta).join("；"))}</div>` +
+          `<div class="muted" style="margin-top:3px">已捐献 ${fmt(c0.current)} / ${fmt(c0.target)}</div>` : "") +
       `</div>`;
     }).join("");
     box.innerHTML = head +
       `<div class="muted">行动 ${acts.length} 项 · 数据与主页「民主空间站 / DSS」区块同源。</div>` +
-      `<div class="muted" style="margin-top:4px">${esc(HD2DssDonations.snapshotLabel(dss))}</div>` +
       (rows || `<div class="muted" style="margin-top:6px">暂无战术行动数据</div>`) +
       tail;
   }
@@ -2820,7 +2593,7 @@ function bindUI(data, planets) {
 /* ============================================================
    挂载 API
    ============================================================ */
-var DOM_HTML = "<header>\n  <h1>🌌 银河星图</h1>\n  <span class=\"tag v2\">实时战况 · 3D</span>\n  <div class=\"stats\" id=\"hd2sm-hdr\"></div>\n  <button id=\"hd2sm-aside-toggle\" title=\"侧栏\">☰</button>\n  <button id=\"hd2sm-btn-reset\">重置视角</button>\n  <button id=\"hd2sm-btn-mode\">视图：银河</button>\n  <a class=\"btn opt\" target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://jerry114514.github.io/HD2-Galatic_war-Map/index.html\">← 战况面板</a>\n  <a class=\"btn opt\" target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://jerry114514.github.io/HD2-Galatic_war-Map/tech.html\">🛠️ 技术详解</a>\n  <button id=\"hd2sm-aside-collapse\" title=\"收起侧栏\">▶</button>\n</header>\n\n<main>\n  <div id=\"hd2sm-stage\">\n    <canvas id=\"hd2sm-stars\"></canvas>\n    <div id=\"hd2sm-map\"></div>\n    <div id=\"hd2sm-tip\"></div>\n    <div id=\"hd2sm-sector-card\"></div>\n    <div id=\"hd2sm-fx-layer\"></div>\n    <div id=\"hd2sm-planet-card\"></div>\n    <div id=\"hd2sm-wheel\"></div>\n    <div id=\"hd2sm-boot\">\n      <div class=\"boot-visual\" aria-hidden=\"true\"><div class=\"boot-frame\">\n        <img class=\"emblem\" src=\"https://jerry114514.github.io/HD2-Galatic_war-Map/assets/ui-icons/super_earth_flag.svg\" alt=\"\" decoding=\"async\">\n        <span class=\"scan-line\"></span>\n      </div></div>\n      <div class=\"boot-stage\" aria-hidden=\"true\"><span class=\"stage-code\">UPLINK</span><span class=\"stage-count\">01 / 04</span></div>\n      <div class=\"segments\" data-mode=\"determinate\" aria-hidden=\"true\"><i class=\"current\"><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>\n      <div class=\"msg\" id=\"hd2sm-bootmsg\"><span class=\"line\" role=\"status\" aria-live=\"polite\">正在建立银河链路…</span><small class=\"sub\">MapLibre · 中文字体 · 战况数据</small><small class=\"lore\" aria-hidden=\"true\"></small></div>\n    </div>\n  </div>\n  <div id=\"hd2sm-aside-backdrop\"></div>\n  <div id=\"hd2sm-aside-rail\" title=\"展开侧栏\"><span>◀</span></div>\n\n  <aside>\n    <section class=\"sec collapsed\">\n      <h2>🔍 检索</h2>\n      <div class=\"card\">\n        <input class=\"search\" id=\"hd2sm-q\" type=\"search\" placeholder=\"输入星球名…（如 CHOOHE / 海尔迈尔）\" autocomplete=\"off\">\n        <div id=\"hd2sm-hits\" style=\"margin-top:8px\"></div>\n      </div>\n    </section>\n\n    <section class=\"sec collapsed\">\n      <h2>🎛️ 阵营筛选</h2>\n      <div class=\"card\"><div class=\"chips\" id=\"hd2sm-factions\"></div></div>\n    </section>\n\n    <section class=\"sec collapsed\">\n      <h2>🗂️ 图层</h2>\n      <div class=\"card\"><div class=\"chips\" id=\"hd2sm-layers\"></div></div>\n    </section>\n\n    <section class=\"sec\">\n      <h2 id=\"hd2sm-detailTitle\">📋 星球详情</h2>\n      <div class=\"card\" id=\"hd2sm-detail\">\n        <div class=\"muted\">点星球 → 星球上方弹出信息卡（手机上是从底部滑出的抽屉）；\n          卡里点「📄 完整资料」进入独立资料页（解放度/战役/区域/统计/环境/补给线都在那页）。<br>\n          滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>\n      </div>\n    </section>\n\n    <section class=\"sec\">\n      <h2>📖 图例</h2>\n      <div class=\"card legend\">\n        <div><i style=\"background:var(--c-humans)\"></i>超级地球</div>\n        <div><i style=\"background:var(--c-terminids)\"></i>终结族</div>\n        <div><i style=\"background:var(--c-automaton)\"></i>机器人</div>\n        <div><i style=\"background:var(--c-illuminate)\"></i>光能者</div>\n        <div><span class=\"ln\" style=\"border-color:rgba(239,68,68,.8)\"></span>入侵战役（箭头=入侵方方向）</div>\n        <div><span class=\"ln\" style=\"border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1\"></span>我方蓝 → 敌方阵营色</div>\n        <div><i style=\"border:2px solid var(--blue);background:none\"></i>战术目标星球</div>\n        <div><span class=\"ln\" style=\"border-image:linear-gradient(90deg,#143ca0,#0096c8,#00c878,#e6c828,#f07820,#ff3c3c,#fff5eb) 1\"></span>玩家热力：冷 → 白热（**相对**密度，非人数刻度）</div>\n      </div>\n    </section>\n    <div class=\"muted\" id=\"hd2sm-srcnote\"></div>\n  </aside>\n</main>\n\n";
+var DOM_HTML = "<header>\n  <h1>🌌 银河星图</h1>\n  <span class=\"tag v2\">实时战况 · 3D</span>\n  <div class=\"stats\" id=\"hd2sm-hdr\"></div>\n  <button id=\"hd2sm-aside-toggle\" title=\"侧栏\">☰</button>\n  <button id=\"hd2sm-btn-reset\">重置视角</button>\n  <button id=\"hd2sm-btn-mode\">视图：银河</button>\n  <a class=\"btn opt\" href=\"https://jerry114514.github.io/HD2-Galatic_war-Map/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">← 战况面板</a>\n  <button id=\"hd2sm-aside-collapse\" title=\"收起侧栏\">▶</button>\n</header>\n\n<main>\n  <div id=\"hd2sm-stage\">\n    <canvas id=\"hd2sm-stars\"></canvas>\n    <div id=\"hd2sm-map\"></div>\n    <div id=\"hd2sm-tip\"></div>\n    <div id=\"hd2sm-sector-card\"></div>\n    <div id=\"hd2sm-fx-layer\"></div>\n    <div id=\"hd2sm-planet-card\"></div>\n    <div id=\"hd2sm-wheel\"></div>\n    <div id=\"hd2sm-boot\">\n      <div class=\"ring\"></div>\n      <div class=\"msg\" id=\"hd2sm-bootmsg\">正在初始化星图…<br><small>加载 MapLibre 与战况数据</small></div>\n    </div>\n  </div>\n  <div id=\"hd2sm-aside-backdrop\"></div>\n  <div id=\"hd2sm-aside-rail\" title=\"展开侧栏\"><span>◀</span></div>\n\n  <aside>\n    <section class=\"sec collapsed\">\n      <h2>🔍 检索</h2>\n      <div class=\"card\">\n        <input class=\"search\" id=\"hd2sm-q\" type=\"search\" placeholder=\"输入星球名…（如 CHOOHE / 海尔迈尔）\" autocomplete=\"off\">\n        <div id=\"hd2sm-hits\" style=\"margin-top:8px\"></div>\n      </div>\n    </section>\n\n    <section class=\"sec collapsed\">\n      <h2>🎛️ 阵营筛选</h2>\n      <div class=\"card\"><div class=\"chips\" id=\"hd2sm-factions\"></div></div>\n    </section>\n\n    <section class=\"sec collapsed\">\n      <h2>🗂️ 图层</h2>\n      <div class=\"card\"><div class=\"chips\" id=\"hd2sm-layers\"></div></div>\n    </section>\n\n    <section class=\"sec\">\n      <h2 id=\"hd2sm-detailTitle\">📋 星球详情</h2>\n      <div class=\"card\" id=\"hd2sm-detail\">\n        <div class=\"muted\">点星球 → 星球上方弹出信息卡（手机上是从底部滑出的抽屉）；\n          卡里点「📄 完整资料」在新标签页打开主站资料页。<br>\n          滚轮缩放 · 拖拽平移 · 右键拖拽旋转/倾斜。</div>\n      </div>\n    </section>\n\n    <section class=\"sec\">\n      <h2>📖 图例</h2>\n      <div class=\"card legend\">\n        <div><i style=\"background:var(--c-humans)\"></i>超级地球</div>\n        <div><i style=\"background:var(--c-terminids)\"></i>终结族</div>\n        <div><i style=\"background:var(--c-automaton)\"></i>机器人</div>\n        <div><i style=\"background:var(--c-illuminate)\"></i>光能者</div>\n        <div><span class=\"ln\" style=\"border-color:rgba(239,68,68,.8)\"></span>入侵战役（箭头=入侵方方向）</div>\n        <div><span class=\"ln\" style=\"border-image:linear-gradient(90deg,#5BA3D0,#f59e0b) 1\"></span>我方蓝 → 敌方阵营色</div>\n        <div><i style=\"border:2px solid var(--blue);background:none\"></i>战术目标星球</div>\n        <div><span class=\"ln\" style=\"border-image:linear-gradient(90deg,#143ca0,#0096c8,#00c878,#e6c828,#f07820,#ff3c3c,#fff5eb) 1\"></span>玩家热力：冷 → 白热（**相对**密度，非人数刻度）</div>\n      </div>\n    </section>\n    <div class=\"muted\" id=\"hd2sm-srcnote\"></div>\n  </aside>\n</main>";
 
 function mount(el, opts) {
   if (!el) return Promise.reject(new Error("HD2StarMap.mount: 缺少容器元素"));
@@ -2839,7 +2612,7 @@ function mount(el, opts) {
   var h = (opts && opts.height) || el.getAttribute("data-height");
   if (h) root.style.setProperty("--hd2sm-h", h);
   CURRENT = { el: el, root: root, map: null };
-  return loadDependencies().then(function () { return boot(); }).then(function () {
+  return loadMaplibre().then(function () { return boot(); }).then(function () {
     CURRENT.map = MAP;
     return root;
   }).catch(function (e) {
@@ -2861,7 +2634,7 @@ function autoMount() {
 window.HD2StarMap = {
   mount: mount,
   focusPlanet: function (i) { if (HD2SM_STATE.focusPlanet) HD2SM_STATE.focusPlanet(i); },
-  version: "1.1.0"
+  version: "1.0.0"
 };
 Object.defineProperty(window.HD2StarMap, "map", { get: function () { return CURRENT.map; } });
 
