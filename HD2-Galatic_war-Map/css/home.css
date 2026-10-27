@@ -2041,3 +2041,166 @@
       .camp-phase-status { margin-left: 0; }
     }
 
+
+    /* ============================================================
+       重要指令播报（2026-10-28 · mo-announce）
+       复刻 helldiverscompanion 的 INCOMING MESSAGE 动效；
+       冷蓝体系 + 主站黑金 HUD（零圆角 / 硬描边），不影响琥珀主色。
+       时间线：遮罩 128ms 淡入 → 通知条 1s 关键帧 → 64ms 后面板 48ms scale(.88→1)。
+       ============================================================ */
+    .mo-block-head { align-items: center; }
+    .mo-head-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mo-head-actions .block-meta { margin-left: 0; }
+    .mo-replay-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      font-size: .8rem; font-weight: 700; line-height: 1.35;
+      color: var(--mo-blue);
+      background: rgba(107, 183, 234, .08);
+      border: 1px solid var(--mo-blue-dim);
+      border-radius: 0;
+      cursor: pointer;
+      transition: background .12s ease-out, border-color .12s ease-out, color .12s ease-out;
+    }
+    .mo-replay-btn:hover:not(:disabled),
+    .mo-replay-btn:focus-visible:not(:disabled) {
+      color: #9CD0F5;
+      background: rgba(107, 183, 234, .18);
+      border-color: var(--mo-blue);
+    }
+    .mo-replay-btn:disabled { opacity: .38; cursor: not-allowed; }
+    .mo-replay-btn > span:first-child { font-size: .95em; }
+
+    /* ---------- 全屏播报层 ---------- */
+    .mo-alert-layer { position: fixed; inset: 0; z-index: var(--z-modal); }
+    .mo-alert-layer[hidden] { display: none; }
+    .mo-alert-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(2, 4, 6, .8);
+      backdrop-filter: grayscale(.8);
+      -webkit-backdrop-filter: grayscale(.8);
+      opacity: 0;
+      transition: opacity .128s ease-out;
+    }
+    .mo-alert-backdrop::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(107, 183, 234, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(107, 183, 234, .045) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .mo-alert-layer.is-open .mo-alert-backdrop { opacity: 1; }
+    .mo-alert-stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+    /* ---------- 阶段 A：INCOMING 通知条 ---------- */
+    .mo-incoming-notice {
+      position: absolute;
+      display: none;
+      align-items: center; justify-content: center; gap: 14px;
+      max-width: 680px; height: 40px; padding: 0 20px;
+      background: rgba(4, 8, 12, .82);
+      border: 1px solid var(--mo-blue-dim);
+    }
+    .mo-incoming-notice.is-active { display: flex; animation: moIncomingPulse 1s cubic-bezier(.8, .1, .2, .9) forwards; }
+    .mo-notice-text {
+      color: var(--mo-blue);
+      font-weight: 800; text-transform: uppercase; letter-spacing: .45px;
+      font-size: 15px; white-space: nowrap;
+    }
+    .mo-notice-seal { width: 20px; height: 20px; flex: none; }
+    @keyframes moIncomingPulse {
+      0%   { opacity: 0; transform: scale(0); }
+      16%  { opacity: 1; transform: scaleY(.92); }
+      20%  { opacity: 1; transform: scale(.96); }
+      30%  { opacity: .64; }
+      40%  { opacity: 1; }
+      50%  { opacity: .64; }
+      60%  { opacity: 1; }
+      70%  { opacity: .64; }
+      80%  { opacity: 1; transform: scale(.96); }
+      90%  { opacity: 1; transform: scaleX(.92); }
+      100% { opacity: 0; transform: scaleX(1.1); }
+    }
+
+    /* ---------- 阶段 B：重要指令正文面板 ---------- */
+    .mo-order-modal {
+      display: none;
+      position: relative;
+      width: min(calc(100vw - 24px), 640px);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      background: #0B1420;
+      border: 4px solid #111111;
+      padding: 2px;                       /* 内层 2px #162132 由衬底露出 */
+      background-clip: padding-box;
+      box-shadow: 0 0 0 1px #162132, 0 18px 60px rgba(0, 0, 0, .55);
+      transform: scale(.88);
+      opacity: 0;
+    }
+    .mo-order-modal.is-active { display: block; }
+    .mo-order-modal.is-in {
+      transform: scale(1); opacity: 1;
+      transition: transform .048s ease-out, opacity .048s ease-out;
+    }
+    .mo-order-banner { display: block; width: 100%; aspect-ratio: 50 / 24.4; object-fit: cover; }
+    /* banner 加载失败/超时 → 阵营渐变 + 扫描线占位（不显示破图） */
+    .mo-banner-wrap { position: relative; }
+    .mo-banner-wrap.is-ph .mo-order-banner { display: none; }
+    .mo-banner-wrap.is-ph::before {
+      content: ""; display: block; aspect-ratio: 50 / 24.4;
+      background:
+        repeating-linear-gradient(0deg, rgba(107, 183, 234, .06) 0 2px, transparent 2px 5px),
+        linear-gradient(135deg, #16283E 0%, #0E1A28 55%, #1C2B43 100%);
+    }
+    .mo-order-head {
+      height: 48px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 16px;
+      background: linear-gradient(to right, #101821, rgba(16, 24, 33, .125));
+      border-top: 2px solid #162132;      /* 图片下方 / 标题栏上方的分隔线 */
+    }
+    .mo-order-head img { width: 28px; height: 28px; flex: none; }
+    .mo-order-head h2 { margin: 0; font-size: 21px; line-height: 1.15; color: #E8F2FA; letter-spacing: .04em; }
+    .mo-order-head span { display: block; font-size: 12px; color: var(--mo-blue); letter-spacing: .3em; }
+    .mo-order-body {
+      padding: 14px 18px 16px;
+      background: linear-gradient(180deg, #1C2B43, rgba(16, 24, 33, .5));
+      color: #BDDDEB;
+      font-size: 17px; line-height: 23px;
+      overflow-wrap: break-word;
+    }
+    .mo-order-body .mo-hl-y { color: var(--mo-yellow); font-weight: 700; font-style: normal; }
+    .mo-order-body .mo-hl-b { color: var(--mo-place); font-weight: 700; font-style: normal; }
+    .mo-order-foot {
+      padding: 10px 16px;
+      text-align: center;
+      color: var(--mo-blue);
+      font-size: 12px; letter-spacing: .45px; text-transform: uppercase;
+      border-top: 1px solid rgba(107, 183, 234, .22);
+      background: rgba(4, 8, 12, .5);
+    }
+
+    /* ---------- 无障碍：减少动态 ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .mo-incoming-notice.is-active { animation: moIncomingFade .18s ease-out forwards; }
+      .mo-order-modal.is-in { transition: opacity .128s ease-out; transform: none; }
+      .mo-order-modal { transform: none; }
+    }
+    @keyframes moIncomingFade {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* ---------- 移动端（与 .block-head 的 720px 断点一致） ---------- */
+    @media (max-width: 720px) {
+      .mo-head-actions { width: 100%; margin-left: 0; justify-content: flex-end; }
+      .mo-head-actions .block-meta { width: auto; }
+      .mo-notice-text { font-size: 13px; }
+      .mo-order-body { font-size: 15px; line-height: 19px; padding: 12px 14px 14px; }
+      .mo-order-head h2 { font-size: 19px; }
+    }

@@ -119,10 +119,16 @@
          区块1：重要指令
          ============================================================ -->
     <section class="block" id="block-mo">
-      <div class="block-head">
+      <div class="block-head mo-block-head">
         <span class="block-emoji">📡</span>
         <h2 class="block-title">重要指令</h2>
-        <span class="block-meta" id="mo-expire"></span>
+        <div class="mo-head-actions">
+          <button id="mo-replay" class="mo-replay-btn" type="button" aria-label="重播重要指令" disabled>
+            <span aria-hidden="true">↻</span>
+            <span>重播指令</span>
+          </button>
+          <span class="block-meta" id="mo-expire"></span>
+        </div>
       </div>
       <div id="mo-content" class="card">
         <div class="loading">正在解码超级地球最高指挥部下达的作战命令…</div>
@@ -320,6 +326,37 @@
   <button class="news-reopen" id="news-reopen" title="打开最新资讯">📰 资讯</button>
 
   <!-- ============================================================
+       重要指令播报层（js/mo-announce.js 控制状态机与时间线）
+       idle → incoming(1s 通知条) → order(正文面板) → closing → idle
+       ============================================================ -->
+  <div id="mo-alert-layer" class="mo-alert-layer" hidden>
+    <div class="mo-alert-backdrop"></div>
+    <div class="mo-alert-stage">
+      <div class="mo-incoming-notice" role="status">
+        <svg class="mo-notice-seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="rgba(10,16,24,.35)" stroke="#9FB2C4" stroke-width="2.4"/><circle cx="32" cy="32" r="24.5" fill="none" stroke="#5E748A"/><circle cx="32" cy="32" r="15.5" fill="#101C29" stroke="#C9D4DE" stroke-width="1.5"/><ellipse cx="32" cy="32" rx="6.8" ry="15.5" fill="none" stroke="#C9D4DE"/><path d="M17 27.2h30M17 36.8h30" stroke="#C9D4DE"/><path d="M32 1.6l1.7 3.5 3.9.55-2.8 2.75.65 3.9L32 10.45l-3.45 1.8.65-3.9-2.8-2.75 3.9-.55z" fill="#C9D4DE"/></svg>
+        <span class="mo-notice-text">INCOMING MESSAGE FROM SUPER EARTH</span>
+        <svg class="mo-notice-seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="rgba(10,16,24,.35)" stroke="#9FB2C4" stroke-width="2.4"/><circle cx="32" cy="32" r="24.5" fill="none" stroke="#5E748A"/><circle cx="32" cy="32" r="15.5" fill="#101C29" stroke="#C9D4DE" stroke-width="1.5"/><ellipse cx="32" cy="32" rx="6.8" ry="15.5" fill="none" stroke="#C9D4DE"/><path d="M17 27.2h30M17 36.8h30" stroke="#C9D4DE"/><path d="M32 1.6l1.7 3.5 3.9.55-2.8 2.75.65 3.9L32 10.45l-3.45 1.8.65-3.9-2.8-2.75 3.9-.55z" fill="#C9D4DE"/></svg>
+      </div>
+
+      <article class="mo-order-modal" id="mo-order-modal" role="dialog" aria-modal="true"
+        aria-labelledby="mo-order-title">
+        <div class="mo-banner-wrap">
+          <img class="mo-order-banner" alt="">
+        </div>
+        <header class="mo-order-head">
+          <img src="./assets/ui-icons/federation_seal.svg" alt="" />
+          <div>
+            <h2 id="mo-order-title">MAJOR ORDER</h2>
+            <span>重要指令</span>
+          </div>
+        </header>
+        <div class="mo-order-body"></div>
+        <footer class="mo-order-foot">▶ CONTINUE · 点击任意位置关闭</footer>
+      </article>
+    </div>
+  </div>
+
+  <!-- ============================================================
        脚本
        ============================================================ -->
   <script src="./js/forecast.js?v=20261013b"></script>
@@ -331,6 +368,7 @@
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
+  <script src="./js/mo-announce.js?v=20261028a"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -3560,6 +3598,8 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       const data = await fetchAll();
       if (window.HD2Boot) HD2Boot.done();   // 首次数据就绪 → 遮罩淡出
       currentData = data;
+      // 重要指令播报：版本判定（assignments.id）+ 已看集合 + 自动/重播入口（js/mo-announce.js）
+      if (window.HD2MoAnnounce) window.HD2MoAnnounce.notifyData(data);
       // 抓取时间基准（fetchedAt / warTime 基准）必须先设：所有倒计时都从它算绝对截止时刻
       setTimeBase(data);
       currentEffectMap = data.effectMap || {};
