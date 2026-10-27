@@ -2109,8 +2109,8 @@
     .mo-incoming-notice.is-active { display: flex; animation: moIncomingPulse 1s cubic-bezier(.8, .1, .2, .9) forwards; }
     .mo-notice-text {
       color: var(--mo-blue);
-      font-weight: 800; text-transform: uppercase; letter-spacing: .45px;
-      font-size: 15px; white-space: nowrap;
+      font-weight: 800; letter-spacing: .14em;
+      font-size: 16px; white-space: nowrap;
     }
     .mo-notice-seal { width: 20px; height: 20px; flex: none; }
     @keyframes moIncomingPulse {
@@ -2147,6 +2147,13 @@
       transform: scale(1); opacity: 1;
       transition: transform .048s ease-out, opacity .048s ease-out;
     }
+    .mo-order-tag {
+      padding: 5px 14px;
+      font-size: 12px; font-weight: 800; letter-spacing: .2em;
+      color: #F2F6FA;
+      background: linear-gradient(90deg, #7A1F0E, #A83226);
+      border-bottom: 2px solid #162132;
+    }
     .mo-order-banner { display: block; width: 100%; aspect-ratio: 50 / 24.4; object-fit: cover; }
     /* banner 加载失败/超时 → 阵营渐变 + 扫描线占位（不显示破图） */
     .mo-banner-wrap { position: relative; }
@@ -2165,12 +2172,11 @@
       border-top: 2px solid #162132;      /* 图片下方 / 标题栏上方的分隔线 */
     }
     .mo-order-head img { width: 28px; height: 28px; flex: none; }
-    .mo-order-head h2 { margin: 0; font-size: 21px; line-height: 1.15; color: #E8F2FA; letter-spacing: .04em; }
-    .mo-order-head span { display: block; font-size: 12px; color: var(--mo-blue); letter-spacing: .3em; }
+    .mo-order-head h2 { margin: 0; font-size: 24px; line-height: 1.15; font-weight: 800; color: #F2F6FA; letter-spacing: .06em; }
     .mo-order-body {
       padding: 14px 18px 16px;
-      background: linear-gradient(180deg, #1C2B43, rgba(16, 24, 33, .5));
-      color: #BDDDEB;
+      background: linear-gradient(180deg, #12161C, rgba(8, 9, 10, .65));
+      color: #E2E8EE;
       font-size: 17px; line-height: 23px;
       overflow-wrap: break-word;
     }
