@@ -175,7 +175,7 @@
 
     return {
       revision: revision || "",
-      title: "MAJOR ORDER",
+      title: "重要指令",
       titleCn: "重要指令",
       bodyHtml: convertBody(rawText),
       bannerSrc: bannerSrc,
