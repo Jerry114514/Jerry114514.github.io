@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3972,
+   "published_at": "2026-10-28T19:48:27Z",
+   "source": "dispatch",
+   "original": "ARSENAL AUGMENTATION ENDED\n\nFree availability of the Gas Mines Stratagem for forces on the Terminid front has now ended.",
+   "translated": "军械扩充已结束\n\nTerminid前线的毒气地雷战略配备免费使用权限已结束。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85276655,
+   "official_message": "<i=3>军械扩充已结束</i>\n\n<i=1>Terminid前线</i>的<i=1>毒气地雷</i>战略配备免费使用权限已结束。",
+   "translated_at": "2026-10-28T23:13:53Z"
+  },
+  {
    "id": 3971,
    "published_at": "2026-10-28T18:56:30Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "published_war_seconds": 84899998,
    "official_message": "<i=3>军械扩充</i>\n\n为了增强战斗力，在接下来的120小时内，<i=1>重机枪部署支架</i>战略配备会免费提供给部署至<i=1>Terminid战争前线</i>的所有绝地潜兵。",
    "translated_at": "2026-10-24T13:52:15Z"
-  },
-  {
-   "id": 3962,
-   "published_at": "2026-10-24T10:54:23Z",
-   "source": "dispatch",
-   "original": "NEW MAJOR ORDER\n\nThe Ministry of Truth is producing an inspirational education film called \"Democratic Sniper.\" Proceeds from the film will go towards construction of the Malevelon Creek Memorial & Interrogation Center for Human Rights.\n\nMuch of the film will consist of real battlefield footage. The Helldivers are ordered to kill 300,000,000 Terminids, 65,000,000 Illuminates, and 50,000,000 Automatons in order to ensure the availability of sufficiently high-quality footage.",
-   "translated": "新重要指令\n\n真理部正在制作一部名为《民主狙击手》的励志教育片。该电影的收益将用于建造麦拉芬蒙河纪念碑与人权审讯中心。\n\n这部电影的大部分内容将来自战场实拍。绝地潜兵奉命击杀300,000,000个Terminids、65,000,000个Illuminates以及50,000,000个Automatons，确保获得足够的高质量录像。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 84899049,
-   "official_message": "<i=3>新重要指令</i>\n\n真理部正在制作一部名为《民主狙击手》的励志教育片。该电影的收益将用于建造麦拉芬蒙河纪念碑与人权审讯中心。\n\n这部电影的大部分内容将来自战场实拍。绝地潜兵奉命击杀<i=1>300,000,000个Terminids、65,000,000个Illuminates以及50,000,000个Automatons</i>，确保获得足够的高质量录像。",
-   "translated_at": "2026-10-24T13:52:15Z"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-28T19:12:30Z",
+  "computed_at": "2026-10-28T23:13:54Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -203,18 +203,6 @@
    "mt": false
   },
   {
-   "event_id": 1501086,
-   "id32": 1706228947,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 85276425,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
    "event_id": 1501088,
    "id32": 3589949480,
    "title": "",
@@ -254,17 +242,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-28T19:12:28Z",
+  "source_version": "2026-10-28T23:13:52Z",
   "war_id": 801,
-  "war_time_seconds": 85274490,
-  "last_success_at": "2026-10-28T19:12:28Z",
+  "war_time_seconds": 85288980,
+  "last_success_at": "2026-10-28T23:13:52Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-28T19:12:28Z",
-  "retrieved_at": "2026-10-28T19:12:28Z",
+  "source_version": "2026-10-28T23:13:52Z",
+  "retrieved_at": "2026-10-28T23:13:52Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -275,7 +263,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 150000000,
-    "progress": 97247765,
+    "progress": 108394632,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -292,7 +280,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 32500000,
-    "progress": 26401956,
+    "progress": 27843180,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
