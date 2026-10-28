@@ -29,7 +29,7 @@ async function runScheduled(cron, env = { GH_PAT: 'test' }) {
 
 {
   const calls = captureFetch();
-  await runScheduled('*/5 * * * *');
+  await runScheduled('5 * * * *');
   assert.equal(calls.length, 1);
   assert.match(calls[0].url, /Jerry114514\/Jerry114514\.github\.io\/.+fetch-data\.yml/);
   assert.deepEqual(calls[0].body, { ref: 'main' });

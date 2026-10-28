@@ -83,7 +83,7 @@
   </main>
 
   <footer class="wiki-footer">
-    <p>绝地潜兵2 中文维基 · 星球索引 · 数据来自官方战况 API（每 5 分钟自动更新）</p>
+    <p>绝地潜兵2 中文维基 · 星球索引 · 数据来自官方战况 API（每小时自动更新）</p>
     <p style="font-size:.74rem;color:var(--text-mute)">
       解放度口径：己方（超级地球）持有的星球一律显示 100%（官方 API 对己方星球报满血）；
       其余按 <code>1 − health / maxHealth</code>。「区域」为该星球下属城市 / 超大型工厂数量（覆盖 84 颗星球）。
@@ -176,7 +176,7 @@
       render();
     } catch (e) {
       document.getElementById("list").innerHTML =
-        '<div class="empty">⚠️ 战况数据加载失败：' + esc(e.message) + '<br>数据由 CI 每 5 分钟生成，稍后重试即可。</div>';
+        '<div class="empty">⚠️ 战况数据加载失败：' + esc(e.message) + '<br>数据由 CI 每小时生成，稍后重试即可。</div>';
     }
   }
 

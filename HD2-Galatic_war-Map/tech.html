@@ -202,7 +202,7 @@
 <pre>
 官方游戏 API (api.live.prod.thehelldiversgame.com)
   │
-  ├─ GitHub Actions 每 5 分钟（fetch-data.yml）
+  ├─ GitHub Actions 每小时（fetch-data.yml）
   │    → scripts/fetch_site_data.py 抓取 + 合并翻译 + 落盘
   │    → HD2-Galatic_war-Map/data.json（主数据，约 300KB）
   │    → HD2-Galatic_war-Map/data/recent/（实测帧，15 分钟粒度）
@@ -225,7 +225,7 @@
         <div class="tw"><table>
           <thead><tr><th>优先级</th><th>来源</th><th>说明</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td><code>data.json</code></td><td>主数据，CI 每 5 分钟更新</td></tr>
+            <tr><td>1</td><td><code>data.json</code></td><td>主数据，CI 每小时更新</td></tr>
             <tr><td>2</td><td><code>data/recent/</code> 实测帧</td><td>15 分钟粒度差分（解放速率 / MO 速率）</td></tr>
             <tr><td>3</td><td><code>data/translated/</code></td><td>翻译仓库产物（TransNews / official_texts / campaign_zh）</td></tr>
             <tr><td>4</td><td><code>tables/</code> 静态表</td><td>星图 / 区域 / 补给线 / 词条 / 效果对照表</td></tr>
@@ -240,7 +240,7 @@
     <section class="panel" id="sec-data">
       <h2><span class="no">02</span>战况主数据（data.json）</h2>
       <div class="panel-body">
-        <p><b>生成</b>：<code>scripts/fetch_site_data.py</code>，GitHub Actions <code>fetch-data.yml</code> 每 5 分钟。</p>
+        <p><b>生成</b>：<code>scripts/fetch_site_data.py</code>，GitHub Actions <code>fetch-data.yml</code> 每小时。</p>
         <p><b>来源</b>：官方 <code>api.live.prod.thehelldiversgame.com</code>（需 <code>X-Super-Client</code> 头），companion 兜底。</p>
         <h3>关键字段</h3>
         <div class="tw"><table>
@@ -527,7 +527,7 @@ id = w + ":" + r
       <div class="panel-body">
         <h3>全服趋势（主面板 index.html）</h3>
         <ul>
-          <li>数据：<code>data/history/player_distribution.json</code>（CI 每 5 分钟追加）</li>
+          <li>数据：<code>data/history/player_distribution.json</code>（主数据 CI 每小时追加）</li>
           <li>Chart.js 折线：四阵营各一条 + 全服合计虚线</li>
           <li><b>这不是单星球历史</b>——官方 API 不提供单星球历史曲线</li>
         </ul>
@@ -641,7 +641,7 @@ id = w + ":" + r
         <div class="tw"><table>
           <thead><tr><th>Workflow</th><th>频率</th><th>功能</th></tr></thead>
           <tbody>
-            <tr><td><code>fetch-data.yml</code></td><td>每 5 分钟</td><td>抓取官方 API → data.json + 实测帧</td></tr>
+            <tr><td><code>fetch-data.yml</code></td><td>每小时</td><td>抓取官方 API → data.json + 实测帧 + API 内容变更侦测</td></tr>
             <tr><td><code>sync-ballistics-catalog.yml</code></td><td>每天</td><td>武器目录同步（RawData 上游）</td></tr>
             <tr><td><code>upstream-watch.yml</code></td><td>每天</td><td>wiki.gg 页面内容变更侦测</td></tr>
             <tr><td><code>api-schema-watch.yml</code></td><td>每天 2 次</td><td>API 信息源结构变更侦测 + Issue 报告</td></tr>

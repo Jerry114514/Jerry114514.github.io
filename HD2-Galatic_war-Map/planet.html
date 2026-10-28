@@ -527,7 +527,7 @@
     try {
       if (window.HD2Boot) HD2Boot.setMsg("📡 正在接收战况数据…");
       DATA = await jget("./data.json");
-    } catch (e) { fail("战况数据载入失败：" + esc(e.message) + "（data.json 由 CI 每 5 分钟生成，稍后重试）"); return; }
+    } catch (e) { fail("战况数据载入失败：" + esc(e.message) + "（data.json 由 CI 每小时生成，稍后重试）"); return; }
 
     // 实测帧（社区 CDN 15 分钟一帧，由采集脚本落到 ./data/recent/）：拿不到不影响页面，
     // 只是速率退回推演。失败要静默 —— 这是一份"锦上添花"的数据。

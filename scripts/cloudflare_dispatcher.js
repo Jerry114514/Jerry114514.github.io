@@ -2,12 +2,12 @@
  * HD2 数据更新 —— 外部定时触发器（Cloudflare Worker）
  * ============================================================================
  * 作用：
- *   · 每 5 分钟调用 GitHub API 的 workflow_dispatch，触发主站 fetch-data.yml；
+ *   · 每小时调用 GitHub API 的 workflow_dispatch，触发主站 fetch-data.yml；
  *   · 每小时的第 2/17/32/47 分钟触发 hd2-planet-history/record.yml。
  *       替代原来「本机 cron 每 15 分钟 dispatch」的方案 —— 那个必须一直开着电脑，
  *       这正是需要解决的痛点。部署在 Cloudflare 后就是 7×24 无人值守。
  *
- * 成本：Cloudflare Workers 免费计划 = 10 万请求/天；每 5 分钟一次 = 288 次/天，
+ * 成本：Cloudflare Workers 免费计划 = 10 万请求/天；每小时一次 = 24 次/天，
  *       连零头都用不到。Cron Triggers 在免费计划即可使用。
  *
  * ---------------------------------------------------------------------------
@@ -33,7 +33,7 @@
  *
  * 4) 配两个错峰 Cron 触发器
  *    Worker → Settings → Triggers → Cron Triggers → Add Cron Trigger
- *      第一条：*​/5 * * * *              （主站主数据）
+ *      第一条：5 * * * *                  （主站主数据，每小时第 5 分钟）
  *      第二条：2,17,32,47 * * * *        （星球历史，避开主站抓取峰值）
  *    → 分别 Add
  *
@@ -53,7 +53,7 @@
  * ---------------------------------------------------------------------------
  * 不想用 Cloudflare？等价的零代码方案
  * ---------------------------------------------------------------------------
- * 用 cron-job.org 之类的免费外部定时服务，每 5 分钟发一次：
+ * 用 cron-job.org 之类的免费外部定时服务，每小时发一次：
  *   Method : POST
  *   URL    : https://api.github.com/repos/Jerry114514/Jerry114514.github.io/actions/workflows/fetch-data.yml/dispatches
  *   Header : Authorization: Bearer github_pat_xxx
@@ -70,7 +70,7 @@ const REF = 'main';
 const HISTORY_OWNER = 'Jerry114514';
 const HISTORY_REPO = 'hd2-planet-history';
 const HISTORY_WORKFLOW = 'record.yml';
-const MAIN_CRON = '*/5 * * * *';
+const MAIN_CRON = '5 * * * *';
 const HISTORY_CRON = '2,17,32,47 * * * *';
 
 async function dispatch(env, owner = OWNER, repo = REPO, workflow = WORKFLOW, ref = REF) {
@@ -97,7 +97,7 @@ async function dispatchAll(env) {
 }
 
 export default {
-  // 每条 Cron 只触发对应目标，避免把星球历史也放大到每 5 分钟。
+  // 每条 Cron 只触发对应目标，主站数据每小时一次，星球历史保持高频。
   async scheduled(event, env, ctx) {
     const jobs = [];
     if (event.cron === MAIN_CRON) {

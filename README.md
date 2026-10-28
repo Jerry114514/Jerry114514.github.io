@@ -71,12 +71,12 @@ id 规范、必填字段、`_zh` 显式 `id` 配对、图标死链、引用完�
 
 | Workflow | 触发 | 职责 |
 |---|---|---|
-| `fetch-data.yml` | 每 5 分钟 | 抓取实时战况 → 自动 commit `data.json` 等，并清理旧 Pages artifact |
+| `fetch-data.yml` | 每小时 | 抓取实时战况 → API 内容变更侦测 → 自动 commit `data.json` 等，并清理旧 Pages artifact |
 | `validate-data.yml` | PR（改动数据文件时） | 跑 19 项数据校验，失败让 PR 变红 |
 | `cleanup-artifacts.yml` | 原生 schedule | artifact 清理的备用定时（主力已挂在 fetch-data 里） |
 | 私密仓的新闻翻译流水线 | 每 15 分钟 | 翻译上游新闻，把译好的 `TransNews.json` 推回本仓 |
 
-> **数据更新频率：每 5 分钟**（GitHub Actions 自动抓取）。页面上的「更新于 HH:MM:SS」即最近一次抓取时间。
+> **数据更新频率：每小时**（GitHub Actions 自动抓取）。页面上的「更新于 HH:MM:SS」即最近一次抓取时间。
 
 ---
 
@@ -88,7 +88,7 @@ id 规范、必填字段、`_zh` 显式 `id` 配对、图标死链、引用完�
 - **DSS 民主空间站**当前停靠位置、跃迁倒计时、战术行动状态
 - **阵营进度**（超级地球 / 机器人 / 终结族 / 光能者）实时数据
 - **玩家分布**、**战况历史**、**环境图像**（biome 兜底表）
-- 数据由 `.github/workflows/fetch-data.yml` 每 5 分钟自动抓取并 commit
+- 数据由 `.github/workflows/fetch-data.yml` 每小时自动抓取并 commit
 
 ### 银河战争态势图（Canvas / MapLibre 双版）
 
@@ -144,16 +144,17 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 
 | Workflow | 触发 | 职责 |
 |---|---|---|
-| `fetch-data.yml` | 每 5 分钟 | 抓取 HD2 实时战况 → 自动 commit `data.json` + 末尾清理旧 Pages artifact |
+| `fetch-data.yml` | 每小时 | 抓取 HD2 实时战况 → 侦测 API 内容变化 → 自动 commit `data.json` + 末尾清理旧 Pages artifact |
 | `validate-data.yml` | PR / push（改动数据文件时） | 数据校验闸门（19 项），失败变红、摘要写 Job Summary |
 | `sync-tables.yml` | 每日 | 从上游同步对照表（星图、机制页） |
-| `cleanup-artifacts.yml` | 原生 schedule | artifact 清理的"备用"定时（常不被触发；主力已在 fetch-data 里挂） |
+| `cleanup-artifacts.yml` | 每小时 | artifact 清理的备用定时（主力已挂在 fetch-data 里） |
 
-`scripts/` 下四个辅助脚本：
+`scripts/` 下主要辅助脚本：
 
 | 脚本 | 用途 |
 |---|---|
 | `fetch_site_data.py` | 主站数据抓取（被 fetch-data.yml 调用） |
+| `detect_api_changes.py` | 官方银河效果定义与星球效果集合的增量侦测（被 fetch-data.yml 调用） |
 | `validate_wiki_data.py` | 数据校验器（被 validate-data.yml 调用，PR 守门人） |
 | `merge_translations.py` | 翻译条目合并（`name_zh` 回退机制） |
 | `cloudflare_dispatcher.js` | Cloudflare Worker 边缘调度（若启用） |
@@ -172,7 +173,7 @@ http://127.0.0.1:8791/HD2-Galatic_war-Map/galaxy-map-v2.html  # 星图
 
 - **HD2 内容均为社区整理**，数据来自 Arrowhead Game Studios 公开接口与社区翻译贡献，**非官方资料**
 - 游戏版本、机制、数值随时可能因官方更新而变化；本仓尽力跟随，但**不保证实时准确**
-- 战况数据有 5 分钟缓存延迟（CI 抓取周期）
+- 战况数据按小时抓取；页面还会保留最多一次抓取周期的缓存延迟
 - **部分翻译 / 抓取可能含少量误差**；如发现错误欢迎在文档站评论区或 issue 反馈
 
 ---

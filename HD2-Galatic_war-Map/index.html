@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>绝地潜兵2 中文实时战况数据面板 - 真理部</title>
-  <meta name="description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。" />
+  <meta name="description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每小时自动更新。" />
   <!-- SEO / 社交分享（2026-09-25 统一补齐：robots + Open Graph + Twitter Card + JSON-LD） -->
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://jerry114514.github.io/HD2-Galatic_war-Map/">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="绝地潜兵2 · 真理部">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:title" content="绝地潜兵2 中文实时战况数据面板 - 真理部">
-  <meta property="og:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。">
+  <meta property="og:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每小时自动更新。">
   <meta property="og:url" content="https://jerry114514.github.io/HD2-Galatic_war-Map/">
   <meta property="og:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
   <meta property="og:image:width" content="1200">
@@ -20,9 +20,9 @@
   <meta property="og:image:alt" content="绝地潜兵2 中文资料站 · 银河星图">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="绝地潜兵2 中文实时战况数据面板 - 真理部">
-  <meta name="twitter:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。">
+  <meta name="twitter:description" content="绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每小时自动更新。">
   <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 5 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每小时自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
   <link rel="stylesheet" href="./css/home.css?v=20261021b">
@@ -379,13 +379,13 @@
   const CONFIG = {
     DATA_URL: "./data.json",          // Actions 定时生成的本地数据
     // CDN 缓存绕过：GitHub Pages CDN 会缓存 data.json 约 10 分钟，加 5 分钟粒度时间戳参数
-    // 使 CDN 每 5 分钟自然失效（fetch-data workflow 也是 5 分钟更新，节奏一致）
+    // 缓存桶仍以 5 分钟轮换，避免主数据每小时发布后客户端长时间命中旧 CDN 文件。
     dataUrlBust: () => {
       const m = Math.floor(Date.now() / 300_000);  // 每 5 分钟一个值
       return `./data.json?t=${m}`;
     },
-    REFRESH_MS: 60_000,             // 60s 自动刷新（读本地 data.json）
-    STALE_AFTER_MS: 360_000,        // 6 分钟无数据视为失联（数据每 5 分钟更新）
+    REFRESH_MS: 300_000,            // 5 分钟刷新；主数据由 CI 每小时生成
+    STALE_AFTER_MS: 7_200_000,      // 2 小时无数据视为失联，容错一次延迟或失败运行
     NEWS_COUNT: 20,                 // 资讯列表显示条数
     SECTORS_PER_GROUP: "auto",      // 按 sector 自动分组
     STAR_MAP_URL: "./tables/starmap.json",

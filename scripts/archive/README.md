@@ -4,4 +4,4 @@
 
 ⚠ 它们的相对路径假设**在仓库根目录执行**，归档后仅供查阅，直接在此运行找不到目标路径。
 
-仍在使用的脚本：`../fetch_site_data.py`（主站战况数据，由 .github/workflows/fetch-data.yml 每 15 分钟调用，**不要移动**）。
+仍在使用的脚本：`../fetch_site_data.py`（主站战况数据，由 .github/workflows/fetch-data.yml 每小时调用，**不要移动**）。

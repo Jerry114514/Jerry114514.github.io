@@ -2,7 +2,7 @@
 # 带重试的 git push —— 给「会自动提交」的工作流统一使用。
 #
 # 为什么需要（2026-09-24 实测）：
-#   每 5 分钟一次的 fetch-data 工作流，在 check out 之后、push 之前，main 上完全可能
+#   每小时一次的 fetch-data 工作流，在 check out 之后、push 之前，main 上完全可能
 #   已经有别的提交落下来（人工 API 推送、fetch-patchnotes、sync-tables、
 #   sync-release-status、build-search-index 都会提交）→ 直接 `git push` 被拒
 #   （non-fast-forward）→ job 变红，但数据本身没有问题。
