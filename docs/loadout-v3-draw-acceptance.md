@@ -14,4 +14,4 @@
 
 内部依然使用现有伤害、库存和敌人样本基准；删除场景选项没有伪造全阵营实测覆盖。当前分数及物理检查政策不因界面黑箱化而改变。
 
-复核记录见[实际页面测试结果](ai/assessment-draw-mech-limit-20261028/ui-result.json)。抽取与替换的自动化测试为`scripts/tests/loadout-v3-assessment-v2/draw*.test.mjs`；真实页面复核脚本为`scripts/check-assessment-draw-ui.mjs`，只读当前模型，不写人工评分文件。旧版截图保留为历史记录，不代表当前页面。
+抽取与替换的自动化测试为`scripts/tests/loadout-v3-assessment-v2/draw*.test.mjs`；真实页面复核脚本为`scripts/check-assessment-draw-ui.mjs`，只读当前模型，不写人工评分文件。运行方式见[公开检查说明](loadout-v3-ci.md)，本地输出保存在`scripts/.loadout-artifacts/pr-browser/`。
