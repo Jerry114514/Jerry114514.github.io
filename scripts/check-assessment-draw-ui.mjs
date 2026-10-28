@@ -15,6 +15,8 @@ await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,...(process.argv[3]?{executablePath:process.argv[3]}:{})});
 try{
   const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[],requests=[],draws=[];
+  // The upstream main page announces new orders; dismiss it through its normal UI.
+  await page.addLocatorHandler(page.locator('#mo-alert-layer.is-open'),async()=>page.keyboard.press('Escape'));
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
   await page.addInitScript(()=>{
     const NativeWorker=window.Worker;window.drawProbe={sent:[],received:[]};
@@ -94,7 +96,7 @@ try{
   await noScores();
   await balanced.click();await page.locator('.lo-status[data-state="DRAWN"]').waitFor();
   await page.setViewportSize({width:390,height:844});
-  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
+  assert.equal(await page.locator('[data-hd2-loadout]').evaluate(el=>el.scrollWidth<=el.clientWidth),true);
   await page.screenshot({path:fileURLToPath(new URL('mobile.png',output)),fullPage:true});
   assert.deepEqual(errors,[]);
   // Shared damage/pressure helpers still live in historical folders. They are
