@@ -238,19 +238,52 @@ def _load_snapshot() -> dict:
 
 
 def _save_snapshot(data: dict) -> None:
-    """保存本次成功抓取快照（仅保留 assignments/dss 关键字段）"""
+    """保存本次成功抓取快照（assignments/dss/campaigns + 星球效果）。"""
     try:
+        active_effects = {}
+        for planet in data.get("planets") or []:
+            index = planet.get("index")
+            if index is None or not isinstance(planet.get("activeEffects"), list):
+                continue
+            active_effects[str(index)] = list(planet["activeEffects"])
         snap = {
             "savedAt": now_cn(),
             "savedAtUnix": time.time(),
             "assignments": data.get("assignments"),
             "dss": data.get("dss"),
             "campaigns": data.get("campaigns"),
+            "activeEffects": active_effects,
         }
         with open(SNAPSHOT_FILE, "w", encoding="utf-8") as f:
             json.dump(snap, f, ensure_ascii=False)
     except Exception:
         pass
+
+
+def apply_active_effects_fallback(planets: list, snapshot: dict) -> int:
+    """Restore all active effects only when a source returned a globally empty set.
+
+    Partial non-empty snapshots are trusted so legitimate per-planet removals
+    are not masked. The fallback exists for the upstream/parser failure mode
+    where every planet appears to have lost every effect at once.
+    """
+    if sum(len(p.get("activeEffects") or []) for p in planets) != 0:
+        return 0
+
+    saved = snapshot.get("activeEffects") if isinstance(snapshot, dict) else {}
+    if not isinstance(saved, dict) or not saved:
+        return 0
+
+    restored = 0
+    for planet in planets:
+        index = planet.get("index")
+        if index is None:
+            continue
+        ids = saved.get(str(index), saved.get(index))
+        if isinstance(ids, list) and ids:
+            planet["activeEffects"] = list(ids)
+            restored += len(ids)
+    return restored
 
 
 # ---------------- 官方源 ----------------
@@ -298,10 +331,12 @@ def fetch_official():
     ps_by_idx = {p.get("index"): p for p in (st.get("planetStatus") or [])}
 
     planets = []
-    # 行动变量索引：planetIndex -> [galacticEffectId]
+    # 行动变量索引：planet index -> [galacticEffectId]
     effects_by_planet = {}
     for ef in (st.get("planetActiveEffects") or []):
-        pi = ef.get("planetIndex")
+        # Status uses `index`; keep `planetIndex` as compatibility for older
+        # responses. Using only planetIndex silently produced an empty map.
+        pi = ef.get("index", ef.get("planetIndex"))
         gid = ef.get("galacticEffectId")
         if pi is not None and gid is not None:
             lst = effects_by_planet.setdefault(pi, [])
@@ -1427,16 +1462,14 @@ def main():
             ass["serverTime"] = hd2dev["assignments"]["serverTime"]
             print(f"  [OK] deadline: {ass['deadline']}")
 
-    # activeEffects 快照兜底：companion 限流时保留上次全量效果（否则只剩官方 MO 星球）
-    if not companion or not companion.get("planets"):
-        snap = _load_snapshot()
-        snap_eff = {}
-        if snap and snap.get("planets"):
-            snap_eff = {p.get("index"): p.get("activeEffects") or [] for p in snap["planets"]}
-        for p in base.get("planets") or []:
-            if not p.get("activeEffects") and p.get("index") in snap_eff:
-                p["activeEffects"] = snap_eff[p["index"]]
-        print("  [FALLBACK] activeEffects 使用上次成功快照")
+    # activeEffects 快照兜底：只有“全局突然归零”才恢复，避免把上游/解析
+    # 故障传播成数十个星球的批量移除；局部变化仍以本次返回为准。
+    restored_effects = apply_active_effects_fallback(
+        base.get("planets") or [],
+        _load_snapshot(),
+    )
+    if restored_effects:
+        print(f"  [FALLBACK] activeEffects 全局为空，从上次成功快照恢复 {restored_effects} 条")
 
     _save_snapshot(base)
 

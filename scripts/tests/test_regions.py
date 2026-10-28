@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('site_data', Path(__file__).resolve().parents[1] / 'fetch_site_data.py')
 data = importlib.util.module_from_spec(spec)
@@ -50,6 +51,57 @@ class RegionDataTests(unittest.TestCase):
             self.assertEqual(a['deadline'], '2026-10-13T00:00:00Z')
         finally:
             data.fetch_json = original
+
+    def test_official_planet_effects_use_index_field(self):
+        def fetch(url, headers, timeout):
+            if url.endswith('/Status'):
+                return {
+                    'time': 1000,
+                    'planetStatus': [{'index': 7, 'owner': 3}],
+                    'planetActiveEffects': [
+                        {'index': 7, 'galacticEffectId': 1402},
+                        {'index': 7, 'galacticEffectId': 1403},
+                    ],
+                    'campaigns': [],
+                    'planetEvents': [],
+                }
+            if url.endswith('/WarInfo'):
+                return {'planetInfos': [{'index': 7, 'name': 'ZEA RUGOSIA'}]}
+            return []
+
+        with patch.object(data, 'fetch_json', side_effect=fetch):
+            planets = data.fetch_official()['planets']
+        self.assertEqual(planets[0]['activeEffects'], [1402, 1403])
+
+    def test_active_effect_snapshot_is_saved_and_restores_global_zero(self):
+        with tempfile.TemporaryDirectory() as folder:
+            snapshot_path = str(Path(folder) / 'snapshot.json')
+            source = {'planets': [
+                {'index': 7, 'activeEffects': [1402, 1403]},
+                {'index': 8, 'activeEffects': []},
+            ]}
+            with patch.object(data, 'SNAPSHOT_FILE', snapshot_path):
+                data._save_snapshot(source)
+                saved = json.loads(Path(snapshot_path).read_text())
+            self.assertEqual(saved['activeEffects'], {'7': [1402, 1403], '8': []})
+
+            broken = [
+                {'index': 7, 'activeEffects': []},
+                {'index': 8, 'activeEffects': []},
+            ]
+            restored = data.apply_active_effects_fallback(broken, saved)
+            self.assertEqual(restored, 2)
+            self.assertEqual(broken[0]['activeEffects'], [1402, 1403])
+
+    def test_active_effect_fallback_does_not_mask_partial_changes(self):
+        planets = [
+            {'index': 7, 'activeEffects': [1402]},
+            {'index': 8, 'activeEffects': []},
+        ]
+        snapshot = {'activeEffects': {'7': [1402, 1403], '8': [1234]}}
+        self.assertEqual(data.apply_active_effects_fallback(planets, snapshot), 0)
+        self.assertEqual(planets[0]['activeEffects'], [1402])
+        self.assertEqual(planets[1]['activeEffects'], [])
 
 if __name__ == '__main__':
     unittest.main()
