@@ -1,0 +1,18 @@
+# Keep source snapshot bytes stable across platforms; CRLF is not trailing whitespace.
+shared/hd2-loadout/** -text whitespace=cr-at-eol
+scripts/*loadout*.mjs -text whitespace=cr-at-eol
+scripts/*assessment*.mjs -text whitespace=cr-at-eol
+scripts/manual-score*.mjs -text whitespace=cr-at-eol
+scripts/tests/loadout-v3-assessment-v2/** -text whitespace=cr-at-eol
+docs/ai/assessment-v2-*/** -text whitespace=cr-at-eol
+docs/loadout-v3-* -text whitespace=cr-at-eol
+HD2-Galatic_war-Map/index.html whitespace=cr-at-eol
+
+# Generated views remain versioned, but collapse by default in code review.
+shared/hd2-loadout/assessment-v2/equipment.json linguist-generated=true
+shared/hd2-loadout/assessment-v2/coverage.json linguist-generated=true
+shared/hd2-loadout/data/catalog.json linguist-generated=true
+docs/loadout-v3-diagnostic-20261027.* linguist-generated=true
+docs/loadout-v3-six-dimensions-20261028.html linguist-generated=true
+shared/hd2-loadout/assessment-v2/sources/** linguist-vendored=true
+docs/ai/assessment-v2-*/** linguist-vendored=true

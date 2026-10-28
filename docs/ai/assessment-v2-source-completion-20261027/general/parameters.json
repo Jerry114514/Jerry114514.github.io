@@ -1,0 +1,425 @@
+{
+  "schema": 1,
+  "parameters": [
+    {
+      "equipment_id": "p_44_mist",
+      "field": "reload",
+      "value": {
+        "empty": 2.3,
+        "tactical": 1.35
+      },
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/P-44_Mist",
+      "source_locator": "Reload Time 2.3s; Tactical Reload Time 1.35s",
+      "condition": "",
+      "note": "",
+      "revision": null
+    },
+    {
+      "equipment_id": "p_69_veto",
+      "field": "reload",
+      "value": {
+        "full": 3.3,
+        "first_empty": 1.45,
+        "first_partial": 2.1,
+        "more_than_one": 1.85
+      },
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/P-69_Veto",
+      "source_locator": "Rounds Reload Full Time 3.3s",
+      "condition": "12发弹仓，6发弹夹分段",
+      "note": "页面标签为每次装填时间，勿简化为每颗",
+      "revision": 140484
+    },
+    {
+      "equipment_id": "sg_22_bushwhacker",
+      "field": "reload",
+      "value": {
+        "full": 1.75,
+        "first": 1.1,
+        "each_further": 0.3
+      },
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-22_Bushwhacker",
+      "source_locator": "Rounds Reload Full Time 1.75s",
+      "condition": "逐发装填",
+      "note": "三管齐射需全装",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_gl_52_conciliator",
+      "field": "reload",
+      "value": {
+        "full": 4.7,
+        "full_upgraded": 4.25,
+        "first_upgraded": 1.7,
+        "subsequent_upgraded": 0.55
+      },
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/GL-52_De-Escalator",
+      "source_locator": "Rounds Reload Full Time 4.7s; 4.25s (Upgraded)",
+      "condition": "逐发；Payroll 升级",
+      "note": "页面历史补丁给另一近似值，注明版本及口径",
+      "revision": null
+    },
+    {
+      "equipment_id": "heavy_support_ac_8_autocannon",
+      "field": "reload",
+      "value": {
+        "full": 4,
+        "full_upgraded": 3.55,
+        "first_upgraded": 2.35,
+        "subsequent_upgraded": 1.15,
+        "assisted_per_clip": 0.66
+      },
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon",
+      "source_locator": "Rounds Reload Full Time 4s; 3.55s (Upgraded)",
+      "condition": "10发，5发弹夹；队友协助另计",
+      "note": "旧 Payroll 页面 5.15 秒版本可能过期，不混用",
+      "revision": null
+    },
+    {
+      "equipment_id": "heavy_support_gl_28_belt_fed_grenade_launcher",
+      "field": "feed",
+      "value": {
+        "capacity": 120,
+        "initial_connect_approx_s": 1,
+        "manual_reload": false
+      },
+      "unit": "mixed",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/GL-28_Belt-Fed_Grenade_Launcher",
+      "source_locator": "does not need to be manually reloaded",
+      "condition": "背包弹链",
+      "note": "耗尽后需补给；约1秒连接只在初拾取或脱开后",
+      "revision": null
+    },
+    {
+      "equipment_id": "heavy_support_m_1000_hmg",
+      "field": "feed",
+      "value": {
+        "capacity": 1000,
+        "initial_connect_approx_s": 1,
+        "manual_reload": false,
+        "spinup_s": 0.5,
+        "sustained_fire_s": 40
+      },
+      "unit": "mixed",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/M-1000_Maxigun",
+      "source_locator": "does not need to be manually reloaded",
+      "condition": "背包供弹；满弹连续开火",
+      "note": "不将领取连接时间当常规换弹",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_ms_11_missile_silo",
+      "field": "payload",
+      "value": 1,
+      "unit": "missile/deployment",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo",
+      "source_locator": "one single, powerful missile",
+      "condition": "单次部署；战略可重复呼叫",
+      "note": "弹药有限与战略次数无限分开",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_mls_4x_commando",
+      "field": "capacity",
+      "value": 4,
+      "unit": "rockets/launcher",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/MLS-4X_Commando",
+      "source_locator": "disposable four-barrel anti-tank rocket launcher",
+      "condition": "一具发射器",
+      "note": "取下一具时间未证实，别以战略CD代替",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_mgx_42_bullet_storm",
+      "field": "type",
+      "value": "disposable",
+      "unit": "text",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/Advanced_Automaton_Support_Weapon_Guide",
+      "source_locator": "Disposable Weapons",
+      "condition": "分类",
+      "note": "再取得时间未知；不要引用 HD1 同名",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_las_99_quasar_cannon",
+      "field": "heat_semantics",
+      "value": "shot cooldown",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.fandom.com/wiki/Weapons",
+      "source_locator": "needs to charge up each shot and cool down afterwards",
+      "condition": "Quasar",
+      "note": "需核对常温完整冷却与开火时具体行为",
+      "revision": null
+    },
+    {
+      "equipment_id": "heat_weapons",
+      "field": "cooling_semantics",
+      "value": null,
+      "unit": "s/rule",
+      "status": "unresolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-5_Scythe",
+      "source_locator": "",
+      "condition": "各装备停火延时和射击中散热",
+      "note": "不得把某支枪通用化；见先前摘录 docs/ai/assessment-v2-wiki-round2-20261027/parameters.json",
+      "revision": null
+    },
+    {
+      "equipment_id": "general",
+      "field": "previous_evidence",
+      "value": "docs/ai/assessment-v2-wiki-round2-20261027/parameters.json",
+      "unit": "path",
+      "status": "already_sourced_implementation_needed",
+      "source_url": null,
+      "source_locator": "原有68项",
+      "condition": "条目按 source_locator 跳转",
+      "note": "需逐项核对条件；candidate 不意味着字段已经证实",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_las_99_quasar_cannon",
+      "field": "recharge_after_shot",
+      "value": 15,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-99_Quasar_Cannon",
+      "source_locator": "cannot be fired again for 15.0 seconds",
+      "condition": "常温；每发后强制过热",
+      "note": "储存或放地上同样冷却；天气改变该值",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_las_99_quasar_cannon",
+      "field": "charge_per_shot",
+      "value": 3.03,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-99_Quasar_Cannon",
+      "source_locator": "Warmup | 3.03 sec",
+      "condition": "射前蓄力",
+      "note": "释放扳机后充能清零；页面叙述约3秒",
+      "revision": null
+    },
+    {
+      "equipment_id": "deployable_flame_sentry",
+      "field": "ignition_and_extinguish",
+      "value": {
+        "ignition_approx": 1,
+        "no_target_extinguish": 12
+      },
+      "unit": "s",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "source_locator": "requires ~1-second of ignition time",
+      "condition": "初次点火/无交战后熄火",
+      "note": "不是油耗或连续喷射时间，约1秒为页面近似",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_2_saber",
+      "field": "inventory_model",
+      "value": "no ammo capacity; sustained melee",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber",
+      "source_locator": "Capacity N/A; continuously attack, even when stamina is empty",
+      "condition": "持有该武器期间",
+      "note": "页面N/A加通用近战描述支持无弹药消耗；未单独确认所有磨损或丢失情况",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "field": "inventory_model",
+      "value": "no ammo capacity; sustained melee",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "source_locator": "Capacity N/A; continuously attack, even when stamina is empty",
+      "condition": "持有该武器期间",
+      "note": "页面N/A加通用近战描述支持无弹药消耗；未单独确认所有磨损或丢失情况",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_42_machete",
+      "field": "inventory_model",
+      "value": "no ammo capacity; sustained melee",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete",
+      "source_locator": "Capacity N/A; continuously attack, even when stamina is empty",
+      "condition": "持有该武器期间",
+      "note": "页面N/A加通用近战描述支持无弹药消耗；未单独确认所有磨损或丢失情况",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_5_combat_hatchet",
+      "field": "inventory_model",
+      "value": "no ammo capacity; sustained melee",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet",
+      "source_locator": "Capacity N/A; continuously attack, even when stamina is empty",
+      "condition": "持有该武器期间",
+      "note": "页面N/A加通用近战描述支持无弹药消耗；未单独确认所有磨损或丢失情况",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "inventory_model",
+      "value": "infinite capacity",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/Template:Damage_Comparison_Table",
+      "source_locator": "CQC-19 ... Infinite",
+      "condition": "模板数据",
+      "note": "模板可能陈旧，非实战证实，缺单独时序与耐久检查",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "penetration_ramp",
+      "value": 0.5,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "source_locator": "over the course of 0.5s of continuous contact",
+      "condition": "连续接触目标",
+      "note": "中甲提升至反坦克I；落地等脱离接触可重置；不解决无限库存",
+      "revision": null
+    },
+    {
+      "equipment_id": "las_16_sickle",
+      "field": "cooling_start_delay",
+      "value": 0.66,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/1.007.200",
+      "source_locator": "time until weapon heat starts cooling ... 0.66sec",
+      "condition": "1.007.200；停火后",
+      "note": "仅该型号；射击期间散热仍另查",
+      "revision": null
+    },
+    {
+      "equipment_id": "las_17_double_edge_sickle",
+      "field": "cooling_start_delay",
+      "value": 0.66,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/1.007.200",
+      "source_locator": "time until weapon heat starts cooling ... 0.66sec",
+      "condition": "1.007.200；停火后",
+      "note": "仅该型号；射击期间散热仍另查",
+      "revision": null
+    },
+    {
+      "equipment_id": "las_12_sai",
+      "field": "between_shots_cooling",
+      "value": "immediate",
+      "unit": "text",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-12_Sai",
+      "source_locator": "immediately cools down after every shot",
+      "condition": "标准配置",
+      "note": "页面未给精确秒数；冷却开始延迟与持续按扳机期间行为不应推为其他武器",
+      "revision": null
+    },
+    {
+      "equipment_id": "las_13_trident",
+      "field": "auto_fire_before_overheat",
+      "value": 2.75,
+      "unit": "s",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-13_Trident",
+      "source_locator": "roughly 2.75s on standard",
+      "condition": "常温全自动",
+      "note": "网页近似；先前冷却间隔已经生效；不代表每个周期都能完整重复",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_las_44_nova",
+      "field": "per_shot_recharge",
+      "value": 3,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-44_Nova",
+      "source_locator": "cannot be fired again for three seconds",
+      "condition": "常温每发后",
+      "note": "射前蓄力1.59秒；天气影响冷却",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_las_44_nova",
+      "field": "charge",
+      "value": 1.59,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/LAS-44_Nova",
+      "source_locator": "Warmup | 1.59 sec",
+      "condition": "每发前",
+      "note": "松开扳机充能重置",
+      "revision": null
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "inventory",
+      "value": "no ammunition limit indicated",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "source_locator": "does not use ammunition",
+      "condition": "武器持有期间",
+      "note": "不推出不会丢失；工具体力耗尽仍可持续挥击的规则与有限库存应区分",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_cqc_1_outcast",
+      "field": "inventory",
+      "value": "no ammunition limit indicated",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag",
+      "source_locator": "Capacity N/A",
+      "condition": "武器持有期间",
+      "note": "不推出不会丢失；工具体力耗尽仍可持续挥击的规则与有限库存应区分",
+      "revision": null
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "inventory",
+      "value": "no ammunition limit indicated",
+      "unit": "text",
+      "status": "candidate",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "source_locator": "Melee Support Weapon",
+      "condition": "武器持有期间",
+      "note": "不推出不会丢失；工具体力耗尽仍可持续挥击的规则与有限库存应区分",
+      "revision": null
+    },
+    {
+      "equipment_id": "deployable_ems_mortar_sentry",
+      "field": "field_duration",
+      "value": 7,
+      "unit": "s",
+      "status": "resolved",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/M-23_EMS_Mortar_Sentry",
+      "source_locator": "AoE Duration | 7 s",
+      "condition": "EMS场",
+      "note": "不是弹体引爆延迟，不能代填",
+      "revision": null
+    }
+  ]
+}

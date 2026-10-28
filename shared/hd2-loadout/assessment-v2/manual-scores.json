@@ -1,0 +1,2970 @@
+{
+  "schema": 1,
+  "overrides": {
+    "deployable_mortar_sentry": {
+      "scores": {
+        "chaff": 2,
+        "close_defense": 2,
+        "anti_medium": 2,
+        "anti_heavy": 0
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:17:33.973Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_anti_personnel_mines": {
+      "scores": {
+        "anti_medium": 6
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:18:06.037Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_at_emplacement": {
+      "scores": {
+        "anti_medium": 10,
+        "anti_heavy": 12
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:18:42.912Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_flame_sentry": {
+      "scores": {
+        "chaff": 10,
+        "close_defense": 4,
+        "anti_medium": 8,
+        "anti_heavy": 6
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:28:00.580Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_gas_mortar_sentry": {
+      "scores": {
+        "chaff": 4
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:19:49.139Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_grenadier_defense_wall": {
+      "scores": {
+        "chaff": 4,
+        "close_defense": 4,
+        "anti_medium": 4
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:20:20.348Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_hmg_emplacement": {
+      "scores": {
+        "chaff": 3,
+        "close_defense": 3,
+        "anti_medium": 3,
+        "anti_heavy": 2
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:20:50.923Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_laser_sentry": {
+      "scores": {
+        "chaff": 3
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:21:22.611Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "deployable_tesla_tower": {
+      "scores": {
+        "chaff": 8,
+        "close_defense": 0,
+        "anti_medium": 8,
+        "anti_heavy": 2
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:27:30.275Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_110mm_rocket_pods": {
+      "scores": {
+        "anti_heavy": 8,
+        "demolition": 15
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:23:23.666Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_500kg_bomb": {
+      "scores": {
+        "chaff": 5,
+        "close_defense": 5,
+        "anti_medium": 6,
+        "anti_heavy": 6,
+        "demolition": 20
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:23:03.096Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_cluster_bomb": {
+      "scores": {
+        "anti_medium": 4,
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:24:10.514Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_gas_airstrike": {
+      "scores": {
+        "chaff": 7,
+        "close_defense": 2,
+        "anti_medium": 5,
+        "demolition": 15
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:24:42.408Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_strafing_run": {
+      "scores": {
+        "demolition": 10
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:25:03.735Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "eagle_napalm_airstrike": {
+      "scores": {
+        "chaff": 8
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:25:21.607Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_50_seeker": {
+      "scores": {
+        "chaff": 1,
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:26:10.081Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_60_anti_tank_seeker": {
+      "scores": {
+        "chaff": 5,
+        "demolition": 30
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:26:35.393Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_8_immolation": {
+      "scores": {
+        "chaff": 8,
+        "anti_medium": 6
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:26:56.897Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "heavy_support_b_flam_80_flamer": {
+      "scores": {
+        "chaff": 105,
+        "close_defense": 75,
+        "anti_medium": 80
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:28:00.604Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "heavy_support_ac_8_autocannon": {
+      "scores": {
+        "endurance": 35
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:28:19.308Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "heavy_support_sta_x3_wasp_launcher": {
+      "scores": {
+        "chaff": 30,
+        "anti_medium": 70,
+        "anti_heavy": 40,
+        "endurance": 45,
+        "demolition": 30
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T12:53:55.184Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "heavy_support_m_1000_hmg": {
+      "scores": {
+        "endurance": 35
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:35:09.949Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "las_5_scythe": {
+      "scores": {
+        "chaff": 88,
+        "close_defense": 30,
+        "endurance": 90
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:35:56.570Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "las_7_dagger": {
+      "scores": {
+        "chaff": 82,
+        "close_defense": 20,
+        "endurance": 90
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:36:21.303Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "las_58_talon": {
+      "scores": {
+        "endurance": 65
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:36:39.482Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_laser": {
+      "scores": {
+        "demolition": 20
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:37:23.720Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_precision_strike": {
+      "scores": {
+        "demolition": 15
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:37:38.711Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_railcannon_strike": {
+      "scores": {
+        "demolition": 8
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:37:51.792Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_walking_barrage": {
+      "scores": {
+        "demolition": 20
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:38:16.859Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_380mm_he_barrage": {
+      "scores": {
+        "demolition": 12
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:38:43.079Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "mp_98_knight": {
+      "scores": {
+        "endurance": 30
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:39:01.395Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "orbital_120mm_he_barrage": {
+      "scores": {
+        "chaff": 6,
+        "anti_medium": 6,
+        "anti_heavy": 6,
+        "demolition": 20
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:39:32.744Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "plas_101_purifier": {
+      "scores": {
+        "close_defense": 75,
+        "anti_medium": 80,
+        "endurance": 70
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:40:22.223Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "plas_15_loyalist": {
+      "scores": {
+        "chaff": 60,
+        "close_defense": 30,
+        "anti_medium": 45
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:41:02.830Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "r_36_eruptor": {
+      "scores": {
+        "anti_medium": 75,
+        "endurance": 45
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:41:29.373Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "r_4_hyena": {
+      "scores": {
+        "close_defense": 30
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:41:46.528Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "sg_20_halt": {
+      "scores": {
+        "chaff": 50,
+        "close_defense": 50
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:42:33.296Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "sg_451_cookout": {
+      "scores": {
+        "chaff": 70,
+        "close_defense": 65
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:43:00.358Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "sg_8p_punisher_plasma": {
+      "scores": {
+        "close_defense": 50
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:43:11.348Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "plas_1_scorcher": {
+      "scores": {
+        "chaff": 88,
+        "close_defense": 82,
+        "anti_medium": 85
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:43:37.959Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "smg_flam_34_stoker": {
+      "scores": {
+        "chaff": 73,
+        "close_defense": 60
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T09:44:08.572Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_cqc_9_defoliation_tool": {
+      "scores": {
+        "chaff": 20,
+        "anti_medium": 65,
+        "anti_heavy": 40,
+        "endurance": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T12:17:41.516Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_eat_411_leveller": {
+      "scores": {
+        "anti_heavy": 20,
+        "demolition": 10
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T09:45:31.118Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_eat_700_incendiary": {
+      "scores": {
+        "chaff": 10,
+        "anti_medium": 6
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:07:24.065Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_las_99_quasar_cannon": {
+      "scores": {
+        "anti_heavy": 60
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:07:52.731Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_m_105_stalwart": {
+      "scores": {
+        "chaff": 75,
+        "close_defense": 70,
+        "endurance": 50
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:08:37.837Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_mgx_42_bullet_storm": {
+      "scores": {
+        "chaff": 80,
+        "close_defense": 70,
+        "anti_medium": 45,
+        "endurance": 60
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:09:07.352Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_ms_11_missile_silo": {
+      "scores": {
+        "anti_heavy": 20,
+        "demolition": 10
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:10:01.192Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_rs_422_railgun": {
+      "scores": {
+        "anti_medium": 70
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:10:23.969Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_spear": {
+      "scores": {
+        "anti_heavy": 10
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:10:38.930Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "support_tx_41_sterilizer": {
+      "scores": {
+        "chaff": 40,
+        "close_defense": 20,
+        "anti_medium": 5,
+        "endurance": 50
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:11:15.515Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "ted_63_dynamite": {
+      "scores": {
+        "chaff": 7,
+        "anti_heavy": 20
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:11:46.147Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "tm_1_lure_mine": {
+      "scores": {
+        "chaff": 4,
+        "close_defense": 2,
+        "anti_medium": 4,
+        "anti_heavy": 10
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:12:22.252Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_exo_49_emancipator_exosuit": {
+      "scores": {
+        "chaff": 15,
+        "close_defense": 15,
+        "anti_medium": 15,
+        "anti_heavy": 10,
+        "endurance": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:16:48.391Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_exo_45_patriot_exosuit": {
+      "scores": {
+        "close_defense": 10,
+        "anti_medium": 10,
+        "anti_heavy": 8,
+        "endurance": 0
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:17:27.733Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_m_102_gunner_fast_recon_vehicle": {
+      "scores": {
+        "chaff": 0,
+        "close_defense": 0,
+        "anti_medium": 0,
+        "anti_heavy": 0,
+        "endurance": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:17:45.497Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_exo_51_lumberjack_exosuit": {
+      "scores": {
+        "chaff": 20,
+        "close_defense": 10,
+        "anti_medium": 10,
+        "anti_heavy": 15,
+        "endurance": 0
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:18:47.825Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_exo_55_breakthrough_exosuit": {
+      "scores": {
+        "chaff": 20,
+        "close_defense": 20,
+        "anti_medium": 20,
+        "anti_heavy": 20,
+        "endurance": 0,
+        "demolition": 0
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:24:51.388Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_td_110_maelstrom": {
+      "scores": {
+        "chaff": 0,
+        "close_defense": 0,
+        "anti_medium": 0,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T10:25:22.122Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "vehicle_td_220_bastion_mk_xvi": {
+      "scores": {
+        "chaff": 0,
+        "close_defense": 0,
+        "anti_medium": 0,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:25:49.200Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_lift_182_teleport_pack": {
+      "scores": {
+        "chaff": 0,
+        "close_defense": 0,
+        "anti_medium": 0,
+        "anti_heavy": 0,
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:26:25.644Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "cqc_19_stun_lance": {
+      "scores": {
+        "chaff": 10,
+        "close_defense": 10,
+        "anti_medium": 10
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:27:06.434Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "flam_66_torcher": {
+      "scores": {
+        "chaff": 70,
+        "close_defense": 65,
+        "anti_medium": 35,
+        "anti_heavy": 10,
+        "endurance": 70
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:28:30.382Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_142_pyrotech": {
+      "scores": {
+        "chaff": 4,
+        "close_defense": 2,
+        "anti_medium": 2
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:28:59.450Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_31_arc": {
+      "scores": {
+        "chaff": 5
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:29:16.114Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "g_40_k_melta_mine": {
+      "scores": {
+        "chaff": 3,
+        "close_defense": 3,
+        "anti_medium": 3,
+        "anti_heavy": 90
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:30:03.080Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "heavy_support_rl_77_airburst_rocket_launcher": {
+      "scores": {
+        "chaff": 100,
+        "close_defense": 0,
+        "anti_medium": 90,
+        "anti_heavy": 40,
+        "endurance": 30,
+        "demolition": 10
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-28T10:30:52.158Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_ax_tx_13_purifier": {
+      "scores": {
+        "chaff": 20,
+        "close_defense": 10,
+        "anti_medium": 2
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T11:55:28.434Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_b_100_portable_hellbomb": {
+      "scores": {
+        "chaff": 2,
+        "close_defense": 2,
+        "anti_medium": 2,
+        "anti_heavy": 15
+      },
+      "mode": "additive",
+      "note": "",
+      "updated_at": "2026-10-28T11:56:06.297Z",
+      "score_scale_id": "review-65-as-60"
+    }
+  },
+  "history": [
+    {
+      "at": "2026-10-28T09:17:33.973Z",
+      "equipment_id": "deployable_mortar_sentry",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 2,
+          "close_defense": 2,
+          "anti_medium": 2,
+          "anti_heavy": 0
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:17:33.973Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 4.526132802653581,
+        "close_defense": null,
+        "anti_medium": 4.195897426927981,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:18:06.037Z",
+      "equipment_id": "deployable_anti_personnel_mines",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_medium": 6
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:18:06.037Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 4.178487479333472,
+        "close_defense": null,
+        "anti_medium": 17.884400075936824,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:18:28.267Z",
+      "equipment_id": "deployable_at_emplacement",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 12
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:18:28.267Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:18:42.912Z",
+      "equipment_id": "deployable_at_emplacement",
+      "before": {
+        "scores": {
+          "anti_heavy": 12
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:18:28.267Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "anti_medium": 10,
+          "anti_heavy": 12
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:18:42.912Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:19:23.104Z",
+      "equipment_id": "deployable_flame_sentry",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 8,
+          "close_defense": 4,
+          "anti_medium": 8,
+          "anti_heavy": 6
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:19:23.104Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:19:49.139Z",
+      "equipment_id": "deployable_gas_mortar_sentry",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 4
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:19:49.139Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 1.9417789844038473,
+        "close_defense": null,
+        "anti_medium": 1.8569897370010195,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:20:20.348Z",
+      "equipment_id": "deployable_grenadier_defense_wall",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 4,
+          "close_defense": 4,
+          "anti_medium": 4
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:20:20.348Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 8.898048266964093,
+        "close_defense": null,
+        "anti_medium": 8.272248693169594,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:20:50.923Z",
+      "equipment_id": "deployable_hmg_emplacement",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 3,
+          "close_defense": 3,
+          "anti_medium": 3,
+          "anti_heavy": 2
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:20:50.923Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 11.240378949203429,
+        "close_defense": null,
+        "anti_medium": 10.810660272126663,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:21:22.611Z",
+      "equipment_id": "deployable_laser_sentry",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 3
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:21:22.611Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 8.176421972738165,
+        "close_defense": null,
+        "anti_medium": 5.056448072978403,
+        "anti_heavy": 0.5651709401709404,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:21:53.537Z",
+      "equipment_id": "deployable_tesla_tower",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 6,
+          "close_defense": 0,
+          "anti_medium": 8,
+          "anti_heavy": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:21:53.537Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:22:26.313Z",
+      "equipment_id": "eagle_110mm_rocket_pods",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 8
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:22:26.313Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 6.460060108756656,
+        "close_defense": null,
+        "anti_medium": 8.014428433257018,
+        "anti_heavy": 1.896136377904872,
+        "endurance": 0,
+        "demolition": 35.44615384615385
+      }
+    },
+    {
+      "at": "2026-10-28T09:23:03.096Z",
+      "equipment_id": "eagle_500kg_bomb",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 5,
+          "close_defense": 5,
+          "anti_medium": 6,
+          "anti_heavy": 6,
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:23:03.096Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 8.861538461538462
+      }
+    },
+    {
+      "at": "2026-10-28T09:23:23.666Z",
+      "equipment_id": "eagle_110mm_rocket_pods",
+      "before": {
+        "scores": {
+          "anti_heavy": 8
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:22:26.313Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "anti_heavy": 8,
+          "demolition": 15
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:23:23.666Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 6.460060108756656,
+        "close_defense": null,
+        "anti_medium": 8.014428433257018,
+        "anti_heavy": 1.896136377904872,
+        "endurance": 0,
+        "demolition": 35.44615384615385
+      }
+    },
+    {
+      "at": "2026-10-28T09:23:43.371Z",
+      "equipment_id": "eagle_cluster_bomb",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:23:43.371Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 7.299565639806759,
+        "close_defense": null,
+        "anti_medium": 8.950071950806839,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 55.38461538461539
+      }
+    },
+    {
+      "at": "2026-10-28T09:24:10.514Z",
+      "equipment_id": "eagle_cluster_bomb",
+      "before": {
+        "scores": {
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:23:43.371Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "anti_medium": 4,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:24:10.514Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 7.299565639806759,
+        "close_defense": null,
+        "anti_medium": 8.950071950806839,
+        "anti_heavy": 0,
+        "endurance": 0,
+        "demolition": 55.38461538461539
+      }
+    },
+    {
+      "at": "2026-10-28T09:24:42.408Z",
+      "equipment_id": "eagle_gas_airstrike",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 7,
+          "close_defense": 2,
+          "anti_medium": 5,
+          "demolition": 15
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:24:42.408Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 19.93846153846154
+      }
+    },
+    {
+      "at": "2026-10-28T09:25:03.735Z",
+      "equipment_id": "eagle_strafing_run",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 10
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:25:03.735Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 7.356666672060344,
+        "close_defense": null,
+        "anti_medium": 9.012918171147694,
+        "anti_heavy": 9.43803590154833,
+        "endurance": 0,
+        "demolition": 55.38461538461539
+      }
+    },
+    {
+      "at": "2026-10-28T09:25:21.607Z",
+      "equipment_id": "eagle_napalm_airstrike",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 8
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:25:21.607Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 4.429286474143979,
+        "close_defense": null,
+        "anti_medium": 5.580060086792033,
+        "anti_heavy": 2.1250283414217828,
+        "endurance": 0,
+        "demolition": 19.93846153846154
+      }
+    },
+    {
+      "at": "2026-10-28T09:26:10.081Z",
+      "equipment_id": "g_50_seeker",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 1,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:26:10.081Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 4.661538461538462,
+        "demolition": 85.93142857142857
+      }
+    },
+    {
+      "at": "2026-10-28T09:26:35.393Z",
+      "equipment_id": "g_60_anti_tank_seeker",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 5,
+          "demolition": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:26:35.393Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 11.03076923076923,
+        "demolition": 55.38461538461539
+      }
+    },
+    {
+      "at": "2026-10-28T09:26:56.897Z",
+      "equipment_id": "g_8_immolation",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 8,
+          "anti_medium": 6
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:26:56.897Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.046153846153846156,
+        "close_defense": 0,
+        "anti_medium": 0.11076923076923076,
+        "anti_heavy": 0,
+        "endurance": 0.13846153846153847,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:27:48.373Z",
+      "equipment_id": "heavy_support_b_flam_80_flamer",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 95,
+          "close_defense": 75,
+          "anti_medium": 80
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:27:48.373Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 37.2,
+        "close_defense": 4.680000000000001,
+        "anti_medium": 12.360000000000001,
+        "anti_heavy": 55.93846153846154,
+        "endurance": 36.8676923076923,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:28:00.604Z",
+      "equipment_id": "heavy_support_b_flam_80_flamer",
+      "before": {
+        "scores": {
+          "chaff": 95,
+          "close_defense": 75,
+          "anti_medium": 80
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:27:48.373Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 105,
+          "close_defense": 75,
+          "anti_medium": 80
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:28:00.604Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 37.2,
+        "close_defense": 4.680000000000001,
+        "anti_medium": 12.360000000000001,
+        "anti_heavy": 55.93846153846154,
+        "endurance": 36.8676923076923,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:28:19.308Z",
+      "equipment_id": "heavy_support_ac_8_autocannon",
+      "before": null,
+      "after": {
+        "scores": {
+          "endurance": 35
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:28:19.308Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 100.2,
+        "close_defense": 30.756923076923076,
+        "anti_medium": 79.41714285714285,
+        "anti_heavy": 92.7657142857143,
+        "endurance": 47.74153846153846,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T09:34:52.505Z",
+      "equipment_id": "heavy_support_sta_x3_wasp_launcher",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_medium": 70,
+          "anti_heavy": 40,
+          "endurance": 45,
+          "demolition": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:34:52.505Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 99.42857142857143,
+        "close_defense": 26.66769230769231,
+        "anti_medium": 95.5657142857143,
+        "anti_heavy": null,
+        "endurance": 52.32,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T09:35:09.949Z",
+      "equipment_id": "heavy_support_m_1000_hmg",
+      "before": null,
+      "after": {
+        "scores": {
+          "endurance": 35
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:35:09.949Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 71.39428571428572,
+        "close_defense": 20.824615384615385,
+        "anti_medium": 40.2,
+        "anti_heavy": 0,
+        "endurance": 79.14285714285714,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:35:56.570Z",
+      "equipment_id": "las_5_scythe",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 88,
+          "close_defense": 30,
+          "endurance": 90
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:35:56.570Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 63.10857142857143,
+        "close_defense": 14.446153846153846,
+        "anti_medium": 11.879999999999999,
+        "anti_heavy": 0,
+        "endurance": 28.65230769230769,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:36:21.303Z",
+      "equipment_id": "las_7_dagger",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 82,
+          "close_defense": 20,
+          "endurance": 90
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:36:21.303Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 41.19692307692308,
+        "close_defense": 6.793846153846154,
+        "anti_medium": 5.252307692307693,
+        "anti_heavy": 0,
+        "endurance": 14.27076923076923,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:36:39.482Z",
+      "equipment_id": "las_58_talon",
+      "before": null,
+      "after": {
+        "scores": {
+          "endurance": 65
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:36:39.482Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 21.821538461538463,
+        "close_defense": 60.41142857142857,
+        "anti_medium": 46.403076923076924,
+        "anti_heavy": 0,
+        "endurance": 10.283076923076925,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:37:14.018Z",
+      "equipment_id": "orbital_laser",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:37:14.018Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 5.570435479035931,
+        "close_defense": null,
+        "anti_medium": 5.3145696444966095,
+        "anti_heavy": 4.864705275667697,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:37:23.720Z",
+      "equipment_id": "orbital_laser",
+      "before": {
+        "scores": {
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:37:14.018Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:37:23.720Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 5.570435479035931,
+        "close_defense": null,
+        "anti_medium": 5.3145696444966095,
+        "anti_heavy": 4.864705275667697,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:37:38.711Z",
+      "equipment_id": "orbital_precision_strike",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 15
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:37:38.711Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 7.485333386978688,
+        "close_defense": null,
+        "anti_medium": 9.656072471009937,
+        "anti_heavy": 7.7900143352712385,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:37:51.792Z",
+      "equipment_id": "orbital_railcannon_strike",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 8
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:37:51.792Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.9478803535648465,
+        "close_defense": null,
+        "anti_medium": 1.037242649744485,
+        "anti_heavy": 1.0320294436744055,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:38:16.859Z",
+      "equipment_id": "orbital_walking_barrage",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:38:16.859Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 6.332253339296295,
+        "close_defense": null,
+        "anti_medium": 6.355867868894005,
+        "anti_heavy": 6.336408506490375,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:38:43.079Z",
+      "equipment_id": "orbital_380mm_he_barrage",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 12
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:38:43.079Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 4.920560303222342,
+        "close_defense": null,
+        "anti_medium": 4.944656597308974,
+        "anti_heavy": 4.924814231916674,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:39:01.395Z",
+      "equipment_id": "mp_98_knight",
+      "before": null,
+      "after": {
+        "scores": {
+          "endurance": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:39:01.395Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 76.05714285714285,
+        "close_defense": 68.65142857142857,
+        "anti_medium": 71.29142857142857,
+        "anti_heavy": 0,
+        "endurance": 54.839999999999996,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:39:32.744Z",
+      "equipment_id": "orbital_120mm_he_barrage",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 6,
+          "anti_medium": 6,
+          "anti_heavy": 6,
+          "demolition": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:39:32.744Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 5.0665375745928465,
+        "close_defense": null,
+        "anti_medium": 5.085215068115983,
+        "anti_heavy": 5.063712014637623,
+        "endurance": 0,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:40:22.223Z",
+      "equipment_id": "plas_101_purifier",
+      "before": null,
+      "after": {
+        "scores": {
+          "close_defense": 75,
+          "anti_medium": 80,
+          "endurance": 70
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:40:22.223Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 92.45714285714286,
+        "close_defense": 7.44,
+        "anti_medium": 21.923076923076923,
+        "anti_heavy": 0,
+        "endurance": 65.5657142857143,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:41:02.830Z",
+      "equipment_id": "plas_15_loyalist",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 60,
+          "close_defense": 30,
+          "anti_medium": 45
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:41:02.830Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 88.09142857142857,
+        "close_defense": 8.086153846153847,
+        "anti_medium": 14.76923076923077,
+        "anti_heavy": 0,
+        "endurance": 31.144615384615385,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:41:29.373Z",
+      "equipment_id": "r_36_eruptor",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_medium": 75,
+          "endurance": 45
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:41:29.373Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 88.48,
+        "close_defense": 0,
+        "anti_medium": 50.39076923076923,
+        "anti_heavy": 5.686153846153847,
+        "endurance": 32.50153846153846,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T09:41:46.528Z",
+      "equipment_id": "r_4_hyena",
+      "before": null,
+      "after": {
+        "scores": {
+          "close_defense": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:41:46.528Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 56.206153846153846,
+        "close_defense": 72.88,
+        "anti_medium": 48.23076923076923,
+        "anti_heavy": 0,
+        "endurance": 37.7723076923077,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:42:21.483Z",
+      "equipment_id": "sg_20_halt",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 60,
+          "close_defense": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:42:21.483Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 36.21230769230769,
+        "close_defense": 21.15692307692308,
+        "anti_medium": 54.646153846153844,
+        "anti_heavy": 0,
+        "endurance": 46.11692307692307,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:42:33.296Z",
+      "equipment_id": "sg_20_halt",
+      "before": {
+        "scores": {
+          "chaff": 60,
+          "close_defense": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:42:21.483Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 50,
+          "close_defense": 50
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:42:33.296Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 36.21230769230769,
+        "close_defense": 21.15692307692308,
+        "anti_medium": 54.646153846153844,
+        "anti_heavy": 0,
+        "endurance": 46.11692307692307,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:42:52.595Z",
+      "equipment_id": "sg_451_cookout",
+      "before": null,
+      "after": {
+        "scores": {
+          "close_defense": 65
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:42:52.595Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 83.90857142857143,
+        "close_defense": 42.46153846153846,
+        "anti_medium": 28.504615384615384,
+        "anti_heavy": 0,
+        "endurance": 42.67384615384615,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:43:00.358Z",
+      "equipment_id": "sg_451_cookout",
+      "before": {
+        "scores": {
+          "close_defense": 65
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:42:52.595Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 70,
+          "close_defense": 65
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:43:00.358Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 83.90857142857143,
+        "close_defense": 42.46153846153846,
+        "anti_medium": 28.504615384615384,
+        "anti_heavy": 0,
+        "endurance": 42.67384615384615,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:43:11.348Z",
+      "equipment_id": "sg_8p_punisher_plasma",
+      "before": null,
+      "after": {
+        "scores": {
+          "close_defense": 50
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:43:11.348Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 94.16,
+        "close_defense": 19.587692307692304,
+        "anti_medium": 20.713846153846156,
+        "anti_heavy": 0,
+        "endurance": 39.16615384615385,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:43:37.959Z",
+      "equipment_id": "plas_1_scorcher",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 88,
+          "close_defense": 82,
+          "anti_medium": 85
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:43:37.959Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 84.82285714285715,
+        "close_defense": 77.69142857142857,
+        "anti_medium": 77.64571428571429,
+        "anti_heavy": 0,
+        "endurance": 42.978461538461545,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:44:08.572Z",
+      "equipment_id": "smg_flam_34_stoker",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 73,
+          "close_defense": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:44:08.572Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 68.16,
+        "close_defense": 43.03384615384615,
+        "anti_medium": 43.12615384615384,
+        "anti_heavy": 9.692307692307692,
+        "endurance": 53.91692307692308,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:44:52.724Z",
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "anti_medium": 65,
+          "anti_heavy": 40,
+          "endurance": 100
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:44:52.724Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T09:45:31.118Z",
+      "equipment_id": "support_eat_411_leveller",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 20,
+          "demolition": 10
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:45:31.118Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.14769230769230768,
+        "close_defense": 0,
+        "anti_medium": 96.10285714285715,
+        "anti_heavy": null,
+        "endurance": 4.024615384615385,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:45:54.713Z",
+      "equipment_id": "support_eat_700_incendiary",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 10
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:45:54.713Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.14769230769230768,
+        "close_defense": 0,
+        "anti_medium": 82.05714285714285,
+        "anti_heavy": null,
+        "endurance": 0.7107692307692308,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T09:46:12.272Z",
+      "equipment_id": "support_eat_700_incendiary",
+      "before": {
+        "scores": {
+          "chaff": 10
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:45:54.713Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 10,
+          "anti_medium": 8
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:46:12.272Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.14769230769230768,
+        "close_defense": 0,
+        "anti_medium": 82.05714285714285,
+        "anti_heavy": null,
+        "endurance": 0.7107692307692308,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T10:07:24.065Z",
+      "equipment_id": "support_eat_700_incendiary",
+      "before": {
+        "scores": {
+          "chaff": 10,
+          "anti_medium": 8
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:46:12.272Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 10,
+          "anti_medium": 6
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:07:24.065Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.14769230769230768,
+        "close_defense": 0,
+        "anti_medium": 82.05714285714285,
+        "anti_heavy": null,
+        "endurance": 0.7107692307692308,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T10:07:52.731Z",
+      "equipment_id": "support_las_99_quasar_cannon",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:07:52.731Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.3138461538461539,
+        "close_defense": 0.02769230769230769,
+        "anti_medium": 5.723076923076923,
+        "anti_heavy": 43.53230769230769,
+        "endurance": 100,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T10:08:25.606Z",
+      "equipment_id": "support_m_105_stalwart",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 75,
+          "close_defense": 70
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:08:25.606Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 64.55999999999999,
+        "close_defense": 39.978461538461545,
+        "anti_medium": 44.261538461538464,
+        "anti_heavy": 0,
+        "endurance": 78.7657142857143,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:08:37.837Z",
+      "equipment_id": "support_m_105_stalwart",
+      "before": {
+        "scores": {
+          "chaff": 75,
+          "close_defense": 70
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:08:25.606Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 75,
+          "close_defense": 70,
+          "endurance": 50
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:08:37.837Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 64.55999999999999,
+        "close_defense": 39.978461538461545,
+        "anti_medium": 44.261538461538464,
+        "anti_heavy": 0,
+        "endurance": 78.7657142857143,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:09:07.352Z",
+      "equipment_id": "support_mgx_42_bullet_storm",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 80,
+          "close_defense": 70,
+          "anti_medium": 45,
+          "endurance": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:09:07.352Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 75.86285714285714,
+        "close_defense": 39.12923076923077,
+        "anti_medium": 32.16923076923077,
+        "anti_heavy": 0,
+        "endurance": 32.86153846153846,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:10:01.192Z",
+      "equipment_id": "support_ms_11_missile_silo",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 20,
+          "demolition": 10
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:10:01.192Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 2.769230769230769,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T10:10:23.969Z",
+      "equipment_id": "support_rs_422_railgun",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_medium": 70
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:10:23.969Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 4.790769230769231,
+        "close_defense": 2.6861538461538466,
+        "anti_medium": 17.916923076923077,
+        "anti_heavy": 50.09538461538462,
+        "endurance": 28.09846153846154,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:10:38.930Z",
+      "equipment_id": "support_spear",
+      "before": null,
+      "after": {
+        "scores": {
+          "anti_heavy": 10
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:10:38.930Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 85.40571428571428,
+        "close_defense": 75.38285714285713,
+        "anti_medium": 74.03428571428572,
+        "anti_heavy": 44.021538461538455,
+        "endurance": 19.596923076923076,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T10:11:15.515Z",
+      "equipment_id": "support_tx_41_sterilizer",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 40,
+          "close_defense": 20,
+          "anti_medium": 5,
+          "endurance": 50
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:11:15.515Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:11:46.147Z",
+      "equipment_id": "ted_63_dynamite",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 7,
+          "anti_heavy": 20
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:11:46.147Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 2.8338461538461535,
+        "close_defense": 0,
+        "anti_medium": 8.095384615384614,
+        "anti_heavy": null,
+        "endurance": 7.227692307692308,
+        "demolition": 72.17142857142858
+      }
+    },
+    {
+      "at": "2026-10-28T10:12:22.252Z",
+      "equipment_id": "tm_1_lure_mine",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 4,
+          "close_defense": 2,
+          "anti_medium": 4,
+          "anti_heavy": 10
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:12:22.252Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0.6092307692307692,
+        "demolition": 72.17142857142858
+      }
+    },
+    {
+      "at": "2026-10-28T10:16:48.391Z",
+      "equipment_id": "vehicle_exo_49_emancipator_exosuit",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 15,
+          "close_defense": 15,
+          "anti_medium": 15,
+          "anti_heavy": 10,
+          "endurance": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:16:48.391Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 44.23384615384616,
+        "close_defense": 0.46153846153846156,
+        "anti_medium": 0.33230769230769225,
+        "anti_heavy": 49.63384615384616,
+        "endurance": 63.074285714285715,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T10:17:27.733Z",
+      "equipment_id": "vehicle_exo_45_patriot_exosuit",
+      "before": null,
+      "after": {
+        "scores": {
+          "close_defense": 10,
+          "anti_medium": 10,
+          "anti_heavy": 8,
+          "endurance": 0
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:17:27.733Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 17.889230769230767,
+        "close_defense": 0.40615384615384614,
+        "anti_medium": 0.36000000000000004,
+        "anti_heavy": 73.22285714285714,
+        "endurance": 76.66285714285715,
+        "demolition": 96.84571428571428
+      }
+    },
+    {
+      "at": "2026-10-28T10:17:45.497Z",
+      "equipment_id": "vehicle_m_102_gunner_fast_recon_vehicle",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 0,
+          "close_defense": 0,
+          "anti_medium": 0,
+          "anti_heavy": 0,
+          "endurance": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:17:45.497Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 17.741538461538457,
+        "close_defense": 0.4338461538461538,
+        "anti_medium": 0.3138461538461539,
+        "anti_heavy": 28.403076923076924,
+        "endurance": 18.193846153846156,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:18:47.825Z",
+      "equipment_id": "vehicle_exo_51_lumberjack_exosuit",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 10,
+          "anti_medium": 10,
+          "anti_heavy": 15,
+          "endurance": 0
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:18:47.825Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 16.615384615384617,
+        "close_defense": 0.3046153846153846,
+        "anti_medium": 0.36000000000000004,
+        "anti_heavy": 61.142857142857146,
+        "endurance": 37.73538461538462,
+        "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-28T10:24:40.373Z",
+      "equipment_id": "vehicle_exo_55_breakthrough_exosuit",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 20,
+          "anti_medium": 20,
+          "anti_heavy": 20,
+          "endurance": 0,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:24:40.373Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.10153846153846154,
+        "close_defense": 0.46153846153846156,
+        "anti_medium": 0.3507692307692308,
+        "anti_heavy": 74.12571428571428,
+        "endurance": 25.209230769230768,
+        "demolition": null
+      }
+    },
+    {
+      "at": "2026-10-28T10:24:51.388Z",
+      "equipment_id": "vehicle_exo_55_breakthrough_exosuit",
+      "before": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 20,
+          "anti_medium": 20,
+          "anti_heavy": 20,
+          "endurance": 0,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:24:40.373Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 20,
+          "anti_medium": 20,
+          "anti_heavy": 20,
+          "endurance": 0,
+          "demolition": 0
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:24:51.388Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.10153846153846154,
+        "close_defense": 0.46153846153846156,
+        "anti_medium": 0.3507692307692308,
+        "anti_heavy": 74.12571428571428,
+        "endurance": 25.209230769230768,
+        "demolition": null
+      }
+    },
+    {
+      "at": "2026-10-28T10:25:22.122Z",
+      "equipment_id": "vehicle_td_110_maelstrom",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 0,
+          "close_defense": 0,
+          "anti_medium": 0,
+          "anti_heavy": 0,
+          "endurance": 0,
+          "demolition": 0
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:25:22.122Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 20.01230769230769,
+        "close_defense": 0.4246153846153846,
+        "anti_medium": 0.3046153846153846,
+        "anti_heavy": 51.16615384615385,
+        "endurance": 43.596923076923076,
+        "demolition": 100
+      }
+    },
+    {
+      "at": "2026-10-28T10:25:49.200Z",
+      "equipment_id": "vehicle_td_220_bastion_mk_xvi",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 0,
+          "close_defense": 0,
+          "anti_medium": 0,
+          "anti_heavy": 0,
+          "endurance": 0,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:25:49.200Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 18.821538461538463,
+        "close_defense": 0.44307692307692303,
+        "anti_medium": 0.36000000000000004,
+        "anti_heavy": 38.15076923076923,
+        "endurance": 91.36,
+        "demolition": 2.2153846153846155
+      }
+    },
+    {
+      "at": "2026-10-28T10:26:25.644Z",
+      "equipment_id": "backpack_lift_182_teleport_pack",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 0,
+          "close_defense": 0,
+          "anti_medium": 0,
+          "anti_heavy": 0,
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:26:25.644Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": null
+      }
+    },
+    {
+      "at": "2026-10-28T10:27:06.434Z",
+      "equipment_id": "cqc_19_stun_lance",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 10,
+          "close_defense": 10,
+          "anti_medium": 10
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:27:06.434Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:27:30.275Z",
+      "equipment_id": "deployable_tesla_tower",
+      "before": {
+        "scores": {
+          "chaff": 6,
+          "close_defense": 0,
+          "anti_medium": 8,
+          "anti_heavy": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:21:53.537Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 8,
+          "close_defense": 0,
+          "anti_medium": 8,
+          "anti_heavy": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:27:30.275Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:28:00.580Z",
+      "equipment_id": "deployable_flame_sentry",
+      "before": {
+        "scores": {
+          "chaff": 8,
+          "close_defense": 4,
+          "anti_medium": 8,
+          "anti_heavy": 6
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T09:19:23.104Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 10,
+          "close_defense": 4,
+          "anti_medium": 8,
+          "anti_heavy": 6
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T10:28:00.580Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 0,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:28:30.382Z",
+      "equipment_id": "flam_66_torcher",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 70,
+          "close_defense": 65,
+          "anti_medium": 35,
+          "anti_heavy": 10,
+          "endurance": 70
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:28:30.382Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 36,
+        "close_defense": 5.815384615384615,
+        "anti_medium": 10.024615384615384,
+        "anti_heavy": 32.676923076923075,
+        "endurance": 27.701538461538462,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:28:59.450Z",
+      "equipment_id": "g_142_pyrotech",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 4,
+          "close_defense": 2,
+          "anti_medium": 2
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:28:59.450Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.38769230769230767,
+        "close_defense": 0.08307692307692306,
+        "anti_medium": 1.2923076923076924,
+        "anti_heavy": 0,
+        "endurance": 0.5538461538461539,
+        "demolition": 94.84571428571428
+      }
+    },
+    {
+      "at": "2026-10-28T10:29:16.114Z",
+      "equipment_id": "g_31_arc",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 5
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:29:16.114Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.8307692307692308,
+        "close_defense": 0,
+        "anti_medium": 4.6984615384615385,
+        "anti_heavy": 3.646153846153846,
+        "endurance": 40.37538461538462,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T10:30:03.080Z",
+      "equipment_id": "g_40_k_melta_mine",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 3,
+          "close_defense": 3,
+          "anti_medium": 3,
+          "anti_heavy": 90
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:30:03.080Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": 14.704615384615384,
+        "demolition": 72.17142857142858
+      }
+    },
+    {
+      "at": "2026-10-28T10:30:52.158Z",
+      "equipment_id": "heavy_support_rl_77_airburst_rocket_launcher",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 100,
+          "close_defense": 0,
+          "anti_medium": 90,
+          "anti_heavy": 40,
+          "endurance": 30,
+          "demolition": 10
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T10:30:52.158Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 30.184615384615388,
+        "close_defense": 0.38769230769230767,
+        "anti_medium": 43.1723076923077,
+        "anti_heavy": 0,
+        "endurance": 81.69142857142857,
+        "demolition": 93.47428571428573
+      }
+    },
+    {
+      "at": "2026-10-28T11:55:28.434Z",
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 10,
+          "anti_medium": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T11:55:28.434Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T11:56:06.297Z",
+      "equipment_id": "backpack_b_100_portable_hellbomb",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 2,
+          "close_defense": 2,
+          "anti_medium": 2,
+          "anti_heavy": 15
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T11:56:06.297Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": null
+      }
+    },
+    {
+      "at": "2026-10-28T12:17:41.516Z",
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "before": {
+        "scores": {
+          "chaff": 20,
+          "anti_medium": 65,
+          "anti_heavy": 40,
+          "endurance": 100
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:44:52.724Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 20,
+          "anti_medium": 65,
+          "anti_heavy": 40,
+          "endurance": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T12:17:41.516Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-10-28T12:53:55.184Z",
+      "equipment_id": "heavy_support_sta_x3_wasp_launcher",
+      "before": {
+        "scores": {
+          "anti_medium": 70,
+          "anti_heavy": 40,
+          "endurance": 45,
+          "demolition": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T09:34:52.505Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 30,
+          "anti_medium": 70,
+          "anti_heavy": 40,
+          "endurance": 45,
+          "demolition": 30
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-28T12:53:55.184Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 99.42857142857143,
+        "close_defense": 26.66769230769231,
+        "anti_medium": 95.5657142857143,
+        "anti_heavy": null,
+        "endurance": 52.32,
+        "demolition": 101.14
+      }
+    }
+  ]
+}

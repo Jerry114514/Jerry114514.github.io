@@ -1,0 +1,72 @@
+{
+  "status": "SOURCE_ROUTES_WITH_ENGINEERING_ACCESS_COST",
+  "policy": "Compare evidenced lethal front/head/body routes by measured response; precise mouths and broad explosive saturation have different acquisition costs.",
+  "acquire_multiplier": 2,
+  "cost_basis": "All precise-part routes pay acquisition cost regardless of weapon penetration. Twofold is a provisional engineering value for ordinary head/gap aim; no hit probability, damage or ammunition penalty.",
+  "precise_acquire_minimum_by_enemy": {
+    "bile_spewer": 4
+  },
+  "precise_acquire_minimum_by_target": {
+    "bile_spewer:mouth": 5
+  },
+  "precise_minimum_basis": "User requires at least fourfold acquisition time for Bile Spewer specific-part aim, with a higher fivefold minimum for its mouth. Broad explosive abdomen saturation is not precise-part aim.",
+  "user_checks": [{
+    "equipment_id": "plas_1_scorcher",
+    "enemy_id": "alpha_commander",
+    "usual_rounds": [6, 8],
+    "confirmed_on": "2026-10-27",
+    "statement": "User confirms all non-Main parts are explosion-immune and usual Scorcher consumption is six to eight shots. This is a validation range, not a damage override or instant threat-removal claim."
+  }],
+  "default_explosion_resistance": {
+    "alpha_commander:head": 1,
+    "hive_guard:head": 1,
+    "bile_spewer:head": 1
+  },
+  "default_explosion_sources": [
+    "https://helldivers.wiki.gg/wiki/Alpha_Commander",
+    "https://helldivers.wiki.gg/wiki/Hive_Guard",
+    "https://helldivers.wiki.gg/wiki/Bile_Spewer"
+  ],
+  "explosive_body_routes": {
+    "bile_spewer:head": {
+      "target_id": "bile_spewer:butt",
+      "condition": "VISIBLE_LARGE_ABDOMEN; NO_PRECISE_MOUTH_AIM",
+      "acquire_multiplier": 1,
+      "explosion_resistance": 0,
+      "source_url": "https://helldivers.wiki.gg/wiki/Bile_Spewer",
+      "evidence": "Large unarmored fatal abdomen is visible from front/side/rear and has 100 percent durability but 0 percent ExDR. User confirms broad explosive saturation is a practical fast route. This is not a promise that every armor plate has identical BTK."
+    }
+  },
+  "body_routes": {
+    "alpha_commander:head": {
+      "target_id": "alpha_commander:main",
+      "condition": "VISIBLE_FRONT_OR_SIDE_MAIN_BODY",
+      "acquire_multiplier": 1,
+      "explosion_resistance": 0,
+      "source_url": "https://helldivers.wiki.gg/wiki/Alpha_Commander",
+      "evidence": "Main is listed as a front/side damage zone with AV2, 70 percent durability and no constitution. Compare direct body destruction against head break plus residual bleed; never force waiting when the same weapon has a quicker body route."
+    }
+  },
+  "alternatives": {
+    "hive_guard:head": {
+      "target_id": "hive_guard:main",
+      "condition": "AIM_THROUGH_FRONT_LEG_HEAD_GAP",
+      "explosion_resistance": 0,
+      "source_url": "https://helldivers.wiki.gg/wiki/Hive_Guard",
+      "panel_source": "HD2_Wiki/data/wiki/zh/enemies.json#hive_guard/main",
+      "evidence": "Wiki tactics explicitly describes hitting Main through the frontal gap, including while crouched; Main has 0 percent ExDR.",
+      "checked_on": "2026-10-27"
+    },
+    "bile_spewer:head": {
+      "target_id": "bile_spewer:mouth",
+      "acquire_multiplier": 5,
+      "cost_basis": "User-specified minimum of fivefold precise-mouth acquisition time; this is a time cost, not measured accuracy.",
+      "condition": "AIM_AT_UNARMORED_MOUTH",
+      "explosion_resistance": 1,
+      "source_url": "https://helldivers.wiki.gg/wiki/Bile_Spewer",
+      "panel_source": "HD2_Wiki/data/wiki/zh/enemies.json#bile_spewer/mouth",
+      "evidence": "Wiki describes the unarmored mouth as optimal for light penetration; it is fatal with 100 percent ExDR. Redirected blast damage to Main is not counted as mouth damage.",
+      "checked_on": "2026-10-27"
+    }
+  }
+}

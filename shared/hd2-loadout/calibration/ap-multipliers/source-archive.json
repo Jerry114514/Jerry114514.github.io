@@ -1,0 +1,356 @@
+{
+  "schema": 1,
+  "kind": "ap-multiplier-source-archive",
+  "artifact_id": "ap-multiplier-source-archive-v1",
+  "created": "2026-10-26",
+  "game_build": null,
+  "not_verified": true,
+  "state": "SOURCE_BOUND_CANDIDATE",
+  "source_kind": "community_wiki_prose",
+  "access_policy": "helldivers.wiki.gg 公开 MediaWiki API only；未登录、未代理、未绕过任何访问控制；非 200 或网络错误原样记入 failures 且不写文件、不重试同一路径",
+  "captured_by": "shared/hd2-loadout/calibration/ap-multipliers/capture-sources.mjs",
+  "user_agent": "hd2-loadout-research/1.0 (offline calibration archive; wiki API; no auth)",
+  "subject": "HD2 直击弹丸的 AP vs AV 伤害倍率（AP>AV 100%、AP=AV 65%、AP<AV 0 伤）",
+  "consumed_scope": {
+    "applied": "正角直击（<25°）的 AP 值 vs 部位 AV 档位的比较结果，作用在标准/耐久混合后的每颗弹丸伤害上",
+    "excluded": [
+      "爆炸（来源只说“爆炸只用一个 AP 值、外圈减 1”，没有重述等甲百分比）：不套用本倍率",
+      "持续伤害/热伤（DoT 一节另有 0.65 旁证）：不并入直击弹丸路径",
+      "26°-90° 入射角 AP 值：没有角度减伤倍率，不做数值",
+      "玩家护甲 Armor Rating（Armor 页）：那是玩家承伤，不是武器 AP 倍率"
+    ]
+  },
+  "pages": [
+    {
+      "id": "damage_page",
+      "kind": "wikitext",
+      "role": "主来源：Armor Penetration & Armor Values 一节的 AP>AV / AP=AV / AP<AV 三条判定，以及四条入射角 AP 值和“爆炸只用一个 AP 值”的适用范围句",
+      "resolved_title": "Damage",
+      "url": "https://helldivers.wiki.gg/api.php?action=query&prop=revisions&titles=Damage&rvprop=ids|timestamp|content&rvslots=main&format=json&formatversion=2",
+      "http_status": 200,
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "fetched_at_utc": "2026-10-26T00:38:34.809Z",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Damage.wikitext",
+      "sha256": "a79bec4928beee9072551f9b5ac9ce52f5fa3a47961c8f7e1ec5bece02f54bf0",
+      "bytes": 31231
+    },
+    {
+      "id": "armor_penetration_redirect",
+      "kind": "wikitext",
+      "role": "别名页：确认 Armor Penetration 指向 Damage#Armor_Penetration_&_Armor_Values，本包的锚点与主来源同页",
+      "resolved_title": "Armor Penetration",
+      "url": "https://helldivers.wiki.gg/api.php?action=query&prop=revisions&titles=Armor%20Penetration&rvprop=ids|timestamp|content&rvslots=main&format=json&formatversion=2",
+      "http_status": 200,
+      "revid": 99371,
+      "revision_timestamp": "2026-02-04T12:35:14Z",
+      "fetched_at_utc": "2026-10-26T00:38:35.730Z",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Armor_Penetration.wikitext",
+      "sha256": "c6852d8ca63512d4bdd8f301abd342ad71f1863f531b204d608df8a15a206a8e",
+      "bytes": 71
+    },
+    {
+      "id": "armor_page",
+      "kind": "wikitext",
+      "role": "消歧：Armor 页的 Armor Rating/Armor Damage Modifiers 是玩家护甲减伤，不是武器 AP 倍率；本包不从这里取倍率",
+      "resolved_title": "Armor",
+      "url": "https://helldivers.wiki.gg/api.php?action=query&prop=revisions&titles=Armor&rvprop=ids|timestamp|content&rvslots=main&format=json&formatversion=2",
+      "http_status": 200,
+      "revid": 137568,
+      "revision_timestamp": "2026-09-30T19:26:49Z",
+      "fetched_at_utc": "2026-10-26T00:38:36.122Z",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Armor.wikitext",
+      "sha256": "61ff7bc344fcebe0d381e094af26e7946a3d7c7bf278ae6d45635230d56fb0a7",
+      "bytes": 5324
+    },
+    {
+      "id": "damage_revision_history",
+      "kind": "revision_history_json",
+      "role": "变更记录：该页最近 50 次修订的 revid/时间/摘要/字节数，用于核对 65% 等判定句不是被本次抓取前刚改动的版本改变过",
+      "resolved_title": "Damage",
+      "url": "https://helldivers.wiki.gg/api.php?action=query&prop=revisions&titles=Damage&rvprop=ids|timestamp|user|comment|size|flags&rvlimit=50&format=json&formatversion=2",
+      "http_status": 200,
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "fetched_at_utc": "2026-10-26T00:38:36.568Z",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Damage.revisions.json",
+      "sha256": "f81b4346fbd091fe7176dd3b460a79b647b2054486a7adb8f767e770002715ac",
+      "bytes": 13440
+    },
+    {
+      "id": "damage_newest_section_diff",
+      "kind": "compare_diff_json",
+      "role": "变更记录：主来源最新一次修订（同一节）与上一版的差异，用来确认该编辑没有改动三条 AP 判定或其中的百分数",
+      "resolved_title": "Damage",
+      "url": "https://helldivers.wiki.gg/api.php?action=compare&fromrev=138337&torev=138884&format=json&formatversion=2",
+      "http_status": 200,
+      "revid": 138884,
+      "revision_timestamp": null,
+      "fetched_at_utc": "2026-10-26T00:38:36.960Z",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Damage.diff.138337-138884.json",
+      "sha256": "323497ca7f8cf4dade370912bc13a6c08d76afb48010343e29a4955007880667",
+      "bytes": 2051
+    }
+  ],
+  "citations": [
+    {
+      "id": "cite:ap_greater_100_percent",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 134,
+      "raw_quote": "* If the Armor Penetration Value is '''greater than''' the enemy part's Armor Value, the weapon deals '''100%''' damage (Red Hitmarker)",
+      "meaning": "AP 高于装甲：武器造成 100% 伤害",
+      "applies_to": "direct_hit_projectile_ap_relation=AP_GREATER",
+      "located": true
+    },
+    {
+      "id": "cite:ap_equal_65_percent",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 135,
+      "raw_quote": "* If the Armor Penetration Value is '''equal to''' the enemy part's Armor Value, the weapon deals '''65%''' damage (White Hitmarker)",
+      "meaning": "AP 等于装甲：武器造成 65% 伤害",
+      "applies_to": "direct_hit_projectile_ap_relation=AP_EQUAL",
+      "located": true
+    },
+    {
+      "id": "cite:ap_less_no_damage",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 136,
+      "raw_quote": "* If the Armor Penetration Value is '''less than''' the enemy part's Armor Value, the weapon deals '''NO''' damage (Ricochet)",
+      "meaning": "AP 低于装甲：武器不造成伤害（跳弹）",
+      "applies_to": "direct_hit_projectile_ap_relation=AP_BLOCKED",
+      "located": true
+    },
+    {
+      "id": "cite:four_angle_values",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 138,
+      "raw_quote": "Each weapon has a total of four penetration values:",
+      "meaning": "每把武器有四个 AP 值，第一个是正角直击（<25°）用的",
+      "applies_to": "scope:direct_hit_angle",
+      "located": true
+    },
+    {
+      "id": "cite:explosions_one_ap_value",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 145,
+      "raw_quote": "For explosions, only one armor penetration value is used. It decreases by 1 in the outer radius.",
+      "meaning": "爆炸只用一个 AP 值，外圈再减 1；本节没有为爆炸另写等甲/破甲百分比",
+      "applies_to": "scope:explosion_excluded",
+      "located": true
+    },
+    {
+      "id": "cite:durable_blend_formula",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 201,
+      "raw_quote": "<big>'''Standard Damage × (1 - Durable %) + (Durable Damage × Durable %) = Damage Dealt'''</big>",
+      "meaning": "标准/耐久按部位耐久比例混合成 “Damage Dealt”；公式本身不含 AP 项，也未写 65% 该放在混合前还是混合后",
+      "applies_to": "scope:stage",
+      "located": true
+    },
+    {
+      "id": "cite:durable_round_down",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 203,
+      "raw_quote": "* Note: Round '''DOWN''' to the nearest '''whole''' number for the damage dealt.",
+      "meaning": "耐久混合后向下取整到整数（该句不涉及 AP 倍率的取整位置）",
+      "applies_to": "scope:rounding",
+      "located": true
+    },
+    {
+      "id": "cite:durable_example_assumes_ap_gt_av",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 212,
+      "raw_quote": "For this example, it will be assumed that the weapon used has 1,000 standard damage and 500 durable damage with no damage fall-off. Assume a single shot is being fired at a specific Enemy Part, and that the shot pierces the armor of the enemy completely (AP > AV).",
+      "meaning": "耐久算例显式假设“炮弹完全穿透装甲（AP > AV）”，所以页面从未演示 AP=AV 时 65% 与耐久混合的先后",
+      "applies_to": "scope:stage_gap",
+      "located": true
+    },
+    {
+      "id": "cite:dot_equal_repeat_65",
+      "page_id": "damage_page",
+      "section_anchor": "Damage#Armor_Penetration_&_Armor_Values",
+      "page_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "revid": 138884,
+      "revision_timestamp": "2026-10-16T17:50:18Z",
+      "line": 348,
+      "raw_quote": "* For Example: Fire DoT which is {{Armor|4|AP}} armor penetration deals 35% less damage to a Charger's main health which is {{Armor|4|AV}} armor.",
+      "meaning": "DoT 一节的独立算例同样对 AP=AV 用 0.65（4 AP 火焰对 4 AV 主血降 35%），只作旁证，不并入直击弹丸路径",
+      "applies_to": "scope:dot_excluded_but_corroborating",
+      "located": true
+    }
+  ],
+  "multipliers": {
+    "greater": {
+      "value": 1,
+      "per_shot_damage_factor": "AP > AV：1.00",
+      "citation": "cite:ap_greater_100_percent"
+    },
+    "equal": {
+      "value": 0.65,
+      "per_shot_damage_factor": "AP = AV：0.65",
+      "citation": "cite:ap_equal_65_percent"
+    },
+    "less": {
+      "state": "NO_DAMAGE",
+      "value": 0,
+      "citation": "cite:ap_less_no_damage",
+      "note": "低穿=0 伤（跳弹）。本包用它阻断“有效比较”，不用它算 ceil(hp/0)=∞ 的 BTK"
+    }
+  },
+  "derived": {
+    "equal_multiplier": 0.65,
+    "greater_multiplier": 1,
+    "less_damage": "NO_DAMAGE",
+    "arithmetic": "65% 是“造成伤害”的百分比，因此作为乘数 0.65（不是 -65% 减免，也不是加伤）",
+    "stage": "AP 倍率与耐久混合同为乘性：engine 先 blend 再乘 AP 再 floor（每颗弹丸一次取整）；来源只写了“武器造成 X% 伤害”，没有规定 65% 与 blend/取整的先后 → review-record 里标为推断"
+  },
+  "change_record": {
+    "revision_history": {
+      "url": "https://helldivers.wiki.gg/api.php?action=query&prop=revisions&titles=Damage&rvprop=ids|timestamp|user|comment|size|flags&rvlimit=50&format=json&formatversion=2",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Damage.revisions.json",
+      "sha256": "f81b4346fbd091fe7176dd3b460a79b647b2054486a7adb8f767e770002715ac",
+      "revisions_recorded": 50,
+      "newest": {
+        "revid": 138884,
+        "parentid": 138337,
+        "timestamp": "2026-10-16T17:50:18Z",
+        "user": "YourOnlyNavigator",
+        "minor": false,
+        "size": 31231,
+        "comment": "/* Armor Penetration & Armor Values */"
+      },
+      "newest_five": [
+        {
+          "revid": 138884,
+          "parentid": 138337,
+          "timestamp": "2026-10-16T17:50:18Z",
+          "user": "YourOnlyNavigator",
+          "minor": false,
+          "size": 31231,
+          "comment": "/* Armor Penetration & Armor Values */"
+        },
+        {
+          "revid": 138337,
+          "parentid": 137573,
+          "timestamp": "2026-10-12T17:08:27Z",
+          "user": "AkuBC",
+          "minor": true,
+          "size": 31059,
+          "comment": "add link to zh page"
+        },
+        {
+          "revid": 137573,
+          "parentid": 137088,
+          "timestamp": "2026-09-30T21:21:53Z",
+          "user": "IamAhamburger",
+          "minor": true,
+          "size": 31045,
+          "comment": "Spore lung patch"
+        },
+        {
+          "revid": 137088,
+          "parentid": 137087,
+          "timestamp": "2026-09-29T23:28:29Z",
+          "user": "0lm",
+          "minor": true,
+          "size": 31046,
+          "comment": "/* List of Damage Types */  added blunt force mitigation and swapped a period for a comma, this would have been in my last edit except i missed it."
+        },
+        {
+          "revid": 137087,
+          "parentid": 135740,
+          "timestamp": "2026-09-29T23:25:40Z",
+          "user": "0lm",
+          "minor": true,
+          "size": 31015,
+          "comment": "/* List of Damage Types */  fixed something saying KDM makes you resist melee damage instead of impact, which it doesnt. whoever made that edit may have remembered that chargers and other large enemy melee DOES do impact dmg or something idk"
+        }
+      ]
+    },
+    "newest_revision_diff": {
+      "url": "https://helldivers.wiki.gg/api.php?action=compare&fromrev=138337&torev=138884&format=json&formatversion=2",
+      "local_path": "shared/hd2-loadout/calibration/ap-multipliers/raw/Damage.diff.138337-138884.json",
+      "sha256": "323497ca7f8cf4dade370912bc13a6c08d76afb48010343e29a4955007880667",
+      "fromrev": 138337,
+      "torev": 138884,
+      "touches_statements": false,
+      "visual_summary": "Line 121: Line 121: |- |- | {{Armor|9|AV}} | {{Armor|9|AV}} | None || {{Armor|9|AP}} || [[MS-11 Solo Silo|Solo Silo]] (First Explosion) | [[Gazer Spire]]&lt;ref name=gazersilo&gt;Please keep in mind that the Gazer Spire is immune to explosions, therefore the Solo Silo will do nothing to it.&lt;/ref&gt; || {{Armor|9|AP}} || [[MS-11 Solo Silo|Solo Silo]] (First Explosion) &lt;ref name=gazersilo/&gt; |- |- | {{Armor|10|AV}} | {{Armor|10|AV}}"
+    },
+    "note": "最新一次修订（138884，同节编辑）的差异只涉及 Gazer Spire 的脚注，没有出现三条判定句或 65%/100%/跳弹字样；因此 65% 不是抓取当天新改的数"
+  },
+  "open_items": [
+    {
+      "id": "ap_multiplier.rounding_order",
+      "reason": "来源写了耐久混合后向下取整，也写了等甲 65%，但没有规定 65% 在 blend 前、blend 后还是取整后生效；engine 每颗弹丸一次 floor",
+      "state": "NOT_STATED"
+    },
+    {
+      "id": "ap_multiplier.durable_portion",
+      "reason": "来源未单独说明 65% 只作用于标准伤害还是标准+耐久混合值（耐久算例只演示 AP>AV）",
+      "state": "NOT_STATED"
+    },
+    {
+      "id": "ap_multiplier.explosion_scope",
+      "reason": "爆炸段的等甲百分比未重述，本包不把 0.65 外推到爆伤",
+      "state": "OUT_OF_SCOPE"
+    },
+    {
+      "id": "ap_multiplier.dot_scope",
+      "reason": "DoT 有独立 0.65 算例，只作旁证；热伤/持续伤害路径不在本包",
+      "state": "OUT_OF_SCOPE"
+    },
+    {
+      "id": "ap_multiplier.angle_scope",
+      "reason": "26°-90° 的 AP 值与角度减伤倍率都未校准，不做数值",
+      "state": "NOT_CALIBRATED"
+    },
+    {
+      "id": "ap_multiplier.inline_citation",
+      "reason": "该三条判定在 wiki 正文里没有 <ref> 内联引用；来源本身是社区 wiki 叙述，不是官方数值表",
+      "state": "SOURCE_HAS_NO_INLINE_CITATION"
+    },
+    {
+      "id": "ap_multiplier.game_build",
+      "reason": "wiki 不记录游戏版本号，抓取时 game_build 无法绑定",
+      "state": "UNKNOWN"
+    },
+    {
+      "id": "ap_multiplier.game_verification",
+      "reason": "没有本局游戏实测或录像核对，不得升 verified",
+      "state": "NOT_VERIFIED"
+    }
+  ],
+  "problems": []
+}

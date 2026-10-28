@@ -1,0 +1,214 @@
+{
+  "schema": "hd2-fire-channel-evidence/1",
+  "date": "2026-10-28",
+  "source_scope": "Wiki search index current patch 1.007.201 and existing pinned snapshots; not in-game testing",
+  "sprays": [
+    {
+      "equipment": "FLAM-40",
+      "particle_standard_and_durable_fire": 2,
+      "fire_strength_per_spray_hit": 2,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": 150,
+      "url": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    },
+    {
+      "equipment": "FLAM-66",
+      "particle_standard_and_durable_fire": 2,
+      "fire_strength_per_spray_hit": 2,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": 150,
+      "url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    },
+    {
+      "equipment": "P-72",
+      "particle_standard_and_durable_fire": 2,
+      "fire_strength_per_spray_hit": 2,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": 150,
+      "url": "https://helldivers.wiki.gg/wiki/P-72_Crisper",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    },
+    {
+      "equipment": "B/FLAM-80",
+      "particle_standard_and_durable_fire": 3,
+      "fire_strength_per_spray_hit": 3,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": 225,
+      "url": "https://helldivers.wiki.gg/wiki/B/FLAM-80_Cremator",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    },
+    {
+      "equipment": "AX/FLAM-75",
+      "particle_standard_and_durable_fire": 2,
+      "fire_strength_per_spray_hit": 2,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": null,
+      "url": "https://helldivers.wiki.gg/wiki/Hot_Dog",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    },
+    {
+      "equipment": "A/FLAM-40",
+      "particle_standard_and_durable_fire": 8,
+      "fire_strength_per_spray_hit": 3,
+      "armor_penetration": "Heavy",
+      "panel_fire_dps": null,
+      "url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "locator": "Detailed Weapon Statistics / spray; Stats; A/FLAM-40 Change History 1.007.200",
+      "caveat": "Particle effective collision rate unknown; panel DPS excludes status generally per Damage Comparison, actual collision DPS not established."
+    }
+  ],
+  "status": {
+    "fire": {
+      "dps": 100,
+      "duration_s": 3,
+      "penetration": "Heavy",
+      "url": "https://helldivers.wiki.gg/wiki/Fire",
+      "locator": "Fire status table"
+    },
+    "burning_heavy": {
+      "dps": 200,
+      "duration_s": 1,
+      "penetration": "Heavy",
+      "url": "https://helldivers.wiki.gg/wiki/Fire",
+      "locator": "Burning Heavy; quote: An additional fire DPS",
+      "application": "Eagle and orbital napalm explosion tables explicitly list both Fire and BurningHeavy; ground-contact component not established. EAT projectile and explosions list BurningHeavy. G-8 table only lists Fire."
+    },
+    "threshold": {
+      "warrior_min": 2.1,
+      "warrior_max": 3.3,
+      "url": "https://helldivers.wiki.gg/wiki/Damage",
+      "locator": "Status Strength & Thresholds",
+      "rule": "buildup decays, minimum gives chance, maximum guarantees; exact general formula and target thresholds unknown"
+    }
+  },
+  "ground": {
+    "confirmed": "FLAM-66 ground contact quickly inflicts Fire; FLAM-40, P-72 and Hot Dog produce ground fire; actual independent contact damage not established",
+    "source": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher",
+    "locator": "Tactical Information",
+    "durations_seconds": {
+      "G-10": 20,
+      "G-13": 15,
+      "G-8": 27
+    },
+    "duration_sources": [
+      "https://helldivers.wiki.gg/wiki/G-10_Incendiary",
+      "https://helldivers.wiki.gg/wiki/Impact_Incendiary_Grenade",
+      "https://helldivers.wiki.gg/wiki/Immolation"
+    ],
+    "locator_durations": "Tactical Information / Change History",
+    "warning": "Explosion radius is not ground pool radius. Stationary overlapping fields, ground contact cadence, refresh and exit residual not established."
+  },
+  "upgrade": {
+    "multiplier": 1.25,
+    "applies_to": [
+      "FLAM-40",
+      "B/FLAM-80",
+      "A/FLAM-40",
+      "AX/FLAM-75",
+      "Eagle Napalm",
+      "Orbital Napalm",
+      "Incendiary Mines",
+      "EAT-700",
+      "Lumberer"
+    ],
+    "effect": "stratagem fire direct damage and damage-over-time; BurningHeavy also benefits",
+    "url": "https://helldivers.wiki.gg/wiki/Enhanced_Combustion",
+    "locator": "Upgrade Effect / Affected Stratagems",
+    "status_strength_or_trigger_time": "not established",
+    "primary_secondary": "not listed; no general application established"
+  },
+  "conflicts": [
+    {
+      "subject": "Flame Sentry",
+      "old": "fixed snapshot may predate 1.007.200",
+      "current": "8 per particle vs historical 3",
+      "url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "locator": "Change History 1.007.200"
+    },
+    {
+      "subject": "Eagle napalm fire pool duration",
+      "value": "12–20 seconds",
+      "status": "existing area-bindings identifies citation needed; not confirmed"
+    }
+  ],
+  "unknown": [
+    "Actual particle hit rate and distribution; no measured hit rate from panel DPS / particle damage",
+    "Precise Scavenger/Hunter fire thresholds, ignition timing and decay; no guarantee from 50/100 alone",
+    "Whether ground contact additionally deals independent direct damage",
+    "Ground fire geometry, contact rate, reapplication/refresh and residual after exiting",
+    "Same Fire stacking and BurningHeavy/Fire simultaneous damage not directly established; community claims not verified",
+    "Ground application of BurningHeavy for napalm, G-8 or EAT not established",
+    "Enhanced Combustion effect on status buildup or threshold not established"
+  ],
+  "explosions": {
+    "G-10": {
+      "fire_strength": 50,
+      "url": "https://helldivers.wiki.gg/wiki/G-10_Incendiary"
+    },
+    "G-13": {
+      "fire_strength": 100,
+      "url": "https://helldivers.wiki.gg/wiki/Impact_Incendiary_Grenade"
+    },
+    "G-8": {
+      "fire_strength": 100,
+      "url": "https://helldivers.wiki.gg/wiki/Immolation"
+    },
+    "Eagle napalm": {
+      "fire_strength": 100,
+      "burning_heavy_strength": 50,
+      "url": "https://helldivers.wiki.gg/wiki/Eagle_Napalm"
+    },
+    "Orbital napalm": {
+      "url": "https://helldivers.wiki.gg/wiki/Damage_Comparison",
+      "locator": "S_P20_IE explosion Fire • BurningHeavy"
+    },
+    "EAT-700": {
+      "fire_strength": 100,
+      "burning_heavy_strength": 50,
+      "url": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm",
+      "locator": "EAT-700 P_IE and P1_IE"
+    },
+    "note": "strength applies to explosion component; do not transfer to ground area or infer guaranteed ignition without target threshold."
+  },
+  "unresolved_searches": {
+    "date": "2026-10-28",
+    "threshold_candidates": {
+      "Scavenger": {
+        "min": 0.5,
+        "max": 1.0
+      },
+      "Hunter": {
+        "min": 1.0,
+        "max": 2.0
+      }
+    },
+    "status": "Historical community research; current game data not verified; not confirmed current values",
+    "sources": [
+      {
+        "url": "https://www.reddit.com/r/Helldivers/comments/1oeyqhh/something_i_want_to_tell_you_including_ah_about/",
+        "locator": "Author response to question about min/max values, 2025-10-24",
+        "finding": "Scavs [0.5,1], Hunters [1,2]; underlying snapshot not provided"
+      },
+      {
+        "url": "https://www.reddit.com/r/Helldivers/comments/1sxfo1f/a_helldiver_debunk_did_ah_really_butchered_fire/",
+        "locator": "Part 1 Terminids table, before/after 1.004.002 balance comparison",
+        "finding": "Scavenger all strains 0.5/1, Hunter all strains 1/2; current patch not verified"
+      }
+    ],
+    "refresh_and_ground": "No current direct game-data or controlled original research establishes Fire refresh timing or proves ground fire only applies Fire; community anecdotes conflict and older research predates changes.",
+    "panel_dps": {
+      "url": "https://helldivers.wiki.gg/wiki/Damage_Comparison",
+      "locator": "DPS calculation paragraph",
+      "quote": "DPS does not include damage from extra effects like explosive or incendiary.",
+      "qualification": "General comparison table statement; does not explicitly define flamethrower panel 150 derivation or observed collision rate.",
+      "engineering_judgment": "Under idealized nominal continuous contact, nominal DPS divided by per-particle direct damage times Fire strength is an equivalent buildup-rate approximation only if the same collision delivers both and nominal DPS represents direct particle damage. It is not an observed particle rate or established ignition time; threshold, buildup decay and collision timing remain unknown. Do not apply target damage multipliers or armor to base DPS before estimating equivalent collisions."
+    }
+  }
+}

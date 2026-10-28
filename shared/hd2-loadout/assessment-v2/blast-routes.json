@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "status": "EXPLICIT_STABLE_PLACEMENTS; NO_INFERRED_HIT_PROBABILITY",
+  "parts": {
+    "bile_titan:head": {
+      "explosion_resistance": 0.5,
+      "residual_threat_ms": 0,
+      "source_url": "https://helldivers.wiki.gg/wiki/Bile_Titan?oldid=138514",
+      "source_locator": "Anatomy: Head; HP1500, AV Heavy, durable95%, fatal Yes, Constitution None, ExDR50%",
+      "verified_on": "2026-10-27"
+    }
+  },
+  "placements": [
+    {
+      "equipment_id": "g_123_thermite",
+      "target_id": "bile_titan",
+      "part_id": "head",
+      "component_id": "G-123_THERMITE_E",
+      "distance_m": 0,
+      "line_of_sight": "clear",
+      "basis": "user",
+      "condition": "STUCK_TO_HEAD",
+      "repeatable": true,
+      "confirmed_rounds": 2,
+      "confirmation": "2026-10-27用户确认：头部两颗稳定杀",
+      "damage_policy": "EXPLOSION_ONLY; DOT_NOT_CREDITED_TO_HEAD; NO_EXTRA_PARTS"
+    }
+  ],
+  "conditional_one_shots": [
+    "g_123_thermite",
+    "g_48_giga_grenade",
+    "g_40_k_melta_mine",
+    "g_60_anti_tank_seeker"
+  ],
+  "one_shot_domain": {
+    "main_hp_strictly_below": 6000,
+    "requires": "USER_CONFIRMED_STABLE_EXTRA_PART_HIT",
+    "interpretation": "SUFFICIENT_KILL_CONDITION_ONLY; NOT_DAMAGE_PER_SHOT; NEVER_SCALE_BY_HP_RATIO"
+  }
+}

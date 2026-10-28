@@ -1,0 +1,648 @@
+{
+  "schema": "hd2-fire-gas-completion/1",
+  "source_note": "Wiki indexed text, accessed 2026-10-28; confirmed means Wiki data not live-game proof. Values marked candidate need binding verification.",
+  "records": [
+    {
+      "equipment_id": "ar_2_coyote",
+      "field": "fire_strength_per_projectile",
+      "value": 2,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-2_Coyote",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "AR-2 P: Status Fire; Status Strength 2",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "r_4_hyena",
+      "field": "fire_strength_per_projectile",
+      "value": 3,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/R-4_Hyena",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "R-4 P: Status Fire; Status Strength 3",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "sg_451_cookout",
+      "field": "fire_strength_per_pellet",
+      "value": 0.600000024,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Cookout",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "SG-451 P: Pellets x 20; Status Strength 0.600000024",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "sg_451_cookout",
+      "field": "pellets_per_shot",
+      "value": 20,
+      "unit": "pellets/shot",
+      "source_url": "https://helldivers.wiki.gg/wiki/Cookout",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "SG-451 P: Pellets x 20",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "sg_225ie_breaker_incendiary",
+      "field": "fire_strength_per_pellet",
+      "value": 0.6,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "SG-225IE has 0.6 status strength per pellet",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "smg_flam_34_stoker",
+      "field": "underbarrel_capacity",
+      "value": 50,
+      "unit": "fuel units",
+      "source_url": "https://helldivers.wiki.gg/wiki/Stoker",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Underbarrel Capacity 50; canister contains enough fuel for 6.1 seconds",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "smg_flam_34_stoker",
+      "field": "continuous_fire_time",
+      "value": 6.1,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Stoker",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "canister contains enough fuel for 6.1 seconds",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "smg_flam_34_stoker",
+      "field": "spray_dps",
+      "value": 150,
+      "unit": "damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Stoker",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "nearly identical to P-72 Crisper, sharing the same damage",
+      "status": "candidate",
+      "note": "P-72 panel DPS 150; spray collision rate not established"
+    },
+    {
+      "equipment_id": "vehicle_exo_51_lumberjack_exosuit",
+      "field": "flame_capacity",
+      "value": 500,
+      "unit": "fuel units",
+      "source_url": "https://helldivers.wiki.gg/wiki/Lumberer",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Capacity 500; allows for 62.35 seconds of sustained fire",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "vehicle_exo_51_lumberjack_exosuit",
+      "field": "continuous_fire_time",
+      "value": 62.35,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Lumberer",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "500 fuel capacity ... 62.35 seconds of sustained fire; ammo cannot be replenished",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "vehicle_exo_51_lumberjack_exosuit",
+      "field": "particle_damage",
+      "value": 8,
+      "unit": "fire damage/particle",
+      "source_url": "https://helldivers.wiki.gg/wiki/Lumberer",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "1.007.200: Increased damage on flame particle from 3 to 8",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "deployable_flame_sentry",
+      "field": "capacity_base_upgraded",
+      "value": [
+        600,
+        900
+      ],
+      "unit": "fuel units",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Ammo Standard 600; Upgraded 900",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "deployable_flame_sentry",
+      "field": "ignition_delay_approx",
+      "value": 1,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "requires ~1-second of ignition time before engaging targets within 35 meters",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "field": "fuel_capacity",
+      "value": 80,
+      "unit": "fuel units",
+      "source_url": "https://helldivers.wiki.gg/wiki/Hot_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "HOT DOGDR 0: Capacity 80",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "field": "backpack_canisters",
+      "value": 6,
+      "unit": "canisters",
+      "source_url": "https://helldivers.wiki.gg/wiki/Hot_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Max Rounds 6; Starting Rounds 6; Mags from Supply 6; Mags from Ammo Box 3",
+      "status": "candidate",
+      "note": "Wiki does not establish whether active canister is included in 6"
+    },
+    {
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "field": "spray_dps",
+      "value": 150,
+      "unit": "damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Hot_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "modified FLAM-66 Torcher ... otherwise has the same damage output",
+      "status": "candidate",
+      "note": "FLAM-66 panel 150; autonomous contact rate unknown"
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "spray_fire_strength",
+      "value": 3,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "G-142 PYROTECH S: Status Fire; Status Strength 3",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "spray_direct_damage",
+      "value": 0,
+      "unit": "damage/particle",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "G-142 PYROTECH S: Standard 0 Fire; vs. Durable 0 Fire",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "explosion_fire_strength",
+      "value": 100,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "G-142 PYROTECH E: Status Fire; Status Strength 100",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "spark_duration",
+      "value": 4,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "spinning sparks last for 4 seconds before it detonates",
+      "status": "confirmed",
+      "note": "Wiki also lists fuse 2.9 s; do not equate fuse and spark duration."
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "ground_fire_after_detonation",
+      "value": 6,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "lingering fire ... remains for 6 seconds after detonating",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "field": "max_rounds",
+      "value": 6,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/Pyrotech",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Max Rounds 6",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "spray_damage",
+      "value": 1,
+      "unit": "gas damage/particle",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Spray: Standard 1 Gas; vs. Durable 1 Gas",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "gas_var2_strength",
+      "value": 0.5,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Status Gas_Var2; Status Strength 0.5",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "confusion_var2_strength",
+      "value": 0.5,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Second Status Gas_Confusion_Var2; Status Strength 0.5",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "gas_var2_duration",
+      "value": 10,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas Var2: Status Duration 10 sec",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "gas_var2_dps",
+      "value": 25,
+      "unit": "gas damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas Var2: Standard 25 Gas; vs. Durable 25 Gas",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "confusion_var2_duration",
+      "value": 9,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas Confusion Var2: Status Duration 9 sec",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "spray_capacity",
+      "value": 100,
+      "unit": "fuel units",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "DOG BREATHDR 0: Capacity 100",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "canisters",
+      "value": 6,
+      "unit": "canisters",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Max Rounds 6; Starting Rounds 6; Mags from Supply 6; Mags from Ammo Box 3",
+      "status": "confirmed",
+      "note": "Canister count inclusion of active unit unknown."
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "target_range",
+      "value": 20,
+      "unit": "m",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "engagement distance of 20-meters",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "spray_start_distance",
+      "value": 5,
+      "unit": "m",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "begin spraying gas when within 5-metres of the target unit",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "targeting",
+      "value": "prioritize unconfused targets; switch after effect",
+      "unit": "text",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Once an enemy is affected by gas the drone will move on and target another unaffected enemy",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "manual_recall_reload",
+      "value": false,
+      "unit": "boolean",
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "won't change its current canister when manually recalled; each ... needs to be completely depleted",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "gas_confusion_duration",
+      "value": 5,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas Confusion: Status Duration 5 sec",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "gas_duration",
+      "value": 6,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas: Status Duration 6 sec",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "gas_dps",
+      "value": 25,
+      "unit": "damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Gas: Standard 25 Gas; vs. Durable 25 Gas",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "cloud_duration",
+      "value": 15,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "S P6 IE: AoE Duration 15 s; gas ... stops dealing damage after 15",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "gas_and_confusion_strength",
+      "value": [
+        100,
+        100
+      ],
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Status Gas Strength 100; Second Status Gas_Confusion Strength 100",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "deployable_incendiary_mines",
+      "field": "fire_damage_definition",
+      "value": 100,
+      "unit": "damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Status_Effects",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Fire damage ... Heavy armor ... duration of 3 seconds; MD-14 Incendiary Mines listed",
+      "status": "candidate",
+      "note": "Local snapshot explosion names Fire and DPS Fire 100 Heavy, but does not explicitly link status duration or strength; 3 s is general Fire definition."
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "warrior_threshold_min_max",
+      "value": [
+        2.1,
+        3.3
+      ],
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "Warrior has a minimum trigger threshold of 2.1 & 3.3 maximum for fire DoT",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "buildup_rule",
+      "value": "accumulates and decays; chance at minimum; guaranteed at maximum",
+      "unit": "text",
+      "source_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "status strength or buildup ... chance ... guaranteed ... maximum ... decay",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "deployable_incendiary_mines",
+      "field": "fire_strength_and_ground_fire",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Status_Effects",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "scavenger_hunter_thresholds_decay_rate_and_refresh",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Damage",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "burningheavy_application_stacking",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Fire",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "ground_fire_radius_and_contact_refresh",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "smg_flam_34_stoker",
+      "field": "reload_and_fuel_replenishment",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Stoker",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "vehicle_exo_51_lumberjack_exosuit",
+      "field": "panel_spray_dps",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Lumberer",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "deployable_flame_sentry",
+      "field": "fuel_rate_and_panel_dps",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "field": "fuel_rate_reload_and_target_switch_timing",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Hot_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "field": "fuel_rate_reload_and_target_switch_timing",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Gas_Dog",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "field": "bombs_per_strike",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "No reliable numeric value located in retrieved source.",
+      "status": "unknown",
+      "note": ""
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "burningheavy_dps",
+      "value": 200,
+      "unit": "fire damage/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Status_Effects",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "BurningHeavy: Status Duration 1 sec; Standard 200 Fire; vs. Durable 200 Fire; Direct Heavy",
+      "status": "confirmed",
+      "note": "Does not establish simultaneous damage stacking with Fire"
+    },
+    {
+      "equipment_id": "global_fire",
+      "field": "burningheavy_duration",
+      "value": 1,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Status_Effects",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "BurningHeavy: Status Duration 1 sec",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "eagle_napalm_airstrike",
+      "field": "explosion_fire_burningheavy_strength",
+      "value": [
+        100,
+        50
+      ],
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Napalm",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "S P3 IE: Status Fire Strength 100; Second Status BurningHeavy Strength 50",
+      "status": "confirmed",
+      "note": "Explosion only; ground flame not established"
+    },
+    {
+      "equipment_id": "support_eat_700_incendiary",
+      "field": "projectile_burningheavy_strength",
+      "value": 50,
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "EAT-700 P: Status BurningHeavy; Status Strength 50",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "equipment_id": "support_eat_700_incendiary",
+      "field": "explosion_fire_burningheavy_strength",
+      "value": [
+        100,
+        50
+      ],
+      "unit": "strength",
+      "source_url": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm",
+      "accessed_at": "2026-10-28",
+      "exact_evidence": "EAT-700 P IE and P1 IE: Fire Strength 100; BurningHeavy Strength 50",
+      "status": "confirmed",
+      "note": "Distinct impact and submunition explosions; actual contact/overlap unresolved"
+    }
+  ]
+}
