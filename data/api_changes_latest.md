@@ -1,11 +1,11 @@
 # HD2 API 内容变更
 
-- 检测时间（UTC）：2026-10-28T15:46:54Z
+- 检测时间（UTC）：2026-10-28T15:51:09Z
 - 当前银河效果定义：312 条
 
 ## CHANGES ON ZEA RUGOSIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1402` — 这是比无票者更加暴力的，被光能者奴役的选民，既然如此，我们也以暴力镇压他们。
 - `1403` — 这是比无票者更加暴力的，被光能者奴役的选民，既然如此，我们也以暴力镇压他们。
@@ -14,56 +14,56 @@
 
 ## CHANGES ON FORT UNION
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1287` — NEW HOPE CITY
 
 ## CHANGES ON ZEGEMA PARADISE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1282` — HELLDIVER TRAINING FACILITIES
 
 ## CHANGES ON FORT SANCTUARY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1292` — NEW YEARNING CITY
 
 ## CHANGES ON HELLMIRE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1304` — OUTPOST ALPHA
 
 ## CHANGES ON EMERIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1291` — NEW ASPIRATION CITY
 
 ## CHANGES ON MASTIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1236` — CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY
 - `1272` — Galactic effect type 69
 
 ## CHANGES ON IVIS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1252` — FRACTURED PLANET
 
 ## CHANGES ON MERIDIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1229` — MERIDIAN BLACK HOLE
 
 ## CHANGES ON ESKER
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1193` — Gloom Border
@@ -77,58 +77,58 @@
 
 ## CHANGES ON TERREK
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON CRIMSICA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON URSICA XI
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1279` — ARSENAL AUGMENTATION: M-102 FAST RECONNAISSANCE VEHICLE
 
 ## CHANGES ON MORADESH
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1252` — FRACTURED PLANET
 
 ## CHANGES ON GRAFMERE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1327` — Adds a galactic map marker
 
 ## CHANGES ON CALYPSO
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1190` — Unreachable
 - `1418` — Adds a galactic map marker
 
 ## CHANGES ON AURORA BAY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1239` — JET BRIGADE FACTORIES
 - `1363` — PILOT SHORTAGE
 
 ## CHANGES ON PENTA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1246` — CAMPAIGN BLOCKER
 - `1352` — CONVENTIONAL BLACK HOLE
 
 ## CHANGES ON ERSON SANDS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1193` — Gloom Border
 - `1246` — CAMPAIGN BLOCKER
@@ -138,7 +138,7 @@
 
 ## CHANGES ON SOCORRO III
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1193` — Gloom Border
@@ -148,19 +148,19 @@
 
 ## CHANGES ON BORE ROCK
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON FENRIR III
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1234` — CENTER OF SCIENCE
 
 ## CHANGES ON TURING
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1197` — Xenoentomology Center
 - `1366` — LESS BATTLEFIELD AMMO
@@ -168,52 +168,52 @@
 
 ## CHANGES ON ANGEL'S VENTURE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1241` — FRACTURED PLANET
 
 ## CHANGES ON DARIUS II
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON ACHERNAR SECUNDUS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1232` — FACTORY HUB
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON ACHIRD III
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON AFOYAY BAY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1344` — PANDORA BASE
 
 ## CHANGES ON AIN-5
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1379` — APPROPRIATORS
 - `1380` — APPROPRIATORS (Enemies)
 
 ## CHANGES ON BELLATRIX
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1400` — 区域内存在SEAF部队，且战场上会周期性投放多种装备的SEAF重装部队。
 - `1401` — 区域内存在SEAF部队，且战场上会周期性投放多种装备的SEAF重装部队。
 
 ## CHANGES ON CHOEPESSA IV
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1400` — 区域内存在SEAF部队，且战场上会周期性投放多种装备的SEAF重装部队。
 - `1401` — 区域内存在SEAF部队，且战场上会周期性投放多种装备的SEAF重装部队。
@@ -221,45 +221,45 @@
 
 ## CHANGES ON CHORT BAY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1365` — ORBITAL FLUCTUATIONS
 
 ## CHANGES ON CLAORELL
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1198` — Deep Mantle Forge Complex
 
 ## CHANGES ON CLASA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1353` — DATA CENTER
 
 ## CHANGES ON ENULIALE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1190` — Unreachable
 - `1193` — Gloom Border
 
 ## CHANGES ON EPSILON PHOENCIS VI
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1190` — Unreachable
 
 ## CHANGES ON ERATA PRIME
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON FORI PRIME
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1243` — PREDATOR STRAIN (Enemies)
 - `1245` — PREDATOR STRAIN
@@ -267,65 +267,65 @@
 
 ## CHANGES ON GRAND ERRANT
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON KARLIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1402` — 这是比无票者更加暴力的，被光能者奴役的选民，既然如此，我们也以暴力镇压他们。
 - `1403` — 这是比无票者更加暴力的，被光能者奴役的选民，既然如此，我们也以暴力镇压他们。
 
 ## CHANGES ON MEISSA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1387` — Adds a galactic map marker
 
 ## CHANGES ON MENKENT
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1202` — THE JET BRIGADE (Enemies)
 - `1203` — THE JET BRIGADE
 
 ## CHANGES ON MERAK
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1246` — CAMPAIGN BLOCKER
 
 ## CHANGES ON MINTORIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1324` — ULTRAMAFIC MINE
 
 ## CHANGES ON NABATEA SECUNDUS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1190` — Unreachable
 
 ## CHANGES ON NAVI VII
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1190` — Unreachable
 
 ## CHANGES ON NIVEL 43
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON OSHAUNE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1303` — RUPTURE STRAIN (ENEMIES)
 - `1306` — DRAGONROACHES (Enemies)
@@ -337,69 +337,69 @@
 
 ## CHANGES ON PARTION
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1303` — RUPTURE STRAIN (ENEMIES)
 - `1310` — RUPTURE STRAIN
 
 ## CHANGES ON PHERKAD SECUNDUS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON SIEMNOT
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1377` — MINDLESS MASSES (Enemies)
 - `1378` — MINDLESS MASSES
 
 ## CHANGES ON USTOTU
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1248` — THE INCINERATION CORPS (Enemies)
 - `1249` — THE INCINERATION CORPS
 
 ## CHANGES ON WASAT
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1248` — THE INCINERATION CORPS (Enemies)
 - `1249` — THE INCINERATION CORPS
 
 ## CHANGES ON VEGA BAY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1248` — THE INCINERATION CORPS (Enemies)
 - `1249` — THE INCINERATION CORPS
 
 ## CHANGES ON ZZANIAH PRIME
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1360` — CYBORGS (Enemies)
 - `1361` — CYBORGS
 
 ## CHANGES ON DIASPORA X
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1190` — Unreachable
 - `1193` — Gloom Border
 
 ## CHANGES ON GEMSTONE BLUFFS
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1190` — Unreachable
 
 ## CHANGES ON ZAGON PRIME
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1246` — CAMPAIGN BLOCKER
@@ -410,7 +410,7 @@
 
 ## CHANGES ON OMICRON
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1188` — Dense Gloom
 - `1306` — DRAGONROACHES (Enemies)
@@ -426,7 +426,7 @@
 
 ## CHANGES ON CYBERSTAN
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1246` — CAMPAIGN BLOCKER
 - `1360` — CYBORGS (Enemies)
@@ -434,38 +434,38 @@
 
 ## CHANGES ON FURY
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1248` — THE INCINERATION CORPS (Enemies)
 - `1249` — THE INCINERATION CORPS
 
 ## CHANGES ON NEW INSIGHT
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1190` — Unreachable
 
 ## CHANGES ON WAYWARD
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1190` — Unreachable
 
 ## CHANGES ON BRILLIANCE
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON FRONTERIA
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1395` — TCS + 是一项旨在针对“阴霾”威胁的天体包围圈工程。在建成该设施的星球上，其将会不断地向大气中喷洒对终结族极度有害的熏香味气体。该工程将会部署到复数个星球以完成对“阴霾”的包围。
 
 ## CHANGES ON BASQUINE VIII
 
-### Effect(s) removed ❌
+### Effect(s) added ✅
 
 - `1377` — MINDLESS MASSES (Enemies)
 - `1378` — MINDLESS MASSES
