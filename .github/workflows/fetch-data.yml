@@ -8,7 +8,12 @@ on:
   #   已废弃 = 本机 cron（必须一直开着电脑）。
   schedule:
     - cron: '5 * * * *'
-  workflow_dispatch:   # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      force_api_change_report:
+        description: "强制生成并提交本次 API 侦测报告（即使没有变化）"
+        type: boolean
+        default: false
   repository_dispatch:
     types: [fetch-now]  # 支持外部调用触发（如翻译推送后）
 
@@ -57,15 +62,21 @@ jobs:
         id: api-changes
         continue-on-error: true
         run: |
+          force_args=()
+          if [ "$FORCE_API_CHANGE_REPORT" = "true" ]; then
+            force_args+=(--force-latest-report)
+          fi
           python scripts/detect_api_changes.py \
             --report "$RUNNER_TEMP/api_changes_report.md" \
             --latest-report "data/api_changes_latest.md" \
-            --github-output "$GITHUB_OUTPUT"
+            --github-output "$GITHUB_OUTPUT" \
+            "${force_args[@]}"
           if [ -s "$RUNNER_TEMP/api_changes_report.md" ]; then
             cat "$RUNNER_TEMP/api_changes_report.md" >> "$GITHUB_STEP_SUMMARY"
           fi
         env:
           PYTHONIOENCODING: utf-8
+          FORCE_API_CHANGE_REPORT: ${{ inputs.force_api_change_report || false }}
 
       - name: Announce API content change
         if: steps.api-changes.outputs.has_changes == 'true'

@@ -410,6 +410,11 @@ def main() -> int:
         action="store_true",
         help="强制把当前完整快照写成新基线，不发送变更",
     )
+    parser.add_argument(
+        "--force-latest-report",
+        action="store_true",
+        help="即使本次没有变化，也写出 --latest-report（用于手动 CI 取证）",
+    )
     args = parser.parse_args()
 
     warnings: list[str] = []
@@ -476,6 +481,8 @@ def main() -> int:
         )
         if args.report:
             _write_text(args.report, report)
+        if args.force_latest_report:
+            _write_text(args.latest_report, report)
         _write_github_output(
             args.github_output,
             {
@@ -541,7 +548,7 @@ def main() -> int:
     )
     if args.report:
         _write_text(args.report, report)
-    if changes.has_changes:
+    if changes.has_changes or args.force_latest_report:
         _write_text(args.latest_report, report)
 
     status = "ok" if effects_ok and planets_ok else "degraded"
