@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3970,
+   "published_at": "2026-10-28T10:38:32Z",
+   "source": "dispatch",
+   "original": "NEW STRATEGIC OPPORTUNITY\n\nA Terminid outbreak has occurred on Nivel 43, likely due to the splintered remnants of the eco-fascistic terrorist network culled in the Counterdissident Hammer campaign. While the threat is assessed as very low, it presents an opportunity to capture vital footage of their wanton aggression. \n\nHelldivers must aid in this virtuously expedient cause and liberate Nivel 43. Securing the footage will reduce remaining major order requirement by 50%.",
+   "translated": "全新战略机遇\n\n尼维尔43发生了一场终结族暴乱，主谋可能是曾在“痛击异见分子之锤”战役中被击溃的生态法西斯恐怖主义犯罪网络的残余势力。虽然该事件的威胁评估为极低水平，但却是一个拍摄关键镜头的绝佳机会，记录下他们肆意妄为的侵略行径。\n\n绝地潜兵必须协助这次紧迫的正义之举，解放尼维尔43。若能完成拍摄，就能将剩余的重要指令需求减少50%。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85243672,
+   "official_message": "<i=3>全新战略机遇</i>\n\n<i=1>尼维尔43</i>发生了一场终结族暴乱，主谋可能是曾在“痛击异见分子之锤”战役中被击溃的生态法西斯恐怖主义犯罪网络的残余势力。虽然该事件的威胁评估为极低水平，但却是一个拍摄关键镜头的绝佳机会，记录下他们肆意妄为的侵略行径。\n\n绝地潜兵必须协助这次紧迫的正义之举，解放<i=1>尼维尔43</i>。若能完成拍摄，就能将剩余的重要指令需求减少50%。",
+   "translated_at": "2026-10-28T13:54:21Z"
+  },
+  {
    "id": 3969,
    "published_at": "2026-10-27T14:43:21Z",
    "source": "dispatch",
@@ -126,30 +139,17 @@
    "published_war_seconds": 84892860,
    "official_message": "<i=3>未完成重要指令</i>\n\n某些领土理应回归自由的怀抱，却受到了敌人侵略的阻碍。\n\n<i=1>麦拉芬蒙河纪念碑与人权审讯中心</i>项目举步维艰，毫无疑问，民主的敌人们正在为此幸灾乐祸。只要我们的资源仍落在敌人手中，牺牲的英雄就会遭受极大的侮辱。",
    "translated_at": "2026-10-24T13:52:15Z"
-  },
-  {
-   "id": 3960,
-   "original": "NEW MAJOR ORDER\n\nTo honor the fallen, the government has authorized the construction of The Malevelon Creek Memorial & Interrogation Center for Human Rights. However, enemy aggression threatens this project. \n\nTheir occupation of Super Earth territories rich in rare metals, crude oil, and radioactive isotopes, among others, steals from the prosperity of all. This is an insult to the memory of our heroes. The Helldivers are ordered to liberate FURY, ESKER, and ZEA RUGOSIA.",
-   "translated": "新重要指令\n\n为了缅怀阵亡将士，政府已批准建造麦拉芬蒙河纪念碑与人权审讯中心。然而，敌人的侵略正威胁着该项目。\n\n他们占领了超级地球的领土，那里富含稀有金属、原油和放射性同位素等资源，无异于窃取全人类的繁荣。简直是对我们逝去英雄的侮辱。绝地潜兵奉命解放费里、艾斯克尔和泽亚鲁戈西亚。",
-   "published_at": "2026-10-20T09:09:25Z",
-   "translated_at": "2026-10-21T10:41:35Z",
-   "source": "dispatch",
-   "engine": "arrowhead-official",
-   "text_source": "official_zh",
-   "mt": false,
-   "published_war_seconds": 84547199,
-   "official_message": "<i=3>新重要指令</i>\n\n为了缅怀阵亡将士，政府已批准建造<i=1>麦拉芬蒙河纪念碑与人权审讯中心</i>。然而，敌人的侵略正威胁着该项目。\n\n他们占领了超级地球的领土，那里富含稀有金属、原油和放射性同位素等资源，无异于窃取全人类的繁荣。简直是对我们逝去英雄的侮辱。绝地潜兵奉命解放<i=1>费里、艾斯克尔和泽亚鲁戈西亚</i>。"
   }
  ],
  "strategic": {
-  "active": false,
-  "status": "failed",
-  "status_cn": "已失败",
-  "dispatch_id": 3906,
-  "planet_en": null,
+  "active": true,
+  "status": "active",
+  "status_cn": "进行中",
+  "dispatch_id": 3970,
+  "planet_en": "Nivel 43",
   "published": null,
-  "computed_at": "2026-10-28T06:59:57Z",
-  "planet_index": null
+  "computed_at": "2026-10-28T13:54:22Z",
+  "planet_index": 211
  },
  "text_source": "arrowhead_official",
  "mo_state": "active",
@@ -157,7 +157,7 @@
   {
    "event_id": 1501078,
    "id32": 1905875691,
-   "title": "重要指令",
+   "title": "鼓舞人心的重演",
    "message": "真理部正在制作一部名为《民主狙击手》的励志教育片。该电影的收益将用于建造麦拉芬蒙河纪念碑与人权审讯中心，以及为阵亡士兵家属发放抚恤金。\n\n本片以戏剧化的手法，重现了第二次星系战争史上最致命的绝地潜兵的故事，这名战士在32分钟的服役时间之内，可确认的击杀数超过4000。本片由库尔特·卡尔霍恩主演，他在2186年被评为最具民主风范的单身汉。\n\n这部电影的大部分内容将来自战场实拍。绝地潜兵奉命击杀<i=1>300,000,000个Terminids、65,000,000个Illuminates以及50,000,000个Automatons</i>，确保该故事能呈现出符合预期的视觉奇观。\n",
    "plain_text": "真理部正在制作一部名为《民主狙击手》的励志教育片。该电影的收益将用于建造麦拉芬蒙河纪念碑与人权审讯中心，以及为阵亡士兵家属发放抚恤金。\n\n本片以戏剧化的手法，重现了第二次星系战争史上最致命的绝地潜兵的故事，这名战士在32分钟的服役时间之内，可确认的击杀数超过4000。本片由库尔特·卡尔霍恩主演，他在2186年被评为最具民主风范的单身汉。\n\n这部电影的大部分内容将来自战场实拍。绝地潜兵奉命击杀300,000,000个Terminids、65,000,000个Illuminates以及50,000,000个Automatons，确保该故事能呈现出符合预期的视觉奇观。",
    "message_id32": 4046929217,
@@ -203,18 +203,6 @@
    "mt": false
   },
   {
-   "event_id": 1501082,
-   "id32": 2224135745,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 85234240,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
    "event_id": 1501086,
    "id32": 1706228947,
    "title": "",
@@ -249,22 +237,46 @@
    "expires_at_war_seconds": 85344477,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501090,
+   "id32": 0,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 4087458651,
+   "expires_at_war_seconds": 85329962,
+   "text_source": "official_untranslated",
+   "mt": false
+  },
+  {
+   "event_id": 1501091,
+   "id32": 449698572,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85330340,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-28T06:59:55Z",
+  "source_version": "2026-10-28T13:54:20Z",
   "war_id": 801,
-  "war_time_seconds": 85230550,
-  "last_success_at": "2026-10-28T06:59:55Z",
+  "war_time_seconds": 85255420,
+  "last_success_at": "2026-10-28T13:54:20Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-28T06:59:55Z",
-  "retrieved_at": "2026-10-28T06:59:55Z",
+  "source_version": "2026-10-28T13:54:20Z",
+  "retrieved_at": "2026-10-28T13:54:20Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -275,7 +287,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 300000000,
-    "progress": 83462497,
+    "progress": 89519741,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -292,7 +304,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 65000000,
-    "progress": 24707041,
+    "progress": 25802184,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
