@@ -1,0 +1,63 @@
+<!-- The switch statement is set up for a future state where AV and AP explanations are in different sections or on different pages. Currently this switch statement is not needed, it is only there for future proofing --><includeonly><span class="Templateicons icon-outline">{{#vardefine:type|{{#switch: {{uc:{{{2|av}}}}}
+| AP = Damage#Armor Penetration & Armor Values
+| AV = Damage#Armor Penetration & Armor Values
+| #default = ["Type" Syntax Error]}}}}{{#vardefine:value|{{#ifexpr: {{{1|0}}} > 10 | Indestructible | {{#ifexpr: {{{1|0}}} < 0 | No Hitbox | {{#switch: {{{1|0}}}
+| 0 = Unarmored
+| 1 = Very Light
+| 2 = Light
+| 3 = Medium
+| 4 = Heavy
+| 5 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank I | Tank I}}
+| 6 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank II | Tank II}}
+| 7 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank III | Tank III}}
+| 8 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank IV | Tank IV}}
+| 9 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank V | Tank V}}
+| 10 = {{#ifeq: {{uc:{{{2|av}}}}} | AP | Anti-Tank VI | Tank VI}}
+| #default = ["Value" Syntax Error]}}}}}}}}{{#ifexpr: {{{1|0}}} > 11 | [[File:Armor {{uc:{{{2|AV}}}}}11 Icon.png|link={{#var:type}}|alt=]]{{#ifeq:{{{3|}}}|notext||&nbsp;[[{{#var:type}}|{{#var:value}}]]}}
+| {{#ifexpr: {{{1|0}}} < 0
+   | [[File:Armor {{uc:{{{2|AV}}}}}-1 Icon.png|link={{#var:type}}|alt=]]{{#ifeq:{{{3|}}}|notext||&nbsp;[[{{#var:type}}|{{#var:value}}]]}}
+   | [[File:Armor {{uc:{{{2|AV}}}}}{{{1|0}}} Icon.png|link={{#var:type}}|alt=]]{{#ifeq:{{{3|}}}|notext||&nbsp;[[{{#var:type}}|{{#var:value}}]]}}}}}}</span></includeonly><noinclude>{{doc}}<templatedata>
+{
+	"params": {
+		"1": {
+			"label": "Value",
+			"description": "Numerical value representing strength of Armor or Penetration",
+			"example": "3",
+			"type": "content",
+			"suggestedvalues": [
+				"0",
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+				"7",
+				"8",
+				"9",
+				"10"
+			],
+			"required": true
+		},
+		"2": {
+			"label": "Type",
+			"description": "Type of displayed value",
+			"example": "AV",
+			"type": "content",
+			"suggestedvalues": [
+				"AV",
+				"AP"
+			],
+			"required": true
+		},
+		"3": {
+			"label": "No Text",
+			"description": "If set to 'notext', the template will not output the text part",
+			"example": "notext",
+			"type": "content",
+			"required": false
+		}
+	},
+	"description": "The {{Armor}} template is used to display Armor Values and Armor Penetration based on a value between 0 and 10. "
+}
+</templatedata></noinclude>

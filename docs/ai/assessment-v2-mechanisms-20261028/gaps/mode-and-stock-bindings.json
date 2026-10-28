@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "source_policy": "Wiki快照与本轮原生检索；非游戏内实测；来源条目分开列，不直接填补未证时序",
+  "items": [
+    {
+      "id": "sg_20_halt",
+      "source_url": "https://helldivers.wiki.gg/wiki/SG-20_Halt",
+      "snapshot_revision": 139665,
+      "page_version": "1.007.201",
+      "source_locator": "Ammo; Tactical Information; Detailed Weapon Statistics: SG-20 P, SG-20 P1",
+      "stock": {
+        "flechette_tube_capacity": 8,
+        "stun_tube_capacity": 8,
+        "reserve_shared_max": 60,
+        "starting_reserve_source_value": 32,
+        "supply_box_refill": 60,
+        "ammo_box_refill": 30
+      },
+      "reload_s": {
+        "first_empty": 1.25,
+        "first_partial": 0.33,
+        "each_subsequent": 0.2,
+        "full_listed": 3.7
+      },
+      "modes": [
+        {
+          "name": "flechette",
+          "projectile": "SG-20_P",
+          "pellets": 11,
+          "normal_per_pellet": 35,
+          "durable_per_pellet": 10,
+          "penetration": "Medium"
+        },
+        {
+          "name": "stun",
+          "projectile": "SG-20_P1",
+          "pellets": 20,
+          "normal_per_pellet": 6,
+          "durable_per_pellet": 2,
+          "penetration": "Light",
+          "status": "Stun Large",
+          "status_duration_s": 5
+        }
+      ],
+      "conflicts": [
+        "16 capacity in detailed table is combined two tubes; reserve 60 is shared, not 60 per mode."
+      ],
+      "unknown": [
+        "initial allocation per tube not explicitly specified",
+        "tube switching time",
+        "reload timing applicability to both tubes and 3.7s exact start/end scope not explicitly detailed",
+        "actual pellet hits"
+      ]
+    },
+    {
+      "id": "heavy_support_gr_8_recoilless_rifle",
+      "source_url": "https://helldivers.wiki.gg/wiki/GR-8_Recoilless_Rifle",
+      "snapshot_revision": 139045,
+      "current_wiki_revision": 140365,
+      "page_version": "1.007.201",
+      "source_locator": "Stats; Functionality; GR-8 P1 and GR-8 P1 IE",
+      "stock": {
+        "loaded": 1,
+        "backpack_reserve": 5,
+        "supply_refill": 3,
+        "ammo_box_refill": 1
+      },
+      "reload_s": {
+        "solo": 6.1,
+        "solo_upgraded": 5.5,
+        "assisted": 1.7
+      },
+      "modes": [
+        {
+          "name": "HE",
+          "projectile": "GR-8_P1",
+          "projectile_normal": 750,
+          "projectile_durable": 750,
+          "projectile_ap": "Anti-Tank I",
+          "explosion": "GR-8_P1_IE",
+          "inner_damage": 800,
+          "inner_durable": 800,
+          "inner_radius_m": 3,
+          "outer_radius_m": 7.5,
+          "shockwave_radius_m": 12,
+          "inner_ap": "Heavy",
+          "outer_ap": "Medium"
+        },
+        {
+          "name": "HEAT",
+          "projectile": "GR-8_P",
+          "explosion": "GR-8_P_IE"
+        }
+      ],
+      "conflicts": [
+        "Functionality prose says HE inner radius 3.5m; detailed table says 3m. Prefer detailed table provisionally while retaining conflict."
+      ],
+      "unknown": [
+        "whether mode change has time cost",
+        "explicit verification of exact shared stock semantics across programmed ammunition",
+        "actual target exposure and impact position"
+      ]
+    },
+    {
+      "id": "support_cqc_20_breaching_hammer",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+      "snapshot_revision": 139216,
+      "page_version": "1.007.201",
+      "source_locator": "Detailed Weapon Statistics; Change History 1.007.200",
+      "stock": {
+        "loaded_charge_capacity": 1,
+        "maximum_spare": 10,
+        "starting_spare_source_value": 7,
+        "supply_refill": 7,
+        "ammo_box_refill": 3
+      },
+      "reload_s": {
+        "standard": 1,
+        "upgraded": 0.9
+      },
+      "components": {
+        "melee": "CQC-20_BREACHING_HAMMER_dm",
+        "charge_explosion": "CQC-20_BREACHING_HAMMER_IE"
+      },
+      "conflicts": [
+        "normalized-feeds reserve 7 conflates previous maximum with current 10; 7 is also listed as Starting Magazines, a separate field."
+      ],
+      "unknown": [
+        "explicit actual starting loaded state",
+        "swing interval and target access",
+        "same target exact melee plus blast damage resolution"
+      ]
+    },
+    {
+      "id": "support_ms_11_missile_silo",
+      "source_url": "https://helldivers.wiki.gg/wiki/Stratagem_Previews",
+      "snapshot_revision": 136642,
+      "source_locator": "MS-11 Solo Silo: a silo that fits one single powerful missile",
+      "stock": {
+        "missiles_per_silo": 1,
+        "stratagem_uses": "unlimited",
+        "base_cooldown_s": 180
+      },
+      "conflicts": [],
+      "unknown": [
+        "remote targeting and missile flight duration",
+        "availability and deployment conditions after launch",
+        "impact/main explosion timing and shared-target resolution"
+      ]
+    },
+    {
+      "id": "backpack_b_md_c4_pack",
+      "source_url": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+      "snapshot_revision": 139309,
+      "page_version": "1.007.201",
+      "source_locator": "Weapon Details; Functionality; Tactical Information",
+      "stock": {
+        "held": 1,
+        "backpack_max": 6,
+        "supply_refill": 3,
+        "ammo_box_refill": 1
+      },
+      "reload_s": {
+        "standard": 1.1,
+        "upgraded": 1
+      },
+      "conflicts": [
+        "Functionality says instantaneous trigger; Tactical Information says short delay after trigger pull.",
+        "Detailed table has Mags from Supply 1; infobox says 3 charges; latter explicitly describes weapon ammo, backpack source interpretation remains unresolved."
+      ],
+      "unknown": [
+        "remote delay duration",
+        "throw, switch and placement times",
+        "whether reload occurs automatically and exact transition"
+      ]
+    },
+    {
+      "id": "backpack_ax_ar_23_guard_dog",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "snapshot_revision": 136994,
+      "source_locator": "Detailed Weapon Statistics AX/AR-23 GUARD DOGDR 0; Functionality",
+      "stock": {
+        "magazine_capacity": 45,
+        "reserve_magazines_max": 8,
+        "supply_refill_magazines": 8,
+        "ammo_box_refill_magazines": 4
+      },
+      "projectile": "AR-23P_P",
+      "fire_rate_rpm": 660,
+      "conflicts": [],
+      "unknown": [
+        "return plus reload and redeploy duration",
+        "actual deployed initial magazine fill",
+        "target allocation and uninterrupted contact"
+      ]
+    }
+  ]
+}

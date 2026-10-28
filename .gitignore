@@ -87,3 +87,8 @@ HD2_Wiki/data/wiki/zh/*啓琛_md
 # 本地维护工具（GitHub API 推送/取文件/日志/自检脚本）—— **不发布、不推送**
 # 放仓库里而不是 %TEMP%：TEMP 每个会话都会轮换，工具每次重建（2026-09-25 已踩三次）
 /.tools-local/
+
+# 本地迁移输入与浏览器验证产物
+/scripts/.loadout-inputs/
+/scripts/.loadout-artifacts/
+/AI_CONTEXT.md

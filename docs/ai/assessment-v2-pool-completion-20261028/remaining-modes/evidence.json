@@ -1,0 +1,1040 @@
+{
+  "schema": "hd2-remaining-modes-evidence/1",
+  "date": "2026-10-28",
+  "basis": "Wiki 页面索引及本地快照；confirmed 仅表示来源明确记载，不是游戏实测；candidate 为近似或存在解释风险；unknown 不等于零。",
+  "items": [
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "fire_rate",
+      "value": 660,
+      "unit": "rpm",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计表及功能说明；返包实际时间未知。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "magazine_capacity",
+      "value": 45,
+      "unit": "rounds",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计表及功能说明；返包实际时间未知。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "reserve_magazines",
+      "value": 8,
+      "unit": "magazines",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计表及功能说明；返包实际时间未知。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "supply_refill",
+      "value": 8,
+      "unit": "magazines",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计表及功能说明；返包实际时间未知。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "ammo_box_refill",
+      "value": 4,
+      "unit": "magazines",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计表及功能说明；返包实际时间未知。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "reload_behavior",
+      "value": "弹匣耗尽返包补装；手动召回丢弃当前弹匣并换新",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "Functionality 和 Tactical Information。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "field": "target_switch",
+      "value": "锁住直至目标消灭或丢失视线数秒；约5秒重新选择",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+      "version_or_date": "1.007.201",
+      "evidence": "General Guard Dog tactical information；近似且条件限定。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "field": "firing_cycle",
+      "value": 5,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "version_or_date": "1.007.201",
+      "evidence": "战术段称约 5 秒，拆成冷却 3、寻敌 1、充能 1 秒；并非本次游戏实测。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "field": "reload_behavior",
+      "value": "无需返包装弹或冷却，可持续工作",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "version_or_date": "1.007.201",
+      "evidence": "战术说明；原始表另有容量 100、补给 6/3、最大和初始 6，与行为语义冲突，不能直接按弹药账使用。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "field": "arc_damage",
+      "value": {
+        "standard": 250,
+        "durable": 45
+      },
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "version_or_date": "1.007.201",
+      "evidence": "电弧伤害；链角 60°、chain count 2、max split 5 是潜在上限，不代表命中数。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "field": "engagement_range",
+      "value": 20,
+      "unit": "m",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "version_or_date": "1.007.201",
+      "evidence": "战术说明：索敌 20 米；数据表 Arc Range 55 米不可直接替代。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "overheat_threshold",
+      "value": 200,
+      "unit": "°C",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "warmup",
+      "value": 0.25,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "heat_per_shot",
+      "value": 2,
+      "unit": "°C/shot",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "cooling_normal",
+      "value": 50,
+      "unit": "°C/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "beam_fire_rate",
+      "value": 60,
+      "unit": "rpm",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "fire_status_strength",
+      "value": 1,
+      "unit": "status units",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "fire_status_duration",
+      "value": 3,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Stratagem Statistics；冷却按常温中间值，射速字段不证明光束时长。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "field": "autonomous_burn_and_switch_timing",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+      "version_or_date": "1.007.201",
+      "evidence": "自动挂火阈值、每目标停留与转火时间无实测；不得套用手持激光。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "overheat_threshold",
+      "value": 250,
+      "unit": "°C",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "warmup",
+      "value": 0.5,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "heat_per_second",
+      "value": 8,
+      "unit": "°C/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "cooling_normal",
+      "value": 5,
+      "unit": "°C/s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "fire_status_strength",
+      "value": 1.5,
+      "unit": "status units",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "fire_status_duration",
+      "value": 3,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "lifetime",
+      "value": 180,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Weapon Statistics；常温选中间冷却值。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "deployable_laser_sentry",
+      "field": "target_burn_and_switch_timing",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/LAS-98_Laser_Sentry",
+      "version_or_date": "1.007.201",
+      "evidence": "未见目标挂火阈值及自动转火实测；寿命不是连续照射时间。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "orbital_laser",
+      "field": "beam_duration",
+      "value": 25,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Laser",
+      "version_or_date": "1.007.201",
+      "evidence": "单次连续光束持续时间。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "orbital_laser",
+      "field": "target_switch",
+      "value": "优先较危险的附近目标；光束扫动寻找下一目标",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Laser",
+      "version_or_date": "1.007.201",
+      "evidence": "战术描述；无转火延迟数值。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "orbital_laser",
+      "field": "burn_and_switch_timing",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Laser",
+      "version_or_date": "1.007.201",
+      "evidence": "未查到自动挂火阈值或逐目标停留时间。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "starting_inventory",
+      "value": 4,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "max_inventory",
+      "value": 5,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "supply_refill",
+      "value": 3,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "explosion_inner_damage",
+      "value": 500,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "explosion_inner_radius",
+      "value": 3.5,
+      "unit": "m",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "explosion_outer_radius",
+      "value": 7,
+      "unit": "m",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "battery_lifetime",
+      "value": 30,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "Detailed Statistics / Tactical Information；寿命到期落地不爆。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "field": "trigger_targeting",
+      "value": "触碰目标、地面或墙面爆炸；跟随玩家，倾向最近敌人及玩家标记敌人",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+      "version_or_date": "1.007.201",
+      "evidence": "战术说明；约50米为估计，另称空中目标优先，实际命中率未知。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "field": "starting_inventory",
+      "value": 2,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/weapons_data.json",
+      "version_or_date": "1.007.201",
+      "evidence": "Wiki 解码 weapon start/max/supplythrowable 或 explosion dmg/dmg2。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "field": "max_inventory",
+      "value": 3,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/weapons_data.json",
+      "version_or_date": "1.007.201",
+      "evidence": "Wiki 解码 weapon start/max/supplythrowable 或 explosion dmg/dmg2。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "field": "supply_refill",
+      "value": 2,
+      "unit": "grenades",
+      "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/weapons_data.json",
+      "version_or_date": "1.007.201",
+      "evidence": "Wiki 解码 weapon start/max/supplythrowable 或 explosion dmg/dmg2。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "field": "explosion_damage",
+      "value": 1800,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/weapons_data.json",
+      "version_or_date": "1.007.201",
+      "evidence": "Wiki 解码 weapon start/max/supplythrowable 或 explosion dmg/dmg2。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "field": "targeting_profile",
+      "value": "代码资料称前方探测 50 米、侧后关闭，参数与 G-50 一致；不代表实战优先级或命中",
+      "unit": null,
+      "source_url": "https://helldiversotl.com/research/ironclad-weapons",
+      "version_or_date": "检索于 2026-10-28",
+      "evidence": "该来源区分代码值与游戏实测；优先目标、丢失目标与电池耗尽规则未独立确认。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "starting_inventory",
+      "value": 3,
+      "unit": "mines",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "max_inventory",
+      "value": 4,
+      "unit": "mines",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "supply_refill",
+      "value": 2,
+      "unit": "mines",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "explosion_inner_damage",
+      "value": 2000,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "flamewall_damage_per_hit",
+      "value": 600,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "flamewall_hits",
+      "value": 2,
+      "unit": "hits",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计和战术段；两次火墙接触不能假定对所有目标都命中。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "trigger",
+      "value": "中/重单位踩踏或射击触发；无常规引信，先热能柱再火墙；火墙不施加火焰 DOT",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "战术信息；版本 1.007.100 变更称不再附着角色与载具，页面旧叙述自相矛盾。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "field": "arming_time",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+      "version_or_date": "1.007.201",
+      "evidence": "补丁说明按投掷计时武装，数值未知。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "starting_inventory",
+      "value": 4,
+      "unit": "throwables",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "max_inventory",
+      "value": 5,
+      "unit": "throwables",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "supply_refill",
+      "value": 3,
+      "unit": "throwables",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "deployment_after_ground",
+      "value": 1,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "explosion_inner_damage",
+      "value": 50,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "explosion_inner_durable",
+      "value": 10,
+      "unit": "damage",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "stun_duration",
+      "value": 1.5,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "详细统计 / 战术说明：落地后散布多个接近触发的眩晕地雷。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "field": "submine_count_and_distribution",
+      "value": null,
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/G-11_Caltrops",
+      "version_or_date": "1.007.201",
+      "evidence": "子雷数量、分布和实际单目标重复触发未给出；10 米是爆炸数据外半径，不是已证实布雷半径。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "p_34_breacher",
+      "field": "impact_to_explosion_delay",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/P-34_Breacher",
+      "version_or_date": "1.007.201",
+      "evidence": "页面列 4 秒燃烧、弹体寿命 1.7 秒、状态 3/1 秒，但未证实任何一项等于命中后延爆。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_40_k_thermal_gun",
+      "field": "beam_duration_per_shot",
+      "value": 1.4,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/40-K_Meltagun",
+      "version_or_date": "1.007.201",
+      "evidence": "战术段称蓄力后持续约 1.4 秒，最大理论 3640；近似候选，50 rpm 名义周期不是射束时长。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "support_40_k_thermal_gun",
+      "field": "beam_fire_status",
+      "value": "不施加普通挂火；有 Fire Panic 和 FlamerSlowed",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/40-K_Meltagun",
+      "version_or_date": "1.007.201",
+      "evidence": "Tactical Information 与状态表。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_ms_11_missile_silo",
+      "field": "missiles_per_deployment",
+      "value": 1,
+      "unit": "missile",
+      "source_url": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo",
+      "version_or_date": "1.007.201",
+      "evidence": "单枚发射井；远程激光导引。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_ms_11_missile_silo",
+      "field": "missile_thruster_fuel",
+      "value": 15,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo",
+      "version_or_date": "1.007.201",
+      "evidence": "按住发射键可持续激光引导直至命中或燃料耗尽；非固定飞行时间。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_ms_11_missile_silo",
+      "field": "launch_to_impact_time",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/MS-11_Solo_Silo",
+      "version_or_date": "1.007.201",
+      "evidence": "取决于目标与飞行路径，未见固定发射/飞行时序。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "deployable_tesla_tower",
+      "field": "charge",
+      "value": 1,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+      "version_or_date": "1.007.201",
+      "evidence": "战术说明充能 1 秒；补丁所称冷却 1 秒与充能是否串行不明。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "deployable_tesla_tower",
+      "field": "cycle_interval",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+      "version_or_date": "1.007.201",
+      "evidence": "不能把充能和冷却假定相加；一代塔 1.6 秒不适用于二代。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "deployable_at_emplacement",
+      "field": "fire_rate",
+      "value": null,
+      "unit": "rpm",
+      "source_url": "https://helldivers.wiki.gg/wiki/E/AT-12_Anti-Tank_Emplacement",
+      "version_or_date": "1.007.201",
+      "evidence": "已有原始 450/600/750 字段不等于实测发射速率；一代 AT-47 的 45 rpm 不可套用。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "deployable_at_emplacement",
+      "field": "capacity",
+      "value": 30,
+      "unit": "shells",
+      "source_url": "https://helldivers.wiki.gg/wiki/Warbond_Rundown",
+      "version_or_date": "1.007.201",
+      "evidence": "页面描述 30 发；是否完整升级和膛内弹计数未核实。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "cqc_2_saber",
+      "field": "stamina_cost_per_attack",
+      "value": 3,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber",
+      "version_or_date": "snapshot revision 139983",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_2_saber",
+      "field": "display_attack_rate",
+      "value": 150,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber",
+      "version_or_date": "snapshot revision 139983",
+      "evidence": "current page infobox Fire Rate 150；显示频率不等于已实测最小动作间隔。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_2_saber",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-2_Saber",
+      "version_or_date": "snapshot revision 139983",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_5_combat_hatchet",
+      "field": "stamina_cost_per_attack",
+      "value": 4,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet",
+      "version_or_date": "snapshot revision 136719",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_5_combat_hatchet",
+      "field": "display_attack_rate",
+      "value": 100,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet",
+      "version_or_date": "snapshot revision 136719",
+      "evidence": "current wiki weapons list Fire Rate 100；显示频率不等于已实测最小动作间隔。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_5_combat_hatchet",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-5_Combat_Hatchet",
+      "version_or_date": "snapshot revision 136719",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "stamina_cost_per_attack",
+      "value": 3,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "version_or_date": "snapshot revision 136717",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "display_attack_rate",
+      "value": null,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "version_or_date": "snapshot revision 136717",
+      "evidence": "current item infobox does not specify rate; older comparison template 117；comparison template 117; current item and weapons list omit rate",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "version_or_date": "snapshot revision 136717",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "field": "stamina_cost_per_attack",
+      "value": 3,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "version_or_date": "snapshot revision 136718",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "field": "display_attack_rate",
+      "value": null,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "version_or_date": "snapshot revision 136718",
+      "evidence": "current item infobox Fire Rate N/A；comparison template 150; current item explicitly N/A",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "version_or_date": "snapshot revision 136718",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_42_machete",
+      "field": "stamina_cost_per_attack",
+      "value": 5,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete",
+      "version_or_date": "snapshot revision 136834",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_42_machete",
+      "field": "display_attack_rate",
+      "value": 72,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete",
+      "version_or_date": "snapshot revision 136834",
+      "evidence": "current item infobox Fire Rate 72；显示频率不等于已实测最小动作间隔。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_42_machete",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-42_Machete",
+      "version_or_date": "snapshot revision 136834",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "stamina_cost_per_attack",
+      "value": 3,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "version_or_date": "snapshot revision 136720",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "display_attack_rate",
+      "value": 150,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "version_or_date": "snapshot revision 136720",
+      "evidence": "current item infobox Fire Rate 150；same page says Saber has slightly higher attack rate, despite both infobox values 150",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "version_or_date": "snapshot revision 136720",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_cqc_1_outcast",
+      "field": "stamina_cost_per_attack",
+      "value": 3,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag",
+      "version_or_date": "snapshot revision 139310",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_cqc_1_outcast",
+      "field": "display_attack_rate",
+      "value": 117,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag",
+      "version_or_date": "snapshot revision 139310",
+      "evidence": "current item infobox Fire Rate 117 rpm；显示频率不等于已实测最小动作间隔。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_cqc_1_outcast",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-1_One_True_Flag",
+      "version_or_date": "snapshot revision 139310",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_cqc_20_breaching_hammer",
+      "field": "stamina_cost_per_attack",
+      "value": 5,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+      "version_or_date": "snapshot revision 139216",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_cqc_20_breaching_hammer",
+      "field": "display_attack_rate",
+      "value": null,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+      "version_or_date": "snapshot revision 139216",
+      "evidence": "current local snapshot detailed weapon statistics Stamina Cost 5%；显示频率不等于已实测最小动作间隔。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_cqc_20_breaching_hammer",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+      "version_or_date": "snapshot revision 139216",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "stamina_cost_per_attack",
+      "value": 5,
+      "unit": "%",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "version_or_date": "snapshot revision 136873",
+      "evidence": "Detailed Weapon Statistics / Stamina Cost；不表示实际净耐力消耗或恢复。",
+      "status": "confirmed"
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "display_attack_rate",
+      "value": null,
+      "unit": "attacks/min",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "version_or_date": "snapshot revision 136873",
+      "evidence": "current item detailed statistics Stamina Cost 5%; contact damage is prolonged, not simple swing ticks；显示频率不等于已实测最小动作间隔。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "minimum_attack_interval",
+      "value": null,
+      "unit": "ms",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "version_or_date": "snapshot revision 136873",
+      "evidence": "动作动画及连续攻击实测未确认，不能机械以显示频率倒数代替。",
+      "status": "unknown"
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "attack_motion",
+      "value": "向前刺击，仅能触及前方目标",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "Tactical Information：可打多个正前方敌人，每实体仅首个接触部位。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "field": "swings_until_stamina_empty",
+      "value": 25,
+      "unit": "swings",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "页面称不受耐力恢复值与增强器影响；未交代测试条件。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "field": "attack_motion",
+      "value": "短距离快速挥击",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "正文定性描述，未给动作间隔。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "attack_motion",
+      "value": "非瞄准交替斜挥；瞄准攻击挖掘并造成近战伤害",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "注意页面提示当前游戏 CQC-72 命名存在混淆。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "field": "swings_until_stamina_empty",
+      "value": 20,
+      "unit": "swings",
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "页面称不受耐力恢复值及增强器影响；与武器字段 3% 不能直接做固定换算。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "contact_mechanism",
+      "value": "连续接触 0.5 秒穿甲从 Medium 增至 Anti-Tank I、拆迁力从 10 增至 30；离开目标或更换部位重置",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "Functionality 和 Tactical；每秒多次与每次挥击伤害同时存在，不能直接乘固定次数。",
+      "status": "candidate"
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "field": "held_attack",
+      "value": "按住可持续攻击，耐力耗尽亦能攻击；接触目标改变动作时间和耐力恢复",
+      "unit": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+      "version_or_date": "1.007.201；页面说明最近更新 1.006.202",
+      "evidence": "Tactical Information；页面轻甲34次、重甲65+次的反常对比缺完整条件，避免固定使用。",
+      "status": "candidate"
+    }
+  ]
+}

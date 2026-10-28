@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "scope": "AC-8 APHET / Flak 与 R-36 破片机制；无游戏内实测",
+  "modes": [
+    {
+      "equipment_id": "heavy_support_ac_8_autocannon",
+      "mode": "APHET",
+      "chain": {
+        "projectile_id": "AC-8_P",
+        "explosion_id": "AC-8_P_IE",
+        "fragment_id": null
+      },
+      "projectile": {
+        "damage_standard": 325,
+        "damage_durable": 260,
+        "penetration_direct": "Heavy",
+        "trigger": "撞击爆炸"
+      },
+      "explosion": {
+        "inner_radius_m": 2,
+        "outer_radius_m": 4,
+        "shockwave_radius_m": 5.5,
+        "inner_damage_standard": 150,
+        "inner_damage_durable": 150,
+        "outer_damage": "149-0",
+        "inner_ap": "Medium",
+        "outer_ap": "Light"
+      },
+      "fragment": null,
+      "fragment_status": "当前组件表未列出破片，依该模式按无破片处理；不能把 Flak 的 30 片套入。",
+      "source_locator": "Detailed Weapon Statistics: AC-8 P, AC-8 P IE; Tactical Information APHET",
+      "source_url": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon",
+      "snapshot_revision": 138831,
+      "current_page_version": "1.007.201",
+      "conflicts": []
+    },
+    {
+      "equipment_id": "heavy_support_ac_8_autocannon",
+      "mode": "FLAK",
+      "chain": {
+        "projectile_id": "AC-8_P1",
+        "explosion_id": "AC-8_P1_IE",
+        "fragment_id": "AC-8_P2"
+      },
+      "projectile": {
+        "damage_standard": 150,
+        "damage_durable": 150,
+        "penetration_direct": "Light",
+        "trigger": "撞击或接近引信",
+        "proximity_radius_m": 3,
+        "arming_distance_m": 8,
+        "lifetime_s": 0.899999976,
+        "expiry_detonation": null
+      },
+      "explosion": {
+        "inner_radius_m": 2,
+        "outer_radius_m": 7,
+        "shockwave_radius_m": 8,
+        "inner_damage_standard": 190,
+        "inner_damage_durable": 190,
+        "outer_damage": "189-0",
+        "inner_ap": "Medium",
+        "outer_ap": "Light"
+      },
+      "fragment": {
+        "id": "AC-8_P2",
+        "count_per_explosion": 30,
+        "damage_standard": 110,
+        "damage_durable": 35,
+        "penetration": {
+          "direct": "Medium",
+          "slight": "Medium",
+          "large": "Light",
+          "extreme": "Unarmored"
+        },
+        "initial_velocity_m_s": 30,
+        "distribution": null,
+        "hits_per_target": null,
+        "repeat_hit_same_body_part": null,
+        "hits_multiple_body_parts": null
+      },
+      "source_locator": "Detailed Weapon Statistics: AC-8 P1, AC-8 P1 IE, AC-8 P2; Tactical Information Flak",
+      "source_url": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon",
+      "snapshot_revision": 138831,
+      "current_page_version": "1.007.201",
+      "conflicts": [
+        "页面武器简表 Medium (Flak) 指破片；弹体正面为 Light。",
+        "FLAK破片方向及散布未量化；可向射手飞回。"
+      ]
+    },
+    {
+      "equipment_id": "r_36_eruptor",
+      "mode": "standard",
+      "chain": {
+        "projectile_id": "R-36_P",
+        "explosion_id": "R-36_P_IE",
+        "fragment_id": "AC-8_P2"
+      },
+      "projectile": {
+        "damage_standard": 230,
+        "damage_durable": 115,
+        "penetration_direct": "Heavy",
+        "trigger": "撞击或寿命结束",
+        "arming_distance_m": 0.100000001,
+        "lifetime_s": 1
+      },
+      "explosion": {
+        "inner_radius_m": 4,
+        "outer_radius_m": 7,
+        "shockwave_radius_m": 8,
+        "inner_damage_standard": 225,
+        "inner_damage_durable": 225,
+        "outer_damage": "224-0",
+        "inner_ap": "Medium",
+        "outer_ap": "Light"
+      },
+      "fragment": {
+        "id": "AC-8_P2",
+        "count_per_explosion": 30,
+        "damage_standard": 110,
+        "damage_durable": 35,
+        "penetration": {
+          "direct": "Medium",
+          "slight": "Medium",
+          "large": "Light",
+          "extreme": "Unarmored"
+        },
+        "initial_velocity_m_s": 30,
+        "distribution": null,
+        "hits_per_target": null,
+        "repeat_hit_same_body_part": null,
+        "hits_multiple_body_parts": null,
+        "direction": "表面命中时约180度扇区，朝所击表面的方向；其他触发条件分布未知",
+        "direction_source_locator": "Change History 1.002.201"
+      },
+      "same_target_components": "Wiki Tactical Information 描述中大型目标可同时承受弹体、爆炸及破片；不确定命中数和部位结算。",
+      "source_locator": "Detailed Weapon Statistics: R-36 P, R-36 P IE, AC-8 P2; Tactical Information; Change History 1.002.201",
+      "source_url": "https://helldivers.wiki.gg/wiki/R-36_Eruptor",
+      "snapshot_revision": 139666,
+      "current_page_version": "1.007.201",
+      "conflicts": [
+        "介绍称各方向发射；更新记录将表面命中限定为约180度，均为定性表述，不应假设均匀分布。",
+        "Warbond Rundown概述称轻甲破片，与详细表正面中甲不一致；计算应采用详细表并保留角度条件。"
+      ]
+    }
+  ],
+  "calculation_constraints": [
+    "破片发射数量不是对某个目标的命中数；命中数、落点、穿透后重复命中、多部位命中与遮挡均未证，不能假定30片全中弱点。",
+    "爆炸与破片分组件；实际结算依位置、护甲、角度及部位，不能转换成固定评分系数。"
+  ],
+  "sources": [
+    {
+      "url": "https://helldivers.wiki.gg/wiki/AC-8_Autocannon",
+      "page_current_version": "1.007.201",
+      "wiki_revision_current": null,
+      "snapshot_revision": 138831
+    },
+    {
+      "url": "https://helldivers.wiki.gg/wiki/R-36_Eruptor",
+      "page_current_version": "1.007.201",
+      "wiki_revision_current": null,
+      "snapshot_revision": 139666
+    },
+    {
+      "url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/weapons_data.json",
+      "locator": "AC-8_P / AC-8_P1 / AC-8_P1_IE / AC-8_P2",
+      "revision": null
+    }
+  ]
+}

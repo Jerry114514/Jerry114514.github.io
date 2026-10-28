@@ -1,0 +1,92 @@
+{
+  "schema": "hd2-status-enemy-thresholds/1",
+  "source_date": "2026-10-28",
+  "formula": {
+    "buildup": "accumulates and decays; between min and max there is chance; at maximum guaranteed",
+    "chance_distribution": null,
+    "decay_rate": null,
+    "random_per_hit_distribution": null,
+    "url": "https://helldivers.wiki.gg/wiki/Damage"
+  },
+  "enemies": [
+    {
+      "name": "Scavenger",
+      "fire_threshold_min": null,
+      "fire_threshold_max": null,
+      "fire_multiplier": 0.5,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Scavenger",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    },
+    {
+      "name": "Hunter",
+      "fire_threshold_min": null,
+      "fire_threshold_max": null,
+      "fire_multiplier": 0.7,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Hunter",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    },
+    {
+      "name": "Warrior",
+      "fire_threshold_min": 2.1,
+      "fire_threshold_max": 3.3,
+      "fire_multiplier": 0.8,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Warrior",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    },
+    {
+      "name": "Alpha Commander",
+      "fire_threshold_min": 4.1,
+      "fire_threshold_max": 5.5,
+      "fire_multiplier": 1,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Alpha_Commander",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    },
+    {
+      "name": "Hive Guard",
+      "fire_threshold_min": 2.1,
+      "fire_threshold_max": 3.3,
+      "fire_multiplier": 0.8,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Hive_Guard",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    },
+    {
+      "name": "Bile Spewer",
+      "fire_threshold_min": 5,
+      "fire_threshold_max": 6.5,
+      "fire_multiplier": 1,
+      "gas_multiplier": null,
+      "gas_threshold_min": null,
+      "gas_threshold_max": null,
+      "source_url": "https://helldivers.wiki.gg/wiki/Bile_Spewer",
+      "source_locator": "Stats / Fire Damage Multiplier; Change History 1.004.100 for threshold where present",
+      "revision": null,
+      "status": "partial; gas values and unlisted thresholds unknown"
+    }
+  ],
+  "caveat": "Threshold change history is evidence of 1.004.100 values; no later superseding change was observed in retrieved page excerpts. 50/100 strength exceeds known fire max for Warrior, Hive Guard, Alpha Commander and Bile Spewer, conditional on successful status application; gas thresholds and exposure/armor remain unverified."
+}

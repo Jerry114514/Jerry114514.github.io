@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "status": "SOURCE_BINDINGS_AND_LABELLED_ENGINEERING_CHOICES_NOT_PLAYTEST_CALIBRATION",
+  "weapons": {
+    "flam_66_torcher": {"full_fire_seconds": 12.4, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher", "basis": "Wiki tactical information; approximate pilot ignition"},
+    "support_flam_40_flamethrower": {"full_fire_seconds": 18.6, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower", "basis": "Fuel duration sourced; 700ms pilot is explicit engineering assumption from Torcher, not this weapon measurement"},
+    "p_72_crisper": {"full_fire_seconds": 6.1, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/Stoker", "basis": "Stoker explicitly identifies the same 50-unit Crisper canister; pilot 700ms engineering assumption"},
+    "heavy_support_b_flam_80_flamer": {"full_fire_seconds": 62.35, "pilot_ms": 700, "reload_ms": 0, "source_url": "https://helldivers.wiki.gg/wiki/B/FLAM-80_Cremator", "basis": "Sourced fuel/no manual reload; pilot 700ms engineering assumption"},
+    "las_13_trident": {"beams_per_shot": 6, "source_url": "https://helldivers.wiki.gg/wiki/LAS-13_Trident", "basis": "Six beams per discharge; do not read three barrels as three beams; finite sink route omits between-shot cooling"}
+  },
+  "strategic": {
+    "deployable_hmg_emplacement": {"ammo": 600, "rate_per_second": 11, "source_url": "https://helldivers.wiki.gg/wiki/E/MG-101_HMG_Emplacement", "basis": "Archived wiki 600 total,11/s; 22/s source conflicts. Explicit lower-rate engineering selection, not resolved fire rate."},
+    "orbital_380mm_he_barrage": {"payload_per_call": 18, "duration_s": 24.5, "source_url": "https://helldivers.wiki.gg/wiki/Orbital_380mm_HE_Barrage", "basis": "Engineering interpretation:6 salvos of3,1s between shells,2.5s after each salvo except last =>12+12.5; source interval origins ambiguous."},
+    "orbital_walking_barrage": {"payload_per_call": 30, "duration_s": 32, "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Walking_Barrage", "basis": "Archived upgraded 6 salvos;32s narrative approximate, pending exact first/last timing."},
+    "orbital_gatling_barrage": {"payload_per_call": 300, "duration_s": 14, "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Gatling_Barrage", "basis": "Archived upgraded payload;14s narrative approximate."},
+    "orbital_airburst_strike": {"payload_per_call": 4, "duration_s": 12, "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Airburst_Strike", "basis": "Four salvos separated by4s =>12s first-to-last; arrival is already in call delay. Fragment payload still separately flagged."},
+    "eagle_cluster_bomb": {"payload_per_call": 72, "payload_mode_id": "P13", "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Cluster_Bomb", "basis": "64 base submunitions/8 per parent =>8 parents; XXL+1 parent =>72; ONLY child damage, no simultaneous parent impact."},
+    "eagle_napalm_airstrike": {"payload_per_call": 4, "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Napalm_Airstrike", "basis": "Archived narrative4 bombs unclear upgrade state; explicit conservative4, do not add another inferred bomb."},
+    "orbital_railcannon_strike": {"payload_per_call": 1, "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Railcannon_Strike", "basis": "Single directed projectile per call."}
+  }
+}

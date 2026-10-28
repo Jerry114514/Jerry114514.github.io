@@ -1,0 +1,250 @@
+{
+  "date": "2026-10-28",
+  "method": "原生网页搜索结果与本地 equipment-expanded.json 对照；Wiki 数据版本页面标注 1.007.201；非游戏内实测。",
+  "local_input": "scripts/.loadout-inputs/equipment-expanded.json",
+  "items": [
+    {
+      "id": "heavy_support_rl_77_airburst_rocket_launcher",
+      "source": "https://helldivers.wiki.gg/wiki/ABRL",
+      "local_revid": 135049,
+      "facts": {
+        "bomblets": 25,
+        "bomblet_ballistic_standard_durable": [
+          150,
+          150
+        ],
+        "bomblet_explosion_standard_durable": [
+          500,
+          500
+        ],
+        "bomblet_explosion_inner_outer_m": [
+          4,
+          6
+        ],
+        "parent_explosion_standard_durable": [
+          150,
+          150
+        ],
+        "parent_explosion_inner_outer_m": [
+          3,
+          5
+        ],
+        "flak_proximity_delay_s": 0.2,
+        "flak_bomblet_random_fuse_max_s": 0.7,
+        "flak_projectile_lifetime_s": 1.5,
+        "cluster_projectile_lifetime_s": 0.25,
+        "cluster_max_level_ground_dispersion_radius_m": 60
+      },
+      "limitations": [
+        "集束的 60 m 是垂直向上射击时的极端最大散布，不是通用散布半径；高爆模式的 30 m 为安全距离而非散布半径。",
+        "表格弹药寿命 0.8 秒与正文随机引信不超过 0.7 秒并列，不能当作完全一致。"
+      ]
+    },
+    {
+      "id": "orbital_airburst_strike",
+      "source": "https://helldivers.wiki.gg/wiki/Orbital_Airburst_Strike",
+      "local_revid": 139218,
+      "facts": {
+        "salvos": 4,
+        "salvo_interval_s": 4,
+        "shrapnel_per_salvo": 12,
+        "child_direct_standard_durable": [
+          300,
+          150
+        ],
+        "child_explosion_standard_durable": [
+          350,
+          350
+        ],
+        "child_explosion_inner_outer_m": [
+          3,
+          6
+        ],
+        "parent_explosion_standard_durable": [
+          350,
+          350
+        ],
+        "parent_explosion_inner_outer_m": [
+          0.2,
+          0.5
+        ],
+        "parent_lifetime_s": 0.95,
+        "approx_affected_width_m": 40,
+        "shape": "不规则长椭圆，随驱逐舰方向与随机散布改变"
+      },
+      "limitations": [
+        "约40米为总影响范围宽度，不是散布半径；子弹单独引信或落点分布未明确。"
+      ]
+    },
+    {
+      "id": "p_34_breacher",
+      "source": "https://helldivers.wiki.gg/wiki/P-34_Breacher",
+      "local_revid": 138990,
+      "facts": {
+        "direct_standard_durable": [
+          60,
+          0
+        ],
+        "direct_ap": 4,
+        "explosion_standard_durable": [
+          2000,
+          2000
+        ],
+        "explosion_inner_ap": 7,
+        "explosion_outer_ap": 6,
+        "explosion_inner_outer_m": [
+          1.5,
+          2.5
+        ],
+        "infobox_fire_damage_per_second": 150,
+        "infobox_duration_s": 4,
+        "thermite_status_standard_durable": [
+          150,
+          150
+        ],
+        "thermite_status_ap": 7,
+        "thermite_status_duration_s": 1,
+        "fire_status_standard_durable": [
+          100,
+          100
+        ],
+        "fire_status_ap": 4,
+        "fire_status_duration_s": 3
+      },
+      "limitations": [
+        "攻击树中 P-34 projectile 下绑定 explosion、Fire 与 Thermite；信息框显示 150/s 持续4秒，详细表 Thermite 状态持续1秒，不能把1秒误认为引信或断言详细表明确给出4秒引信。用户授权按4秒铝热模型处理，应标为建模假设。",
+        "Fire 与 Thermite 是独立状态字段，不应直接重复计入而假定其叠加规则。"
+      ]
+    },
+    {
+      "id": "support_arc_3_arc_thrower",
+      "source": "https://helldivers.wiki.gg/wiki/ARC-3_Arc_Thrower",
+      "local_revid": 138227,
+      "facts": {
+        "base_chain_count": 1,
+        "base_max_split": 1,
+        "full_module_chain_count": 3,
+        "damage_factors_base": [
+          1,
+          0.5
+        ],
+        "damage_factors_full_module": [
+          1,
+          0.75,
+          0.5,
+          0.25
+        ],
+        "arc_standard_durable": [
+          250,
+          100
+        ]
+      },
+      "limitations": [
+        "Wiki明确给出的比例针对 ARC-3，不足以证明适用于其余分叉武器。"
+      ]
+    },
+    {
+      "id": "arc_12_blitzer",
+      "source": "https://helldivers.wiki.gg/wiki/Blitzer",
+      "local_revid": 139676,
+      "facts": {
+        "barrels_per_shot": 5,
+        "arc_standard_durable": [
+          50,
+          35
+        ],
+        "chain_count": 1,
+        "max_split": 0
+      },
+      "limitations": [
+        "每发5弧由5枪管推导；连锁衰减和舰船模块实际影响未获得独立明确证据。"
+      ]
+    },
+    {
+      "id": "backpack_ax_arc_3_k_9",
+      "source": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+      "local_revid": 136370,
+      "facts": {
+        "chain_count": 2,
+        "max_split": 5,
+        "arc_standard_durable": [
+          250,
+          45
+        ],
+        "ideal_max_targets_wiki": 36,
+        "attack_interval_approx_s": 5
+      },
+      "limitations": [
+        "初始单次电弧数、分叉与链伤害衰减未明确；理想36目标不能视作实际必命中。"
+      ]
+    },
+    {
+      "id": "support_gl_52_conciliator",
+      "source": "https://helldivers.wiki.gg/wiki/Deescalator",
+      "local_revid": 136482,
+      "facts": {
+        "initial_arcs_per_grenade": 10,
+        "chain_count": 2,
+        "max_split": 2,
+        "arc_standard_durable": [
+          100,
+          70
+        ]
+      },
+      "limitations": [
+        "Wiki未给可核实的分叉及连锁伤害衰减，10条初始电弧不等于同一敌人必受10次命中。"
+      ]
+    },
+    {
+      "id": "g_31_arc",
+      "source": "https://helldivers.wiki.gg/wiki/G-31_Arc",
+      "local_revid": 132452,
+      "facts": {
+        "infobox_arc_count": 10,
+        "pulses": 5,
+        "chain_count": 2,
+        "max_split": 2,
+        "arc_standard_durable": [
+          100,
+          70
+        ]
+      },
+      "limitations": [
+        "信息框 x10 和正文5次脉冲并列，未证实每脉冲2条的分配；不可自行推定。分叉衰减缺证据。"
+      ]
+    },
+    {
+      "id": "deployable_tesla_tower",
+      "source": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+      "local_revid": 136793,
+      "facts": {
+        "arc_standard_durable": [
+          600,
+          600
+        ],
+        "arc_range_m": 20,
+        "max_split": 2
+      },
+      "limitations": [
+        "以上为2026-10-23本地 Wiki 导入表；单次初始弧数、chain count、分叉和连锁衰减缺少可靠证据。"
+      ]
+    },
+    {
+      "id": "fire_buildup",
+      "source": "https://helldivers.wiki.gg/wiki/Damage",
+      "facts": {
+        "buildup_and_decay_exist": true,
+        "example_weapon": "SG-225IE",
+        "example_strength_per_pellet": 0.6,
+        "example_target": "Warrior",
+        "example_threshold_min": 2.1,
+        "example_threshold_max": 3.3,
+        "example_hits_min_chance": 4,
+        "example_hits_guaranteed_without_decay": 6
+      },
+      "limitations": [
+        "阈值之间为概率触发；维基仅确认积累会衰减，并未提供可用的衰减速率、触发概率函数或重复施加后刷新/叠加算法。例子6弹保证不应忽视弹间衰减。"
+      ]
+    }
+  ]
+}

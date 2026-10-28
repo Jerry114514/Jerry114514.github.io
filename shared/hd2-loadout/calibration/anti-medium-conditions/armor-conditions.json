@@ -1,0 +1,2084 @@
+{
+  "artifact_id": "anti-medium-armor-conditions-v1",
+  "calibration_difficulty": {
+    "label": "N10",
+    "note": "N10 是用户 2026-10-24 指定的首轮校准难度；政策文件自己声明 calibration.state=missing，因此这里只当其为一个候选场景标签",
+    "numeric": 10,
+    "numeric_basis": "difficulty 阶梯（Module:difficulty）最大编号为 10；政策 id/name 的 N10 即该难度",
+    "policy_calibration_state": "missing",
+    "policy_name": "首轮虫族N10六维及格线场景政策（校准候选）",
+    "policy_ref": "shared/hd2-loadout/scenarios/n10-policy.json#id=terminids-n10-v1",
+    "state": "CANDIDATE_NOT_CALIBRATED"
+  },
+  "created": "2026-10-26",
+  "difficulty_ladder": {
+    "names": {
+      "0": "Training",
+      "1": "Trivial",
+      "2": "Easy",
+      "3": "Medium",
+      "4": "Challenging",
+      "5": "Hard",
+      "6": "Extreme",
+      "7": "Suicide Mission",
+      "8": "Impossible",
+      "9": "Helldive",
+      "10": "Super Helldive"
+    },
+    "numbers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "state": "PARSED"
+  },
+  "game_build": null,
+  "inputs": {
+    "captures": "shared/hd2-loadout/calibration/anti-medium-conditions/raw/captures.json",
+    "captures_sha256": "cf06a9fd106c5facb17956ae9f348c9d5f7879caabc3d6096a0f477d39e10d61",
+    "combat_projection_sha256": "d7a4a47835d6dcbffc154126e28c7865423ac881fde70e7ca840b333549e9d94",
+    "enemy_snapshot_sha256": "e5db1dc441670bd2a4509bbe240fa8c5494a2e0de04329d3e38e8794686bd4b6",
+    "policy_id": "terminids-n10-v1",
+    "policy_sha256": "ef5cea9bab0647139d6c9c76e21e3a5292514823f63d688530c1afdd5db47a98",
+    "source_archive": "shared/hd2-loadout/calibration/anti-medium-conditions/source-archive.json"
+  },
+  "kind": "anti-medium-armor-conditions",
+  "not_a_certification": true,
+  "open_items": [
+    {
+      "id": "conditions.admission.rupture_spewer.butt",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.front_leg",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.head",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.main",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.mouth",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.rear_leg",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.admission.rupture_spewer.spinal_plates",
+      "layer": "armor",
+      "reason": "部位准入被阻断（ANATOMY_SOURCE_UNAVAILABLE）：没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较"
+    },
+    {
+      "id": "conditions.coverage",
+      "layer": "coverage",
+      "reason": "部位可达性、命中覆盖、齐射全中同部位都未建模（沿用 anti-medium 的覆盖未知块）"
+    },
+    {
+      "id": "conditions.difficulty_variant_crest",
+      "layer": "source",
+      "reason": "Bile Spewer 页面图注称 N6+ 出现“头部冠脊更明显 + 口部酸蚀”的变体外观；该图注只描述外观差异，是否另有属性差异无来源"
+    },
+    {
+      "id": "conditions.post_lethal",
+      "layer": "neutralization",
+      "reason": "致死部位被打破 ≠ 威胁解除：post_lethal/死后爆炸（Bile Spewer 死亡 300 爆炸）都未建模"
+    },
+    {
+      "id": "conditions.threshold_comparator",
+      "layer": "armor",
+      "reason": "阈值比较取 “>=” 的依据是正文措辞（6 and above），数据表只给 av6，未给 “6 及以上” 的数值表；比较符仍属候选"
+    },
+    {
+      "id": "conditions.variant_term",
+      "layer": "term",
+      "reason": "“黄绿胖”未由任何来源映射到变体名，见 source-archive.variant_term"
+    }
+  ],
+  "ordinal_scale": {
+    "conflicts": [],
+    "cross_check": "CONSISTENT_WITH_COMBAT_PROJECTION",
+    "map": {
+      "0": "Unarmored",
+      "1": "Very Light",
+      "2": "Light",
+      "3": "Medium",
+      "4": "Heavy"
+    },
+    "state": "PARSED"
+  },
+  "per_enemy": {
+    "bile_spewer": {
+      "anatomy_alignment": {
+        "admitted_parts": 7,
+        "blocked_parts": [],
+        "rule": "部位只有在英文 Anatomy 行的 av / avN（含阈值）/ HP / 耐久 / fatal 与快照行全部一致时才准入；“字串能解析”不等于来源一致",
+        "source": {
+          "anatomy_state": "PARSED",
+          "capture_id": "bile_spewer_page",
+          "rows": 7
+        },
+        "state": "ADMITTED"
+      },
+      "health_total_raw": "750",
+      "minimum_difficulty": "Medium",
+      "name_en": "Bile Spewer",
+      "name_zh": "胆汁喷涌虫",
+      "parts": {
+        "butt": {
+          "admission": {
+            "anatomy_row": {
+              "av": 0,
+              "av_by_difficulty": {},
+              "capture_id": "bile_spewer_page",
+              "durability": "100%",
+              "fatal": "Yes",
+              "health": "750",
+              "line": 89,
+              "part_name": "Butt"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "part_id": "butt",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": "Unarmored",
+            "armor_ordinal": 0,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 1,
+            "raw": "100%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/8/body_parts/4",
+          "part_id": "butt",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "front_leg": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {
+                "6": 3
+              },
+              "capture_id": "bile_spewer_page",
+              "durability": "0%",
+              "fatal": "No",
+              "health": "200",
+              "line": 103,
+              "part_name": "Front Legs (2)"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "part_id": "front_leg",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light Medium at Extreme",
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light Medium at Extreme",
+          "armor_level_zh_snapshot": "轻（极端难度下为中）",
+          "at_calibration_difficulty": {
+            "armor_label": "Medium",
+            "armor_ordinal": 3,
+            "basis": "difficulty 10 >= 阈值 6（Extreme）",
+            "branch_id": "at_or_above_threshold",
+            "difficulty": 10,
+            "state": "SELECTED",
+            "threshold": 6
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "200",
+            "value": 200
+          },
+          "json_path": "/enemies/8/body_parts/5",
+          "part_id": "front_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "comparator": "<",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "below_threshold"
+              },
+              {
+                "applies_when": {
+                  "comparator": ">=",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "at_or_above_threshold"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale",
+              "cite:module_difficulty_extreme",
+              "cite:module_anatomy_armor_format",
+              "cite:nursing_spewer_armor_sentence",
+              "cite:bile_spewer_tactical_head"
+            ],
+            "condition": {
+              "comparator": ">=",
+              "difficulty_name": "Extreme",
+              "kind": "mission_difficulty",
+              "threshold": 6,
+              "threshold_basis": "Module:difficulty 的 [\"6\"] = \"Extreme\"；候选者关系取 “Extreme 及以上”，见 cite:nursing_spewer_armor_sentence 与 cite:bile_spewer_tactical_head"
+            },
+            "conditional": true,
+            "raw": "Light Medium at Extreme",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_CONDITIONAL_ARMOR",
+            "token": "Light Medium at Extreme"
+          }
+        },
+        "head": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {
+                "6": 3
+              },
+              "capture_id": "bile_spewer_page",
+              "durability": "0%",
+              "fatal": "Yes",
+              "health": "300",
+              "line": 48,
+              "part_name": "Head"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "part_id": "head",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light Medium at Extreme",
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light Medium at Extreme",
+          "armor_level_zh_snapshot": "轻（极端难度下为中）",
+          "at_calibration_difficulty": {
+            "armor_label": "Medium",
+            "armor_ordinal": 3,
+            "basis": "difficulty 10 >= 阈值 6（Extreme）",
+            "branch_id": "at_or_above_threshold",
+            "difficulty": 10,
+            "state": "SELECTED",
+            "threshold": 6
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "300",
+            "value": 300
+          },
+          "json_path": "/enemies/8/body_parts/1",
+          "part_id": "head",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "comparator": "<",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "below_threshold"
+              },
+              {
+                "applies_when": {
+                  "comparator": ">=",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "at_or_above_threshold"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale",
+              "cite:module_difficulty_extreme",
+              "cite:module_anatomy_armor_format",
+              "cite:nursing_spewer_armor_sentence",
+              "cite:bile_spewer_tactical_head"
+            ],
+            "condition": {
+              "comparator": ">=",
+              "difficulty_name": "Extreme",
+              "kind": "mission_difficulty",
+              "threshold": 6,
+              "threshold_basis": "Module:difficulty 的 [\"6\"] = \"Extreme\"；候选者关系取 “Extreme 及以上”，见 cite:nursing_spewer_armor_sentence 与 cite:bile_spewer_tactical_head"
+            },
+            "conditional": true,
+            "raw": "Light Medium at Extreme",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_CONDITIONAL_ARMOR",
+            "token": "Light Medium at Extreme"
+          }
+        },
+        "main": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {
+                "6": 3
+              },
+              "capture_id": "bile_spewer_page",
+              "durability": "50%",
+              "fatal": "Yes",
+              "health": "750",
+              "line": 34,
+              "part_name": "Main"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "part_id": "main",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light Medium at Extreme",
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light Medium at Extreme",
+          "armor_level_zh_snapshot": "轻（极端难度下为中）",
+          "at_calibration_difficulty": {
+            "armor_label": "Medium",
+            "armor_ordinal": 3,
+            "basis": "difficulty 10 >= 阈值 6（Extreme）",
+            "branch_id": "at_or_above_threshold",
+            "difficulty": 10,
+            "state": "SELECTED",
+            "threshold": 6
+          },
+          "durable": {
+            "fraction": 0.5,
+            "raw": "50%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/8/body_parts/0",
+          "part_id": "main",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "comparator": "<",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "below_threshold"
+              },
+              {
+                "applies_when": {
+                  "comparator": ">=",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "at_or_above_threshold"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale",
+              "cite:module_difficulty_extreme",
+              "cite:module_anatomy_armor_format",
+              "cite:nursing_spewer_armor_sentence",
+              "cite:bile_spewer_tactical_head"
+            ],
+            "condition": {
+              "comparator": ">=",
+              "difficulty_name": "Extreme",
+              "kind": "mission_difficulty",
+              "threshold": 6,
+              "threshold_basis": "Module:difficulty 的 [\"6\"] = \"Extreme\"；候选者关系取 “Extreme 及以上”，见 cite:nursing_spewer_armor_sentence 与 cite:bile_spewer_tactical_head"
+            },
+            "conditional": true,
+            "raw": "Light Medium at Extreme",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_CONDITIONAL_ARMOR",
+            "token": "Light Medium at Extreme"
+          }
+        },
+        "mouth": {
+          "admission": {
+            "anatomy_row": {
+              "av": 0,
+              "av_by_difficulty": {},
+              "capture_id": "bile_spewer_page",
+              "durability": "0%",
+              "fatal": "Yes",
+              "health": "250",
+              "line": 62,
+              "part_name": "Mouth"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "part_id": "mouth",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": "Unarmored",
+            "armor_ordinal": 0,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/8/body_parts/2",
+          "part_id": "mouth",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "rear_leg": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "bile_spewer_page",
+              "durability": "30%",
+              "fatal": "No",
+              "health": "250",
+              "line": 117,
+              "part_name": "Rear Legs (2)"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "rear_leg",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0.3,
+            "raw": "30%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/8/body_parts/6",
+          "part_id": "rear_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "spinal_plates": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {
+                "6": 3
+              },
+              "capture_id": "bile_spewer_page",
+              "durability": "80%",
+              "fatal": "Yes",
+              "health": "500",
+              "line": 74,
+              "part_name": "Spinal Plates"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "part_id": "spinal_plates",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light Medium at Extreme",
+              "base_label": "Light",
+              "conditional": [
+                {
+                  "label": "Medium",
+                  "ordinal": 3,
+                  "threshold": 6
+                }
+              ]
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light Medium at Extreme",
+          "armor_level_zh_snapshot": "轻（极端难度下为中）",
+          "at_calibration_difficulty": {
+            "armor_label": "Medium",
+            "armor_ordinal": 3,
+            "basis": "difficulty 10 >= 阈值 6（Extreme）",
+            "branch_id": "at_or_above_threshold",
+            "difficulty": 10,
+            "state": "SELECTED",
+            "threshold": 6
+          },
+          "durable": {
+            "fraction": 0.8,
+            "raw": "80%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "500",
+            "value": 500
+          },
+          "json_path": "/enemies/8/body_parts/3",
+          "part_id": "spinal_plates",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "comparator": "<",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "below_threshold"
+              },
+              {
+                "applies_when": {
+                  "comparator": ">=",
+                  "kind": "mission_difficulty",
+                  "threshold": 6
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "at_or_above_threshold"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale",
+              "cite:module_difficulty_extreme",
+              "cite:module_anatomy_armor_format",
+              "cite:nursing_spewer_armor_sentence",
+              "cite:bile_spewer_tactical_head"
+            ],
+            "condition": {
+              "comparator": ">=",
+              "difficulty_name": "Extreme",
+              "kind": "mission_difficulty",
+              "threshold": 6,
+              "threshold_basis": "Module:difficulty 的 [\"6\"] = \"Extreme\"；候选者关系取 “Extreme 及以上”，见 cite:nursing_spewer_armor_sentence 与 cite:bile_spewer_tactical_head"
+            },
+            "conditional": true,
+            "raw": "Light Medium at Extreme",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_CONDITIONAL_ARMOR",
+            "token": "Light Medium at Extreme"
+          }
+        }
+      },
+      "state": "candidate_projection"
+    },
+    "nursing_spewer": {
+      "anatomy_alignment": {
+        "admitted_parts": 7,
+        "blocked_parts": [],
+        "rule": "部位只有在英文 Anatomy 行的 av / avN（含阈值）/ HP / 耐久 / fatal 与快照行全部一致时才准入；“字串能解析”不等于来源一致",
+        "source": {
+          "anatomy_state": "PARSED",
+          "capture_id": "nursing_spewer_page",
+          "rows": 7
+        },
+        "state": "ADMITTED"
+      },
+      "health_total_raw": "750",
+      "minimum_difficulty": "Medium",
+      "name_en": "Nursing Spewer",
+      "name_zh": "抚育喷涌者",
+      "parts": {
+        "butt": {
+          "admission": {
+            "anatomy_row": {
+              "av": 0,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "100%",
+              "fatal": "Yes",
+              "health": "750",
+              "line": 87,
+              "part_name": "Butt"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "part_id": "butt",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": "Unarmored",
+            "armor_ordinal": 0,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 1,
+            "raw": "100%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/57/body_parts/4",
+          "part_id": "butt",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "front_leg": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "0%",
+              "fatal": "No",
+              "health": "200",
+              "line": 101,
+              "part_name": "Front Legs (2)"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "front_leg",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "200",
+            "value": 200
+          },
+          "json_path": "/enemies/57/body_parts/5",
+          "part_id": "front_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "head": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "0%",
+              "fatal": "Yes",
+              "health": "300",
+              "line": 48,
+              "part_name": "Head"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "head",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "300",
+            "value": 300
+          },
+          "json_path": "/enemies/57/body_parts/1",
+          "part_id": "head",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "main": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "50%",
+              "fatal": "Yes",
+              "health": "750",
+              "line": 35,
+              "part_name": "Main"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "main",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0.5,
+            "raw": "50%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/57/body_parts/0",
+          "part_id": "main",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "mouth": {
+          "admission": {
+            "anatomy_row": {
+              "av": 0,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "0%",
+              "fatal": "Yes",
+              "health": "250",
+              "line": 61,
+              "part_name": "Mouth"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "part_id": "mouth",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": "Unarmored",
+            "armor_ordinal": 0,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/57/body_parts/2",
+          "part_id": "mouth",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "rear_leg": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "30%",
+              "fatal": "No",
+              "health": "250",
+              "line": 114,
+              "part_name": "Rear Legs (2)"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "rear_leg",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0.3,
+            "raw": "30%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/57/body_parts/6",
+          "part_id": "rear_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "spinal_plates": {
+          "admission": {
+            "anatomy_row": {
+              "av": 2,
+              "av_by_difficulty": {},
+              "capture_id": "nursing_spewer_page",
+              "durability": "80%",
+              "fatal": "Yes",
+              "health": "500",
+              "line": 73,
+              "part_name": "Spinal Plates"
+            },
+            "checks": {
+              "base_av": "MATCH",
+              "conditional_av": "MATCH",
+              "durable": "MATCH",
+              "fatal": "MATCH",
+              "health": "MATCH"
+            },
+            "expected": {
+              "base_label": "Light",
+              "conditional": []
+            },
+            "part_id": "spinal_plates",
+            "reason": null,
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ADMITTED"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": "Light",
+            "armor_ordinal": 2,
+            "branch_id": "all_difficulties",
+            "difficulty": 10,
+            "state": "ALL_DIFFICULTIES"
+          },
+          "durable": {
+            "fraction": 0.8,
+            "raw": "80%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "500",
+            "value": 500
+          },
+          "json_path": "/enemies/57/body_parts/3",
+          "part_id": "spinal_plates",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        }
+      },
+      "state": "candidate_projection"
+    },
+    "rupture_spewer": {
+      "anatomy_alignment": {
+        "admitted_parts": 0,
+        "blocked_parts": [
+          "butt",
+          "front_leg",
+          "head",
+          "main",
+          "mouth",
+          "rear_leg",
+          "spinal_plates"
+        ],
+        "rule": "部位只有在英文 Anatomy 行的 av / avN（含阈值）/ HP / 耐久 / fatal 与快照行全部一致时才准入；“字串能解析”不等于来源一致",
+        "source": {
+          "anatomy_state": "ANATOMY_SOURCE_UNAVAILABLE",
+          "capture_id": null,
+          "rows": 0
+        },
+        "state": "BLOCKED_PARTS"
+      },
+      "health_total_raw": "750",
+      "minimum_difficulty": "Extreme",
+      "name_en": "Rupture Spewer",
+      "name_zh": "爆裂胆汁喷涌虫",
+      "parts": {
+        "butt": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "butt",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 1,
+            "raw": "100%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/70/body_parts/4",
+          "part_id": "butt",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "front_leg": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "front_leg",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Medium",
+              "base_label": "Medium",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Medium",
+          "armor_level_zh_snapshot": "中",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "200",
+            "value": 200
+          },
+          "json_path": "/enemies/70/body_parts/5",
+          "part_id": "front_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Medium",
+              "ordinal": 3
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Medium",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Medium"
+          }
+        },
+        "head": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "head",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Medium",
+              "base_label": "Medium",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Medium",
+          "armor_level_zh_snapshot": "中",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "300",
+            "value": 300
+          },
+          "json_path": "/enemies/70/body_parts/1",
+          "part_id": "head",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Medium",
+              "ordinal": 3
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Medium",
+                "armor_ordinal": 3,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Medium",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Medium"
+          }
+        },
+        "main": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "main",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0.5,
+            "raw": "50%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "750",
+            "value": 750
+          },
+          "json_path": "/enemies/70/body_parts/0",
+          "part_id": "main",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "mouth": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "mouth",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Unarmored",
+              "base_label": "Unarmored",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Unarmored",
+          "armor_level_zh_snapshot": "无装甲",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0,
+            "raw": "0%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/70/body_parts/2",
+          "part_id": "mouth",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Unarmored",
+              "ordinal": 0
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Unarmored",
+                "armor_ordinal": 0,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Unarmored",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Unarmored"
+          }
+        },
+        "rear_leg": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "rear_leg",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0.3,
+            "raw": "30%"
+          },
+          "fatal": false,
+          "hp": {
+            "raw": "250",
+            "value": 250
+          },
+          "json_path": "/enemies/70/body_parts/6",
+          "part_id": "rear_leg",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        },
+        "spinal_plates": {
+          "admission": {
+            "anatomy_row": null,
+            "checks": {
+              "base_av": "MISSING",
+              "conditional_av": "MISSING",
+              "durable": "MISSING",
+              "fatal": "MISSING",
+              "health": "MISSING"
+            },
+            "expected": {
+              "base_label": null,
+              "conditional": []
+            },
+            "part_id": "spinal_plates",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "snapshot": {
+              "armor_level_raw": "Light",
+              "base_label": "Light",
+              "conditional": []
+            },
+            "state": "ANATOMY_SOURCE_UNAVAILABLE"
+          },
+          "armor_level_raw": "Light",
+          "armor_level_zh_snapshot": "轻",
+          "at_calibration_difficulty": {
+            "armor_label": null,
+            "armor_ordinal": null,
+            "difficulty": 10,
+            "note": "来源交叉核对未通过：不取任何档位，也不进入比较",
+            "reason": "没有该变体的英文 Anatomy 表抓取（ANATOMY_SOURCE_UNAVAILABLE）：无法对齐就不进比较",
+            "state": "BLOCKED_SOURCE_CROSS_CHECK"
+          },
+          "durable": {
+            "fraction": 0.8,
+            "raw": "80%"
+          },
+          "fatal": true,
+          "hp": {
+            "raw": "500",
+            "value": 500
+          },
+          "json_path": "/enemies/70/body_parts/3",
+          "part_id": "spinal_plates",
+          "resolution": {
+            "angle_semantics": {
+              "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+              "state": "NOT_AN_INCIDENCE_ANGLE"
+            },
+            "base_tier": {
+              "label": "Light",
+              "ordinal": 2
+            },
+            "branches": [
+              {
+                "applies_when": {
+                  "kind": "any_difficulty"
+                },
+                "armor_label": "Light",
+                "armor_ordinal": 2,
+                "branch_id": "all_difficulties"
+              }
+            ],
+            "citations": [
+              "cite:template_armor_scale"
+            ],
+            "conditional": false,
+            "raw": "Light",
+            "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+            "state": "CANDIDATE_UNCONDITIONAL_ARMOR",
+            "token": "Light"
+          }
+        }
+      },
+      "state": "PARTS_BLOCKED_SOURCE_CROSS_CHECK"
+    }
+  },
+  "question": "条件装甲串能否在显式阈值下给出各分支档位；未知/缺难度/冲突行是否一律不降甲",
+  "rules": {
+    "explicit_selection": "分支选择必须显式传入难度；未选分支时 at_calibration_difficulty 为 null，不默认任何一支",
+    "never_default": "未知 token、缺难度、冲突行 → ARMOR_TOKEN_UNRESOLVED，不给任何档位、不取“更低/更高”的有利值",
+    "no_angle": "难度条件与弹道入射角是两个轴；解析器直接拒绝角度词，绝不互相代换",
+    "scale_source": "AV 编号→标签来自 Template:Armor，并与 combat/candidates.json 的候选档序交叉校验"
+  },
+  "schema": 1,
+  "state": "candidate_projection",
+  "tokens": {
+    "Light Medium at Extreme": {
+      "aligned_anatomy_row": {
+        "av": 2,
+        "av_by_difficulty": {
+          "6": 3
+        },
+        "capture_id": "bile_spewer_page",
+        "durability": "50%",
+        "fatal": "Yes",
+        "health": "750",
+        "line": 34,
+        "part_name": "Main"
+      },
+      "angle_semantics": {
+        "note": "该串是 wiki Anatomy 表的 “AV 值 + 难度覆盖值” 渲染；与弹道入射角（direct / slight / large angle）是完全不同的轴，禁止互相代换",
+        "state": "NOT_AN_INCIDENCE_ANGLE"
+      },
+      "base_tier": {
+        "label": "Light",
+        "ordinal": 2
+      },
+      "branches": [
+        {
+          "applies_when": {
+            "comparator": "<",
+            "kind": "mission_difficulty",
+            "threshold": 6
+          },
+          "armor_label": "Light",
+          "armor_ordinal": 2,
+          "branch_id": "below_threshold"
+        },
+        {
+          "applies_when": {
+            "comparator": ">=",
+            "kind": "mission_difficulty",
+            "threshold": 6
+          },
+          "armor_label": "Medium",
+          "armor_ordinal": 3,
+          "branch_id": "at_or_above_threshold"
+        }
+      ],
+      "citations": [
+        "cite:template_armor_scale",
+        "cite:module_difficulty_extreme",
+        "cite:module_anatomy_armor_format",
+        "cite:nursing_spewer_armor_sentence",
+        "cite:bile_spewer_tactical_head"
+      ],
+      "condition": {
+        "comparator": ">=",
+        "difficulty_name": "Extreme",
+        "kind": "mission_difficulty",
+        "threshold": 6,
+        "threshold_basis": "Module:difficulty 的 [\"6\"] = \"Extreme\"；候选者关系取 “Extreme 及以上”，见 cite:nursing_spewer_armor_sentence 与 cite:bile_spewer_tactical_head"
+      },
+      "conditional": true,
+      "first_seen": "bile_spewer/main",
+      "raw": "Light Medium at Extreme",
+      "semantics": "MISSION_DIFFICULTY_CONDITIONAL_ARMOR",
+      "state": "CANDIDATE_CONDITIONAL_ARMOR",
+      "token": "Light Medium at Extreme"
+    }
+  },
+  "variant_differences": {
+    "forbidden": "不把三者归成同一种：同一维度的结论只对具体 target_id 成立",
+    "state": "source_reviewed",
+    "summary": [
+      "Bile Spewer：main/head/spinal_plates/front_legs 在 N6+ 由 Light 升 Medium；mouth/butt 无甲；rear_legs 恒 Light",
+      "Nursing Spewer：七个部位在任何难度都不变（没有 avN 覆盖），与 Bile Spewer 的差别是“全难度 2 AV”，描述还多了刷出时的孢子云",
+      "Rupture Spewer：头部与前腿无条件 Medium；最低难度即 Extreme（不是“N6+ 才变中甲”的条件串）"
+    ]
+  }
+}

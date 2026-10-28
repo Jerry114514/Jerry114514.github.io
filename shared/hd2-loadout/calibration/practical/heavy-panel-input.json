@@ -1,0 +1,829 @@
+{
+  "schema": 1,
+  "kind": "practical-heavy-panel-input",
+  "source_state": "frozen_snapshot_with_checked_increment",
+  "not_game_certified": true,
+  "targets": {
+    "bile_titan": {
+      "parts": {
+        "butt_armor": {
+          "health": 3500.0,
+          "health_raw": "3,500",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Butt Armor"
+        },
+        "claw": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "0%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Claws (2)"
+        },
+        "front_left_leg_flesh": {
+          "health": 2000.0,
+          "health_raw": "2,000",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Front Left Leg Flesh"
+        },
+        "head": {
+          "health": 1500.0,
+          "health_raw": "1,500",
+          "armor_level": "Heavy",
+          "durable": "95%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Head"
+        },
+        "inner_flesh": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Unarmored",
+          "durable": "70%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Inner Flesh"
+        },
+        "leg_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Leg Armor (12)"
+        },
+        "leg_flesh": {
+          "health": 2000.0,
+          "health_raw": "2,000",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Leg Flesh (3)"
+        },
+        "lower_sac": {
+          "health": 750.0,
+          "health_raw": "750",
+          "armor_level": "Unarmored",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Lower Sac"
+        },
+        "main": {
+          "health": 6500.0,
+          "health_raw": "6,500",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "-",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Main"
+        },
+        "torso_armor": {
+          "health": 1500.0,
+          "health_raw": "1,500",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Torso Armor (2)"
+        },
+        "underside": {
+          "health": 4000.0,
+          "health_raw": "4,000",
+          "armor_level": "Light",
+          "durable": "80%",
+          "fatal": true,
+          "percent_to_main": "60%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Underside"
+        },
+        "upper_sac": {
+          "health": 750.0,
+          "health_raw": "750",
+          "armor_level": "Unarmored",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-bile_titan@138514"
+          ],
+          "source_part_name": "Upper Sac"
+        }
+      }
+    },
+    "charger": {
+      "parts": {
+        "butt": {
+          "health": 950.0,
+          "health_raw": "950",
+          "armor_level": "Unarmored",
+          "durable": "80%",
+          "fatal": null,
+          "percent_to_main": "150%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Butt"
+        },
+        "claw": {
+          "health": 500.0,
+          "health_raw": "500",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Claws (2)"
+        },
+        "front_leg_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "60%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Front Leg Armor (2)"
+        },
+        "head": {
+          "health": 1200.0,
+          "health_raw": "1,200",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Head"
+        },
+        "inner_flesh": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Very Light",
+          "durable": "30%",
+          "fatal": true,
+          "percent_to_main": "300%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Inner Flesh"
+        },
+        "leg_flesh": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Light",
+          "durable": "70%",
+          "fatal": true,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Leg Flesh (4)"
+        },
+        "main": {
+          "health": 2400.0,
+          "health_raw": "2,400",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "-",
+          "overflow_cap": "-",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Main"
+        },
+        "rear_armor_plates": {
+          "health": 2200.0,
+          "health_raw": "2,200",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "75%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Rear Armor Plates"
+        },
+        "rear_leg_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Rear Leg Armor (2)"
+        },
+        "torso_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "85%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Torso Armor (2)"
+        },
+        "underside": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Light",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-charger@137700"
+          ],
+          "source_part_name": "Underside"
+        }
+      }
+    },
+    "charger_behemoth": {
+      "parts": {
+        "butt": {
+          "health": 950.0,
+          "health_raw": "950",
+          "armor_level": "Unarmored",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Butt"
+        },
+        "claw": {
+          "health": 500.0,
+          "health_raw": "500",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Claws (2)"
+        },
+        "front_leg_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "80%",
+          "fatal": false,
+          "percent_to_main": "60%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Front Leg Armor (2)"
+        },
+        "head": {
+          "health": 1600.0,
+          "health_raw": "1,600",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Head"
+        },
+        "inner_flesh": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Very Light",
+          "durable": "30%",
+          "fatal": true,
+          "percent_to_main": "300%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Inner Flesh"
+        },
+        "leg_flesh": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Light",
+          "durable": "70%",
+          "fatal": true,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Leg Flesh (4)"
+        },
+        "main": {
+          "health": 3000.0,
+          "health_raw": "3,000",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "-",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Main"
+        },
+        "rear_armor_plates": {
+          "health": 2200.0,
+          "health_raw": "2,200",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "75%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Rear Armor Plates"
+        },
+        "rear_leg_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "80%",
+          "fatal": false,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Rear Leg Armor (2)"
+        },
+        "torso_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "85%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Torso Armor (2)"
+        },
+        "underside": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Light",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-charger_behemoth@137702"
+          ],
+          "source_part_name": "Underside"
+        }
+      }
+    },
+    "impaler": {
+      "parts": {
+        "butt": {
+          "health": 1100.0,
+          "health_raw": "1,100",
+          "armor_level": "Very Light",
+          "durable": "85%",
+          "fatal": false,
+          "percent_to_main": "140%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Butt"
+        },
+        "crest_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "80%",
+          "fatal": false,
+          "percent_to_main": "75%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Crest Armor"
+        },
+        "head": {
+          "health": 1250.0,
+          "health_raw": "1,250",
+          "armor_level": "Very Light",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "150%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Head"
+        },
+        "inner_flesh": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Unarmored",
+          "durable": "90%",
+          "fatal": true,
+          "percent_to_main": "150%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Inner Flesh"
+        },
+        "leg_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Leg Armor (4)"
+        },
+        "leg_flesh": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Unarmored",
+          "durable": "70%",
+          "fatal": true,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Leg Flesh (4)"
+        },
+        "main": {
+          "health": 4000.0,
+          "health_raw": "4,000",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "-",
+          "overflow_cap": "-",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Main"
+        },
+        "rear_armor_plates": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": false,
+          "percent_to_main": "75%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Rear Armor Plates"
+        },
+        "tentacle_armor": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Tentacle Armor (3)"
+        },
+        "tentacle_flesh": {
+          "health": 500.0,
+          "health_raw": "500",
+          "armor_level": "Very Light",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Tentacle Flesh (3)"
+        },
+        "torso_armor": {
+          "health": 1000.0,
+          "health_raw": "1,000",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": false,
+          "percent_to_main": "75%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Torso Armor (2)"
+        },
+        "underside": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Light",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "150%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-impaler@136861"
+          ],
+          "source_part_name": "Underside"
+        }
+      }
+    },
+    "spore_charger": {
+      "parts": {
+        "butt": {
+          "health": 950.0,
+          "health_raw": "950",
+          "armor_level": "Unarmored",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "150%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Butt"
+        },
+        "claw": {
+          "health": 500.0,
+          "health_raw": "500",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Claws (2)"
+        },
+        "front_leg_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "60%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Front Leg Armor (2)"
+        },
+        "head": {
+          "health": 1200.0,
+          "health_raw": "1,200",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "70%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Head"
+        },
+        "inner_flesh": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Very Light",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "300%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Inner Flesh"
+        },
+        "leg_flesh": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Light",
+          "durable": "70%",
+          "fatal": true,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Leg Flesh (4)"
+        },
+        "main": {
+          "health": 2400.0,
+          "health_raw": "2,400",
+          "armor_level": "Heavy",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "-",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Main"
+        },
+        "rear_armor_plates": {
+          "health": 2200.0,
+          "health_raw": "2,200",
+          "armor_level": "Heavy",
+          "durable": "75%",
+          "fatal": true,
+          "percent_to_main": "75%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Rear Armor Plates"
+        },
+        "rear_leg_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "70%",
+          "fatal": false,
+          "percent_to_main": "50%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Rear Leg Armor (2)"
+        },
+        "spore_flesh": {
+          "health": 500.0,
+          "health_raw": "500",
+          "armor_level": "Very Light",
+          "durable": "100%",
+          "fatal": false,
+          "percent_to_main": "20%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Spore Flesh (6)"
+        },
+        "torso_armor": {
+          "health": 800.0,
+          "health_raw": "800",
+          "armor_level": "Heavy",
+          "durable": "85%",
+          "fatal": false,
+          "percent_to_main": "100%",
+          "overflow_cap": "No",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Torso Armor (2)"
+        },
+        "underside": {
+          "health": null,
+          "health_raw": "Main",
+          "armor_level": "Light",
+          "durable": "100%",
+          "fatal": true,
+          "percent_to_main": "100%",
+          "overflow_cap": "Yes",
+          "evidence_refs": [
+            "wiki:enemy-spore_charger@140019"
+          ],
+          "source_part_name": "Underside"
+        }
+      }
+    }
+  },
+  "sources": [
+    {
+      "id": "wiki:enemy-bile_titan@138514",
+      "source_url": "https://helldivers.wiki.gg/wiki/Bile_Titan",
+      "revid": 138514,
+      "fetched_at": "2026-10-26",
+      "kind": "frozen_wiki_anatomy",
+      "note": "A增量278字段已对原始HTML单元格及值独立复核；其余面板项为同表直接结构化，不冒称逐字段正式review_record"
+    },
+    {
+      "id": "wiki:enemy-charger@137700",
+      "source_url": "https://helldivers.wiki.gg/wiki/Charger",
+      "revid": 137700,
+      "fetched_at": "2026-10-26",
+      "kind": "frozen_wiki_anatomy",
+      "note": "A增量278字段已对原始HTML单元格及值独立复核；其余面板项为同表直接结构化，不冒称逐字段正式review_record"
+    },
+    {
+      "id": "wiki:enemy-charger_behemoth@137702",
+      "source_url": "https://helldivers.wiki.gg/wiki/Charger_Behemoth",
+      "revid": 137702,
+      "fetched_at": "2026-10-26",
+      "kind": "frozen_wiki_anatomy",
+      "note": "A增量278字段已对原始HTML单元格及值独立复核；其余面板项为同表直接结构化，不冒称逐字段正式review_record"
+    },
+    {
+      "id": "wiki:enemy-impaler@136861",
+      "source_url": "https://helldivers.wiki.gg/wiki/Impaler",
+      "revid": 136861,
+      "fetched_at": "2026-10-26",
+      "kind": "frozen_wiki_anatomy",
+      "note": "A增量278字段已对原始HTML单元格及值独立复核；其余面板项为同表直接结构化，不冒称逐字段正式review_record"
+    },
+    {
+      "id": "wiki:enemy-spore_charger@140019",
+      "source_url": "https://helldivers.wiki.gg/wiki/Spore_Charger",
+      "revid": 140019,
+      "fetched_at": "2026-10-26",
+      "kind": "frozen_wiki_anatomy",
+      "note": "A增量278字段已对原始HTML单元格及值独立复核；其余面板项为同表直接结构化，不冒称逐字段正式review_record"
+    }
+  ],
+  "accepted_increment": {
+    "field_records": 278,
+    "conflict_records": 4,
+    "conflicts_not_silently_applied": true
+  }
+}

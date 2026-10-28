@@ -1,0 +1,22 @@
+{
+  "status": "SOURCE_POOLS_WITH_EXPLICIT_ENGINEERING_ROUTE_ASSUMPTIONS",
+  "overflow_to_constitution": false,
+  "overflow_basis": "Conservative default: same-hit excess is not deducted from constitution without confirmed event ordering. Main transfer remains independent. The review also computes overflow-enabled sensitivity.",
+  "gas_control": {
+    "targets": ["alpha_commander"],
+    "onset_delay_ms": 300,
+    "residual_threat_fraction": 0.1,
+    "basis": "User confirms S11 gas confusion leaves the decapitated commander with little practical threat. 300 ms response delay and 10 percent residual threat are engineering estimates, not hit probability or guaranteed hard stun. Only direct status delivery is credited here."
+  },
+  "cleave_routes": {
+    "S-11_P:alpha_commander:head": {
+      "next_target": "alpha_commander:main",
+      "penetration_cost": 1,
+      "basis": "User-confirmed S11 commander overpenetration route; head-to-Main alignment and Wiki one-AP cost are explicit engineering inputs, not a universal pass-through rule.",
+      "source_conflict": "Wiki describes one AP lost per cleave. OTL's 6.3.0 code study describes an armor/durability cost and is older than current 7.2.1. This route is evaluated alongside a zero-extra-hit sensitivity; no generic AP+2 rule is enabled.",
+      "sources": ["https://helldivers.wiki.gg/wiki/S-11_Speargun", "https://helldivers.wiki.gg/wiki/Damage", "https://helldiversotl.com/research/damage-resolution"]
+    }
+  },
+  "sources": ["https://helldivers.wiki.gg/wiki/Alpha_Commander", "https://helldivers.wiki.gg/wiki/Hive_Guard", "https://helldivers.wiki.gg/wiki/Damage", "https://helldivers.wiki.gg/wiki/Status_Effects"],
+  "scope": "One weapon, explicit selected part and at most one bound follow-through part. Gas damages Main only; confusion changes residual threat, never HP. Natural bleed and control do not occupy the player's hands."
+}

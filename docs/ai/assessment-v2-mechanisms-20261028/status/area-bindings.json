@@ -1,0 +1,921 @@
+{
+  "schema": "hd2-area-bindings/1",
+  "items": [
+    {
+      "id": "g_4_gas",
+      "producer_component_id": "G-4_GAS_E",
+      "producer_component_title": "G-4 GAS E",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 15,
+      "duration_source": "snapshot attack table AoE Duration",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 2,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 7,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Throwables from Supply",
+          "raw": "2"
+        },
+        {
+          "section": null,
+          "label": "Max Rounds",
+          "raw": "4"
+        },
+        {
+          "section": null,
+          "label": "Starting Rounds",
+          "raw": "3"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-4_Gas",
+      "source_revision_snapshot": 134066,
+      "locator": "Detailed Weapon Statistics / component G-4_GAS_E; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "g_8_immolation",
+      "producer_component_id": "G-8_IMMOLATION_E",
+      "producer_component_title": "G-8 IMMOLATION E",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": 27,
+      "duration_source": "current page Tactical Information",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 4,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 10,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Throwables from Supply",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Max Rounds",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Starting Rounds",
+          "raw": "4"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/Immolation",
+      "source_revision_snapshot": 136947,
+      "locator": "Detailed Weapon Statistics / component G-8_IMMOLATION_E; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "g_10_incendiary",
+      "producer_component_id": "G-10_INCENDIARY_E",
+      "producer_component_title": "G-10 INCENDIARY E",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": 20,
+      "duration_source": "current page Tactical Information",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 1,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 7,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Throwables from Supply",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Max Rounds",
+          "raw": "5"
+        },
+        {
+          "section": null,
+          "label": "Starting Rounds",
+          "raw": "4"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-10_Incendiary",
+      "source_revision_snapshot": 123870,
+      "locator": "Detailed Weapon Statistics / component G-10_INCENDIARY_E; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "g_13_incendiary_impact",
+      "producer_component_id": "G-13_INCENDIARY_IMPACT_E",
+      "producer_component_title": "G-13 INCENDIARY IMPACT E",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": 15,
+      "duration_source": "current page Tactical Information",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 1,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 7,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Throwables from Supply",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Max Rounds",
+          "raw": "5"
+        },
+        {
+          "section": null,
+          "label": "Starting Rounds",
+          "raw": "4"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/G-13_Incendiary_Impact",
+      "source_revision_snapshot": 128954,
+      "locator": "Detailed Weapon Statistics / component G-13_INCENDIARY_IMPACT_E; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "orbital_gas_strike",
+      "producer_component_id": "S_P14_IE",
+      "producer_component_title": "S P14 IE",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 15,
+      "duration_source": "snapshot attack table AoE Duration",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 1,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 15,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Salvos",
+          "raw": "1"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Gas_Strike",
+      "source_revision_snapshot": 134393,
+      "locator": "Detailed Weapon Statistics / component S_P14_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "eagle_gas_airstrike",
+      "producer_component_id": "S_P6_IE",
+      "producer_component_title": "S P6 IE",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 15,
+      "duration_source": "snapshot attack table AoE Duration",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 1,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 12,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "source_revision_snapshot": 139358,
+      "locator": "Detailed Weapon Statistics / component S_P6_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "support_spear",
+      "producer_component_id": "S-11_P_E",
+      "producer_component_title": "S-11 P E",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 10,
+      "duration_source": "snapshot attack table AoE Duration",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 2,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 5,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "1"
+        },
+        {
+          "section": null,
+          "label": "Spare Magazines",
+          "raw": "12"
+        },
+        {
+          "section": null,
+          "label": "Starting Magazines",
+          "raw": "12"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "3"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/S-11_Speargun",
+      "source_revision_snapshot": 133900,
+      "locator": "Detailed Weapon Statistics / component S-11_P_E; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "deployable_gas_mortar_sentry",
+      "producer_component_id": "AGM-17_P_IE",
+      "producer_component_title": "A/GM-17 P IE",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 15,
+      "duration_source": "snapshot attack table AoE Duration",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 2,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 7,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": "GAS MORTAR SENTRY",
+          "label": "Capacity",
+          "raw": "16"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/GM-17_Gas_Mortar_Sentry",
+      "source_revision_snapshot": 136353,
+      "locator": "Detailed Weapon Statistics / component AGM-17_P_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "deployable_gas_mines",
+      "producer_component_id": null,
+      "producer_component_title": "Gas Mine",
+      "mode": "gas_cloud",
+      "status_candidate": "Gas",
+      "persistent_area_duration_s": 15,
+      "duration_source": "MD-8 page says same cloud duration as G-4 (15s); table radius conflicts with prose",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 2,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 6,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Salvos",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "8"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/MD-8_Gas_Mines",
+      "source_revision_snapshot": 136345,
+      "locator": "Detailed Weapon Statistics / component None; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "orbital_napalm_barrage",
+      "producer_component_id": "S_P20_IE",
+      "producer_component_title": "S P20 IE",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 3.29999995,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 10,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Salvos",
+          "raw": "5"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/ONB",
+      "source_revision_snapshot": 134424,
+      "locator": "Detailed Weapon Statistics / component S_P20_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "eagle_napalm_airstrike",
+      "producer_component_id": "S_P3_IE",
+      "producer_component_title": "S P3 IE",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 2,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 10,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Napalm",
+      "source_revision_snapshot": 138266,
+      "locator": "Detailed Weapon Statistics / component S_P3_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed"
+    },
+    {
+      "id": "support_eat_700_incendiary",
+      "producer_component_id": "EAT-700_P_IE",
+      "producer_component_title": "EAT-700 P IE",
+      "mode": "ground_fire",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [
+        {
+          "label": "Inner Radius",
+          "value": 1.60000002,
+          "unit": "m"
+        },
+        {
+          "label": "Outer Radius",
+          "value": 8,
+          "unit": "m"
+        }
+      ],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "1"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/EAT-700_Expendable_Napalm",
+      "source_revision_snapshot": 138248,
+      "locator": "Detailed Weapon Statistics / component EAT-700_P_IE; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; specific pool binding needs confirmation"
+    },
+    {
+      "id": "flam_66_torcher",
+      "producer_component_id": "FLAM-66_TORCHER_S",
+      "producer_component_title": "FLAM-66 TORCHER S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "100"
+        },
+        {
+          "section": null,
+          "label": "Spare Magazines",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Starting Magazines",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "3"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher",
+      "source_revision_snapshot": 139670,
+      "locator": "Detailed Weapon Statistics / component FLAM-66_TORCHER_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed by current named page"
+    },
+    {
+      "id": "support_flam_40_flamethrower",
+      "producer_component_id": "FLAM-40_FLAMETHROWER_S",
+      "producer_component_title": "FLAM-40 FLAMETHROWER S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "150"
+        },
+        {
+          "section": null,
+          "label": "Spare Magazines",
+          "raw": "5"
+        },
+        {
+          "section": null,
+          "label": "Starting Magazines",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "3"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower",
+      "source_revision_snapshot": 135335,
+      "locator": "Detailed Weapon Statistics / component FLAM-40_FLAMETHROWER_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; persistent ground fire not independently verified for this item"
+    },
+    {
+      "id": "p_72_crisper",
+      "producer_component_id": "P-72_CRISPER_S",
+      "producer_component_title": "P-72 CRISPER S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "50"
+        },
+        {
+          "section": null,
+          "label": "Spare Magazines",
+          "raw": "4"
+        },
+        {
+          "section": null,
+          "label": "Starting Magazines",
+          "raw": "2"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "3"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/P-72_Crisper",
+      "source_revision_snapshot": 138944,
+      "locator": "Detailed Weapon Statistics / component P-72_CRISPER_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; persistent ground fire not independently verified for this item"
+    },
+    {
+      "id": "smg_flam_34_stoker",
+      "producer_component_id": "Underbarrel_SMGFLAM-34_STOKER_0_S",
+      "producer_component_title": "Underbarrel SMG/FLAM-34 STOKER 0 S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "45"
+        },
+        {
+          "section": null,
+          "label": "Spare Magazines",
+          "raw": "5"
+        },
+        {
+          "section": null,
+          "label": "Starting Magazines",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "5"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "2"
+        },
+        {
+          "section": "Underbarrel SMG/FLAM-34 STOKER 0",
+          "label": "Capacity",
+          "raw": "50"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/SMG/FLAM-34_Stoker",
+      "source_revision_snapshot": 139655,
+      "locator": "Detailed Weapon Statistics / component Underbarrel_SMGFLAM-34_STOKER_0_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; persistent ground fire not independently verified for this item"
+    },
+    {
+      "id": "heavy_support_b_flam_80_flamer",
+      "producer_component_id": "BFLAM-80_CREMATOR_S",
+      "producer_component_title": "B/FLAM-80 CREMATOR S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "several seconds; no precise value",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Capacity",
+          "raw": "500"
+        },
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "250"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "125"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/Cremator",
+      "source_revision_snapshot": 139938,
+      "locator": "Detailed Weapon Statistics / component BFLAM-80_CREMATOR_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed by current named page",
+      "inventory_note": "Wiki says full backpack 62.35 s continuous spraying; no independent grounds per fuel conversion"
+    },
+    {
+      "id": "deployable_flame_sentry",
+      "producer_component_id": "FLAME_SENTRY_S",
+      "producer_component_title": "FLAME SENTRY S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": "FLAME SENTRY",
+          "label": "Capacity",
+          "raw": "600"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+      "source_revision_snapshot": 139936,
+      "locator": "Detailed Weapon Statistics / component FLAME_SENTRY_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; persistent ground fire not independently verified for this item"
+    },
+    {
+      "id": "vehicle_exo_51_lumberjack_exosuit",
+      "producer_component_id": "LUMBERER_FLAMETHROWER_S",
+      "producer_component_title": "LUMBERER FLAMETHROWER S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": "LUMBERER ANTI TANK CANNON",
+          "label": "Capacity",
+          "raw": "25"
+        },
+        {
+          "section": "LUMBERER FLAMETHROWER",
+          "label": "Capacity",
+          "raw": "500"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/EXO-51_Lumberer_Exosuit",
+      "source_revision_snapshot": 139939,
+      "locator": "Detailed Weapon Statistics / component LUMBERER_FLAMETHROWER_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "confirmed by current named page",
+      "inventory_note": "500 fuel for 62.35 seconds continuous spray, cannot be replenished per current Wiki; applies to flamethrower only"
+    },
+    {
+      "id": "backpack_ax_flam_75_hot_dog",
+      "producer_component_id": "AXFLAM-75_HOT_DOG_S",
+      "producer_component_title": "AX/FLAM-75 HOT DOG S",
+      "mode": "ground_fire_from_spray",
+      "status_candidate": "Fire",
+      "persistent_area_duration_s": null,
+      "duration_source": "unknown",
+      "attack_explosion_radius": [],
+      "area_radius_m": null,
+      "area_component_id": null,
+      "inventory_rows": [
+        {
+          "section": null,
+          "label": "Mags from Supply",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Mags from Ammo Box",
+          "raw": "3"
+        },
+        {
+          "section": null,
+          "label": "Max Rounds",
+          "raw": "6"
+        },
+        {
+          "section": null,
+          "label": "Starting Rounds",
+          "raw": "6"
+        },
+        {
+          "section": "AX/FLAM-75 HOT DOGDR 0",
+          "label": "Capacity",
+          "raw": "80"
+        }
+      ],
+      "inventory_binding": "source rows only; section must match producer; projectile count or fuel consumption is not independently known",
+      "source_url": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog",
+      "source_revision_snapshot": 136372,
+      "locator": "Detailed Weapon Statistics / component AXFLAM-75_HOT_DOG_S; Tactical Information for residual ground or cloud",
+      "limitations": [
+        "Explosion radius does not establish ground pool geometry",
+        "Area status application timing and refresh unknown",
+        "No particle count or hit probability inferred"
+      ],
+      "ground_area_existence": "candidate; persistent ground fire not independently verified for this item"
+    }
+  ],
+  "excluded_direct_only": [
+    {
+      "id": "support_tx_41_sterilizer",
+      "component": "TX-41_STERILIZER_S",
+      "status": "Gas_Var2",
+      "reason": "Wiki says spray remains airborne approximately 0.25s and does not stick to surfaces; not a persistent ground area",
+      "url": "https://helldivers.wiki.gg/wiki/TX-41_Sterilizer"
+    },
+    {
+      "id": "backpack_ax_tx_13_purifier",
+      "component": "AXTX-13_DOG_BREATH_S",
+      "status": "Gas_Var2",
+      "reason": "spray application; persistent ground area not established",
+      "url": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath"
+    },
+    {
+      "id": "sg_225ie_breaker_incendiary",
+      "component": "SG-225IE_P",
+      "status": "Fire",
+      "reason": "projectile applies status; persistent ground fire not established",
+      "url": "https://helldivers.wiki.gg/wiki/SG-225IE_Breaker_Incendiary"
+    }
+  ],
+  "notes": [
+    "IDs identify area-producing attacks, not proven independent ground-area component IDs.",
+    "MD-8 prose says same area as G-4, but detailed tables list MD-8 outer 6 m versus G-4 outer 7 m; retain conflict and do not infer actual area radius.",
+    "Eagle napalm 12–20 seconds appears in wiki but is marked citation needed; do not promote to confirmed duration.",
+    "Explosion status and persistent-area status may have different application strength and geometry."
+  ]
+}

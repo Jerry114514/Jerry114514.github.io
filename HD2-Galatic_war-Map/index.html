@@ -63,6 +63,7 @@
   </script>
   <link rel="stylesheet" href="./css/forecast.css?v=20261013b">
   <link rel="stylesheet" href="./css/ownership-changes.css?v=20261014a">
+  <link rel="stylesheet" href="../shared/hd2-loadout/styles.css">
 </head>
 <body>
 
@@ -199,13 +200,7 @@
         <h2 class="block-title">战术搭配器</h2>
         <span class="block-meta" id="stratagem-meta"></span>
       </div>
-      <div class="stratagem-toolbar">
-        <button class="stratagem-btn" id="stratagem-draw-btn">🎲 随机抽取</button>
-        <button class="stratagem-btn strat-btn-alt" id="stratagem-balanced-btn" title="按游戏内冲突规则抽取：不重复占三号位、不重复占背包位、自带背包的三号位不与其它三号位或背包共存；次抛类不占冲突位">⚖️ 平衡随机</button>
-      </div>
-      <div id="stratagem-content">
-        <div class="loading">正在加载战备库…</div>
-      </div>
+      <div data-hd2-loadout data-evaluator="assessment" data-presentation="black-box"><p>正在加载七格搭配器…</p></div>
     </section>
 
 <!-- ============================================================
@@ -393,7 +388,6 @@
     EFFECT_URL: "./tables/effect_id_cn.json",     // 效果 ID -> 中文（星球行动变量）
     WAYPOINTS_URL: "./tables/waypoints.json",   // 补给线邻接（战术目标词条计算，冻结文件只读复用）
     EFFECT_DETAIL_URL: "./tables/galactic_effects.json",  // 效果 ID -> 英文名+描述（词条详情）
-    STRATAGEMS_URL: "./tables/stratagems.json"  // 战备库（战术搭配器）
   };
 
   /* ==============================================================
@@ -670,13 +664,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       const wpRaw = await HD2Source.jsonSoft(CONFIG.WAYPOINTS_URL);
       if (wpRaw) waypoints = wpRaw;
     } catch (_) { /* ignore */ }
-    // 战备库（战术搭配器）
-    let stratagems = [];
-    try {
-      const sg = await HD2Source.jsonSoft(CONFIG.STRATAGEMS_URL);
-      if (sg) stratagems = sg;
-    } catch (_) { /* ignore */ }
-
     // 实测历史（社区 CDN 的 15 分钟帧，由采集脚本落到 ./data/recent/ 后同源读取）：
     // 速率四件套与 MO 外推都优先用它。拿不到（没有这份缓存 / CDN 挂了）返回 false，
     // 各调用点会自动退回站内推演公式，不会变成 0。
@@ -702,7 +689,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       variables,
       effectMap,
       effectDetailMap,
-      stratagems,
       player_distribution: data.player_distribution || null,
       recon_stats: data.recon_stats || {},
       war_stats: data.war_stats || {},
@@ -799,318 +785,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
   /* ==============================================================
      渲染：区块1 重要指令
      ============================================================== */
-  // ============ 战术搭配器 ============
-  const STRAT_DIM4_CN = {
-    "轨道": "冷却", "飞鹰": "冷却",
-    "支援武器": "人机工效", "重型支援武器": "压制力",
-    "载具": "战术性", "可部署物": "战术灵活性", "背包": "战术价值",
-  };
-  const STRAT_TYPE_COLOR = {
-    "轨道": "#F5C518", "飞鹰": "#5BA3D0", "支援武器": "#2ECC71",
-    "重型支援武器": "#E74C3C", "载具": "#CF64F8",
-    "可部署物": "#D6806D", "背包": "#6B7280",
-  };
-  // 维度配色：对单=橙红 对群=黄 穿甲=紫 第四维=蓝
-  const STRAT_DIM_COLOR = ["#FF6B4A", "#F5C518", "#CF64F8", "#5BA3D0"];
-  const STRAT_DIM_LABEL = ["对单", "对群", "穿甲"];
-  let stratagemPool = [];
-  let currentLoadout = [];   // 当前配装（支持换一个微调）
+  // 七格搭配器由 shared/hd2-loadout 独立加载，战况刷新不重置配装或锁定。
 
-  function stratGrade(score) {
-    if (score >= 44) return { g: "S", cls: "strat-grade-S" };
-    if (score >= 32) return { g: "A", cls: "strat-grade-A" };
-    if (score >= 20) return { g: "B", cls: "strat-grade-B" };
-    if (score >= 10) return { g: "C", cls: "strat-grade-C" };
-    return { g: "D", cls: "strat-grade-D" };
-  }
-
-  function stratDraw() {
-    const pool = stratagemPool.slice();
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-    return pool.slice(0, 4);
-  }
-
-  /* ============ 平衡随机（2026-09-29 新增；与图鉴站 HD2_Wiki/loadout.html 同一套口径） ============
-     分类表按游戏内口径手写，用户已逐条订正：
-       · 次抛（不占冲突位，5 件）：EAT-17 / EAT-411 / EAT-700 / MLS-4X 突击兵 / MS-11 单兵导弹发射井
-       · 自带背包的三号位（8 件）：GR-8 无后坐力炮、AC-8 机炮、FAF-14 飞矛、空爆火箭弹发射器、
-         GL-28 弹链式榴弹发射器、B/FLAM-80 焚燃者、M-1000 重装机枪、StA-X3 WASP 发射器
-       · LAS-98 激光大炮、40-K 热熔枪按普通三号位
-     规则：已有非次抛三号位 → 不再要非次抛三号位；已有背包 → 不再要背包 / 自带背包的三号位；
-           已有自带背包的三号位 → 不再要非次抛三号位 / 背包。次抛全部豁免。
-     改分类表只需改下面两个数组。 */
-  const STRAT_DISPOSABLE = [
-    "support_eat_17_expendable_anti_tank",
-    "support_eat_411_leveller",
-    "support_eat_700_incendiary",
-    "support_mls_4x_commando",
-    "support_ms_11_missile_silo",
-  ];
-  const STRAT_BACKPACK_WEAPONS = [
-    "heavy_support_gr_8_recoilless_rifle",
-    "heavy_support_ac_8_autocannon",
-    "heavy_support_faf_14_spear",
-    "heavy_support_rl_77_airburst_rocket_launcher",
-    "heavy_support_gl_28_belt_fed_grenade_launcher",
-    "heavy_support_b_flam_80_flamer",
-    "heavy_support_m_1000_hmg",
-    "heavy_support_sta_x3_wasp_launcher",
-  ];
-  let stratMode = "pure";      // "pure" = 纯随机 · "balanced" = 平衡随机
-
-  function stratSlotKind(x) {
-    if (!x) return "other";
-    if (x.type !== "支援武器" && x.type !== "重型支援武器") {
-      return x.type === "背包" ? "backpack" : "other";
-    }
-    if (STRAT_DISPOSABLE.includes(x.id)) return "disposable";
-    if (STRAT_BACKPACK_WEAPONS.includes(x.id)) return "bpWeapon";
-    return "weapon";
-  }
-  function stratCanTake(x, st) {
-    const k = stratSlotKind(x);
-    if (k === "disposable") return true;
-    if (k === "weapon")   return !st.sw && !st.bpw;
-    if (k === "backpack") return !st.bp && !st.bpw;
-    if (k === "bpWeapon") return !st.sw && !st.bp && !st.bpw;
-    return true;
-  }
-  function stratMarkTaken(x, st) {
-    const k = stratSlotKind(x);
-    if (k === "weapon") st.sw = true;
-    else if (k === "backpack") st.bp = true;
-    else if (k === "bpWeapon") { st.sw = true; st.bp = true; st.bpw = true; }
-  }
-  // 平衡随机：洗牌后顺序取，撞位就跳过；次抛永远放行
-  function stratDrawBalanced() {
-    const p = stratagemPool.slice();
-    for (let i = p.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [p[i], p[j]] = [p[j], p[i]];
-    }
-    const st = { sw: false, bp: false, bpw: false };
-    const out = [];
-    for (let i = 0; i < p.length && out.length < 4; i++) {
-      if (!stratCanTake(p[i], st)) continue;
-      out.push(p[i]);
-      stratMarkTaken(p[i], st);
-    }
-    return out.length === 4 ? out : stratDraw();
-  }
-  function stratUpdateMeta() {
-    const meta = $("stratagem-meta");
-    if (!meta || !stratagemPool.length) return;
-    meta.textContent = stratagemPool.length + " 个战备可选 · " + (stratMode === "balanced"
-      ? "平衡随机：不重复占三号位 / 背包位，自带背包的三号位不共存（次抛豁免）"
-      : "纯随机：等概率抽 4 件，不做约束");
-  }
-
-  function stratShowBigBtn() {
-    const root = $("stratagem-content");
-    if (!root) return;
-    // 两个入口并排：纯随机 / 平衡随机（2026-09-29 用户要求两种随机都要有入口）
-    root.innerHTML = `<div class="stratagem-big-btn-wrap">
-      <button class="stratagem-big-btn" id="stratagem-big-btn">🎲 抽取你的随机战备</button>
-      <button class="stratagem-big-btn strat-big-alt" id="stratagem-big-btn-balanced"
-        title="按游戏内冲突规则抽取：不重复占三号位、不重复占背包位、自带背包的三号位不与其它三号位或背包共存；次抛类（EAT/MS-11/MLS-4X）不占冲突位">⚖️ 平衡随机</button>
-    </div>`;
-    const b = $("stratagem-big-btn");
-    if (b) b.addEventListener("click", () => stratRender("pure"));
-    const bb = $("stratagem-big-btn-balanced");
-    if (bb) bb.addEventListener("click", () => stratRender("balanced"));
-  }
-
-  // 战备卡片（含进度条 + 换一个）
-  function stratCardHtml(x, isS) {
-    const d4 = STRAT_DIM4_CN[x.type] || "第四维";
-    const tc = STRAT_TYPE_COLOR[x.type] || "#6B7280";
-    const bonusCls = (x.bonus || 0) > 0 ? "strat-bonus-pos" : (x.bonus || 0) < 0 ? "strat-bonus-neg" : "strat-bonus-zero";
-    const bonusTxt = (x.bonus || 0) > 0 ? `+${x.bonus}` : `${x.bonus || 0}`;
-    const dims = [
-      { label: "对单", val: x.stats[0], color: STRAT_DIM_COLOR[0] },
-      { label: "对群", val: x.stats[1], color: STRAT_DIM_COLOR[1] },
-      { label: "穿甲", val: x.stats[2], color: STRAT_DIM_COLOR[2] },
-      { label: d4, val: x.stats[3], color: STRAT_DIM_COLOR[3] },
-    ];
-    const bars = dims.map(d => `
-      <div class="strat-bar">
-        <span class="strat-bar-label">${esc(d.label)}</span>
-        <div class="strat-bar-track"><div class="strat-bar-fill" style="width:${Math.min(100, d.val / 10 * 100)}%;background:${d.color}"></div></div>
-        <span class="strat-bar-val">${d.val}</span>
-      </div>`).join("");
-    return `
-      <div class="strat-card${isS ? " strat-card-S" : ""}">
-        <div class="strat-card-head">
-          <div class="strat-card-name">${esc(x.name)}</div>
-          ${x.icon ? `<img class="strat-card-icon" src="${esc(x.icon)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : `<span class="strat-card-type" style="background:${tc}22;color:${tc};border:1px solid ${tc}55">${esc(x.type)}</span>`}
-        </div>
-        ${bars}
-        <div class="strat-card-footer">
-          <div class="strat-card-bonus ${bonusCls}">Bonus: ${bonusTxt}</div>
-          <button class="strat-swap-btn" data-swap="${esc(x.id)}">换一个</button>
-        </div>
-      </div>`;
-  }
-
-  // 换一个弹层
-  function stratOpenSwap(id) {
-    const item = stratagemPool.find(x => x.id === id);
-    if (!item) return;
-    /* 同类型候选。平衡模式下还要按规则过滤：把「其它三件」当作已占位状态，
-       只列出换上去不会破坏约束的候选（否则一换就又出现两把三号位/两个背包）。 */
-    const st = { sw: false, bp: false, bpw: false };
-    if (stratMode === "balanced") {
-      currentLoadout.forEach(y => { if (y.id !== id) stratMarkTaken(y, st); });
-    }
-    const sameType = stratagemPool.filter(x => {
-      if (x.type !== item.type || x.id === id) return false;
-      return stratMode === "balanced" ? stratCanTake(x, st) : true;
-    });
-    const mask = document.createElement("div");
-    mask.className = "strat-modal-mask";
-    const list = sameType.map(x => `
-      <div class="strat-modal-item" data-pick="${esc(x.id)}">
-        <span>${esc(x.name)}</span>
-        <span class="strat-modal-item-stats">${x.stats[0]}/${x.stats[1]}/${x.stats[2]}/${x.stats[3]} · B${x.bonus || 0}</span>
-      </div>`).join("") || `<div class="strat-empty">同类型没有可换的战备${stratMode === "balanced" ? "（平衡规则下都被占位挡住了）" : ""}</div>`;
-    mask.innerHTML = `
-      <div class="strat-modal">
-        <div class="strat-modal-head">
-          <span class="strat-modal-title">🔄 更换「${esc(item.name)}」</span>
-          <span class="strat-modal-close">✕</span>
-        </div>
-        <div class="strat-modal-list">${list}</div>
-      </div>`;
-    document.body.appendChild(mask);
-    const close = () => mask.remove();
-    mask.querySelector(".strat-modal-close").addEventListener("click", close);
-    mask.addEventListener("click", (e) => { if (e.target === mask) close(); });
-    mask.querySelectorAll(".strat-modal-item").forEach(el => {
-      el.addEventListener("click", () => {
-        const nid = el.dataset.pick;
-        const ni = stratagemPool.find(x => x.id === nid);
-        if (ni) {
-          const idx = currentLoadout.findIndex(x => x.id === id);
-          if (idx >= 0) currentLoadout[idx] = ni;
-          stratRenderFromLoadout();
-        }
-        close();
-      });
-    });
-  }
-
-  function stratRenderFromLoadout() {
-    stratRenderWith(currentLoadout);
-  }
-
-  // 参数：显式传 "pure" / "balanced"；作为事件处理器被直接绑定时（旧入口）沿用当前模式
-  function stratRender(mode) {
-    if (!stratagemPool.length) {
-      $("stratagem-content").innerHTML = `<div class="strat-empty">战备库加载失败。</div>`;
-      return;
-    }
-    stratMode = (mode === "balanced") ? "balanced" : (mode === "pure" ? "pure" : stratMode);
-    currentLoadout = (stratMode === "balanced") ? stratDrawBalanced() : stratDraw();
-    stratUpdateMeta();
-    stratRenderWith(currentLoadout);
-  }
-
-  function stratRenderWith(picked) {
-    const root = $("stratagem-content");
-    if (!root) return;
-    // 评分
-    const T = new Set(picked.map(x => x.type)).size;
-    const M = picked.filter(x => (x.subtag && x.subtag.length > 0)).length;
-    const bonusSum = picked.reduce((s, x) => s + (x.bonus || 0), 0);
-    const total = (T * 5 + T * T) - (M * M * 0.5) + bonusSum;
-    const grade = stratGrade(total);
-    const isS = grade.g === "S";
-
-    const cardsHtml = picked.map(x => stratCardHtml(x, isS)).join("");
-
-    // 四维柱状统计图（平均值，0-12 轴）
-    const dimAvg = [0, 1, 2, 3].map(i =>
-      picked.reduce((s, x) => s + (x.stats[i] || 0), 0) / picked.length
-    );
-    // 第四维名称自适应：取出现次数最多的类型对应的名称
-    const typeCount = {};
-    picked.forEach(x => { typeCount[x.type] = (typeCount[x.type] || 0) + 1; });
-    const dominantType = Object.keys(typeCount).sort((a, b) => typeCount[b] - typeCount[a])[0] || "";
-    const d4Name = STRAT_DIM4_CN[dominantType] || "第四维";
-    const chartLabels = ["对单", "对群", "穿甲", d4Name];
-    const chartBars = chartLabels.map((lb, i) => `
-      <div class="strat-chart-bar">
-        <span class="strat-chart-label">${esc(lb)}</span>
-        <div class="strat-chart-track"><div class="strat-chart-fill" style="width:${Math.min(100, dimAvg[i] / 12 * 100)}%;background:${STRAT_DIM_COLOR[i]}"></div></div>
-        <span class="strat-chart-val">${dimAvg[i].toFixed(1)}</span>
-      </div>`).join("");
-
-    root.innerHTML = `
-      <div class="stratagem-layout">
-        <div class="stratagem-cards">${cardsHtml}</div>
-        <div class="strat-side">
-          <div class="strat-panel">
-            <div class="strat-panel-title">📊 评分明细</div>
-            <div class="strat-panel-row"><span>类型数 T</span><strong>${T}</strong></div>
-            <div class="strat-panel-row"><span>多功能 M</span><strong>${M}</strong></div>
-            <div class="strat-panel-row"><span>Bonus</span><strong>${bonusSum > 0 ? "+" + bonusSum : bonusSum}</strong></div>
-            <div class="strat-panel-divider"></div>
-            <div class="strat-panel-row"><span>总评</span><strong class="strat-total">${total.toFixed(1)}</strong></div>
-            <div class="strat-grade ${grade.cls}">${grade.g} 级</div>
-            <div class="strat-hint">${isS ? "🏆 顶级配装，真理部为你骄傲！" : "搭配越多样，战术评级越高"}</div>
-            <div class="strat-grade-guide">评级标准：S≥44 · A≥32 · B≥20 · C≥10 · D&lt;10</div>
-          </div>
-          <div class="strat-chart">
-            <div class="strat-chart-title">📈 配装能力轮廓</div>
-            ${chartBars}
-          </div>
-        </div>
-      </div>`;
-
-    // 换一个按钮
-    root.querySelectorAll(".strat-swap-btn").forEach(b => {
-      b.addEventListener("click", () => stratOpenSwap(b.dataset.swap));
-    });
-
-    // 抽取后显示两个重新抽取按钮（纯随机 / 平衡随机）
-    const tb = $("stratagem-draw-btn");
-    if (tb) tb.style.display = "inline-block";
-    const tbb = $("stratagem-balanced-btn");
-    if (tbb) tbb.style.display = "inline-block";
-    // 当前模式在按钮上高亮
-    if (tb) tb.classList.toggle("strat-btn-on", stratMode !== "balanced");
-    if (tbb) tbb.classList.toggle("strat-btn-on", stratMode === "balanced");
-  }
-
-  function renderStratagem(data) {
-    const meta = $("stratagem-meta");
-    if (data.stratagems && data.stratagems.length) {
-      stratagemPool = data.stratagems;
-      stratUpdateMeta();
-    }
-    const btn = $("stratagem-draw-btn");
-    if (btn) {
-      btn.style.display = "none";
-      if (!btn.dataset.bound) {
-        btn.dataset.bound = "1";
-        btn.addEventListener("click", () => stratRender("pure"));
-      }
-    }
-    const btn2 = $("stratagem-balanced-btn");
-    if (btn2) {
-      btn2.style.display = "none";
-      if (!btn2.dataset.bound) {
-        btn2.dataset.bound = "1";
-        btn2.addEventListener("click", () => stratRender("balanced"));
-      }
-    }
-    stratShowBigBtn();  // 初始只显示两个大按钮（纯随机 / 平衡随机）
-  }
-
-function renderPlayers(data) {
+  function renderPlayers(data) {
     const root = $("players-content");
     const meta = $("players-meta");
     if (!root) return;
@@ -3622,7 +3299,6 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       renderAttackable(data);
       renderProspect(data);
       renderSectors(data);
-      renderStratagem(data);
       renderNews(data);
       // 栅格布局：必须在所有卡片渲染完成后再算（列宽取决于各行的卡片数）
       layoutPlanetGrids();
@@ -3882,5 +3558,6 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
     sync();
   }
   </script>
+  <script type="module" src="../shared/hd2-loadout/ui/mount.mjs"></script>
 </body>
 </html>

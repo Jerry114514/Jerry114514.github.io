@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "kind": "user-qualitative-acceptance-cases",
+  "score_override": false,
+  "cases": [
+    {
+      "id": "scorcher-ultimatum-giga-supply-speargun-core",
+      "evidence": "用户在本对话2026-10-27确认：五件核心已是轮椅，另外两个战备槽空着也能打；数值锚点为大致强度比较。",
+      "core_ids": ["plas_1_scorcher", "gp_20_ultimatum", "g_48_giga_grenade", "backpack_b_1_supply_pack", "support_spear"],
+      "optional_slots": 2,
+      "role_plan": {
+        "main_weapon": "support_spear",
+        "main_tasks": ["点杀指挥官等中型单位", "毒气控制并过滤敌群"],
+        "close_fallback": "plas_1_scorcher",
+        "fallback_tasks": ["处理接近玩家的轻中甲漏网目标"],
+        "reserved_for_heavy": ["gp_20_ultimatum", "g_48_giga_grenade"],
+        "resource_provider": "backpack_b_1_supply_pack"
+      },
+      "acceptance": {
+        "all_known_physical_gates_pass_without_optional_stratagems": true,
+        "ordinary_plan_does_not_consume_reserved_heavy_ammo": true,
+        "normal_roles_have_clear_margin_over_baseline": true,
+        "do_not_force_exact_100_or_require_equal_work_shares": true
+      },
+      "evaluation_policy": "各武器独立评分；毒云能力归入矛枪；不实现矛枪削血后焦土补刀的组合路线。真实命中率不建模。",
+      "pending_binding": ["控制收益的独立表达，不能当作瞬杀", "资料缺失的机制字段；全局校准等待验收反馈"],
+      "no_free_credit": ["不把矛枪和焦土同时按全DPS相加", "不把减速或混乱直接当击杀", "不重复计同一单位的毒伤与击杀", "不从此例推导所有装备必须有固定角色分工"]
+    }
+  ]
+}

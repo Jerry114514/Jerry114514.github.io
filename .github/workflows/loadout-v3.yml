@@ -1,0 +1,37 @@
+name: Loadout V3
+on:
+  pull_request:
+    paths:
+      - 'shared/hd2-loadout/**'
+      - 'scripts/*loadout-v3*'
+      - 'scripts/*assessment*'
+      - 'scripts/manual-score*'
+      - 'scripts/render-loadout-six-dimensions.mjs'
+      - 'docs/ai/assessment-v2-*/**'
+      - 'scripts/tests/loadout-v3-*/**'
+      - 'HD2_Wiki/loadout.html'
+      - 'HD2-Galatic_war-Map/index.html'
+      - '.github/workflows/loadout-v3.yml'
+  push:
+    paths:
+      - 'shared/hd2-loadout/**'
+      - 'scripts/*loadout-v3*'
+      - 'scripts/*assessment*'
+      - 'scripts/manual-score*'
+      - 'scripts/render-loadout-six-dimensions.mjs'
+      - 'docs/ai/assessment-v2-*/**'
+      - 'scripts/tests/loadout-v3-*/**'
+      - '.github/workflows/loadout-v3.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test scripts/tests/loadout-v3-assessment-v2/*.test.mjs
+      - run: node scripts/build-loadout-v3-assessment.mjs --check
+      - run: node scripts/review-loadout-v3-assessment.mjs --check

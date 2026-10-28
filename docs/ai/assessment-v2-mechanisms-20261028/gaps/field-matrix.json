@@ -1,0 +1,1226 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "scope": "coverage calculation_ready=false 全40项；已有资料引用与新查证分开；火毒由其他任务处理",
+  "category_definitions": {
+    "已查有证": "本轮检索有可定位来源",
+    "已查缺": "相关来源已查，所需字段未获证",
+    "源冲突": "来源间或同页有不一致，禁止静默择值",
+    "已有源待绑定": "此前资料或 coverage 已有来源，非实现完成"
+  },
+  "equipment": [
+    {
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "name": "AX-AR23 护卫犬",
+      "coverage_source_ref": "wiki:backpack_ax_ar_23_guard_dog@136994",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "drone_reload_cycle",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+          "source_locator": "Functionality: returns to backpack on depletion",
+          "note": "模块武器reload 2.5秒未证明为无人机往返装填时间"
+        },
+        {
+          "field": "manual_recall",
+          "status": "已查有证",
+          "value": "丢弃当前弹匣并装新弹匣",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/%22Guard_Dog%22",
+          "source_locator": "Tactical Information: Guard Dog Specific",
+          "note": null
+        },
+        {
+          "field": "feed:ax_ar_23_guard_dogdr_0",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": 45,
+            "reserve": 8,
+            "rpm": 660,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/AR-23_Guard_Dog",
+          "source_locator": "AX/AR-23 GUARD DOGDR 0",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "reload_ms",
+            "return-to-backpack reload duration; decoded weapon reload 2.5 s is not proven drone cycle"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "name": "AX-ARC3 K-9",
+      "coverage_source_ref": "wiki:backpack_ax_arc_3_k_9@136370",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "FINITE_ARC_TARGET_ALLOCATION",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "feed:ax_arc_3_k_9dr_0",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": 100,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/ARC-3_K-9",
+          "source_locator": "AX/ARC-3 K-9DR 0",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "name": "AX-FLAM75 热狗",
+      "coverage_source_ref": "wiki:backpack_ax_flam_75_hot_dog@136372",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "FUEL_TIME_AND_AREA_ROUTE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "feed:ax_flam_75_hot_dogdr_0",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": 80,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/FLAM-75_Hot_Dog",
+          "source_locator": "AX/FLAM-75 HOT DOGDR 0",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "name": "AX-LAS5 漫游车",
+      "coverage_source_ref": "wiki:backpack_ax_las_5_guard_dog_rover@136376",
+      "coverage_source_fields": [
+        "COOLING_START_DELAY_AND_FIRING_HEAT_SEMANTICS"
+      ],
+      "implementation_bindings": [
+        "DPS_UNIT_AND_CONTINUOUS_DAMAGE_BINDING",
+        "HEAT_ACCOUNT_AND_NORMAL_CLIMATE_CYCLE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "heat_behavior",
+          "status": "源冲突",
+          "value": null,
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+          "source_locator": "Heat Data and Change History 1.003.103",
+          "note": "参数表有过热与冷却，历史更正称不积热；当前实际运行待核验"
+        },
+        {
+          "field": "feed:ax_las_5_roverdr_0",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": null,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/LAS-5_Rover",
+          "source_locator": "AX/LAS-5 ROVERDR 0",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "capacity",
+            "reserve",
+            "rpm",
+            "reload_ms",
+            "temperature-dependent heat cycle interpretation and normal-climate mapping"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "name": "AX-TX13 腐息",
+      "coverage_source_ref": "wiki:backpack_ax_tx_13_purifier@136367",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "FUEL_TIME_AND_AREA_ROUTE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "feed:ax_tx_13_dog_breathdr_0",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": 100,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/AX/TX-13_Dog_Breath",
+          "source_locator": "AX/TX-13 DOG BREATHDR 0",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "backpack_b_100_portable_hellbomb",
+      "name": "B-100 便携式地狱火炸弹",
+      "coverage_source_ref": "wiki:backpack_b_100_portable_hellbomb@137336",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "countdown",
+          "status": "已查有证",
+          "value": 10,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/B-100_Portable_Hellbomb",
+          "source_locator": "Functionality: explodes ten seconds after activation regardless of being worn",
+          "note": null
+        },
+        {
+          "field": "drop_after_activation",
+          "status": "已查有证",
+          "value": true,
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/B-100_Portable_Hellbomb",
+          "source_locator": "Functionality and Ship Management Terminal",
+          "note": "倒计时不可取消"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_b_md_c4_pack",
+      "name": "B/MD C4背包",
+      "coverage_source_ref": "wiki:backpack_b_md_c4_pack@139309",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "reload",
+          "status": "已查有证",
+          "value": {
+            "standard": 1.1,
+            "upgraded": 1
+          },
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+          "source_locator": "Weapon Details: Reload Time",
+          "note": null
+        },
+        {
+          "field": "stock",
+          "status": "已查有证",
+          "value": {
+            "held": 1,
+            "backpack": 6
+          },
+          "unit": "charges",
+          "source_url": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+          "source_locator": "Functionality: backpack six and trigger seventh",
+          "note": null
+        },
+        {
+          "field": "resupply",
+          "status": "已查有证",
+          "value": {
+            "supply_box": 3,
+            "ammo_box": 1
+          },
+          "unit": "charges",
+          "source_url": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+          "source_locator": "Weapon Details: Supply Box Refill 3; Ammo Box Refill 1",
+          "note": null
+        },
+        {
+          "field": "remote_delay",
+          "status": "源冲突",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/B/MD_C4_Pack",
+          "source_locator": "Functionality instantaneous; Tactical Information short delay",
+          "note": "无定量时间，不将instantaneous记作零"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_lift_182_teleport_pack",
+      "name": "LIFT-182 传送背包",
+      "coverage_source_ref": "wiki:backpack_lift_182_teleport_pack@136830",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE",
+        "PASSIVE_OR_MANUAL_OPERATION_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_lift_182_teleport_pack@136830",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_lift_850_jump_pack",
+      "name": "LIFT-850 喷射背包",
+      "coverage_source_ref": "wiki:backpack_lift_850_jump_pack@136379",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_lift_850_jump_pack@136379",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_lift_860_hover_pack",
+      "name": "LIFT-860 悬浮背包",
+      "coverage_source_ref": "wiki:backpack_lift_860_hover_pack@136368",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_lift_860_hover_pack@136368",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_sh_20_ballistic_shield_backpack",
+      "name": "SH-20 防弹护盾背包",
+      "coverage_source_ref": "wiki:backpack_sh_20_ballistic_shield_backpack@136378",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_sh_20_ballistic_shield_backpack@136378",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_sh_32_shield_generator_pack",
+      "name": "SH-32 防护罩生成包",
+      "coverage_source_ref": "wiki:backpack_sh_32_shield_generator_pack@136374",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_sh_32_shield_generator_pack@136374",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "backpack_sh_51_directional_shield",
+      "name": "SH-51 定向护盾",
+      "coverage_source_ref": "wiki:backpack_sh_51_directional_shield@136373",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:backpack_sh_51_directional_shield@136373",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "cqc_19_stun_lance",
+      "name": "CQC-19 眩晕长矛",
+      "coverage_source_ref": "wiki:cqc_19_stun_lance@136717",
+      "coverage_source_fields": [
+        "MELEE_CADENCE_AND_CONTACT_SEMANTICS"
+      ],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "feed:melee",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": null,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-19_Stun_Lance",
+          "source_locator": "melee",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "capacity",
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "cqc_30_stun_baton",
+      "name": "CQC-30 眩晕警棍",
+      "coverage_source_ref": "wiki:cqc_30_stun_baton@136718",
+      "coverage_source_fields": [
+        "MELEE_CADENCE_AND_CONTACT_SEMANTICS"
+      ],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "feed:melee",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": null,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-30_Stun_Baton",
+          "source_locator": "melee",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "capacity",
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "cqc_73_entrenchment_tool",
+      "name": "CQC-73 堑壕工具",
+      "coverage_source_ref": "wiki:cqc_73_entrenchment_tool@136720",
+      "coverage_source_fields": [
+        "MELEE_CADENCE_AND_CONTACT_SEMANTICS"
+      ],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "feed:melee",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": null,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-73_Entrenchment_Tool",
+          "source_locator": "melee",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "capacity",
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "deployable_at_emplacement",
+      "name": "反坦克炮台",
+      "coverage_source_ref": "wiki:deployable_at_emplacement@138347",
+      "coverage_source_fields": [
+        "FINITE_DEPLOYABLE_AMMO_AND_RATE_REQUIRED"
+      ],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "capacity",
+          "status": "已有源待绑定",
+          "value": 30,
+          "unit": "rounds",
+          "source_url": "https://helldivers.wiki.gg/wiki/Warbond_Rundown",
+          "source_locator": "Anti-Tank Emplacement: 30 shells in a self-loading mechanism",
+          "note": "未证实30是否已包含完整升级；原始解码 magazine_capacity 30 和 chambered 1 的游戏解释不明。"
+        },
+        {
+          "field": "fire_rate",
+          "status": "已查缺",
+          "value": null,
+          "unit": "rpm",
+          "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/new_gear.json",
+          "source_locator": "E/AT-12: rounds_per_minute x 450 y 600 z 750",
+          "note": "原始字段可能并非实际射速，不能以字段名直接认定；检索返回的45 rpm属于一代AT-47。"
+        },
+        {
+          "field": "capacity_full_upgrades",
+          "status": "已查缺",
+          "value": null,
+          "unit": "rounds",
+          "source_url": "https://helldivers.wiki.gg/wiki/Warbond_Rundown",
+          "source_locator": "Anti-Tank Emplacement: 30 shells",
+          "note": "30弹是否受升级影响未证实。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "deployable_ems_mortar_sentry",
+      "name": "电磁冲击波迫击哨戒炮",
+      "coverage_source_ref": "wiki:deployable_ems_mortar_sentry@136358",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:deployable_ems_mortar_sentry@136358",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "deployable_flame_sentry",
+      "name": "火焰喷射哨戒炮",
+      "coverage_source_ref": "wiki:deployable_flame_sentry@139936",
+      "coverage_source_fields": [
+        "FINITE_DEPLOYABLE_AMMO_AND_RATE_REQUIRED"
+      ],
+      "implementation_bindings": [
+        "FUEL_TIME_AND_AREA_ROUTE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "ammo",
+          "status": "已有源待绑定",
+          "value": {
+            "standard": 600,
+            "upgraded": 900
+          },
+          "unit": "fuel units",
+          "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+          "source_locator": "Stratagem Statistics: Sentry Ammo standard 600, upgraded 900",
+          "note": null
+        },
+        {
+          "field": "continuous_fire_duration",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/A/FLAM-40_Flame_Sentry",
+          "source_locator": "Detailed Weapon Statistics: Capacity 600; Lifetime 150 sec",
+          "note": "无油耗速率；150秒是寿命，非喷射时长。"
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "deployable_shield_generator_relay",
+      "name": "防护罩生成中继器",
+      "coverage_source_ref": "wiki:deployable_shield_generator_relay@136348",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:deployable_shield_generator_relay@136348",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "deployable_tesla_tower",
+      "name": "特斯拉塔",
+      "coverage_source_ref": "wiki:deployable_tesla_tower@136793",
+      "coverage_source_fields": [
+        "FINITE_DEPLOYABLE_AMMO_AND_RATE_REQUIRED"
+      ],
+      "implementation_bindings": [
+        "FINITE_ARC_TARGET_ALLOCATION"
+      ],
+      "entries": [
+        {
+          "field": "lifetime",
+          "status": "已有源待绑定",
+          "value": 150,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+          "source_locator": "Tactical Information: remain in place for 150 seconds if not destroyed",
+          "note": null
+        },
+        {
+          "field": "ammo",
+          "status": "已有源待绑定",
+          "value": "infinite",
+          "unit": "arcs",
+          "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+          "source_locator": "Tactical Information: firing an infinite number of arcs until it expires",
+          "note": null
+        },
+        {
+          "field": "charge_cooldown_sequential",
+          "status": "已查缺",
+          "value": null,
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+          "source_locator": "Tactical Information: 1 second charge; Change History 1.001.104: charge-up shots cooldown 3 to 1 sec",
+          "note": "术语是否指同一阶段或串行未说明；不能认定2秒周期。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "eagle_500kg_bomb",
+      "name": "飞鹰500 KG炸弹",
+      "coverage_source_ref": "wiki:eagle_500kg_bomb@129516",
+      "coverage_source_fields": [
+        "DETONATION_DELAY_REQUIRED"
+      ],
+      "implementation_bindings": [
+        "OPTIONAL_OUTER_BLAST_OR_FRAGMENT_ALLOCATION"
+      ],
+      "entries": [
+        {
+          "field": "impact_to_explosion_delay",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/Eagle_500kg_Bomb",
+          "source_locator": "500kg BOMB P: Explosion On Impact; Explode After",
+          "note": "Explode After 的值为爆炸组件名，不是数字秒数；3.45秒是呼叫时间。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "eagle_gas_airstrike",
+      "name": "飞鹰毒气攻击",
+      "coverage_source_ref": "wiki:eagle_gas_airstrike@139358",
+      "coverage_source_fields": [
+        "PER_CALL_PAYLOAD_REQUIRED"
+      ],
+      "implementation_bindings": [
+        "OPTIONAL_OUTER_BLAST_OR_FRAGMENT_ALLOCATION",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "bombs_per_strike",
+          "status": "已查缺",
+          "value": null,
+          "unit": "bombs",
+          "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+          "source_locator": "Tactical Information: bombs in a straight line; Applicable Ship Modules: XXL adds 1 bomb",
+          "note": "基础数量未给出；2/3是每次重装前使用次数，不是每轮炸弹数。"
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "g_109_urchin",
+      "name": "G-109 海胆",
+      "coverage_source_ref": "wiki:g_109_urchin@134064",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:g_109_urchin@134064",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_11_caltrops",
+      "name": "G-11 Caltrops",
+      "coverage_source_ref": "wiki:g_11_caltrops@139419",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:g_11_caltrops@139419",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_142_pyrotech",
+      "name": "G-142 烟花术",
+      "coverage_source_ref": "wiki:g_142_pyrotech@125762",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "FUEL_TIME_AND_AREA_ROUTE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:g_142_pyrotech@125762",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_23_stun",
+      "name": "G-23 眩晕榴弹",
+      "coverage_source_ref": "wiki:g_23_stun@126725",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:g_23_stun@126725",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_40_k_melta_mine",
+      "name": "G/40-K 热熔地雷",
+      "coverage_source_ref": "wiki:g_40_k_melta_mine@139243",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER"
+      ],
+      "entries": [
+        {
+          "field": "arming",
+          "status": "已查有证",
+          "value": "地形附着或投掷后计时布防",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+          "source_locator": "Change History 1.007.100",
+          "note": "计时数值未知；不能假定附着即0秒"
+        },
+        {
+          "field": "arming_delay",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+          "source_locator": "Change History 1.007.100",
+          "note": null
+        },
+        {
+          "field": "activation_order",
+          "status": "已查有证",
+          "value": "热柱后爆炸",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/G/40-K_Melta_Mine",
+          "source_locator": "Introduction and Tactical Information",
+          "note": null
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_50_seeker",
+      "name": "G-50 寻踪者",
+      "coverage_source_ref": "wiki:g_50_seeker@138263",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER"
+      ],
+      "entries": [
+        {
+          "field": "seeking_radius",
+          "status": "已查有证",
+          "value": 50,
+          "unit": "m",
+          "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+          "source_locator": "Tactical Information: seems about 50 meters",
+          "note": "约数"
+        },
+        {
+          "field": "lifetime",
+          "status": "已查有证",
+          "value": 30,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+          "source_locator": "Tactical Information: 30s; battery expires harmlessly",
+          "note": null
+        },
+        {
+          "field": "impact_trigger",
+          "status": "已查有证",
+          "value": "撞击固体即爆",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+          "source_locator": "Tactical Information: impact-fused",
+          "note": null
+        },
+        {
+          "field": "flight_time",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/G-50_Seeker",
+          "source_locator": "Tactical Information",
+          "note": "取决于目标；页面未给速度或固定延迟"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_60_anti_tank_seeker",
+      "name": "G-60 反坦克追踪者",
+      "coverage_source_ref": "wiki:g_60_anti_tank_seeker@138729",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER"
+      ],
+      "entries": [
+        {
+          "field": "seeking_radius",
+          "status": "已查有证",
+          "value": {
+            "normal_approx": 50,
+            "obscured_approx": 30
+          },
+          "unit": "m",
+          "source_url": "https://helldivers.wiki.gg/wiki/G-60_Anti-Tank_Seeker",
+          "source_locator": "Tactical Information: 50m; bad visibility 30m",
+          "note": null
+        },
+        {
+          "field": "impact_trigger",
+          "status": "已查有证",
+          "value": "撞击固体即爆",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/G-60_Anti-Tank_Seeker",
+          "source_locator": "Tactical Information: impact-fused",
+          "note": null
+        },
+        {
+          "field": "flight_time",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/G-60_Anti-Tank_Seeker",
+          "source_locator": "Tactical Information",
+          "note": "未给飞行速度或固定延迟，不从G-50借用寿命"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "g_sh_39_shield",
+      "name": "G/SH-39 护盾",
+      "coverage_source_ref": "wiki:g_sh_39_shield@135960",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:g_sh_39_shield@135960",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "orbital_ems_strike",
+      "name": "轨道电磁冲击波攻击",
+      "coverage_source_ref": "wiki:orbital_ems_strike@129557",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "UTILITY_SAFETY_OR_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:orbital_ems_strike@129557",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "orbital_napalm_barrage",
+      "name": "轨道凝固汽油弹火力网",
+      "coverage_source_ref": "wiki:orbital_napalm_barrage@134424",
+      "coverage_source_fields": [
+        "BARRAGE_EFFECT_DURATION_REQUIRED"
+      ],
+      "implementation_bindings": [
+        "OPTIONAL_OUTER_BLAST_OR_FRAGMENT_ALLOCATION",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "barrage_duration",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
+          "source_locator": "Detailed Weapon Stats: Bombs 5, Salvos 5",
+          "note": "投射间隔及波次间隔语义未核实，无法据此确认总时长。"
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "p_34_breacher",
+      "name": "P-34 爆破者",
+      "coverage_source_ref": "wiki:p_34_breacher@138990",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER"
+      ],
+      "entries": [
+        {
+          "field": "burn_and_explosion_timing",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/P-34_Breacher",
+          "source_locator": "Stats: 150/s over 4s Fire; P-34 P: Lifetime 1.70000005 sec; Fire status 3 sec; Thermite status 1 sec",
+          "note": "4秒燃烧描述、弹体寿命与两个状态时长不是已证实的命中后延爆时序；页面同时列撞击爆炸和延后爆炸，具体触发不明。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "support_40_k_thermal_gun",
+      "name": "40-K 热熔枪",
+      "coverage_source_ref": "wiki:support_40_k_thermal_gun@139245",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "DPS_UNIT_AND_CONTINUOUS_DAMAGE_BINDING",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "beam_duration_per_shot",
+          "status": "已查缺",
+          "value": null,
+          "unit": "s",
+          "source_url": "https://helldivers.wiki.gg/wiki/40-K_Meltagun",
+          "source_locator": "Detailed Weapon Statistics: Beam Fire Rate 50 rpm; beam Standard 2600 Laser",
+          "note": "2600 DPS 和 50 rpm 不足以确定每弹光束实际持续时间。"
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "support_cqc_20_breaching_hammer",
+      "name": "CQC-20 破门锤",
+      "coverage_source_ref": "wiki:support_cqc_20_breaching_hammer@139216",
+      "coverage_source_fields": [],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "reserve",
+          "status": "源冲突",
+          "value": 10,
+          "unit": "charges",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+          "source_locator": "Change History 1.007.200: 7 to 10",
+          "note": "旧 feeds 为7；当前页1.007.201为10"
+        },
+        {
+          "field": "melee_hit",
+          "status": "已查有证",
+          "value": {
+            "standard": 300,
+            "durable": 150
+          },
+          "unit": "damage",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+          "source_locator": "Detailed Weapon Statistics: CQC-20 BREACHING HAMMER_dm",
+          "note": null
+        },
+        {
+          "field": "charged_explosion",
+          "status": "已查有证",
+          "value": 2200,
+          "unit": "damage",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+          "source_locator": "Detailed Weapon Statistics: CQC-20 BREACHING HAMMER IE",
+          "note": null
+        },
+        {
+          "field": "contact_rule",
+          "status": "已查有证",
+          "value": "每个实体只计首次接触部位",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+          "source_locator": "Tactical Information: Melee Weapons",
+          "note": null
+        },
+        {
+          "field": "feed:melee",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": 1,
+            "reserve": 7,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-20_Breaching_Hammer",
+          "source_locator": "melee",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "support_cqc_9_defoliation_tool",
+      "name": "CQC-9 除叶工具",
+      "coverage_source_ref": "wiki:support_cqc_9_defoliation_tool@136873",
+      "coverage_source_fields": [
+        "MELEE_CADENCE_AND_CONTACT_SEMANTICS"
+      ],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "feed:melee",
+          "status": "已有源待绑定",
+          "value": {
+            "capacity": null,
+            "reserve": null,
+            "rpm": null,
+            "reload_ms": null
+          },
+          "unit": "mixed",
+          "source_url": "https://helldivers.wiki.gg/wiki/CQC-9_Defoliation_Tool",
+          "source_locator": "melee",
+          "note": "字段语义及未解项以 normalized-feeds.json 为准；不表示已实现。",
+          "unresolved": [
+            "capacity",
+            "reserve",
+            "rpm",
+            "reload_ms"
+          ]
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "support_ms_11_missile_silo",
+      "name": "MS-11 单兵导弹发射井",
+      "coverage_source_ref": "wiki:support_ms_11_missile_silo@136642",
+      "coverage_source_fields": [
+        "FINITE_INVENTORY_TOTAL"
+      ],
+      "implementation_bindings": [
+        "SOURCE_ATTACK_OR_UTILITY_ADAPTER"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:support_ms_11_missile_silo@136642",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": null
+    },
+    {
+      "equipment_id": "support_tx_41_sterilizer",
+      "name": "TX-41 灭菌器",
+      "coverage_source_ref": "wiki:support_tx_41_sterilizer@136393",
+      "coverage_source_fields": [],
+      "implementation_bindings": [
+        "FUEL_TIME_AND_AREA_ROUTE",
+        "STATUS_APPLICATION_STACKING_AND_CONTROL_ROUTE"
+      ],
+      "entries": [
+        {
+          "field": "coverage_existing_source",
+          "status": "已有源待绑定",
+          "value": null,
+          "unit": null,
+          "source_url": null,
+          "source_locator": "wiki:support_tx_41_sterilizer@136393",
+          "note": "覆盖表有来源引用；此行只说明存在来源，未逐项验证细节。实现路线不等于缺资料。"
+        }
+      ],
+      "scope_note": "火毒具体机制由并行资料任务处理"
+    },
+    {
+      "equipment_id": "tm_1_lure_mine",
+      "name": "TM-1 诱饵地雷",
+      "coverage_source_ref": "wiki:tm_1_lure_mine@136571",
+      "coverage_source_fields": [],
+      "implementation_bindings": [],
+      "entries": [
+        {
+          "field": "arming",
+          "status": "已查有证",
+          "value": "附着表面立即布防",
+          "unit": null,
+          "source_url": "https://helldivers.wiki.gg/wiki/TM-1_Lure_Mine",
+          "source_locator": "Tactical Information: armed immediately upon sticking",
+          "note": null
+        },
+        {
+          "field": "fragment_count",
+          "status": "已查有证",
+          "value": 35,
+          "unit": "fragments",
+          "source_url": "https://helldivers.wiki.gg/wiki/TM-1_Lure_Mine",
+          "source_locator": "TM-1 LURE MINE E: Shrapnel Count 35",
+          "note": "单片命中数未知"
+        }
+      ],
+      "scope_note": null
+    }
+  ],
+  "allitems_variant_audit": {
+    "status": "未完成",
+    "note": "尚未形成 allitems 模式与解析结果的逐项差集；不可声称已覆盖全部合法变体。"
+  },
+  "not_game_tested": true
+}

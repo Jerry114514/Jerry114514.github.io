@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "scope": "六个战略参数阻塞项；仅查证来源，不代表已实现",
+  "items": [
+    {
+      "id": "eagle_500kg_bomb",
+      "field": "impact_to_main_detonation_s",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_500kg_Bomb",
+      "locator": "500kg BOMB P: Explosion On Impact; Explode After",
+      "qualification": "Explode After 值为组件 ID，未给秒数；3.45秒是呼叫时间。",
+      "directly_unblocks": false
+    },
+    {
+      "id": "eagle_gas_airstrike",
+      "field": "bombs_per_strike_fully_upgraded",
+      "value": null,
+      "unit": "bombs",
+      "source_url": "https://helldivers.wiki.gg/wiki/Eagle_Gas_Airstrike",
+      "locator": "Applicable Ship Modules: XXL Weapons Bay adds one bomb for multiple-bomb Eagle stratagems",
+      "qualification": "基础每次投放数量未知，不能以每次重装前使用次数代替。",
+      "directly_unblocks": false
+    },
+    {
+      "id": "orbital_napalm_barrage",
+      "field": "fully_upgraded_shell_count",
+      "value": 30,
+      "unit": "shells",
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
+      "locator": "Introduction: 5 salvos of 5; Applicable Ship Modules: More Guns adds one salvo",
+      "qualification": "工程算术推论：6轮×每轮5发=30；假设额外一轮每轮发数不变。非网页直接列出的满升级值。",
+      "directly_unblocks": false
+    },
+    {
+      "id": "orbital_napalm_barrage",
+      "field": "fully_upgraded_barrage_duration_s",
+      "value": null,
+      "unit": "s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Orbital_Napalm_Barrage",
+      "locator": "Detailed Weapon Stats: Bombs 5; Salvos 5; Applicable Ship Modules: +1 salvo",
+      "qualification": "页面未提供弹幕持续时间；弹体与火场持续时间也不可混同。",
+      "directly_unblocks": false
+    },
+    {
+      "id": "deployable_at_emplacement",
+      "field": "actual_fire_rate_or_minimum_interval",
+      "value": null,
+      "unit": "rpm or s",
+      "source_url": "https://helldivers.wiki.gg/wiki/Module:Decodedata-Attacks/new_gear.json",
+      "locator": "E/AT-12: rounds_per_minute x 450 y 600 z 750",
+      "qualification": "仅原始字段，未证该数是实际允许射速；一代AT-47的45 rpm不可套用。",
+      "directly_unblocks": false
+    },
+    {
+      "id": "deployable_tesla_tower",
+      "field": "discharge_interval_and_effective_lifetime",
+      "value": {
+        "discharge_interval_s": null,
+        "lifetime_upper_bound_s": 150,
+        "ammo": "infinite"
+      },
+      "unit": "mixed",
+      "source_url": "https://helldivers.wiki.gg/wiki/A/ARC-3_Tesla_Tower",
+      "locator": "Tactical Information: one-second charge; remains 150 seconds firing unlimited arcs if not destroyed; Change History 1.001.104",
+      "qualification": "1秒充能与1秒 charge-up shots cooldown 是否串行未知；150秒以未被摧毁为条件，并不保证持续有目标。一代1.6秒无关。",
+      "directly_unblocks": false
+    }
+  ],
+  "summary": "没有一项能单独解除对应完整战略缺口；满模块30发为条件推算，Tesla寿命为上限，均不足以解决各自时序。"
+}

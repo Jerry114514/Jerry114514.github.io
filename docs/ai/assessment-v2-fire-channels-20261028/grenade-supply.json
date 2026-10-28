@@ -1,0 +1,76 @@
+{
+  "schema": "hd2-grenade-supply-evidence/1",
+  "verified_date": "2026-10-28",
+  "resupply": {
+    "base_cooldown_s": 180,
+    "full_module_cooldown_s": 153.9,
+    "value_status": "DERIVED_MODULE_PRODUCT_NOT_DIRECT_UPGRADED_RESUPPLY_ROW",
+    "derivation": "180 * 0.95 * 0.90 = 153.9 seconds",
+    "stacking_basis": "Project ship-module model uses multiplicative cooldown factors; the two named modules both explicitly include Resupply in their applicability. No upgraded Resupply row or in-game timing was verified.",
+    "base_source": {
+      "path": "HD2_Wiki/data/wiki/zh/stratagems_full.json",
+      "selector": "stratagems[95] (id=resupply).cooldown",
+      "raw": "180s",
+      "snapshot_updated_at": "2026-09-23T17:45:58Z",
+      "url": "https://helldivers.wiki.gg/wiki/Resupply"
+    },
+    "module_sources": [
+      {
+        "module": "Morale Augmentation",
+        "multiplier": 0.95,
+        "path": "scripts/.loadout-inputs/equipment-expanded.json",
+        "selector": "items[160] (id=deployable_gatling_sentry).tables[5].rows[0] (variant=Morale Augmentation)",
+        "raw": "Reduces cooldown time for all Stratagems by 5%.",
+        "revid": 136794,
+        "url": "https://helldivers.wiki.gg/wiki/A/G-16_Gatling_Sentry",
+        "implementation_path": "shared/hd2-loadout/effects/ship-modules.mjs",
+        "implementation_selector": "MODULES[key=bridge.morale_augmentation].mechanism.value"
+      },
+      {
+        "module": "Synthetic Supplementation",
+        "multiplier": 0.9,
+        "path": "scripts/.loadout-inputs/equipment-expanded.json",
+        "selector": "items[160] (id=deployable_gatling_sentry).tables[5].rows[1] (variant=Synthetic Supplementation)",
+        "raw": "Reduces cooldown time for Sentry, Emplacement, and Resupply stratagems by 10%.",
+        "revid": 136794,
+        "url": "https://helldivers.wiki.gg/wiki/A/G-16_Gatling_Sentry",
+        "implementation_path": "shared/hd2-loadout/effects/ship-modules.mjs",
+        "implementation_selector": "MODULES[key=engineering_bay.synthetic_supplementation].mechanism.value"
+      }
+    ],
+    "live_check_limit": {
+      "url": "https://helldivers.wiki.gg/wiki/Resupply",
+      "result": "Native web open returned HTTP 403; full current Resupply body and upgraded row were not available.",
+      "supporting_url": "https://helldivers.wiki.gg/wiki/Talk%3AResupply",
+      "supporting_page_role": "The discussion identifies the missing combined-module cooldown as an unresolved table entry; it is not confirmation of 153.9 seconds."
+    }
+  },
+  "grenade_refill": {
+    "rule": "Read each throwable's own facts.refill.public, derived from its source mags_from_supply row and limited by carrying capacity; do not use one universal grenade refill count.",
+    "adapter_path": "shared/hd2-loadout/assessment-v2/facts.mjs",
+    "adapter_selector": "sourceRefill(item, inventory)",
+    "per_player_boxes_per_call": 1,
+    "boxes_basis": "Existing user scenario policy, not a property inferred from a four-box pod.",
+    "example": {
+      "equipment_id": "g_4_gas",
+      "grenades_per_box": 2,
+      "path": "scripts/.loadout-inputs/equipment-expanded.json",
+      "selector": "items[22] (id=g_4_gas).tables[0].rows[0] (key=mags_from_supply)",
+      "raw": "2",
+      "source_label": "Throwables from Supply",
+      "revid": 134066,
+      "url": "https://helldivers.wiki.gg/wiki/G-4_Gas"
+    },
+    "observed_examples": {
+      "g_4_gas": 2,
+      "g_10_incendiary": 3,
+      "g_13_incendiary_impact": 3,
+      "g_16_impact": 3,
+      "g_6_frag": 4,
+      "g_48_giga_grenade": 2,
+      "g_142_pyrotech": 6,
+      "k_2_throwing_knife": 20
+    }
+  },
+  "scope": "Evidence for grenade auxiliary combat availability only. This file does not change finite resource ledgers, nominal total-ammo endurance, manual calibration or grenade carrying capacity."
+}
