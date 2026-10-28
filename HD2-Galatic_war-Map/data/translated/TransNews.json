@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3971,
+   "published_at": "2026-10-28T18:56:30Z",
+   "source": "dispatch",
+   "original": "STRATEGIC OPPORTUNITY SEIZED\n\nHelldivers have contained the outbreak on Nivel 43, securing essential footage for Democratic Sniper. Simultaneously, reports of new Terminid mutations have been investigated; the mutations were determined to be merely superficial changes, well within normal Terminid gene expression. \n\nThe Ministry of Truth has deemed the filmed footage to be of masterfully evocative cinematic quality. As a result, the remaining major order requirements are reduced by 50%.",
+   "translated": "抓住战略机遇\n\n绝地潜兵已遏制在尼维尔43发生的暴乱，而且为《民主狙击手》拍摄了关键影像资料。同时，关于终结族出现新突变的报告已完成调查；可以证实，这些突变仅为表面变化，完全处于正常的终结族基因表达范围内。\n\n真理部认为，拍摄到的这段影像极具电影质感，足以打动人心。因此，剩余的重要指令需求减少了50%。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85273532,
+   "official_message": "<i=3>抓住战略机遇</i>\n\n绝地潜兵已遏制在<i=1>尼维尔43</i>发生的暴乱，而且为《民主狙击手》拍摄了关键影像资料。同时，关于终结族出现新突变的报告已完成调查；可以证实，这些突变仅为表面变化，完全处于正常的终结族基因表达范围内。\n\n真理部认为，拍摄到的这段影像极具电影质感，足以打动人心。因此，剩余的重要指令需求减少了50%。",
+   "translated_at": "2026-10-28T19:12:29Z"
+  },
+  {
    "id": 3970,
    "published_at": "2026-10-28T10:38:32Z",
    "source": "dispatch",
@@ -126,30 +139,17 @@
    "published_war_seconds": 84899049,
    "official_message": "<i=3>新重要指令</i>\n\n真理部正在制作一部名为《民主狙击手》的励志教育片。该电影的收益将用于建造麦拉芬蒙河纪念碑与人权审讯中心。\n\n这部电影的大部分内容将来自战场实拍。绝地潜兵奉命击杀<i=1>300,000,000个Terminids、65,000,000个Illuminates以及50,000,000个Automatons</i>，确保获得足够的高质量录像。",
    "translated_at": "2026-10-24T13:52:15Z"
-  },
-  {
-   "id": 3961,
-   "published_at": "2026-10-24T09:11:14Z",
-   "source": "dispatch",
-   "original": "MAJOR ORDER LOST\n\nEnemy aggression has denied the rightful return of certain territories to Freedom's embrace.\n\nThe Malevelon Creek Memorial & Interrogation Center for Human Rights project is on rocky ground—a consequence that Democracy's enemies doubtlessly celebrate with glee. So long as our resources remain in enemy hands, our fallen heroes will suffer grave insult.",
-   "translated": "未完成重要指令\n\n某些领土理应回归自由的怀抱，却受到了敌人侵略的阻碍。\n\n麦拉芬蒙河纪念碑与人权审讯中心项目举步维艰，毫无疑问，民主的敌人们正在为此幸灾乐祸。只要我们的资源仍落在敌人手中，牺牲的英雄就会遭受极大的侮辱。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 84892860,
-   "official_message": "<i=3>未完成重要指令</i>\n\n某些领土理应回归自由的怀抱，却受到了敌人侵略的阻碍。\n\n<i=1>麦拉芬蒙河纪念碑与人权审讯中心</i>项目举步维艰，毫无疑问，民主的敌人们正在为此幸灾乐祸。只要我们的资源仍落在敌人手中，牺牲的英雄就会遭受极大的侮辱。",
-   "translated_at": "2026-10-24T13:52:15Z"
   }
  ],
  "strategic": {
-  "active": true,
-  "status": "active",
-  "status_cn": "进行中",
-  "dispatch_id": 3970,
-  "planet_en": "Nivel 43",
+  "active": false,
+  "status": "seized",
+  "status_cn": "已夺取",
+  "dispatch_id": 3971,
+  "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-28T13:54:22Z",
-  "planet_index": 211
+  "computed_at": "2026-10-28T19:12:30Z",
+  "planet_index": null
  },
  "text_source": "arrowhead_official",
  "mo_state": "active",
@@ -239,18 +239,6 @@
    "mt": false
   },
   {
-   "event_id": 1501090,
-   "id32": 0,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 4087458651,
-   "expires_at_war_seconds": 85329962,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
    "event_id": 1501091,
    "id32": 449698572,
    "title": "",
@@ -266,17 +254,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-28T13:54:20Z",
+  "source_version": "2026-10-28T19:12:28Z",
   "war_id": 801,
-  "war_time_seconds": 85255420,
-  "last_success_at": "2026-10-28T13:54:20Z",
+  "war_time_seconds": 85274490,
+  "last_success_at": "2026-10-28T19:12:28Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-28T13:54:20Z",
-  "retrieved_at": "2026-10-28T13:54:20Z",
+  "source_version": "2026-10-28T19:12:28Z",
+  "retrieved_at": "2026-10-28T19:12:28Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -286,8 +274,8 @@
     "action": "击杀",
     "faction_id": 2,
     "faction_name": "终结族",
-    "goal": 300000000,
-    "progress": 89519741,
+    "goal": 150000000,
+    "progress": 97247765,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -303,8 +291,8 @@
     "action": "击杀",
     "faction_id": 4,
     "faction_name": "光能者",
-    "goal": 65000000,
-    "progress": 25802184,
+    "goal": 32500000,
+    "progress": 26401956,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
