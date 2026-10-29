@@ -1,2 +1,262 @@
-.hd2-loadout{--lo-border:rgba(148,163,184,.26);--lo-muted:#acb8c9;--lo-accent:#f5c518;color:#eef2f7;font:14px/1.6 "Microsoft YaHei",sans-serif;max-width:1200px;margin:0 auto;padding:20px;box-sizing:border-box}.hd2-loadout *{box-sizing:border-box}.hd2-loadout button,.hd2-loadout select,.hd2-loadout input[type=search]{font:inherit;color:inherit;background:#172336;border:1px solid var(--lo-border);border-radius:8px;padding:8px 12px}.hd2-loadout button{cursor:pointer}.hd2-loadout button:hover:not(:disabled){border-color:var(--lo-accent)}.hd2-loadout button:disabled{opacity:.45;cursor:default}.hd2-loadout button[hidden]{display:none}.hd2-loadout button[data-act=pure]{color:#171a22;background:var(--lo-accent);font-weight:bold}.hd2-loadout button[data-act=certified]{background:#164473}.hd2-loadout button[aria-pressed=true]{border-color:var(--lo-accent);color:var(--lo-accent)}.lo-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.lo-toolbar label{display:flex;align-items:center;gap:7px}.lo-status{border-left:3px solid var(--lo-accent);padding:10px 14px;background:#172336;overflow-wrap:anywhere}.lo-status[data-state=CERTIFIED]{border-color:#62d49a}.lo-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.lo-card{background:rgba(21,32,50,.9);border:1px solid var(--lo-border);border-radius:12px;padding:16px;min-width:0}.lo-card h3{font-size:17px;margin:8px 0;overflow-wrap:anywhere}.lo-card small,.lo-slot,.lo-foot,.hd2-loadout [data-role=profile-note]{color:var(--lo-muted)}.lo-slot{font-size:12px}.lo-card-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}.lo-card-actions button{font-size:12px;padding:6px 8px}.lo-dimensions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.lo-dimensions div{border:1px solid var(--lo-border);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:4px}.lo-dimensions b{font-size:12px;color:var(--lo-muted)}.lo-dimensions small{color:var(--lo-muted);font-size:11px;line-height:1.45}.lo-dimensions div{gap:6px}.hd2-loadout details{margin-top:16px;border-top:1px solid var(--lo-border);padding-top:12px}.hd2-loadout summary{cursor:pointer}.lo-pool [data-role=pool]{max-height:320px;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}.lo-pool label{display:flex;gap:8px;align-items:baseline;overflow-wrap:anywhere}.lo-pool input[type=search]{margin:12px 8px 0 0;max-width:100%}.hd2-loadout pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;font-size:12px}.hd2-loadout dialog{color:#eef2f7;background:#101b2d;border:1px solid var(--lo-border);border-radius:12px;width:min(760px,92vw);max-height:85vh;padding:22px}.hd2-loadout dialog::backdrop{background:#000a}.lo-dialog-head{display:flex;justify-content:space-between;align-items:center}.lo-dialog-head h3{margin:0}.lo-replacement{display:block;width:100%;text-align:left;margin:8px 0}.lo-empty{grid-column:1/-1;padding:20px;border:1px dashed var(--lo-border);color:var(--lo-muted)}.lo-foot{font-size:12px;margin-top:20px}@media(max-width:900px){.lo-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.lo-dimensions{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:560px){.hd2-loadout{padding:12px}.lo-cards{grid-template-columns:1fr}.lo-pool [data-role=pool]{grid-template-columns:1fr}.lo-toolbar{align-items:stretch}.lo-toolbar>button{flex:1 1 45%}.lo-toolbar label{width:100%;justify-content:space-between}.lo-toolbar select{max-width:72%}}
-.lo-status[data-state=UNKNOWN_DATA],.lo-status[data-state=UNKNOWN_COVERAGE],.lo-status[data-state=CONTEXT_BLOCKED],.lo-status[data-state=PRODUCTION_NOT_CERTIFIED]{border-color:#e0a83f}
+/* ============================================================
+   七格战术搭配器 · 组件样式
+   ------------------------------------------------------------
+   被 HD2_Wiki/loadout.html 与 HD2-Galatic_war-Map/index.html 共用。
+   颜色/字体一律取宿主站 token（wiki-base.css / tokens.css 同名同值），
+   fallback 与 token 缺省值一致，保证组件单独打开也不走样。
+   遵守站点设计语言：零圆角 · 零阴影 · 硬描边 · 黄铜顶条 · 高密度。
+   断点只用两档：≤1024px 平板 / ≤768px 手机。
+   ============================================================ */
+
+.hd2-loadout{
+  /* 宿主 token 缺省兜底 */
+  --lo-yellow: var(--yellow, #FFB000);
+  --lo-yellow-2: var(--yellow-2, #FFC94A);
+  --lo-yellow-3: var(--yellow-3, #8A5E00);
+  --lo-brass: var(--brass, #C8862A);
+  --lo-panel: var(--panel, #111111);
+  --lo-panel-2: var(--panel-2, #0F0F0F);
+  --lo-card-h: var(--card-h, #171717);
+  --lo-border: var(--border, #1F1F1F);
+  --lo-line-2: var(--line-2, #2A2A2A);
+  --lo-border-h: var(--border-h, #3A2A00);
+  --lo-text: var(--text, #F2F2F2);
+  --lo-text-dim: var(--text-dim, #A8A8A8);
+  --lo-text-mute: var(--text-mute, #6E6E6E);
+  --lo-ok: var(--ok, #1FA84A);
+  --lo-warn: var(--warn, #FF4D2E);
+  --lo-stripe: var(--stripe, repeating-linear-gradient(45deg, rgba(255,176,0,.14) 0 6px, transparent 6px 12px));
+  --lo-font-title: var(--font-title, "ZZZ-thick", "Microsoft YaHei", sans-serif);
+  --lo-font-body: var(--font-body, "Microsoft YaHei", "PingFang SC", sans-serif);
+
+  color: var(--lo-text);
+  font: 14px/1.6 var(--lo-font-body);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.hd2-loadout *{box-sizing:border-box}
+
+/* ── 按钮：键帽式（与 hud-skin ⑤ 同族） ── */
+.hd2-loadout button,.hd2-loadout select,.hd2-loadout input[type=search]{
+  font: inherit;
+  color: var(--lo-text);
+  background: var(--lo-panel-2);
+  border: 1px solid var(--lo-line-2);
+  border-top: 2px solid var(--lo-brass);
+  border-radius: 0;
+  padding: 8px 12px;
+}
+.hd2-loadout button{cursor:pointer;letter-spacing:.04em}
+.hd2-loadout button:hover:not(:disabled){border-color:var(--lo-yellow);border-top-color:var(--lo-yellow);color:var(--lo-yellow);background:#1A1200}
+.hd2-loadout button:disabled{opacity:.42;cursor:default}
+.hd2-loadout button[hidden]{display:none}
+.hd2-loadout button[data-act=pure]{color:#000;background:var(--lo-yellow);border-color:var(--lo-yellow);border-top-color:#FFE0A0;font-weight:bold}
+.hd2-loadout button[data-act=pure]:hover:not(:disabled){color:#000;background:var(--lo-yellow-2);border-color:var(--lo-yellow-2)}
+.hd2-loadout button[data-act=certified]{background:#141414}
+.hd2-loadout button[aria-pressed=true]{background:#1A1200;border-color:var(--lo-yellow);border-top-color:var(--lo-yellow);color:var(--lo-yellow)}
+
+/* ── 工具栏 / 提示 / 状态条 ── */
+.lo-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.lo-toolbar label{display:flex;align-items:center;gap:7px}
+.hd2-loadout [data-role=profile-note]{color:var(--lo-text-mute);margin:10px 0 0;font-size:13px}
+.lo-status{
+  border:1px solid var(--lo-border);
+  border-left:3px solid var(--lo-brass);
+  padding:10px 14px;
+  background:var(--lo-panel-2);
+  color:var(--lo-text-dim);
+  overflow-wrap:anywhere;
+  margin:12px 0 0;
+}
+.lo-status[data-state=CERTIFIED]{border-color:var(--lo-border);border-left-color:var(--lo-ok)}
+.lo-status[data-state=DRAWN]{border-left-color:var(--lo-yellow)}
+.lo-status[data-state=UNKNOWN_DATA],
+.lo-status[data-state=UNKNOWN_COVERAGE],
+.lo-status[data-state=CONTEXT_BLOCKED],
+.lo-status[data-state=PRODUCTION_NOT_CERTIFIED],
+.lo-status[data-state=NO_ACCEPTABLE_LOADOUT],
+.lo-status[data-state=INVALID_LOCKS],
+.lo-status[data-state=ATTEMPTS_EXHAUSTED],
+.lo-status[data-state=NO_CERTIFIABLE_LOADOUT]{border-left-color:var(--lo-warn)}
+
+/* ── 分区 ── */
+.lo-cards{margin:18px 0 0}
+.lo-section+.lo-section{margin-top:24px}
+.lo-section-head{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.lo-section-head h2{
+  margin:0;
+  font:400 17px/1.25 var(--lo-font-title);
+  color:var(--lo-yellow);
+  padding-left:10px;
+  border-left:4px solid var(--lo-yellow);
+  letter-spacing:.08em;
+}
+.lo-section-head span{
+  font-family:var(--font-mono,inherit);
+  font-size:11px;
+  letter-spacing:.18em;
+  color:var(--lo-text-mute);
+  white-space:nowrap;
+  padding-top:2px;
+}
+.lo-section-head::after{
+  content:"";
+  flex:1;
+  height:3px;
+  align-self:center;
+  background:var(--lo-stripe);
+  border-top:1px solid #241B00;
+}
+
+/* ── 网格：武器 3 列 · 战备 4 列 ── */
+.lo-grid{display:grid;gap:12px}
+.lo-grid-weapons{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lo-grid-stratagems{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* ── 卡片：铸铁块（panel 底 + 1px 硬描边 + 2px 黄铜顶条） ── */
+.lo-card{
+  background:var(--lo-panel);
+  border:1px solid var(--lo-border);
+  border-top:2px solid var(--lo-brass);
+  border-radius:0;
+  padding:14px 14px 12px;
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"main icon" "actions actions";
+  column-gap:12px;
+  transition:none;
+}
+.lo-card:hover{background:var(--lo-card-h);border-color:var(--lo-border-h);border-top-color:var(--lo-yellow)}
+.lo-card.lo-locked{border-color:var(--lo-border-h);border-top-color:var(--lo-yellow);background:#141009}
+.lo-locked .lo-icon{border-color:var(--lo-yellow-3)}
+.lo-card-main{grid-area:main;min-width:0}
+.lo-card h3{
+  font:400 16px/1.3 var(--lo-font-title);
+  color:var(--lo-text);
+  margin:7px 0 3px;
+  overflow-wrap:anywhere;
+}
+.lo-card small{color:var(--lo-text-mute);font-size:11px;line-height:1.45;display:block;overflow-wrap:anywhere}
+.lo-slot{font-size:12px;color:var(--lo-text-dim);letter-spacing:.06em}
+.lo-card-actions{grid-area:actions;display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.lo-card-actions button{font-size:12px;padding:5px 9px;border-top-width:1px}
+
+/* ── 图标：方块容器（浅底提亮深色武器渲染图，同 weapons.html 的 .weapon-icon 处理） ── */
+.lo-icon{
+  grid-area:icon;
+  width:72px;
+  height:72px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--lo-line-2);
+  overflow:hidden;
+}
+.lo-icon img{max-width:92%;max-height:92%;object-fit:contain}
+.lo-ic-fb{font-size:26px;line-height:1;opacity:.75}
+.lo-grid-stratagems .lo-icon{width:56px;height:56px}
+.lo-grid-stratagems .lo-ic-fb{font-size:22px}
+
+/* ── 空状态占位卡 ── */
+.lo-card-empty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-align:center;
+  background:transparent;
+  border:1px dashed var(--lo-line-2);
+  border-top:1px dashed var(--lo-line-2);
+  padding:18px 14px;
+  min-height:128px;
+}
+.lo-card-empty:hover{background:transparent;border-color:var(--lo-line-2);border-top-color:var(--lo-line-2)}
+.lo-empty-mark{font-size:26px;line-height:1;opacity:.45}
+.lo-card-empty small{color:var(--lo-text-mute);letter-spacing:.1em}
+.lo-empty-hint{color:var(--lo-text-mute);font-size:13px;margin:14px 0 0}
+
+/* ── 六维 / 认证（非 black-box 页面） ── */
+.lo-dimensions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:18px 0 0}
+.lo-dimensions div{
+  border:1px solid var(--lo-border);
+  border-top:2px solid var(--lo-line-2);
+  background:var(--lo-panel-2);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.lo-dimensions span{color:var(--lo-text)}
+.lo-dimensions b{font-size:12px;color:var(--lo-text-dim)}
+.lo-dimensions small{color:var(--lo-text-mute);font-size:11px;line-height:1.45}
+
+/* ── 折叠区 / 装备池 ── */
+.hd2-loadout details{margin-top:18px;border-top:1px solid var(--lo-border);padding-top:12px}
+.hd2-loadout summary{cursor:pointer;color:var(--lo-text-dim);letter-spacing:.04em}
+.hd2-loadout summary:hover{color:var(--lo-yellow)}
+.lo-pool [data-role=pool]{max-height:320px;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.lo-pool label{display:flex;gap:8px;align-items:baseline;overflow-wrap:anywhere;color:var(--lo-text-dim);font-size:13px}
+.lo-pool input[type=search]{margin:12px 8px 0 0;max-width:100%}
+.hd2-loadout pre{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  max-height:360px;
+  overflow:auto;
+  font-size:12px;
+  background:var(--lo-panel-2);
+  border:1px solid var(--lo-border);
+  border-left:3px solid var(--lo-brass);
+  padding:10px 12px;
+  color:var(--lo-text-dim);
+}
+.lo-foot{font-size:12px;color:var(--lo-text-mute);margin-top:20px}
+
+/* ── 替换弹窗 ── */
+.hd2-loadout dialog{
+  color:var(--lo-text);
+  background:var(--lo-panel);
+  border:1px solid var(--lo-line-2);
+  border-top:3px solid var(--lo-yellow);
+  border-radius:0;
+  width:min(760px,92vw);
+  max-height:85vh;
+  padding:22px;
+}
+.hd2-loadout dialog::backdrop{background:rgba(0,0,0,.82)}
+.lo-dialog-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lo-dialog-head h3{margin:0;font:400 16px/1.25 var(--lo-font-title);color:var(--lo-yellow);letter-spacing:.06em}
+.lo-dialog-head button{font-size:12px}
+.hd2-loadout dialog p{color:var(--lo-text-dim);font-size:13px;margin:10px 0}
+.lo-replacement{
+  display:block;
+  width:100%;
+  text-align:left;
+  margin:8px 0;
+  color:var(--lo-text-dim);
+}
+.lo-replacement:hover:not(:disabled){color:var(--lo-yellow)}
+
+/* ── 响应式：≤1024 平板（战备 4→2） ── */
+@media (max-width:1024px){
+  .lo-grid-stratagems{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* ── 响应式：≤768 手机（武器收单列；战备小卡保持 2 列） ── */
+@media (max-width:768px){
+  .hd2-loadout{padding:12px}
+  .lo-grid-weapons{grid-template-columns:1fr}
+  .lo-grid{gap:10px}
+  .lo-grid-stratagems{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lo-icon,.lo-grid-stratagems .lo-icon{width:60px;height:60px}
+  .lo-card h3{font-size:15px}
+  .lo-toolbar{align-items:stretch}
+  .lo-toolbar>button{flex:1 1 45%}
+  .lo-toolbar label{width:100%;justify-content:space-between}
+  .lo-toolbar select{max-width:72%}
+  .lo-pool [data-role=pool]{grid-template-columns:1fr}
+  .lo-dimensions{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

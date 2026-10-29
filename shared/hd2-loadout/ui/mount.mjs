@@ -32,6 +32,14 @@ const caseCover = profile => {
     return bits.join(' · ');
   };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SLOT_GLYPH = {primary:'🔫', secondary:'🗡️', grenade:'💣', stratagem:'🚀'};
+const slotGlyph = slot => SLOT_GLYPH[slot.startsWith('stratagem:') ? 'stratagem' : slot] || '🎯';
+const iconHTML = (e, slot) => {
+  const glyph = slotGlyph(slot);
+  return e?.icon
+    ? `<span class="lo-icon" data-fb="${glyph}"><img src="${esc(e.icon)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=lo-ic-fb>'+this.parentElement.dataset.fb+'</span>'"></span>`
+    : `<span class="lo-icon"><span class="lo-ic-fb">${glyph}</span></span>`;
+};
 export function mount(root) {
   if (!root || root.dataset.mounted) return;
   const blackBox=root.dataset.presentation==='black-box';
@@ -79,10 +87,13 @@ export function mount(root) {
   function idAt(slot) { return slot.startsWith('stratagem:') ? current.stratagems[Number(slot.split(':')[1])] : current[slot]; }
   function renderCards() {
     const map = byID();
-    find('cards').innerHTML = current ? [...SLOTS, ...[0,1,2,3].map(n=>'stratagem:'+n)].map(slot => {
-      const e = map.get(idAt(slot));
-      return `<article class="lo-card"><span class="lo-slot">${LABEL[slot] || '战备 '+(Number(slot.split(':')[1])+1)}</span><h3>${esc(e?.name || e?.name_en || idAt(slot))}</h3><small>${esc(e?.name_en || e?.id)}</small><div class="lo-card-actions"><button data-act="lock" data-slot="${slot}" aria-pressed="${!!isLocked(slot)}">${isLocked(slot)?'🔒 已锁定':'锁定'}</button><button data-act="swap" data-slot="${slot}">随机换一件</button><button data-act="manual" data-slot="${slot}">人工点选</button></div></article>`;
-    }).join('') : '<p class="lo-empty">抽取主手、副手、手雷与四个战备。你可以锁住喜欢的装备，再抽其余位置。</p>';
+    const card = slot => {
+      const e = map.get(idAt(slot)), locked = !!isLocked(slot);
+      return `<article class="lo-card${locked ? ' lo-locked' : ''}"><div class="lo-card-main"><span class="lo-slot">${LABEL[slot] || '战备 '+(Number(slot.split(':')[1])+1)}</span><h3>${esc(e?.name || e?.name_en || idAt(slot))}</h3><small>${esc(e?.name_en || e?.id)}</small></div>${iconHTML(e, slot)}<div class="lo-card-actions"><button data-act="lock" data-slot="${slot}" aria-pressed="${locked}">${locked?'🔒 已锁定':'锁定'}</button><button data-act="swap" data-slot="${slot}">随机换一件</button><button data-act="manual" data-slot="${slot}">人工点选</button></div></article>`;
+    };
+    const placeholder = slot => `<article class="lo-card lo-card-empty"><span class="lo-slot">${LABEL[slot] || '战备 '+(Number(slot.split(':')[1])+1)}</span><span class="lo-empty-mark">${slotGlyph(slot)}</span><small>待抽取</small></article>`;
+    const grid = (slots, cls) => `<div class="lo-grid ${cls}">${(current ? slots.map(slot => card(slot)) : slots.map(slot => placeholder(slot))).join('')}</div>`;
+    find('cards').innerHTML = `<section class="lo-section"><header class="lo-section-head"><h2>武器装备</h2><span>PRIMARY · SECONDARY · GRENADE</span></header>${grid(SLOTS, 'lo-grid-weapons')}</section><section class="lo-section"><header class="lo-section-head"><h2>战略配备</h2><span>STRATAGEMS · ×4</span></header>${grid([0,1,2,3].map(n => 'stratagem:'+n), 'lo-grid-stratagems')}</section>${current ? '' : '<p class="lo-empty-hint">抽取主手、副手、手雷与四个战备。你可以锁住喜欢的装备，再抽其余位置。</p>'}`;
     if(blackBox){controls();return;}
     const cover = caseCover(profiles?.profiles.find(p => p.id === find('profile').value));
     find('dimensions').innerHTML = DIMENSIONS.map(d => {
