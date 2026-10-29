@@ -759,7 +759,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <!-- 战略配备详情 · 115 条 · 数据：data/wiki/zh/stratagems_full.json -->
+  <!-- 战略配备详情 · 117 条 · 数据：data/wiki/zh/stratagems_full.json -->
   <url>
     <loc>https://jerry114514.github.io/HD2_Wiki/stratagem.html?id=orbital_120mm_he_barrage</loc>
     <lastmod>2026-09-20</lastmod>
@@ -1069,6 +1069,18 @@
   <url>
     <loc>https://jerry114514.github.io/HD2_Wiki/stratagem.html?id=support_cqc_9_defoliation_tool</loc>
     <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2_Wiki/stratagem.html?id=support_amw_20_apex</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2_Wiki/stratagem.html?id=support_las_44_nova</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -2992,10 +3004,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <!-- 星球资料页 · 144 颗（有区域或当前有人口）· 数据：HD2-Galatic_war-Map/data.json -->
+  <!-- 星球资料页 · 147 颗（有区域或当前有人口）· 数据：HD2-Galatic_war-Map/data.json -->
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=0</loc>
     <lastmod>2026-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=5</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3014,6 +3032,18 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=22</loc>
     <lastmod>2026-10-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=25</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=26</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3043,12 +3073,6 @@
   </url>
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=34</loc>
-    <lastmod>2026-10-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=35</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3092,12 +3116,6 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=53</loc>
     <lastmod>2026-09-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=55</loc>
-    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3174,6 +3192,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=77</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=78</loc>
     <lastmod>2026-09-25</lastmod>
     <changefreq>daily</changefreq>
@@ -3246,6 +3270,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=98</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=99</loc>
     <lastmod>2026-09-25</lastmod>
     <changefreq>daily</changefreq>
@@ -3276,20 +3306,8 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=111</loc>
-    <lastmod>2026-10-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=112</loc>
     <lastmod>2026-09-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=113</loc>
-    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3314,12 +3332,6 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=117</loc>
     <lastmod>2026-09-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=123</loc>
-    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3368,6 +3380,12 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=131</loc>
     <lastmod>2026-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=133</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3522,6 +3540,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=174</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=175</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
@@ -3590,6 +3614,12 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=196</loc>
     <lastmod>2026-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=197</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3708,12 +3738,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=227</loc>
-    <lastmod>2026-10-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=228</loc>
     <lastmod>2026-09-25</lastmod>
     <changefreq>daily</changefreq>
@@ -3758,6 +3782,12 @@
   <url>
     <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=242</loc>
     <lastmod>2026-10-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=243</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3852,7 +3882,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=272</loc>
+    <loc>https://jerry114514.github.io/HD2-Galatic_war-Map/planet.html?idx=271</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
