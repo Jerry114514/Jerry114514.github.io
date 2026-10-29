@@ -1,6 +1,18 @@
 # HD2 API 内容变更
 
-- 检测时间（UTC）：2026-10-28T16:04:04Z
+- 检测时间（UTC）：2026-10-29T12:20:50Z
 - 当前银河效果定义：312 条
 
-本次未检测到新增、移除或定义变更。
+## CHANGES ON USTOTU
+
+### Effect(s) removed ❌
+
+- `1248` — THE INCINERATION CORPS (Enemies)
+- `1249` — THE INCINERATION CORPS
+
+## CHANGES ON VARYLIA 5
+
+### Effect(s) added ✅
+
+- `1248` — THE INCINERATION CORPS (Enemies)
+- `1249` — THE INCINERATION CORPS
