@@ -41,6 +41,10 @@ DEFAULT_LATEST_REPORT = os.path.join(BASE_DIR, "data", "api_changes_latest.md")
 EFFECT_META_FILE = os.path.join(
     BASE_DIR, "HD2-Galatic_war-Map", "tables", "galactic_effects.json"
 )
+EFFECT_CN_FILE = os.path.join(
+    BASE_DIR, "HD2-Galatic_war-Map", "tables", "effect_id_cn.json"
+)
+STARMAP_FILE = os.path.join(BASE_DIR, "HD2-Galatic_war-Map", "tables", "starmap.json")
 
 WAR_ID = 801
 OFFICIAL_API = "https://api.live.prod.thehelldiversgame.com"
@@ -57,8 +61,8 @@ HEADERS = {
 # the fallback labels needed when our translation table has not caught up yet;
 # the full localized name is always preferred when present locally.
 EFFECT_TYPE_LABELS = {
-    40: "Adds a combatant force",
-    71: "Adds a galactic map marker",
+    40: "增加作战兵力",
+    71: "增加星图标记",
 }
 
 
@@ -244,17 +248,44 @@ def _load_effect_meta() -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def _load_effect_cn() -> dict[str, str]:
+    """effect_id → 中文短名（tables/effect_id_cn.json，站内对照表）。"""
+    value = _load_json(EFFECT_CN_FILE, {})
+    if not isinstance(value, dict):
+        return {}
+    return {str(key): str(text) for key, text in value.items() if text}
+
+
+def _load_planet_cn() -> dict[str, str]:
+    """英文星球名（大写）→ 中文名（tables/starmap.json 的 cn 字段）。"""
+    starmap = _load_json(STARMAP_FILE, {})
+    planets = starmap.get("planets") if isinstance(starmap, dict) else None
+    if not isinstance(planets, dict):
+        return {}
+    out: dict[str, str] = {}
+    for name, info in planets.items():
+        if isinstance(info, dict) and info.get("cn"):
+            out[str(name).upper()] = str(info["cn"])
+    return out
+
+
 def _clean_inline(value: Any, limit: int = 180) -> str:
     text = " ".join(str(value or "").replace("`", "'").split())
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
 def effect_label(
-    effect_id: str, effect: dict[str, Any] | None, meta: dict[str, Any]
+    effect_id: str,
+    effect: dict[str, Any] | None,
+    meta: dict[str, Any],
+    effect_cn: dict[str, str] | None = None,
 ) -> str:
+    cn = (effect_cn or {}).get(str(effect_id))
+    if cn:
+        return cn
     item = meta.get(effect_id)
     if isinstance(item, dict):
-        for key in ("name", "name_cn", "description_cn", "description"):
+        for key in ("name_cn", "description_cn", "name", "description"):
             text = _clean_inline(item.get(key))
             if text:
                 return text
@@ -266,16 +297,30 @@ def effect_label(
     if effect_type in EFFECT_TYPE_LABELS:
         return EFFECT_TYPE_LABELS[effect_type]
     if effect_type is not None:
-        return f"Galactic effect type {effect_type}"
-    return "Unknown galactic effect"
+        return f"银河效果类型 {effect_type}"
+    return "未知银河效果"
+
+
+def planet_display(
+    planet_id: str, planet_names: dict[str, str], planet_cn: dict[str, str]
+) -> str:
+    """星球显示名：优先 starmap 中文名，缺表时保留英文名。"""
+    raw = planet_names.get(planet_id)
+    if not raw:
+        return f"未知星球（{planet_id}）"
+    return planet_cn.get(str(raw).upper(), raw)
 
 
 def _effect_line(
     effect_id: str,
     effects: dict[str, dict[str, Any]],
     meta: dict[str, Any],
+    effect_cn: dict[str, str] | None = None,
 ) -> str:
-    return f"- `{effect_id}` — {effect_label(effect_id, effects.get(effect_id), meta)}"
+    return (
+        f"- `{effect_id}` — "
+        f"{effect_label(effect_id, effects.get(effect_id), meta, effect_cn)}"
+    )
 
 
 def render_report(
@@ -286,7 +331,11 @@ def render_report(
     checked_at: str,
     warnings: list[str],
     initial: bool = False,
+    effect_cn: dict[str, str] | None = None,
+    planet_cn: dict[str, str] | None = None,
 ) -> str:
+    effect_cn = effect_cn or {}
+    planet_cn = planet_cn or {}
     lines = [
         "# HD2 API 内容变更",
         "",
@@ -305,23 +354,23 @@ def render_report(
         lines.extend(["本次未检测到新增、移除或定义变更。", ""])
 
     if changes.new_effects:
-        lines.extend(["## NEW GALACTIC EFFECTS ✅", ""])
+        lines.extend(["## 新增的银河效果 ✅", ""])
         lines.extend(
-            _effect_line(effect_id, effects, meta)
+            _effect_line(effect_id, effects, meta, effect_cn)
             for effect_id in changes.new_effects
         )
         lines.append("")
 
     if changes.removed_effects:
-        lines.extend(["## REMOVED GALACTIC EFFECTS ❌", ""])
+        lines.extend(["## 移除的银河效果 ❌", ""])
         lines.extend(
-            _effect_line(effect_id, changes.removed_effect_defs, meta)
+            _effect_line(effect_id, changes.removed_effect_defs, meta, effect_cn)
             for effect_id in changes.removed_effects
         )
         lines.append("")
 
     if changes.changed_effects:
-        lines.extend(["## CHANGED GALACTIC EFFECTS 🔄", ""])
+        lines.extend(["## 定义变更的银河效果 🔄", ""])
         for effect_id, before, after in changes.changed_effects:
             fields = sorted(
                 key
@@ -329,7 +378,8 @@ def render_report(
                 if before.get(key) != after.get(key)
             )
             lines.append(
-                f"- `{effect_id}` — {effect_label(effect_id, after, meta)}"
+                f"- `{effect_id}` — "
+                f"{effect_label(effect_id, after, meta, effect_cn)}"
             )
             for name in fields:
                 left = _clean_inline(json.dumps(before.get(name), ensure_ascii=False))
@@ -344,21 +394,21 @@ def render_report(
     for planet_id in planet_ids:
         lines.extend(
             [
-                f"## CHANGES ON {planet_names.get(planet_id, 'PLANET_' + planet_id)}",
+                f"## 变更：{planet_display(planet_id, planet_names, planet_cn)}",
                 "",
             ]
         )
         if planet_id in changes.planet_effects_added:
-            lines.extend(["### Effect(s) added ✅", ""])
+            lines.extend(["### 新增的星球效果 ✅", ""])
             lines.extend(
-                _effect_line(effect_id, effects, meta)
+                _effect_line(effect_id, effects, meta, effect_cn)
                 for effect_id in map(str, changes.planet_effects_added[planet_id])
             )
             lines.append("")
         if planet_id in changes.planet_effects_removed:
-            lines.extend(["### Effect(s) removed ❌", ""])
+            lines.extend(["### 移除的星球效果 ❌", ""])
             lines.extend(
-                _effect_line(effect_id, effects, meta)
+                _effect_line(effect_id, effects, meta, effect_cn)
                 for effect_id in map(str, changes.planet_effects_removed[planet_id])
             )
             lines.append("")
@@ -419,6 +469,8 @@ def main() -> int:
 
     warnings: list[str] = []
     checked_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    effect_cn = _load_effect_cn()
+    planet_cn = _load_planet_cn()
 
     effects: dict[str, dict[str, Any]] | None = None
     last_error: Exception | None = None
@@ -478,6 +530,8 @@ def main() -> int:
             checked_at,
             warnings,
             initial=True,
+            effect_cn=effect_cn,
+            planet_cn=planet_cn,
         )
         if args.report:
             _write_text(args.report, report)
@@ -545,6 +599,8 @@ def main() -> int:
         checked_at,
         warnings,
         initial=initial,
+        effect_cn=effect_cn,
+        planet_cn=planet_cn,
     )
     if args.report:
         _write_text(args.report, report)
