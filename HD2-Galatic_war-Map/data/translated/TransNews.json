@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3973,
+   "published_at": "2026-10-29T08:26:11Z",
+   "source": "dispatch",
+   "original": "ARSENAL AUGMENTATION ENDED\n\nFree availability of the Shield Generator Pack Stratagem for forces on the Illuminate front has now ended.",
+   "translated": "军械扩充已结束\n\nIlluminate前线的防护罩生成包战略配备免费使用权限已结束。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85322113,
+   "official_message": "<i=3>军械扩充已结束</i>\n\n<i=1>Illuminate前线</i>的<i=1>防护罩生成包</i>战略配备免费使用权限已结束。",
+   "translated_at": "2026-10-29T08:45:39Z"
+  },
+  {
    "id": 3972,
    "published_at": "2026-10-28T19:48:27Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "published_war_seconds": 84900950,
    "official_message": "<i=3>军械扩充</i>\n\n为了增强战斗力，在接下来的120小时内，<i=1>轨道炮攻击</i>战略配备会免费提供给部署至<i=1>Automaton战争前线</i>的所有绝地潜兵。",
    "translated_at": "2026-10-24T13:52:15Z"
-  },
-  {
-   "id": 3963,
-   "published_at": "2026-10-24T11:10:12Z",
-   "source": "dispatch",
-   "original": "ARSENAL AUGMENTATION\n\nTo bolster war efforts, the HMG Emplacement Stratagem has been made freely available for all Helldiver deployments on the Terminid warfront, for the next 120 hours.",
-   "translated": "军械扩充\n\n为了增强战斗力，在接下来的120小时内，重机枪部署支架战略配备会免费提供给部署至Terminid战争前线的所有绝地潜兵。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 84899998,
-   "official_message": "<i=3>军械扩充</i>\n\n为了增强战斗力，在接下来的120小时内，<i=1>重机枪部署支架</i>战略配备会免费提供给部署至<i=1>Terminid战争前线</i>的所有绝地潜兵。",
-   "translated_at": "2026-10-24T13:52:15Z"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-29T02:27:53Z",
+  "computed_at": "2026-10-29T08:45:40Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -203,18 +203,6 @@
    "mt": false
   },
   {
-   "event_id": 1501088,
-   "id32": 3589949480,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 85321913,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
    "event_id": 1501089,
    "id32": 1548832078,
    "title": "",
@@ -242,17 +230,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-29T02:27:51Z",
+  "source_version": "2026-10-29T08:45:38Z",
   "war_id": 801,
-  "war_time_seconds": 85300620,
-  "last_success_at": "2026-10-29T02:27:51Z",
+  "war_time_seconds": 85323280,
+  "last_success_at": "2026-10-29T08:45:38Z",
   "stale": false
  },
  "tasks": {
   "id32": 568917260,
   "source": "arrowhead_official",
-  "source_version": "2026-10-29T02:27:51Z",
-  "retrieved_at": "2026-10-29T02:27:51Z",
+  "source_version": "2026-10-29T08:45:38Z",
+  "retrieved_at": "2026-10-29T08:45:38Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -263,7 +251,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 150000000,
-    "progress": 119654691,
+    "progress": 134585766,
     "requirement": {
      "type": "equipment",
      "id": 3827587060,
@@ -280,7 +268,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 32500000,
-    "progress": 29135018,
+    "progress": 30932505,
     "requirement": {
      "type": "equipment",
      "id": 376960160,
