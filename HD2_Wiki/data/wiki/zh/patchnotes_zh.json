@@ -1,7 +1,108 @@
 {
-  "updated_at": "2026-10-22T13:38:47Z",
+  "updated_at": "2026-10-29T12:38:44Z",
   "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。`mt: true` 表示**机器翻译、待人工校对**（页面显示「机翻 · 待校对」）；人工校对完成后删掉该字段即为已校对。更新名用官方中文译名（已登记于 terms.json）。",
   "versions_zh": [
+    {
+      "id": "1.007.202",
+      "title_zh": "自由入寂：7.2.2",
+      "fully_translated": true,
+      "mt": true,
+      "sections_zh": [
+        {
+          "id": "overview",
+          "heading_zh": "概述",
+          "items_zh": [
+            "本次热修复旨在解决部分玩家的崩溃问题，并对战略配备进行了一些平衡性调整。"
+          ]
+        },
+        {
+          "id": "balancing",
+          "heading_zh": "平衡性调整",
+          "subsections_zh": [
+            {
+              "id": "stratagems",
+              "heading_zh": "战略配备",
+              "subsections_zh": [
+                {
+                  "id": "amw20_apex",
+                  "heading_zh": "AMW-20 APEX",
+                  "items_zh": [
+                    "我们想要解决的问题：",
+                    "拆除强度过低，导致其无法摧毁同类武器（反器材步枪和自动加农炮）能够摧毁的目标",
+                    "其口径过高，导致伤害衰减过于陡峭",
+                    "关于其护甲穿透的错误信息导致玩家对该武器能做什么产生困惑",
+                    "本次调整的意图与预期：",
+                    "现在它能够摧毁更大的目标，例如掩体、集装箱门等，与其同级别武器的表现保持一致",
+                    "在更远距离上伤害衰减更低，这将使其作为狙击武器表现更好，并符合该弹药的合理性",
+                    "在军械库中正确显示护甲穿透等级，让玩家更清楚该武器可以用于对付什么目标。",
+                    "改动：",
+                    "口径由 60 降低至 20",
+                    "已修复，现在正确显示护甲穿透为“反坦克”",
+                    "拆除强度提升至 30"
+                  ]
+                },
+                {
+                  "id": "las44_nova",
+                  "heading_zh": "LAS-44 NOVA",
+                  "items_zh": [
+                    "我们想要解决的问题：",
+                    "关于其护甲穿透的错误信息让玩家对该武器的表现产生困惑",
+                    "本次调整的意图与预期：",
+                    "在军械库中正确显示护甲穿透等级，让玩家更清楚该武器可以用于对付什么目标。",
+                    "改动：",
+                    "已修复，现在正确显示护甲穿透为“反坦克”"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "correction",
+              "heading_zh": "更正",
+              "subsections_zh": [
+                {
+                  "id": "sg22_bushwacker",
+                  "heading_zh": "SG-22 BUSHWACKER",
+                  "items_zh": [
+                    "上个补丁中对 Bushwacker 的改动计算有误",
+                    "正确的数值为",
+                    "伤害由 405 提升至 486",
+                    "耐久伤害由 108 提升至 135"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading_zh": "修复",
+          "subsections_zh": [
+            {
+              "id": "crash_fixes",
+              "heading_zh": "崩溃修复",
+              "items_zh": [
+                "修复了 PC 和 Xbox 上渲染器中罕见的崩溃",
+                "修复了启动时罕见的崩溃"
+              ]
+            },
+            {
+              "id": "misc",
+              "heading_zh": "杂项",
+              "items_zh": [
+                "移除了两首音乐曲目，不影响游戏玩法"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading_zh": "已知问题",
+          "items_zh": [
+            "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues"
+          ]
+        }
+      ]
+    },
     {
       "id": "1.007.201",
       "title_zh": "自由入寂：7.2.1",
