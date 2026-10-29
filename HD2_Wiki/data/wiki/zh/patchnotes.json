@@ -1,8 +1,300 @@
 {
-  "updated_at": "2026-10-22T13:38:30Z",
+  "updated_at": "2026-10-29T12:38:28Z",
   "source": "https://helldivers.wiki.gg/wiki/Category:Patch_Notes",
-  "total": 13,
+  "total": 14,
   "versions": [
+    {
+      "id": "1.007.202",
+      "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.202",
+      "title": "Devoid of Liberty: 7.2.2",
+      "cover_wiki": "Helldivers 2 Devoid of Liberty Key Art EN 2x3.png",
+      "release_date": "2026-10-29",
+      "release_time": "9:59 AM UTC",
+      "size": "177.3 MB",
+      "previous": "1.007.201",
+      "next": null,
+      "blog_url": "https://store.steampowered.com/news/app/553850/view/708913061799395773?l=english",
+      "image_local": "./assets/patchnotes/helldivers_2_devoid_of_liberty_key_art_en_2x3.webp",
+      "sections": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "This hotfix intends to resolve some crashing for players, as well as some adjustments to stratagem balancing.",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "balancing",
+          "heading": "Balancing",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "stratagems",
+              "heading": "Stratagems",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "amw20_apex",
+                  "heading": "AMW-20 APEX",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Demolition strength was too low resulting in being unable to destroy things that weapons in the same category could (Anti Material Rifle and Autocannon)",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Its Caliber was too high and made the damage dropoff too steep",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Incorrect information about its armor penetration caused confusion as to what the weapon was able to do",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "It is now able to destroy larger things such as covers, container doors etc in line with similar weapons of its power",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Lower damage drop off over longer distances, which will make it work better as a sniper and fit the believability of the rounds",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Correctly displays the armor penetration level in the armory so players know better what they can use the weapon against.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Decreased caliber from 60 to 20",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Fixed, so it correctly displays armor penetration is “Anti-Tank”",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Increased demolition strength to 30",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                },
+                {
+                  "id": "las44_nova",
+                  "heading": "LAS-44 NOVA",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Problem we want to solve:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Incorrect information about its armor penetration confused players as to how the weapon would perform",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Intent and expectation with the changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Correctly displays the armor penetration level in the armory so players know better what they can use the weapon against.",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "p",
+                      "depth": 0,
+                      "text": "Changes:",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "Fixed so it correctly displays armor penetration as “Anti-Tank”",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                }
+              ]
+            },
+            {
+              "id": "correction",
+              "heading": "Correction",
+              "level": 3,
+              "items": [],
+              "subsections": [
+                {
+                  "id": "sg22_bushwacker",
+                  "heading": "SG-22 BUSHWACKER",
+                  "level": 4,
+                  "items": [
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The Bushwacker changes in the previous patch were calculated incorrectly",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 0,
+                      "text": "The correct values are",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 1,
+                      "text": "Increased damage from 405 to 486",
+                      "links": [],
+                      "files": []
+                    },
+                    {
+                      "kind": "li",
+                      "depth": 1,
+                      "text": "Increased durable damage from 108 to 135",
+                      "links": [],
+                      "files": []
+                    }
+                  ],
+                  "subsections": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading": "Fixes",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "crash_fixes",
+              "heading": "Crash Fixes",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed rare crash in renderer on PC and Xbox",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a rare crash on boot",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "misc",
+              "heading": "Misc",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Removed two music tracks, does not affect gameplay",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            }
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading": "Known Issues",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        }
+      ]
+    },
     {
       "id": "1.007.201",
       "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.201",
