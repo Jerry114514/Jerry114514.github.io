@@ -51676,6 +51676,173 @@
         "mode_policy": "BEST_MODE_PER_AMMO_ACCOUNT; SUM_INDEPENDENT_FEEDS; SHARED_AMMUNITION_NEVER_ADDED_TWICE",
         "component_limits": "DOT_AND_FRAGMENT_POTENTIAL_REMAIN_SEPARATE; NO_ASSUMED_MULTIPLE_TARGETS_OR_PARTS"
       }
+    },
+    {
+      "equipment_id": "ar_23l_liberator_legacy",
+      "name": "AR-23L “解放者”传承",
+      "state": "TOTAL_AMMO_DAMAGE",
+      "score": 60,
+      "without_public_score": 41.04,
+      "selected_mode": "AR-23_P",
+      "reference_id": "ar_23_liberator",
+      "public_boxes": 1,
+      "modes": [
+        {
+          "mode_id": "AR-23_P",
+          "resource_id": "ar_23l_liberator_legacy",
+          "renewable": false,
+          "loaded": 45,
+          "total_rounds": 405,
+          "direct_damage_unresolved": false,
+          "nominal_only": false,
+          "nominal_arc_count": null,
+          "payload_basis": "DIRECT_PLUS_BOUND_BLAST",
+          "standard_damage_per_round": 90,
+          "durable_damage_per_round": 22,
+          "one_public_box_rounds": 360,
+          "full_stock_standard_damage": 36450,
+          "full_stock_durable_damage": 8910,
+          "plus_one_box_standard_damage": 68850,
+          "plus_one_box_durable_damage": 16830,
+          "fragment_potential": null,
+          "reload_or_cooldown_ms": null,
+          "scope": "DIRECT_PLUS_BOUND_BLAST_FULL_STOCK; NO_FREE_DOT_FRAGMENT_OR_MULTIPART_MULTIPLIER",
+          "limitations": []
+        }
+      ],
+      "combat_trials": [
+        {
+          "role": "chaff",
+          "state": "UNRESOLVED",
+          "reason": "EXECUTABLE_ROLE_PLAN_REQUIRED"
+        },
+        {
+          "role": "anti_medium",
+          "state": "UNRESOLVED",
+          "reason": "EXECUTABLE_ROLE_PLAN_REQUIRED"
+        }
+      ],
+      "scope": "FULL_AMMO_TIMES_NOMINAL_DAMAGE; NO_TARGET_BTK_DPS_RELOAD_OR_ROLE_SELECTION",
+      "mode_policy": "ALTERNATIVE_MODES_SHARE_ONE_STOCK; NEVER_SUMMED",
+      "replenishable_score_policy": "100_DENOTES_NO_FINITE_AMMO_EXHAUSTION; DOES_NOT_REMOVE_COOLING_OR_CONTACT_LIMITS",
+      "rating": {
+        "kind": "TOTAL_AMMO_DAMAGE",
+        "reference_id": "ar_23_liberator",
+        "reference_standard_damage": 68850,
+        "curve": {
+          "basis": "TOTAL_AMMO_STANDARD_DAMAGE",
+          "reference_id": "ar_23_liberator",
+          "reference_score": 60,
+          "ceiling": 105,
+          "steepness": 1.15,
+          "curve": "HILL_DAMAGE_RATIO; REFERENCE_AND_CEILING_PRESERVED",
+          "status": "ENGINEERING_DISPLAY_SCALE"
+        },
+        "scope": "FULL_AMMO_TIMES_NOMINAL_DAMAGE; NO_TARGET_BTK_DPS_RELOAD_OR_ROLE_SELECTION",
+        "damage_basis": "BOUND_DIRECT_PLUS_BLAST; STANDARD_SCORE; DURABLE_TOTAL_LISTED_SEPARATELY",
+        "score": 60,
+        "selected_mode": "AR-23_P",
+        "modes": [
+          {
+            "mode_id": "AR-23_P",
+            "resource_id": "ar_23l_liberator_legacy",
+            "scenarios": {
+              "initial": {
+                "rounds": 405,
+                "standard_damage": 36450,
+                "durable_damage": 8910,
+                "score": 41.04,
+                "mode_id": "AR-23_P"
+              },
+              "public": {
+                "rounds": 765,
+                "standard_damage": 68850,
+                "durable_damage": 16830,
+                "score": 60,
+                "mode_id": "AR-23_P"
+              },
+              "pack": {
+                "rounds": 2565,
+                "standard_damage": 230850,
+                "durable_damage": 56430,
+                "score": 88.49,
+                "mode_id": "AR-23_P"
+              },
+              "vehicle": {
+                "rounds": 3645,
+                "standard_damage": 328050,
+                "durable_damage": 80190,
+                "score": 93.37,
+                "mode_id": "AR-23_P"
+              }
+            }
+          }
+        ],
+        "scenarios": {
+          "initial": {
+            "rounds": 405,
+            "standard_damage": 36450,
+            "durable_damage": 8910,
+            "score": 41.04,
+            "mode_id": "AR-23_P",
+            "resource_id": "ar_23l_liberator_legacy",
+            "mode_ids": [
+              "AR-23_P"
+            ],
+            "independent_accounts": [
+              "ar_23l_liberator_legacy"
+            ],
+            "partial": false
+          },
+          "public": {
+            "rounds": 765,
+            "standard_damage": 68850,
+            "durable_damage": 16830,
+            "score": 60,
+            "mode_id": "AR-23_P",
+            "resource_id": "ar_23l_liberator_legacy",
+            "mode_ids": [
+              "AR-23_P"
+            ],
+            "independent_accounts": [
+              "ar_23l_liberator_legacy"
+            ],
+            "partial": false
+          },
+          "pack": {
+            "rounds": 2565,
+            "standard_damage": 230850,
+            "durable_damage": 56430,
+            "score": 88.49,
+            "mode_id": "AR-23_P",
+            "resource_id": "ar_23l_liberator_legacy",
+            "mode_ids": [
+              "AR-23_P"
+            ],
+            "independent_accounts": [
+              "ar_23l_liberator_legacy"
+            ],
+            "partial": false
+          },
+          "vehicle": {
+            "rounds": 3645,
+            "standard_damage": 328050,
+            "durable_damage": 80190,
+            "score": 93.37,
+            "mode_id": "AR-23_P",
+            "resource_id": "ar_23l_liberator_legacy",
+            "mode_ids": [
+              "AR-23_P"
+            ],
+            "independent_accounts": [
+              "ar_23l_liberator_legacy"
+            ],
+            "partial": false
+          }
+        },
+        "mode_policy": "BEST_MODE_PER_AMMO_ACCOUNT; SUM_INDEPENDENT_FEEDS; SHARED_AMMUNITION_NEVER_ADDED_TWICE",
+        "component_limits": "DOT_AND_FRAGMENT_POTENTIAL_REMAIN_SEPARATE; NO_ASSUMED_MULTIPLE_TARGETS_OR_PARTS"
+      }
     }
   ],
   "equipment_heavy": [
@@ -66274,6 +66441,24 @@
       "reason": "BELOW_HEAVY_PENETRATION; INCIDENTAL_WEAKPOINT_NOT_ANTI_HEAVY",
       "incidental_routes": [],
       "scope": "USER_DEFAULT_ZERO; INCIDENTAL_ROUTES_HAVE_NO_SCORE_OR_HEAVY_GATE_CREDIT"
+    },
+    {
+      "equipment_id": "ar_23l_liberator_legacy",
+      "name": "AR-23L “解放者”传承",
+      "state": "KNOWN_ZERO",
+      "score": 0,
+      "eligibility": {
+        "state": "BELOW_THRESHOLD",
+        "minimum_penetration": 4,
+        "max_penetration": 2,
+        "qualifying_components": [],
+        "confirmed_exception": false,
+        "basis": "USER_MINIMUM_HEAVY_PENETRATION; DIRECT_OR_EXPLOSION; STATUS_AP_DOES_NOT_QUALIFY",
+        "scope": "ELIGIBILITY_ONLY; NOT_A_DAMAGE_TIME_OR_INVENTORY_GUARANTEE"
+      },
+      "reason": "BELOW_HEAVY_PENETRATION; INCIDENTAL_WEAKPOINT_NOT_ANTI_HEAVY",
+      "incidental_routes": [],
+      "scope": "USER_DEFAULT_ZERO; INCIDENTAL_ROUTES_HAVE_NO_SCORE_OR_HEAVY_GATE_CREDIT"
     }
   ],
   "equipment_demolition": [
@@ -80170,6 +80355,29 @@
       "caveats": [
         "INSIDE_ANY_30_FROM_ARCHIVED_MISSIONS_EQUIVALENCE; CURRENT_BUG_HOLE_PAGE_OMITS_THIS_BRANCH"
       ]
+    },
+    {
+      "equipment_id": "ar_23l_liberator_legacy",
+      "name": "AR-23L “解放者”传承",
+      "state": "KNOWN_ZERO",
+      "capability": {
+        "state": "KNOWN_ZERO",
+        "qualifies": false,
+        "components": [],
+        "max_force": 10,
+        "basis": "SINGLE_COMPONENT_FORCE; DIRECT_OR_EXPLOSION_40_SUFFICIENT; NO_CROSS_HIT_SUM",
+        "scope": "STRUCTURE_ELIGIBILITY; STOCK_AND_TIMING_SEPARATE"
+      },
+      "score": 0,
+      "score_lower_bound": false,
+      "score_basis": "S_FIRST_CYCLE_HOLES_DIVIDED_BY_5; NO_LARGE_CD_REFILL; NO_SPEED_BONUS",
+      "max_demolition_force": null,
+      "candidates": [],
+      "best": null,
+      "scope": "FIVE_DISTINCT_ORDINARY_HOLES; ONE_PAID_ACTION_PER_HOLE; NO_TRAVEL_DEADLINE",
+      "caveats": [
+        "INSIDE_ANY_30_FROM_ARCHIVED_MISSIONS_EQUIVALENCE; CURRENT_BUG_HOLE_PAGE_OMITS_THIS_BRANCH"
+      ]
     }
   ],
   "pool_coverage": {
@@ -80200,19 +80408,19 @@
       "supply_vehicle_turret": false
     },
     "counts": {
-      "equipment": 200,
+      "equipment": 201,
       "three_role_calculation_ready": 164,
-      "with_unresolved_role": 36,
+      "with_unresolved_role": 37,
       "strategic_calculation_ready": 32,
-      "with_source_work": 16,
+      "with_source_work": 17,
       "heavy_with_executed_routes": 39,
       "strategic_heavy_conditionally_computed": 20,
       "demolition_with_executed_inventory": 63,
-      "demolition_known_zero": 134,
+      "demolition_known_zero": 135,
       "weapons_with_endurance_trials": 128,
-      "with_heavy_score": 184,
-      "with_endurance_score": 190,
-      "with_demolition_score": 199,
+      "with_heavy_score": 185,
+      "with_endurance_score": 191,
+      "with_demolition_score": 200,
       "with_implementation_work": 105
     },
     "equipment": [
@@ -88718,6 +88926,53 @@
         "calculation_ready": true,
         "calculation_scope": "THREE_LIGHT_MEDIUM_ROLES_ONLY; MAY_BE_LOWER_BOUND; HEAVY_AND_SHARED_STOCK_STILL_REQUIRED",
         "source_fields_to_resolve": [],
+        "implementation_bindings": [],
+        "scenario_judgments": [
+          "STABLE_AIM_AND_RANGE_CONDITIONS"
+        ],
+        "disposition": "ESTIMATE_OR_UNRESOLVED; NOT_CERTIFIED"
+      },
+      {
+        "equipment_id": "ar_23l_liberator_legacy",
+        "name": "AR-23L “解放者”传承",
+        "category": "primary",
+        "source_ref": "wiki:ar_23l_liberator_legacy@140750",
+        "role_states": {
+          "chaff": "UNRESOLVED",
+          "close_defense": "UNRESOLVED",
+          "anti_medium": "UNRESOLVED"
+        },
+        "heavy_bound_routes": {
+          "charger_behemoth": 0,
+          "bile_titan": 0,
+          "impaler": 0
+        },
+        "mechanism_states": {
+          "fragments": "NO_BOUND_FRAGMENT_COMPONENT",
+          "fire": "NO_FIRE_EFFECT",
+          "gas": "NO_GAS_EFFECT",
+          "endurance": "TOTAL_AMMO_DAMAGE"
+        },
+        "additional_dimensions": {
+          "anti_heavy": "KNOWN_ZERO",
+          "demolition": "KNOWN_ZERO",
+          "endurance_trials": 0
+        },
+        "finite_resource_accounts": [
+          {
+            "id": "ar_23l_liberator_legacy",
+            "loaded": 45,
+            "reserve": 360,
+            "renewable": false
+          }
+        ],
+        "calculation_ready": false,
+        "calculation_scope": "THREE_LIGHT_MEDIUM_ROLES_ONLY; MAY_BE_LOWER_BOUND; HEAVY_AND_SHARED_STOCK_STILL_REQUIRED",
+        "source_fields_to_resolve": [
+          "HANDLING_RECOIL_HORIZONTAL",
+          "HANDLING_RECOIL_VERTICAL",
+          "RELOAD_TIME"
+        ],
         "implementation_bindings": [],
         "scenario_judgments": [
           "STABLE_AIM_AND_RANGE_CONDITIONS"

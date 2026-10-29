@@ -126,7 +126,7 @@ test('melee has contact costs and does not use a fictional supply ammunition poo
 });
 
 test('coverage follows calculation and keeps optional mechanisms separate',()=>{
-  assert.equal(coverage.counts.equipment,200);
+  assert.equal(coverage.counts.equipment,201);
   const known=coverage.equipment.find(e=>e.equipment_id==='eagle_airstrike');
   assert.equal(known.role_states.chaff,'ENGINEERING_ESTIMATE');
   assert.ok(!known.implementation_bindings.includes('CALL_PAYLOAD_COVERAGE_AND_READINESS_TIMELINE'));

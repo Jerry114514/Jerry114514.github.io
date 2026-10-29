@@ -1,10 +1,10 @@
 {
   "schema": "hd2-wiki-import-candidate/2",
   "summary": {
-    "generated_at": "2026-10-23T09:16:12Z",
+    "generated_at": "2026-10-29T16:44:39Z",
     "covered": {
-      "total": 200,
-      "weapons": 106,
+      "total": 201,
+      "weapons": 107,
       "stratagems": 94
     },
     "added": 8,
@@ -158277,6 +158277,664 @@
       "icon": "https://helldivers.wiki.gg/images/thumb/P-44_Mist_Secondary_Render.png/600px-P-44_Mist_Secondary_Render.png?8a61cf",
       "mechanics_notes": [],
       "notes_status": "numeric_tables_imported_prose_not_copied"
+    },
+    {
+      "id": "ar_23l_liberator_legacy",
+      "kind": "weapon",
+      "category": "primary",
+      "subcategory": "assault_rifles",
+      "name_en": "AR-23L Liberator Legacy",
+      "name_zh": "AR-23L “解放者”传承",
+      "source_url": "https://helldivers.wiki.gg/wiki/AR-23L_Liberator_Legacy",
+      "page_title": "AR-23L Liberator Legacy",
+      "provenance": {
+        "api": "https://helldivers.wiki.gg/api.php",
+        "request": "https://helldivers.wiki.gg/api.php?action=parse&page=AR-23L+Liberator+Legacy&prop=text%7Crevid%7Cdisplaytitle&format=json&formatversion=2&redirects=1",
+        "fetched_at": "2026-10-29T16:44:39Z",
+        "revid": 140750,
+        "revision_timestamp": "2026-10-27T17:48:22Z",
+        "html_sha256": "e95c29a154728d5d7c3026248e9cb357e2cd8f6b3edbee1a01ee7127f7a850dc",
+        "locator": "infobox / tables[index] / attack-data-table-<type>"
+      },
+      "infobox": [
+        {
+          "section": "WeaponDetails",
+          "label": "Weapon Category",
+          "key": "weapon_category",
+          "raw": "Primary Weapons",
+          "parsed": {
+            "raw": "Primary Weapons",
+            "number": null,
+            "unit": null
+          },
+          "values": [
+            "Primary Weapons"
+          ]
+        },
+        {
+          "section": "WeaponDetails",
+          "label": "Weapon Type",
+          "key": "weapon_type",
+          "raw": "Assault Rifles",
+          "parsed": {
+            "raw": "Assault Rifles",
+            "number": null,
+            "unit": null
+          },
+          "values": [
+            "Assault Rifles"
+          ]
+        },
+        {
+          "section": "WeaponDetails",
+          "label": "Firing Modes",
+          "key": "firing_modes",
+          "raw": "Auto • Burst • Semi",
+          "parsed": {
+            "raw": "Auto • Burst • Semi",
+            "number": null,
+            "unit": null
+          },
+          "values": [
+            "Auto",
+            "Burst",
+            "Semi"
+          ]
+        },
+        {
+          "section": "WeaponDetails",
+          "label": "Traits",
+          "key": "weapon_traits",
+          "raw": "Light Armor Penetrating",
+          "parsed": {
+            "raw": "Light Armor Penetrating",
+            "number": null,
+            "unit": null
+          },
+          "values": [
+            "Light Armor Penetrating"
+          ]
+        },
+        {
+          "section": "Stats",
+          "label": "Standard Damage",
+          "key": "damage",
+          "raw": "90 Ballistic",
+          "parsed": {
+            "raw": "90 Ballistic",
+            "number": 90,
+            "unit": "Ballistic"
+          },
+          "values": [
+            "90 Ballistic"
+          ]
+        },
+        {
+          "section": "Stats",
+          "label": "Armor Penetration",
+          "key": "penetration",
+          "raw": "Light",
+          "parsed": {
+            "raw": "Light",
+            "number": null,
+            "unit": null
+          },
+          "values": [
+            "Light"
+          ]
+        },
+        {
+          "section": "Stats",
+          "label": "Fire Rate",
+          "key": "fire_rate",
+          "raw": "660 rpm",
+          "parsed": {
+            "raw": "660 rpm",
+            "number": 660,
+            "unit": "rpm"
+          },
+          "values": [
+            "660 rpm"
+          ]
+        },
+        {
+          "section": "Stats",
+          "label": "DPS",
+          "key": "dps",
+          "raw": "990",
+          "parsed": {
+            "raw": "990",
+            "number": 990,
+            "unit": null
+          },
+          "values": [
+            "990"
+          ]
+        },
+        {
+          "section": "Ammo",
+          "label": "Capacity",
+          "key": "capacity",
+          "raw": "45",
+          "parsed": {
+            "raw": "45",
+            "number": 45,
+            "unit": null
+          },
+          "values": [
+            "45"
+          ]
+        },
+        {
+          "section": "Ammo",
+          "label": "Spare Mags",
+          "key": "spare_mags",
+          "raw": "8",
+          "parsed": {
+            "raw": "8",
+            "number": 8,
+            "unit": null
+          },
+          "values": [
+            "8"
+          ]
+        },
+        {
+          "section": "Ammo",
+          "label": "Supply Box Refill",
+          "key": "supply_box_refill",
+          "raw": "8",
+          "parsed": {
+            "raw": "8",
+            "number": 8,
+            "unit": null
+          },
+          "values": [
+            "8"
+          ]
+        },
+        {
+          "section": "Ammo",
+          "label": "Ammo Box Refill",
+          "key": "ammo_box_refill",
+          "raw": "4",
+          "parsed": {
+            "raw": "4",
+            "number": 4,
+            "unit": null
+          },
+          "values": [
+            "4"
+          ]
+        },
+        {
+          "section": "Handling",
+          "label": "Ergonomics",
+          "key": "ergonomics",
+          "raw": "60",
+          "parsed": {
+            "raw": "60",
+            "number": 60,
+            "unit": null
+          },
+          "values": [
+            "60"
+          ]
+        },
+        {
+          "section": "Handling",
+          "label": "Recoil",
+          "key": "recoil",
+          "raw": "14",
+          "parsed": {
+            "raw": "14",
+            "number": 14,
+            "unit": null
+          },
+          "values": [
+            "14"
+          ]
+        },
+        {
+          "section": "Procurement",
+          "label": "Source",
+          "key": "source",
+          "raw": "Liberty Day 2186",
+          "parsed": {
+            "raw": "Liberty Day 2186",
+            "number": 2186,
+            "unit": null
+          },
+          "values": [
+            "Liberty Day 2186"
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "index": 1,
+          "kind": "weapon_stats",
+          "classes": "wikitable tableleftjustified Secondcolumnright table-weapon-stats attack-data-table-weapon",
+          "id": null,
+          "context_heading": "Detailed_Weapon_Statistics",
+          "title": "AR-23L LIBERATOR LEGACY",
+          "attack_type": null,
+          "type_label": null,
+          "column_header": null,
+          "rows": [
+            {
+              "section": null,
+              "label": "Fire Rate",
+              "key": "fire_rate",
+              "raw": "660 rpm",
+              "parsed": {
+                "raw": "660 rpm",
+                "number": 660,
+                "unit": "rpm"
+              },
+              "values": [
+                "660 rpm"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Drift Recoil",
+              "key": "drift_recoil",
+              "raw": "↔[10.00] ↕[13.00]",
+              "parsed": {
+                "raw": "↔[10.00] ↕[13.00]",
+                "number": 10,
+                "unit": null
+              },
+              "values": [
+                "↔[10.00] ↕[13.00]"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Climb Recoil",
+              "key": "climb_recoil",
+              "raw": "↔[7.00] ↕[26.00]",
+              "parsed": {
+                "raw": "↔[7.00] ↕[26.00]",
+                "number": 7,
+                "unit": null
+              },
+              "values": [
+                "↔[7.00] ↕[26.00]"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Spread",
+              "key": "spread",
+              "raw": "↔[2.00] ↕[2.00]",
+              "parsed": {
+                "raw": "↔[2.00] ↕[2.00]",
+                "number": 2,
+                "unit": null
+              },
+              "values": [
+                "↔[2.00] ↕[2.00]"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Base Sway",
+              "key": "sway",
+              "raw": "1",
+              "parsed": {
+                "raw": "1",
+                "number": 1,
+                "unit": null
+              },
+              "values": [
+                "1"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Base Ergonomics",
+              "key": "ergonomics",
+              "raw": "60",
+              "parsed": {
+                "raw": "60",
+                "number": 60,
+                "unit": null
+              },
+              "values": [
+                "60"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Noise When Firing",
+              "key": "noise",
+              "raw": "Medium (~48m)",
+              "parsed": {
+                "raw": "Medium (~48m)",
+                "number": 48,
+                "unit": null
+              },
+              "values": [
+                "Medium (~48m)"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Capacity",
+              "key": "capacity",
+              "raw": "45",
+              "parsed": {
+                "raw": "45",
+                "number": 45,
+                "unit": null
+              },
+              "values": [
+                "45"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Spare Magazines",
+              "key": "spare_magazines",
+              "raw": "8",
+              "parsed": {
+                "raw": "8",
+                "number": 8,
+                "unit": null
+              },
+              "values": [
+                "8"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Starting Magazines",
+              "key": "starting_magazines",
+              "raw": "6",
+              "parsed": {
+                "raw": "6",
+                "number": 6,
+                "unit": null
+              },
+              "values": [
+                "6"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Mags from Supply",
+              "key": "mags_from_supply",
+              "raw": "8",
+              "parsed": {
+                "raw": "8",
+                "number": 8,
+                "unit": null
+              },
+              "values": [
+                "8"
+              ]
+            },
+            {
+              "section": null,
+              "label": "Mags from Ammo Box",
+              "key": "mags_from_ammo_box",
+              "raw": "4",
+              "parsed": {
+                "raw": "4",
+                "number": 4,
+                "unit": null
+              },
+              "values": [
+                "4"
+              ]
+            },
+            {
+              "section": null,
+              "label": "* AR-23 P",
+              "key": "ar_23_p",
+              "raw": "Projectile",
+              "parsed": {
+                "raw": "Projectile",
+                "number": null,
+                "unit": null
+              },
+              "values": [
+                "Projectile"
+              ]
+            }
+          ],
+          "remote_targets": [
+            "AR-23_P"
+          ]
+        },
+        {
+          "index": 2,
+          "kind": "attack_projectile",
+          "classes": "wikitable tableleftjustified Secondcolumnright table-weapon-stats attack-data-table-projectile",
+          "id": "AR-23_P",
+          "context_heading": "Detailed_Weapon_Statistics",
+          "title": "AR-23 P",
+          "attack_type": "projectile",
+          "type_label": "projectile",
+          "column_header": null,
+          "rows": [
+            {
+              "section": "Projectile",
+              "label": "Size",
+              "key": "size",
+              "raw": "5.5 mm",
+              "parsed": {
+                "raw": "5.5 mm",
+                "number": 5.5,
+                "unit": "mm"
+              },
+              "values": [
+                "5.5 mm"
+              ]
+            },
+            {
+              "section": "Projectile",
+              "label": "Mass",
+              "key": "mass",
+              "raw": "4.5 g",
+              "parsed": {
+                "raw": "4.5 g",
+                "number": 4.5,
+                "unit": "g"
+              },
+              "values": [
+                "4.5 g"
+              ]
+            },
+            {
+              "section": "Projectile",
+              "label": "Initial Velocity",
+              "key": "initial_velocity",
+              "raw": "900 m/s",
+              "parsed": {
+                "raw": "900 m/s",
+                "number": 900,
+                "unit": "m/s"
+              },
+              "values": [
+                "900 m/s"
+              ]
+            },
+            {
+              "section": "Projectile",
+              "label": "Drag Factor",
+              "key": "drag_factor",
+              "raw": "30%",
+              "parsed": {
+                "raw": "30%",
+                "number": 30,
+                "unit": null
+              },
+              "values": [
+                "30%"
+              ]
+            },
+            {
+              "section": "Projectile",
+              "label": "Gravity Factor",
+              "key": "gravity_factor",
+              "raw": "100%",
+              "parsed": {
+                "raw": "100%",
+                "number": 100,
+                "unit": null
+              },
+              "values": [
+                "100%"
+              ]
+            },
+            {
+              "section": "Projectile",
+              "label": "Penetration Slowdown",
+              "key": "penetration_slowdown",
+              "raw": "25%",
+              "parsed": {
+                "raw": "25%",
+                "number": 25,
+                "unit": null
+              },
+              "values": [
+                "25%"
+              ]
+            },
+            {
+              "section": "Damage",
+              "label": "Standard",
+              "key": "damage_standard",
+              "raw": "90 Ballistic",
+              "parsed": {
+                "raw": "90 Ballistic",
+                "number": 90,
+                "unit": "Ballistic"
+              },
+              "values": [
+                "90 Ballistic"
+              ]
+            },
+            {
+              "section": "Damage",
+              "label": "vs. Durable",
+              "key": "damage_durable",
+              "raw": "22 Ballistic",
+              "parsed": {
+                "raw": "22 Ballistic",
+                "number": 22,
+                "unit": "Ballistic"
+              },
+              "values": [
+                "22 Ballistic"
+              ]
+            },
+            {
+              "section": "Penetration",
+              "label": "Direct",
+              "key": "pen_direct",
+              "raw": "Light",
+              "parsed": {
+                "raw": "Light",
+                "number": null,
+                "unit": null
+              },
+              "values": [
+                "Light"
+              ]
+            },
+            {
+              "section": "Penetration",
+              "label": "Slight Angle",
+              "key": "pen_slight_angle",
+              "raw": "Light",
+              "parsed": {
+                "raw": "Light",
+                "number": null,
+                "unit": null
+              },
+              "values": [
+                "Light"
+              ]
+            },
+            {
+              "section": "Penetration",
+              "label": "Large Angle",
+              "key": "pen_large_angle",
+              "raw": "Light",
+              "parsed": {
+                "raw": "Light",
+                "number": null,
+                "unit": null
+              },
+              "values": [
+                "Light"
+              ]
+            },
+            {
+              "section": "Penetration",
+              "label": "Extreme Angle",
+              "key": "pen_extreme_angle",
+              "raw": "Unarmored",
+              "parsed": {
+                "raw": "Unarmored",
+                "number": null,
+                "unit": null
+              },
+              "values": [
+                "Unarmored"
+              ]
+            },
+            {
+              "section": "Special Effects",
+              "label": "Demolition Force",
+              "key": "demolition_force",
+              "raw": "10",
+              "parsed": {
+                "raw": "10",
+                "number": 10,
+                "unit": null
+              },
+              "values": [
+                "10"
+              ]
+            },
+            {
+              "section": "Special Effects",
+              "label": "Stagger Force",
+              "key": "stagger_force",
+              "raw": "15",
+              "parsed": {
+                "raw": "15",
+                "number": 15,
+                "unit": null
+              },
+              "values": [
+                "15"
+              ]
+            },
+            {
+              "section": "Special Effects",
+              "label": "Push Force",
+              "key": "push_force",
+              "raw": "10",
+              "parsed": {
+                "raw": "10",
+                "number": 10,
+                "unit": null
+              },
+              "values": [
+                "10"
+              ]
+            }
+          ],
+          "remote_targets": []
+        }
+      ],
+      "mechanics_notes": []
     }
   ],
   "baseline_summary": {
@@ -158343,10 +159001,12 @@
     }
   },
   "incremental_summary": {
-    "generated_at": "2026-10-23T09:16:12Z",
-    "baseline": 192,
-    "added": 8,
-    "total": 200,
-    "user_excluded_id": "vehicle_m_104_incinerator_fast_recon_vehicle"
+    "generated_at": "2026-10-29T16:44:39Z",
+    "baseline": 201,
+    "added": 0,
+    "total": 201,
+    "imported": [
+      "ar_23l_liberator_legacy"
+    ]
   }
 }

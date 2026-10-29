@@ -26,19 +26,19 @@
     "supply_vehicle_turret": false
   },
   "counts": {
-    "equipment": 200,
+    "equipment": 201,
     "three_role_calculation_ready": 164,
-    "with_unresolved_role": 36,
+    "with_unresolved_role": 37,
     "strategic_calculation_ready": 32,
-    "with_source_work": 16,
+    "with_source_work": 17,
     "heavy_with_executed_routes": 39,
     "strategic_heavy_conditionally_computed": 20,
     "demolition_with_executed_inventory": 63,
-    "demolition_known_zero": 134,
+    "demolition_known_zero": 135,
     "weapons_with_endurance_trials": 128,
-    "with_heavy_score": 184,
-    "with_endurance_score": 190,
-    "with_demolition_score": 199,
+    "with_heavy_score": 185,
+    "with_endurance_score": 191,
+    "with_demolition_score": 200,
     "with_implementation_work": 105
   },
   "equipment": [
@@ -8544,6 +8544,53 @@
       "calculation_ready": true,
       "calculation_scope": "THREE_LIGHT_MEDIUM_ROLES_ONLY; MAY_BE_LOWER_BOUND; HEAVY_AND_SHARED_STOCK_STILL_REQUIRED",
       "source_fields_to_resolve": [],
+      "implementation_bindings": [],
+      "scenario_judgments": [
+        "STABLE_AIM_AND_RANGE_CONDITIONS"
+      ],
+      "disposition": "ESTIMATE_OR_UNRESOLVED; NOT_CERTIFIED"
+    },
+    {
+      "equipment_id": "ar_23l_liberator_legacy",
+      "name": "AR-23L “解放者”传承",
+      "category": "primary",
+      "source_ref": "wiki:ar_23l_liberator_legacy@140750",
+      "role_states": {
+        "chaff": "UNRESOLVED",
+        "close_defense": "UNRESOLVED",
+        "anti_medium": "UNRESOLVED"
+      },
+      "heavy_bound_routes": {
+        "charger_behemoth": 0,
+        "bile_titan": 0,
+        "impaler": 0
+      },
+      "mechanism_states": {
+        "fragments": "NO_BOUND_FRAGMENT_COMPONENT",
+        "fire": "NO_FIRE_EFFECT",
+        "gas": "NO_GAS_EFFECT",
+        "endurance": "TOTAL_AMMO_DAMAGE"
+      },
+      "additional_dimensions": {
+        "anti_heavy": "KNOWN_ZERO",
+        "demolition": "KNOWN_ZERO",
+        "endurance_trials": 0
+      },
+      "finite_resource_accounts": [
+        {
+          "id": "ar_23l_liberator_legacy",
+          "loaded": 45,
+          "reserve": 360,
+          "renewable": false
+        }
+      ],
+      "calculation_ready": false,
+      "calculation_scope": "THREE_LIGHT_MEDIUM_ROLES_ONLY; MAY_BE_LOWER_BOUND; HEAVY_AND_SHARED_STOCK_STILL_REQUIRED",
+      "source_fields_to_resolve": [
+        "HANDLING_RECOIL_HORIZONTAL",
+        "HANDLING_RECOIL_VERTICAL",
+        "RELOAD_TIME"
+      ],
       "implementation_bindings": [],
       "scenario_judgments": [
         "STABLE_AIM_AND_RANGE_CONDITIONS"

@@ -38,7 +38,7 @@ test('real worker loads only current model, draws, replaces without scores and c
   const h=harness();try{
     await h.wait(m=>m.type==='boot');h.post({type:'init',request_id:1});
     const ready=await h.wait(m=>m.type==='ready'&&m.request_id===1);
-    assert.equal(ready.integration.assessment.ready,true);assert.equal(ready.catalog.equipment.length,200);
+    assert.equal(ready.integration.assessment.ready,true);assert.equal(ready.catalog.equipment.length,201);
     assert.deepEqual(h.messages.filter(m=>m.type==='fetch').map(m=>m.url.split('/').pop()).sort(),['catalog.json','equipment.json']);
     assert.ok(h.messages.filter(m=>m.type==='fetch').every(m=>m.cache==='no-cache'));
     h.post({type:'start',request_id:2,model_hash:ready.model_hash,options:{mode:'assessment',seed:42}});
