@@ -82,8 +82,8 @@ class ApiChangeDetectionTests(unittest.TestCase):
             "2026-10-28T00:00:00Z",
             [],
         )
-        self.assertIn("NEW GALACTIC EFFECTS", report)
-        self.assertIn("Adds a combatant force", report)
+        self.assertIn("新增的银河效果", report)
+        self.assertIn("增加作战兵力", report)
 
     def test_invalid_empty_effect_payload_is_rejected(self):
         with self.assertRaises(ValueError):

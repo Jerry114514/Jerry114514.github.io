@@ -134,11 +134,13 @@ KNOWN = {
              "（2026-09-22 补录 2 条 → 91；2026-09-23 补录 12 条 → 103；"
              "新条目沿用既有热链约定，本地化迁移时本条与 §8 一并撤掉）"),
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/stratagems_full.json"): (
-        115, "SCHEMA §8：stratagems_full.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"
+        117, "SCHEMA §8：stratagems_full.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"
              "（2026-09-23 补录 6 条：CQC-20 / CQC-9 / TD-110 / M-104 + 民用 2 条 → 115；"
+             "2026-10-30 补录 2 条：AMW-20 Apex / LAS-44 Nova → 117；"
              "新条目沿用既有热链约定，本地化迁移时本条与 §8 一并撤掉）"),
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/loadout.json"): (
-        89, "SCHEMA §8：loadout.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"),
+        91, "SCHEMA §8：loadout.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"
+             "（2026-10-30 补录 2 条：AMW-20 尖峰 / LAS-44 新星 → 91）"),
     ("IMG.HOTLINK", "HD2_Wiki/data/wiki/zh/missions.json"): (
         104, "SCHEMA §8：missions.json 的 icon 仍引 wiki.gg 绝对 URL，登记为「未迁移」"),
     ("ID.UNIQUE", "HD2_Wiki/data/wiki/zh/missions.json"): (
