@@ -44,6 +44,18 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
 
+      # API 不提供浏览器跨域读取；仅补取站点缺失的简中公告，由战报同源读取。
+      - name: Fetch missing Simplified Chinese report dispatches
+        run: python scripts/fetch_report_dispatches.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Fetch report 24-hour baseline from site history
+        run: python scripts/fetch_report_baseline.py
+        env:
+          PYTHONIOENCODING: utf-8
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # 实测帧缓存（2026-09-29）：站点 js/rate-source.js 读 HD2-Galatic_war-Map/data/recent/
       # 里的社区 CDN 15 分钟帧来算「实测速率」（星球四件套 / 城市四项 / MO 预期进度）。
       # 这份缓存不在仓库里时，Pages 上所有卡片都会退回推演、角标写「推演 · 无实测帧」。
@@ -107,6 +119,9 @@ jobs:
           git config user.name "Jerry Jiang"
           git config user.email "69064950+Jerry114514@users.noreply.github.com"
           git add HD2-Galatic_war-Map/data.json
+          git add HD2-Galatic_war-Map/data/translated/report_dispatches_zh.json
+          git add HD2-Galatic_war-Map/data/planet_environment.json
+          git add HD2-Galatic_war-Map/data/history/status_24h.json
           git add HD2-Galatic_war-Map/data/history/player_distribution.json
           git add HD2-Galatic_war-Map/data/recent
           # API 内容侦测状态与最近一次变化报告：基线有变化才重写。

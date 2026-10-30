@@ -1155,6 +1155,20 @@ def biome_name_of(planet: dict) -> str:
     return ""
 
 
+def report_environment_profiles(planets):
+    """复用本轮已取到的星球资料，给静态战报保留生态与环境，不额外请求 API。"""
+    profiles = {}
+    for planet in planets:
+        index = planet.get("index")
+        if not isinstance(index, int):
+            continue
+        hazards = planet.get("hazards")
+        names = [h.get("name") if isinstance(h, dict) else h for h in hazards] if isinstance(hazards, list) else None
+        profiles[str(index)] = {"biome": biome_name_of(planet),
+                                "hazards": [name for name in names if isinstance(name, str) and name] if names is not None else None}
+    return profiles
+
+
 def fetch_hd2dev():
     war = fetch_json(f"{HD2DEV}/war", HEADERS_HD2DEV, 25)
     planets = fetch_json(f"{HD2DEV}/planets", HEADERS_HD2DEV, 25)
@@ -1386,6 +1400,13 @@ def main():
             biome_n += 1
         else:
             p.setdefault("biome", "")
+    if hd2dev_map:
+        try:
+            write_json_atomic(os.path.join(SITE_ROOT, "HD2-Galatic_war-Map", "data", "planet_environment.json"),
+                              {"fetchedAt": now_cn(), "source": f"{HD2DEV}/planets",
+                               "planets": report_environment_profiles(hd2dev_map.values())})
+        except OSError as error:
+            print(f"  [WARN] 战报环境缓存未更新，保留已有文件：{error}")
     if biome_n:
         extra = f"（其中 {biome_fb} 颗来自本地对照表兜底）" if biome_fb else ""
         print(f"  [OK] biome 字段补全 {biome_n} 颗星球{extra}")
