@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-03T12:53:02Z",
-  "source": "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径",
+  "updated_at": "2026-10-30T11:35:50Z",
+  "source": "合并自 HD2-Galatic_war-Map/tables/starmap.json、HD2-Galatic_war-Map/index.html#BUILTIN_PLANET_CN、HD2-Galatic_war-Map/tables/hd2_variables.json、HD2-Galatic_war-Map/tables/HD2行动变量对照表.md、HD2_Wiki/data/wiki/zh 各数据集（weapons/enemies/stratagems_full/boosters/warbonds/missions/factions/ds_terms）、既有译文中已确认的口径；中文名称按《绝地潜兵2游戏内文本-20261020解包》校正",
   "total": 1706,
   "terms": [
     {
@@ -2099,13 +2099,13 @@
     },
     {
       "en": "ACAMAR IV",
-      "zh": "天园六 IV",
+      "zh": "天园六IV",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Acclimated",
-      "zh": "适应",
+      "zh": "应变自如",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
     },
@@ -2117,7 +2117,7 @@
     },
     {
       "en": "ACHIRD III",
-      "zh": "王良三 III",
+      "zh": "王良三III",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -2130,31 +2130,31 @@
     },
     {
       "en": "ACRAB XI",
-      "zh": "房宿四 XI",
+      "zh": "房宿四XI",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "ACRUX IX",
-      "zh": "十字架二 IX",
+      "zh": "十字架二IX",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Activate Oil Pumps",
-      "zh": "启动石油泵",
+      "zh": "启动油泵",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Activate TCS+ Station",
-      "zh": "激活 TCS+ 站点",
+      "zh": "启动TCS+站",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Activate Terminid Control System",
-      "zh": "激活终结族控制系统",
+      "zh": "启动终结族遏制体系",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -2172,7 +2172,7 @@
     },
     {
       "en": "Advanced Filtration",
-      "zh": "高级过滤",
+      "zh": "高级过滤能力",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
     },
@@ -2196,7 +2196,7 @@
     },
     {
       "en": "AIN-5",
-      "zh": "毕宿一 5",
+      "zh": "毕宿一5",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -2208,13 +2208,13 @@
     },
     {
       "en": "ALAIRT III",
-      "zh": "艾列尔特 III",
+      "zh": "艾列尔特III",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "ALAMAK VII",
-      "zh": "天大将军一 VII",
+      "zh": "天大将军一VII",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -2226,7 +2226,7 @@
     },
     {
       "en": "ALATHFAR XI",
-      "zh": "织女增三 XI",
+      "zh": "织女增三XI",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -2292,7 +2292,7 @@
     },
     {
       "en": "Annex Untapped Mineral Sites",
-      "zh": "吞并未开采矿区",
+      "zh": "吞并未开发的矿点",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
@@ -2316,7 +2316,7 @@
     },
     {
       "en": "Anti-Air Emplacement",
-      "zh": "防空阵地",
+      "zh": "防空炮台",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -2467,7 +2467,7 @@
     },
     {
       "en": "Arkturus",
-      "zh": "阿图里昂",
+      "zh": "阿克图勒斯",
       "source": "口径（星图 canonical）",
       "note": "星区（starmap systems.name_en）；同星区的行星 ARKTURUS 作「阿克图勒斯」；同形异义（大小写区分）：ARKTURUS=阿克图勒斯"
     },
@@ -2545,7 +2545,7 @@
     },
     {
       "en": "Assault Raider",
-      "zh": "突击奇袭者",
+      "zh": "特攻奇袭者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -2773,7 +2773,7 @@
     },
     {
       "en": "Barrager Tank",
-      "zh": "弹幕坦克",
+      "zh": "铁幕坦克",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -2791,13 +2791,13 @@
     },
     {
       "en": "BASQUINE VIII",
-      "zh": "巴斯金 VIII",
+      "zh": "巴斯金VIII",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "BEKVAM III",
-      "zh": "贝克温",
+      "zh": "贝克温III",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -2983,7 +2983,7 @@
     },
     {
       "en": "Brood Commander",
-      "zh": "虫群指挥官",
+      "zh": "虫族指挥官",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -3163,7 +3163,7 @@
     },
     {
       "en": "CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY",
-      "zh": "平民监控与安全中心",
+      "zh": "公民监控和安全中心",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -3181,7 +3181,7 @@
     },
     {
       "en": "CHARBAL-VII",
-      "zh": "查巴尔 VII",
+      "zh": "查巴尔VII",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -3193,7 +3193,7 @@
     },
     {
       "en": "Charger Behemoth",
-      "zh": "巨兽强袭虫",
+      "zh": "巨兽级强袭虫",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -3205,7 +3205,7 @@
     },
     {
       "en": "Chart Terminid Tunnels",
-      "zh": "测绘终结族隧道",
+      "zh": "绘制终结族隧道网络",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -3235,7 +3235,7 @@
     },
     {
       "en": "CHOEPESSA IV",
-      "zh": "科埃佩萨 IV",
+      "zh": "科埃佩萨IV",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -3265,7 +3265,7 @@
     },
     {
       "en": "CLAORELL",
-      "zh": "可洛威尔",
+      "zh": "可洛尔",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -3283,7 +3283,7 @@
     },
     {
       "en": "Cleanse Infested District",
-      "zh": "净化感染区域",
+      "zh": "净化侵染区域",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -3403,13 +3403,13 @@
     },
     {
       "en": "Cognitive Disruptor",
-      "zh": "认知干扰器",
+      "zh": "感知干扰器",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
     {
       "en": "Collect Gloom Spore Readings",
-      "zh": "收集阴霾孢子读数",
+      "zh": "收集“阴霾”孢子数据",
       "source": "missions.json",
       "note": "任务 · Terminid Specific",
       "rejected": [
@@ -3422,7 +3422,7 @@
     },
     {
       "en": "Collect Gloom-Infused Oil",
-      "zh": "收集阴霾浸润石油",
+      "zh": "采集“阴霾”污染的原油",
       "source": "missions.json",
       "note": "任务 · Terminid Specific",
       "rejected": [
@@ -3471,7 +3471,7 @@
     },
     {
       "en": "Compromise Automaton Defenses",
-      "zh": "削弱机器人防御",
+      "zh": "破坏机器人的防御系统",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -3483,13 +3483,13 @@
     },
     {
       "en": "Conduct Geological Survey",
-      "zh": "进行地质勘探",
+      "zh": "开展地质调查",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
     {
       "en": "Conduct Mobile E-711 Extraction",
-      "zh": "进行移动式 E-711 提取",
+      "zh": "移动式提取711元素",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -3501,7 +3501,7 @@
     },
     {
       "en": "Conflagration Devastator",
-      "zh": "炽灼蹂躏者",
+      "zh": "烈火蹂躏者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -3585,7 +3585,7 @@
     },
     {
       "en": "Crescent Overseer",
-      "zh": "新月监察者",
+      "zh": "新月监视者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -3669,13 +3669,13 @@
     },
     {
       "en": "DARIUS II",
-      "zh": "大流士 II",
+      "zh": "大流士II",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Dark Fluid Vessel",
-      "zh": "暗流容器",
+      "zh": "暗液体容器",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -3705,7 +3705,7 @@
     },
     {
       "en": "Deactivate Terminid Control System",
-      "zh": "关闭终结族控制系统",
+      "zh": "关闭终结族遏制体系",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -3717,13 +3717,13 @@
     },
     {
       "en": "Deep Mantle Forge Complex",
-      "zh": "深地幔锻造综合体",
+      "zh": "深部地幔铸造复合体",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
     {
       "en": "DEFENSE CAMPAIGN",
-      "zh": "入侵战役",
+      "zh": "保卫战役",
       "source": "hd2_variables.json",
       "note": "行动变量分类"
     },
@@ -3747,7 +3747,7 @@
     },
     {
       "en": "Democratize the Void",
-      "zh": "使虚空民主化",
+      "zh": "民主解放寂域",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
@@ -3785,25 +3785,25 @@
     },
     {
       "en": "Deploy Dark Fluid",
-      "zh": "部署暗流体",
+      "zh": "部署暗液体",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Desert Stormer",
-      "zh": "沙漠风暴",
+      "zh": "沙漠突击者",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
     },
     {
       "en": "Destroy Command Bunkers",
-      "zh": "摧毁指挥地堡",
+      "zh": "摧毁指挥碉堡",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
     {
       "en": "Destroy Exospire",
-      "zh": "摧毁外泄塔",
+      "zh": "摧毁异界尖塔",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
@@ -3815,7 +3815,7 @@
     },
     {
       "en": "Destroy Harvesters",
-      "zh": "摧毁收割者",
+      "zh": "摧毁猎杀器",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
@@ -3827,13 +3827,13 @@
     },
     {
       "en": "Destroy Rogue Research Station",
-      "zh": "摧毁失控研究站",
+      "zh": "摧毁叛变科研站",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
     {
       "en": "Destroy Spore Lung",
-      "zh": "摧毁孢子肺",
+      "zh": "摧毁孢肺",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -3845,7 +3845,7 @@
     },
     {
       "en": "Detector Tower",
-      "zh": "侦测塔",
+      "zh": "探测塔",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -3857,7 +3857,7 @@
     },
     {
       "en": "Devastator Surge",
-      "zh": "歼灭者狂潮",
+      "zh": "蹂躏者激增",
       "source": "hd2_variables.json",
       "note": "机器人辅助军团 · 行动变量"
     },
@@ -3995,7 +3995,7 @@
     },
     {
       "en": "Eagle Airstrike",
-      "zh": "飞鹰空袭",
+      "zh": "“飞鹰”空袭",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -4013,31 +4013,31 @@
     },
     {
       "en": "Eagle Cluster Bomb",
-      "zh": "飞鹰集束炸弹",
+      "zh": "“飞鹰”集束炸弹",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Eagle Gas Airstrike",
-      "zh": "飞鹰毒气攻击",
+      "zh": "“飞鹰”毒气空袭",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Eagle Napalm Airstrike",
-      "zh": "飞鹰凝固汽油弹空袭",
+      "zh": "“飞鹰”凝固汽油弹空袭",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Eagle Rearm",
-      "zh": "飞鹰重新装填",
+      "zh": "重新武装“飞鹰”",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Eagle Smoke Strike",
-      "zh": "飞鹰烟雾攻击",
+      "zh": "“飞鹰”烟雾攻击",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -4049,7 +4049,7 @@
     },
     {
       "en": "Eagle Strafing Run",
-      "zh": "飞鹰机枪扫射",
+      "zh": "“飞鹰”机枪扫射",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -4127,13 +4127,13 @@
     },
     {
       "en": "ELECTRA BAY",
-      "zh": "昂宿一湾",
+      "zh": "昴宿一湾",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Electrical Conduit",
-      "zh": "电流导管",
+      "zh": "电路导管",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
     },
@@ -4145,19 +4145,19 @@
     },
     {
       "en": "Elevated Overseer",
-      "zh": "悬浮监察者",
+      "zh": "崇高监视者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
     {
       "en": "Eliminate Automaton Factory Strider",
-      "zh": "消灭移动工厂",
+      "zh": "消灭机器人移动工厂",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
     {
       "en": "Eliminate Automaton Hulks",
-      "zh": "消灭巨型者",
+      "zh": "消灭机器人巨型者",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
@@ -4169,7 +4169,7 @@
     },
     {
       "en": "Eliminate Brood Commanders",
-      "zh": "消灭巢群指挥官",
+      "zh": "消灭虫族指挥官",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -4181,13 +4181,13 @@
     },
     {
       "en": "Eliminate Devastators",
-      "zh": "消灭破坏者",
+      "zh": "消灭蹂躏者",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
     {
       "en": "Eliminate Impaler",
-      "zh": "消灭穿刺者",
+      "zh": "消灭穿刺虫",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -4259,7 +4259,7 @@
     },
     {
       "en": "Enable Oil Extraction",
-      "zh": "启用石油开采",
+      "zh": "设法采油",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -4289,37 +4289,37 @@
     },
     {
       "en": "EPSILON PHOENCIS VI",
-      "zh": "厄普西隆VI",
+      "zh": "艾普斯林芬赛斯VI",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Eradicate Automaton Forces",
-      "zh": "歼灭机器人部队",
+      "zh": "彻底消灭机器人部队",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
     {
       "en": "Eradicate Illuminate Forces",
-      "zh": "歼灭光能者部队",
+      "zh": "彻底消灭光能者部队",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
     {
       "en": "Eradicate Terminid Swarm",
-      "zh": "歼灭终结族虫群",
+      "zh": "彻底清除终结族虫群",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Erase Terrorist Memorials",
-      "zh": "抹除恐怖分子纪念物",
+      "zh": "推倒恐怖分子纪念碑",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
     {
       "en": "ERATA PRIME",
-      "zh": "艾拉塔主星",
+      "zh": "艾拉特主星",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -4337,7 +4337,7 @@
     },
     {
       "en": "ESKER",
-      "zh": "艾斯科尔",
+      "zh": "艾斯克尔",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -4361,25 +4361,25 @@
     },
     {
       "en": "EUPHORIA III",
-      "zh": "欧福利亚 III",
+      "zh": "欧福利亚III",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "Evacuate Colonists",
-      "zh": "撤离殖民者",
+      "zh": "撤离拓殖地居民",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
     {
       "en": "Evacuate High-Value Assets",
-      "zh": "撤离高价值资产",
+      "zh": "疏散高价值目标",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
     {
       "en": "Exo Experts",
-      "zh": "外骨骼机甲专家",
+      "zh": "外骨骼装甲专家",
       "source": "warbonds.json",
       "note": "战争债券"
     },
@@ -4439,7 +4439,7 @@
     },
     {
       "en": "Experimental Infusion",
-      "zh": "实验性注射剂",
+      "zh": "试验性注射剂",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -4493,13 +4493,13 @@
     },
     {
       "en": "Extract E-711",
-      "zh": "提取 E-711",
+      "zh": "提取711元素",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Extract Research Probe Data",
-      "zh": "提取科研探测器数据",
+      "zh": "提取研究探测仪数据",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -4511,7 +4511,7 @@
     },
     {
       "en": "EXTREME COLD",
-      "zh": "夜间极寒",
+      "zh": "极寒",
       "source": "hd2_variables.json",
       "note": "环境条件 · 行动变量"
     },
@@ -4583,7 +4583,7 @@
     },
     {
       "en": "FENRIR III",
-      "zh": "芬里尔 III",
+      "zh": "芬里尔III",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -4626,7 +4626,7 @@
     },
     {
       "en": "FIRE TORNADOES",
-      "zh": "火龙卷",
+      "zh": "烈焰龙卷",
       "source": "hd2_variables.json",
       "note": "环境条件 · 行动变量"
     },
@@ -4638,7 +4638,7 @@
     },
     {
       "en": "Firebomb Hellpods",
-      "zh": "火焰炸弹绝地喷射仓",
+      "zh": "火焰炸弹绝地喷射舱",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -4734,7 +4734,7 @@
     },
     {
       "en": "Fortified",
-      "zh": "固守",
+      "zh": "强化",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；此前仅 mechanics/damage_zh.json 正文使用「固守」，本轮一并回填术语表"
     },
@@ -4758,7 +4758,7 @@
     },
     {
       "en": "Free Colony",
-      "zh": "解放殖民地",
+      "zh": "解放拓殖地",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
@@ -5413,7 +5413,7 @@
     },
     {
       "en": "Gunship Facility",
-      "zh": "炮艇设施",
+      "zh": "炮舰设施",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -5449,7 +5449,7 @@
     },
     {
       "en": "Halt Cyborg Production",
-      "zh": "阻止生化人生产",
+      "zh": "使生化人停产",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
@@ -5529,7 +5529,7 @@
     },
     {
       "en": "Heavy Armor Surge",
-      "zh": "巨型者狂潮",
+      "zh": "重甲敌军激增",
       "source": "hd2_variables.json",
       "note": "机器人辅助军团 · 行动变量"
     },
@@ -5553,7 +5553,7 @@
     },
     {
       "en": "Hellbomb",
-      "zh": "地狱炸弹",
+      "zh": "地狱火炸弹",
       "source": "ds_terms.json",
       "note": "游戏内文本替换表"
     },
@@ -5565,7 +5565,7 @@
     },
     {
       "en": "HELLDIVER TRAINING FACILITIES",
-      "zh": "绝地潜兵训练设施",
+      "zh": "绝地潜兵训练基地",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -5583,7 +5583,7 @@
     },
     {
       "en": "Hellpod Space Optimization",
-      "zh": "绝地喷射仓空间优化",
+      "zh": "绝地喷射舱空间优化",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -5607,7 +5607,7 @@
     },
     {
       "en": "HEZE BAY",
-      "zh": "九州殊口增七",
+      "zh": "角宿二湾",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -5631,13 +5631,13 @@
     },
     {
       "en": "Hive Breaker Drill",
-      "zh": "巢穴破坏钻机",
+      "zh": "“虫窝破裂者”钻机",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Hive Guard",
-      "zh": "虫巢守卫",
+      "zh": "虫窝护卫",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -5649,7 +5649,7 @@
     },
     {
       "en": "HIVE WORLD",
-      "zh": "巢穴世界",
+      "zh": "虫窝世界",
       "source": "hd2_variables.json",
       "note": "深域惧像 · 行动变量"
     },
@@ -5697,25 +5697,25 @@
     },
     {
       "en": "Hulk Firebomber",
-      "zh": "巨型炙炎者",
+      "zh": "巨型烈焰轰炸者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
     {
       "en": "Hulk Obliterator",
-      "zh": "巨型湮灭者",
+      "zh": "巨型抹煞者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
     {
       "en": "Hulk Scorcher",
-      "zh": "炽灼巨型者",
+      "zh": "巨型炙炎者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
     {
       "en": "Hulk Surge",
-      "zh": "蹂躏者狂潮",
+      "zh": "巨型者激增",
       "source": "hd2_variables.json",
       "note": "机器人辅助军团 · 行动变量"
     },
@@ -5745,7 +5745,7 @@
     },
     {
       "en": "Hunter",
-      "zh": "猎手",
+      "zh": "追猎虫",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -5775,7 +5775,7 @@
     },
     {
       "en": "IGLA",
-      "zh": "依格勒",
+      "zh": "伊格勒",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -5793,7 +5793,7 @@
     },
     {
       "en": "Illuminate Overship",
-      "zh": "统御舰",
+      "zh": "光能者统御舰",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -5859,7 +5859,7 @@
     },
     {
       "en": "Inflammable",
-      "zh": "阻燃",
+      "zh": "易燃易爆",
       "source": "本次补译（2026-09-19）",
       "note": "护甲被动（Armor Passive）；出处 mechanics/damage_zh.json 伤害类型表"
     },
@@ -5913,7 +5913,7 @@
     },
     {
       "en": "INTENSE HEAT",
-      "zh": "昼间极暑",
+      "zh": "极暑",
       "source": "hd2_variables.json",
       "note": "环境条件 · 行动变量"
     },
@@ -5949,7 +5949,7 @@
     },
     {
       "en": "IRIDICA",
-      "zh": "艾利迪卡",
+      "zh": "艾丽迪卡",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -5961,7 +5961,7 @@
     },
     {
       "en": "Ironclad Democracy",
-      "zh": "民主铁壁",
+      "zh": "铁甲民主",
       "source": "warbonds.json",
       "note": "战争债券"
     },
@@ -5997,7 +5997,7 @@
     },
     {
       "en": "Jet Brigade Commissar",
-      "zh": "喷气机械统帅",
+      "zh": "喷气旅机械统帅",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -6009,7 +6009,7 @@
     },
     {
       "en": "JET BRIGADE FACTORIES",
-      "zh": "喷气旅工厂",
+      "zh": "喷气旅孵化厂",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -6033,7 +6033,7 @@
     },
     {
       "en": "Jet Brigade Trooper",
-      "zh": "喷气劫掠者",
+      "zh": "喷气旅装甲兵",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -6069,7 +6069,7 @@
     },
     {
       "en": "KEID",
-      "zh": "角宿二湾",
+      "zh": "九州殊口增七",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -6123,7 +6123,7 @@
     },
     {
       "en": "KLEN DAHTH II",
-      "zh": "克伦达斯 II",
+      "zh": "克伦达斯II",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -6267,7 +6267,7 @@
     },
     {
       "en": "LAS-13 Trident",
-      "zh": "LAS-13 三叉戟",
+      "zh": "LAS-13“三叉戟”",
       "source": "weapons.json",
       "note": "武器"
     },
@@ -6543,7 +6543,7 @@
     },
     {
       "en": "Leviathan Blockade",
-      "zh": "利维坦封锁",
+      "zh": "利维坦封锁屏障",
       "source": "hd2_variables.json",
       "note": "环境条件 · 行动变量"
     },
@@ -6749,7 +6749,7 @@
     },
     {
       "en": "MAIA",
-      "zh": "昂宿四",
+      "zh": "昴宿四",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -6845,7 +6845,7 @@
     },
     {
       "en": "MASTIA",
-      "zh": "玛斯蒂娅",
+      "zh": "玛斯蒂亚",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -6967,7 +6967,7 @@
     },
     {
       "en": "MERGA IV",
-      "zh": "玄戈增二 IV",
+      "zh": "玄戈增二IV",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -6985,7 +6985,7 @@
     },
     {
       "en": "MERIDIAN BLACK HOLE",
-      "zh": "梅里迪亚黑洞",
+      "zh": "默里迪恩黑洞",
       "source": "hd2_variables.json",
       "note": "深域惧像 · 行动变量"
     },
@@ -7105,7 +7105,7 @@
     },
     {
       "en": "Mortar Emplacement",
-      "zh": "迫击炮阵地",
+      "zh": "迫击炮台",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -7117,7 +7117,7 @@
     },
     {
       "en": "Motivational Shocks",
-      "zh": "激励冲击",
+      "zh": "激励性冲击",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -7147,7 +7147,7 @@
     },
     {
       "en": "Muscle Enhancement",
-      "zh": "肌肉增强",
+      "zh": "肌肉强化",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -7201,13 +7201,13 @@
     },
     {
       "en": "Neutralize Ground-to-Orbit Defenses",
-      "zh": "瘫痪地对空防御",
+      "zh": "瘫痪地对轨道防御系统",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
     {
       "en": "NEW ASPIRATION CITY",
-      "zh": "新憧憬城",
+      "zh": "志向新城",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -7219,7 +7219,7 @@
     },
     {
       "en": "NEW HOPE CITY",
-      "zh": "新希望城",
+      "zh": "希望新城",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -7237,7 +7237,7 @@
     },
     {
       "en": "NEW YEARNING CITY",
-      "zh": "新渴望城",
+      "zh": "盛盼新城",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -7273,13 +7273,13 @@
     },
     {
       "en": "Nuke Nursery",
-      "zh": "核平育巢",
+      "zh": "用核武器炸毁繁育窝",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
     {
       "en": "Nursing Spewer",
-      "zh": "抚育喷涌者",
+      "zh": "抚育喷涌虫",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -7381,7 +7381,7 @@
     },
     {
       "en": "Orbital Gatling Barrage",
-      "zh": "轨道加特林攻击",
+      "zh": "轨道加特林火力网",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -7489,7 +7489,7 @@
     },
     {
       "en": "OUTPOST ALPHA",
-      "zh": "阿尔法前哨",
+      "zh": "阿尔法哨站",
       "source": "hd2_variables.json",
       "note": "深域惧像 · 行动变量"
     },
@@ -7501,7 +7501,7 @@
     },
     {
       "en": "Overseer",
-      "zh": "监察者",
+      "zh": "监视者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -7567,7 +7567,7 @@
     },
     {
       "en": "PANDION-XXIV",
-      "zh": "帕迪恩 XXIV",
+      "zh": "帕狄恩XXIV",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7591,7 +7591,7 @@
     },
     {
       "en": "PATHFINDER V",
-      "zh": "开拓者 V",
+      "zh": "开拓者V",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7657,7 +7657,7 @@
     },
     {
       "en": "PILEN V",
-      "zh": "皮伦 V",
+      "zh": "皮伦V",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7669,7 +7669,7 @@
     },
     {
       "en": "PIONEER II",
-      "zh": "先驱 II",
+      "zh": "先驱II",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7729,7 +7729,7 @@
     },
     {
       "en": "POLLUX 31",
-      "zh": "北河三 31",
+      "zh": "北河三31",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7741,7 +7741,7 @@
     },
     {
       "en": "PÖPLI IX",
-      "zh": "珀普利 IX",
+      "zh": "珀普利IX",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -7814,7 +7814,7 @@
     },
     {
       "en": "Purge Hatcheries",
-      "zh": "净化孵化巢",
+      "zh": "清除孵化点",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -7826,7 +7826,7 @@
     },
     {
       "en": "Pyro Trooper",
-      "zh": "炽灼劫掠者",
+      "zh": "炙焰装甲兵",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -7964,7 +7964,7 @@
     },
     {
       "en": "Raze Strategic Infrastructure",
-      "zh": "夷平战略设施",
+      "zh": "摧毁战略基础设施",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -8072,7 +8072,7 @@
     },
     {
       "en": "Recover SSSD",
-      "zh": "回收 SSSD",
+      "zh": "找回超级固态硬盘",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -8108,7 +8108,7 @@
     },
     {
       "en": "Reinforcement Pods",
-      "zh": "增援舱",
+      "zh": "增援太空舱",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -8126,7 +8126,7 @@
     },
     {
       "en": "Restart Pumps",
-      "zh": "重启燃料泵",
+      "zh": "重启泵机",
       "source": "missions.json",
       "note": "任务 · Terminid Specific"
     },
@@ -8138,13 +8138,13 @@
     },
     {
       "en": "Resupply",
-      "zh": "补给",
+      "zh": "重新补给",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
     {
       "en": "Retrieve Essential Personnel",
-      "zh": "营救关键人员",
+      "zh": "找回重要人员",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
@@ -8156,13 +8156,13 @@
     },
     {
       "en": "Retrieve Recon Craft Intel",
-      "zh": "取回侦察艇情报",
+      "zh": "取回侦察机情报",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
     {
       "en": "Retrieve Valuable Data",
-      "zh": "取回宝贵数据",
+      "zh": "检索有价值的数据",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
@@ -8294,13 +8294,13 @@
     },
     {
       "en": "Rupture Spewer",
-      "zh": "爆裂胆汁喷涌虫",
+      "zh": "爆裂喷涌虫",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
     {
       "en": "Rupture Strain",
-      "zh": "爆裂变种",
+      "zh": "爆裂虫族变种",
       "source": "hd2_variables.json",
       "note": "终结族变种 · 行动变量"
     },
@@ -8324,7 +8324,7 @@
     },
     {
       "en": "Sabotage Air Base",
-      "zh": "破坏空军基地",
+      "zh": "破坏航空基地",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
@@ -8396,7 +8396,7 @@
     },
     {
       "en": "SEAF Artillery",
-      "zh": "SEAF 火炮",
+      "zh": "超级地球武装部队大炮",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives；语境歧义：战略配备名作「超级地球武装部队大炮」（stratagems_full.json）；任务目标名作「SEAF 火炮」（missions.json），两者互不覆盖",
       "ambiguous": true
@@ -8439,7 +8439,7 @@
     },
     {
       "en": "SEAF Soldier",
-      "zh": "SEAF士兵",
+      "zh": "超级地球武装部队战士",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -8451,7 +8451,7 @@
     },
     {
       "en": "Secondary Extraction Zone",
-      "zh": "备用撤离区",
+      "zh": "次级撤离区",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -8463,7 +8463,7 @@
     },
     {
       "en": "Seize Industrial Complex",
-      "zh": "占领工业综合体",
+      "zh": "占领工业联合体",
       "source": "missions.json",
       "note": "任务 · Automaton Specific"
     },
@@ -8487,7 +8487,7 @@
     },
     {
       "en": "SETIA",
-      "zh": "塞提亚",
+      "zh": "赛提亚",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -8691,7 +8691,7 @@
     },
     {
       "en": "Shredder Tank",
-      "zh": "风暴坦克",
+      "zh": "碎裂坦克",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -8703,7 +8703,7 @@
     },
     {
       "en": "Shrieker Nest",
-      "zh": "尖啸者巢穴",
+      "zh": "尖啸虫巢穴",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -8733,7 +8733,7 @@
     },
     {
       "en": "SIEMNOT",
-      "zh": "西姆诺特",
+      "zh": "席姆纳特",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -8889,7 +8889,7 @@
     },
     {
       "en": "SoS Beacon",
-      "zh": "SOS信标",
+      "zh": "S.O.S.求救信标",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -8991,7 +8991,7 @@
     },
     {
       "en": "Spore Spewer",
-      "zh": "孢子喷射者",
+      "zh": "孢子喷涌虫",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -9059,13 +9059,13 @@
     },
     {
       "en": "Stalker Lair",
-      "zh": "潜行者巢穴",
+      "zh": "追踪虫巢穴",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
     {
       "en": "Stamina Enhancement",
-      "zh": "耐力增强",
+      "zh": "耐力强化",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -9181,7 +9181,7 @@
     },
     {
       "en": "Stratagem Jammer",
-      "zh": "战略配备干扰器",
+      "zh": "战略配备干扰装置",
       "source": "missions.json",
       "note": "任务 · Tactical Objectives"
     },
@@ -9205,7 +9205,7 @@
     },
     {
       "en": "Stun Pods",
-      "zh": "眩晕喷射仓",
+      "zh": "眩晕喷射舱",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -9247,7 +9247,7 @@
     },
     {
       "en": "Surplus EAT Allocation",
-      "zh": "额外一次性反坦克火箭筒强化资源",
+      "zh": "盈余EAT配给",
       "source": "boosters.json",
       "note": "强化资源"
     },
@@ -9308,7 +9308,7 @@
     },
     {
       "en": "Take Down Overship",
-      "zh": "击落主宰舰",
+      "zh": "击沉统御舰",
       "source": "missions.json",
       "note": "任务 · Illuminate Specific"
     },
@@ -9350,7 +9350,7 @@
     },
     {
       "en": "Tectonic Drill",
-      "zh": "构造钻机",
+      "zh": "地壳钻机",
       "source": "stratagems_full.json",
       "note": "战略配备"
     },
@@ -9392,7 +9392,7 @@
     },
     {
       "en": "Terminate Illegal Broadcast",
-      "zh": "终止非法广播",
+      "zh": "关停非法广播",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
@@ -9579,7 +9579,7 @@
     },
     {
       "en": "Trooper",
-      "zh": "劫掠者",
+      "zh": "装甲兵",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -9663,7 +9663,7 @@
     },
     {
       "en": "ULTRAMAFIC MINE",
-      "zh": "超镁铁质矿场",
+      "zh": "超镁铁矿井",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -9729,7 +9729,7 @@
     },
     {
       "en": "Upload Escape Pod Data",
-      "zh": "上传逃生舱数据",
+      "zh": "上传逃生舱的数据",
       "source": "missions.json",
       "note": "任务 · Main Objectives"
     },
@@ -9771,7 +9771,7 @@
     },
     {
       "en": "URSICA XI",
-      "zh": "厄西卡 XI",
+      "zh": "厄西卡XI",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -9831,13 +9831,13 @@
     },
     {
       "en": "VANDALON IV",
-      "zh": "万达隆 IV",
+      "zh": "万达隆IV",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "VARYLIA 5",
-      "zh": "瓦拉瑞亚 5",
+      "zh": "瓦瑞拉亚5",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -10042,7 +10042,7 @@
     },
     {
       "en": "Watcher",
-      "zh": "监视者",
+      "zh": "守望者",
       "source": "enemies.json",
       "note": "敌人（name=英文 / name_zh=中文）"
     },
@@ -10096,7 +10096,7 @@
     },
     {
       "en": "Xenoentomology Center",
-      "zh": "异虫学研究中心",
+      "zh": "异星昆虫学研究中心",
       "source": "hd2_variables.json",
       "note": "设施与场所 · 行动变量"
     },
@@ -10114,7 +10114,7 @@
     },
     {
       "en": "YED PRIOR",
-      "zh": "天市右垣六",
+      "zh": "天市右垣九",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -10132,19 +10132,19 @@
     },
     {
       "en": "ZEFIA",
-      "zh": "塞飞亚",
+      "zh": "赛飞亚",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "ZEGEMA PARADISE",
-      "zh": "泽格玛乐土",
+      "zh": "泽格马乐土",
       "source": "starmap.json",
       "note": "行星"
     },
     {
       "en": "ZOSMA",
-      "zh": "太徽右垣五",
+      "zh": "太微右垣五",
       "source": "starmap.json",
       "note": "行星"
     },
@@ -10210,7 +10210,7 @@
     },
     {
       "en": "One-Two",
-      "zh": "“幺二”",
+      "zh": "幺二",
       "source": "口径（A 项 · 官方译名）",
       "note": "上一条的**短名**：正文/表格里省略型号时用（如 7.1.0 公告正文「更突出“幺二”与其他突击步枪的不同之处」）"
     },

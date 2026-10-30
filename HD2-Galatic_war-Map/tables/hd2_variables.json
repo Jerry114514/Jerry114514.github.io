@@ -27,7 +27,7 @@
         {
           "key": "Rupture Strain",
           "name": "Rupture Strain",
-          "cn": "爆裂变种",
+          "cn": "爆裂虫族变种",
           "desc": "情报显示，这颗星球上的终结族体现出极强的腐蚀性，且学会了掘地等手段免疫常规攻击，做好准备，应对这些精通于地下突袭的变种。",
           "effect_ids": [
             1303,
@@ -115,7 +115,7 @@
         {
           "key": "Devastator Surge",
           "name": "Devastator Surge",
-          "cn": "歼灭者狂潮",
+          "cn": "蹂躏者激增",
           "desc": "机器人在该星球部署了大量歼灭者。",
           "effect_ids": [
             1359
@@ -124,7 +124,7 @@
         {
           "key": "Heavy Armor Surge",
           "name": "Heavy Armor Surge",
-          "cn": "巨型者狂潮",
+          "cn": "重甲敌军激增",
           "desc": "做好反坦克准备，面对重甲机器人大军。",
           "effect_ids": [
             1355
@@ -133,7 +133,7 @@
         {
           "key": "Hulk Surge",
           "name": "Hulk Surge",
-          "cn": "蹂躏者狂潮",
+          "cn": "巨型者激增",
           "desc": "地图扫描显示，该地部署了大量的蹂躏者。",
           "effect_ids": [
             1357
@@ -344,7 +344,7 @@
         {
           "key": "MERIDIAN BLACK HOLE",
           "name": "MERIDIAN BLACK HOLE",
-          "cn": "梅里迪亚黑洞",
+          "cn": "默里迪恩黑洞",
           "desc": "繁荣的梅里迪亚被腐蚀成终结族超级殖民地，需要使用神秘的暗流将其摧毁。剩下的只有这道银河疤痕。",
           "effect_ids": [
             1229
@@ -362,7 +362,7 @@
         {
           "key": "OUTPOST ALPHA",
           "name": "OUTPOST ALPHA",
-          "cn": "阿尔法前哨",
+          "cn": "阿尔法哨站",
           "desc": "在阴霾肆虐的太空中建立的第一个载人航天站。",
           "effect_ids": [
             1304
@@ -371,7 +371,7 @@
         {
           "key": "HIVE WORLD",
           "name": "HIVE WORLD",
-          "cn": "巢穴世界",
+          "cn": "虫窝世界",
           "desc": "这颗星球已被终结族完全侵扰，里里外外都变成了暴政的巢穴。它是阴霾孢子的来源。",
           "effect_ids": [
             1311
@@ -490,7 +490,7 @@
         {
           "key": "DEFENSE CAMPAIGN",
           "name": "DEFENSE CAMPAIGN",
-          "cn": "入侵战役",
+          "cn": "保卫战役",
           "desc": "敌方 HP 进度显示（如 212,983/700,000），描述：敌军妄想占领这颗星球，天真。",
           "effect_ids": []
         }
@@ -525,21 +525,21 @@
         {
           "key": "EXTREME COLD",
           "name": "EXTREME COLD",
-          "cn": "夜间极寒",
+          "cn": "极寒",
           "desc": "夜间气温大幅降低，同时使需要散热的武器冷却加快。",
           "effect_ids": []
         },
         {
           "key": "INTENSE HEAT",
           "name": "INTENSE HEAT",
-          "cn": "昼间极暑",
+          "cn": "极暑",
           "desc": "昼间气温大幅升高，加快体力消耗速度，同时使需要散热的武器冷却变慢。",
           "effect_ids": []
         },
         {
           "key": "FIRE TORNADOES",
           "name": "FIRE TORNADOES",
-          "cn": "火龙卷",
+          "cn": "烈焰龙卷",
           "desc": "火龙卷将随机出现在地图上。",
           "effect_ids": []
         },
@@ -560,7 +560,7 @@
         {
           "key": "Leviathan Blockade",
           "name": "Leviathan Blockade",
-          "cn": "利维坦封锁",
+          "cn": "利维坦封锁屏障",
           "desc": "城市上空会出现利维坦。",
           "effect_ids": [
             1404,
@@ -648,7 +648,7 @@
         {
           "key": "Xenoentomology Center",
           "name": "Xenoentomology Center",
-          "cn": "异虫学研究中心",
+          "cn": "异星昆虫学研究中心",
           "desc": "那些研究终结族行为、生态学和E-710潜力的人聚集在这里进行跨学科研究。",
           "effect_ids": [
             1197
@@ -657,7 +657,7 @@
         {
           "key": "Deep Mantle Forge Complex",
           "name": "Deep Mantle Forge Complex",
-          "cn": "深地幔锻造综合体",
+          "cn": "深部地幔铸造复合体",
           "desc": "这个星球上的冶炼厂和炼油厂将原材料转化为可用的硬件。",
           "effect_ids": [
             1198
@@ -693,7 +693,7 @@
         {
           "key": "CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY",
           "name": "CENTER FOR CIVILIAN SURVEILLANCE AND SAFETY",
-          "cn": "平民监控与安全中心",
+          "cn": "公民监控和安全中心",
           "desc": "真理部在这里分析公民的活动、言语、数据、DNA、RNA和神经拓扑结构。",
           "effect_ids": [
             1236
@@ -702,7 +702,7 @@
         {
           "key": "JET BRIGADE FACTORIES",
           "name": "JET BRIGADE FACTORIES",
-          "cn": "喷气旅工厂",
+          "cn": "喷气旅孵化厂",
           "desc": "这里生产了垂直增强的喷气旅士兵。",
           "effect_ids": [
             1239
@@ -729,7 +729,7 @@
         {
           "key": "HELLDIVER TRAINING FACILITIES",
           "name": "HELLDIVER TRAINING FACILITIES",
-          "cn": "绝地潜兵训练设施",
+          "cn": "绝地潜兵训练基地",
           "desc": "在这里，最优秀的人会接受严格的绝地潜兵训练，这将为他们赢得斗篷。",
           "effect_ids": [
             1282
@@ -738,7 +738,7 @@
         {
           "key": "NEW HOPE CITY",
           "name": "NEW HOPE CITY",
-          "cn": "新希望城",
+          "cn": "希望新城",
           "desc": "旗舰级最高安全城市。暴政无法攻克；这是联邦的未来。",
           "effect_ids": [
             1287
@@ -747,7 +747,7 @@
         {
           "key": "NEW ASPIRATION CITY",
           "name": "NEW ASPIRATION CITY",
-          "cn": "新憧憬城",
+          "cn": "志向新城",
           "desc": "三大最高安全城市之一。暴政无法攻克；这是联邦的未来。",
           "effect_ids": [
             1291
@@ -756,7 +756,7 @@
         {
           "key": "NEW YEARNING CITY",
           "name": "NEW YEARNING CITY",
-          "cn": "新渴望城",
+          "cn": "盛盼新城",
           "desc": "三大最高安全城市之一。暴政无法攻克；这是联邦的未来。",
           "effect_ids": [
             1292
@@ -765,7 +765,7 @@
         {
           "key": "ULTRAMAFIC MINE",
           "name": "ULTRAMAFIC MINE",
-          "cn": "超镁铁质矿场",
+          "cn": "超镁铁矿井",
           "desc": "从火成岩深部矿床中提取铂的矿山。",
           "effect_ids": [
             1324
