@@ -1,18 +1,11 @@
 # HD2 API 内容变更
 
-- 检测时间（UTC）：2026-10-29T12:20:50Z
+- 检测时间（UTC）：2026-10-30T21:16:02Z
 - 当前银河效果定义：312 条
 
-## CHANGES ON USTOTU
+## 变更：科埃佩萨IV
 
-### Effect(s) removed ❌
+### 新增的星球效果 ✅
 
-- `1248` — THE INCINERATION CORPS (Enemies)
-- `1249` — THE INCINERATION CORPS
-
-## CHANGES ON VARYLIA 5
-
-### Effect(s) added ✅
-
-- `1248` — THE INCINERATION CORPS (Enemies)
-- `1249` — THE INCINERATION CORPS
+- `1360` — 生化人
+- `1361` — 生化人
