@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
     paths:
+      - 'HD2-Report/**'
+      - 'scripts/fetch_report_dispatches.py'
+      - 'scripts/fetch_report_baseline.py'
       - 'HD2-Galatic_war-Map/js/forecast.js'
       - 'HD2-Galatic_war-Map/js/rate-source.js'
       - 'HD2-Galatic_war-Map/js/regions.js'
@@ -28,6 +31,7 @@ jobs:
         with:
           node-version: '22'
       - run: node scripts/tests/forecast-check.mjs
+      - run: node scripts/tests/site-report-check.mjs
       - run: node scripts/tests/regions-check.mjs
       - run: node scripts/tests/planet-page-check.mjs
       - run: node scripts/tests/planet-cards-check.mjs

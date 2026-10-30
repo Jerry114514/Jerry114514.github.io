@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>站点战报 · 绝地潜兵2 真理部</title>
+  <meta name="description" content="与真理部主站同源的简体中文战报：主要指令、超级地球态势、热门战线、军队武装、DSS 与战争报告，支持长图导出。">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="canonical" href="https://jerry114514.github.io/HD2-Report/">
+  <link rel="stylesheet" href="../HD2-Galatic_war-Map/css/tokens.css?v=20261030a">
+  <link rel="stylesheet" href="./report.css?v=20261030f">
+  <script defer src="../HD2-Galatic_war-Map/js/forecast.js?v=20261013b"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/rate-source.js"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/regions.js"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/dss-donations.js?v=20261014b"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/ownership-changes.js?v=20261014a"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/planet-card-effects.js?v=20261021b"></script>
+  <script defer src="../HD2-Galatic_war-Map/js/mo-equipment.js?v=20261024a"></script>
+  <script defer src="./report-model.js?v=20261030g"></script>
+  <script defer src="./report.js?v=20261030f"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="../HD2-Galatic_war-Map/" aria-label="返回真理部主站"><span class="seal" aria-hidden="true">✦</span>真理部 <span class="brand-divider">/</span> <strong>站点战报</strong></a>
+      <nav aria-label="站点导航"><a href="../HD2-Galatic_war-Map/">实时战况</a><a href="../HD2-Galatic_war-Map/galaxy-map-v2.html">银河星图</a><a href="../HD2_Wiki/wiki.html">图鉴站</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="report-heading">
+      <div><p class="eyebrow">银河战争 · 态势简报</p><h1>超级地球战报<span class="live-label">站点同源</span></h1><p class="snapshot" id="snapshot">正在接收战况快照…</p></div>
+      <div class="actions" aria-label="战报操作"><button id="refresh" type="button">↻ 刷新战报</button><button id="copy" type="button" disabled>复制文字</button><button class="primary" id="export" type="button" disabled>↓ 导出长图</button></div>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite">正在读取主站数据…</p>
+    <div id="report" class="report-grid" aria-busy="true"><div class="loading">正在整理来自各条战线的报告…</div></div>
+    <noscript><p class="status">请启用 JavaScript 以读取主站战况数据。</p></noscript>
+    <footer><p>数据与真理部主站共用。推进速率优先取近期实测；推演与胜负预测均会标明依据，只反映快照时的战况。</p><p>文本优先使用站点简中及现成汉化；缺失时补充 <a href="https://api.helldivers2.dev/api/v2/dispatches" target="_blank" rel="noopener">Helldivers 2 API</a> 简中公告缓存。<span class="motto">为了超级地球！</span></p></footer>
+  </main>
+</body>
+</html>
