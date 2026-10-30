@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-10-30T18:21:01Z",
+  "computed_at": "2026-10-30T22:32:15Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -177,34 +177,22 @@
    "expires_at_war_seconds": 85695666,
    "text_source": "official_zh",
    "mt": false
-  },
-  {
-   "event_id": 1501098,
-   "id32": 1573342022,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 85447301,
-   "text_source": "official_untranslated",
-   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-30T18:20:59Z",
+  "source_version": "2026-10-30T22:32:14Z",
   "war_id": 801,
-  "war_time_seconds": 85444200,
-  "last_success_at": "2026-10-30T18:20:59Z",
+  "war_time_seconds": 85459270,
+  "last_success_at": "2026-10-30T22:32:14Z",
   "stale": false
  },
  "tasks": {
   "id32": 3291378705,
   "source": "arrowhead_official",
-  "source_version": "2026-10-30T18:20:59Z",
-  "retrieved_at": "2026-10-30T18:20:59Z",
+  "source_version": "2026-10-30T22:32:14Z",
+  "retrieved_at": "2026-10-30T22:32:14Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -215,7 +203,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 35000000,
-    "progress": 709916,
+    "progress": 2869468,
     "requirement": {
      "type": "equipment",
      "id": 3992382197,
@@ -232,7 +220,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 60000000,
-    "progress": 89120,
+    "progress": 466640,
     "requirement": {
      "type": "equipment",
      "id": 0,
