@@ -366,7 +366,7 @@
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
-  <script src="./js/mo-announce.js?v=20261031a"></script>
+  <script src="./js/mo-announce.js?v=20261031b"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -925,6 +925,40 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     return window.HD2Forecast?.orderWindow(data, window.HD2Recent?.assignmentFrames() || []) || null;
   }
 
+  // MO 物品官方中文名补全（2026-10-31）：data/reward_types.json 是 companion 前端
+  // bundle 的物品注册表（自动生成，含官方中文，如 3992382197=普通样本）。
+  // 翻译管线（HD2Web-Trans）对部分物品只落到 en_fallback（如 "Common Samples"），
+  // 这里按 id 补成游戏内同款中文名；异步迟到时重渲染一次指令区即可。
+  let rewardTypeCn = {};
+  let rewardTypeCnReady = null;
+  function ensureRewardTypeCn() {
+    if (!rewardTypeCnReady) {
+      rewardTypeCnReady = fetch("./data/reward_types.json")
+        .then(r => r.json())
+        .then(j => {
+          const types = (j && j.types) || {};
+          const out = {};
+          for (const [id, v] of Object.entries(types)) if (v && v.cn) out[id] = v.cn;
+          rewardTypeCn = out;
+          if (currentData) renderMO(currentData); // 迟到补齐：指令区已在渲染就重刷一次
+        })
+        .catch(() => { /* 补全失败不影响页面，装备名维持 en_fallback 口径 */ });
+    }
+    return rewardTypeCnReady;
+  }
+  // 只补 en_fallback（官方中文名暂缺）的条目；管线已有中文名的不动
+  function refineEquipNames(names) {
+    for (const req of Object.values(names || {})) {
+      if (!req || !req.id || !req.name) continue;
+      const cn = rewardTypeCn[String(req.id)];
+      if (cn && req.name_source && String(req.name_source).includes("en_fallback")) {
+        req.name = cn;
+        req.name_source = "reward_types_cn";
+      }
+    }
+    return names;
+  }
+
   function renderMO(data) {
     const root = $("mo-content");
     const expireEl = $("mo-expire");
@@ -950,8 +984,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     // MO 限定装备官中名（2026-10-24）：major_order.tasks 由 HD2Web-Trans 解析写入
     //（itemMixId -> 官方英文索引 -> 站点权威图鉴官方简中，见 js/mo-equipment.js）。
     // 旧数据没有 tasks 时表为空，任务行自动降级为 raw ID 展示，其余不受影响。
-    const equipNames = window.HD2MoEquipment
-      ? window.HD2MoEquipment.nameById(mo.tasks, mo.id32) : {};
+    const equipNames = refineEquipNames(window.HD2MoEquipment
+      ? window.HD2MoEquipment.nameById(mo.tasks, mo.id32) : {});
+    ensureRewardTypeCn(); // 首次异步拉取物品注册表，迟到后由回调重渲染
 
     const moW = moWindowOf(data);
     const mw = window.HD2Recent?.moWindows(a, DATA_FETCH_MS);

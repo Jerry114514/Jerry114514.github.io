@@ -33,9 +33,11 @@
   }
 
   /* 单个任务的「使用：…」HTML 行；无限定装备（requirement 缺失）返回 ""。
+     itemID 为 0（击杀类任务没有物品要求）同样不显示——
+     2026-10-31 修正：此前把 0 当真实物品哈希，渲染出「使用：装备 #0（官方名称暂缺）」。
      esc 必传：调用方的 HTML 转义函数。 */
   function line(itemID, names, esc) {
-    if (itemID == null) return "";
+    if (itemID == null || Number(itemID) === 0) return "";
     const req = (names || {})[String(itemID)];
     const e = esc || (s => String(s));
     if (req && req.name) {
