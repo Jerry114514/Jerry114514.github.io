@@ -510,7 +510,7 @@ main.container > .block > .block-head .block-meta + .block-meta { margin-left: 1
 .sector-body-inner { padding: 8px 10px 10px; gap: 10px; }
 .sector-chevron { color: var(--yellow); }
 
-/* ════════════════ ⑬ 悬浮资讯窗 ════════════════ */
+/* ════════════════ ⑬ 悬浮资讯窗（2026-10-31 对齐游戏内右下角通知卡片） ════════════════ */
 .news-float {
   background: var(--panel);
   border: 1px solid var(--line-2);
@@ -528,17 +528,28 @@ main.container > .block > .block-head .block-meta + .block-meta { margin-left: 1
 .news-float-toggle { color: var(--yellow); }
 .news-float-close { color: var(--text-mute); border: 1px solid transparent; padding: 1px 6px; }
 .news-float-close:hover { color: var(--warn); border-color: var(--warn); background: rgba(255,77,46,.08); }
+/* 通知卡片：深色块 + 间隙分隔（替代原来的行分隔线），标题 / 正文 / 底部相对时间三段式 */
 .news-item {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--line-2);
+  margin: 8px 10px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
   border-left: 2px solid transparent;
   font-size: 12px;
   color: var(--text-dim);
   line-height: 1.6;
 }
-.news-item:hover { border-left-color: var(--yellow); background: var(--panel-2); }
-.news-item-title { font-size: 10.5px; color: var(--yellow); letter-spacing: .12em; }
-.news-item-time { font-size: 10px; color: var(--text-mute); }
+.news-item:hover { border-left-color: var(--yellow); background: var(--card-h, #171717); }
+.news-item-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: .02em;
+  margin-bottom: 4px;
+}
+.news-item-body { margin-top: 2px; }
+.news-item-time { font-size: 10px; color: var(--text-mute); margin-top: 8px; }
 .news-reopen {
   background: var(--panel);
   border: 1px solid var(--yellow);

@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="./css/home.css?v=20261021b">
   <link rel="stylesheet" href="./css/boot-splash.css?v=20261027b">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
-  <link rel="stylesheet" href="./css/hud-skin.css?v=20260920a">
+  <link rel="stylesheet" href="./css/hud-skin.css?v=20261031a">
   <!-- 多源兜底加载 Chart.js -->
   <script>
   (function() {
@@ -366,7 +366,7 @@
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
-  <script src="./js/mo-announce.js?v=20261028b"></script>
+  <script src="./js/mo-announce.js?v=20261031a"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -3194,6 +3194,24 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     return out;
   }
 
+  // 通知卡片（对齐游戏内右下角资讯：加粗标题行 + 正文 + 底部相对时间）
+  const splitNewsTitle = (text) => {
+    const s = String(text || "").trim();
+    const i = s.indexOf("\n");
+    if (i <= 0) return { title: "", body: s };
+    return { title: s.slice(0, i).trim(), body: s.slice(i).trim() };
+  };
+  const newsCardHtml = (title, body, iso) => {
+    const t = title
+      ? `<div class="news-item-title">${richText(title)}</div>` : "";
+    const fullTime = iso ? new Date(iso).toLocaleString("zh-CN", { hour12: false }) : "";
+    const rel = esc(relativeTime(iso));
+    return `<div class="news-item">
+      ${t}<div class="news-item-body">${richText(body)}</div>
+      <div class="news-item-time" title="${esc(fullTime)}">${rel}</div>
+    </div>`;
+  };
+
   function renderNews(data) {
     const body = $("news-float-body");
     // 优先中文翻译（data.news，最新 5 条）；无则降级英文 dispatches
@@ -3204,12 +3222,11 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       return;
     }
     if (transList.length > 0) {
-      body.innerHTML = transList.map(d => `
-        <div class="news-item">
-          <div class="news-item-time">${esc(relativeTime(d.published_at || d.published))} · ${esc(new Date(d.published_at || d.published).toLocaleString("zh-CN", { hour12: false }))}</div>
-          <div class="news-item-body">${richText(d.translated || d.message || "")}</div>
-        </div>
-      `).join("");
+      body.innerHTML = transList.map(d => {
+        const iso = d.published_at || d.published;
+        const parts = splitNewsTitle(d.translated || d.message || "");
+        return newsCardHtml(parts.title, parts.body, iso);
+      }).join("");
       return;
     }
     const list = dedupeNews(data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);
@@ -3217,12 +3234,10 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       body.innerHTML = `<div class="empty" style="padding: 24px 0;">暂无新资讯</div>`;
       return;
     }
-    body.innerHTML = list.map(d => `
-      <div class="news-item">
-        <div class="news-item-time">${esc(relativeTime(d.published))} · ${esc(new Date(d.published).toLocaleString("zh-CN", { hour12: false }))}</div>
-        <div class="news-item-body">${richText(d.message)}</div>
-      </div>
-    `).join("");
+    body.innerHTML = list.map(d => {
+      const parts = splitNewsTitle(d.message || "");
+      return newsCardHtml(parts.title, parts.body, d.published);
+    }).join("");
   }
 
   /* ==============================================================

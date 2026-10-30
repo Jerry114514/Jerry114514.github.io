@@ -166,8 +166,18 @@
       var newsItem = (data.news || []).filter(function (n) { return n && n.id === hit.id; })[0];
       if (newsItem) zh = newsItem.translated || newsItem.message_zh || "";
     }
-    var rawText = zh || mo.translated_brief || a.briefing || "";
-    if (!rawText && hit) rawText = hit.message;
+    /* 正文回退（2026-10-31 修正）：
+       ① major_order.translated_brief —— 翻译侧按指令 id32 对齐当前 assignment，最权威；
+       ② 「NEW MAJOR ORDER」dispatch 的中文稿 —— 只认发布时间不早于当前指令开始的那条；
+          新一期指令尚未发布公告时，旧一期的公告不得冒充新令（宁可用英文原文）；
+       ③ 英文原文简报。 */
+    var moIdOk = (mo.id32 == null || a.id == null)
+      ? !!mo.translated_brief
+      : String(mo.id32) === String(a.id);
+    var startedMs = Date.parse(a.startedAt || "") || 0;
+    var dispOk = !!hit && (!startedMs || (Date.parse(hit.published) || 0) >= startedMs - 300000);
+    var rawText = (moIdOk && mo.translated_brief) || (dispOk ? zh : "") || a.briefing || "";
+    if (!rawText && dispOk && hit) rawText = hit.message;
 
     /* Banner 四级本地/远程 + 纯 CSS 占位兜底 */
     var bannerSrc = (mo.banner_image_local) || (ac && ac.banner_image_local) ||
