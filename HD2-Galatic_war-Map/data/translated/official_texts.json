@@ -2,10 +2,10 @@
  "source": "arrowhead_official",
  "language": "zh-Hans",
  "war_id": 801,
- "retrieved_at": "2026-10-31T14:05:22Z",
- "war_time_seconds": 85515260,
+ "retrieved_at": "2026-10-31T18:30:22Z",
+ "war_time_seconds": 85531160,
  "source_urls": {
-  "news": "https://api.live.prod.thehelldiversgame.com/api/NewsFeed/801?fromTimestamp=84305660&maxEntries=100",
+  "news": "https://api.live.prod.thehelldiversgame.com/api/NewsFeed/801?fromTimestamp=84321560&maxEntries=100",
   "events": "https://api.live.prod.thehelldiversgame.com/api/WarSeason/801/Status",
   "assignments": "https://api.live.prod.thehelldiversgame.com/api/v2/Assignment/War/801"
  },
@@ -304,10 +304,10 @@
     }
    ],
    "progress": [
-    9665370,
-    5618493
+    12101085,
+    9301699
    ],
-   "expires_in": 180416
+   "expires_in": 164526
   }
  ],
  "global_events": [
@@ -491,10 +491,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-10-31T14:05:22Z",
+  "source_version": "2026-10-31T18:30:22Z",
   "war_id": 801,
-  "war_time_seconds": 85515260,
-  "last_success_at": "2026-10-31T14:05:22Z",
+  "war_time_seconds": 85531160,
+  "last_success_at": "2026-10-31T18:30:22Z",
   "stale": false
  }
 }
