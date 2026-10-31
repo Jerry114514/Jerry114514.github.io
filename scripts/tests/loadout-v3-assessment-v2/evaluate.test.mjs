@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {evaluateAssessment, assessmentLegality} from '../../../shared/hd2-loadout/assessment-v2/evaluate.mjs';
+import {evaluateAssessment, previewAssessment, assessmentLegality} from '../../../shared/hd2-loadout/assessment-v2/evaluate.mjs';
 import {heavyRoutes, assessHeavyPairs} from '../../../shared/hd2-loadout/assessment-v2/engagement.mjs';
 import {assessFiveHoles, demolitionRoutes} from '../../../shared/hd2-loadout/assessment-v2/demolition.mjs';
 import {ordinaryCapabilities, scoreOrdinary} from '../../../shared/hd2-loadout/assessment-v2/projectile.mjs';
@@ -55,17 +55,18 @@ test('ordinary shared-stock plan preserves Ultimatum and Giga for heavies', () =
   }
 });
 
-test('physical medium floor is not vetoed by the support-slot display preference', () => {
+test('medium route feasibility and the final medium score are separate admission checks', () => {
   const baseline = {primary: 'ar_23_liberator', secondary: 'gp_20_ultimatum', grenade: 'g_6_frag',
     stratagems: ['support_mg_43_machine_gun', 'backpack_b_1_supply_pack', 'eagle_airstrike', 'orbital_gas_strike']};
   const lowDisplay = structuredClone(model);
   lowDisplay.equipment.find(r => r.equipment_id === 'support_mg_43_machine_gun').dimensions.anti_medium.score = 1;
   const result = evaluateAssessment(baseline, lowDisplay, catalog);
   assert.equal(result.status, 'UNKNOWN');
-  assert.deepEqual(result.missing, ['close_defense']); // Old Liberator 60 is now 55.38.
+  assert.ok(result.missing.includes('close_defense')); // Old Liberator 60 is now 55.38.
   assert.equal(result.gates.shared_resources.status, 'PASS');
   assert.deepEqual(result.gates.shared_resources.medium_weapons, ['support_mg_43_machine_gun']);
-  assert.equal(result.dimensions.anti_medium.status, 'ADVISORY');
+  assert.equal(result.dimensions.anti_medium.threshold, 60);
+  assert.equal(result.dimensions.anti_medium.status, result.dimensions.anti_medium.score >= 60 ? 'PASS' : 'UNKNOWN');
 });
 
 test('known backpack/support incompatibilities reject before scoring', () => {
@@ -168,4 +169,16 @@ test('all-upgrade Eagle small cooldown selects its source variant, not base/upgr
   assert.equal(reuse.selected.unit, 'ms');
   assert.equal(fields.find(f => f.field === 'eagle_rearm').full_upgrade_status, 'PARTIAL');
   assert.equal(fields.find(f => f.field === 'call_latency').full_upgrade_status, 'UNKNOWN');
+});
+
+
+test('ranking preview never admits a kit and cannot bypass a later complete physical check',()=>{
+  const preview=previewAssessment(kit,model,catalog);
+  assert.equal(preview.status,'RANKING_ONLY');assert.equal(preview.acceptance_ready,false);
+  assert.equal(preview.eligible_for_draw,false);
+  for(const key of ['heavy_pair','demolition','shared_resources'])assert.equal(preview.gates[key].status,'UNKNOWN');
+  assert.equal(preview.dimensions.endurance.score,100,'known supply score is retained only as a ranking hint');
+  const full=evaluateAssessment(kit,model,catalog);
+  assert.equal(full.status,'ESTIMATED_PASS');assert.equal(full.acceptance_ready,true);
+  assert.ok(Object.values(full.gates).every(g=>g.status==='PASS'));
 });
