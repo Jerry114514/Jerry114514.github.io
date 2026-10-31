@@ -8,12 +8,20 @@ const state = gate => typeof gate === 'string' ? gate : gate?.status;
 export function repairMeasure(value) {
   if (!REPAIR_ROLES.every(role => value.dimensions?.[role]) || !physicalGates.every(gate => value.gates?.[gate])) return null;
   let deficit=0, surplus=0;
-  const needs={};
+  const needs={},groups={routine:{},addition:{}};
   const passed=[];
   for (const role of REPAIR_ROLES) {
     const dimension=value.dimensions[role];
     // Unknown contributes only its known lower bound to search priority; it cannot pass.
     const score=Number.isFinite(dimension.score)?Math.max(0,dimension.score):0;
+    const base=Number.isFinite(dimension.base_score)?dimension.base_score:score;
+    const addition=Number.isFinite(dimension.auxiliary_bonus)?dimension.auxiliary_bonus:0;
+    // Supply changes the final endurance floor, not an endlessly additive bonus.
+    // Attribute only its actual adjustment to routine capability for this ranking.
+    const supply=role==='endurance'&&dimension.supply_adjustment
+      ?Math.max(0,score-(dimension.supply_adjustment.before_score??0)):0;
+    groups.routine[role]=Math.max(0,base)+supply;
+    groups.addition[role]=Math.max(0,addition);
     needs[role]=Math.max(0,60-score);
     deficit+=needs[role];
     surplus+=Math.min(REPAIR_POLICY.surplus_cap,Math.max(0,score-60));
@@ -27,7 +35,37 @@ export function repairMeasure(value) {
       for(const role of ({heavy_pair:['anti_heavy'],demolition:['demolition'],shared_resources:['chaff','anti_medium','endurance'],close_safety:['close_defense']}[gate]))needs[role]=Math.max(needs[role],30);
     }
   }
-  return {deficit,surplus,utility:-deficit+REPAIR_POLICY.surplus_weight*surplus,pending_physical,passed,needs};
+  return {deficit,surplus,utility:-deficit+REPAIR_POLICY.surplus_weight*surplus,pending_physical,passed,needs,groups};
+}
+
+// Compare the weakest routine and auxiliary dimensions separately. A 5-point
+// auxiliary improvement is not competing directly with a 50-point gun upgrade.
+// Only unresolved loadout needs guide repair: a zero in one layer is legitimate
+// when the complete kit covers that role. Unimprovable zeros consume no trial.
+export function bottleneckTrials(parent, candidates, needs=parent?.needs??{}) {
+  if(!parent||!candidates.length)return {candidates:[],directions:[]};
+  const ranked=[...candidates].sort((a,b)=>b.measure.utility-a.measure.utility);
+  const safe=ranked.filter(c=>c.measure.utility>=parent.utility-epsilon);
+  const selected=[],directions=[];
+  for(const group of ['routine','addition']) {
+    const roles=REPAIR_ROLES.filter(role=>needs[role]>0);
+    const levels=[...new Set(roles.map(role=>parent.groups[group][role]))].sort((a,b)=>a-b);
+    for(const level of levels) {
+      const weakest=roles.filter(role=>parent.groups[group][role]===level);
+      const improvements=safe.map(candidate=>({candidate,gain:weakest.reduce((sum,role)=>
+        sum+candidate.measure.groups[group][role]-parent.groups[group][role],0)/weakest.length}))
+        .filter(c=>c.gain>epsilon).sort((a,b)=>b.gain-a.gain||b.candidate.measure.utility-a.candidate.measure.utility);
+      if(!improvements.length)continue;
+      const best=improvements[0].candidate;
+      directions.push({group,roles:weakest,before:level,gain:improvements[0].gain});
+      if(!selected.includes(best))selected.push(best);
+      break;
+    }
+  }
+  // An unavailable group, or one candidate covering both directions, leaves room
+  // for the best remaining whole-kit candidate. All still need full evaluation.
+  for(const candidate of ranked)if(!selected.includes(candidate)&&selected.length<REPAIR_POLICY.full_checks_per_round)selected.push(candidate);
+  return {candidates:selected.slice(0,REPAIR_POLICY.full_checks_per_round),directions};
 }
 
 export function contributionLoss(before, without) {

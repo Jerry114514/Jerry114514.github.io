@@ -4,11 +4,11 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {performance} from 'node:perf_hooks';
 import {beginAssessmentDraw,stepAssessmentDraw} from '../shared/hd2-loadout/assessment-v2/draw.mjs';
-import {REPAIR_ROLES,REPAIR_POLICY} from '../shared/hd2-loadout/assessment-v2/repair.mjs';
+import {REPAIR_ROLES,REPAIR_POLICY,repairMeasure} from '../shared/hd2-loadout/assessment-v2/repair.mjs';
 import {seeded,uniformInt} from '../shared/hd2-loadout/engine/rng.mjs';
 
 const arg=(key,fallback)=>{const i=process.argv.indexOf(key);return i<0?fallback:process.argv[i+1];};
-const count=Number(arg('--count',300)),start=Number(arg('--start',230000));
+const count=Number(arg('--count',300)),start=Number(arg('--start',240000));
 if(!Number.isSafeInteger(count)||count<1||!Number.isSafeInteger(start)||start<0||start+count>0xffffffff)throw Error('INVALID_SAMPLE_RANGE');
 const output=resolve(arg('--output','scripts/.loadout-artifacts/local-repair-comparison.json'));
 const root=new URL('../',import.meta.url),modelBytes=readFileSync(new URL('shared/hd2-loadout/assessment-v2/equipment.json',root));
@@ -29,7 +29,7 @@ function run(seed,local_repair){
   if(REPAIR_ROLES.some(role=>value.dimensions[role].status!=='PASS'||scores[role]<60-1e-10)
     ||Object.values(value.gates).some(gate=>gate.status!=='PASS'))throw Error('UNACCEPTABLE_OUTPUT');
   return {status:value.status,loadout:value.loadout,scores,quality:mean(Object.values(scores).map(n=>Math.min(100,n))),
-    weakest:Math.min(...Object.values(scores)),elapsed_ms,steps,completed:task.completed,search_stats:task.search_stats};
+    weakest:Math.min(...Object.values(scores)),layers:repairMeasure(value).groups,elapsed_ms,steps,completed:task.completed,search_stats:task.search_stats};
 }
 function summarize(){
   report.summary={};
@@ -41,6 +41,8 @@ function summarize(){
       median_quality:quantile(rows.map(r=>r.quality),.5),mean_weakest:mean(rows.map(r=>r.weakest)),
       role_means:Object.fromEntries(REPAIR_ROLES.map(role=>[role,mean(rows.map(r=>Math.min(100,r.scores[role])))])),
       elapsed_ms:{mean:mean(all.map(r=>r.elapsed_ms)),median:quantile(all.map(r=>r.elapsed_ms),.5),p95:quantile(all.map(r=>r.elapsed_ms),.95),max:Math.max(...all.map(r=>r.elapsed_ms))},
+      layer_means:Object.fromEntries(['routine','addition'].map(group=>[group,Object.fromEntries(REPAIR_ROLES.map(role=>[role,mean(rows.map(r=>r.layers[group][role]))]))])),
+      layer_minima:Object.fromEntries(['routine','addition'].map(group=>[group,mean(rows.map(r=>Math.min(...Object.values(r.layers[group]))))])),
       over_bot_deadline:all.filter(r=>r.elapsed_ms>15000).length,
       average_search:Object.fromEntries(Object.keys(all[0].search_stats).map(key=>[key,mean(all.map(r=>r.search_stats[key]))])),
       unique_equipment:Object.fromEntries(['primary','secondary','grenade','stratagem'].map(slot=>[slot,distinct(slot)])),

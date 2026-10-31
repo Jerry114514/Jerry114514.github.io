@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {beginAssessmentDraw,stepAssessmentDraw} from '../../../shared/hd2-loadout/assessment-v2/draw.mjs';
 import {assessmentLegality} from '../../../shared/hd2-loadout/assessment-v2/evaluate.mjs';
-import {REPAIR_POLICY,REPAIR_ROLES,repairMeasure,contributionLoss,improvesRepair,weakestContributions,candidateWeight,preferredTrials} from '../../../shared/hd2-loadout/assessment-v2/repair.mjs';
+import {REPAIR_POLICY,REPAIR_ROLES,repairMeasure,contributionLoss,improvesRepair,weakestContributions,candidateWeight,preferredTrials,bottleneckTrials} from '../../../shared/hd2-loadout/assessment-v2/repair.mjs';
 const read=name=>JSON.parse(readFileSync(new URL('../../../shared/hd2-loadout/'+name,import.meta.url)));
 const model=read('assessment-v2/equipment.json'),catalog=read('data/catalog.json');
 const slots=['primary','secondary','grenade',...Array.from({length:4},(_,i)=>'stratagem:'+i)];
@@ -138,4 +138,49 @@ test('actual trial selection rejects physical regressions and keeps multiple nea
     {id:'c',measure:repairMeasure(estimate({chaff:48},'PASS'))},
     {id:'regression',measure:repairMeasure(estimate({},'UNKNOWN'))}];
   assert.deepEqual(preferredTrials(parent,trials).map(t=>t.id),['a','b']);
+});
+
+
+function splitEstimate(routine={},addition={}) {
+  const value=estimate({},'PASS');
+  for(const role of REPAIR_ROLES) {
+    const base=routine[role]??80,bonus=addition[role]??0,score=base+bonus;
+    value.dimensions[role]={score,base_score:base,auxiliary_bonus:bonus,status:score>=60?'PASS':'UNKNOWN'};
+  }
+  return repairMeasure(value);
+}
+
+test('routine and additive bottlenecks each nominate a trial without comparing their raw increment sizes',()=>{
+  const parent=splitEstimate({chaff:30},{chaff:20});
+  const routine={id:'routine',measure:splitEstimate({chaff:70},{chaff:20})};
+  const smallerRoutine={id:'second-routine',measure:splitEstimate({chaff:60},{chaff:20})};
+  const addition={id:'addition',measure:splitEstimate({chaff:30},{chaff:24})};
+  const result=bottleneckTrials(parent,[routine,smallerRoutine,addition]);
+  assert.deepEqual(result.candidates.map(c=>c.id),['routine','addition']);
+  assert.deepEqual(result.directions.map(d=>[d.group,d.roles]),[['routine',['chaff']],['addition',['chaff']]]);
+});
+
+test('structural zeros in covered roles do not create separate admission requirements',()=>{
+  const parent=splitEstimate({chaff:30,anti_heavy:0},{chaff:20,anti_heavy:100});
+  const result=bottleneckTrials(parent,[{id:'chaff',measure:splitEstimate({chaff:45,anti_heavy:0},{chaff:20,anti_heavy:100})},
+    {id:'redundant-heavy',measure:splitEstimate({chaff:30,anti_heavy:50},{chaff:20,anti_heavy:100})}]);
+  assert.ok(result.directions.every(d=>!d.roles.includes('anti_heavy')));
+  assert.equal(result.directions[0].group,'routine');
+  assert.equal(result.candidates[0].id,'chaff');
+});
+
+test('unimprovable zero additions do not consume a physical trial, and tied weakest roles can improve one at a time',()=>{
+  const parent=splitEstimate({chaff:20,close_defense:20,endurance:50},{chaff:10,close_defense:10});
+  const result=bottleneckTrials(parent,[{id:'one',measure:splitEstimate({chaff:35,close_defense:20,endurance:50},{chaff:10,close_defense:10})},
+    {id:'bonus',measure:splitEstimate({chaff:20,close_defense:20,endurance:50},{chaff:13,close_defense:10})}]);
+  assert.deepEqual(result.directions.map(d=>d.roles),[['chaff','close_defense'],['chaff','close_defense']]);
+  assert.equal(result.candidates.length,2);
+});
+
+test('the supply floor improves the routine endurance layer once without inventing an additive stock',()=>{
+  const value=estimate();value.dimensions.endurance={score:100,base_score:40,auxiliary_bonus:5,status:'PASS',
+    supply_adjustment:{before_score:45,added_score:55}};
+  const measure=repairMeasure(value);
+  assert.equal(measure.groups.routine.endurance,95);assert.equal(measure.groups.addition.endurance,5);
+  assert.equal(measure.needs.endurance,0);
 });

@@ -2,7 +2,7 @@ import {SLOTS, equipmentIDs, withinExosuitLimit} from '../engine/common.mjs';
 import {pools, propose, spaceSize, enumerate, replaceAt} from '../engine/sampling.mjs';
 import {seeded, sample, uniformInt} from '../engine/rng.mjs';
 import {assessmentLegality, assessmentHoldingLegality, evaluateAssessment, previewAssessment} from './evaluate.mjs';
-import {REPAIR_POLICY,repairMeasure,contributionLoss,weakestContributions,candidateWeight,preferredTrials} from './repair.mjs';
+import {REPAIR_POLICY,repairMeasure,contributionLoss,weakestContributions,candidateWeight,preferredTrials,bottleneckTrials} from './repair.mjs';
 
 export const EVIDENCE_GRADE = 'assessment_estimate';
 // Only small spaces are enumerated, to terminate impossible locked draws.
@@ -79,7 +79,7 @@ export function stepAssessmentDraw(task, evaluate=evaluateAssessment, preview=ev
       const choice=parent.choices[parent.contributions.length];
       const disabled=[...new Set([...(task.constraints.disabled_contributions??[]),at(parent.loadout,choice.slot)])];
       // Keep all seven slot IDs: ablation removes contribution, not slot legality.
-      // One evaluator call per step leaves pause/cancel responsive in the worker.
+      // These previews do not run resource simulations; full trials yield separately.
       if(!parent.rankMeasure) {
         parent.rankMeasure=repairMeasure(preview(parent.loadout,task.model,task.catalog,task.constraints));
         task.search_stats.previews++;
@@ -119,9 +119,11 @@ export function stepAssessmentDraw(task, evaluate=evaluateAssessment, preview=ev
     }
     if(!parent.verify) {
       // Shuffle ties before ranking; this bounded shortlist is only a search hint.
-      parent.verify=sample(parent.ranked,parent.ranked.length,task.rng)
-        .sort((a,b)=>b.measure.utility-a.measure.utility)
-        .slice(0,REPAIR_POLICY.full_checks_per_round);
+      const shortlist=bottleneckTrials(parent.rankMeasure,
+        sample(parent.ranked,parent.ranked.length,task.rng),parent.measure.needs);
+      parent.directions=shortlist.directions;
+      // Give either layer the first full trial; ties cannot favor slot/group order.
+      parent.verify=sample(shortlist.candidates,shortlist.candidates.length,task.rng);
     }
     if(parent.verify.length) {
       const {loadout}=parent.verify.shift();task.search_stats.local_trials++;
