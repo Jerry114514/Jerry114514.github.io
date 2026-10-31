@@ -744,6 +744,15 @@
       "note": "",
       "updated_at": "2026-10-28T11:56:06.297Z",
       "score_scale_id": "review-65-as-60"
+    },
+    "g_7_pineapple": {
+      "scores": {
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-31T13:23:29.379Z",
+      "score_scale_id": "review-65-as-60"
     }
   },
   "history": [
@@ -2964,6 +2973,29 @@
         "anti_heavy": null,
         "endurance": 52.32,
         "demolition": 101.14
+      }
+    },
+    {
+      "at": "2026-10-31T13:23:29.379Z",
+      "equipment_id": "g_7_pineapple",
+      "before": null,
+      "after": {
+        "scores": {
+          "demolition": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-10-31T13:23:29.379Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 2.7876923076923075,
+        "close_defense": 0,
+        "anti_medium": 2.750769230769231,
+        "anti_heavy": 0,
+        "endurance": 69.82857142857142,
+        "demolition": 85.93142857142857
       }
     }
   ]
