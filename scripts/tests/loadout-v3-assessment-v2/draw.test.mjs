@@ -18,6 +18,10 @@ test('whole random kits repeat with a seed; accepted kits use the actual current
   assert.equal(a.eligible_for_draw,false,'acceptance testing must not claim gameplay calibration');
   const evaluation=evaluateAssessment(a.loadout,model,catalog);
   assert.equal(evaluation.acceptance_ready,true);
+  for(const dimension of Object.values(evaluation.dimensions)){
+    assert.equal(dimension.threshold,60);assert.equal(dimension.status,'PASS');
+    assert.ok(dimension.score>=60-1e-10);
+  }
   assert.deepEqual(a.dimensions.endurance,evaluation.dimensions.endurance);
   assert.equal(a.evidence_grade,'assessment_estimate');
 });
