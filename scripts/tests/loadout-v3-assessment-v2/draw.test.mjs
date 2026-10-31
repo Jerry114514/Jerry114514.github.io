@@ -11,7 +11,7 @@ const kit={primary:'plas_1_scorcher',secondary:'gp_20_ultimatum',grenade:'g_48_g
   stratagems:['support_spear','backpack_b_1_supply_pack','deployable_gas_mines','deployable_flame_sentry']};
 function finish(task,evaluate){for(let i=0;i<3000;i++){const v=stepAssessmentDraw(task,evaluate);if(v.status!=='SEARCHING')return v;}assert.fail('No result within test budget');}
 
-test('whole random kits repeat with a seed; accepted kits use the actual current evaluator',()=>{
+test('repaired draws repeat with a seed; accepted kits use the actual current evaluator',()=>{
   const run=()=>finish(beginAssessmentDraw(model,catalog,{seed:42}));
   const a=run(),b=run();assert.deepEqual(a,b);
   assert.equal(a.status,'ASSESSMENT_PASS');assert.ok(a.completed>1);
@@ -26,7 +26,7 @@ test('whole random kits repeat with a seed; accepted kits use the actual current
   assert.equal(a.evidence_grade,'assessment_estimate');
 });
 
-test('failure and unknown both cause another complete random draw; no best-kit ranking',()=>{
+test('incomplete evaluator diagnostics fall back to complete random draws; failure and unknown never output',()=>{
   let calls=0;
   const task=beginAssessmentDraw(model,catalog,{seed:12});
   const v=finish(task,()=>({status:++calls===1?'ESTIMATED_FAIL':calls===2?'UNKNOWN':'ESTIMATED_PASS',acceptance_ready:calls>=3}));

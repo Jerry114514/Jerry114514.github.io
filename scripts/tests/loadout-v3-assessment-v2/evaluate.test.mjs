@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {evaluateAssessment, assessmentLegality} from '../../../shared/hd2-loadout/assessment-v2/evaluate.mjs';
+import {evaluateAssessment, previewAssessment, assessmentLegality} from '../../../shared/hd2-loadout/assessment-v2/evaluate.mjs';
 import {heavyRoutes, assessHeavyPairs} from '../../../shared/hd2-loadout/assessment-v2/engagement.mjs';
 import {assessFiveHoles, demolitionRoutes} from '../../../shared/hd2-loadout/assessment-v2/demolition.mjs';
 import {ordinaryCapabilities, scoreOrdinary} from '../../../shared/hd2-loadout/assessment-v2/projectile.mjs';
@@ -169,4 +169,16 @@ test('all-upgrade Eagle small cooldown selects its source variant, not base/upgr
   assert.equal(reuse.selected.unit, 'ms');
   assert.equal(fields.find(f => f.field === 'eagle_rearm').full_upgrade_status, 'PARTIAL');
   assert.equal(fields.find(f => f.field === 'call_latency').full_upgrade_status, 'UNKNOWN');
+});
+
+
+test('ranking preview never admits a kit and cannot bypass a later complete physical check',()=>{
+  const preview=previewAssessment(kit,model,catalog);
+  assert.equal(preview.status,'RANKING_ONLY');assert.equal(preview.acceptance_ready,false);
+  assert.equal(preview.eligible_for_draw,false);
+  for(const key of ['heavy_pair','demolition','shared_resources'])assert.equal(preview.gates[key].status,'UNKNOWN');
+  assert.equal(preview.dimensions.endurance.score,100,'known supply score is retained only as a ranking hint');
+  const full=evaluateAssessment(kit,model,catalog);
+  assert.equal(full.status,'ESTIMATED_PASS');assert.equal(full.acceptance_ready,true);
+  assert.ok(Object.values(full.gates).every(g=>g.status==='PASS'));
 });
