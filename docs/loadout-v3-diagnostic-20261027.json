@@ -12,8 +12,8 @@
   "manual_calibration": {
     "schema": 1,
     "path": "shared/hd2-loadout/assessment-v2/manual-scores.json",
-    "edited_equipment": 69,
-    "history_entries": 84,
+    "edited_equipment": 70,
+    "history_entries": 85,
     "scope": "SCORE_AND_CONTRIBUTION_MODE_ONLY; NO_DAMAGE_INVENTORY_LEGALITY_OR_PHYSICAL_GATE_OVERRIDE"
   },
   "manual_scores": [
@@ -511,6 +511,24 @@
       "mode": "auto",
       "note": "",
       "updated_at": "2026-10-28T09:26:35.393Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    {
+      "equipment_id": "g_7_pineapple",
+      "calculated_scores": {
+        "chaff": 3.02,
+        "close_defense": 0,
+        "anti_medium": 2.98,
+        "anti_heavy": 0,
+        "endurance": 73.6,
+        "demolition": 87.69
+      },
+      "scores": {
+        "demolition": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-10-31T13:23:29.379Z",
       "score_scale_id": "review-65-as-60"
     },
     {
@@ -70925,7 +70943,7 @@
         "basis": "SINGLE_COMPONENT_FORCE; DIRECT_OR_EXPLOSION_40_SUFFICIENT; NO_CROSS_HIT_SUM",
         "scope": "STRUCTURE_ELIGIBILITY; STOCK_AND_TIMING_SEPARATE"
       },
-      "score": 87.69,
+      "score": 0,
       "score_lower_bound": false,
       "score_basis": "S_FIRST_CYCLE_HOLES_DIVIDED_BY_5; NO_LARGE_CD_REFILL; NO_SPEED_BONUS",
       "max_demolition_force": 30,
@@ -71066,7 +71084,9 @@
       "scope": "FIVE_DISTINCT_ORDINARY_HOLES; ONE_PAID_ACTION_PER_HOLE; NO_TRAVEL_DEADLINE",
       "caveats": [
         "INSIDE_ANY_30_FROM_ARCHIVED_MISSIONS_EQUIVALENCE; CURRENT_BUG_HOLE_PAGE_OMITS_THIS_BRANCH"
-      ]
+      ],
+      "calculated_score": 87.69,
+      "score_origin": "MANUAL_CALIBRATED"
     },
     {
       "equipment_id": "g_89_smokescreen",
