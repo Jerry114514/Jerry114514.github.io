@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3981,
+   "published_at": "2026-11-01T18:08:14Z",
+   "source": "dispatch",
+   "original": "STRATAGEM GRANTED\n\nThe Orbital Laser Stratagem has been authorized for immediate use on Choepessa IV, for the next 24 hours.",
+   "translated": "战略配备已授权\n\n轨道激光战略配备已获准在科埃佩萨IV立即投入使用，有效期 24 小时。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 85616171,
+   "official_message": "<i=3>STRATAGEM GRANTED</i>\n\nThe <i=1>Orbital Laser Stratagem</i> has been authorized for immediate use on <i=1>Choepessa IV</i>, for the next <i=1>24 hours.</i>",
+   "translated_at": "2026-11-01T18:43:00Z"
+  },
+  {
    "id": 3980,
    "published_at": "2026-10-30T16:21:28Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "published_war_seconds": 85276655,
    "official_message": "<i=3>军械扩充已结束</i>\n\n<i=1>Terminid前线</i>的<i=1>毒气地雷</i>战略配备免费使用权限已结束。",
    "translated_at": "2026-10-28T23:13:53Z"
-  },
-  {
-   "id": 3971,
-   "published_at": "2026-10-28T18:56:30Z",
-   "source": "dispatch",
-   "original": "STRATEGIC OPPORTUNITY SEIZED\n\nHelldivers have contained the outbreak on Nivel 43, securing essential footage for Democratic Sniper. Simultaneously, reports of new Terminid mutations have been investigated; the mutations were determined to be merely superficial changes, well within normal Terminid gene expression. \n\nThe Ministry of Truth has deemed the filmed footage to be of masterfully evocative cinematic quality. As a result, the remaining major order requirements are reduced by 50%.",
-   "translated": "抓住战略机遇\n\n绝地潜兵已遏制在尼维尔43发生的暴乱，而且为《民主狙击手》拍摄了关键影像资料。同时，关于终结族出现新突变的报告已完成调查；可以证实，这些突变仅为表面变化，完全处于正常的终结族基因表达范围内。\n\n真理部认为，拍摄到的这段影像极具电影质感，足以打动人心。因此，剩余的重要指令需求减少了50%。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85273532,
-   "official_message": "<i=3>抓住战略机遇</i>\n\n绝地潜兵已遏制在<i=1>尼维尔43</i>发生的暴乱，而且为《民主狙击手》拍摄了关键影像资料。同时，关于终结族出现新突变的报告已完成调查；可以证实，这些突变仅为表面变化，完全处于正常的终结族基因表达范围内。\n\n真理部认为，拍摄到的这段影像极具电影质感，足以打动人心。因此，剩余的重要指令需求减少了50%。",
-   "translated_at": "2026-10-28T19:12:29Z"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-01T13:56:16Z",
+  "computed_at": "2026-11-01T18:43:00Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -165,22 +165,34 @@
    "expires_at_war_seconds": 85695666,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501105,
+   "id32": 2044704338,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 85702475,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-01T13:56:14Z",
+  "source_version": "2026-11-01T18:42:53Z",
   "war_id": 801,
-  "war_time_seconds": 85601050,
-  "last_success_at": "2026-11-01T13:56:14Z",
+  "war_time_seconds": 85618250,
+  "last_success_at": "2026-11-01T18:42:53Z",
   "stale": false
  },
  "tasks": {
   "id32": 3291378705,
   "source": "arrowhead_official",
-  "source_version": "2026-11-01T13:56:14Z",
-  "retrieved_at": "2026-11-01T13:56:14Z",
+  "source_version": "2026-11-01T18:42:53Z",
+  "retrieved_at": "2026-11-01T18:42:53Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -191,7 +203,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 35000000,
-    "progress": 20709124,
+    "progress": 23356993,
     "requirement": {
      "type": "equipment",
      "id": 3992382197,
@@ -208,7 +220,7 @@
     "faction_id": 3,
     "faction_name": "机器人",
     "goal": 60000000,
-    "progress": 20474286,
+    "progress": 24063064,
     "requirement": {
      "type": "equipment",
      "id": 0,
