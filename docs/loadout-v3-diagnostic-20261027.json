@@ -89010,8 +89010,6 @@
   "examples": [
     {
       "name": "基线分工：机枪清杂，通牒反重，破片拆洞",
-      "status": "UNKNOWN",
-      "numeric_status": "UNKNOWN",
       "dimensions": {
         "chaff": {
           "base_score": 67.67999999999999,
@@ -89465,8 +89463,8 @@
           "total_before_display": 107.36119758770141,
           "score": 102.97754223871695,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "anti_heavy": {
           "base_score": 0,
@@ -89524,8 +89522,8 @@
           "total_before_display": 107.81419429652085,
           "score": 107.81419429652085,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "endurance": {
           "base_score": 77.08761180049481,
@@ -89538,8 +89536,8 @@
           "total_before_display": 77.08761180049481,
           "score": 100,
           "lower_bound": false,
-          "threshold": null,
-          "status": "ADVISORY",
+          "threshold": 60,
+          "status": "PASS",
           "computation": {
             "score": 77.08761180049481,
             "known_lower_bound": 77.08761180049481,
@@ -89679,7 +89677,7 @@
               "backup_weight": 0.35,
               "ceiling": 100,
               "supply_final_floor": 100,
-              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
             },
             "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -89751,8 +89749,8 @@
           "total_before_display": 133.78373626373627,
           "score": 133.78373626373627,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         }
       },
       "gates": {
@@ -91710,10 +91708,6 @@
           "scope": "DECLARED_KILL_OR_CONDITIONAL_CONTROL_ESCAPE; NOT_GAMEPLAY_CERTIFIED"
         }
       },
-      "failed": [],
-      "missing": [
-        "close_defense"
-      ],
       "score_scale": {
         "id": "review-65-as-60",
         "previous_pass": 65,
@@ -91722,9 +91716,15 @@
         "ceiling": 105,
         "basis": "USER_DISPLAY_RESCALE; PHYSICAL_REQUIREMENTS_UNCHANGED"
       },
-      "eligible_for_draw": false,
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
+      "status": "UNKNOWN",
+      "numeric_status": "UNKNOWN",
+      "failed": [],
+      "missing": [
+        "close_defense"
+      ],
+      "eligible_for_draw": false,
       "loadout": {
         "primary": "ar_23_liberator",
         "secondary": "gp_20_ultimatum",
@@ -92111,7 +92111,7 @@
           "backup_weight": 0.35,
           "ceiling": 100,
           "supply_final_floor": 100,
-          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
         },
         "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -92645,7 +92645,7 @@
         "chaff": "support_mg_43_machine_gun",
         "close_defense": "ar_23_liberator",
         "anti_medium": "br_14_adjudicator",
-        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; SCORE_ADVISORY",
+        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; FINAL_SCORE_AT_LEAST_60",
         "threshold_meaning": "REFERENCE_NORMALIZED; NOT_RETIRED_ABSOLUTE_POINTS"
       },
       "unresolved_strategic_equipment": [],
@@ -92653,8 +92653,6 @@
     },
     {
       "name": "铝热与补包：连续粘附处理双泰坦",
-      "status": "ESTIMATED_PASS",
-      "numeric_status": "PASS",
       "dimensions": {
         "chaff": {
           "base_score": 91.41714285714285,
@@ -93108,8 +93106,8 @@
           "total_before_display": 95.26405473055857,
           "score": 95.26405473055857,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "anti_heavy": {
           "base_score": 0,
@@ -93167,8 +93165,8 @@
           "total_before_display": 87.67990858223514,
           "score": 87.67990858223514,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "endurance": {
           "base_score": 73.44372659338528,
@@ -93181,8 +93179,8 @@
           "total_before_display": 73.44372659338528,
           "score": 100,
           "lower_bound": false,
-          "threshold": null,
-          "status": "ADVISORY",
+          "threshold": 60,
+          "status": "PASS",
           "computation": {
             "score": 73.44372659338528,
             "known_lower_bound": 73.44372659338528,
@@ -93322,7 +93320,7 @@
               "backup_weight": 0.35,
               "ceiling": 100,
               "supply_final_floor": 100,
-              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
             },
             "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -93394,8 +93392,8 @@
           "total_before_display": 171.01274725274726,
           "score": 171.01274725274726,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         }
       },
       "gates": {
@@ -95068,8 +95066,6 @@
           "scope": "DECLARED_KILL_OR_CONDITIONAL_CONTROL_ESCAPE; NOT_GAMEPLAY_CERTIFIED"
         }
       },
-      "failed": [],
-      "missing": [],
       "score_scale": {
         "id": "review-65-as-60",
         "previous_pass": 65,
@@ -95078,9 +95074,13 @@
         "ceiling": 105,
         "basis": "USER_DISPLAY_RESCALE; PHYSICAL_REQUIREMENTS_UNCHANGED"
       },
-      "eligible_for_draw": false,
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
+      "status": "ESTIMATED_PASS",
+      "numeric_status": "PASS",
+      "failed": [],
+      "missing": [],
+      "eligible_for_draw": false,
       "loadout": {
         "primary": "plas_1_scorcher",
         "secondary": "gp_31_grenade_pistol",
@@ -95468,7 +95468,7 @@
           "backup_weight": 0.35,
           "ceiling": 100,
           "supply_final_floor": 100,
-          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
         },
         "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -96002,7 +96002,7 @@
         "chaff": "support_mg_43_machine_gun",
         "close_defense": "ar_23_liberator",
         "anti_medium": "br_14_adjudicator",
-        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; SCORE_ADVISORY",
+        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; FINAL_SCORE_AT_LEAST_60",
         "threshold_meaning": "REFERENCE_NORMALIZED; NOT_RETIRED_ABSOLUTE_POINTS"
       },
       "unresolved_strategic_equipment": [],
@@ -96021,8 +96021,6 @@
     },
     {
       "name": "四发突击兵：同一库存完成双重甲",
-      "status": "ESTIMATED_PASS",
-      "numeric_status": "PASS",
       "dimensions": {
         "chaff": {
           "base_score": 91.41714285714285,
@@ -96476,8 +96474,8 @@
           "total_before_display": 106.78848097391916,
           "score": 102.87928571498652,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "anti_heavy": {
           "base_score": 0,
@@ -96535,8 +96533,8 @@
           "total_before_display": 108.91419429652086,
           "score": 108.91419429652086,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "endurance": {
           "base_score": 58.076783687569225,
@@ -96549,8 +96547,8 @@
           "total_before_display": 58.076783687569225,
           "score": 100,
           "lower_bound": false,
-          "threshold": null,
-          "status": "ADVISORY",
+          "threshold": 60,
+          "status": "PASS",
           "computation": {
             "score": 58.076783687569225,
             "known_lower_bound": 58.076783687569225,
@@ -96690,7 +96688,7 @@
               "backup_weight": 0.35,
               "ceiling": 100,
               "supply_final_floor": 100,
-              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
             },
             "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -96762,8 +96760,8 @@
           "total_before_display": 242.7657142857143,
           "score": 242.7657142857143,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         }
       },
       "gates": {
@@ -98473,8 +98471,6 @@
           "scope": "DECLARED_KILL_OR_CONDITIONAL_CONTROL_ESCAPE; NOT_GAMEPLAY_CERTIFIED"
         }
       },
-      "failed": [],
-      "missing": [],
       "score_scale": {
         "id": "review-65-as-60",
         "previous_pass": 65,
@@ -98483,9 +98479,13 @@
         "ceiling": 105,
         "basis": "USER_DISPLAY_RESCALE; PHYSICAL_REQUIREMENTS_UNCHANGED"
       },
-      "eligible_for_draw": false,
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
+      "status": "ESTIMATED_PASS",
+      "numeric_status": "PASS",
+      "failed": [],
+      "missing": [],
+      "eligible_for_draw": false,
       "loadout": {
         "primary": "ar_23a_liberator_carbine",
         "secondary": "gp_31_grenade_pistol",
@@ -98875,7 +98875,7 @@
           "backup_weight": 0.35,
           "ceiling": 100,
           "supply_final_floor": 100,
-          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
         },
         "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -99409,7 +99409,7 @@
         "chaff": "support_mg_43_machine_gun",
         "close_defense": "ar_23_liberator",
         "anti_medium": "br_14_adjudicator",
-        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; SCORE_ADVISORY",
+        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; FINAL_SCORE_AT_LEAST_60",
         "threshold_meaning": "REFERENCE_NORMALIZED; NOT_RETIRED_ABSOLUTE_POINTS"
       },
       "unresolved_strategic_equipment": [],
@@ -99417,8 +99417,6 @@
     },
     {
       "name": "用户组合：毒矛主战过滤，焦土近防，通牒千兆反重",
-      "status": "ESTIMATED_PASS",
-      "numeric_status": "PASS",
       "dimensions": {
         "chaff": {
           "base_score": 88,
@@ -99668,8 +99666,8 @@
           "total_before_display": 102.31240457556626,
           "score": 101.58115196695555,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "anti_heavy": {
           "base_score": 0,
@@ -99730,8 +99728,8 @@
           "total_before_display": 218.83730210866997,
           "score": 218.83730210866997,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "endurance": {
           "base_score": 49.83738461538462,
@@ -99752,8 +99750,8 @@
           "total_before_display": 49.83738461538462,
           "score": 100,
           "lower_bound": false,
-          "threshold": null,
-          "status": "ADVISORY",
+          "threshold": 60,
+          "status": "PASS",
           "computation": {
             "score": 49.83738461538462,
             "known_lower_bound": 49.83738461538462,
@@ -99864,7 +99862,7 @@
               "backup_weight": 0.35,
               "ceiling": 100,
               "supply_final_floor": 100,
-              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
             },
             "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -99937,8 +99935,8 @@
           "total_before_display": 156.5246153846154,
           "score": 156.5246153846154,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         }
       },
       "gates": {
@@ -101942,8 +101940,6 @@
           "scope": "DECLARED_KILL_OR_CONDITIONAL_CONTROL_ESCAPE; NOT_GAMEPLAY_CERTIFIED"
         }
       },
-      "failed": [],
-      "missing": [],
       "score_scale": {
         "id": "review-65-as-60",
         "previous_pass": 65,
@@ -101952,9 +101948,13 @@
         "ceiling": 105,
         "basis": "USER_DISPLAY_RESCALE; PHYSICAL_REQUIREMENTS_UNCHANGED"
       },
-      "eligible_for_draw": false,
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
+      "status": "ESTIMATED_PASS",
+      "numeric_status": "PASS",
+      "failed": [],
+      "missing": [],
+      "eligible_for_draw": false,
       "loadout": {
         "primary": "plas_1_scorcher",
         "secondary": "gp_20_ultimatum",
@@ -102331,7 +102331,7 @@
           "backup_weight": 0.35,
           "ceiling": 100,
           "supply_final_floor": 100,
-          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
         },
         "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -102591,7 +102591,7 @@
         "chaff": "support_mg_43_machine_gun",
         "close_defense": "ar_23_liberator",
         "anti_medium": "br_14_adjudicator",
-        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; SCORE_ADVISORY",
+        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; FINAL_SCORE_AT_LEAST_60",
         "threshold_meaning": "REFERENCE_NORMALIZED; NOT_RETIRED_ABSOLUTE_POINTS"
       },
       "unresolved_strategic_equipment": [],
@@ -102599,8 +102599,6 @@
     },
     {
       "name": "五件核心：停用毒气地雷和火焰哨戒炮",
-      "status": "ESTIMATED_PASS",
-      "numeric_status": "PASS",
       "dimensions": {
         "chaff": {
           "base_score": 88,
@@ -102638,8 +102636,8 @@
           "total_before_display": 85,
           "score": 85,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "anti_heavy": {
           "base_score": 0,
@@ -102686,8 +102684,8 @@
           "total_before_display": 212.79,
           "score": 212.79,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         },
         "endurance": {
           "base_score": 49.83738461538462,
@@ -102700,8 +102698,8 @@
           "total_before_display": 49.83738461538462,
           "score": 100,
           "lower_bound": false,
-          "threshold": null,
-          "status": "ADVISORY",
+          "threshold": 60,
+          "status": "PASS",
           "computation": {
             "score": 49.83738461538462,
             "known_lower_bound": 49.83738461538462,
@@ -102804,7 +102802,7 @@
               "backup_weight": 0.35,
               "ceiling": 100,
               "supply_final_floor": 100,
-              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+              "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
             },
             "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -102864,8 +102862,8 @@
           "total_before_display": 156.5246153846154,
           "score": 156.5246153846154,
           "lower_bound": true,
-          "threshold": null,
-          "status": "ADVISORY"
+          "threshold": 60,
+          "status": "PASS"
         }
       },
       "gates": {
@@ -104869,8 +104867,6 @@
           "scope": "DECLARED_KILL_OR_CONDITIONAL_CONTROL_ESCAPE; NOT_GAMEPLAY_CERTIFIED"
         }
       },
-      "failed": [],
-      "missing": [],
       "score_scale": {
         "id": "review-65-as-60",
         "previous_pass": 65,
@@ -104879,9 +104875,13 @@
         "ceiling": 105,
         "basis": "USER_DISPLAY_RESCALE; PHYSICAL_REQUIREMENTS_UNCHANGED"
       },
-      "eligible_for_draw": false,
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
+      "status": "ESTIMATED_PASS",
+      "numeric_status": "PASS",
+      "failed": [],
+      "missing": [],
+      "eligible_for_draw": false,
       "loadout": {
         "primary": "plas_1_scorcher",
         "secondary": "gp_20_ultimatum",
@@ -105250,7 +105250,7 @@
           "backup_weight": 0.35,
           "ceiling": 100,
           "supply_final_floor": 100,
-          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; NO_NEW_PASS_THRESHOLD",
+          "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "ENGINEERING_INITIAL_VALUES_PENDING_PLAY_REVIEW"
         },
         "scope": "ROUTINE_PRIMARY_PLUS_BACKUP; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
@@ -105296,7 +105296,7 @@
         "chaff": "support_mg_43_machine_gun",
         "close_defense": "ar_23_liberator",
         "anti_medium": "br_14_adjudicator",
-        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; SCORE_ADVISORY",
+        "medium_gate": "MEAN_PHYSICAL_RESPONSE_INSIDE_SHARED_PLAN; FINAL_SCORE_AT_LEAST_60",
         "threshold_meaning": "REFERENCE_NORMALIZED; NOT_RETIRED_ABSOLUTE_POINTS"
       },
       "unresolved_strategic_equipment": [],

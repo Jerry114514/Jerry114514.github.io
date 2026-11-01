@@ -103,3 +103,26 @@ test('partial reload shares firing interval but spends a reserve round for each 
   assert.equal(result.state.resources[loadedKey('gun')].value, 0);
   assert.equal(executeResourcePlan({...request, steps: [shot(7, {interval_ms: 400})]}).status, 'INSUFFICIENT');
 });
+
+
+test('private history copying exactly matches deep ledger execution through reload, supply and delayed damage',()=>{
+  for(const deadline_ms of [3500,20000]) {
+    const request={weapons:[gun()],providers:[pack(),box()],deadline_ms,
+      targets:{a:{hp:4},b:{hp:4}},steps:[shot(4,{target_id:'a',damage_per_round:1,effect_delay_ms:300}),
+        shot(4,{target_id:'b',damage_per_round:1,effect_delay_ms:300})]};
+    const before=structuredClone(request);
+    assert.deepEqual(executeResourcePlan(request),executeResourcePlan(request,structuredClone));
+    assert.deepEqual(request,before,'caller-owned input stays unchanged');
+  }
+  const cooling={weapons:[{...gun(),renewable:true,cooling_ms:1000}],providers:[],steps:[shot(20)]};
+  assert.deepEqual(executeResourcePlan(cooling),executeResourcePlan(cooling,structuredClone));
+});
+
+test('public supply transitions still deeply isolate the previous state and history',()=>{
+  const state=combatResources([gun()],[box()]);
+  state.resources[ammoKey('gun')].value=0;
+  state.trace.push({kind:'action',action_id:'history',at:0});
+  const before=structuredClone(state),next=receiveSupply(state,box(),[gun()]).state;
+  next.trace[0].action_id='changed';next.resources[loadedKey('gun')].value=0;
+  assert.deepEqual(state,before);
+});

@@ -1,0 +1,1202 @@
+{
+  "schema": 1,
+  "seed_start": 240000,
+  "count_requested": 300,
+  "policy": {
+    "max_rounds": 2,
+    "weakest_choices": 2,
+    "candidates_per_slot": 2,
+    "retained_choices": 2,
+    "full_checks_per_round": 2,
+    "surplus_weight": 0.15,
+    "surplus_cap": 40
+  },
+  "model_sha256": "73a4b5fb1a47c01669b63a045ae8aad9e6f727625a2e0031b8996095e09613f3",
+  "revision": "921f3c913a7fe73e34ad049fb9b36ea045d57423",
+  "runtime_hashes": {
+    "draw.mjs": "2948ee73a70a10f7cad5d450c559a08291f791f1f667a7ae3609d86309ee3ffb",
+    "repair.mjs": "3fba242bd2f51020699fd80a4b0b0bfcde08d76afdc2a3466e2a2862a998e280",
+    "evaluate.mjs": "82e66a0d63d56679bfdab106835ccbf3b551ddc30bd7c10f6933e2740651761d",
+    "resources.mjs": "e6929c005d686fa3154af7f5cc5aa5e1c7c54f3e41b6abab532a65a39d9115ad",
+    "../engine/ledger.mjs": "4dc936cc19fa55d02049e3f7b463c0c834d66892b06ba084d8d04491c668a677"
+  },
+  "metric": "MEAN_OF_SIX_FINAL_SCORES_CAPPED_AT_100; MODEL_PROXY_NOT_GAMEPLAY",
+  "summary": {
+    "whole": {
+      "completed": 300,
+      "failed_or_timeout": 0,
+      "mean_quality": 88.5915271493952,
+      "median_quality": 88.90840873382488,
+      "mean_weakest": 69.46271616271258,
+      "role_means": {
+        "chaff": 93.70585708244153,
+        "close_defense": 76.01911208791202,
+        "anti_medium": 91.64698577631107,
+        "anti_heavy": 94.57415843401317,
+        "endurance": 79.61609273913642,
+        "demolition": 95.98695677655685
+      },
+      "elapsed_ms": {
+        "mean": 435.1937696666672,
+        "median": 315.71600000000035,
+        "p95": 1196.1345000000001,
+        "max": 3179.274800000014
+      },
+      "layer_means": {
+        "routine": {
+          "chaff": 82.06694212454214,
+          "close_defense": 72.60901684981674,
+          "anti_medium": 82.3707969242525,
+          "anti_heavy": 0,
+          "endurance": 79.17640043144408,
+          "demolition": 0
+        },
+        "addition": {
+          "chaff": 17.500488224038165,
+          "close_defense": 3.5366666666666666,
+          "anti_medium": 19.08753744975874,
+          "anti_heavy": 125.11227259466658,
+          "endurance": 0.4920923076923079,
+          "demolition": 144.30109084249085
+        }
+      },
+      "layer_minima": {
+        "routine": 0,
+        "addition": 0.1276102564102564
+      },
+      "over_bot_deadline": 0,
+      "average_search": {
+        "whole_draws": 34.89333333333333,
+        "local_trials": 0,
+        "ablations": 0,
+        "previews": 0,
+        "improvements": 0,
+        "restarts": 0
+      },
+      "unique_equipment": {
+        "primary": 39,
+        "secondary": 26,
+        "grenade": 24,
+        "stratagem": 93
+      },
+      "top_equipment": [
+        {
+          "id": "support_mls_4x_commando",
+          "name": "MLS-4X 突击兵",
+          "count": 53
+        },
+        {
+          "id": "g_123_thermite",
+          "name": "G-123 铝热弹",
+          "count": 40
+        },
+        {
+          "id": "gp_20_ultimatum",
+          "name": "GP-20 最后通牒",
+          "count": 35
+        },
+        {
+          "id": "las_13_trident",
+          "name": "LAS-13 三叉戟",
+          "count": 32
+        },
+        {
+          "id": "support_40_k_thermal_gun",
+          "name": "40-K 热熔枪",
+          "count": 30
+        },
+        {
+          "id": "support_mg_206_heavy_machine_gun",
+          "name": "MG-206 重机枪",
+          "count": 28
+        },
+        {
+          "id": "sg_225sp_breaker_spray_pray",
+          "name": "SG-225SP 千发百中破裂者",
+          "count": 27
+        },
+        {
+          "id": "vehicle_m_103_supply_fast_recon_vehicle",
+          "name": "M-103 补给型快速侦察载具",
+          "count": 27
+        },
+        {
+          "id": "vehicle_exo_45_patriot_exosuit",
+          "name": "EXO-45 “爱国者”外骨骼装甲",
+          "count": 27
+        },
+        {
+          "id": "orbital_380mm_he_barrage",
+          "name": "轨道380 MM高爆弹火力网",
+          "count": 26
+        },
+        {
+          "id": "g_12_high_explosive",
+          "name": "G-12 高爆弹",
+          "count": 24
+        },
+        {
+          "id": "eagle_110mm_rocket_pods",
+          "name": "飞鹰110 MM火箭巢",
+          "count": 23
+        }
+      ],
+      "frequency": {
+        "r_72_censor": 8,
+        "p_19_redeemer": 10,
+        "g_12_high_explosive": 24,
+        "support_eat_411_leveller": 22,
+        "support_mls_4x_commando": 53,
+        "orbital_napalm_barrage": 16,
+        "support_spear": 10,
+        "sg_97_sweeper": 17,
+        "gp_20_ultimatum": 35,
+        "eagle_napalm_airstrike": 15,
+        "support_40_k_thermal_gun": 30,
+        "deployable_anti_personnel_mines": 13,
+        "support_eat_700_incendiary": 13,
+        "sg_225sp_breaker_spray_pray": 27,
+        "p_34_breacher": 20,
+        "g_109_urchin": 9,
+        "orbital_ems_strike": 16,
+        "deployable_incendiary_mines": 11,
+        "vehicle_m_102_gunner_fast_recon_vehicle": 17,
+        "p_69_veto": 12,
+        "k_2_throwing_knife": 7,
+        "orbital_smoke_strike": 13,
+        "support_las_99_quasar_cannon": 8,
+        "deployable_at_emplacement": 17,
+        "ted_63_dynamite": 11,
+        "vehicle_td_220_bastion_mk_xvi": 15,
+        "deployable_gas_mines": 11,
+        "heavy_support_gl_28_belt_fed_grenade_launcher": 7,
+        "m7s_smg": 13,
+        "p_92_warrant": 8,
+        "g_sh_39_shield": 4,
+        "deployable_autocannon_sentry": 17,
+        "deployable_rocket_sentry": 11,
+        "support_ms_11_missile_silo": 18,
+        "heavy_support_gr_8_recoilless_rifle": 20,
+        "ar_23a_liberator_carbine": 8,
+        "p_2_peacemaker": 11,
+        "g_60_anti_tank_seeker": 12,
+        "deployable_flame_sentry": 11,
+        "backpack_lift_850_jump_pack": 8,
+        "sg_225_breaker": 20,
+        "cqc_73_entrenchment_tool": 4,
+        "eagle_110mm_rocket_pods": 23,
+        "eagle_airstrike": 21,
+        "gl_15_evictor": 3,
+        "p_4_senator": 18,
+        "g_89_smokescreen": 10,
+        "backpack_lift_860_hover_pack": 5,
+        "orbital_airburst_strike": 17,
+        "support_mg_206_heavy_machine_gun": 28,
+        "vehicle_m_103_supply_fast_recon_vehicle": 27,
+        "plas_1_scorcher": 8,
+        "p_44_mist": 8,
+        "g_50_seeker": 8,
+        "eagle_smoke_strike": 13,
+        "las_13_trident": 32,
+        "cqc_19_stun_lance": 6,
+        "g_6_frag": 15,
+        "heavy_support_ac_8_autocannon": 23,
+        "eagle_cluster_bomb": 13,
+        "orbital_380mm_he_barrage": 26,
+        "deployable_mortar_sentry": 13,
+        "sta_11_smg": 21,
+        "g_40_k_melta_mine": 17,
+        "deployable_ems_mortar_sentry": 11,
+        "plas_101_purifier": 9,
+        "orbital_gatling_barrage": 11,
+        "orbital_laser": 18,
+        "p_33_missile_pistol": 6,
+        "g_48_giga_grenade": 11,
+        "gp_31_grenade_pistol": 10,
+        "g_142_pyrotech": 17,
+        "backpack_sh_51_directional_shield": 13,
+        "vehicle_exo_55_breakthrough_exosuit": 10,
+        "r_63cs_diligence_counter_sniper": 2,
+        "cqc_2_saber": 9,
+        "g_10_incendiary": 12,
+        "eagle_strafing_run": 19,
+        "orbital_walking_barrage": 15,
+        "cqc_30_stun_baton": 11,
+        "g_123_thermite": 40,
+        "heavy_support_sta_x3_wasp_launcher": 3,
+        "eagle_gas_airstrike": 18,
+        "deployable_laser_sentry": 17,
+        "p_113_verdict": 12,
+        "deployable_machine_gun_sentry": 14,
+        "vehicle_exo_51_lumberjack_exosuit": 23,
+        "vehicle_exo_49_emancipator_exosuit": 15,
+        "support_apw_1_anti_materiel_rifle": 23,
+        "backpack_ax_flam_75_hot_dog": 8,
+        "r_2_amendment": 16,
+        "support_amw_20_apex": 8,
+        "orbital_gas_strike": 14,
+        "smg_203_gallant": 1,
+        "g_11_caltrops": 9,
+        "deployable_anti_tank_mines": 12,
+        "vehicle_exo_45_patriot_exosuit": 27,
+        "m6c_socom_pistol": 10,
+        "deployable_gatling_sentry": 14,
+        "r_40_k_hot_shot_marksman_rifle": 6,
+        "las_7_dagger": 13,
+        "heavy_support_b_flam_80_flamer": 10,
+        "support_las_44_nova": 8,
+        "r_63_diligence": 11,
+        "p_40_k_bolt_pistol": 21,
+        "backpack_ax_ar_23_guard_dog": 8,
+        "deployable_gas_mortar_sentry": 14,
+        "p_72_crisper": 9,
+        "g_8_immolation": 7,
+        "orbital_precision_strike": 17,
+        "deployable_tesla_tower": 9,
+        "orbital_railcannon_strike": 20,
+        "heavy_support_m_1000_hmg": 1,
+        "las_58_talon": 23,
+        "g_16_impact": 18,
+        "backpack_b_100_portable_hellbomb": 10,
+        "mp_98_knight": 5,
+        "support_mg_43_machine_gun": 6,
+        "ar_59_suppressor": 12,
+        "deployable_grenadier_defense_wall": 9,
+        "backpack_ax_tx_13_purifier": 8,
+        "support_m_105_stalwart": 12,
+        "support_eat_17_expendable_anti_tank": 18,
+        "support_plas_45_epoch": 4,
+        "ar_2_coyote": 3,
+        "g_13_incendiary_impact": 13,
+        "support_gl_52_conciliator": 6,
+        "g_7_pineapple": 4,
+        "las_12_sai": 17,
+        "tm_1_lure_mine": 16,
+        "backpack_b_1_supply_pack": 12,
+        "vehicle_td_110_maelstrom": 14,
+        "sg_451_cookout": 3,
+        "deployable_shield_generator_relay": 20,
+        "backpack_sh_32_shield_generator_pack": 5,
+        "backpack_b_md_c4_pack": 10,
+        "orbital_120mm_he_barrage": 14,
+        "jar_5_dominator": 3,
+        "support_mgx_42_bullet_storm": 11,
+        "backpack_sh_20_ballistic_shield_backpack": 8,
+        "p_11_stim_pistol": 7,
+        "g_4_gas": 12,
+        "support_gl_21_grenade_launcher": 4,
+        "sta_52_assault_rifle": 6,
+        "sg_22_bushwhacker": 7,
+        "g_3_smoke": 14,
+        "flam_66_torcher": 5,
+        "sg_225ie_breaker_incendiary": 7,
+        "sg_8p_punisher_plasma": 2,
+        "smg_flam_34_stoker": 2,
+        "cqc_42_machete": 6,
+        "ar_61_tenderizer": 6,
+        "support_flam_40_flamethrower": 10,
+        "deployable_hmg_emplacement": 14,
+        "p_35_re_educator": 4,
+        "ar_gl_21_one_two": 1,
+        "eagle_500kg_bomb": 9,
+        "plas_15_loyalist": 16,
+        "support_cqc_20_breaching_hammer": 4,
+        "plas_39_accelerator_rifle": 11,
+        "las_5_scythe": 3,
+        "smg_37_defender": 3,
+        "backpack_lift_182_teleport_pack": 5,
+        "heavy_support_faf_14_spear": 1,
+        "heavy_support_rl_77_airburst_rocket_launcher": 6,
+        "smg_32_reprimand": 1,
+        "backpack_ax_las_5_guard_dog_rover": 4,
+        "backpack_ax_arc_3_k_9": 5,
+        "cqc_5_combat_hatchet": 4,
+        "support_tx_41_sterilizer": 4,
+        "ar_23_liberator": 3,
+        "support_rs_422_railgun": 2,
+        "g_31_arc": 6,
+        "vg_70_variable": 1,
+        "support_arc_3_arc_thrower": 2,
+        "las_16_sickle": 1,
+        "support_las_98_laser_cannon": 1,
+        "g_23_stun": 4,
+        "sg_20_halt": 1,
+        "las_17_double_edge_sickle": 1,
+        "support_cqc_1_outcast": 1,
+        "r_4_hyena": 1
+      }
+    },
+    "repair": {
+      "completed": 300,
+      "failed_or_timeout": 0,
+      "mean_quality": 89.07514081552486,
+      "median_quality": 89.39313343076697,
+      "mean_weakest": 69.04607473257475,
+      "role_means": {
+        "chaff": 94.29283069519093,
+        "close_defense": 76.84828424908417,
+        "anti_medium": 92.5813300397993,
+        "anti_heavy": 95.37826684921193,
+        "endurance": 79.68138141151111,
+        "demolition": 95.66875164835172
+      },
+      "elapsed_ms": {
+        "mean": 432.8962300000012,
+        "median": 296.2569000000003,
+        "p95": 1179.2978999999978,
+        "max": 3114.5652999999875
+      },
+      "layer_means": {
+        "routine": {
+          "chaff": 81.51310842490844,
+          "close_defense": 71.97049377289368,
+          "anti_medium": 82.58620502893854,
+          "anti_heavy": 0,
+          "endurance": 79.23171987304957,
+          "demolition": 0
+        },
+        "addition": {
+          "chaff": 19.653068630501338,
+          "close_defense": 4.96,
+          "anti_medium": 20.474389326877557,
+          "anti_heavy": 126.2350392569952,
+          "endurance": 0.5265230769230772,
+          "demolition": 141.38225347985355
+        }
+      },
+      "layer_minima": {
+        "routine": 0,
+        "addition": 0.27040000000000003
+      },
+      "over_bot_deadline": 0,
+      "average_search": {
+        "whole_draws": 4.34,
+        "local_trials": 6.54,
+        "ablations": 24.826666666666668,
+        "previews": 35.42,
+        "improvements": 1.55,
+        "restarts": 1.12
+      },
+      "unique_equipment": {
+        "primary": 49,
+        "secondary": 26,
+        "grenade": 24,
+        "stratagem": 94
+      },
+      "top_equipment": [
+        {
+          "id": "support_mls_4x_commando",
+          "name": "MLS-4X 突击兵",
+          "count": 60
+        },
+        {
+          "id": "g_123_thermite",
+          "name": "G-123 铝热弹",
+          "count": 47
+        },
+        {
+          "id": "gp_20_ultimatum",
+          "name": "GP-20 最后通牒",
+          "count": 38
+        },
+        {
+          "id": "vehicle_m_103_supply_fast_recon_vehicle",
+          "name": "M-103 补给型快速侦察载具",
+          "count": 35
+        },
+        {
+          "id": "vehicle_exo_51_lumberjack_exosuit",
+          "name": "EXO-51 “伐木者”外骨骼装甲",
+          "count": 35
+        },
+        {
+          "id": "p_34_breacher",
+          "name": "P-34 爆破者",
+          "count": 28
+        },
+        {
+          "id": "vehicle_exo_45_patriot_exosuit",
+          "name": "EXO-45 “爱国者”外骨骼装甲",
+          "count": 26
+        },
+        {
+          "id": "support_eat_700_incendiary",
+          "name": "EAT-700 一次性凝固汽油弹",
+          "count": 24
+        },
+        {
+          "id": "support_eat_411_leveller",
+          "name": "EAT-411 荡平者",
+          "count": 24
+        },
+        {
+          "id": "support_mgx_42_bullet_storm",
+          "name": "MGX-42 子弹风暴",
+          "count": 22
+        },
+        {
+          "id": "g_40_k_melta_mine",
+          "name": "G/40-K 热熔地雷",
+          "count": 21
+        },
+        {
+          "id": "deployable_shield_generator_relay",
+          "name": "防护罩生成中继器",
+          "count": 21
+        }
+      ],
+      "frequency": {
+        "flam_66_torcher": 7,
+        "sg_22_bushwhacker": 17,
+        "tm_1_lure_mine": 18,
+        "deployable_autocannon_sentry": 14,
+        "eagle_110mm_rocket_pods": 15,
+        "support_arc_3_arc_thrower": 9,
+        "support_mls_4x_commando": 60,
+        "sg_225sp_breaker_spray_pray": 17,
+        "las_58_talon": 17,
+        "g_109_urchin": 8,
+        "vehicle_exo_49_emancipator_exosuit": 14,
+        "deployable_gatling_sentry": 11,
+        "orbital_gas_strike": 17,
+        "support_las_44_nova": 9,
+        "ar_23a_liberator_carbine": 13,
+        "g_123_thermite": 47,
+        "support_apw_1_anti_materiel_rifle": 20,
+        "eagle_airstrike": 13,
+        "vehicle_td_220_bastion_mk_xvi": 15,
+        "support_eat_700_incendiary": 24,
+        "plas_101_purifier": 7,
+        "gp_20_ultimatum": 38,
+        "g_40_k_melta_mine": 21,
+        "deployable_anti_personnel_mines": 13,
+        "support_spear": 16,
+        "deployable_hmg_emplacement": 16,
+        "ted_63_dynamite": 18,
+        "orbital_napalm_barrage": 11,
+        "deployable_gas_mines": 10,
+        "heavy_support_gl_28_belt_fed_grenade_launcher": 4,
+        "ar_59_suppressor": 10,
+        "p_11_stim_pistol": 7,
+        "g_50_seeker": 10,
+        "heavy_support_ac_8_autocannon": 9,
+        "deployable_flame_sentry": 14,
+        "vehicle_m_102_gunner_fast_recon_vehicle": 13,
+        "deployable_gas_mortar_sentry": 8,
+        "arc_12_blitzer": 2,
+        "p_4_senator": 19,
+        "g_31_arc": 5,
+        "eagle_cluster_bomb": 12,
+        "heavy_support_b_flam_80_flamer": 13,
+        "sg_225ie_breaker_incendiary": 16,
+        "g_3_smoke": 7,
+        "support_40_k_thermal_gun": 14,
+        "vehicle_m_103_supply_fast_recon_vehicle": 35,
+        "eagle_napalm_airstrike": 18,
+        "r_36_eruptor": 3,
+        "backpack_sh_51_directional_shield": 8,
+        "deployable_incendiary_mines": 9,
+        "r_2_amendment": 20,
+        "p_113_verdict": 10,
+        "g_142_pyrotech": 11,
+        "deployable_machine_gun_sentry": 12,
+        "orbital_railcannon_strike": 15,
+        "eagle_500kg_bomb": 12,
+        "eagle_gas_airstrike": 17,
+        "deployable_grenadier_defense_wall": 18,
+        "backpack_b_1_supply_pack": 17,
+        "cqc_73_entrenchment_tool": 6,
+        "support_eat_411_leveller": 24,
+        "deployable_mortar_sentry": 11,
+        "support_flam_40_flamethrower": 10,
+        "m7s_smg": 9,
+        "m6c_socom_pistol": 8,
+        "g_23_stun": 7,
+        "deployable_tesla_tower": 14,
+        "backpack_b_md_c4_pack": 11,
+        "vehicle_exo_45_patriot_exosuit": 26,
+        "jar_5_dominator": 2,
+        "p_19_redeemer": 7,
+        "backpack_b_100_portable_hellbomb": 15,
+        "support_mg_206_heavy_machine_gun": 17,
+        "deployable_ems_mortar_sentry": 8,
+        "r_63_diligence": 19,
+        "p_40_k_bolt_pistol": 17,
+        "g_48_giga_grenade": 18,
+        "backpack_ax_las_5_guard_dog_rover": 5,
+        "eagle_strafing_run": 11,
+        "support_las_99_quasar_cannon": 10,
+        "g_8_immolation": 7,
+        "backpack_sh_32_shield_generator_pack": 3,
+        "orbital_380mm_he_barrage": 14,
+        "sg_97_sweeper": 16,
+        "las_7_dagger": 20,
+        "g_60_anti_tank_seeker": 10,
+        "orbital_gatling_barrage": 14,
+        "deployable_anti_tank_mines": 10,
+        "ar_61_tenderizer": 6,
+        "plas_15_loyalist": 12,
+        "g_4_gas": 12,
+        "support_gl_52_conciliator": 14,
+        "smg_203_gallant": 3,
+        "g_12_high_explosive": 11,
+        "deployable_shield_generator_relay": 21,
+        "support_mg_43_machine_gun": 13,
+        "backpack_ax_tx_13_purifier": 16,
+        "p_44_mist": 12,
+        "vehicle_exo_55_breakthrough_exosuit": 18,
+        "orbital_smoke_strike": 10,
+        "p_69_veto": 11,
+        "g_89_smokescreen": 6,
+        "support_las_98_laser_cannon": 7,
+        "vehicle_exo_51_lumberjack_exosuit": 35,
+        "r_72_censor": 13,
+        "gp_31_grenade_pistol": 16,
+        "support_eat_17_expendable_anti_tank": 10,
+        "p_34_breacher": 28,
+        "support_gl_21_grenade_launcher": 9,
+        "sta_52_assault_rifle": 9,
+        "heavy_support_rl_77_airburst_rocket_launcher": 6,
+        "sg_225_breaker": 13,
+        "p_72_crisper": 10,
+        "g_13_incendiary_impact": 13,
+        "support_tx_41_sterilizer": 4,
+        "orbital_airburst_strike": 19,
+        "plas_39_accelerator_rifle": 12,
+        "g_16_impact": 13,
+        "orbital_precision_strike": 17,
+        "orbital_walking_barrage": 20,
+        "deployable_rocket_sentry": 17,
+        "p_33_missile_pistol": 9,
+        "p_2_peacemaker": 7,
+        "backpack_lift_182_teleport_pack": 10,
+        "deployable_laser_sentry": 15,
+        "heavy_support_gr_8_recoilless_rifle": 10,
+        "las_13_trident": 14,
+        "deployable_at_emplacement": 20,
+        "orbital_120mm_he_barrage": 13,
+        "heavy_support_m_1000_hmg": 3,
+        "support_ms_11_missile_silo": 16,
+        "support_mgx_42_bullet_storm": 22,
+        "eagle_smoke_strike": 15,
+        "g_7_pineapple": 8,
+        "orbital_laser": 11,
+        "support_cqc_20_breaching_hammer": 3,
+        "orbital_ems_strike": 12,
+        "r_40_k_hot_shot_marksman_rifle": 3,
+        "vehicle_td_110_maelstrom": 11,
+        "sg_8p_punisher_plasma": 2,
+        "g_10_incendiary": 16,
+        "sg_8s_slugger": 1,
+        "backpack_lift_850_jump_pack": 6,
+        "p_92_warrant": 7,
+        "support_plas_45_epoch": 5,
+        "sg_20_halt": 2,
+        "support_m_105_stalwart": 16,
+        "cqc_19_stun_lance": 4,
+        "plas_1_scorcher": 6,
+        "cqc_42_machete": 5,
+        "heavy_support_sta_x3_wasp_launcher": 1,
+        "dbs_2_double_freedom": 3,
+        "las_12_sai": 16,
+        "cqc_2_saber": 4,
+        "r_63cs_diligence_counter_sniper": 6,
+        "support_amw_20_apex": 8,
+        "ar_23_liberator": 5,
+        "k_2_throwing_knife": 7,
+        "las_5_scythe": 2,
+        "g_6_frag": 14,
+        "smg_flam_34_stoker": 2,
+        "g_sh_39_shield": 4,
+        "backpack_ax_flam_75_hot_dog": 5,
+        "smg_72_pummeler": 1,
+        "sta_11_smg": 11,
+        "backpack_sh_20_ballistic_shield_backpack": 6,
+        "support_cqc_9_defoliation_tool": 1,
+        "g_11_caltrops": 9,
+        "cb_9_exploding_crossbow": 4,
+        "vg_70_variable": 2,
+        "mp_98_knight": 5,
+        "heavy_support_faf_14_spear": 2,
+        "backpack_ax_ar_23_guard_dog": 4,
+        "br_14_adjudicator": 3,
+        "support_cqc_1_outcast": 1,
+        "backpack_lift_860_hover_pack": 4,
+        "sg_8_punisher": 1,
+        "gl_15_evictor": 1,
+        "ar_23l_liberator_legacy": 1,
+        "smg_37_defender": 2,
+        "support_rs_422_railgun": 2,
+        "cqc_5_combat_hatchet": 1,
+        "smg_32_reprimand": 2,
+        "las_16_sickle": 1,
+        "backpack_ax_arc_3_k_9": 4,
+        "sg_451_cookout": 2,
+        "p_35_re_educator": 6,
+        "ar_23p_liberator_penetrator": 1,
+        "ma5c_assault_rifle": 1,
+        "cqc_30_stun_baton": 2,
+        "ar_2_coyote": 1,
+        "r_2124_constitution": 1,
+        "las_17_double_edge_sickle": 1
+      }
+    }
+  },
+  "paired": {
+    "n": 300,
+    "mean_delta": 0.483613666129708,
+    "bootstrap_95": [
+      -0.29375849262185677,
+      1.2039519327370278
+    ]
+  },
+  "status": "SEPARATE_ROUTINE_AND_ADDITION_BOTTLENECKS",
+  "full_report_sha256": "a81b4f89cbaa89d2261b786f810361940615c8347edb0543c3e9d14a16aed534",
+  "examples": [
+    {
+      "seed": 240000,
+      "whole": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "r_72_censor",
+          "secondary": "p_19_redeemer",
+          "grenade": "g_12_high_explosive",
+          "stratagems": [
+            "support_eat_411_leveller",
+            "support_mls_4x_commando",
+            "orbital_napalm_barrage",
+            "support_spear"
+          ]
+        },
+        "scores": {
+          "chaff": 90.15032967032967,
+          "close_defense": 76.97142857142856,
+          "anti_medium": 104.74334390244117,
+          "anti_heavy": 131.68,
+          "endurance": 66.72435210177596,
+          "demolition": 234.732967032967
+        },
+        "quality": 88.97435172392237,
+        "weakest": 66.72435210177596,
+        "layers": {
+          "routine": {
+            "chaff": 85.40571428571428,
+            "close_defense": 76.97142857142856,
+            "anti_medium": 96.30375130239693,
+            "anti_heavy": 0,
+            "endurance": 62.699736717160576,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 4.7446153846153845,
+            "close_defense": 0,
+            "anti_medium": 96.10285714285715,
+            "anti_heavy": 131.68,
+            "endurance": 4.024615384615385,
+            "demolition": 234.732967032967
+          }
+        },
+        "elapsed_ms": 871.5338,
+        "steps": 122,
+        "completed": 122,
+        "search_stats": {
+          "whole_draws": 122,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      },
+      "repair": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "flam_66_torcher",
+          "secondary": "sg_22_bushwhacker",
+          "grenade": "tm_1_lure_mine",
+          "stratagems": [
+            "deployable_autocannon_sentry",
+            "eagle_110mm_rocket_pods",
+            "support_arc_3_arc_thrower",
+            "support_mls_4x_commando"
+          ]
+        },
+        "scores": {
+          "chaff": 83.39269435328944,
+          "close_defense": 67,
+          "anti_medium": 103.42433352952327,
+          "anti_heavy": 161.2736258544524,
+          "endurance": 91.47926444098117,
+          "demolition": 122.61758241758243
+        },
+        "quality": 90.31199313237845,
+        "weakest": 67,
+        "layers": {
+          "routine": {
+            "chaff": 70,
+            "close_defense": 65,
+            "anti_medium": 95.95739047953026,
+            "anti_heavy": 0,
+            "endurance": 91.47926444098117,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 13.392694353289446,
+            "close_defense": 2,
+            "anti_medium": 14.908911474864933,
+            "anti_heavy": 161.2736258544524,
+            "endurance": 0,
+            "demolition": 122.61758241758243
+          }
+        },
+        "elapsed_ms": 225.6907000000001,
+        "steps": 40,
+        "completed": 6,
+        "search_stats": {
+          "whole_draws": 2,
+          "local_trials": 4,
+          "ablations": 14,
+          "previews": 20,
+          "improvements": 1,
+          "restarts": 1
+        }
+      }
+    },
+    {
+      "seed": 240001,
+      "repair": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_225sp_breaker_spray_pray",
+          "secondary": "las_58_talon",
+          "grenade": "g_109_urchin",
+          "stratagems": [
+            "vehicle_exo_49_emancipator_exosuit",
+            "deployable_gatling_sentry",
+            "orbital_gas_strike",
+            "support_las_44_nova"
+          ]
+        },
+        "scores": {
+          "chaff": 87.63266128677004,
+          "close_defense": 77.69142857142857,
+          "anti_medium": 76.96116809175494,
+          "anti_heavy": 73.12207066043962,
+          "endurance": 87.59221263737422,
+          "demolition": 103.35538461538462
+        },
+        "quality": 83.8332568746279,
+        "weakest": 73.12207066043962,
+        "layers": {
+          "routine": {
+            "chaff": 74.81142857142856,
+            "close_defense": 77.69142857142857,
+            "anti_medium": 67.55533894754389,
+            "anti_heavy": 0,
+            "endurance": 87.59221263737422,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 12.821232715341477,
+            "close_defense": 0,
+            "anti_medium": 9.405829144211058,
+            "anti_heavy": 73.12207066043962,
+            "endurance": 0,
+            "demolition": 103.35538461538462
+          }
+        },
+        "elapsed_ms": 476.61310000000003,
+        "steps": 117,
+        "completed": 17,
+        "search_stats": {
+          "whole_draws": 6,
+          "local_trials": 11,
+          "ablations": 42,
+          "previews": 59,
+          "improvements": 3,
+          "restarts": 2
+        }
+      },
+      "whole": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_97_sweeper",
+          "secondary": "gp_20_ultimatum",
+          "grenade": "g_12_high_explosive",
+          "stratagems": [
+            "eagle_napalm_airstrike",
+            "support_40_k_thermal_gun",
+            "deployable_anti_personnel_mines",
+            "support_eat_700_incendiary"
+          ]
+        },
+        "scores": {
+          "chaff": 103.06646656836344,
+          "close_defense": 60.41142857142857,
+          "anti_medium": 103.72949422378622,
+          "anti_heavy": 167.23074262713607,
+          "endurance": 61.84751046154378,
+          "demolition": 229.16373626373627
+        },
+        "quality": 87.0431565054954,
+        "weakest": 60.41142857142857,
+        "layers": {
+          "routine": {
+            "chaff": 81.15428571428572,
+            "close_defense": 60.41142857142857,
+            "anti_medium": 97.09714285714284,
+            "anti_heavy": 0,
+            "endurance": 61.13674123077455,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 26.77541055625655,
+            "close_defense": 0,
+            "anti_medium": 17.58006008679203,
+            "anti_heavy": 167.23074262713607,
+            "endurance": 0.7107692307692308,
+            "demolition": 229.16373626373627
+          }
+        },
+        "elapsed_ms": 355.53369999999995,
+        "steps": 73,
+        "completed": 73,
+        "search_stats": {
+          "whole_draws": 73,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      }
+    },
+    {
+      "seed": 240002,
+      "whole": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_225sp_breaker_spray_pray",
+          "secondary": "p_34_breacher",
+          "grenade": "g_109_urchin",
+          "stratagems": [
+            "orbital_ems_strike",
+            "deployable_incendiary_mines",
+            "vehicle_m_102_gunner_fast_recon_vehicle",
+            "support_spear"
+          ]
+        },
+        "scores": {
+          "chaff": 89.55852834038554,
+          "close_defense": 77.69142857142857,
+          "anti_medium": 82.4230231148233,
+          "anti_heavy": 104.54857142857144,
+          "endurance": 82.33912940659314,
+          "demolition": 136.58615384615385
+        },
+        "quality": 88.66868490553843,
+        "weakest": 77.69142857142857,
+        "layers": {
+          "routine": {
+            "chaff": 85.40571428571428,
+            "close_defense": 77.69142857142857,
+            "anti_medium": 76.26731491169829,
+            "anti_heavy": 0,
+            "endurance": 82.33912940659314,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 4.152814054671255,
+            "close_defense": 0,
+            "anti_medium": 6.155708203125,
+            "anti_heavy": 104.54857142857144,
+            "endurance": 0,
+            "demolition": 136.58615384615385
+          }
+        },
+        "elapsed_ms": 211.54190000000017,
+        "steps": 34,
+        "completed": 34,
+        "search_stats": {
+          "whole_draws": 34,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      },
+      "repair": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "ar_23a_liberator_carbine",
+          "secondary": "sg_22_bushwhacker",
+          "grenade": "g_123_thermite",
+          "stratagems": [
+            "support_apw_1_anti_materiel_rifle",
+            "eagle_airstrike",
+            "vehicle_td_220_bastion_mk_xvi",
+            "support_eat_700_incendiary"
+          ]
+        },
+        "scores": {
+          "chaff": 87.00865812342576,
+          "close_defense": 62.994285714285716,
+          "anti_medium": 93.38046057870035,
+          "anti_heavy": 177.40355220750982,
+          "endurance": 71.2954089940767,
+          "demolition": 77.53846153846155
+        },
+        "quality": 82.03621249149168,
+        "weakest": 62.994285714285716,
+        "layers": {
+          "routine": {
+            "chaff": 70.01142857142858,
+            "close_defense": 62.994285714285716,
+            "anti_medium": 80.62216189580411,
+            "anti_heavy": 0,
+            "endurance": 70.58463976330746,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 16.997229551997187,
+            "close_defense": 0,
+            "anti_medium": 12.758298682896235,
+            "anti_heavy": 177.40355220750982,
+            "endurance": 0.7107692307692308,
+            "demolition": 77.53846153846155
+          }
+        },
+        "elapsed_ms": 329.17610000000013,
+        "steps": 96,
+        "completed": 13,
+        "search_stats": {
+          "whole_draws": 4,
+          "local_trials": 9,
+          "ablations": 35,
+          "previews": 49,
+          "improvements": 2,
+          "restarts": 2
+        }
+      }
+    },
+    {
+      "seed": 240003,
+      "repair": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "plas_101_purifier",
+          "secondary": "gp_20_ultimatum",
+          "grenade": "g_40_k_melta_mine",
+          "stratagems": [
+            "deployable_anti_personnel_mines",
+            "deployable_autocannon_sentry",
+            "support_spear",
+            "deployable_hmg_emplacement"
+          ]
+        },
+        "scores": {
+          "chaff": 102.63442712771175,
+          "close_defense": 78.38285714285713,
+          "anti_medium": 103.21865059697993,
+          "anti_heavy": 205.31824123906776,
+          "endurance": 79.56146153846154,
+          "demolition": 193.24989010989012
+        },
+        "quality": 92.99071978021978,
+        "weakest": 78.38285714285713,
+        "layers": {
+          "routine": {
+            "chaff": 92.45714285714286,
+            "close_defense": 75.38285714285713,
+            "anti_medium": 97.13982149045943,
+            "anti_heavy": 0,
+            "endurance": 79.56146153846154,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 13.111121723866264,
+            "close_defense": 3,
+            "anti_medium": 11.894483041607915,
+            "anti_heavy": 205.31824123906776,
+            "endurance": 0,
+            "demolition": 193.24989010989012
+          }
+        },
+        "elapsed_ms": 109.79379999999992,
+        "steps": 47,
+        "completed": 14,
+        "search_stats": {
+          "whole_draws": 11,
+          "local_trials": 3,
+          "ablations": 14,
+          "previews": 20,
+          "improvements": 1,
+          "restarts": 0
+        }
+      },
+      "whole": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_225sp_breaker_spray_pray",
+          "secondary": "p_69_veto",
+          "grenade": "k_2_throwing_knife",
+          "stratagems": [
+            "orbital_smoke_strike",
+            "support_las_99_quasar_cannon",
+            "deployable_at_emplacement",
+            "support_mls_4x_commando"
+          ]
+        },
+        "scores": {
+          "chaff": 74.96835164835164,
+          "close_defense": 77.69142857142857,
+          "anti_medium": 102.7184348730929,
+          "anti_heavy": 173.68,
+          "endurance": 78.06300575687852,
+          "demolition": 136.58615384615385
+        },
+        "quality": 88.45379766277647,
+        "weakest": 74.96835164835164,
+        "layers": {
+          "routine": {
+            "chaff": 74.81142857142856,
+            "close_defense": 77.69142857142857,
+            "anti_medium": 95.95739047953026,
+            "anti_heavy": 0,
+            "endurance": 78.06300575687852,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 0.15692307692307694,
+            "close_defense": 0,
+            "anti_medium": 10,
+            "anti_heavy": 173.68,
+            "endurance": 0,
+            "demolition": 136.58615384615385
+          }
+        },
+        "elapsed_ms": 18.739599999999882,
+        "steps": 12,
+        "completed": 12,
+        "search_stats": {
+          "whole_draws": 12,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      }
+    },
+    {
+      "seed": 240004,
+      "whole": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_225sp_breaker_spray_pray",
+          "secondary": "gp_20_ultimatum",
+          "grenade": "ted_63_dynamite",
+          "stratagems": [
+            "orbital_napalm_barrage",
+            "vehicle_td_220_bastion_mk_xvi",
+            "deployable_gas_mines",
+            "heavy_support_gl_28_belt_fed_grenade_launcher"
+          ]
+        },
+        "scores": {
+          "chaff": 104.01620449689598,
+          "close_defense": 77.69142857142857,
+          "anti_medium": 102.80885261685933,
+          "anti_heavy": 120.62730210867,
+          "endurance": 86.26616221132511,
+          "demolition": 195.46527472527475
+        },
+        "quality": 93.9929317971256,
+        "weakest": 77.69142857142857,
+        "layers": {
+          "routine": {
+            "chaff": 101.4,
+            "close_defense": 77.69142857142857,
+            "anti_medium": 97.09714285714284,
+            "anti_heavy": 0,
+            "endurance": 86.26616221132511,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 19.0117851943023,
+            "close_defense": 0,
+            "anti_medium": 9.31240457556626,
+            "anti_heavy": 120.62730210867,
+            "endurance": 0,
+            "demolition": 195.46527472527475
+          }
+        },
+        "elapsed_ms": 17.75109999999995,
+        "steps": 2,
+        "completed": 2,
+        "search_stats": {
+          "whole_draws": 2,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      },
+      "repair": {
+        "status": "ASSESSMENT_PASS",
+        "loadout": {
+          "primary": "sg_225sp_breaker_spray_pray",
+          "secondary": "gp_20_ultimatum",
+          "grenade": "ted_63_dynamite",
+          "stratagems": [
+            "orbital_napalm_barrage",
+            "vehicle_td_220_bastion_mk_xvi",
+            "deployable_gas_mines",
+            "heavy_support_gl_28_belt_fed_grenade_launcher"
+          ]
+        },
+        "scores": {
+          "chaff": 104.01620449689598,
+          "close_defense": 77.69142857142857,
+          "anti_medium": 102.80885261685933,
+          "anti_heavy": 120.62730210867,
+          "endurance": 86.26616221132511,
+          "demolition": 195.46527472527475
+        },
+        "quality": 93.9929317971256,
+        "weakest": 77.69142857142857,
+        "layers": {
+          "routine": {
+            "chaff": 101.4,
+            "close_defense": 77.69142857142857,
+            "anti_medium": 97.09714285714284,
+            "anti_heavy": 0,
+            "endurance": 86.26616221132511,
+            "demolition": 0
+          },
+          "addition": {
+            "chaff": 19.0117851943023,
+            "close_defense": 0,
+            "anti_medium": 9.31240457556626,
+            "anti_heavy": 120.62730210867,
+            "endurance": 0,
+            "demolition": 195.46527472527475
+          }
+        },
+        "elapsed_ms": 17.603700000000117,
+        "steps": 2,
+        "completed": 2,
+        "search_stats": {
+          "whole_draws": 2,
+          "local_trials": 0,
+          "ablations": 0,
+          "previews": 0,
+          "improvements": 0,
+          "restarts": 0
+        }
+      }
+    }
+  ]
+}

@@ -213,7 +213,7 @@ function routineEnduranceReview(model,results) {
   const name=id=>model.equipment.find(r=>r.equipment_id===id)?.name??id??'待定';
   return '<section id="loadout-endurance-review"><h2>整套常驻续航：主力＋备用</h2>'
     +'<p>每把常驻枪沿用一盒公共补给基线与人工校准。清杂、近防、反中各以60为参照截到0～1，再按60%／30%／10%合成适配度q；每枪有效贡献＝q×单件续航。常态分＝最高贡献＋其余贡献的35%，最高100分。权重是可调工程起点，q不是使用时间或命中率。手雷次数独立；红绿不拖平均。携带补包或补车时，最终续航补到至少100；两者不重复加分，原本超过100不降低。</p>'
-    +'<p>明确保留反重的装备退出常态枪池；人工整件加值在末尾只加一次。补给不改动单枪续航，人工0保持0。最终续航100不等于真实无限弹药，有限补给次数与资源门槛仍单独检查。未知数据保留缺口；没有新增续航分数硬门槛，物理检查仍独立。</p>'
+    +'<p>明确保留反重的装备退出常态枪池；人工整件加值在末尾只加一次。补给不改动单枪续航，人工0保持0。平衡抽取须六维最终分全部达到60；先完成补包/补车修正，再检查续航是否及格。最终续航100不等于真实无限弹药，互斥、有限资源、20秒双重甲、五洞与近防安全仍单独检查。未知数据保留缺口。</p>'
     +'<p class="note">下表是当前保存数据的计算结果。修改人工评分后刷新页面，可查看重新生成的整套结果。<a href="/docs/loadout-v3-endurance-algorithm.md">查看公式与边界说明</a></p>'
     +table(['示例配装','常态汇总','补给修正前（含人工加值）','最终续航','主力贡献项'],results.filter(r=>r.endurance_assessment).map(r=>[
       r.name,score(r.endurance_assessment.score),score(r.dimensions.endurance.supply_adjustment?.before_score??r.dimensions.endurance.score),

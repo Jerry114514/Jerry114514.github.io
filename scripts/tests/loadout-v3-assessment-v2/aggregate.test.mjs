@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {summarizeLoadout, displayScore} from '../../../shared/hd2-loadout/assessment-v2/aggregate.mjs';
+import {summarizeLoadout, displayScore, finalizeAssessmentSummary} from '../../../shared/hd2-loadout/assessment-v2/aggregate.mjs';
 const roles = ['chaff', 'close_defense', 'anti_medium'];
 const base = score => roles.map(role => ({equipment_id: 'gun', role, score, state: 'ENGINEERING_ESTIMATE'}));
 const request = () => ({ordinary: base(60), thresholds: {chaff: 60, close_defense: 60, anti_medium: null},
@@ -41,4 +41,37 @@ test('display compression preserves every pass threshold below 100 and has no ov
   assert.ok(displayScore(500) > displayScore(110)); assert.ok(displayScore(500) < 105);
   const data = request(); data.ordinary = base(1000); data.calibration_ready = true;
   assert.equal(summarizeLoadout(data).eligible_for_draw, true);
+});
+
+test('each final dimension independently blocks admission below 60 despite five strong dimensions', () => {
+  const allRoles = [...roles, 'anti_heavy', 'endurance', 'demolition'];
+  for (const weakRole of allRoles) for (const score of [0, 59.99, null]) {
+    const data = request();
+    data.thresholds = Object.fromEntries(allRoles.map(role => [role, 60]));
+    data.coverage_complete = Object.fromEntries(allRoles.map(role => [role, false]));
+    data.ordinary = allRoles.map(role => ({equipment_id:'fixture', role,
+      score:role === weakRole ? score : 100, state:'ENGINEERING_ESTIMATE'}));
+    const result = summarizeLoadout(data);
+    assert.notEqual(result.numeric_status, 'PASS', `${weakRole}=${score}`);
+    assert.ok(result.missing.includes(weakRole));
+    data.ordinary.find(r => r.role === weakRole).score = 60;
+    assert.equal(summarizeLoadout(data).numeric_status, 'PASS', weakRole);
+  }
+});
+
+test('final score adjustments reclassify admission without bypassing physical gates', () => {
+  const data = request();
+  data.thresholds.endurance = 60;
+  data.ordinary.push({equipment_id:'routine',role:'endurance',score:20,state:'ENGINEERING_ESTIMATE'});
+  const result = summarizeLoadout(data);
+  assert.ok(result.missing.includes('endurance'));
+  result.dimensions.endurance.score = 100;
+  const supplied = finalizeAssessmentSummary(result);
+  assert.equal(supplied.dimensions.endurance.status, 'PASS');
+  assert.equal(supplied.numeric_status, 'PASS');
+  assert.deepEqual(supplied.missing, []);
+  supplied.gates.heavy_pair = 'UNKNOWN';
+  const incomplete = finalizeAssessmentSummary(supplied);
+  assert.equal(incomplete.numeric_status, 'UNKNOWN');
+  assert.deepEqual(incomplete.missing, ['heavy_pair']);
 });

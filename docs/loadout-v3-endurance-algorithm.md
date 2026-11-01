@@ -39,6 +39,7 @@ V = q × 单枪续航E
 - 实现：[loadout-endurance.mjs](../shared/hd2-loadout/assessment-v2/loadout-endurance.mjs)。没有射击模拟或职责组合搜索。
 - 接入：[evaluate.mjs](../shared/hd2-loadout/assessment-v2/evaluate.mjs) 返回 `endurance_assessment` 与 `dimensions.endurance.supply_adjustment`，保留每枪E、q、V以及主力/备用分解。
 - 参数由构建器写入 `scenario.loadout_endurance`；最终分不会再重复重标尺度。
-- 这里完成的是综合续航评分。现有真实资源门槛继续判定配装；没有擅自增加续航分数硬门槛，也没有开启尚未验收的正式随机。
+- 首次平衡抽取要求清杂、近防、反中、反重、续航、拆迁六项最终显示分全部达到60。续航先完成手工加值和补包/补车修正，再参与及格判定；不存在只显示100分却按补给前低分拒绝的情况。
+- 分数达标仍须通过互斥、20秒双重甲、五洞、共享弹药与近防安全检查。纯随机不检查能力；输出后的换装不调用评价器，始终保留单机甲限制。模型及格不代表已完成游戏实战认证。
 
 验收页包含当前保存数据下的示例组合和逐项分解；保存人工评分后刷新页面即可查看重算结果。

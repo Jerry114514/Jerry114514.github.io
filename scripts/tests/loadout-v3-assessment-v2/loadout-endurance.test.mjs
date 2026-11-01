@@ -209,3 +209,30 @@ test('display floor cannot create unlimited physical supplies, repair a missing 
   assert.equal(illegal.gates.legality.reason, 'SUPPORT_WEAPON_CARRIES_BACKPACK');
   assert.equal(illegal.dimensions, undefined);
 });
+
+test('supply pack or car resolves the actual endurance admission gate after all final adjustments', () => {
+  const model = read('shared/hd2-loadout/assessment-v2/equipment.json');
+  const strong = {primary:'plas_1_scorcher',secondary:'gp_20_ultimatum',grenade:'g_48_giga_grenade',
+    stratagems:['support_spear',PACK,'deployable_gas_mines','deployable_flame_sentry']};
+  for (const id of [strong.primary,strong.secondary,'support_spear']) {
+    const row = get(model,id);
+    row.endurance = {...row.endurance,score:0,score_origin:'MANUAL_CALIBRATED'};
+  }
+  for (const provider of [PACK,CAR]) {
+    const loadout = {...strong,stratagems:strong.stratagems.map(id=>id===PACK?provider:id)};
+    const before = evaluateAssessment(loadout,model,catalog,{disabled_contributions:[provider]});
+    assert.equal(before.dimensions.endurance.score,0);
+    assert.equal(before.dimensions.endurance.threshold,60);
+    assert.ok(before.failed.includes('endurance'));
+    assert.equal(before.acceptance_ready,false);
+    const supplied = evaluateAssessment(loadout,model,catalog);
+    assert.equal(supplied.dimensions.endurance.score,100);
+    assert.equal(supplied.dimensions.endurance.status,'PASS');
+    assert.equal(supplied.dimensions.endurance.supply_adjustment.before_score,0);
+    assert.equal(supplied.missing.includes('endurance'),false);
+    assert.equal(supplied.failed.includes('endurance'),false);
+    assert.equal(supplied.status,'ESTIMATED_PASS');
+    assert.equal(supplied.acceptance_ready,true);
+    assert.ok(Object.values(supplied.dimensions).every(d=>d.threshold===60&&d.status==='PASS'));
+  }
+});
