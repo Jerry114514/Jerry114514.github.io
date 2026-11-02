@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "https://api.live.prod.thehelldiversgame.com/api/WarSeason/GalacticWarEffects",
-  "updated_at": "2026-11-02T13:45:56Z",
+  "updated_at": "2026-11-02T13:50:50Z",
   "version": 1,
   "war_id": 801
  },
@@ -5439,6 +5439,42 @@
    ],
    "values": [
     3308586179,
+    0
+   ]
+  },
+  "1433": {
+   "descriptionFluffHash": 0,
+   "descriptionGamePlayLongHash": 3185502027,
+   "descriptionGamePlayShortHash": 3822354591,
+   "effectType": 71,
+   "flags": 1,
+   "gameplayEffectId32": 0,
+   "id": 1433,
+   "nameHash": 1857678154,
+   "valueTypes": [
+    16,
+    0
+   ],
+   "values": [
+    2982396937,
+    0
+   ]
+  },
+  "1434": {
+   "descriptionFluffHash": 0,
+   "descriptionGamePlayLongHash": 2043048891,
+   "descriptionGamePlayShortHash": 4233691074,
+   "effectType": 40,
+   "flags": 1,
+   "gameplayEffectId32": 0,
+   "id": 1434,
+   "nameHash": 4130906463,
+   "valueTypes": [
+    16,
+    0
+   ],
+   "values": [
+    903954334,
     0
    ]
   },
