@@ -85,6 +85,93 @@ class ApiChangeDetectionTests(unittest.TestCase):
         self.assertIn("新增的银河效果", report)
         self.assertIn("增加作战兵力", report)
 
+    def test_normalizes_global_events_and_remaining_time(self):
+        rows, max_id, war_time = changes.normalize_global_events(
+            {
+                "warStatus": {
+                    "time": 1000,
+                    "globalEvents": [
+                        {
+                            "eventId": 7,
+                            "title": "INTERROGATION",
+                            "message": "<i=1>Archive</i> recovered",
+                            "expireTime": 1900,
+                            "effectIds": [1430, 1430],
+                            "planetIndices": [199],
+                        }
+                    ],
+                }
+            }
+        )
+        self.assertEqual(max_id, 7)
+        self.assertEqual(war_time, 1000)
+        self.assertEqual(rows[0]["title"], "INTERROGATION")
+        self.assertEqual(rows[0]["message"], "Archive recovered")
+        self.assertEqual(rows[0]["effect_ids"], [1430])
+        self.assertEqual(rows[0]["remaining_seconds"], 900)
+
+    def test_global_event_filter_skips_mo_and_detached_combatant_event(self):
+        rows, _max_id, _war_time = changes.normalize_global_events(
+            {
+                "warStatus": {
+                    "time": 1000,
+                    "globalEvents": [
+                        {
+                            "eventId": 10,
+                            "title": "BRIEFING",
+                            "assignmentId32": 123,
+                        },
+                        {
+                            "eventId": 11,
+                            "effectIds": [1430],
+                            "planetIndices": [],
+                        },
+                        {
+                            "eventId": 12,
+                            "title": "COMPANY MOVES",
+                            "effectIds": [1431],
+                            "planetIndices": [43],
+                        },
+                    ],
+                }
+            }
+        )
+        effects = {
+            "1430": {"id": 1430, "effectType": 40},
+            "1431": {"id": 1431, "effectType": 71},
+        }
+        selected = changes.eligible_global_events(rows, effects, 0)
+        self.assertEqual([row["event_id"] for row in selected], [12])
+
+    def test_report_renders_global_event_effects_and_planets(self):
+        result = changes.ChangeSet(
+            new_global_events=[
+                {
+                    "event_id": 1501099,
+                    "title": "COMPANY MOVES",
+                    "message": "Forces have moved.",
+                    "flag": 0,
+                    "effect_ids": [1431],
+                    "planet_indices": [43],
+                    "remaining_seconds": 3600,
+                }
+            ],
+            global_events_initial=True,
+        )
+        report = changes.render_report(
+            result,
+            {"1431": {"id": 1431, "effectType": 71}},
+            {"43": "NIVEL 43"},
+            {},
+            "2026-10-31T00:00:00Z",
+            [],
+            effect_cn={"1431": "星图标记"},
+            planet_cn={"NIVEL 43": "尼维尔 43"},
+        )
+        self.assertIn("首次启用全局事件侦测", report)
+        self.assertIn("`1431` — 星图标记", report)
+        self.assertIn("尼维尔 43", report)
+
     def test_invalid_empty_effect_payload_is_rejected(self):
         with self.assertRaises(ValueError):
             changes.normalize_effects([])

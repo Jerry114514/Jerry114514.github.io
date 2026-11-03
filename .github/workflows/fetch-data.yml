@@ -2,12 +2,12 @@ name: Fetch HD2 Data
 
 on:
   # 触发方式：
-  #   主力 = 下面的原生 schedule，每小时一次（整点后第 5 分钟，避开整点高峰）。
+  #   主力 = 下面的原生 schedule，每 15 分钟一次（:05/:20/:35/:50，避开整点高峰）。
   #   备用 = Cloudflare Worker 外部 dispatch（helldivers2-gitpage-dispatch），
   #          它的 cron 触发器配好后会再叠一层；重复触发无害（脚本幂等，无变化不提交）。
   #   已废弃 = 本机 cron（必须一直开着电脑）。
   schedule:
-    - cron: '5 * * * *'
+    - cron: '5,20,35,50 * * * *'
   workflow_dispatch:
     inputs:
       force_api_change_report:
@@ -59,7 +59,7 @@ jobs:
       # 实测帧缓存（2026-09-29）：站点 js/rate-source.js 读 HD2-Galatic_war-Map/data/recent/
       # 里的社区 CDN 15 分钟帧来算「实测速率」（星球四件套 / 城市四项 / MO 预期进度）。
       # 这份缓存不在仓库里时，Pages 上所有卡片都会退回推演、角标写「推演 · 无实测帧」。
-      # 帧是滚动窗口，跟随每小时抓取刷新即可；对外站点的“实测”角标仍使用最新可用帧。
+      # 帧是滚动窗口，跟随每 15 分钟抓取刷新即可；对外站点的“实测”角标仍使用最新可用帧。
       # ⚠ 缓存是滚动窗口（星球/区域 1 小时、MO 48 小时），必须靠这一步持续刷新；
       #   推一份静态快照上去，页面会继续拿"过去那个小时"的差分标「实测」。
       - name: Fetch HD2 recent frames (实测帧缓存)
@@ -67,9 +67,9 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
 
-      # 参考 Galactic Wide Web 的内容侦测：官方 GalacticWarEffects 定义 +
-      # 每颗星球的 planetActiveEffects 集合分别与仓库基线比较。
-      # stateless CI 不能依赖上一次进程的内存，因此只持久化这两个稳定快照。
+      # 参考 Galactic Wide Web 的内容侦测：官方 GalacticWarEffects 定义、
+      # 每颗星球的 planetActiveEffects 集合、warStatus.globalEvents 游标。
+      # stateless CI 不能依赖上一次进程的内存，因此只持久化这些稳定快照。
       - name: Detect API content changes
         id: api-changes
         continue-on-error: true
@@ -95,8 +95,8 @@ jobs:
         run: |
           echo "::notice title=HD2 API content changed::${{ steps.api-changes.outputs.change_count }} change(s) detected"
 
-      # 与现有 schema watch / upstream watch 一样，使用一条常驻 issue，
-      # 基线已同步，所以同一批变化不会在下一次运行重复通知。
+      # 常驻 issue 保存最新正文，并为本轮变化追加一条评论。只编辑正文时
+      # 不一定产生订阅通知；评论更接近截图里的逐轮消息，也保留变更历史。
       - name: Publish API content change issue
         if: steps.api-changes.outputs.has_changes == 'true'
         continue-on-error: true
@@ -107,7 +107,8 @@ jobs:
             --json number --jq '.[0].number // empty')"
           if [ -n "$n" ]; then
             gh issue edit "$n" --body-file data/api_changes_latest.md
-            echo "已刷新 issue #$n"
+            gh issue comment "$n" --body-file data/api_changes_latest.md
+            echo "已刷新 issue #$n 并追加本轮评论"
           else
             gh issue create \
               --title "🔔 HD2 API 内容变更（自动刷新）" \
@@ -135,7 +136,7 @@ jobs:
           # 必须一起提交，否则 data.json 里的 banner_image_local 在线上会 404
           git add HD2-Galatic_war-Map/assets/campaign
           # 战役奖励类型表（scripts/fetch_reward_types.py 落盘）：新战役出现新 mixId 时会被重写。
-          # 必须一起提交，否则每个小时都会重抓一次上游 bundle（白耗流量），页面也拿不到明文。
+          # 必须一起提交，否则每轮都会重抓一次上游 bundle（白耗流量），页面也拿不到明文。
           git add HD2-Galatic_war-Map/data/reward_types.json
           if ! git diff --cached --quiet; then
             git commit -m "data: 自动更新战况数据 ($(date -u '+%Y-%m-%d %H:%M'))"

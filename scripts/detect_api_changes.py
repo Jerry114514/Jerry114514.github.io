@@ -6,7 +6,8 @@ against the previous refresh. GitHub Actions starts a fresh process each time,
 so this script persists only the fields needed for the same comparison:
 
 * official GalacticWarEffects definitions, keyed by effect id;
-* each planet's active effect-id set.
+* each planet's active effect-id set;
+* a monotonic cursor for active warStatus.globalEvents.
 
 The baseline advances only after a complete v2 snapshot and the live effect
 endpoint have both been read successfully. A first run creates the baseline
@@ -16,9 +17,11 @@ without emitting a burst of false "new" notices.
 from __future__ import annotations
 
 import argparse
+import html
 import io
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -49,12 +52,17 @@ STARMAP_FILE = os.path.join(BASE_DIR, "HD2-Galatic_war-Map", "tables", "starmap.
 WAR_ID = 801
 OFFICIAL_API = "https://api.live.prod.thehelldiversgame.com"
 EFFECTS_URL = f"{OFFICIAL_API}/api/WarSeason/GalacticWarEffects"
+COMPANION_LIVE = "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live"
 HEADERS = {
     "User-Agent": "HD2-DataSync/1.0 (api-content-watch)",
     "Accept": "application/json",
     "X-Super-Client": "Jerry114514",
     "X-Super-Contact": "https://jerry114514.github.io/",
     "Accept-Language": "en-US",
+}
+COMPANION_HEADERS = {
+    "User-Agent": "HD2-DataSync/1.0 (api-content-watch)",
+    "Accept": "application/json",
 }
 
 # GWW's effect_types.json exposes these two human-readable defaults. Keep only
@@ -76,6 +84,8 @@ class ChangeSet:
     )
     planet_effects_added: dict[str, list[int]] = field(default_factory=dict)
     planet_effects_removed: dict[str, list[int]] = field(default_factory=dict)
+    new_global_events: list[dict[str, Any]] = field(default_factory=list)
+    global_events_initial: bool = False
 
     @property
     def count(self) -> int:
@@ -85,6 +95,7 @@ class ChangeSet:
             + len(self.changed_effects)
             + sum(len(v) for v in self.planet_effects_added.values())
             + sum(len(v) for v in self.planet_effects_removed.values())
+            + len(self.new_global_events)
         )
 
     @property
@@ -191,6 +202,106 @@ def normalize_planet_effects(
     if not effects_by_planet:
         raise ValueError("data.json has no usable planet activeEffects fields")
     return effects_by_planet, names
+
+
+def _int_or_default(value: Any, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _plain_block(value: Any, limit: int = 2400) -> str:
+    text = re.sub(r"<[^>]+>", "", str(value or ""))
+    text = html.unescape(text).replace("\r\n", "\n").replace("\r", "\n").strip()
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def normalize_global_events(
+    payload: Any,
+) -> tuple[list[dict[str, Any]], int, int]:
+    """Normalize active warStatus.globalEvents entries.
+
+    Returns eligible and ineligible rows together so the cursor advances past
+    major-order briefing events that should not be announced twice. The caller
+    filters eligibility when effects definitions are available.
+    """
+    if not isinstance(payload, dict) or not isinstance(payload.get("warStatus"), dict):
+        raise ValueError("companion response has no warStatus object")
+    war_status = payload["warStatus"]
+    rows = war_status.get("globalEvents")
+    if not isinstance(rows, list):
+        raise ValueError("warStatus.globalEvents is not a list")
+
+    war_time = _int_or_default(war_status.get("time"))
+    by_id: dict[int, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        event_id = _int_or_default(row.get("eventId"), -1)
+        if event_id < 0:
+            continue
+        expire_time = _int_or_default(row.get("expireTime"))
+        by_id[event_id] = {
+            "event_id": event_id,
+            "id32": _int_or_default(row.get("id32")),
+            "title": _plain_block(row.get("title"), 240),
+            "message": _plain_block(row.get("message")),
+            "flag": _int_or_default(row.get("flag")),
+            "assignment_id": _int_or_default(row.get("assignmentId32")),
+            "effect_ids": sorted(
+                {
+                    _int_or_default(value, -1)
+                    for value in row.get("effectIds") or []
+                }
+                - {-1}
+            ),
+            "planet_indices": sorted(
+                {
+                    _int_or_default(value, -1)
+                    for value in row.get("planetIndices") or []
+                }
+                - {-1}
+            ),
+            "remaining_seconds": (
+                max(0, expire_time - war_time) if expire_time and war_time else None
+            ),
+        }
+    normalized = [by_id[event_id] for event_id in sorted(by_id)]
+    return normalized, max(by_id, default=0), war_time
+
+
+def eligible_global_events(
+    events: list[dict[str, Any]],
+    effects: dict[str, dict[str, Any]],
+    after_event_id: int,
+) -> list[dict[str, Any]]:
+    """Apply the same noise filters as Galactic Wide Web's global-event cog."""
+    out = []
+    for event in events:
+        if event["event_id"] <= after_event_id:
+            continue
+        title = str(event.get("title") or "")
+        if event.get("assignment_id") or "BRIEFING" in title.upper():
+            continue
+        if not (
+            title
+            or event.get("message")
+            or event.get("effect_ids")
+            or event.get("planet_indices")
+        ):
+            continue
+        if not event.get("planet_indices"):
+            effect_types = {
+                _int_or_default((effects.get(str(effect_id)) or {}).get("effectType"), -1)
+                for effect_id in event.get("effect_ids") or []
+            }
+            # A global combatant-force event without a planet is a detached
+            # briefing fragment; GWW intentionally skips it.
+            if 40 in effect_types:
+                continue
+        out.append(event)
+    return out
 
 
 def _sort_ids(ids: set[str] | list[str]) -> list[str]:
@@ -323,6 +434,16 @@ def _effect_line(
     )
 
 
+def _format_remaining(seconds: int | None) -> str:
+    if seconds is None:
+        return "未知"
+    minutes = max(0, seconds // 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return f"{hours} 小时 {minutes} 分钟"
+    return f"{minutes} 分钟"
+
+
 def render_report(
     changes: ChangeSet,
     effects: dict[str, dict[str, Any]],
@@ -386,6 +507,40 @@ def render_report(
                 right = _clean_inline(json.dumps(after.get(name), ensure_ascii=False))
                 lines.append(f"  - `{name}`: `{left}` → `{right}`")
         lines.append("")
+
+    if changes.new_global_events:
+        lines.extend(["## 全局事件 📣", ""])
+        if changes.global_events_initial:
+            lines.extend(
+                [
+                    "首次启用全局事件侦测；以下为当前仍活跃且此前未跟踪的事件。",
+                    "",
+                ]
+            )
+        for event in changes.new_global_events:
+            event_id = event["event_id"]
+            title = event.get("title") or "未命名事件"
+            lines.extend([f"### `{event_id}` · {title}", ""])
+            event_meta = [f"剩余 {_format_remaining(event.get('remaining_seconds'))}"]
+            if event.get("flag"):
+                event_meta.append(f"flag {event['flag']}")
+            lines.append("- " + " · ".join(event_meta))
+            if event.get("message"):
+                quoted = event["message"].replace("\n", "\n> ")
+                lines.extend(["", f"> {quoted}"])
+            if event.get("effect_ids"):
+                lines.extend(["", "**关联效果**", ""])
+                lines.extend(
+                    _effect_line(str(effect_id), effects, meta, effect_cn)
+                    for effect_id in event["effect_ids"]
+                )
+            if event.get("planet_indices"):
+                planets = [
+                    planet_display(str(index), planet_names, planet_cn)
+                    for index in event["planet_indices"]
+                ]
+                lines.extend(["", "**涉及星球**：" + "、".join(planets)])
+            lines.append("")
 
     planet_ids = sorted(
         set(changes.planet_effects_added) | set(changes.planet_effects_removed),
@@ -488,6 +643,26 @@ def main() -> int:
             f"{type(last_error).__name__}: {last_error}"
         )
 
+    global_events: list[dict[str, Any]] | None = None
+    global_event_max_id = 0
+    last_global_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            companion = fetch_json(COMPANION_LIVE, COMPANION_HEADERS)
+            global_events, global_event_max_id, _war_time = normalize_global_events(
+                companion
+            )
+            break
+        except Exception as exc:
+            last_global_error = exc
+            if attempt < 2:
+                time.sleep(1.5 * (attempt + 1))
+    if global_events is None:
+        warnings.append(
+            "全局事件获取失败，global_event_id 基线保持不变："
+            f"{type(last_global_error).__name__}: {last_global_error}"
+        )
+
     data = _load_json(args.data, {})
     if not isinstance(data, dict):
         data = {}
@@ -518,9 +693,10 @@ def main() -> int:
 
     effects_ok = effects is not None
     planets_ok = planet_effects is not None
+    global_events_ok = global_events is not None
     initial = args.init or not baseline_ready
-    if initial and not (effects_ok and planets_ok):
-        warnings.append("首次基线需要效果定义和星球快照同时可用；本轮未写基线")
+    if initial and not (effects_ok and planets_ok and global_events_ok):
+        warnings.append("首次基线需要效果定义、星球快照和全局事件同时可用；本轮未写基线")
         changes = ChangeSet()
         report = render_report(
             changes,
@@ -552,13 +728,14 @@ def main() -> int:
         changes = ChangeSet()
         new_baseline = {
             "_meta": {
-                "version": 1,
+                "version": 2,
                 "war_id": WAR_ID,
                 "updated_at": checked_at,
                 "source": EFFECTS_URL,
             },
             "effects": effects,
             "planet_effects": planet_effects,
+            "global_event_id": global_event_max_id,
         }
         _write_json_atomic(args.baseline, new_baseline)
     else:
@@ -573,16 +750,39 @@ def main() -> int:
             comparable_effects,
             comparable_planets,
         )
+        has_global_cursor = isinstance(baseline.get("global_event_id"), int)
+        previous_global_event_id = (
+            baseline["global_event_id"] if has_global_cursor else 0
+        )
+        baseline_dirty = False
+        if global_events_ok:
+            if not has_global_cursor:
+                changes.global_events_initial = True
+                after_global_event_id = 0
+            else:
+                after_global_event_id = previous_global_event_id
+            changes.new_global_events = eligible_global_events(
+                global_events,
+                comparable_effects,
+                after_global_event_id,
+            )
+            next_global_event_id = max(
+                previous_global_event_id,
+                global_event_max_id,
+            )
+            if not has_global_cursor or next_global_event_id != previous_global_event_id:
+                baseline["global_event_id"] = next_global_event_id
+                baseline_dirty = True
         # Do not let a failed source advance its half of the baseline.
         if effects_ok:
             baseline["effects"] = effects
         if planets_ok:
             baseline["planet_effects"] = planet_effects
-        if changes.has_changes:
+        if changes.has_changes or baseline_dirty:
             baseline.setdefault("_meta", {})
             baseline["_meta"].update(
                 {
-                    "version": 1,
+                    "version": 2,
                     "war_id": WAR_ID,
                     "updated_at": checked_at,
                     "source": EFFECTS_URL,
@@ -607,7 +807,11 @@ def main() -> int:
     if changes.has_changes or args.force_latest_report:
         _write_text(args.latest_report, report)
 
-    status = "ok" if effects_ok and planets_ok else "degraded"
+    status = (
+        "ok"
+        if effects_ok and planets_ok and global_events_ok
+        else "degraded"
+    )
     _write_github_output(
         args.github_output,
         {
