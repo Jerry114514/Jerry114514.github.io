@@ -89526,59 +89526,56 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 56.76778317151462,
+          "base_score": 56.72637738658396,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
           "strategic_bonus": 0,
           "grenade_bonus": 0,
           "contributions": [],
-          "total_before_display": 56.76778317151462,
+          "total_before_display": 56.72637738658396,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 56.76778317151462,
-            "known_lower_bound": 56.76778317151462,
+            "score": 56.72637738658396,
+            "known_lower_bound": 56.72637738658396,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 55.37083070771969,
-                "ability_only_score": 43.1051312351693,
-                "endurance_tilted_score": 57.948108905544814,
+                "score": 54.68026100921485,
                 "ability_total": 181.89230769230767,
-                "ability_endurance_total": 7840.491793744717,
-                "known_lower_bound": 50.526620070357055,
+                "endurance_total": 135.67252747252746,
+                "weight_total": 317.56483516483513,
+                "known_lower_bound": 49.83605037185222,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 50.526620070357055,
+                "routine_score": 49.83605037185222,
                 "grenade_bonus": 4.844210637362637
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 61.04042411458518,
-                "ability_only_score": 60.66645601276627,
-                "endurance_tilted_score": 61.41439221640408,
+                "score": 62.07917825323442,
                 "ability_total": 89.43692307692308,
-                "ability_endurance_total": 5425.821159763314,
-                "known_lower_bound": 61.04042411458518,
+                "endurance_total": 124.64175824175824,
+                "weight_total": 214.07868131868133,
+                "known_lower_bound": 62.07917825323442,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 61.04042411458518,
+                "routine_score": 62.07917825323442,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 51.45479585033313,
-                "ability_only_score": 36.75528077841216,
-                "endurance_tilted_score": 55.8735844167596,
+                "score": 51.056896622296584,
                 "ability_total": 191.68483516483516,
-                "ability_endurance_total": 7045.429937447168,
-                "known_lower_bound": 46.31443259758588,
+                "endurance_total": 135.67252747252746,
+                "weight_total": 327.3573626373626,
+                "known_lower_bound": 45.916533369549335,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 46.31443259758588,
+                "routine_score": 45.916533369549335,
                 "grenade_bonus": 5.140363252747252
               }
             },
@@ -89600,12 +89597,12 @@
                   "anti_medium": 0.2167981783284375
                 },
                 "role_shares": {
-                  "chaff": 0.3694873141907863,
-                  "close_defense": 0.5923014936412778,
-                  "anti_medium": 0.27174002233780137
+                  "chaff": 0.3596503612656756,
+                  "close_defense": 0.517422987132183,
+                  "anti_medium": 0.29613367385577216
                 },
-                "weighted_share": 0.43281018322051057,
-                "value": 23.971025532212895
+                "weighted_share": 0.4053432772074677,
+                "value": 22.449781506875137
               },
               {
                 "equipment_id": "gp_20_ultimatum",
@@ -89624,12 +89621,12 @@
                   "anti_medium": 0.506545772249778
                 },
                 "role_shares": {
-                  "chaff": 0.2336535666332728,
+                  "chaff": 0.24785732082052983,
                   "close_defense": 0,
-                  "anti_medium": 0.329283589895528
+                  "anti_medium": 0.3303054228466924
                 },
-                "weighted_share": 0.1662193218009656,
-                "value": 1.8335269804814205
+                "weighted_share": 0.17347447383726877,
+                "value": 1.9135568883280263
               },
               {
                 "equipment_id": "support_mg_43_machine_gun",
@@ -89648,19 +89645,18 @@
                   "anti_medium": 0.2766560494217844
                 },
                 "role_shares": {
-                  "chaff": 0.3968591191759409,
-                  "close_defense": 0.4076985063587222,
-                  "anti_medium": 0.39897638776667066
+                  "chaff": 0.3924923179137946,
+                  "close_defense": 0.48257701286781685,
+                  "anti_medium": 0.3735609032975355
                 },
-                "weighted_share": 0.40097049497852383,
-                "value": 27.770070852226905
+                "weighted_share": 0.42118224895526346,
+                "value": 29.169879184787387
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 53.574623364921216,
+            "routine_score": 53.533217579990556,
             "grenade_bonus": 3.1931598065934064,
             "grenade_items": [
               {
@@ -89704,19 +89700,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -89726,8 +89722,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 56.76778317151462,
-            "added_score": 43.23221682848538,
+            "before_score": 56.72637738658396,
+            "added_score": 43.27362261341604,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -92011,46 +92007,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 56.76778317151462,
-        "known_lower_bound": 56.76778317151462,
+        "score": 56.72637738658396,
+        "known_lower_bound": 56.72637738658396,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 55.37083070771969,
-            "ability_only_score": 43.1051312351693,
-            "endurance_tilted_score": 57.948108905544814,
+            "score": 54.68026100921485,
             "ability_total": 181.89230769230767,
-            "ability_endurance_total": 7840.491793744717,
-            "known_lower_bound": 50.526620070357055,
+            "endurance_total": 135.67252747252746,
+            "weight_total": 317.56483516483513,
+            "known_lower_bound": 49.83605037185222,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 50.526620070357055,
+            "routine_score": 49.83605037185222,
             "grenade_bonus": 4.844210637362637
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 61.04042411458518,
-            "ability_only_score": 60.66645601276627,
-            "endurance_tilted_score": 61.41439221640408,
+            "score": 62.07917825323442,
             "ability_total": 89.43692307692308,
-            "ability_endurance_total": 5425.821159763314,
-            "known_lower_bound": 61.04042411458518,
+            "endurance_total": 124.64175824175824,
+            "weight_total": 214.07868131868133,
+            "known_lower_bound": 62.07917825323442,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 61.04042411458518,
+            "routine_score": 62.07917825323442,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 51.45479585033313,
-            "ability_only_score": 36.75528077841216,
-            "endurance_tilted_score": 55.8735844167596,
+            "score": 51.056896622296584,
             "ability_total": 191.68483516483516,
-            "ability_endurance_total": 7045.429937447168,
-            "known_lower_bound": 46.31443259758588,
+            "endurance_total": 135.67252747252746,
+            "weight_total": 327.3573626373626,
+            "known_lower_bound": 45.916533369549335,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 46.31443259758588,
+            "routine_score": 45.916533369549335,
             "grenade_bonus": 5.140363252747252
           }
         },
@@ -92072,12 +92065,12 @@
               "anti_medium": 0.2167981783284375
             },
             "role_shares": {
-              "chaff": 0.3694873141907863,
-              "close_defense": 0.5923014936412778,
-              "anti_medium": 0.27174002233780137
+              "chaff": 0.3596503612656756,
+              "close_defense": 0.517422987132183,
+              "anti_medium": 0.29613367385577216
             },
-            "weighted_share": 0.43281018322051057,
-            "value": 23.971025532212895
+            "weighted_share": 0.4053432772074677,
+            "value": 22.449781506875137
           },
           {
             "equipment_id": "gp_20_ultimatum",
@@ -92096,12 +92089,12 @@
               "anti_medium": 0.506545772249778
             },
             "role_shares": {
-              "chaff": 0.2336535666332728,
+              "chaff": 0.24785732082052983,
               "close_defense": 0,
-              "anti_medium": 0.329283589895528
+              "anti_medium": 0.3303054228466924
             },
-            "weighted_share": 0.1662193218009656,
-            "value": 1.8335269804814205
+            "weighted_share": 0.17347447383726877,
+            "value": 1.9135568883280263
           },
           {
             "equipment_id": "support_mg_43_machine_gun",
@@ -92120,19 +92113,18 @@
               "anti_medium": 0.2766560494217844
             },
             "role_shares": {
-              "chaff": 0.3968591191759409,
-              "close_defense": 0.4076985063587222,
-              "anti_medium": 0.39897638776667066
+              "chaff": 0.3924923179137946,
+              "close_defense": 0.48257701286781685,
+              "anti_medium": 0.3735609032975355
             },
-            "weighted_share": 0.40097049497852383,
-            "value": 27.770070852226905
+            "weighted_share": 0.42118224895526346,
+            "value": 29.169879184787387
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 53.574623364921216,
+        "routine_score": 53.533217579990556,
         "grenade_bonus": 3.1931598065934064,
         "grenade_items": [
           {
@@ -92176,19 +92168,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -93245,59 +93237,56 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 48.027052957042294,
+          "base_score": 48.27235551119679,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
           "strategic_bonus": 0,
           "grenade_bonus": 0,
           "contributions": [],
-          "total_before_display": 48.027052957042294,
+          "total_before_display": 48.27235551119679,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 48.027052957042294,
-            "known_lower_bound": 48.027052957042294,
+            "score": 48.27235551119679,
+            "known_lower_bound": 48.27235551119679,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 44.69700609665803,
-                "ability_only_score": 35.82934010266318,
-                "endurance_tilted_score": 51.72078872970613,
+                "score": 43.459779077133156,
                 "ability_total": 234.80175824175822,
-                "ability_endurance_total": 8412.792052747252,
-                "known_lower_bound": 43.775064416184655,
+                "endurance_total": 120.93098901098901,
+                "weight_total": 355.73274725274723,
+                "known_lower_bound": 42.53783739665978,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 43.775064416184655,
+                "routine_score": 42.53783739665978,
                 "grenade_bonus": 0.9219416804733729
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 52.30460559693303,
-                "ability_only_score": 50.68920645862609,
-                "endurance_tilted_score": 53.51372535062458,
+                "score": 55.07376014258938,
                 "ability_total": 116.05230769230769,
-                "ability_endurance_total": 5882.599384615385,
-                "known_lower_bound": 52.101465904625336,
+                "endurance_total": 112.2356043956044,
+                "weight_total": 228.2879120879121,
+                "known_lower_bound": 54.870620450281685,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 52.101465904625336,
+                "routine_score": 54.870620450281685,
                 "grenade_bonus": 0.20313969230769235
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 49.14625299857814,
-                "ability_only_score": 38.964635968722845,
-                "endurance_tilted_score": 52.78573019411391,
+                "score": 48.44433281815957,
                 "ability_total": 202.3736263736264,
-                "ability_endurance_total": 7885.414681318682,
-                "known_lower_bound": 45.87518308141838,
+                "endurance_total": 120.93098901098901,
+                "weight_total": 323.30461538461543,
+                "known_lower_bound": 45.17326290099981,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 45.87518308141838,
+                "routine_score": 45.17326290099981,
                 "grenade_bonus": 3.271069917159764
               }
             },
@@ -93319,12 +93308,12 @@
                   "anti_medium": 0.3179409209383145
                 },
                 "role_shares": {
-                  "chaff": 0.24191273804845467,
+                  "chaff": 0.2814262342887363,
                   "close_defense": 0,
-                  "anti_medium": 0.1944464571491649
+                  "anti_medium": 0.2259115344559888
                 },
-                "weighted_share": 0.15012333759660207,
-                "value": 1.3053801601476847
+                "weighted_share": 0.17459984731276648,
+                "value": 1.5182128261719328
               },
               {
                 "equipment_id": "plas_1_scorcher",
@@ -93343,12 +93332,12 @@
                   "anti_medium": 0.42001520417028665
                 },
                 "role_shares": {
-                  "chaff": 0.4121750841419097,
-                  "close_defense": 0.6528362951120261,
-                  "anti_medium": 0.4416485099136147
+                  "chaff": 0.3681934332725395,
+                  "close_defense": 0.5474598299814193,
+                  "anti_medium": 0.3958448331651978
                 },
-                "weighted_share": 0.5008275218472061,
-                "value": 21.52479638511316
+                "weighted_share": 0.43508438210454614,
+                "value": 18.699257382265543
               },
               {
                 "equipment_id": "support_mg_43_machine_gun",
@@ -93367,19 +93356,18 @@
                   "anti_medium": 0.26204387489139874
                 },
                 "role_shares": {
-                  "chaff": 0.34591217780963573,
-                  "close_defense": 0.3471637048879739,
-                  "anti_medium": 0.3639050329372203
+                  "chaff": 0.35038033243872424,
+                  "close_defense": 0.4525401700185807,
+                  "anti_medium": 0.3782436323788132
                 },
-                "weighted_share": 0.34904914055619174,
-                "value": 24.174146191663105
+                "weighted_share": 0.3903157705826873,
+                "value": 27.03215508264097
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 47.00432273692395,
+            "routine_score": 47.24962529107845,
             "grenade_bonus": 1.0227302201183432,
             "grenade_items": [
               {
@@ -93423,19 +93411,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -93445,8 +93433,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 48.027052957042294,
-            "added_score": 51.972947042957706,
+            "before_score": 48.27235551119679,
+            "added_score": 51.72764448880321,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -95444,46 +95432,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 48.027052957042294,
-        "known_lower_bound": 48.027052957042294,
+        "score": 48.27235551119679,
+        "known_lower_bound": 48.27235551119679,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 44.69700609665803,
-            "ability_only_score": 35.82934010266318,
-            "endurance_tilted_score": 51.72078872970613,
+            "score": 43.459779077133156,
             "ability_total": 234.80175824175822,
-            "ability_endurance_total": 8412.792052747252,
-            "known_lower_bound": 43.775064416184655,
+            "endurance_total": 120.93098901098901,
+            "weight_total": 355.73274725274723,
+            "known_lower_bound": 42.53783739665978,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 43.775064416184655,
+            "routine_score": 42.53783739665978,
             "grenade_bonus": 0.9219416804733729
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 52.30460559693303,
-            "ability_only_score": 50.68920645862609,
-            "endurance_tilted_score": 53.51372535062458,
+            "score": 55.07376014258938,
             "ability_total": 116.05230769230769,
-            "ability_endurance_total": 5882.599384615385,
-            "known_lower_bound": 52.101465904625336,
+            "endurance_total": 112.2356043956044,
+            "weight_total": 228.2879120879121,
+            "known_lower_bound": 54.870620450281685,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 52.101465904625336,
+            "routine_score": 54.870620450281685,
             "grenade_bonus": 0.20313969230769235
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 49.14625299857814,
-            "ability_only_score": 38.964635968722845,
-            "endurance_tilted_score": 52.78573019411391,
+            "score": 48.44433281815957,
             "ability_total": 202.3736263736264,
-            "ability_endurance_total": 7885.414681318682,
-            "known_lower_bound": 45.87518308141838,
+            "endurance_total": 120.93098901098901,
+            "weight_total": 323.30461538461543,
+            "known_lower_bound": 45.17326290099981,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 45.87518308141838,
+            "routine_score": 45.17326290099981,
             "grenade_bonus": 3.271069917159764
           }
         },
@@ -95505,12 +95490,12 @@
               "anti_medium": 0.3179409209383145
             },
             "role_shares": {
-              "chaff": 0.24191273804845467,
+              "chaff": 0.2814262342887363,
               "close_defense": 0,
-              "anti_medium": 0.1944464571491649
+              "anti_medium": 0.2259115344559888
             },
-            "weighted_share": 0.15012333759660207,
-            "value": 1.3053801601476847
+            "weighted_share": 0.17459984731276648,
+            "value": 1.5182128261719328
           },
           {
             "equipment_id": "plas_1_scorcher",
@@ -95529,12 +95514,12 @@
               "anti_medium": 0.42001520417028665
             },
             "role_shares": {
-              "chaff": 0.4121750841419097,
-              "close_defense": 0.6528362951120261,
-              "anti_medium": 0.4416485099136147
+              "chaff": 0.3681934332725395,
+              "close_defense": 0.5474598299814193,
+              "anti_medium": 0.3958448331651978
             },
-            "weighted_share": 0.5008275218472061,
-            "value": 21.52479638511316
+            "weighted_share": 0.43508438210454614,
+            "value": 18.699257382265543
           },
           {
             "equipment_id": "support_mg_43_machine_gun",
@@ -95553,19 +95538,18 @@
               "anti_medium": 0.26204387489139874
             },
             "role_shares": {
-              "chaff": 0.34591217780963573,
-              "close_defense": 0.3471637048879739,
-              "anti_medium": 0.3639050329372203
+              "chaff": 0.35038033243872424,
+              "close_defense": 0.4525401700185807,
+              "anti_medium": 0.3782436323788132
             },
-            "weighted_share": 0.34904914055619174,
-            "value": 24.174146191663105
+            "weighted_share": 0.3903157705826873,
+            "value": 27.03215508264097
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 47.00432273692395,
+        "routine_score": 47.24962529107845,
         "grenade_bonus": 1.0227302201183432,
         "grenade_items": [
           {
@@ -95609,19 +95593,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -96689,59 +96673,56 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 41.878872488068595,
+          "base_score": 37.90177971969683,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
           "strategic_bonus": 0,
           "grenade_bonus": 0,
           "contributions": [],
-          "total_before_display": 41.878872488068595,
+          "total_before_display": 37.90177971969683,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 41.878872488068595,
-            "known_lower_bound": 41.878872488068595,
+            "score": 37.90177971969683,
+            "known_lower_bound": 37.90177971969683,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 42.81352496748539,
-                "ability_only_score": 28.6190254715635,
-                "endurance_tilted_score": 47.31960318868201,
+                "score": 38.48683615858838,
                 "ability_total": 163.74549450549452,
-                "ability_endurance_total": 4686.236478106509,
-                "known_lower_bound": 37.96931433012276,
+                "endurance_total": 70.02461538461539,
+                "weight_total": 233.7701098901099,
+                "known_lower_bound": 33.642625521225746,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 37.96931433012276,
+                "routine_score": 33.642625521225746,
                 "grenade_bonus": 4.844210637362637
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 42.84495650137407,
-                "ability_only_score": 34.034424177070164,
-                "endurance_tilted_score": 51.655488825677985,
+                "score": 39.93145252850085,
                 "ability_total": 110.87428571428572,
-                "ability_endurance_total": 3773.542470329671,
-                "known_lower_bound": 42.84495650137407,
+                "endurance_total": 61.329230769230776,
+                "weight_total": 172.2035164835165,
+                "known_lower_bound": 39.93145252850085,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 42.84495650137407,
+                "routine_score": 39.93145252850085,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 36.509168192299825,
-                "ability_only_score": 19.87724508064504,
-                "endurance_tilted_score": 42.860364798460104,
+                "score": 31.215688369515636,
                 "ability_total": 218.210989010989,
-                "ability_endurance_total": 4337.43330786137,
-                "known_lower_bound": 31.36880493955257,
+                "endurance_total": 70.02461538461539,
+                "weight_total": 288.2356043956044,
+                "known_lower_bound": 26.075325116768383,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 31.36880493955257,
+                "routine_score": 26.075325116768383,
                 "grenade_bonus": 5.140363252747252
               }
             },
@@ -96763,12 +96744,12 @@
                   "anti_medium": 0.2654029772576194
                 },
                 "role_shares": {
-                  "chaff": 0.6274987326203643,
-                  "close_defense": 0.7463661229117857,
-                  "anti_medium": 0.502451968579829
+                  "chaff": 0.5364075159779402,
+                  "close_defense": 0.6874360263730879,
+                  "anti_medium": 0.3930758719972672
                 },
-                "weighted_share": 0.6503453046162815,
-                "value": 36.019124563363285
+                "weighted_share": 0.567767748019141,
+                "value": 31.445598351829346
               },
               {
                 "equipment_id": "gp_31_grenade_pistol",
@@ -96787,12 +96768,12 @@
                   "anti_medium": 0.29486533851701147
                 },
                 "role_shares": {
-                  "chaff": 0.3639569592235822,
+                  "chaff": 0.4282520443678113,
                   "close_defense": 0,
-                  "anti_medium": 0.21192771164865054
+                  "anti_medium": 0.25339770883404295
                 },
-                "weighted_share": 0.21376763635908866,
-                "value": 1.8587918164639528
+                "weighted_share": 0.2521356785090121,
+                "value": 2.1924166998968255
               },
               {
                 "equipment_id": "support_mls_4x_commando",
@@ -96811,19 +96792,18 @@
                   "anti_medium": 0.43973168422536907
                 },
                 "role_shares": {
-                  "chaff": 0.008544308156053544,
-                  "close_defense": 0.2536338770882142,
-                  "anti_medium": 0.2856203197715205
+                  "chaff": 0.03534043965424847,
+                  "close_defense": 0.3125639736269122,
+                  "anti_medium": 0.3535264191686898
                 },
-                "weighted_share": 0.13588705902462983,
-                "value": 0.8077963016479535
+                "weighted_share": 0.180096573471847,
+                "value": 1.0706048613772567
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 38.68571268147519,
+            "routine_score": 34.708619913103426,
             "grenade_bonus": 3.1931598065934064,
             "grenade_items": [
               {
@@ -96867,19 +96847,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -96889,8 +96869,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 41.878872488068595,
-            "added_score": 58.121127511931405,
+            "before_score": 37.90177971969683,
+            "added_score": 62.09822028030317,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -98927,46 +98907,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 41.878872488068595,
-        "known_lower_bound": 41.878872488068595,
+        "score": 37.90177971969683,
+        "known_lower_bound": 37.90177971969683,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 42.81352496748539,
-            "ability_only_score": 28.6190254715635,
-            "endurance_tilted_score": 47.31960318868201,
+            "score": 38.48683615858838,
             "ability_total": 163.74549450549452,
-            "ability_endurance_total": 4686.236478106509,
-            "known_lower_bound": 37.96931433012276,
+            "endurance_total": 70.02461538461539,
+            "weight_total": 233.7701098901099,
+            "known_lower_bound": 33.642625521225746,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 37.96931433012276,
+            "routine_score": 33.642625521225746,
             "grenade_bonus": 4.844210637362637
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 42.84495650137407,
-            "ability_only_score": 34.034424177070164,
-            "endurance_tilted_score": 51.655488825677985,
+            "score": 39.93145252850085,
             "ability_total": 110.87428571428572,
-            "ability_endurance_total": 3773.542470329671,
-            "known_lower_bound": 42.84495650137407,
+            "endurance_total": 61.329230769230776,
+            "weight_total": 172.2035164835165,
+            "known_lower_bound": 39.93145252850085,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 42.84495650137407,
+            "routine_score": 39.93145252850085,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 36.509168192299825,
-            "ability_only_score": 19.87724508064504,
-            "endurance_tilted_score": 42.860364798460104,
+            "score": 31.215688369515636,
             "ability_total": 218.210989010989,
-            "ability_endurance_total": 4337.43330786137,
-            "known_lower_bound": 31.36880493955257,
+            "endurance_total": 70.02461538461539,
+            "weight_total": 288.2356043956044,
+            "known_lower_bound": 26.075325116768383,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 31.36880493955257,
+            "routine_score": 26.075325116768383,
             "grenade_bonus": 5.140363252747252
           }
         },
@@ -98988,12 +98965,12 @@
               "anti_medium": 0.2654029772576194
             },
             "role_shares": {
-              "chaff": 0.6274987326203643,
-              "close_defense": 0.7463661229117857,
-              "anti_medium": 0.502451968579829
+              "chaff": 0.5364075159779402,
+              "close_defense": 0.6874360263730879,
+              "anti_medium": 0.3930758719972672
             },
-            "weighted_share": 0.6503453046162815,
-            "value": 36.019124563363285
+            "weighted_share": 0.567767748019141,
+            "value": 31.445598351829346
           },
           {
             "equipment_id": "gp_31_grenade_pistol",
@@ -99012,12 +98989,12 @@
               "anti_medium": 0.29486533851701147
             },
             "role_shares": {
-              "chaff": 0.3639569592235822,
+              "chaff": 0.4282520443678113,
               "close_defense": 0,
-              "anti_medium": 0.21192771164865054
+              "anti_medium": 0.25339770883404295
             },
-            "weighted_share": 0.21376763635908866,
-            "value": 1.8587918164639528
+            "weighted_share": 0.2521356785090121,
+            "value": 2.1924166998968255
           },
           {
             "equipment_id": "support_mls_4x_commando",
@@ -99036,19 +99013,18 @@
               "anti_medium": 0.43973168422536907
             },
             "role_shares": {
-              "chaff": 0.008544308156053544,
-              "close_defense": 0.2536338770882142,
-              "anti_medium": 0.2856203197715205
+              "chaff": 0.03534043965424847,
+              "close_defense": 0.3125639736269122,
+              "anti_medium": 0.3535264191686898
             },
-            "weighted_share": 0.13588705902462983,
-            "value": 0.8077963016479535
+            "weighted_share": 0.180096573471847,
+            "value": 1.0706048613772567
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 38.68571268147519,
+        "routine_score": 34.708619913103426,
         "grenade_bonus": 3.1931598065934064,
         "grenade_items": [
           {
@@ -99092,19 +99068,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -100171,7 +100147,7 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 71.37369795474001,
+          "base_score": 66.65504311685577,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
@@ -100186,52 +100162,49 @@
               "original_value": 0
             }
           ],
-          "total_before_display": 71.37369795474001,
-          "score": 71.37369795474001,
+          "total_before_display": 66.65504311685577,
+          "score": 66.65504311685577,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 71.37369795474001,
-            "known_lower_bound": 71.37369795474001,
+            "score": 66.65504311685577,
+            "known_lower_bound": 66.65504311685577,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 66.32837354838664,
-                "ability_only_score": 46.68709031997644,
-                "endurance_tilted_score": 82.191982930643,
+                "score": 60.41097373776585,
                 "ability_total": 241.74857142857144,
-                "ability_endurance_total": 11286.537389010991,
-                "known_lower_bound": 64.43953662530971,
+                "endurance_total": 130.6276923076923,
+                "weight_total": 372.37626373626375,
+                "known_lower_bound": 58.52213681468893,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 64.43953662530971,
+                "routine_score": 58.52213681468893,
                 "grenade_bonus": 1.888836923076923
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 76.23142283886769,
-                "ability_only_score": 63.653026154162475,
-                "endurance_tilted_score": 88.8098195235729,
+                "score": 73.3311180791412,
                 "ability_total": 166.7542857142857,
-                "ability_endurance_total": 10614.414909890109,
-                "known_lower_bound": 76.23142283886769,
+                "endurance_total": 119.59692307692308,
+                "weight_total": 286.35120879120876,
+                "known_lower_bound": 73.3311180791412,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 76.23142283886769,
+                "routine_score": 73.3311180791412,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 76.85675457962006,
-                "ability_only_score": 39.96926288682167,
-                "endurance_tilted_score": 78.18400011857229,
+                "score": 71.89109946848949,
                 "ability_total": 243.06285714285713,
-                "ability_endurance_total": 9715.043235164836,
-                "known_lower_bound": 59.076631502696976,
+                "endurance_total": 130.6276923076923,
+                "weight_total": 373.69054945054944,
+                "known_lower_bound": 54.1109763915664,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 59.076631502696976,
+                "routine_score": 54.1109763915664,
                 "grenade_bonus": 17.78012307692308
               }
             },
@@ -100253,12 +100226,12 @@
                   "anti_medium": 0.39947338724844833
                 },
                 "role_shares": {
-                  "chaff": 0.17305328462376046,
+                  "chaff": 0.21137429233812893,
                   "close_defense": 0,
-                  "anti_medium": 0.2548602864841793
+                  "anti_medium": 0.2893514760993994
                 },
-                "weighted_share": 0.12475568528450712,
-                "value": 1.376151174599871
+                "weighted_share": 0.14908986758397436,
+                "value": 1.6445759239647633
               },
               {
                 "equipment_id": "las_13_trident",
@@ -100277,12 +100250,12 @@
                   "anti_medium": 0.2959375587737446
                 },
                 "role_shares": {
-                  "chaff": 0.5761597239913592,
-                  "close_defense": 0.7043822441786384,
-                  "anti_medium": 0.5181752047739647
+                  "chaff": 0.5066457653608072,
+                  "close_defense": 0.6683101823780526,
+                  "anti_medium": 0.4600903844751372
                 },
-                "weighted_share": 0.6123399281742977,
-                "value": 61.23399281742977
+                "weighted_share": 0.5562450041839926,
+                "value": 55.62450041839926
               },
               {
                 "equipment_id": "support_spear",
@@ -100301,19 +100274,18 @@
                   "anti_medium": 0.30458905397780706
                 },
                 "role_shares": {
-                  "chaff": 0.2507869913848803,
-                  "close_defense": 0.29561775582136174,
-                  "anti_medium": 0.22696450874185584
+                  "chaff": 0.28197994230106377,
+                  "close_defense": 0.3316898176219474,
+                  "anti_medium": 0.2505581394254634
                 },
-                "weighted_share": 0.26290438654119513,
-                "value": 5.152117039633452
+                "weighted_share": 0.29466512823203295,
+                "value": 5.774529851414824
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 67.76226103166309,
+            "routine_score": 63.04360619377884,
             "grenade_bonus": 3.611436923076923,
             "grenade_items": [
               {
@@ -100357,19 +100329,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -102328,46 +102300,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 71.37369795474001,
-        "known_lower_bound": 71.37369795474001,
+        "score": 66.65504311685577,
+        "known_lower_bound": 66.65504311685577,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 66.32837354838664,
-            "ability_only_score": 46.68709031997644,
-            "endurance_tilted_score": 82.191982930643,
+            "score": 60.41097373776585,
             "ability_total": 241.74857142857144,
-            "ability_endurance_total": 11286.537389010991,
-            "known_lower_bound": 64.43953662530971,
+            "endurance_total": 130.6276923076923,
+            "weight_total": 372.37626373626375,
+            "known_lower_bound": 58.52213681468893,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 64.43953662530971,
+            "routine_score": 58.52213681468893,
             "grenade_bonus": 1.888836923076923
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 76.23142283886769,
-            "ability_only_score": 63.653026154162475,
-            "endurance_tilted_score": 88.8098195235729,
+            "score": 73.3311180791412,
             "ability_total": 166.7542857142857,
-            "ability_endurance_total": 10614.414909890109,
-            "known_lower_bound": 76.23142283886769,
+            "endurance_total": 119.59692307692308,
+            "weight_total": 286.35120879120876,
+            "known_lower_bound": 73.3311180791412,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 76.23142283886769,
+            "routine_score": 73.3311180791412,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 76.85675457962006,
-            "ability_only_score": 39.96926288682167,
-            "endurance_tilted_score": 78.18400011857229,
+            "score": 71.89109946848949,
             "ability_total": 243.06285714285713,
-            "ability_endurance_total": 9715.043235164836,
-            "known_lower_bound": 59.076631502696976,
+            "endurance_total": 130.6276923076923,
+            "weight_total": 373.69054945054944,
+            "known_lower_bound": 54.1109763915664,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 59.076631502696976,
+            "routine_score": 54.1109763915664,
             "grenade_bonus": 17.78012307692308
           }
         },
@@ -102389,12 +102358,12 @@
               "anti_medium": 0.39947338724844833
             },
             "role_shares": {
-              "chaff": 0.17305328462376046,
+              "chaff": 0.21137429233812893,
               "close_defense": 0,
-              "anti_medium": 0.2548602864841793
+              "anti_medium": 0.2893514760993994
             },
-            "weighted_share": 0.12475568528450712,
-            "value": 1.376151174599871
+            "weighted_share": 0.14908986758397436,
+            "value": 1.6445759239647633
           },
           {
             "equipment_id": "las_13_trident",
@@ -102413,12 +102382,12 @@
               "anti_medium": 0.2959375587737446
             },
             "role_shares": {
-              "chaff": 0.5761597239913592,
-              "close_defense": 0.7043822441786384,
-              "anti_medium": 0.5181752047739647
+              "chaff": 0.5066457653608072,
+              "close_defense": 0.6683101823780526,
+              "anti_medium": 0.4600903844751372
             },
-            "weighted_share": 0.6123399281742977,
-            "value": 61.23399281742977
+            "weighted_share": 0.5562450041839926,
+            "value": 55.62450041839926
           },
           {
             "equipment_id": "support_spear",
@@ -102437,19 +102406,18 @@
               "anti_medium": 0.30458905397780706
             },
             "role_shares": {
-              "chaff": 0.2507869913848803,
-              "close_defense": 0.29561775582136174,
-              "anti_medium": 0.22696450874185584
+              "chaff": 0.28197994230106377,
+              "close_defense": 0.3316898176219474,
+              "anti_medium": 0.2505581394254634
             },
-            "weighted_share": 0.26290438654119513,
-            "value": 5.152117039633452
+            "weighted_share": 0.29466512823203295,
+            "value": 5.774529851414824
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 67.76226103166309,
+        "routine_score": 63.04360619377884,
         "grenade_bonus": 3.611436923076923,
         "grenade_items": [
           {
@@ -102493,19 +102461,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -103328,7 +103296,7 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 71.37369795474001,
+          "base_score": 66.65504311685577,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
@@ -103343,52 +103311,49 @@
               "original_value": 0
             }
           ],
-          "total_before_display": 71.37369795474001,
+          "total_before_display": 66.65504311685577,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 71.37369795474001,
-            "known_lower_bound": 71.37369795474001,
+            "score": 66.65504311685577,
+            "known_lower_bound": 66.65504311685577,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 66.32837354838664,
-                "ability_only_score": 46.68709031997644,
-                "endurance_tilted_score": 82.191982930643,
+                "score": 60.41097373776585,
                 "ability_total": 241.74857142857144,
-                "ability_endurance_total": 11286.537389010991,
-                "known_lower_bound": 64.43953662530971,
+                "endurance_total": 130.6276923076923,
+                "weight_total": 372.37626373626375,
+                "known_lower_bound": 58.52213681468893,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 64.43953662530971,
+                "routine_score": 58.52213681468893,
                 "grenade_bonus": 1.888836923076923
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 76.23142283886769,
-                "ability_only_score": 63.653026154162475,
-                "endurance_tilted_score": 88.8098195235729,
+                "score": 73.3311180791412,
                 "ability_total": 166.7542857142857,
-                "ability_endurance_total": 10614.414909890109,
-                "known_lower_bound": 76.23142283886769,
+                "endurance_total": 119.59692307692308,
+                "weight_total": 286.35120879120876,
+                "known_lower_bound": 73.3311180791412,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 76.23142283886769,
+                "routine_score": 73.3311180791412,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 76.85675457962006,
-                "ability_only_score": 39.96926288682167,
-                "endurance_tilted_score": 78.18400011857229,
+                "score": 71.89109946848949,
                 "ability_total": 243.06285714285713,
-                "ability_endurance_total": 9715.043235164836,
-                "known_lower_bound": 59.076631502696976,
+                "endurance_total": 130.6276923076923,
+                "weight_total": 373.69054945054944,
+                "known_lower_bound": 54.1109763915664,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 59.076631502696976,
+                "routine_score": 54.1109763915664,
                 "grenade_bonus": 17.78012307692308
               }
             },
@@ -103410,12 +103375,12 @@
                   "anti_medium": 0.39947338724844833
                 },
                 "role_shares": {
-                  "chaff": 0.17305328462376046,
+                  "chaff": 0.21137429233812893,
                   "close_defense": 0,
-                  "anti_medium": 0.2548602864841793
+                  "anti_medium": 0.2893514760993994
                 },
-                "weighted_share": 0.12475568528450712,
-                "value": 1.376151174599871
+                "weighted_share": 0.14908986758397436,
+                "value": 1.6445759239647633
               },
               {
                 "equipment_id": "las_13_trident",
@@ -103434,12 +103399,12 @@
                   "anti_medium": 0.2959375587737446
                 },
                 "role_shares": {
-                  "chaff": 0.5761597239913592,
-                  "close_defense": 0.7043822441786384,
-                  "anti_medium": 0.5181752047739647
+                  "chaff": 0.5066457653608072,
+                  "close_defense": 0.6683101823780526,
+                  "anti_medium": 0.4600903844751372
                 },
-                "weighted_share": 0.6123399281742977,
-                "value": 61.23399281742977
+                "weighted_share": 0.5562450041839926,
+                "value": 55.62450041839926
               },
               {
                 "equipment_id": "support_spear",
@@ -103458,19 +103423,18 @@
                   "anti_medium": 0.30458905397780706
                 },
                 "role_shares": {
-                  "chaff": 0.2507869913848803,
-                  "close_defense": 0.29561775582136174,
-                  "anti_medium": 0.22696450874185584
+                  "chaff": 0.28197994230106377,
+                  "close_defense": 0.3316898176219474,
+                  "anti_medium": 0.2505581394254634
                 },
-                "weighted_share": 0.26290438654119513,
-                "value": 5.152117039633452
+                "weighted_share": 0.29466512823203295,
+                "value": 5.774529851414824
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 67.76226103166309,
+            "routine_score": 63.04360619377884,
             "grenade_bonus": 3.611436923076923,
             "grenade_items": [
               {
@@ -103514,19 +103478,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -103536,8 +103500,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 71.37369795474001,
-            "added_score": 28.62630204525999,
+            "before_score": 66.65504311685577,
+            "added_score": 33.344956883144235,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -105520,46 +105484,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 71.37369795474001,
-        "known_lower_bound": 71.37369795474001,
+        "score": 66.65504311685577,
+        "known_lower_bound": 66.65504311685577,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 66.32837354838664,
-            "ability_only_score": 46.68709031997644,
-            "endurance_tilted_score": 82.191982930643,
+            "score": 60.41097373776585,
             "ability_total": 241.74857142857144,
-            "ability_endurance_total": 11286.537389010991,
-            "known_lower_bound": 64.43953662530971,
+            "endurance_total": 130.6276923076923,
+            "weight_total": 372.37626373626375,
+            "known_lower_bound": 58.52213681468893,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 64.43953662530971,
+            "routine_score": 58.52213681468893,
             "grenade_bonus": 1.888836923076923
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 76.23142283886769,
-            "ability_only_score": 63.653026154162475,
-            "endurance_tilted_score": 88.8098195235729,
+            "score": 73.3311180791412,
             "ability_total": 166.7542857142857,
-            "ability_endurance_total": 10614.414909890109,
-            "known_lower_bound": 76.23142283886769,
+            "endurance_total": 119.59692307692308,
+            "weight_total": 286.35120879120876,
+            "known_lower_bound": 73.3311180791412,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 76.23142283886769,
+            "routine_score": 73.3311180791412,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 76.85675457962006,
-            "ability_only_score": 39.96926288682167,
-            "endurance_tilted_score": 78.18400011857229,
+            "score": 71.89109946848949,
             "ability_total": 243.06285714285713,
-            "ability_endurance_total": 9715.043235164836,
-            "known_lower_bound": 59.076631502696976,
+            "endurance_total": 130.6276923076923,
+            "weight_total": 373.69054945054944,
+            "known_lower_bound": 54.1109763915664,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 59.076631502696976,
+            "routine_score": 54.1109763915664,
             "grenade_bonus": 17.78012307692308
           }
         },
@@ -105581,12 +105542,12 @@
               "anti_medium": 0.39947338724844833
             },
             "role_shares": {
-              "chaff": 0.17305328462376046,
+              "chaff": 0.21137429233812893,
               "close_defense": 0,
-              "anti_medium": 0.2548602864841793
+              "anti_medium": 0.2893514760993994
             },
-            "weighted_share": 0.12475568528450712,
-            "value": 1.376151174599871
+            "weighted_share": 0.14908986758397436,
+            "value": 1.6445759239647633
           },
           {
             "equipment_id": "las_13_trident",
@@ -105605,12 +105566,12 @@
               "anti_medium": 0.2959375587737446
             },
             "role_shares": {
-              "chaff": 0.5761597239913592,
-              "close_defense": 0.7043822441786384,
-              "anti_medium": 0.5181752047739647
+              "chaff": 0.5066457653608072,
+              "close_defense": 0.6683101823780526,
+              "anti_medium": 0.4600903844751372
             },
-            "weighted_share": 0.6123399281742977,
-            "value": 61.23399281742977
+            "weighted_share": 0.5562450041839926,
+            "value": 55.62450041839926
           },
           {
             "equipment_id": "support_spear",
@@ -105629,19 +105590,18 @@
               "anti_medium": 0.30458905397780706
             },
             "role_shares": {
-              "chaff": 0.2507869913848803,
-              "close_defense": 0.29561775582136174,
-              "anti_medium": 0.22696450874185584
+              "chaff": 0.28197994230106377,
+              "close_defense": 0.3316898176219474,
+              "anti_medium": 0.2505581394254634
             },
-            "weighted_share": 0.26290438654119513,
-            "value": 5.152117039633452
+            "weighted_share": 0.29466512823203295,
+            "value": 5.774529851414824
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 67.76226103166309,
+        "routine_score": 63.04360619377884,
         "grenade_bonus": 3.611436923076923,
         "grenade_items": [
           {
@@ -105685,19 +105645,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -106385,7 +106345,7 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 33.823031939338414,
+          "base_score": 32.76097062967792,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
@@ -106400,52 +106360,49 @@
               "original_value": 0
             }
           ],
-          "total_before_display": 33.823031939338414,
+          "total_before_display": 32.76097062967792,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 33.823031939338414,
-            "known_lower_bound": 33.823031939338414,
+            "score": 32.76097062967792,
+            "known_lower_bound": 32.76097062967792,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 33.63411832050393,
-                "ability_only_score": 31.462595399723195,
-                "endurance_tilted_score": 35.80564124128466,
+                "score": 32.57456387254535,
                 "ability_total": 173.40571428571428,
-                "ability_endurance_total": 5455.793828571429,
-                "known_lower_bound": 33.63411832050393,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 235.9810989010989,
+                "known_lower_bound": 32.57456387254535,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 33.63411832050393,
+                "routine_score": 32.57456387254535,
                 "grenade_bonus": 0
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 33.92579605644884,
-                "ability_only_score": 31.77922926104468,
-                "endurance_tilted_score": 36.07236285185299,
+                "score": 32.88212067609852,
                 "ability_total": 157.38285714285712,
-                "ability_endurance_total": 5001.5058989010995,
-                "known_lower_bound": 33.92579605644884,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 219.95824175824174,
+                "known_lower_bound": 32.88212067609852,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 33.92579605644884,
+                "routine_score": 32.88212067609852,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 34.21296106219572,
-                "ability_only_score": 32.093792920456714,
-                "endurance_tilted_score": 36.33212920393473,
+                "score": 33.09964304513842,
                 "ability_total": 159.03428571428572,
-                "ability_endurance_total": 5104.013432967034,
-                "known_lower_bound": 34.21296106219572,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 221.60967032967034,
+                "known_lower_bound": 33.09964304513842,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 34.21296106219572,
+                "routine_score": 33.09964304513842,
                 "grenade_bonus": 0
               }
             },
@@ -106467,12 +106424,12 @@
                   "anti_medium": 0.5344759440911214
                 },
                 "role_shares": {
-                  "chaff": 0.600353790520302,
-                  "close_defense": 0.6128284930051152,
-                  "anti_medium": 0.6251101915006723
+                  "chaff": 0.5550379337514459,
+                  "close_defense": 0.5681917646706168,
+                  "anti_medium": 0.5774949321844962
                 },
-                "weighted_share": 0.6084333965370421,
-                "value": 26.149531331782786
+                "weighted_share": 0.5630103243381133,
+                "value": 24.19731757032236
               },
               {
                 "equipment_id": "support_spear",
@@ -106491,19 +106448,18 @@
                   "anti_medium": 0.4655240559088786
                 },
                 "role_shares": {
-                  "chaff": 0.3996462094796979,
-                  "close_defense": 0.38717150699488473,
-                  "anti_medium": 0.37488980849932774
+                  "chaff": 0.44496206624855406,
+                  "close_defense": 0.43180823532938317,
+                  "anti_medium": 0.42250506781550373
                 },
-                "weighted_share": 0.39156660346295774,
-                "value": 7.673500607555624
+                "weighted_share": 0.4369896756618867,
+                "value": 8.563653059355557
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 33.823031939338414,
+            "routine_score": 32.76097062967792,
             "grenade_bonus": 0,
             "grenade_items": [],
             "excluded": [
@@ -106529,19 +106485,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -106551,8 +106507,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 33.823031939338414,
-            "added_score": 66.17696806066158,
+            "before_score": 32.76097062967792,
+            "added_score": 67.23902937032207,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -108900,46 +108856,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 33.823031939338414,
-        "known_lower_bound": 33.823031939338414,
+        "score": 32.76097062967792,
+        "known_lower_bound": 32.76097062967792,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 33.63411832050393,
-            "ability_only_score": 31.462595399723195,
-            "endurance_tilted_score": 35.80564124128466,
+            "score": 32.57456387254535,
             "ability_total": 173.40571428571428,
-            "ability_endurance_total": 5455.793828571429,
-            "known_lower_bound": 33.63411832050393,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 235.9810989010989,
+            "known_lower_bound": 32.57456387254535,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 33.63411832050393,
+            "routine_score": 32.57456387254535,
             "grenade_bonus": 0
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 33.92579605644884,
-            "ability_only_score": 31.77922926104468,
-            "endurance_tilted_score": 36.07236285185299,
+            "score": 32.88212067609852,
             "ability_total": 157.38285714285712,
-            "ability_endurance_total": 5001.5058989010995,
-            "known_lower_bound": 33.92579605644884,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 219.95824175824174,
+            "known_lower_bound": 32.88212067609852,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 33.92579605644884,
+            "routine_score": 32.88212067609852,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 34.21296106219572,
-            "ability_only_score": 32.093792920456714,
-            "endurance_tilted_score": 36.33212920393473,
+            "score": 33.09964304513842,
             "ability_total": 159.03428571428572,
-            "ability_endurance_total": 5104.013432967034,
-            "known_lower_bound": 34.21296106219572,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 221.60967032967034,
+            "known_lower_bound": 33.09964304513842,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 34.21296106219572,
+            "routine_score": 33.09964304513842,
             "grenade_bonus": 0
           }
         },
@@ -108961,12 +108914,12 @@
               "anti_medium": 0.5344759440911214
             },
             "role_shares": {
-              "chaff": 0.600353790520302,
-              "close_defense": 0.6128284930051152,
-              "anti_medium": 0.6251101915006723
+              "chaff": 0.5550379337514459,
+              "close_defense": 0.5681917646706168,
+              "anti_medium": 0.5774949321844962
             },
-            "weighted_share": 0.6084333965370421,
-            "value": 26.149531331782786
+            "weighted_share": 0.5630103243381133,
+            "value": 24.19731757032236
           },
           {
             "equipment_id": "support_spear",
@@ -108985,19 +108938,18 @@
               "anti_medium": 0.4655240559088786
             },
             "role_shares": {
-              "chaff": 0.3996462094796979,
-              "close_defense": 0.38717150699488473,
-              "anti_medium": 0.37488980849932774
+              "chaff": 0.44496206624855406,
+              "close_defense": 0.43180823532938317,
+              "anti_medium": 0.42250506781550373
             },
-            "weighted_share": 0.39156660346295774,
-            "value": 7.673500607555624
+            "weighted_share": 0.4369896756618867,
+            "value": 8.563653059355557
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 33.823031939338414,
+        "routine_score": 32.76097062967792,
         "grenade_bonus": 0,
         "grenade_items": [],
         "excluded": [
@@ -109023,19 +108975,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -109391,59 +109343,56 @@
           "status": "PASS"
         },
         "endurance": {
-          "base_score": 33.823031939338414,
+          "base_score": 32.76097062967792,
           "selected_ordinary": "plan:routine-endurance",
           "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
           "auxiliary_bonus": 0,
           "strategic_bonus": 0,
           "grenade_bonus": 0,
           "contributions": [],
-          "total_before_display": 33.823031939338414,
+          "total_before_display": 32.76097062967792,
           "score": 100,
           "lower_bound": false,
           "threshold": 55,
           "status": "PASS",
           "computation": {
-            "score": 33.823031939338414,
-            "known_lower_bound": 33.823031939338414,
+            "score": 32.76097062967792,
+            "known_lower_bound": 32.76097062967792,
             "roles": {
               "chaff": {
                 "weight": 0.5,
-                "score": 33.63411832050393,
-                "ability_only_score": 31.462595399723195,
-                "endurance_tilted_score": 35.80564124128466,
+                "score": 32.57456387254535,
                 "ability_total": 173.40571428571428,
-                "ability_endurance_total": 5455.793828571429,
-                "known_lower_bound": 33.63411832050393,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 235.9810989010989,
+                "known_lower_bound": 32.57456387254535,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 33.63411832050393,
+                "routine_score": 32.57456387254535,
                 "grenade_bonus": 0
               },
               "close_defense": {
                 "weight": 0.35,
-                "score": 33.92579605644884,
-                "ability_only_score": 31.77922926104468,
-                "endurance_tilted_score": 36.07236285185299,
+                "score": 32.88212067609852,
                 "ability_total": 157.38285714285712,
-                "ability_endurance_total": 5001.5058989010995,
-                "known_lower_bound": 33.92579605644884,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 219.95824175824174,
+                "known_lower_bound": 32.88212067609852,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 33.92579605644884,
+                "routine_score": 32.88212067609852,
                 "grenade_bonus": 0
               },
               "anti_medium": {
                 "weight": 0.15,
-                "score": 34.21296106219572,
-                "ability_only_score": 32.093792920456714,
-                "endurance_tilted_score": 36.33212920393473,
+                "score": 33.09964304513842,
                 "ability_total": 159.03428571428572,
-                "ability_endurance_total": 5104.013432967034,
-                "known_lower_bound": 34.21296106219572,
+                "endurance_total": 62.57538461538462,
+                "weight_total": 221.60967032967034,
+                "known_lower_bound": 33.09964304513842,
                 "missing_abilities": [],
                 "missing_endurance": [],
-                "routine_score": 34.21296106219572,
+                "routine_score": 33.09964304513842,
                 "grenade_bonus": 0
               }
             },
@@ -109465,12 +109414,12 @@
                   "anti_medium": 0.5344759440911214
                 },
                 "role_shares": {
-                  "chaff": 0.600353790520302,
-                  "close_defense": 0.6128284930051152,
-                  "anti_medium": 0.6251101915006723
+                  "chaff": 0.5550379337514459,
+                  "close_defense": 0.5681917646706168,
+                  "anti_medium": 0.5774949321844962
                 },
-                "weighted_share": 0.6084333965370421,
-                "value": 26.149531331782786
+                "weighted_share": 0.5630103243381133,
+                "value": 24.19731757032236
               },
               {
                 "equipment_id": "support_spear",
@@ -109489,19 +109438,18 @@
                   "anti_medium": 0.4655240559088786
                 },
                 "role_shares": {
-                  "chaff": 0.3996462094796979,
-                  "close_defense": 0.38717150699488473,
-                  "anti_medium": 0.37488980849932774
+                  "chaff": 0.44496206624855406,
+                  "close_defense": 0.43180823532938317,
+                  "anti_medium": 0.42250506781550373
                 },
-                "weighted_share": 0.39156660346295774,
-                "value": 7.673500607555624
+                "weighted_share": 0.4369896756618867,
+                "value": 8.563653059355557
               }
             ],
             "lower_bound": false,
-            "endurance_tendency": 0.5,
             "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
             "score_units": "CURRENT_DISPLAY_SCALE",
-            "routine_score": 33.823031939338414,
+            "routine_score": 32.76097062967792,
             "grenade_bonus": 0,
             "grenade_items": [],
             "excluded": [
@@ -109519,19 +109467,19 @@
               }
             ],
             "policy": {
-              "id": "routine-role-weighted-v3",
+              "id": "routine-role-additive-weight-v4",
               "role_weights": {
                 "chaff": 0.5,
                 "close_defense": 0.35,
                 "anti_medium": 0.15
               },
-              "endurance_tendency": 0.5,
+              "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
               "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-              "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+              "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
             },
             "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
             "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"
@@ -109541,8 +109489,8 @@
             "equipment_ids": [
               "backpack_b_1_supply_pack"
             ],
-            "before_score": 33.823031939338414,
-            "added_score": 66.17696806066158,
+            "before_score": 32.76097062967792,
+            "added_score": 67.23902937032207,
             "scope": "USER_FINAL_SCORE_FLOOR_ONCE; DOES_NOT_CHANGE_AMMO_OR_PHYSICAL_GATES"
           }
         },
@@ -111877,46 +111825,43 @@
         "scope": "SCENARIO_COUNT_WEIGHTED_MEAN; TARGET_SPECIALIZATION_REQUIRES_SHARED_RESOURCE_PLAN"
       },
       "endurance_assessment": {
-        "score": 33.823031939338414,
-        "known_lower_bound": 33.823031939338414,
+        "score": 32.76097062967792,
+        "known_lower_bound": 32.76097062967792,
         "roles": {
           "chaff": {
             "weight": 0.5,
-            "score": 33.63411832050393,
-            "ability_only_score": 31.462595399723195,
-            "endurance_tilted_score": 35.80564124128466,
+            "score": 32.57456387254535,
             "ability_total": 173.40571428571428,
-            "ability_endurance_total": 5455.793828571429,
-            "known_lower_bound": 33.63411832050393,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 235.9810989010989,
+            "known_lower_bound": 32.57456387254535,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 33.63411832050393,
+            "routine_score": 32.57456387254535,
             "grenade_bonus": 0
           },
           "close_defense": {
             "weight": 0.35,
-            "score": 33.92579605644884,
-            "ability_only_score": 31.77922926104468,
-            "endurance_tilted_score": 36.07236285185299,
+            "score": 32.88212067609852,
             "ability_total": 157.38285714285712,
-            "ability_endurance_total": 5001.5058989010995,
-            "known_lower_bound": 33.92579605644884,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 219.95824175824174,
+            "known_lower_bound": 32.88212067609852,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 33.92579605644884,
+            "routine_score": 32.88212067609852,
             "grenade_bonus": 0
           },
           "anti_medium": {
             "weight": 0.15,
-            "score": 34.21296106219572,
-            "ability_only_score": 32.093792920456714,
-            "endurance_tilted_score": 36.33212920393473,
+            "score": 33.09964304513842,
             "ability_total": 159.03428571428572,
-            "ability_endurance_total": 5104.013432967034,
-            "known_lower_bound": 34.21296106219572,
+            "endurance_total": 62.57538461538462,
+            "weight_total": 221.60967032967034,
+            "known_lower_bound": 33.09964304513842,
             "missing_abilities": [],
             "missing_endurance": [],
-            "routine_score": 34.21296106219572,
+            "routine_score": 33.09964304513842,
             "grenade_bonus": 0
           }
         },
@@ -111938,12 +111883,12 @@
               "anti_medium": 0.5344759440911214
             },
             "role_shares": {
-              "chaff": 0.600353790520302,
-              "close_defense": 0.6128284930051152,
-              "anti_medium": 0.6251101915006723
+              "chaff": 0.5550379337514459,
+              "close_defense": 0.5681917646706168,
+              "anti_medium": 0.5774949321844962
             },
-            "weighted_share": 0.6084333965370421,
-            "value": 26.149531331782786
+            "weighted_share": 0.5630103243381133,
+            "value": 24.19731757032236
           },
           {
             "equipment_id": "support_spear",
@@ -111962,19 +111907,18 @@
               "anti_medium": 0.4655240559088786
             },
             "role_shares": {
-              "chaff": 0.3996462094796979,
-              "close_defense": 0.38717150699488473,
-              "anti_medium": 0.37488980849932774
+              "chaff": 0.44496206624855406,
+              "close_defense": 0.43180823532938317,
+              "anti_medium": 0.42250506781550373
             },
-            "weighted_share": 0.39156660346295774,
-            "value": 7.673500607555624
+            "weighted_share": 0.4369896756618867,
+            "value": 8.563653059355557
           }
         ],
         "lower_bound": false,
-        "endurance_tendency": 0.5,
         "formula": "MIN(100, SUM_ROLE(weight * (GUN_ROLE_MEAN + GRENADE_ROLE_ADDITION * GRENADE_ENDURANCE / 100)))",
         "score_units": "CURRENT_DISPLAY_SCALE",
-        "routine_score": 33.823031939338414,
+        "routine_score": 32.76097062967792,
         "grenade_bonus": 0,
         "grenade_items": [],
         "excluded": [
@@ -111992,19 +111936,19 @@
           }
         ],
         "policy": {
-          "id": "routine-role-weighted-v3",
+          "id": "routine-role-additive-weight-v4",
           "role_weights": {
             "chaff": 0.5,
             "close_defense": 0.35,
             "anti_medium": 0.15
           },
-          "endurance_tendency": 0.5,
+          "role_weighting": "ABILITY_PLUS_ENDURANCE; EXCLUDE_ZERO_ROLE_ABILITY",
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
           "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
-          "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_AND_50_50_TENDENCY_20261103"
+          "parameters_status": "USER_SELECTED_ABILITY_PLUS_ENDURANCE_WEIGHTS_20261103"
         },
         "scope": "ROLE_WEIGHTED_GUN_MEANS_PLUS_THROWABLE_ENDURANCE; PUBLIC_BOX_BASELINES; PHYSICAL_GATES_UNCHANGED",
         "supply_scope": "SUPPLY_PACK_OR_VEHICLE_ADJUSTS_FINAL_SCORE_ONLY; PHYSICAL_LEDGER_REMAINS_FINITE"

@@ -63,10 +63,10 @@ test('separate role proportions expose short close-defense endurance and combine
   const entries = [item('clearer',100,{chaff:90,close_defense:10,anti_medium:50}),
     item('defender',20,{chaff:10,close_defense:90,anti_medium:50})];
   const result = aggregateRoutineScores(entries);
-  approximate(result.roles.chaff.score,.5*92+.5*(904000/9200));
-  approximate(result.roles.close_defense.score,.5*28+.5*(136000/2800));
-  approximate(result.roles.anti_medium.score,.5*60+.5*(520000/6000));
-  approximate(result.score,71.96521739130435);
+  approximate(result.roles.chaff.score,19600/220);
+  approximate(result.roles.close_defense.score,13200/220);
+  approximate(result.roles.anti_medium.score,16400/220);
+  approximate(result.score,76.72727272727273);
   assert.deepEqual(Object.values(result.roles).map(r=>r.weight),[.5,.35,.15]);
   approximate(result.items.reduce((sum,i)=>sum+i.value,0),result.score);
   assert.equal(result.lower_bound, false);
@@ -87,7 +87,7 @@ test('adding a capable but short-endurance weapon deliberately lowers the averag
 test('a versatile gun is counted once and ability proportions are not clipped at 60', () => {
   assert.equal(aggregateRoutineScores([item('versatile',80)]).score,80);
   const result=aggregateRoutineScores([item('strong',100,{chaff:120,close_defense:120,anti_medium:120}),item('weak',20)]);
-  approximate(result.score,.5*((2*100+20)/3)+.5*((2*10000+400)/220));
+  approximate(result.score,23600/300);
   assert.equal(aggregateRoutineScores([item('a', 105), item('b', 105)]).score, 100);
 });
 
@@ -96,7 +96,7 @@ test('unknown ammo stays in the denominator and cannot inflate the known estimat
   assert.equal(result.lower_bound, true);
   assert.equal(result.score,null);
   assert.equal(result.items.find(r => r.equipment_id === 'unknown').value, null);
-  assert.equal(result.known_lower_bound,35);
+  assert.equal(result.known_lower_bound,0);
   const allUnknown = aggregateRoutineScores([item('unknown', null)]);
   assert.equal(allUnknown.lower_bound, true);
   assert.equal(allUnknown.score, null);
@@ -295,7 +295,7 @@ test('endurance admission accepts 55 and rejects below it without lowering other
 });
 
 
-test('mild endurance tendency keeps 50% ability allocation and tilts the remaining 50%',()=>{
+test('ability plus endurance weights stay normalized and keep zero-endurance capable guns',()=>{
   const result=aggregateRoutineScores([item('high',100),item('low',20)]);
   const high=result.items.find(i=>i.equipment_id==='high'),low=result.items.find(i=>i.equipment_id==='low');
   approximate(high.ability_shares.chaff,.5);
@@ -305,22 +305,28 @@ test('mild endurance tendency keeps 50% ability allocation and tilts the remaini
   assert.ok(result.score>60&&result.score<80);
   assert.ok(low.value>0,'a low-endurance weapon still lowers the score');
   const zero=aggregateRoutineScores([item('high',100),item('empty',0)]);
-  approximate(zero.score,75);
-  approximate(zero.items.find(i=>i.equipment_id==='empty').weighted_share,.25);
+  approximate(zero.score,16000/220);
+  approximate(zero.items.find(i=>i.equipment_id==='empty').weighted_share,60/220);
   const noAbility={chaff:0,close_defense:0,anti_medium:0};
   assert.equal(aggregateRoutineScores([item('high',100,noAbility),item('low',20)]).score,20);
   assert.equal(aggregateRoutineScores([item('a',0),item('b',0)]).score,0);
 });
 
-test('uniform endurance and common ability rescaling leave the tendency result unchanged',()=>{
+test('uniform endurance is unchanged; raw ability and endurance scores are added before normalization',()=>{
   const entries=[item('a',40,{chaff:120,close_defense:20,anti_medium:10}),item('b',40)];
   approximate(aggregateRoutineScores(entries).score,40);
-  entries[1].score=100;
-  const original=aggregateRoutineScores(entries);
-  const rescaled=aggregateRoutineScores(entries.map(i=>({...i,role_scores:Object.fromEntries(Object.entries(i.role_scores).map(([r,a])=>[r,a*3]))})));
-  approximate(rescaled.score,original.score);
-  for(const role of ['chaff','close_defense','anti_medium']){
-    const r=original.roles[role];
-    approximate(r.score-r.ability_only_score,.5*(r.endurance_tilted_score-r.ability_only_score));
+  const result=aggregateRoutineScores([item('a',20,{chaff:100,close_defense:100,anti_medium:100}),item('b',100,{chaff:20,close_defense:20,anti_medium:20})]);
+  approximate(result.score,60);
+  for(const i of result.items)approximate(i.weighted_share,.5);
+  for(const r of Object.values(result.roles)){
+    assert.equal(r.ability_total,120);assert.equal(r.endurance_total,120);assert.equal(r.weight_total,240);
   }
+});
+
+test('zero role ability excludes that gun from both halves of the additive denominator',()=>{
+  const result=aggregateRoutineScores([item('clearer',100,{chaff:60,close_defense:0,anti_medium:0}),item('defender',20,{chaff:0,close_defense:60,anti_medium:60})]);
+  approximate(result.roles.chaff.score,100);approximate(result.roles.close_defense.score,20);approximate(result.roles.anti_medium.score,20);
+  approximate(result.score,60);
+  assert.equal(result.items.find(i=>i.equipment_id==='clearer').role_shares.close_defense,0);
+  assert.equal(result.roles.close_defense.weight_total,80);
 });

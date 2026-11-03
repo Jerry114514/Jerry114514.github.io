@@ -1,0 +1,79 @@
+{
+  "seed_start": 640000,
+  "count_per_version": 500,
+  "workers": 4,
+  "model_sha256": "467a96f464d4f4b95fda4faa5b40b561adac024e3a2e5329b21611643f423f3c",
+  "policy": "ABILITY_PLUS_ENDURANCE_EXCLUDING_ZERO_ROLE",
+  "baseline_kind": "ARCHIVED_50_50_SAME_SEEDS_NOT_RERUN",
+  "scope": "SAME_SEEDS_SAME_ITEM_DATA; AGGREGATION_FORMULA_DIFFERS; ARCHIVED_50_50_BASELINE; PARALLEL_TIMES_NOT_SINGLE_REQUEST_BENCHMARK",
+  "wall_ms": 105520.26310000001,
+  "baseline": {
+    "summary": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 176,
+      "supply_rate": 0.352,
+      "supply_wilson95": [
+        0.31141012174922117,
+        0.39484676533592616
+      ],
+      "with_pack": 56,
+      "with_car": 120,
+      "mean_endurance": 78.4031316864744,
+      "mean_dimension": {
+        "chaff": 95.40905868013817,
+        "close_defense": 74.43883340163838,
+        "anti_medium": 93.42702059636497,
+        "anti_heavy": 123.94050314947586,
+        "endurance": 78.4031316864744,
+        "demolition": 130.44683032967026
+      },
+      "elapsed_ms_parallel": {
+        "mean": 838.8792746000008,
+        "max": 5801.803200000009
+      }
+    },
+    "model_sha256": "f21dc1e3277edbc1b57927ff10eb874512e00ea9e9654da05b5fab5fa911e1de"
+  },
+  "paired": {
+    "supply_rate_delta": -0.024,
+    "approx95": [
+      -0.04465640459764964,
+      -0.003343595402350359
+    ],
+    "supply_added": 8,
+    "supply_removed": 20,
+    "same_loadout": 370
+  },
+  "versions": {
+    "additive": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 164,
+      "supply_rate": 0.328,
+      "supply_wilson95": [
+        0.2882954889726376,
+        0.3703273798019932
+      ],
+      "with_pack": 56,
+      "with_car": 108,
+      "mean_endurance": 77.66483829930704,
+      "mean_dimension": {
+        "chaff": 94.65081200624367,
+        "close_defense": 74.07268799073431,
+        "anti_medium": 92.63104380872224,
+        "anti_heavy": 125.38244855198045,
+        "endurance": 77.66483829930704,
+        "demolition": 131.74686725274722
+      },
+      "elapsed_ms_parallel": {
+        "mean": 798.8108413999998,
+        "max": 5994.761199999994
+      }
+    }
+  },
+  "raw_data": ".tools-local/role-endurance-additive-comparison-20261103.json",
+  "script": ".tools-local/check-role-endurance-additive.mjs",
+  "publication": "LOCAL_ONLY; DO_NOT_PUSH_UNTIL_USER_FINISHES_ITERATION",
+  "conclusion": "Supply 176/500 -> 164/500, pack 56 -> 56, car 120 -> 108; paired delta -2.4pp, approximate95% -4.47 to -0.33pp. Model sample only, not fixed output frequency or gameplay validation."
+}
