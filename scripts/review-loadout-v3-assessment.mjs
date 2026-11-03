@@ -20,6 +20,10 @@ const examples = [
     stratagems: ['heavy_support_gr_8_recoilless_rifle', 'backpack_b_1_supply_pack', 'eagle_airstrike', 'orbital_gas_strike']},
   {name: '四发突击兵：同一库存完成双重甲', primary: 'ar_23a_liberator_carbine', secondary: 'gp_31_grenade_pistol', grenade: 'g_6_frag',
     stratagems: ['support_mls_4x_commando', 'backpack_b_1_supply_pack', 'eagle_airstrike', 'orbital_gas_strike']},
+  {name: '续航分工：三叉戟、毒矛与通牒，未携带补给设备', primary: 'las_13_trident', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
+    stratagems: ['support_spear', 'orbital_gas_strike', 'deployable_gas_mines', 'deployable_flame_sentry']},
+  {name: '续航分工：相同武器，轨道毒气换成补包', primary: 'las_13_trident', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
+    stratagems: ['support_spear', 'backpack_b_1_supply_pack', 'deployable_gas_mines', 'deployable_flame_sentry']},
   {name: '用户组合：毒矛主战过滤，焦土近防，通牒千兆反重', primary: 'plas_1_scorcher', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
     stratagems: ['support_spear', 'backpack_b_1_supply_pack', 'deployable_gas_mines', 'deployable_flame_sentry']},
 ];
