@@ -366,7 +366,7 @@
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
-  <script src="./js/mo-announce.js?v=20261031b"></script>
+  <script src="./js/mo-announce.js?v=20261104a"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -1152,11 +1152,11 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
        { title/title_cn, description/description_cn, race_name/race_cn,
          phase_count, current_phase_index, phases[{ title/title_cn,
          briefing/briefing_cn, status_key, status_cn, reward,
-         intro_image_id/intro_image(阶段插画，暂未展示) }],
+         intro_image_id/intro_image/intro_image_local }],
          reward[{ name/name_cn, amount, icon, icon_img, detail }],
          banner_image_id, banner_image_path, banner_image, banner_image_local }
-      图片：横幅位图取 banner_image_local（assets/campaign/，本地化）→ banner_image
-            （上游 /news/<name>.webp）→ 阵营渐变；奖励图标取 reward.icon_img
+      图片：当前阶段插画 intro_image_local → intro_image → 战役 banner_image_local
+            → banner_image → 阵营渐变；奖励图标取 reward.icon_img
             （assets/campaign/reward_*.svg）→ 内联 SVG。两级都有降级，不留破图。
             reward.detail（可选）= 具体奖励名，由 data/campaign_zh.json 的 reward_types[].detail 提供。
      上游：helldiverscompanion.com live API 的 episodes（无 CORS，故由 Actions 侧
@@ -1274,6 +1274,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const titleEn = c.title_cn ? c.title : "";
     const facCls = CAMP_FACTION_CLS[c.race_name] || "unknown";
     const curIdx = (typeof c.current_phase_index === "number") ? c.current_phase_index : 0;
+    const cur = (c.phases || [])[curIdx] || {};
 
     // 整体状态徽章（战役状态判定）
     const overall = campaignOverall(c);
@@ -1281,14 +1282,18 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const overallBadge = `<span class="camp-overall-main">${oDef.icon} ${esc(oDef.cn)}</span><span class="camp-overall-en">${esc(oDef.en)}</span>`;
 
 
-    // 横幅三级回退：本地 assets/campaign/banner_*.webp（fetch_site_data.py 按
-    // bannerImageId32 从 companion /news/<name>.webp 下载）→ 上游位图 → 阵营渐变（CSS .is-*）。
-    // 上游图是真实 WebP 位图（700×340，无需鉴权），不是猜出来的路径：id32→文件名 表在
-    // companion 前端 chunk 里（nd = {frv4: L1("frv4", 2434584678), ...}）。
-    const bannerSrcs = [c.banner_image_local, c.banner_image].filter(Boolean);
+    // 横幅回退：当前阶段 introMediaId32 → 战役 bannerImageId32 → 阵营渐变。
+    // 阶段插图与游戏内的当前简报一一对应；两者最终都落在公开的
+    // /news/<name>.webp，并由抓取脚本本地化。
+    function campaignImageSources(phase) {
+      return [phase && phase.intro_image_local, phase && phase.intro_image,
+        c.banner_image_local, c.banner_image]
+        .filter((src, i, all) => src && all.indexOf(src) === i);
+    }
+    const bannerSrcs = campaignImageSources(cur);
     const banner = `<div class="camp-banner is-${facCls} is-camp-${overall}${bannerSrcs.length ? " has-img" : ""}">
-        ${bannerSrcs.length ? `<img class="camp-banner-img" src="${esc(bannerSrcs[0])}" alt=""
-            decoding="async" referrerpolicy="no-referrer">` : ""}
+        <img class="camp-banner-img"${bannerSrcs.length ? ` src="${esc(bannerSrcs[0])}"` : ' style="display:none"'} alt=""
+            decoding="async" referrerpolicy="no-referrer">
         <div class="camp-banner-scrim"></div>
         <div class="camp-banner-text">
           <div class="camp-banner-kicker">进行中的战役<span class="camp-kicker-en">ACTIVE CAMPAIGN</span></div>
@@ -1318,7 +1323,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
         </button>`;
     }).join("");
 
-    const cur = (c.phases || [])[curIdx] || {};
     const briefRaw = (cur.briefing_cn || cur.briefing || "").trim();
     const paras = briefRaw ? briefRaw.split(/\n{2,}/) : [];
     const briefingHtml = paras.length
@@ -1341,17 +1345,32 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
         </div>
       </div>`;
 
-    // 横幅降级链：本地文件 404 → 换上上游 URL → 都不行就摘掉 <img>，露出阵营渐变（不留破图）
+    // 横幅降级链：本地文件 404 → 换成下一候选 → 都不行就摘掉 <img>，露出阵营渐变。
     const bImg = root.querySelector(".camp-banner-img");
     if (bImg) {
-      const chain = bannerSrcs.slice(1);
-      bImg.addEventListener("error", () => {
-        const next = chain.shift();
-        if (next) { bImg.src = next; return; }
+      const applyCampaignBanner = (phase) => {
+        const chain = campaignImageSources(phase);
         const bn = bImg.closest(".camp-banner");
-        bImg.remove();
-        if (bn) bn.classList.remove("has-img");
-      });
+        if (!chain.length) {
+          bImg.removeAttribute("src");
+          bImg.style.display = "none";
+          if (bn) bn.classList.remove("has-img");
+          return;
+        }
+        if (bn) bn.classList.add("has-img");
+        bImg.style.display = "";
+        let index = 1;
+        bImg.onerror = () => {
+          if (index < chain.length) { bImg.src = chain[index++]; return; }
+          const box = bImg.closest(".camp-banner");
+          bImg.removeAttribute("src");
+          bImg.style.display = "none";
+          if (box) box.classList.remove("has-img");
+        };
+        bImg.src = chain[0];
+      };
+      applyCampaignBanner(cur);
+      root._campaignBannerSwap = applyCampaignBanner;
     }
 
     // 阶段点击：只换简报与阶段奖励，不重排整块（避免闪烁）
@@ -1363,6 +1382,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
         const i = parseInt(el.getAttribute("data-phase"), 10);
         const p = (c.phases || [])[i];
         if (!p) return;
+        if (root._campaignBannerSwap) root._campaignBannerSwap(p);
         phaseEls.forEach(x => {
           const on = x === el;
           x.classList.toggle("is-current", on);

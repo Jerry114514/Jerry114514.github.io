@@ -1028,7 +1028,7 @@ def build_active_campaign(companion, zh=None):
             "status_cn": sm.get("cn") or fb_cn,
             "reward": _reward_of((p.get("rewards") or [None])[0], zh),
             # 阶段插画（introMediaId32 与横幅同一张 id32->/news/*.webp 表）：
-            # 只解析出上游 URL 供后续使用，本次不下载、前端暂不展示（无本地文件则不外链）。
+            # 当前阶段的位图会在下面本地化，作为缺失战役横幅时的权威回退。
             "intro_image_id": p.get("introMediaId32"),
             "intro_image": (p_img or {}).get("url"),
         })
@@ -1045,6 +1045,9 @@ def build_active_campaign(companion, zh=None):
         pending = [i for i, ph in enumerate(phases) if ph["status"] == 0]
         cur_idx = pending[-1] if pending else len(phases) - 1
     cur = phases[cur_idx]
+    cur_intro = campaign_banner_of(cur.get("intro_image_id"))
+    cur_intro_local = download_campaign_banner(cur_intro)
+    cur["intro_image_local"] = ("./" + cur_intro_local) if cur_intro_local else None
 
     race = ep.get("race")
     fb_race_en, fb_race_cn = _RACE_FALLBACK.get(race, ("", ""))
@@ -1082,8 +1085,9 @@ def build_active_campaign(companion, zh=None):
         "briefing": cur.get("briefing") or "",
         "briefing_cn": cur.get("briefing_cn") or "",
         "reward": _reward_of((ep.get("rewards") or [None])[0], zh),
-        # 横幅三级回退：banner_image_local（本地 assets/campaign/）→ banner_image（上游
-        # /news/*.webp）→ 阵营渐变（前端无图时自动降级，不留破图）。
+        # 横幅回退：当前阶段 introMediaId32 → 战役 bannerImageId32（二者共用
+        # /news/*.webp 表）→ 阵营渐变。阶段插画与游戏内当前简报直接对应；
+        # 新战役的 banner ID 还可能暂时不在 companion 前端映射里。
         "banner_image_id": ep.get("bannerImageId32"),
         "banner_image": (banner or {}).get("url"),
         "banner_image_path": (banner or {}).get("path"),

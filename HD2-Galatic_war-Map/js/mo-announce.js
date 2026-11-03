@@ -1,6 +1,6 @@
 "use strict";
 /* ==============================================================
-   重要指令播报（mo-announce）· 2026-10-28
+   重要指令播报（mo-announce）· 2026-11-04
    --------------------------------------------------------------
    复刻 helldiverscompanion 的 INCOMING MESSAGE FROM SUPER EARTH 动效。
    状态机：idle → incoming → order → closing → idle
@@ -156,7 +156,8 @@
     var mo = data.major_order || {};
     var ac = data.active_campaign || null;
 
-    /* 正文三级回退：dispatches(NEW MAJOR ORDER) → news 中文 → translated_brief → briefing */
+    /* 正文回退：当期 NEW MAJOR ORDER 官中公告 → Assignment 简版 → 英文简报。
+       战役阶段简报属于另一份剧情文本，不能拿来冒充重要指令通知。 */
     var disp = (data.dispatches || []).filter(function (n) {
       return n && n.message && /NEW\s+MAJOR\s+ORDER/i.test(n.message);
     }).sort(function (x, y) { return (y.id || 0) - (x.id || 0); });
@@ -164,7 +165,8 @@
     var zh = "";
     if (hit && hit.id != null) {
       var newsItem = (data.news || []).filter(function (n) { return n && n.id === hit.id; })[0];
-      if (newsItem) zh = newsItem.translated || newsItem.message_zh || "";
+      /* official_message 保留 Arrowhead 的 <i=N> 强调标记；translated 是无格式纯文本。 */
+      if (newsItem) zh = newsItem.official_message || newsItem.translated || newsItem.message_zh || "";
     }
     /* 正文回退（2026-10-31 二修）：
        ① 「NEW MAJOR ORDER」dispatch 的中文稿（详细内容，与游戏内通知同文）——
@@ -182,9 +184,10 @@
     var rawText = (dispOk ? zh : "") || (moIdOk && mo.translated_brief) || a.briefing || "";
     if (!rawText && dispOk && hit) rawText = hit.message;
 
-    /* Banner 四级本地/远程 + 纯 CSS 占位兜底 */
-    var bannerSrc = (mo.banner_image_local) || (ac && ac.banner_image_local) ||
-                    (ac && ac.banner_image) || "./assets/campaign/banner_eagle3.webp";
+    /* 重要指令通知与战役阶段插画是两套版面。当前 MO 没有独立 media id 时，
+       eagle3 是对应游戏内「新重要指令」通知的通用横幅，不能借用活动战役阶段图。 */
+    var bannerSrc = (mo.banner_image_local) || (mo.banner_image) ||
+                    "./assets/campaign/banner_eagle3.webp";
 
     return {
       revision: revision || "",

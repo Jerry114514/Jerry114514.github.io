@@ -35,7 +35,7 @@
     },
     "campaign/banner_*.webp": {
       "from": "https://helldiverscompanion.com/news/<name>.webp（位图 700x340，公开无鉴权）",
-      "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
+      "note": "由 scripts/fetch_site_data.py 的 download_campaign_banner() 按 episodes[].bannerImageId32 与当前阶段 phases[].introMediaId32 自动下载；文件名 = banner_<上游文件名>.webp，例如 bannerImageId32=2434584678 → /news/frv4.webp → banner_frv4.webp"
     }
   },
   "status": {
