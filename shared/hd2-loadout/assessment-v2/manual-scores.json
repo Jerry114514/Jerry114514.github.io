@@ -724,13 +724,13 @@
     },
     "backpack_ax_tx_13_purifier": {
       "scores": {
-        "chaff": 20,
+        "chaff": 12,
         "close_defense": 10,
-        "anti_medium": 2
+        "anti_medium": 1
       },
       "mode": "additive",
       "note": "",
-      "updated_at": "2026-10-28T11:55:28.434Z",
+      "updated_at": "2026-11-03T06:17:22.982Z",
       "score_scale_id": "review-65-as-60"
     },
     "backpack_b_100_portable_hellbomb": {
@@ -752,6 +752,65 @@
       "mode": "auto",
       "note": "",
       "updated_at": "2026-10-31T13:23:29.379Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_ax_arc_3_k_9": {
+      "scores": {
+        "chaff": 9,
+        "close_defense": 4,
+        "anti_medium": 7,
+        "anti_heavy": 1
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-11-03T06:15:53.372Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_ax_ar_23_guard_dog": {
+      "scores": {
+        "chaff": 6,
+        "close_defense": 4,
+        "anti_medium": 2,
+        "anti_heavy": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-11-03T06:15:39.126Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_ax_las_5_guard_dog_rover": {
+      "scores": {
+        "chaff": 8,
+        "close_defense": 2,
+        "anti_medium": 1,
+        "anti_heavy": 0
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-11-03T06:16:17.218Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "backpack_ax_flam_75_hot_dog": {
+      "scores": {
+        "chaff": 9,
+        "close_defense": 3,
+        "anti_medium": 4,
+        "anti_heavy": 1
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-11-03T06:17:38.370Z",
+      "score_scale_id": "review-65-as-60"
+    },
+    "las_13_trident": {
+      "scores": {
+        "chaff": 80,
+        "close_defense": 80,
+        "anti_medium": 60
+      },
+      "mode": "auto",
+      "note": "",
+      "updated_at": "2026-11-03T08:02:10.401Z",
       "score_scale_id": "review-65-as-60"
     }
   },
@@ -2996,6 +3055,355 @@
         "anti_heavy": 0,
         "endurance": 69.82857142857142,
         "demolition": 85.93142857142857
+      }
+    },
+    {
+      "at": "2026-11-03T06:14:44.269Z",
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 5,
+          "close_defense": 4,
+          "anti_medium": 5,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:14:44.269Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.17239392923091632,
+        "close_defense": null,
+        "anti_medium": 0.2231919978551758,
+        "anti_heavy": null,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:15:00.061Z",
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "before": {
+        "scores": {
+          "chaff": 5,
+          "close_defense": 4,
+          "anti_medium": 5,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:14:44.269Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 6,
+          "close_defense": 4,
+          "anti_medium": 5,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:00.061Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.17239392923091632,
+        "close_defense": null,
+        "anti_medium": 0.2231919978551758,
+        "anti_heavy": null,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:15:18.205Z",
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 4,
+          "close_defense": 3,
+          "anti_medium": 2,
+          "anti_heavy": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:18.205Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 46.36615384615384,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:15:39.126Z",
+      "equipment_id": "backpack_ax_ar_23_guard_dog",
+      "before": {
+        "scores": {
+          "chaff": 4,
+          "close_defense": 3,
+          "anti_medium": 2,
+          "anti_heavy": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:18.205Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 6,
+          "close_defense": 4,
+          "anti_medium": 2,
+          "anti_heavy": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:39.126Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 46.36615384615384,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:15:53.372Z",
+      "equipment_id": "backpack_ax_arc_3_k_9",
+      "before": {
+        "scores": {
+          "chaff": 6,
+          "close_defense": 4,
+          "anti_medium": 5,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:00.061Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 9,
+          "close_defense": 4,
+          "anti_medium": 7,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:15:53.372Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 0.17239392923091632,
+        "close_defense": null,
+        "anti_medium": 0.2231919978551758,
+        "anti_heavy": null,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:16:17.218Z",
+      "equipment_id": "backpack_ax_las_5_guard_dog_rover",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 8,
+          "close_defense": 2,
+          "anti_medium": 1,
+          "anti_heavy": 0
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:16:17.218Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": 0,
+        "endurance": 100,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:16:44.582Z",
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 9,
+          "close_defense": 3,
+          "anti_medium": 4,
+          "anti_heavy": 1,
+          "endurance": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:16:44.582Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:17:09.861Z",
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "before": {
+        "scores": {
+          "chaff": 20,
+          "close_defense": 10,
+          "anti_medium": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-10-28T11:55:28.434Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 15,
+          "close_defense": 10,
+          "anti_medium": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-11-03T06:17:09.861Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:17:22.982Z",
+      "equipment_id": "backpack_ax_tx_13_purifier",
+      "before": {
+        "scores": {
+          "chaff": 15,
+          "close_defense": 10,
+          "anti_medium": 2
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-11-03T06:17:09.861Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 12,
+          "close_defense": 10,
+          "anti_medium": 1
+        },
+        "mode": "additive",
+        "note": "",
+        "updated_at": "2026-11-03T06:17:22.982Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T06:17:38.370Z",
+      "equipment_id": "backpack_ax_flam_75_hot_dog",
+      "before": {
+        "scores": {
+          "chaff": 9,
+          "close_defense": 3,
+          "anti_medium": 4,
+          "anti_heavy": 1,
+          "endurance": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:16:44.582Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "after": {
+        "scores": {
+          "chaff": 9,
+          "close_defense": 3,
+          "anti_medium": 4,
+          "anti_heavy": 1
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T06:17:38.370Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": null,
+        "close_defense": null,
+        "anti_medium": null,
+        "anti_heavy": null,
+        "endurance": null,
+        "demolition": 0
+      }
+    },
+    {
+      "at": "2026-11-03T08:02:10.401Z",
+      "equipment_id": "las_13_trident",
+      "before": null,
+      "after": {
+        "scores": {
+          "chaff": 80,
+          "close_defense": 80,
+          "anti_medium": 60
+        },
+        "mode": "auto",
+        "note": "",
+        "updated_at": "2026-11-03T08:02:10.401Z",
+        "score_scale_id": "review-65-as-60"
+      },
+      "score_scale_id": "review-65-as-60",
+      "calculated_scores": {
+        "chaff": 88.66285714285715,
+        "close_defense": 91.37142857142857,
+        "anti_medium": 71.93142857142857,
+        "anti_heavy": 0,
+        "endurance": 100,
+        "demolition": 0
       }
     }
   ]
