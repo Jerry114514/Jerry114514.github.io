@@ -9,6 +9,15 @@ const model=read('assessment-v2/equipment.json'),catalog=read('data/catalog.json
 const slots=['primary','secondary','grenade',...Array.from({length:4},(_,i)=>'stratagem:'+i)];
 const at=(l,s)=>s.startsWith('stratagem:')?l.stratagems[Number(s.split(':')[1])]:l[s];
 const ids=l=>slots.map(s=>at(l,s));
+test('repair uses the actual endurance threshold rather than searching for an obsolete 55',()=>{
+  const value=estimate({endurance:51},'PASS');
+  value.dimensions.endurance.threshold=50;value.dimensions.endurance.status='PASS';
+  const result=repairMeasure(value);
+  assert.equal(result.needs.endurance,0);
+  assert.equal(result.deficit,0);
+  value.dimensions.endurance.score=49;value.dimensions.endurance.status='FAIL';
+  assert.equal(repairMeasure(value).needs.endurance,1);
+});
 function estimate(scores={},physical='UNKNOWN') {
   const dimensions=Object.fromEntries(REPAIR_ROLES.map(role=>{
     const score=Object.hasOwn(scores,role)?scores[role]:80;
@@ -20,7 +29,7 @@ function estimate(scores={},physical='UNKNOWN') {
 }
 const advance=(task,evaluate,condition,preview=evaluate)=>{for(let i=0;i<500;i++){stepAssessmentDraw(task,evaluate,preview);if(condition())return;}assert.fail('test step bound');};
 
-test('contribution compares complete-loadout deficits and capped surplus, protects passed checks and keeps unknown unpassed',()=>{
+test('contribution compares complete-loadout deficits without surplus, protects passed checks and keeps unknown unpassed',()=>{
   const base=repairMeasure(estimate({endurance:50}));
   const redundant=contributionLoss(base,repairMeasure(estimate({endurance:50})));
   const essential=contributionLoss(base,repairMeasure(estimate({chaff:40,endurance:50})));
@@ -183,4 +192,59 @@ test('the supply floor improves the routine endurance layer once without inventi
   const measure=repairMeasure(value);
   assert.equal(measure.groups.routine.endurance,95);assert.equal(measure.groups.addition.endurance,5);
   assert.equal(measure.needs.endurance,0);
+});
+
+
+for(const role of REPAIR_ROLES)test(`repair gives no overflow credit for ${role} at any scoring stage`,()=>{
+  const threshold=role==='endurance'?50:60;
+  const measure=score=>{
+    const value=estimate({[role]:score},'UNKNOWN');
+    value.dimensions[role].threshold=threshold;
+    value.dimensions[role].status=score>=threshold?'PASS':'FAIL';
+    return repairMeasure(value);
+  };
+  const parent=measure(threshold-20),exact=measure(threshold),overflow=measure(1000);
+  assert.equal(parent.utility,-20);assert.equal(exact.utility,0);assert.equal(overflow.utility,0);
+  assert.equal(contributionLoss(exact,overflow).utility_loss,0);
+  assert.deepEqual(contributionLoss(exact,overflow).lost_checks,[]);
+  assert.equal(improvesRepair(exact,overflow),false);
+  assert.deepEqual(preferredTrials(parent,[{id:'exact',measure:exact},{id:'overflow',measure:overflow}]).map(c=>c.id),['exact','overflow']);
+  const selected=bottleneckTrials(parent,[{id:'exact',measure:exact},{id:'overflow',measure:overflow}]);
+  assert.equal(selected.directions[0].gain,20);
+  assert.equal(selected.candidates[0].id,'exact');
+  const row=score=>({dimensions:{[role]:{score}},heavy_assessment:{score},endurance:{score},demolition_assessment:{score}});
+  assert.equal(candidateWeight(row(20),parent),candidateWeight(row(1000),parent));
+  assert.equal(candidateWeight(row(10),parent),2.5);
+});
+
+test('covered scores with a physical failure receive no invented numeric need or extra hints',()=>{
+  const parent=repairMeasure(estimate({},'UNKNOWN'));
+  assert.equal(parent.pending_physical,1);assert.equal(parent.deficit,0);
+  assert.ok(Object.values(parent.needs).every(n=>n===0));
+  const high={dimensions:Object.fromEntries(REPAIR_ROLES.map(r=>[r,{score:1000}])),heavy_assessment:{score:1000},demolition_assessment:{score:1000},endurance:{state:'SUPPLY_PROVIDER',score:100}};
+  assert.equal(candidateWeight(high,parent),1);
+  const higher=repairMeasure(estimate(Object.fromEntries(REPAIR_ROLES.map(r=>[r,1000])),'UNKNOWN'));
+  assert.equal(improvesRepair(parent,higher),false);
+  assert.deepEqual(bottleneckTrials(parent,[{measure:higher}]).directions,[]);
+  assert.equal(improvesRepair(parent,repairMeasure(estimate({},'PASS'))),true);
+});
+
+test('layer nominations cap net hole filling and do not reward moving points between layers',()=>{
+  const parent=splitEstimate({chaff:30},{chaff:20});
+  const exact={id:'exact',measure:splitEstimate({chaff:40},{chaff:20})};
+  const over={id:'over',measure:splitEstimate({chaff:100},{chaff:20})};
+  const addition={id:'addition',measure:splitEstimate({chaff:30},{chaff:30})};
+  const result=bottleneckTrials(parent,[exact,over,addition]);
+  assert.deepEqual(result.candidates.map(c=>c.id),['exact','addition']);
+  assert.deepEqual(result.directions.map(d=>d.gain),[10,10]);
+  const transfer={id:'transfer',measure:splitEstimate({chaff:50},{chaff:0})};
+  assert.deepEqual(bottleneckTrials(parent,[transfer]).directions,[]);
+});
+
+test('overflow cannot pay for a new deficit in another dimension',()=>{
+  const parent=repairMeasure(estimate({chaff:50,close_defense:50},'PASS'));
+  const trade=repairMeasure(estimate({chaff:40,close_defense:1000},'PASS'));
+  assert.equal(parent.deficit,20);assert.equal(trade.deficit,20);
+  assert.equal(improvesRepair(parent,trade),false);
+  assert.deepEqual(preferredTrials(parent,[{measure:trade}]),[]);
 });

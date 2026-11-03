@@ -3,6 +3,7 @@
   "date": "2026-10-28",
   "status": "SOURCE_BINDINGS_AND_LABELLED_ENGINEERING_CHOICES_NOT_PLAYTEST_CALIBRATION",
   "weapons": {
+    "ar_23l_liberator_legacy": {"reload_ms": 3000, "partial_reload_ms": 2000, "source_url": "https://helldivers.wiki.gg/wiki/AR-23L_Liberator_Legacy", "evidence": "docs/ai/assessment-v2-liberator-legacy-20261103/evidence.json", "basis": "Default level-1 Extended Magazine:45 rounds,8 spare magazines,3s full/2s partial reload. Evaluation retains full empty reload; no short/drum magazine modifiers."},
     "flam_66_torcher": {"full_fire_seconds": 12.4, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/FLAM-66_Torcher", "basis": "Wiki tactical information; approximate pilot ignition"},
     "support_flam_40_flamethrower": {"full_fire_seconds": 18.6, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/FLAM-40_Flamethrower", "basis": "Fuel duration sourced; 700ms pilot is explicit engineering assumption from Torcher, not this weapon measurement"},
     "p_72_crisper": {"full_fire_seconds": 6.1, "pilot_ms": 700, "source_url": "https://helldivers.wiki.gg/wiki/Stoker", "basis": "Stoker explicitly identifies the same 50-unit Crisper canister; pilot 700ms engineering assumption"},

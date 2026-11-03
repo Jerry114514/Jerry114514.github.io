@@ -20,6 +20,10 @@ const examples = [
     stratagems: ['heavy_support_gr_8_recoilless_rifle', 'backpack_b_1_supply_pack', 'eagle_airstrike', 'orbital_gas_strike']},
   {name: '四发突击兵：同一库存完成双重甲', primary: 'ar_23a_liberator_carbine', secondary: 'gp_31_grenade_pistol', grenade: 'g_6_frag',
     stratagems: ['support_mls_4x_commando', 'backpack_b_1_supply_pack', 'eagle_airstrike', 'orbital_gas_strike']},
+  {name: '续航分工：三叉戟、毒矛与通牒，未携带补给设备', primary: 'las_13_trident', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
+    stratagems: ['support_spear', 'orbital_gas_strike', 'deployable_gas_mines', 'deployable_flame_sentry']},
+  {name: '续航分工：相同武器，轨道毒气换成补包', primary: 'las_13_trident', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
+    stratagems: ['support_spear', 'backpack_b_1_supply_pack', 'deployable_gas_mines', 'deployable_flame_sentry']},
   {name: '用户组合：毒矛主战过滤，焦土近防，通牒千兆反重', primary: 'plas_1_scorcher', secondary: 'gp_20_ultimatum', grenade: 'g_48_giga_grenade',
     stratagems: ['support_spear', 'backpack_b_1_supply_pack', 'deployable_gas_mines', 'deployable_flame_sentry']},
 ];
@@ -50,7 +54,7 @@ const sensitivityPolicies = [
   ['当前保守输入', model.scenario.medium_resolution],
   ['不计过穿额外碰撞', {...model.scenario.medium_resolution, cleave_routes: {}}],
   ['混乱残余威胁5%', {...model.scenario.medium_resolution, gas_control: {...model.scenario.medium_resolution.gas_control, residual_threat_fraction: .05}}],
-  ['混乱残余威胁20%', {...model.scenario.medium_resolution, gas_control: {...model.scenario.medium_resolution.gas_control, residual_threat_fraction: .2}}],
+  ['混乱残余威胁35%', {...model.scenario.medium_resolution, gas_control: {...model.scenario.medium_resolution.gas_control, residual_threat_fraction: .2}}],
   ['取消混乱减威胁收益', {...model.scenario.medium_resolution, gas_control: {...model.scenario.medium_resolution.gas_control, residual_threat_fraction: 1}}],
   ['若致死发溢出可扣流血条', {...model.scenario.medium_resolution, overflow_to_constitution: true}],
 ];
@@ -196,7 +200,7 @@ rows.push('## 全池实际计算覆盖（2026-10-28）','',
   '喷流采用已有直击、单份Fire和有限燃料；燃烧弹新增连续射击状态积累，未知阈值仍不填数。钗与三叉戟接射击间隙散热及有限快换，耗尽备用散热器后自然冷却。三叉戟六束不附火。缓和使者每发10弧，电弧雷按用户确认每跳10弧共5次；两者锁尸体候选系数0.5，电弧雷后四跳另各乘0.2，当前为9弧等价。以上损失系数与1秒放电间隔均为工程参数。空爆火箭/轨道空爆接各自25/12颗子弹，声明散布几何，母弹不重复加伤。', '',
   '六项都显示分数。战斗与拆迁沿用曲线S(r)：r≤1时60r²，r>1时60+45(r−1)/(r−0.625)。反重每类完整双杀r=20秒/实际用时；只能付出一只时r最多0.5，避免速杀一只掩盖缺弹。已知路线表现取平均，覆盖情况另列，不再按覆盖几类÷三折分；未知目标不充零。先检查直击或爆炸AP4重穿门槛，低于默认反重0，火毒状态AP不能绕过；弱点战例只作说明，不参与分数或整套反重过线。达到门槛后按实际双杀耗时、BTK和库存计算，不额外要求Anti-Tank标签；已确认的稳定爆炸反重手段保留。红绿反重仍为经CD/分类修正的条件加值。拆迁r=首轮可完成洞数/5，探测25洞，达到上限只报分数下界；绿战备恒0，不等大CD补次数。单次直击或爆炸拆迁力≥40即可具备拆迁能力，不累加拆迁力；红战备不按名称白名单筛选。仅核有限库存时不因未知起爆时间丢分，也不声称完成时间。', '',
   '枪械续航已按用户要求简化为全弹总伤D=可用总弹量×单发伤害，直击与已绑定爆炸合计一次；肉伤用于分数，耐伤总量单列。不再查敌人、BTK、AP、击杀波数、职责、换弹或后座。显示换算暂用令r=D/D参照，S=105r^1.15/(r^1.15+0.75)，参照附近斜率提高15%，参照为解放者满弹＋一盒公共总伤68850，60分是工程显示刻度。补给先增加有限弹量再算总伤，不固定送满分。红绿续航统一为0；CD/兑现系数继续用于其他战斗能力。', '',
-  '手雷续航按携带颗数＋有限补给颗数计，不乘伤害；用户参照4携带＋一盒补2为显示60分。补给每颗权重暂取携带的2倍（工程参数），真实库存不加权。手雷次数暂单列，不混入枪械续航；整套续航采用主力＋备用汇总，见后文。反重与拆迁将各件最终分直接相加，不压缩总分；真实弹药、20秒双重甲和五洞检查保留。', '',
+  '手雷续航按携带颗数＋有限补给颗数计，不乘伤害；用户参照4携带＋一盒补2为显示60分。补给每颗权重暂取携带的2倍（工程参数），真实库存不加权。手雷以各职责加值×续航分/100补充整套续航，不加入常驻枪械分母；整套按职责能力与续航占比合成，见后文。反重与拆迁将各件最终分直接相加，不压缩总分；真实弹药、20秒双重甲和五洞检查保留。', '',
   '| 装备 | 清杂 | 近防 | 反中 | 反重 | 续航：一盒公共 | 拆迁：五洞 |', '|---|---:|---:|---:|---|---|---|');
 const numeric=(value,lower=false)=>Number.isFinite(value)?value>0&&value<.01?'<0.01':`${lower?'≥':''}${value.toFixed(2)}`:'待补';
 const point=(v,origin,lower=false)=>numeric(contributionScore(v,origin,model.scenario.score_scale),lower);
@@ -276,11 +280,11 @@ for(const r of model.equipment)for(const m of r.capabilities.modes.filter(m=>m.c
 }
 rows.push('',
   '## 续航库存与整套续航', '',
-  '整套现用固定“主力＋备用”算法，无大模型或在线资料查询。每把枪沿用一盒公共补给基线与人工校准；清杂/近防/反中各按分数÷60截到0～1，以60%/30%/10%加权得到适配度q。每枪贡献V=q×单件续航分；常态续航=min(100,最大V＋35%×其余V之和)。这些权重为待验收工程参数，不是玩家真实使用时间。专职工具不会通过均值拖低主力；无限弹副手也须经过q。', '',
-  '补包/补车不参与最高分或平均，而在最终结算把整套续航补到至少100，两者不叠加、原本超过100不降低；红绿、手雷、自动背包和载具不参与常驻枪池。明确保留反重的装备退出常态池。人工整件加值只在末尾加一次；手雷次数仍独立。人工单件续航及人工0保持原值；补给只改变最终分，不把真实弹药变成无限。缺资料标记未知或下界，不回退成参照枪。平衡抽取须六维最终分全部达到60；先应用补包/补车修正，再检查续航及格。真实弹药与其他物理检查保留。', '',
-  '| 诊断配装 | 常态汇总 | 补给修正前（含人工加值） | 最终续航 | 主力贡献项 |',
-  '|---|---:|---:|---:|---|',
-  ...results.filter(r=>r.endurance_assessment).map(r=>`| ${r.name} | ${numeric(r.endurance_assessment.score)} | ${numeric(r.dimensions.endurance.supply_adjustment?.before_score??r.dimensions.endurance.score)} | ${numeric(r.dimensions.endurance.score)} | ${model.equipment.find(x=>x.equipment_id===r.endurance_assessment.primary_id)?.name??'待定'} |`), '',
+  '整套续航各职责只纳入能力A大于0的常驻武器：权重＝(能力分A＋续航E)/Σ(A＋E)，每项枪械续航＝Σ(权重×E)。直接使用显示分相加，能力0的武器不占分母；全空或全枪续航0时该项为0。手雷另提供该项加值×手雷续航/100。清杂50%、近防35%、反中15%合成，最高100。低续航武器会拉低相关平均，已知0和未知分开，未知分母不静默丢弃。常驻武器人工续航也参与加权，不额外直接相加。', '',
+  '补包/补车在最终结算将续航补到至少100，不重复加；枪械分母排除红绿、手雷、近战、自动背包与载具。手雷以折算加值补充，不改变枪械分母。整套续航及格线50，其余五维60；先应用补给修正再判定。真实弹药、20秒双重甲、五洞、互斥与近防安全独立检查。', '',
+  '| 诊断配装 | 枪械加权 | 手雷补充 | 常态合成 | 最终续航 |',
+  '|---|---:|---:|---:|---:|',
+  ...results.filter(r=>r.endurance_assessment).map(r=>`| ${r.name} | ${numeric(r.endurance_assessment.routine_score)} | ${numeric(r.endurance_assessment.grenade_bonus)} | ${numeric(r.endurance_assessment.score)} | ${numeric(r.dimensions.endurance.score)} |`), '',
   '枪械续航现在只使用名义全弹总伤，不再使用同职责目标工作量。每个模式都列已装＋全备弹、补给追加弹量、肉伤/耐伤总量。不同模式共享弹药，选可用模式而不相加。近战武器续航固定为0，完全退出整套续航计算，不占主力、备用或平均分母，也不能作为人工续航加值。已有四波战斗诊断仍供核对其他能力，但完全不参与续航计分。', '',
   '本简化版合计已绑定直击与基础爆炸，破片潜力和持续伤害仍单列条件，不假定全部命中/无限群伤，因此相关项目的基础总伤不代表完整特殊效果。补包4盒、补车8盒，补车炮塔不计；额外弹药受接收容量和实际补给量限制。可冷却资源保持100的无限弹药标识，冷却等待只影响其他能力。红绿续航统一为0，载荷资料仅供其他战斗能力使用。', '',
   '| 装备 | 满状态肉伤总量 | 满状态耐伤总量 | 加一盒后的肉伤 / 耐伤 | 续航分：无公共 / 一盒 |', '|---|---:|---:|---:|---:|');

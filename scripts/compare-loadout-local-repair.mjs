@@ -26,7 +26,7 @@ function run(seed,local_repair){
   const elapsed_ms=performance.now()-begin;
   if(value.status!=='ASSESSMENT_PASS')return {status:value.status,elapsed_ms,steps,search_stats:task.search_stats};
   const scores=Object.fromEntries(REPAIR_ROLES.map(role=>[role,value.dimensions[role].score]));
-  if(REPAIR_ROLES.some(role=>value.dimensions[role].status!=='PASS'||scores[role]<60-1e-10)
+  if(REPAIR_ROLES.some(role=>value.dimensions[role].status!=='PASS'||scores[role]<value.dimensions[role].threshold-1e-10)
     ||Object.values(value.gates).some(gate=>gate.status!=='PASS'))throw Error('UNACCEPTABLE_OUTPUT');
   return {status:value.status,loadout:value.loadout,scores,quality:mean(Object.values(scores).map(n=>Math.min(100,n))),
     weakest:Math.min(...Object.values(scores)),layers:repairMeasure(value).groups,elapsed_ms,steps,completed:task.completed,search_stats:task.search_stats};

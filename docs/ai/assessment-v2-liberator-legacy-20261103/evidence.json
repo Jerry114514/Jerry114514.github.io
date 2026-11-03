@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "equipment_id": "ar_23l_liberator_legacy",
+  "verified_at": "2026-11-03 (Asia/Shanghai)",
+  "source_url": "https://helldivers.wiki.gg/wiki/AR-23L_Liberator_Legacy",
+  "reload_cross_reference": "https://helldivers.wiki.gg/wiki/Extended_Magazine",
+  "retrieval": "Native web search returned complete Detailed Weapon Statistics and Attachments tables; direct open returned403. Existing source snapshot revision140750 retained. No inferred revision for current search extraction.",
+  "existing_snapshot_revision": 140750,
+  "weapon_configuration": "BASE_DETAILED_STATS; DEFAULT_LEVEL_1_EXTENDED_MAGAZINE; NO_ATTACHMENT_STAT_OPTIMIZATION",
+  "source_values": {
+    "normal_damage": 90,
+    "durable_damage": 22,
+    "penetration_label": "Light",
+    "rpm": 660,
+    "magazine_capacity": 45,
+    "spare_magazines": 8,
+    "supply_refill_magazines": 8,
+    "ammo_box_refill_magazines": 4,
+    "base_ergonomics": 60,
+    "drift_recoil": {
+      "horizontal": 10,
+      "vertical": 13
+    },
+    "climb_recoil": {
+      "horizontal": 7,
+      "vertical": 26
+    },
+    "full_reload_ms": 3000,
+    "partial_reload_ms": 2000,
+    "demolition_force": 10
+  },
+  "model_bindings": {
+    "inventory": "405 rounds full stock; one public supply box restores360 rounds when consumed, subject to capacity; starting6mag load is not full-state assumption",
+    "reload": "Use3000ms full reload in ordinary magazine cycle;2000ms partial preserved as source data, no unsupported tactical reload optimization",
+    "recoil": "Per-axis max(abs(drift),abs(climb)) =>10/26; explicit engineering projection for existing bounded small handling-time correction, not exact equivalence to old Wiki axes and not hit probability. Existing legacy-axis rows retain precedence.",
+    "pool": "Regular primary slot; no added draw weight; ordinary whole-loadout six-score and physical gates retained",
+    "scope": "SOURCE_INTEGRATION_NOT_MANUAL_SCORE_OVERRIDE",
+    "ergonomics": "User final correction on2026-11-03: ergonomics difference must count. Retain sourced60 vs standard Liberator65 and apply existing small acquisition-time penalty. No manual score override."
+  }
+}

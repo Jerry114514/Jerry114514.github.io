@@ -1,0 +1,79 @@
+{
+  "seed_start": 640000,
+  "count_per_version": 500,
+  "workers": 4,
+  "model_sha256": "aacbd19f92c374e5487bef9e6f27a17c79d70563987ccf883e88ab53e2c0173e",
+  "policy": "ENDURANCE_THRESHOLD_50_DEFICIT_ONLY_REPAIR",
+  "repair_sha256": "63c58ddc8d8e66f74d27ba2ad82451008e54293ca54652764dad70496b6e9552",
+  "baseline_kind": "ARCHIVED_THRESHOLD_55_DEFICIT_ONLY_REPAIR; SAME_SEEDS_NOT_RERUN",
+  "scope": "SAME_SEEDS_SAME_ITEM_DATA_AND_REPAIR; ONLY_ENDURANCE_THRESHOLD_DIFFERS; PARALLEL_TIMES_NOT_SINGLE_REQUEST_BENCHMARK",
+  "versions": {
+    "deficit_only": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 117,
+      "supply_rate": 0.234,
+      "supply_wilson95": [
+        0.19900409539602293,
+        0.27305220166241767
+      ],
+      "with_pack": 35,
+      "with_car": 82,
+      "mean_endurance": 70.86807301427578,
+      "mean_dimension": {
+        "chaff": 92.46032584092134,
+        "close_defense": 73.96577011440543,
+        "anti_medium": 91.43967653332032,
+        "anti_heavy": 122.61312856468368,
+        "endurance": 70.86807301427578,
+        "demolition": 126.52904000000002
+      },
+      "elapsed_ms_parallel": {
+        "mean": 675.6013546,
+        "max": 6242.5082
+      }
+    }
+  },
+  "wall_ms": 89856.6238,
+  "baseline": {
+    "summary": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 169,
+      "supply_rate": 0.338,
+      "supply_wilson95": [
+        0.2979123151908617,
+        0.38055806121315106
+      ],
+      "with_pack": 51,
+      "with_car": 118,
+      "mean_endurance": 77.50206702902874,
+      "mean_dimension": {
+        "chaff": 93.10528514945715,
+        "close_defense": 74.19901286661687,
+        "anti_medium": 91.74522912657865,
+        "anti_heavy": 122.78111891946598,
+        "endurance": 77.50206702902874,
+        "demolition": 124.61978549450554
+      },
+      "elapsed_ms_parallel": {
+        "mean": 862.4761810000003,
+        "max": 6704.8714999999975
+      }
+    },
+    "model_sha256": "467a96f464d4f4b95fda4faa5b40b561adac024e3a2e5329b21611643f423f3c"
+  },
+  "paired": {
+    "supply_rate_delta": -0.104,
+    "approx95": [
+      -0.1324564447409472,
+      -0.07554355525905279
+    ],
+    "supply_added": 3,
+    "supply_removed": 55,
+    "same_loadout": 304
+  },
+  "raw_result_sha256": "5510379e27bc3c161d38e761956250c9213022aa58ad567e637b937c0c5acf74",
+  "runtime_source_baseline": "14fb0a1e3fcf7f85c61a9b4636029b399271b403",
+  "item_records_unchanged": true
+}

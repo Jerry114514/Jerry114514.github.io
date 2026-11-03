@@ -189,6 +189,7 @@ for (const row of equipment) {
 }
 const inputPaths = ['shared/hd2-loadout/assessment-v2/mechanism-bindings.mjs','docs/ai/assessment-v2-mechanism-review-20261028/evidence-terra.json',supplementPath, 'shared/hd2-loadout/assessment-v2/source-bindings.mjs', 'shared/hd2-loadout/assessment-v2/sources/equipment-expanded.json','shared/hd2-loadout/data/catalog.json','HD2_Wiki/data/wiki/zh/enemies.json',
   'shared/hd2-loadout/assessment-v2/automatic.mjs',
+  'docs/ai/assessment-v2-liberator-legacy-20261103/evidence.json',
   'shared/hd2-loadout/assessment-v2/children.mjs',
   'shared/hd2-loadout/assessment-v2/score-scale.mjs',
   'docs/ai/assessment-v2-pool-completion-20261028/fire-gas/evidence.json',

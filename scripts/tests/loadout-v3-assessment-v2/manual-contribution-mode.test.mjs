@@ -21,11 +21,13 @@ const kit={primary:id,secondary:'gp_20_ultimatum',grenade:'g_48_giga_grenade',
   stratagems:['support_spear','backpack_b_1_supply_pack','deployable_gas_mines','deployable_flame_sentry']};
 function apply(doc){const model=structuredClone(source);applyManualScores(model,doc);return model;}
 
-test('one whole-item mode routes all six final manual values once without ordinary/composite double counting',()=>{
+test('manual addition routes five dimensions directly and held endurance through role means once',()=>{
   const scores=Object.fromEntries(SCORE_ROLES.map(role=>[role,60]));
   const doc=changeManualScores(empty(),{equipment_id:id,mode:'additive',scores},source);
   const model=apply(doc),r=evaluateAssessment(kit,model,catalog);
-  for(const role of SCORE_ROLES){const dim=r.dimensions[role],added=dim.contributions.filter(c=>c.equipment_id===id);
+  assert.equal(r.endurance_assessment.items.find(i=>i.equipment_id===id).score,60);
+  assert.equal(r.dimensions.endurance.contributions.some(c=>c.equipment_id===id),false);
+  for(const role of SCORE_ROLES.filter(role=>role!=='endurance')){const dim=r.dimensions[role],added=dim.contributions.filter(c=>c.equipment_id===id);
     assert.equal(added.length,1,role);assert.equal(added[0].value,60,role);
     assert.equal(added[0].source,'MANUAL_EQUIPMENT_ADDITION');
     assert.notEqual(dim.selected_ordinary,id,role);
@@ -46,7 +48,10 @@ test('mode-only edits use regraded automatic values; reset restores automatic ro
   for(const role of SCORE_ROLES){
     assert.equal(contributionKind(row,role),'AUXILIARY_ADDITION');
     const added=r.dimensions[role].contributions.find(c=>c.equipment_id===id);
-    if(Number.isFinite(row.calculated_scores[role]))assert.equal(added.value,rescaleScore(row.calculated_scores[role],model.scenario.score_scale));
+    if(role==='endurance'){
+      assert.equal(added,undefined);
+      assert.equal(r.endurance_assessment.items.find(i=>i.equipment_id===id).score,rescaleScore(row.calculated_scores[role],model.scenario.score_scale));
+    } else if(Number.isFinite(row.calculated_scores[role]))assert.equal(added.value,rescaleScore(row.calculated_scores[role],model.scenario.score_scale));
   }
   const reset=changeManualScores(doc,{equipment_id:id,mode:'auto',scores:{}},model);
   assert.deepEqual(reset.overrides,{});assert.equal(reset.history.length,2);

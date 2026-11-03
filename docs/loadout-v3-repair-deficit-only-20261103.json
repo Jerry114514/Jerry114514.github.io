@@ -1,0 +1,80 @@
+{
+  "seed_start": 640000,
+  "count_per_version": 500,
+  "workers": 4,
+  "model_sha256": "467a96f464d4f4b95fda4faa5b40b561adac024e3a2e5329b21611643f423f3c",
+  "policy": "DEFICIT_ONLY_ALL_REPAIR_STAGES",
+  "repair_sha256": "63c58ddc8d8e66f74d27ba2ad82451008e54293ca54652764dad70496b6e9552",
+  "baseline_kind": "ARCHIVED_ADDITIVE_MODEL_WITH_SURPLUS_REPAIR; SAME_SEEDS_NOT_RERUN",
+  "scope": "SAME_SEEDS_EXACT_SAME_MODEL; ONLY_REPAIR_SELECTION_DIFFERS; PARALLEL_TIMES_NOT_SINGLE_REQUEST_BENCHMARK",
+  "wall_ms": 111638.2123,
+  "baseline": {
+    "summary": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 164,
+      "supply_rate": 0.328,
+      "supply_wilson95": [
+        0.2882954889726376,
+        0.3703273798019932
+      ],
+      "with_pack": 56,
+      "with_car": 108,
+      "mean_endurance": 77.66483829930704,
+      "mean_dimension": {
+        "chaff": 94.65081200624367,
+        "close_defense": 74.07268799073431,
+        "anti_medium": 92.63104380872224,
+        "anti_heavy": 125.38244855198045,
+        "endurance": 77.66483829930704,
+        "demolition": 131.74686725274722
+      },
+      "elapsed_ms_parallel": {
+        "mean": 798.8108413999998,
+        "max": 5994.761199999994
+      }
+    },
+    "model_sha256": "467a96f464d4f4b95fda4faa5b40b561adac024e3a2e5329b21611643f423f3c"
+  },
+  "paired": {
+    "supply_rate_delta": 0.01,
+    "approx95": [
+      -0.03133181241410642,
+      0.05133181241410643
+    ],
+    "supply_added": 58,
+    "supply_removed": 53,
+    "same_loadout": 151
+  },
+  "versions": {
+    "deficit_only": {
+      "requests": 500,
+      "passed": 500,
+      "with_supply": 169,
+      "supply_rate": 0.338,
+      "supply_wilson95": [
+        0.2979123151908617,
+        0.38055806121315106
+      ],
+      "with_pack": 51,
+      "with_car": 118,
+      "mean_endurance": 77.50206702902874,
+      "mean_dimension": {
+        "chaff": 93.10528514945715,
+        "close_defense": 74.19901286661687,
+        "anti_medium": 91.74522912657865,
+        "anti_heavy": 122.78111891946598,
+        "endurance": 77.50206702902874,
+        "demolition": 124.61978549450554
+      },
+      "elapsed_ms_parallel": {
+        "mean": 862.4761810000003,
+        "max": 6704.8714999999975
+      }
+    }
+  },
+  "raw_data": ".tools-local/repair-deficit-only-comparison-20261103.json",
+  "script": ".tools-local/check-repair-deficit-only.mjs",
+  "publication": "LOCAL_ONLY; NO_PUSH",
+  "conclusion": "All 500 pass; supply 164 -> 169, paired delta +1pp, approximate95% [-3.13,+5.13]pp. No established frequency trend. Fixed 201-item data excludes later local manual Trident changes."
+}
