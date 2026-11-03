@@ -51827,7 +51827,7 @@
           "plus_one_box_standard_damage": 68850,
           "plus_one_box_durable_damage": 16830,
           "fragment_potential": null,
-          "reload_or_cooldown_ms": null,
+          "reload_or_cooldown_ms": 3000,
           "scope": "DIRECT_PLUS_BOUND_BLAST_FULL_STOCK; NO_FREE_DOT_FRAGMENT_OR_MULTIPART_MULTIPLIER",
           "limitations": []
         }
@@ -51835,13 +51835,169 @@
       "combat_trials": [
         {
           "role": "chaff",
-          "state": "UNRESOLVED",
-          "reason": "EXECUTABLE_ROLE_PLAN_REQUIRED"
+          "state": "EXECUTED_FINITE_RESOURCE_PROBE",
+          "targets_per_wave": 28,
+          "rounds_per_wave": 68,
+          "modes": [
+            "AR-23_P"
+          ],
+          "probe_limit_waves": 4,
+          "actions_per_wave": 28,
+          "scenarios": {
+            "initial": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 112,
+              "probe_completed": true,
+              "elapsed_ms": 65849,
+              "actions_elapsed_ms": 65849,
+              "completed_effect_actions_at_stop": 112,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 90,
+                "loaded:ar_23l_liberator_legacy": 43
+              }
+            },
+            "public": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 112,
+              "probe_completed": true,
+              "elapsed_ms": 65849,
+              "actions_elapsed_ms": 65849,
+              "completed_effect_actions_at_stop": 112,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 90,
+                "loaded:ar_23l_liberator_legacy": 43,
+                "supply:public": 1
+              }
+            },
+            "pack": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 112,
+              "probe_completed": true,
+              "elapsed_ms": 65849,
+              "actions_elapsed_ms": 65849,
+              "completed_effect_actions_at_stop": 112,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 90,
+                "loaded:ar_23l_liberator_legacy": 43,
+                "supply:public": 1,
+                "supply:backpack_b_1_supply_pack": 4
+              }
+            },
+            "vehicle": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 112,
+              "probe_completed": true,
+              "elapsed_ms": 65849,
+              "actions_elapsed_ms": 65849,
+              "completed_effect_actions_at_stop": 112,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 90,
+                "loaded:ar_23l_liberator_legacy": 43,
+                "supply:public": 1,
+                "supply:vehicle_m_103_supply_fast_recon_vehicle": 8
+              }
+            }
+          },
+          "scope": "ROLE_SPECIFIC_STOCK_RESET; PACK_OR_CAR_VARIANTS_INCLUDE_ONE_PUBLIC_BOX; NO_GLOBAL_SUPPLY_GUARANTEE"
         },
         {
           "role": "anti_medium",
-          "state": "UNRESOLVED",
-          "reason": "EXECUTABLE_ROLE_PLAN_REQUIRED"
+          "state": "EXECUTED_FINITE_RESOURCE_PROBE",
+          "targets_per_wave": 8,
+          "rounds_per_wave": 96,
+          "modes": [
+            "AR-23_P"
+          ],
+          "probe_limit_waves": 4,
+          "actions_per_wave": 8,
+          "scenarios": {
+            "initial": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 32,
+              "probe_completed": true,
+              "elapsed_ms": 80073,
+              "actions_elapsed_ms": 80073,
+              "completed_effect_actions_at_stop": 32,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 0,
+                "loaded:ar_23l_liberator_legacy": 21
+              }
+            },
+            "public": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 32,
+              "probe_completed": true,
+              "elapsed_ms": 80073,
+              "actions_elapsed_ms": 80073,
+              "completed_effect_actions_at_stop": 32,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 0,
+                "loaded:ar_23l_liberator_legacy": 21,
+                "supply:public": 1
+              }
+            },
+            "pack": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 32,
+              "probe_completed": true,
+              "elapsed_ms": 80073,
+              "actions_elapsed_ms": 80073,
+              "completed_effect_actions_at_stop": 32,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 0,
+                "loaded:ar_23l_liberator_legacy": 21,
+                "supply:public": 1,
+                "supply:backpack_b_1_supply_pack": 4
+              }
+            },
+            "vehicle": {
+              "status": "COMPLETED",
+              "reason": null,
+              "completed_waves": 4,
+              "completed_actions": 32,
+              "probe_completed": true,
+              "elapsed_ms": 80073,
+              "actions_elapsed_ms": 80073,
+              "completed_effect_actions_at_stop": 32,
+              "progress_basis": "COMMITTED_PAID_ACTIONS; ELAPSED_INCLUDES_DECLARED_EFFECT_HORIZON",
+              "supplies_taken": [],
+              "remaining_stock": {
+                "ammo:ar_23l_liberator_legacy": 0,
+                "loaded:ar_23l_liberator_legacy": 21,
+                "supply:public": 1,
+                "supply:vehicle_m_103_supply_fast_recon_vehicle": 8
+              }
+            }
+          },
+          "scope": "ROLE_SPECIFIC_STOCK_RESET; PACK_OR_CAR_VARIANTS_INCLUDE_ONE_PUBLIC_BOX; NO_GLOBAL_SUPPLY_GUARANTEE"
         }
       ],
       "scope": "FULL_AMMO_TIMES_NOMINAL_DAMAGE; NO_TARGET_BTK_DPS_RELOAD_OR_ROLE_SELECTION",
@@ -80541,15 +80697,15 @@
     },
     "counts": {
       "equipment": 201,
-      "three_role_calculation_ready": 164,
-      "with_unresolved_role": 37,
+      "three_role_calculation_ready": 165,
+      "with_unresolved_role": 36,
       "strategic_calculation_ready": 32,
-      "with_source_work": 17,
+      "with_source_work": 16,
       "heavy_with_executed_routes": 39,
       "strategic_heavy_conditionally_computed": 20,
       "demolition_with_executed_inventory": 63,
       "demolition_known_zero": 135,
-      "weapons_with_endurance_trials": 128,
+      "weapons_with_endurance_trials": 129,
       "with_heavy_score": 187,
       "with_endurance_score": 191,
       "with_demolition_score": 200,
@@ -89070,9 +89226,9 @@
         "category": "primary",
         "source_ref": "wiki:ar_23l_liberator_legacy@140750",
         "role_states": {
-          "chaff": "UNRESOLVED",
-          "close_defense": "UNRESOLVED",
-          "anti_medium": "UNRESOLVED"
+          "chaff": "ENGINEERING_ESTIMATE",
+          "close_defense": "ENGINEERING_ESTIMATE",
+          "anti_medium": "ENGINEERING_ESTIMATE"
         },
         "heavy_bound_routes": {
           "charger_behemoth": 0,
@@ -89088,7 +89244,7 @@
         "additional_dimensions": {
           "anti_heavy": "KNOWN_ZERO",
           "demolition": "KNOWN_ZERO",
-          "endurance_trials": 0
+          "endurance_trials": 2
         },
         "finite_resource_accounts": [
           {
@@ -89098,13 +89254,9 @@
             "renewable": false
           }
         ],
-        "calculation_ready": false,
+        "calculation_ready": true,
         "calculation_scope": "THREE_LIGHT_MEDIUM_ROLES_ONLY; MAY_BE_LOWER_BOUND; HEAVY_AND_SHARED_STOCK_STILL_REQUIRED",
-        "source_fields_to_resolve": [
-          "HANDLING_RECOIL_HORIZONTAL",
-          "HANDLING_RECOIL_VERTICAL",
-          "RELOAD_TIME"
-        ],
+        "source_fields_to_resolve": [],
         "implementation_bindings": [],
         "scenario_judgments": [
           "STABLE_AIM_AND_RANGE_CONDITIONS"
