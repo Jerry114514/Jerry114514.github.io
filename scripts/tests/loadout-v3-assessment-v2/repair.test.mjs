@@ -9,6 +9,15 @@ const model=read('assessment-v2/equipment.json'),catalog=read('data/catalog.json
 const slots=['primary','secondary','grenade',...Array.from({length:4},(_,i)=>'stratagem:'+i)];
 const at=(l,s)=>s.startsWith('stratagem:')?l.stratagems[Number(s.split(':')[1])]:l[s];
 const ids=l=>slots.map(s=>at(l,s));
+test('repair uses the actual endurance threshold rather than searching for an obsolete 60',()=>{
+  const value=estimate({endurance:56},'PASS');
+  value.dimensions.endurance.threshold=55;value.dimensions.endurance.status='PASS';
+  const result=repairMeasure(value);
+  assert.equal(result.needs.endurance,0);
+  assert.equal(result.deficit,0);
+  value.dimensions.endurance.score=54;value.dimensions.endurance.status='FAIL';
+  assert.equal(repairMeasure(value).needs.endurance,1);
+});
 function estimate(scores={},physical='UNKNOWN') {
   const dimensions=Object.fromEntries(REPAIR_ROLES.map(role=>{
     const score=Object.hasOwn(scores,role)?scores[role]:80;

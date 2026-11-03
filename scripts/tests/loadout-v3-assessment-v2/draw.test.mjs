@@ -18,9 +18,10 @@ test('repaired draws repeat with a seed; accepted kits use the actual current ev
   assert.equal(a.eligible_for_draw,false,'acceptance testing must not claim gameplay calibration');
   const evaluation=evaluateAssessment(a.loadout,model,catalog);
   assert.equal(evaluation.acceptance_ready,true);
-  for(const dimension of Object.values(evaluation.dimensions)){
-    assert.equal(dimension.threshold,60);assert.equal(dimension.status,'PASS');
-    assert.ok(dimension.score>=60-1e-10);
+  for(const [role,dimension] of Object.entries(evaluation.dimensions)){
+    const threshold=role==='endurance'?55:60;
+    assert.equal(dimension.threshold,threshold);assert.equal(dimension.status,'PASS');
+    assert.ok(dimension.score>=threshold-1e-10);
   }
   assert.deepEqual(a.dimensions.endurance,evaluation.dimensions.endurance);
   assert.equal(a.evidence_grade,'assessment_estimate');

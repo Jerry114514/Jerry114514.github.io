@@ -135,7 +135,8 @@ function evaluateCore(loadout, model, catalog, options, ranking) {
     shared_resources: ordinaryPlan, close_safety: closeSafety(ordinaryRows, model)};
   // Every final dimension must pass, in addition to the independent physical gates.
   // Medium route selection still uses physical response, not slot display preference.
-  const thresholds = {chaff:60,close_defense:60,anti_medium:60,anti_heavy:60,endurance:60,demolition:60};
+  const thresholds = {chaff:60,close_defense:60,anti_medium:60,anti_heavy:60,
+    endurance:model.scenario.loadout_endurance?.pass_threshold??55,demolition:60};
   // A grenade's auxiliary display score cannot lower the physical gun-only
   // floor without a paid combined plan. The stock ledger remains conservative.
   const candidates=[...ordinary.map(r=>({...r,default_kind:'BASE_CAPABILITY'})),

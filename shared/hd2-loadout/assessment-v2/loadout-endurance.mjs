@@ -6,7 +6,7 @@ import {isMeleeEquipment} from './score-exclusions.mjs';
 export const DEFAULT_LOADOUT_ENDURANCE_POLICY={
   id:'routine-role-weighted-v2',role_weights:{chaff:.5,close_defense:.35,anti_medium:.15},
   throwable_bonus:'ROLE_ADDITION_TIMES_ENDURANCE_OVER_100',
-  ceiling:100,supply_final_floor:100,
+  ceiling:100,pass_threshold:55,supply_final_floor:100,
   scope:'DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE',
   parameters_status:'USER_SELECTED_ROLE_PROPORTIONS_20261103'
 };

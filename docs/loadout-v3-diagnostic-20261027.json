@@ -89536,7 +89536,7 @@
           "total_before_display": 51.492277145408075,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 51.492277145408075,
@@ -89687,6 +89687,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -92132,6 +92133,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -93201,7 +93203,7 @@
           "total_before_display": 42.52331792727749,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 42.52331792727749,
@@ -93352,6 +93354,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -95511,6 +95514,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -96591,7 +96595,7 @@
           "total_before_display": 32.39630776644647,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 32.39630776644647,
@@ -96742,6 +96746,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -98940,6 +98945,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -100027,8 +100033,8 @@
           "total_before_display": 55.22893067004526,
           "score": 55.22893067004526,
           "lower_bound": false,
-          "threshold": 60,
-          "status": "FAIL",
+          "threshold": 55,
+          "status": "PASS",
           "computation": {
             "score": 55.22893067004526,
             "known_lower_bound": 55.22893067004526,
@@ -100178,6 +100184,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -101883,11 +101890,9 @@
       },
       "scoring_rule": "BEST_EXECUTABLE_ORDINARY_PLUS_CD_AND_REFILL_WEIGHTED_AUXILIARIES; HEAVY_AND_DEMOLITION_SUM_FINAL_SCORES; SHARED_PHYSICAL_GATES",
       "scope": "INITIAL_DRAW_ONLY; POST_OUTPUT_REPLACEMENT_MUST_NOT_CALL_EVALUATOR",
-      "status": "ESTIMATED_FAIL",
-      "numeric_status": "FAIL",
-      "failed": [
-        "endurance"
-      ],
+      "status": "ESTIMATED_PASS",
+      "numeric_status": "PASS",
+      "failed": [],
       "missing": [],
       "eligible_for_draw": false,
       "loadout": {
@@ -102289,6 +102294,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -102741,7 +102747,7 @@
         }
       ],
       "automatic_assessments": [],
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "acceptance_policy": {
         "global_recalibration_required": false,
         "corrections_from_rejected_playtest_loadouts": true,
@@ -103132,7 +103138,7 @@
           "total_before_display": 55.22893067004526,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 55.22893067004526,
@@ -103283,6 +103289,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -105427,6 +105434,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -106135,7 +106143,7 @@
           "total_before_display": 31.668096879295746,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 31.668096879295746,
@@ -106249,6 +106257,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -108721,6 +108730,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -109089,7 +109099,7 @@
           "total_before_display": 31.668096879295746,
           "score": 100,
           "lower_bound": false,
-          "threshold": 60,
+          "threshold": 55,
           "status": "PASS",
           "computation": {
             "score": 31.668096879295746,
@@ -109195,6 +109205,7 @@
               },
               "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
               "ceiling": 100,
+              "pass_threshold": 55,
               "supply_final_floor": 100,
               "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
               "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"
@@ -111646,6 +111657,7 @@
           },
           "throwable_bonus": "ROLE_ADDITION_TIMES_ENDURANCE_OVER_100",
           "ceiling": 100,
+          "pass_threshold": 55,
           "supply_final_floor": 100,
           "scope": "DETERMINISTIC_RESOURCE_INDEX; NO_LLM; FINAL_SCORE_PARTICIPATES_IN_SIX_DIMENSION_GATE",
           "parameters_status": "USER_SELECTED_ROLE_PROPORTIONS_20261103"

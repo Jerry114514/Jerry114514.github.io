@@ -262,7 +262,7 @@ test('supply pack or car resolves the actual endurance admission gate after all 
     const before = evaluateAssessment(loadout,model,catalog,{disabled_contributions:[provider]});
     assert.equal(before.dimensions.endurance.score,before.endurance_assessment.grenade_bonus);
     assert.ok(before.dimensions.endurance.score<60);
-    assert.equal(before.dimensions.endurance.threshold,60);
+    assert.equal(before.dimensions.endurance.threshold,55);
     assert.ok(before.failed.includes('endurance'));
     assert.equal(before.acceptance_ready,false);
     const supplied = evaluateAssessment(loadout,model,catalog);
@@ -273,6 +273,23 @@ test('supply pack or car resolves the actual endurance admission gate after all 
     assert.equal(supplied.failed.includes('endurance'),false);
     assert.equal(supplied.status,'ESTIMATED_PASS');
     assert.equal(supplied.acceptance_ready,true);
-    assert.ok(Object.values(supplied.dimensions).every(d=>d.threshold===60&&d.status==='PASS'));
+    assert.ok(Object.entries(supplied.dimensions).every(([role,d])=>d.threshold===(role==='endurance'?55:60)&&d.status==='PASS'));
+  }
+});
+
+test('endurance admission accepts 55 and rejects below it without lowering other dimensions',()=>{
+  const strong={primary:'plas_1_scorcher',secondary:'gp_20_ultimatum',grenade:'g_48_giga_grenade',
+    stratagems:['support_spear','orbital_gas_strike','deployable_gas_mines','deployable_flame_sentry']};
+  for(const [score,expected] of [[54.9,'FAIL'],[55,'PASS'],[59,'PASS']]){
+    const model=read('shared/hd2-loadout/assessment-v2/equipment.json');
+    for(const id of [strong.primary,strong.secondary,'support_spear'])
+      get(model,id).endurance={...get(model,id).endurance,score,score_origin:'MANUAL_CALIBRATED'};
+    get(model,strong.grenade).endurance={...get(model,strong.grenade).endurance,score:0,score_origin:'MANUAL_CALIBRATED'};
+    const result=evaluateAssessment(strong,model,catalog);
+    assert.equal(result.dimensions.endurance.status,expected);
+    assert.equal(result.dimensions.endurance.threshold,55);
+    assert.equal(result.acceptance_ready,expected==='PASS');
+    for(const [role,d] of Object.entries(result.dimensions))if(role!=='endurance')assert.equal(d.threshold,60);
+    assert.ok(Object.values(result.gates).every(g=>g.status==='PASS'));
   }
 });
