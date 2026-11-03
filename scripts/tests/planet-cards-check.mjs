@@ -237,6 +237,23 @@ check("EFFECT_COLOR 与 galaxy-map-v2.html 逐条一致", () => {
   assert.deepEqual(FX.EFFECT_COLOR, jsonLiteral("EFFECT_COLOR"));
 });
 
+check("腐蚀/毒瘴新变种映射到独立图标并保留中文名称", () => {
+  const expected = {
+    1430: ["腐蚀变种", "corrosive_strain.svg"],
+    1431: ["腐蚀变种", "corrosive_strain.svg"],
+    1432: ["毒瘴变种", "toxic_miasma_strain.svg"],
+    1433: ["毒瘴变种", "toxic_miasma_strain.svg"],
+    1434: ["毒瘴变种", "toxic_miasma_strain.svg"],
+  };
+  for (const [id, [cn, icon]] of Object.entries(expected)) {
+    assert.equal(FX.EFFECT_ICON[id].cn, cn);
+    assert.equal(FX.EFFECT_ICON[id].icon, icon);
+    assert.ok(fs.existsSync(site("assets/effect-icons/" + icon)));
+  }
+  const plan = FX.effectBadges([1395, 1430, 1431, 1432, 1433, 1434], { vars });
+  assert.deepEqual(plan.shown.map(f => f.cn), ["腐蚀变种", "毒瘴变种", "终结族控制系统 +"]);
+});
+
 check("图标资源版本号与星图 FX_ASSET_VER 同步（共用缓存）", () => {
   const m = mapSrc.match(/const FX_ASSET_VER = "(\d+)"/);
   assert.ok(m);

@@ -3,16 +3,16 @@
   "desc": "银河层效果（GalacticEffect）数值表：effect id → {effectType, valueTypes, values}。用于替换 galactic_effects 描述模板中的 #V_ONE / #V_TWO / #AMOUNT 占位符——官方 planetActiveEffects 只回 id、Darctor RawData 未导出该表，此为唯一公开数值来源（游戏 GalacticEffectSetting 的透传，非文案创作内容）。",
   "source": "https://helldiverscompanion.com/api/hell-divers-2-api/get-api-data-live → galacticWarEffects[]",
   "app_version": {
-   "HD2": "01.007.200",
-   "GEN": "01.000.169",
-   "HCA": "02.182.013",
+   "HD2": "01.007.202",
+   "GEN": "01.000.174",
+   "HCA": "02.183.001",
    "F": "0",
-   "DAY": "2026.10.23"
+   "DAY": "2026.11.3"
   },
-  "retrieved_at": "2026-10-25T17:30:40Z",
+  "retrieved_at": "2026-11-03T18:34:35Z",
   "usage": "占位符取值规则（实测归纳）：#V_ONE=values[0]，#V_TWO=values[1]，#AMOUNT=values[1]；显示 |值|，方向（延长/缩短、增加/减少）由中文模板词自带；值为 0 视为实例未定，不替换。ARSENAL AUGMENTATION 系的 #V_ONE 为战备 hash（values[0]），展示层用 effect 名冒号后的配备名等效替换。",
   "refresh": "游戏大版本更新效果数值后手动重取（curl 该 URL 取 galacticWarEffects 字段重新生成本文件）",
-  "count": 309
+  "count": 314
  },
  "effects": {
   "1": {
@@ -3411,6 +3411,61 @@
    ],
    "v": [
     201738752,
+    0
+   ]
+  },
+  "1430": {
+   "t": 40,
+   "vt": [
+    16,
+    0
+   ],
+   "v": [
+    585432236,
+    0
+   ]
+  },
+  "1431": {
+   "t": 71,
+   "vt": [
+    16,
+    0
+   ],
+   "v": [
+    2161600322,
+    0
+   ]
+  },
+  "1432": {
+   "t": 71,
+   "vt": [
+    16,
+    0
+   ],
+   "v": [
+    3308586179,
+    0
+   ]
+  },
+  "1433": {
+   "t": 71,
+   "vt": [
+    16,
+    0
+   ],
+   "v": [
+    2982396937,
+    0
+   ]
+  },
+  "1434": {
+   "t": 40,
+   "vt": [
+    16,
+    0
+   ],
+   "v": [
+    903954334,
     0
    ]
   }

@@ -44,6 +44,11 @@
     1386: { icon: "spore_burst_strain.svg", cn: "孢裂变种",   tier: 1 },
     1303: { icon: "rupture_strain.svg",     cn: "爆裂变种",   tier: 1 },
     1310: { icon: "rupture_strain.svg",     cn: "爆裂变种",   tier: 1 },
+    1430: { icon: "corrosive_strain.svg",   cn: "腐蚀变种",   tier: 1 },
+    1431: { icon: "corrosive_strain.svg",   cn: "腐蚀变种",   tier: 1 },
+    1432: { icon: "toxic_miasma_strain.svg", cn: "毒瘴变种",  tier: 1 },
+    1433: { icon: "toxic_miasma_strain.svg", cn: "毒瘴变种",  tier: 1 },
+    1434: { icon: "toxic_miasma_strain.svg", cn: "毒瘴变种",  tier: 1 },
     1380: { icon: "appropriators.svg",      cn: "占领者",     tier: 1 },
     1379: { icon: "appropriators.svg",      cn: "占领者",     tier: 1 },
     1377: { icon: "mindless_masses.svg",    cn: "无脑群氓",   tier: 1 },
@@ -67,6 +72,7 @@
     "seaf.svg": "#ffe800",
     "incineration_corps.svg": "#D6806D", "jet_brigade.svg": "#D6806D", "cyborgs.svg": "#D6806D",
     "predator_strain.svg": "#F5C518", "spore_burst_strain.svg": "#F5C518", "rupture_strain.svg": "#F5C518",
+    "corrosive_strain.svg": "#E7B34A", "toxic_miasma_strain.svg": "#8BD450",
     "dragonroach.svg": "#F5C518",
     "appropriators.svg": "#CF64F8", "mindless_masses.svg": "#CF64F8", "vote_snatchers.svg": "#CF64F8",
   };
@@ -93,7 +99,7 @@
 
   // 图标资源版本号：与 galaxy-map-v2.html 的 FX_ASSET_VER 保持一致（共用浏览器缓存）。
   // 改了 assets/effect-icons 里任何文件 → 两边一起 +1。
-  const ICON_VER = "4";
+  const ICON_VER = "5";
   const ICON_DIR = "./assets/effect-icons/";
   const FALLBACK_COLOR = "#94A3B8";
   const ICON_MAX = 6;        // 图标层最多显示几个（其余收进 +N）

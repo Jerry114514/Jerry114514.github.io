@@ -891,6 +891,11 @@ const EFFECT_ICON = {
   1386:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
   1303:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
   1310:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1430:{ icon:"corrosive_strain.svg",   cn:"腐蚀变种",   tier:1 },
+  1431:{ icon:"corrosive_strain.svg",   cn:"腐蚀变种",   tier:1 },
+  1432:{ icon:"toxic_miasma_strain.svg", cn:"毒瘴变种",  tier:1 },
+  1433:{ icon:"toxic_miasma_strain.svg", cn:"毒瘴变种",  tier:1 },
+  1434:{ icon:"toxic_miasma_strain.svg", cn:"毒瘴变种",  tier:1 },
   1380:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1379:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1377:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
@@ -924,6 +929,7 @@ const EFFECT_COLOR = {
   "seaf.svg":"#ffe800",
   "incineration_corps.svg":"#D6806D", "jet_brigade.svg":"#D6806D", "cyborgs.svg":"#D6806D",
   "predator_strain.svg":"#F5C518", "spore_burst_strain.svg":"#F5C518", "rupture_strain.svg":"#F5C518",
+  "corrosive_strain.svg":"#E7B34A", "toxic_miasma_strain.svg":"#8BD450",
   "dragonroach.svg":"#F5C518",
   "appropriators.svg":"#CF64F8", "mindless_masses.svg":"#CF64F8", "vote_snatchers.svg":"#CF64F8",
 };
@@ -1017,7 +1023,7 @@ function fxOf(planet) {
 // 而此处用的是 cache:"force-cache"，浏览器会把那份坏文件长期钉在缓存里 ——
 // 即使 HTML 已更新，图标仍然不显示。加版本号即换新 URL，强制重新取图。
 // 以后只要改了 assets/effect-icons 下的任何文件，就把这个数字 +1。
-const FX_ASSET_VER = "4";
+const FX_ASSET_VER = "5";
 async function effectIconMarkup(file) {
   if (__fxsvg[file] !== undefined) return __fxsvg[file];
   try {
