@@ -1016,6 +1016,7 @@ def build_active_campaign(companion, zh=None):
         key = sm.get("key") or fb_key
         zph = _zh_by_id_or_title(zh_phases, p.get("id32"), _plain(p.get("introTitle")))
         p_img = campaign_banner_of(p.get("introMediaId32"))
+        p_img_local = download_campaign_banner(p_img)
         phases.append({
             "id": p.get("id32"),
             "title": _plain(p.get("introTitle")),
@@ -1028,9 +1029,10 @@ def build_active_campaign(companion, zh=None):
             "status_cn": sm.get("cn") or fb_cn,
             "reward": _reward_of((p.get("rewards") or [None])[0], zh),
             # 阶段插画（introMediaId32 与横幅同一张 id32->/news/*.webp 表）：
-            # 当前阶段的位图会在下面本地化，作为缺失战役横幅时的权威回退。
+            # 每个阶段的位图都本地化，三章报告墙不依赖外链。
             "intro_image_id": p.get("introMediaId32"),
             "intro_image": (p_img or {}).get("url"),
+            "intro_image_local": ("./" + p_img_local) if p_img_local else None,
         })
     if not phases:
         return None
@@ -1045,9 +1047,6 @@ def build_active_campaign(companion, zh=None):
         pending = [i for i, ph in enumerate(phases) if ph["status"] == 0]
         cur_idx = pending[-1] if pending else len(phases) - 1
     cur = phases[cur_idx]
-    cur_intro = campaign_banner_of(cur.get("intro_image_id"))
-    cur_intro_local = download_campaign_banner(cur_intro)
-    cur["intro_image_local"] = ("./" + cur_intro_local) if cur_intro_local else None
 
     race = ep.get("race")
     fb_race_en, fb_race_cn = _RACE_FALLBACK.get(race, ("", ""))

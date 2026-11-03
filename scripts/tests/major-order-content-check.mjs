@@ -65,6 +65,13 @@ assert.equal(announcement.bannerSrc, "./assets/campaign/banner_eagle3.webp",
 
 const html = fs.readFileSync(path.join(site, "index.html"), "utf8");
 assert.match(html, /phase\.intro_image_local/);
-assert.match(html, /_campaignBannerSwap\(p\)/);
+assert.match(html, /camp-phase-grid/);
+assert.match(html, /camp-chapter-overlay/);
+assert.match(html, /data-campaign-image/);
+const css = fs.readFileSync(path.join(site, "css/home.css"), "utf8");
+assert.match(css, /data-count="3".*repeat\(3, minmax\(0, 1fr\)\)/);
+const fetchSource = fs.readFileSync(path.join(root, "scripts/fetch_site_data.py"), "utf8");
+assert.match(fetchSource, /p_img_local = download_campaign_banner\(p_img\)/);
+assert.match(fetchSource, /"intro_image_local":/);
 
 console.log("major-order-content-check: all assertions passed");
