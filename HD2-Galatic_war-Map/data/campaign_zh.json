@@ -4,7 +4,7 @@
     "source": "https://api.live.prod.thehelldiversgame.com/api/Episode/801/",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**官中可覆盖 `mt:true` 机器字段，绝不覆盖人工字段；机翻仍只补空字段**。；文本主源为 Arrowhead 官方 zh-Hans Episode API；仅官中缺失字段才调用 DeepSeek。",
-    "updated_at": "2026-10-31",
+    "updated_at": "2026-11-03",
     "source_language": "zh-Hans",
     "official_zh": true
   },
@@ -293,6 +293,16 @@
           "briefing": "由于敌人的侵略，麦拉芬蒙河纪念碑与人权审讯中心已无法建造。\n\n因此，该项目的规模已被缩小，仅建造人权审讯中心。鉴于机器人是袭击麦拉芬蒙河的交战方，我们将数字审讯定为研究的前沿领域：也就是从机械与改造士兵的体内提取信息。自从星系战争爆发以来，痛苦感知模拟已投入使用，而且取得了显著成效。\n\n为了协助开发更有效的数字审讯技术，绝地潜兵奉命获取35,000,000份机器人样本，并击杀60,000,000个生化人。",
           "title": "审讯强化",
           "mt": true
+        }
+      }
+    },
+    "3145394140": {
+      "title": "宁静守护者",
+      "description": "TCS+设施附近发生的轻微且例行的终结族入侵在平民分区引起了不必要的焦虑，导致民间消费下降，还阻碍了商业投资。虽然终结族的“威胁”完全是想象出来的，因为TCS+坚不可摧，但经济放缓的威胁却是非常真实的。绝地潜兵必须向公民保证，联邦拥有绝对的控制权。",
+      "phases": {
+        "699333331": {
+          "title": "保证",
+          "briefing": "关于TCS+发生故障的煽动性虚假谣言正在平民中传播。SEAF情报部门证实，被认为是结构故障的所有事件，实际上都是预定的机械维护，而不是终结族突破。公民只要全额购买保险，就完全不会遇到危险。\n\n然而，就在解放日来临之前，毫无根据的经济恐慌，影响了除卫生纸行业以外的所有企业，我们必须平息这种恐慌。\n\n为了恢复公众信心，绝地潜兵奉命消灭700,000,000只终结族。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供INCINERATOR FRV战略配备。"
         }
       }
     }
