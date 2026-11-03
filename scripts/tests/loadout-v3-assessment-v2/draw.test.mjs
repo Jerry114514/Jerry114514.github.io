@@ -19,7 +19,7 @@ test('repaired draws repeat with a seed; accepted kits use the actual current ev
   const evaluation=evaluateAssessment(a.loadout,model,catalog);
   assert.equal(evaluation.acceptance_ready,true);
   for(const [role,dimension] of Object.entries(evaluation.dimensions)){
-    const threshold=role==='endurance'?55:60;
+    const threshold=role==='endurance'?50:60;
     assert.equal(dimension.threshold,threshold);assert.equal(dimension.status,'PASS');
     assert.ok(dimension.score>=threshold-1e-10);
   }

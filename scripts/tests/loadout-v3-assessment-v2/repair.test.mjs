@@ -9,13 +9,13 @@ const model=read('assessment-v2/equipment.json'),catalog=read('data/catalog.json
 const slots=['primary','secondary','grenade',...Array.from({length:4},(_,i)=>'stratagem:'+i)];
 const at=(l,s)=>s.startsWith('stratagem:')?l.stratagems[Number(s.split(':')[1])]:l[s];
 const ids=l=>slots.map(s=>at(l,s));
-test('repair uses the actual endurance threshold rather than searching for an obsolete 60',()=>{
-  const value=estimate({endurance:56},'PASS');
-  value.dimensions.endurance.threshold=55;value.dimensions.endurance.status='PASS';
+test('repair uses the actual endurance threshold rather than searching for an obsolete 55',()=>{
+  const value=estimate({endurance:51},'PASS');
+  value.dimensions.endurance.threshold=50;value.dimensions.endurance.status='PASS';
   const result=repairMeasure(value);
   assert.equal(result.needs.endurance,0);
   assert.equal(result.deficit,0);
-  value.dimensions.endurance.score=54;value.dimensions.endurance.status='FAIL';
+  value.dimensions.endurance.score=49;value.dimensions.endurance.status='FAIL';
   assert.equal(repairMeasure(value).needs.endurance,1);
 });
 function estimate(scores={},physical='UNKNOWN') {
@@ -196,7 +196,7 @@ test('the supply floor improves the routine endurance layer once without inventi
 
 
 for(const role of REPAIR_ROLES)test(`repair gives no overflow credit for ${role} at any scoring stage`,()=>{
-  const threshold=role==='endurance'?55:60;
+  const threshold=role==='endurance'?50:60;
   const measure=score=>{
     const value=estimate({[role]:score},'UNKNOWN');
     value.dimensions[role].threshold=threshold;
