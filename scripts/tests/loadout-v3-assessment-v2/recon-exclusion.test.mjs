@@ -29,7 +29,7 @@ test('recon pair conflicts in every slot pair and partial locks, independently o
     }
   }
   for(const car of cars){
-    const mixed={...kit,stratagems:[car,'vehicle_exo_45_patriot_exosuit','vehicle_td_110_maelstrom','vehicle_td_220_bastion_mk_xvi']};
+    const mixed={...kit,stratagems:[car,'vehicle_exo_45_patriot_exosuit','vehicle_td_110_maelstrom','orbital_precision_strike']};
     assert.equal(assessmentLegality(mixed,catalog,model).status,'PASS','not a global vehicle cap');
   }
 });
