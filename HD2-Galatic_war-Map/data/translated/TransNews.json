@@ -1,6 +1,41 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 1636665659,
+  "title": "重要指令",
+  "original": "Eliminate the mandated number of Terminids in order to restore public confidence, quell unlawful rumours of TCS+ failures, and safeguard Federal prosperity.",
+  "translated": "消灭规定数量的终结族，恢复公众的信心，平息有关TCS+故障的非法谣言，保障联邦的繁荣。",
+  "text_source": "official_zh",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-03T16:11:59Z"
+ },
  "items": [
+  {
+   "id": 3987,
+   "published_at": "2026-11-03T13:16:06Z",
+   "source": "dispatch",
+   "original": "GLOOM SPREAD DETECTED\n\nThe Gloom is spreading at an unprecedented pace. GACRUX is now surrounded by low-density Gloom, and other planets in the sector are expected to follow. \n\nWorse, there are indications of new Hive Worlds forming, corrupting biomes formerly resistant to severe infestation. This may represent a novel strain of Gloom spores, adapted to more extreme conditions.",
+   "translated": "侦测发现“阴霾”扩散\n\n“阴霾”正在以前所未有的速度蔓延。十字架一现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。\n\n更糟糕的是，有迹象表明新的虫窝世界正在形成，而且腐化了之前还能抵抗严重侵扰的生物群系。这种迹象表明，可能出现了一种新型“阴霾”孢子变种，能适应更极端的条件。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85771438,
+   "official_message": "<i=3>侦测发现“阴霾”扩散</i>\n\n“阴霾”正在以前所未有的速度蔓延。<i=1>十字架一</i>现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。\n\n更糟糕的是，有迹象表明新的<i=1>虫窝世界</i>正在形成，而且腐化了之前还能抵抗严重侵扰的生物群系。这种迹象表明，可能出现了一种新型“阴霾”孢子变种，能适应更极端的条件。\n",
+   "translated_at": "2026-11-03T16:11:59Z"
+  },
+  {
+   "id": 3986,
+   "published_at": "2026-11-03T13:00:24Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER\n\nSeditious and entirely false rumours regarding TCS+ malfunctions are spreading across civilian channels, resulting in unfounded economic panic. SEAF Intelligence confirms: there is zero actionable peril to fully insured citizens.\n\nTo restore public confidence, the Helldivers are ordered to eliminate 700,000,000 Terminids. To aid in swiftly safeguarding Federal prosperity, High Command has authorized and subsidized fleetwide availability of the INCINERATOR FRV Stratagem.",
+   "translated": "新重要指令\n\n有关TCS+出现故障的煽动性虚假谣言正在平民通信频道中蔓延，导致了毫无根据的经济恐慌。SEAF情报部门确切表示：公民只要全额购买保险，就完全不会遇到危险。\n\n为了恢复公众信心，绝地潜兵奉命消灭700,000,000只终结族。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供INCINERATOR FRV战略配备。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 85770496,
+   "official_message": "<i=3>新重要指令</i>\n\n有关TCS+出现故障的煽动性虚假谣言正在平民通信频道中蔓延，导致了毫无根据的经济恐慌。SEAF情报部门确切表示：公民只要全额购买保险，就完全不会遇到危险。\n\n为了恢复公众信心，绝地潜兵奉命<i=1>消灭700,000,000只终结族</i>。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供<i=1>INCINERATOR FRV战略配备</i>。",
+   "translated_at": "2026-11-03T16:11:59Z"
+  },
   {
    "id": 3985,
    "published_at": "2026-11-02T21:48:00Z",
@@ -104,32 +139,6 @@
    "published_war_seconds": 85344679,
    "official_message": "<i=1>SCAVENGER RAMPAGE UPDATE</i>\n\n<i=1>Scavenger</i> numbers on <i=1>Terminid</i> warfront have returned to normal levels.",
    "translated_at": "2026-10-29T15:45:05Z"
-  },
-  {
-   "id": 3977,
-   "published_at": "2026-10-29T11:44:35Z",
-   "source": "dispatch",
-   "original": "ARSENAL AUGMENTATION ENDED\n\nFree availability of the Anti-Materiel Rifle Stratagem for forces on the Illuminate front has now ended.",
-   "translated": "军械扩充已结束\n\nIlluminate前线的反器材步枪战略配备免费使用权限已结束。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85334023,
-   "official_message": "<i=3>军械扩充已结束</i>\n\n<i=1>Illuminate前线</i>的<i=1>反器材步枪</i>战略配备免费使用权限已结束。",
-   "translated_at": "2026-10-29T15:45:03Z"
-  },
-  {
-   "id": 3976,
-   "published_at": "2026-10-29T11:29:55Z",
-   "source": "dispatch",
-   "original": "ARSENAL AUGMENTATION ENDED\n\nFree availability of the Orbital Railcannon Strike Stratagem for forces on the Automaton front has now ended.",
-   "translated": "军械扩充已结束\n\nAutomaton前线的轨道炮攻击战略配备免费使用权限已结束。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85333143,
-   "official_message": "<i=3>军械扩充已结束</i>\n\n<i=1>Automaton前线</i>的<i=1>轨道炮攻击</i>战略配备免费使用权限已结束。",
-   "translated_at": "2026-10-29T15:45:03Z"
   }
  ],
  "strategic": {
@@ -139,18 +148,18 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-03T08:09:21Z",
+  "computed_at": "2026-11-03T16:12:00Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501106,
    "id32": 1479060546,
    "title": "失败",
-   "message": "由于敌人赤裸裸的仇恨，麦拉芬蒙河人权审讯中心已无法建造。这一伟大工程原本可以向牺牲的英雄们致敬，现在却被敌人窃取。做出伟大牺牲之人的坟墓，刚刚被一系列不可饶恕的罪行所践踏。\n\n很不幸，由于资金问题，档案部只能从记录中删除了最后10%的牺牲英雄，影响到了姓氏以V-Z开头的所有士兵。\n\n该工程的取消对公民士气造成了显著的负面影响，导致入伍率急剧下降。在接下来的战役中，绝地潜兵的增援数量将会大幅减少。",
-   "plain_text": "由于敌人赤裸裸的仇恨，麦拉芬蒙河人权审讯中心已无法建造。这一伟大工程原本可以向牺牲的英雄们致敬，现在却被敌人窃取。做出伟大牺牲之人的坟墓，刚刚被一系列不可饶恕的罪行所践踏。\n\n很不幸，由于资金问题，档案部只能从记录中删除了最后10%的牺牲英雄，影响到了姓氏以V-Z开头的所有士兵。\n\n该工程的取消对公民士气造成了显著的负面影响，导致入伍率急剧下降。在接下来的战役中，绝地潜兵的增援数量将会大幅减少。",
+   "message": "由于敌人赤裸裸的仇恨，麦拉芬蒙河人权审讯中心已无法建造。这一伟大工程原本可以向牺牲的英雄们致敬，现在却被敌人窃取。做出伟大牺牲之人的坟墓，刚刚被一系列不可饶恕的罪行所践踏。\n\n很不幸，由于资金问题，档案部只能从记录中删除了最后10%的牺牲英雄，影响到了姓氏以Y-Z开头的所有士兵。\n\n该工程的取消对公民士气造成了显著的负面影响，导致入伍率急剧下降。在接下来的战役中，绝地潜兵的增援数量将会大幅减少。",
+   "plain_text": "由于敌人赤裸裸的仇恨，麦拉芬蒙河人权审讯中心已无法建造。这一伟大工程原本可以向牺牲的英雄们致敬，现在却被敌人窃取。做出伟大牺牲之人的坟墓，刚刚被一系列不可饶恕的罪行所践踏。\n\n很不幸，由于资金问题，档案部只能从记录中删除了最后10%的牺牲英雄，影响到了姓氏以Y-Z开头的所有士兵。\n\n该工程的取消对公民士气造成了显著的负面影响，导致入伍率急剧下降。在接下来的战役中，绝地潜兵的增援数量将会大幅减少。",
    "message_id32": 1428151692,
    "assignment_id32": 0,
    "expires_at_war_seconds": 85868505,
@@ -168,15 +177,75 @@
    "expires_at_war_seconds": 86906204,
    "text_source": "official_untranslated",
    "mt": false
+  },
+  {
+   "event_id": 1501108,
+   "id32": 699333331,
+   "title": "保证",
+   "message": "关于TCS+发生故障的煽动性虚假谣言正在平民中传播。SEAF情报部门证实，被认为是结构故障的所有事件，实际上都是预定的机械维护，而不是<i=1>终结族</i>突破。公民只要全额购买保险，就完全不会遇到危险。\n\n然而，就在解放日来临之前，毫无根据的经济恐慌，影响了除卫生纸行业以外的所有企业，我们必须平息这种恐慌。\n\n为了恢复公众信心，绝地潜兵奉命<i=1>消灭700,000,000只终结族</i>。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供<i=1>INCINERATOR FRV战略配备</i>。",
+   "plain_text": "关于TCS+发生故障的煽动性虚假谣言正在平民中传播。SEAF情报部门证实，被认为是结构故障的所有事件，实际上都是预定的机械维护，而不是终结族突破。公民只要全额购买保险，就完全不会遇到危险。\n\n然而，就在解放日来临之前，毫无根据的经济恐慌，影响了除卫生纸行业以外的所有企业，我们必须平息这种恐慌。\n\n为了恢复公众信心，绝地潜兵奉命消灭700,000,000只终结族。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供INCINERATOR FRV战略配备。",
+   "message_id32": 2837407043,
+   "assignment_id32": 1636665659,
+   "expires_at_war_seconds": 86202480,
+   "text_source": "official_zh",
+   "mt": false
+  },
+  {
+   "event_id": 1501109,
+   "id32": 2310366674,
+   "title": "",
+   "message": "",
+   "plain_text": "",
+   "message_id32": 0,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 86202504,
+   "text_source": "official_untranslated",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-03T08:09:20Z",
+  "source_version": "2026-11-03T16:11:58Z",
   "war_id": 801,
-  "war_time_seconds": 85753030,
-  "last_success_at": "2026-11-03T08:09:20Z",
+  "war_time_seconds": 85781990,
+  "last_success_at": "2026-11-03T16:11:58Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 1636665659,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-03T16:11:58Z",
+  "retrieved_at": "2026-11-03T16:11:58Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 700000000,
+    "progress": 56539666,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   },
+   {
+    "index": 1,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   }
+  ]
  }
 }
