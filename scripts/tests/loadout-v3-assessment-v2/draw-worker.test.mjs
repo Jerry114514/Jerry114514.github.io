@@ -57,6 +57,26 @@ test('real worker loads only current model, draws, replaces without scores and c
   }finally{await h.worker.terminate();}
 });
 
+test('real worker blocks recon conflicts in locks and both replacement paths',async()=>{
+  const h=harness();try{
+    await h.wait(m=>m.type==='boot');h.post({type:'init',request_id:1,black_box:true});await h.wait(m=>m.type==='ready');
+    const scout='vehicle_m_102_gunner_fast_recon_vehicle',supply='vehicle_m_103_supply_fast_recon_vehicle';
+    h.post({type:'start',request_id:2,options:{mode:'pure',seed:42,constraints:{locks:{stratagems:[scout,supply,null,null]}}}});
+    assert.equal((await h.result(2)).value.status,'INVALID_LOCKS');
+    const loadout={primary:'ar_23_liberator',secondary:'gp_20_ultimatum',grenade:'g_48_giga_grenade',
+      stratagems:[scout,'backpack_b_1_supply_pack','deployable_gas_mines','deployable_flame_sentry']};
+    h.post({type:'start',request_id:3,loadout,slot:'stratagem:1',manual:true,options:{mode:'pure'}});
+    const menu=(await h.result(3)).value;
+    assert.equal(menu.rows.find(r=>r.id===supply).reason,'MULTIPLE_RECON_VEHICLES');
+    h.post({type:'start',request_id:4,loadout,slot:'stratagem:1',options:{mode:'pure',seed:42}});
+    const next=(await h.result(4)).value;
+    assert.equal(next.status,'UNVERIFIED');assert.equal(next.loadout.stratagems.includes(supply),false);
+    assert.equal(next.dimensions,undefined);
+    h.post({type:'start',request_id:5,loadout,slot:'stratagem:0',manual:true,options:{mode:'pure'}});
+    assert.equal((await h.result(5)).value.rows.find(r=>r.id===supply).status,'UNVERIFIED');
+  }finally{await h.worker.terminate();}
+});
+
 test('unknown search yields for pause/cancel and old work cannot overwrite a new draw',async()=>{
   const h=harness({neverPass:true});try{
     await h.wait(m=>m.type==='boot');h.post({type:'init',request_id:1});await h.wait(m=>m.type==='ready');

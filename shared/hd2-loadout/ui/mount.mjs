@@ -1,4 +1,4 @@
-import {DIMENSIONS, SLOTS, profileReady, equipmentIDs, withinExosuitLimit} from '../engine/common.mjs';
+import {DIMENSIONS, SLOTS, profileReady, equipmentIDs, withinExosuitLimit, withinReconVehicleLimit} from '../engine/common.mjs';
 import {replaceAt} from '../engine/sampling.mjs';
 const CN = {anti_heavy:'反重', chaff:'清杂', sustain:'续航', anti_medium:'反中', close_defense:'近防', demolition:'拆迁'};
 const LABEL = {primary:'主手', secondary:'副手', grenade:'手雷'};
@@ -185,6 +185,7 @@ export function mount(root) {
   }
   function applyResult(value) {
     if(!withinExosuitLimit(equipmentIDs(value.loadout))){say('最多只能携带一台机甲。');return;}
+    if(!withinReconVehicleLimit(equipmentIDs(value.loadout))){say('侦察车与补给车只能携带其中一台。');return;}
     current = value.loadout; gaps = null;
     if(blackBox){certificate=null;say(value.reason==='USER_ADJUSTMENT'?'已更换装备。':'配装已生成。','DRAWN');renderCards();return;}
     certificate = value.status==='ASSESSMENT_PASS'&&value.evidence_grade==='assessment_estimate'?value:value.status==='QUALIFIED'&&value.evidence_grade==='practical_estimate'?value:value.status === 'CERTIFIED' ? (value.certificate ? {...value.certificate, completed: value.completed} : value) : null;
@@ -218,7 +219,7 @@ export function mount(root) {
     const map = byID(); find('replacements').innerHTML = '';
     for (const row of rows || []) {
       const e = map.get(row.id), item = document.createElement('button');
-      item.className = 'lo-replacement'; item.dataset.equipmentId=row.id; item.textContent = `${e?.name || e?.name_en || row.id} · ${row.status==='UNVERIFIED'?'可选':row.reason==='MULTIPLE_EXOSUITS'?'最多携带一台机甲':'不符合选取规则'}`;
+      item.className = 'lo-replacement'; item.dataset.equipmentId=row.id; item.textContent = `${e?.name || e?.name_en || row.id} · ${row.status==='UNVERIFIED'?'可选':row.reason==='MULTIPLE_EXOSUITS'?'最多携带一台机甲':row.reason==='MULTIPLE_RECON_VEHICLES'?'侦察车与补给车互斥':'不符合选取规则'}`;
       item.disabled = row.status !== 'UNVERIFIED';
       item.addEventListener('click',()=> { applyResult({status:row.status,loadout:replaceAt(current,replacementSlot,row.id),reason:'USER_ADJUSTMENT'}); find('dialog').close(); });
       find('replacements').append(item);
