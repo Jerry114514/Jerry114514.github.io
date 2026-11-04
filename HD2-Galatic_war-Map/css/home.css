@@ -439,6 +439,182 @@
     .mo-target-card .planet-card { margin: 0; }
 
     /* ============================================================
+       独立战略指令通道
+       战略指令 / 战略机遇 / 次要指令分别使用独立游戏式面板，
+       不再把三类状态塞进普通资讯或重要指令任务列表。
+       ============================================================ */
+    .special-orders-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .special-order-card {
+      --channel: #59f2f6;
+      min-width: 0;
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      background:
+        linear-gradient(180deg, rgba(13, 16, 21, .98), rgba(7, 9, 12, .99)),
+        repeating-linear-gradient(135deg, transparent 0 13px, rgba(255,255,255,.015) 13px 14px);
+      border: 1px solid #2d323b;
+      border-top: 3px solid var(--channel);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.015), 0 14px 30px rgba(0,0,0,.2);
+    }
+    .special-order-card.channel-directive { --channel: #59f2f6; }
+    .special-order-card.channel-opportunity { --channel: #c568ff; }
+    .special-order-card.channel-minor { --channel: #69aefc; }
+    .special-order-card.is-empty { opacity: .78; }
+    .special-order-card-head {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      background: rgba(255,255,255,.025);
+      border-bottom: 1px solid #2d323b;
+    }
+    .special-order-symbol {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 28px;
+      color: #071013;
+      background: var(--channel);
+      font-family: var(--font-title);
+      font-size: 1rem;
+      box-shadow: 0 0 14px color-mix(in srgb, var(--channel) 32%, transparent);
+    }
+    .special-order-card-head > div {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .special-order-card-head b {
+      color: var(--channel);
+      font-family: var(--font-title);
+      font-size: .86rem;
+      letter-spacing: .1em;
+    }
+    .special-order-card-head small {
+      color: var(--text-mute);
+      font-size: .56rem;
+      letter-spacing: .13em;
+    }
+    .special-order-state {
+      margin-left: auto;
+      color: var(--channel);
+      font-size: .61rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+    .special-order-card.is-ended .special-order-state { color: var(--text-mute); }
+    .special-order-card-body { padding: 15px 15px 17px; min-width: 0; }
+    .special-order-title {
+      color: var(--channel);
+      font-family: var(--font-title);
+      font-size: 1.24rem;
+      line-height: 1.25;
+      letter-spacing: .045em;
+      overflow-wrap: anywhere;
+    }
+    .special-order-title em { color: inherit; font-style: normal; }
+    .special-order-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px 14px;
+      margin-top: 6px;
+      color: var(--text-mute);
+      font-size: .66rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .special-order-countdown { color: var(--channel); font-weight: 700; }
+    .special-order-brief {
+      margin-top: 14px;
+      color: #c8d0da;
+      font-size: .84rem;
+      line-height: 1.75;
+      overflow-wrap: anywhere;
+    }
+    .special-order-brief em,
+    .special-order-brief strong { color: var(--yellow); font-style: normal; }
+    .special-target-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 15px;
+      padding-top: 12px;
+      border-top: 1px solid #2d323b;
+    }
+    .special-target {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 5px 9px;
+      padding: 7px 9px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .special-target.is-done { border-color: rgba(46,204,113,.36); background: rgba(46,204,113,.05); }
+    .special-target-type {
+      padding: 2px 6px;
+      color: #061012;
+      background: var(--channel);
+      font-size: .58rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .special-target-link,
+    .special-target > span:nth-child(2) {
+      color: #e6ebf0;
+      font-size: .76rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .special-target-link { text-decoration: none; }
+    .special-target-link:hover { color: var(--channel); text-decoration: underline; }
+    .special-target-state { color: var(--text-mute); font-size: .64rem; white-space: nowrap; }
+    .special-target.is-done .special-target-state { color: var(--c-res-mid); }
+    .special-target-bar {
+      grid-column: 2 / -1;
+      height: 3px;
+      display: block;
+      background: #20252d;
+      overflow: hidden;
+    }
+    .special-target-bar i { height: 100%; display: block; background: var(--channel); }
+    .special-order-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      padding: 22px;
+      color: var(--text-mute);
+      text-align: center;
+    }
+    .special-order-empty strong { color: var(--text-dim); font-size: .88rem; }
+    .special-order-empty span { font-size: .74rem; line-height: 1.55; }
+    @media (max-width: 1100px) {
+      .special-orders-grid { grid-template-columns: minmax(0, 1fr); }
+      .special-order-card { min-height: 0; }
+    }
+    @media (max-width: 520px) {
+      .special-order-card-head { flex-wrap: wrap; }
+      .special-order-state { margin-left: 38px; }
+      .special-order-card-body { padding: 13px 12px 15px; }
+      .special-order-title { font-size: 1.08rem; }
+      .special-target { grid-template-columns: auto minmax(0, 1fr); }
+      .special-target-state { grid-column: 2; justify-self: start; }
+      .special-target-bar { grid-column: 1 / -1; }
+    }
+
+    /* ============================================================
        区块2 & 区块3：星球卡片
        ============================================================ */
     .planet-grid {

@@ -320,6 +320,40 @@ def restore_dss_actions(current, previous):
     return result
 
 
+def normalize_assignment(raw, clock=None, war_now=None):
+    """Normalize one assignment while retaining every order channel."""
+    if not isinstance(raw, dict):
+        return None
+    setting = raw.get("setting") or {}
+    out = {
+        "id": raw.get("id32") or raw.get("id"),
+        "briefing": setting.get("overrideBrief") or raw.get("briefing") or "",
+        "title": setting.get("overrideTitle") or raw.get("title") or "MAJOR ORDER",
+        "tasks": setting.get("tasks") or raw.get("tasks") or [],
+        "progress": raw.get("progress") or [],
+        "expiration": norm_time(raw.get("expiration")),
+    }
+    if raw.get("startTime") is not None:
+        out["startTime"] = raw["startTime"]
+    if raw.get("expiresIn") is not None:
+        out["expiresIn"] = raw["expiresIn"]
+    if setting.get("reward") is not None:
+        out["reward"] = setting["reward"]
+    if setting.get("rewards") is not None:
+        out["rewards"] = setting["rewards"]
+    if clock is not None and war_now is not None and raw.get("startTime") is not None:
+        out["startedAt"] = time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ",
+            time.gmtime(float(clock) + float(raw["startTime"]) - float(war_now)),
+        )
+    if clock is not None and raw.get("expiresIn") is not None:
+        out["deadline"] = time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ",
+            time.gmtime(float(clock) + float(raw["expiresIn"])),
+        )
+    return out
+
+
 def fetch_official():
     st = fetch_json(f"{OFFICIAL_API}/api/WarSeason/{WAR_ID}/Status", HEADERS_OFFICIAL, 20)
     wi = fetch_json(f"{OFFICIAL_API}/api/WarSeason/{WAR_ID}/WarInfo", HEADERS_OFFICIAL, 20)
@@ -446,18 +480,14 @@ def fetch_official():
                     seen_planet[pi] = c
     campaigns = list(seen_planet.values())
 
-    assignment = None
-    if ass:
-        a0 = ass[0] if isinstance(ass, list) else ass
-        setting = a0.get("setting") or {}
-        assignment = {
-            "id": a0.get("id32") or a0.get("id"),
-            "briefing": setting.get("overrideBrief") or a0.get("briefing") or "",
-            "title": setting.get("overrideTitle") or "MAJOR ORDER",
-            "tasks": setting.get("tasks") or a0.get("tasks") or [],
-            "progress": a0.get("progress") or [],
-            "expiration": norm_time(a0.get("expiration")),
-        }
+    raw_assignments = ass if isinstance(ass, list) else ([ass] if isinstance(ass, dict) else [])
+    assignments_all = [
+        item for item in (
+            normalize_assignment(a, time.time(), st.get("time"))
+            for a in raw_assignments if isinstance(a, dict)
+        ) if item
+    ]
+    assignment = assignments_all[0] if assignments_all else None
 
     war = {"time": st.get("time") or 0}
     if stats:
@@ -498,7 +528,8 @@ def fetch_official():
                 dss["activeEffectIds"] = dss["activeEffectIds"] or (s0.get("activeEffectIds") or [])
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches, "dss": dss,
+            "assignments": assignment, "assignments_all": assignments_all,
+            "dispatches": dispatches, "dss": dss,
             "planet_events": st.get("planetEvents") or []}
 
 
@@ -603,28 +634,15 @@ def fetch_companion():
         })
 
     mos = obj.get("majorOrders") or []
-    assignment = None
-    if mos:
-        m0 = mos[0]
-        setting = m0.get("setting") or {}
-        assignment = {
-            "id": m0.get("id32"),
-            "briefing": setting.get("overrideBrief") or "",
-            "title": setting.get("overrideTitle") or "MAJOR ORDER",
-            "tasks": setting.get("tasks") or [],
-            "progress": m0.get("progress") or [],
-            "expiration": "",
-        }
-
-    if assignment:
-        # Companion provides an independent UTC anchor, including during hd2dev outages.
-        clock = (obj.get("clientTime") or int(time.time() * 1000)) / 1000
-        war_now = ws.get("time")
-        start_war, expires = m0.get("startTime"), m0.get("expiresIn")
-        if war_now is not None and start_war is not None:
-            assignment["startedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(clock + start_war - war_now))
-        if expires is not None:
-            assignment["deadline"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(clock + expires))
+    # Companion provides an independent UTC anchor, including during hd2dev outages.
+    clock = (obj.get("clientTime") or int(time.time() * 1000)) / 1000
+    assignments_all = [
+        item for item in (
+            normalize_assignment(m, clock, ws.get("time"))
+            for m in mos if isinstance(m, dict)
+        ) if item
+    ]
+    assignment = assignments_all[0] if assignments_all else None
 
     war = {"statistics": {"playerCount": (ws.get("statistics") or {}).get("playerCount", 0),
                           "missionsWon": 0, "missionsLost": 0}}
@@ -644,7 +662,8 @@ def fetch_companion():
                             obj.get("clientTime"), "companion")
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches, "dss": dss,
+            "assignments": assignment, "assignments_all": assignments_all,
+            "dispatches": dispatches, "dss": dss,
             "war_stats": _clean_war_stats(obj.get("warStats")),
             "planet_events": ws.get("planetEvents") or [],
             "planet_attacks": ws.get("planetAttacks") or [],
@@ -1184,18 +1203,23 @@ def fetch_hd2dev():
     # 只保留最新 30 条（网站展示 20）
     dispatches = sorted(dispatches, key=lambda x: x.get("id", 0), reverse=True)[:30]
 
-    assignment = None
-    if assignments:
-        a0 = assignments[0]
-        assignment = {"id": a0.get("id"), "briefing": a0.get("briefing") or "",
-                      "title": a0.get("title") or "MAJOR ORDER",
-                      "tasks": a0.get("tasks") or [], "progress": a0.get("progress") or [],
-                      "expiration": norm_time(a0.get("expiration")),
-                      "deadline": a0.get("expiration") or "",
-                      "serverTime": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    raw_assignments = assignments if isinstance(assignments, list) else []
+    assignments_all = [
+        item for item in (
+            normalize_assignment(a, time.time(), (war or {}).get("time"))
+            for a in raw_assignments if isinstance(a, dict)
+        ) if item
+    ]
+    now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    for item in assignments_all:
+        if not item.get("deadline") and item.get("expiration"):
+            item["deadline"] = norm_time(item["expiration"])
+        item["serverTime"] = now_iso
+    assignment = assignments_all[0] if assignments_all else None
 
     return {"war": war, "planets": planets, "campaigns": campaigns,
-            "assignments": assignment, "dispatches": dispatches, "dss": None}
+            "assignments": assignment, "assignments_all": assignments_all,
+            "dispatches": dispatches, "dss": None}
 
 
 def build_ownership_history(previous, current, history=None):
@@ -1467,24 +1491,35 @@ def main():
     # 重要指令：companion（社区源）优先 -> 官方 -> hd2dev -> 快照兜底（用户指定社区源）
     if companion and companion.get("assignments"):
         base["assignments"] = companion["assignments"]
+        base["assignments_all"] = companion.get("assignments_all") or [companion["assignments"]]
     elif official and official.get("assignments"):
         base["assignments"] = official["assignments"]
+        base["assignments_all"] = official.get("assignments_all") or [official["assignments"]]
     elif hd2dev and hd2dev.get("assignments"):
         base["assignments"] = hd2dev["assignments"]
+        base["assignments_all"] = hd2dev.get("assignments_all") or [hd2dev["assignments"]]
     else:
         # 全部为空：用上次成功快照（MO 切换间隙保护）
         snap = _load_snapshot()
         if snap and snap.get("assignments"):
             base["assignments"] = snap["assignments"]
+            base["assignments_all"] = snap.get("assignments_all") or [snap["assignments"]]
             print("  [FALLBACK] 重要指令使用上次成功快照")
 
     # 从 hd2dev 补 deadline 和 serverTime（必须在 assignments 覆盖逻辑之后，否则被覆盖清空）
     if hd2dev and hd2dev.get("assignments") and hd2dev["assignments"].get("deadline"):
-        ass = base.get("assignments")
-        if ass and isinstance(ass, dict) and str(ass.get("id")) == str(hd2dev["assignments"].get("id")):
-            ass["deadline"] = hd2dev["assignments"]["deadline"]
-            ass["serverTime"] = hd2dev["assignments"]["serverTime"]
-            print(f"  [OK] deadline: {ass['deadline']}")
+        hd = hd2dev["assignments"]
+        matches = [
+            ass for ass in (base.get("assignments_all") or [])
+            if isinstance(ass, dict) and str(ass.get("id")) == str(hd.get("id"))
+        ]
+        if base.get("assignments") and str(base["assignments"].get("id")) == str(hd.get("id")):
+            matches.append(base["assignments"])
+        for ass in matches:
+            ass["deadline"] = hd["deadline"]
+            ass["serverTime"] = hd.get("serverTime")
+        if matches:
+            print(f"  [OK] deadline: {hd['deadline']}")
 
     # activeEffects 快照兜底：只有“全局突然归零”才恢复，避免把上游/解析
     # 故障传播成数十个星球的批量移除；局部变化仍以本次返回为准。

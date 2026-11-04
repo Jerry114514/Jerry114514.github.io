@@ -25,7 +25,7 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 15 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
     <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
-  <link rel="stylesheet" href="./css/home.css?v=20261104b">
+  <link rel="stylesheet" href="./css/home.css?v=20261105a">
   <link rel="stylesheet" href="./css/boot-splash.css?v=20261027b">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
   <link rel="stylesheet" href="./css/hud-skin.css?v=20261031a">
@@ -136,6 +136,21 @@
       </div>
       <div id="mo-content" class="card">
         <div class="loading">正在解码超级地球最高指挥部下达的作战命令…</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         独立指令通道：战略指令 / 战略机遇 / 次要指令
+         游戏内不使用普通资讯卡的展示空间。
+         ============================================================ -->
+    <section class="block" id="block-special-orders">
+      <div class="block-head">
+        <span class="block-emoji">🧭</span>
+        <h2 class="block-title">战略指令台</h2>
+        <span class="block-meta" id="special-orders-meta"></span>
+      </div>
+      <div id="special-orders-content" class="special-orders-grid">
+        <div class="loading">正在同步战略级指令通道…</div>
       </div>
     </section>
 
@@ -391,6 +406,7 @@
     EFFECT_URL: "./tables/effect_id_cn.json",     // 效果 ID -> 中文（星球行动变量）
     WAYPOINTS_URL: "./tables/waypoints.json",   // 补给线邻接（战术目标词条计算，冻结文件只读复用）
     EFFECT_DETAIL_URL: "./tables/galactic_effects.json",  // 效果 ID -> 英文名+描述（词条详情）
+    OFFICIAL_TEXTS_URL: "./data/translated/official_texts.json", // 独立指令通道的官方简中补齐
   };
 
   /* ==============================================================
@@ -502,6 +518,9 @@
       .replace(/&lt;ci=1&gt;/g, '<span style="color:#F5C518;font-weight:600;">')
       .replace(/&lt;ci=3&gt;/g, '<span style="color:#5BA3D0;font-weight:700;">')
       .replace(/&lt;\/ci&gt;/g, '</span>')
+      .replace(/&lt;i=1&gt;/g, '<span style="color:#F5C518;font-weight:700;">')
+      .replace(/&lt;i=3&gt;/g, '<span style="color:#5BA3D0;font-weight:700;">')
+      .replace(/&lt;\/i&gt;/g, '</span>')
       .replace(/\n/g, "<br>");
   };
   const relativeTime = (iso) => {
@@ -650,6 +669,10 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     try {
       variables = await HD2Source.jsonSoft(CONFIG.VARIABLES_URL);
     } catch (_) { /* ignore */ }
+    let officialTexts = {};
+    try {
+      officialTexts = (await HD2Source.jsonSoft(CONFIG.OFFICIAL_TEXTS_URL)) || {};
+    } catch (_) { /* ignore */ }
 
     // 效果 ID -> 中文（星球行动变量）
     let effectMap = {};
@@ -682,11 +705,14 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       planets:    data.planets || { __err: "no planets data" },
       campaigns:  data.campaigns || { __err: "no campaigns data" },
       assignments:data.assignments || { __err: "no assignments data" },
+      assignments_all: Array.isArray(data.assignments_all) ? data.assignments_all : [],
       dispatches: data.dispatches || { __err: "no dispatches data" },
+      official_texts: officialTexts,
       dss:        data.dss || null,
       major_order: data.major_order || {},
       personal_order: data.personal_order || null,
       news:        data.news || [],
+      strategic:   data.strategic || null,
       active_campaign: data.active_campaign || null,   // 进行中的战役（fetch_site_data.py 抓 companion episodes）
       starMap,
       variables,
@@ -825,76 +851,220 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     `;
   }
 
-  // ============ 战略机遇 ============
-  function renderStrategicOpportunities(data) {
-    // 生命周期状态由管线侧（translator.py）从**未剥离标签**的原始 dispatch 计算后写入 data.strategic。
-    // 不能在前端用文本匹配判断：strip_tags() 会剥掉区分「新机遇」与「已结束」的前导 <i=3> 标记，
-    // 使 "STRATEGIC OPPORTUNITY SEIZED" 这类收尾条目与开局条目无法区分（2026-09-11 实测 7 处歧义）。
-    // 旧数据无该字段时按「无活跃机遇」处理，不显示过期内容。
-    const s = data.strategic;
-    if (!s || !s.active) return "";
-    const a = data.assignments;
-    if (!a || !a.tasks || a.tasks.length < 2) return "";
-    // 机遇正文：取开局 dispatch 的翻译（translated 缺失时回退原文去除标签）
-    let siDesc = "";
-    const disp = (data.dispatches || []).slice().sort((x, y) => (y.id || 0) - (x.id || 0));
+  // ============ 独立战略指令通道 ============
+  const SPECIAL_ORDER_META = {
+    directive: { cn: "战略指令", en: "STRATEGIC DIRECTIVE", icon: "⌖" },
+    opportunity: { cn: "战略机遇", en: "STRATEGIC OPPORTUNITY", icon: "◇" },
+    minor: { cn: "次要指令", en: "MINOR ORDER", icon: "▸" },
+  };
+
+  function channelAssignments(data) {
+    const rows = Array.isArray(data.assignments_all) ? data.assignments_all : [];
+    if (rows.length) return rows.filter(a => a && a.tasks);
+    return data.assignments && data.assignments.tasks ? [data.assignments] : [];
+  }
+
+  function assignmentForChannel(all, kind) {
+    return all.find(a => {
+      const title = String(a.title || "").toUpperCase();
+      if (kind === "directive") return /STRATEGIC\s+(?:DIRECTIVE|THREAT)|战略指令|战略威胁/.test(title);
+      if (kind === "minor") return /^MINOR\s+ORDER|^次要指令/.test(title);
+      return false;
+    }) || null;
+  }
+
+  function assignmentIsActive(assignment) {
+    if (!assignment) return false;
+    const deadline = Date.parse(assignment.deadline || assignment.expiration || "");
+    return !isFinite(deadline) || deadline > Date.now();
+  }
+
+  function localizedSpecialDispatch(data, matcher, preferredId) {
+    const rows = Array.isArray(data.dispatches) ? data.dispatches : [];
     const newsMap = {};
-    (data.news || []).forEach(n => { if (n.id != null) newsMap[n.id] = n; });
-    for (const n of disp) {
-      const msg = n.message || "";
-      // 开局条目：结尾的 </i> 即标题标记边界；行首可能带有 <p> 等包裹标签
-      if (/\bSTRATEGIC\s+(?:IMPERATIVE|OPPORTUNITY)\s*<\/i>/i.test(msg)) {
-        const newsItem = newsMap[n.id];
-        const zh = newsItem && (newsItem.translated || newsItem.message_zh || "");
-        siDesc = zh || stripTags(msg.replace(/^<[^>]+>\s*/i, "")).trim();
-        break;
-      }
-    }
-    // 目标星球（有则给定位链接，与战术目标词条同款机制）
-    const sp = s.planet_index != null ? s.planet_index : s.planetIndex;
-    let planetLink = "";
-    if (typeof sp === "number") {
-      const tp = (data.planets || []).find(x => x.index === sp);
-      const tn = tp ? (planetName(tp, data.starMap).cn || planetName(tp, data.starMap).en) : ("#" + sp);
-      planetLink = `<div class="tac-jump">目标星球：<a class="tac-target" data-planet-index="${sp}" title="定位到该星球">${esc(tn)}</a></div>`;
-    }
-    // 副任务进度（仅在活跃战略机遇期间展示）
-    const tasks = a.tasks.slice(1).map((tk, i) => {
-      const d = decodeTask(tk, a.progress ? a.progress[i + 1] : null);
-      let goal = "—", current = "—", pct = 0;
-      if (typeof d.current === "number") current = fmt(d.current);
-      if (typeof d.goal === "number" && d.goal > 0) {
-        goal = fmt(d.goal);
-        pct = Math.min(100, Math.round((d.current || 0) / d.goal * 100));
-      }
-      // 副任务标题：带阵营
-      let title = d.typeCn || "未知任务";
-      const hasRace = (d.race === 2 || d.race === 3 || d.race === 4);
-      const raceName = d.raceName ? ownerCn(d.raceName) : "";
-      if (d.type === 3 && hasRace) title = `消灭${raceName}敌人`;
-      else if (hasRace) title = `${title} · 目标：${raceName}`;
-      return { title, current, goal, pct };
+    (Array.isArray(data.news) ? data.news : []).forEach(n => {
+      if (n && n.id != null) newsMap[String(n.id)] = n;
     });
-    if (tasks.length === 0) return "";
-    return `
-      <div class="block-head" style="margin-top:12px;">
-        <span class="block-emoji">🎯</span>
-        <h2 class="block-title" style="font-size:1rem;">战略机遇</h2>
+    const officialMap = {};
+    ((data.official_texts || {}).dispatches || []).forEach(n => {
+      if (n && n.id != null) officialMap[String(n.id)] = n;
+    });
+    const sorted = rows.slice().sort((a, b) => (b.id || 0) - (a.id || 0));
+    const dispatch = preferredId != null
+      ? sorted.find(n => String(n.id) === String(preferredId))
+      : sorted.find(n => matcher.test(splitNewsTitle(n.message || "").title));
+    if (!dispatch) return null;
+    const newsItem = newsMap[String(dispatch.id)] || {};
+    const officialItem = officialMap[String(dispatch.id)] || {};
+    const source = newsItem.official_message || newsItem.translated || newsItem.message_zh ||
+      officialItem.raw_message || officialItem.translated || dispatch.message || "";
+    const parts = splitNewsTitle(source);
+    return {
+      id: dispatch.id,
+      published: dispatch.published || newsItem.published_at || "",
+      title: parts.title || SPECIAL_ORDER_META.directive.cn,
+      body: parts.body,
+      newsItem,
+    };
+  }
+
+  function specialOrderModels(data) {
+    const all = channelAssignments(data);
+    const major = all.find(a => /^MAJOR ORDER|^重要指令/i.test(String(a.title || "")))
+      || (data.assignments && data.assignments.tasks ? data.assignments : null);
+    const directiveAssign = assignmentForChannel(all, "directive");
+    const minorAssign = assignmentForChannel(all, "minor");
+    const directiveDispatch = localizedSpecialDispatch(
+      data, /NEW\s+STRATEGIC\s+DIRECTIVE|STRATEGIC\s+DIRECTIVE/i);
+    const opportunityDispatch = localizedSpecialDispatch(
+      data,
+      /STRATEGIC\s+(?:OPPORTUNITY|IMPERATIVE)/i,
+      data.strategic && data.strategic.dispatch_id
+    );
+    const minorDispatch = localizedSpecialDispatch(
+      data, /(?:NEW\s+)?MINOR\s+ORDER(?:\s|$)/i);
+
+    // 旧版数据没有 assignments_all 时，把主指令的附加任务作为“次要指令”兜底。
+    let minorFallback = null;
+    if (!minorAssign && major && Array.isArray(major.tasks) && major.tasks.length > 1) {
+      minorFallback = {
+        ...major,
+        id: `${major.id || "major"}:minor`,
+        title: "重要指令附加目标",
+        briefing: "当前重要指令包含附加守持目标。最高指挥部会在指令截止时一并核验下列星球的控制状态。",
+        tasks: major.tasks.slice(1),
+        progress: (major.progress || []).slice(1),
+      };
+    }
+
+    return {
+      major,
+      directive: {
+        ...SPECIAL_ORDER_META.directive,
+        kind: "directive",
+        assignment: directiveAssign,
+        dispatch: directiveDispatch,
+        active: assignmentIsActive(directiveAssign),
+      },
+      opportunity: {
+        ...SPECIAL_ORDER_META.opportunity,
+        kind: "opportunity",
+        assignment: data.strategic && data.strategic.active ? major : null,
+        dispatch: opportunityDispatch,
+        active: !!(data.strategic && data.strategic.active),
+        statusCn: data.strategic && data.strategic.status_cn || "",
+        taskOffset: 1,
+      },
+      minor: {
+        ...SPECIAL_ORDER_META.minor,
+        kind: "minor",
+        assignment: minorAssign || minorFallback,
+        dispatch: minorDispatch,
+        active: assignmentIsActive(minorAssign || minorFallback),
+        taskOffset: 0,
+      },
+    };
+  }
+
+  function specialOrderDispatchIds(data) {
+    const models = specialOrderModels(data);
+    return new Set(Object.values(models)
+      .map(m => m && m.dispatch && m.dispatch.id)
+      .filter(id => id != null)
+      .map(String));
+  }
+
+  function specialOrderTasks(assignment, taskOffset) {
+    if (!assignment) return "";
+    const tasks = (assignment.tasks || []).slice(taskOffset || 0);
+    if (!tasks.length) return "";
+    const progress = assignment.progress || [];
+    return `<div class="special-target-list">${tasks.map((task, i) => {
+      const d = decodeTask(task, progress[i + (taskOffset || 0)]);
+      const target = d.planet != null
+        ? (dataPlanetName(d.planet, assignment) || ("#" + d.planet)) : "";
+      const held = d.planet != null && currentPlanetOwner(d.planet) === "Humans";
+      const done = d.type === 13 ? held
+        : (typeof d.current === "number" && typeof d.goal === "number" && d.goal > 0 && d.current >= d.goal);
+      const pct = typeof d.goal === "number" && d.goal > 0
+        ? Math.max(0, Math.min(100, Math.round((d.current || 0) / d.goal * 100))) : 0;
+      const label = d.type === 13 ? "守持" : (d.typeCn || "目标");
+      const link = d.planet != null
+        ? `<a href="./planet.html?idx=${d.planet}" class="special-target-link">${esc(target)}</a>`
+        : `<span>${esc(d.raceName ? ownerCn(d.raceName) : "全局目标")}</span>`;
+      return `<div class="special-target${done ? " is-done" : ""}">
+        <span class="special-target-type">${esc(label)}</span>
+        ${link}
+        ${d.type === 13
+          ? `<span class="special-target-state">${done ? "已守住" : "待守"}</span>`
+          : `<span class="special-target-state">${fmt(d.current)} / ${fmt(d.goal)} · ${pct}%</span>`}
+        ${d.type === 13 ? "" : `<span class="special-target-bar"><i style="width:${pct}%"></i></span>`}
+      </div>`;
+    }).join("")}</div>`;
+  }
+
+  function dataPlanetName(index, assignment) {
+    const p = (currentData && currentData.planets || []).find(x => x.index === index);
+    if (!p) return "";
+    const n = planetName(p, currentData.starMap);
+    return n && (n.cn || n.en);
+  }
+
+  function currentPlanetOwner(index) {
+    const p = (currentData && currentData.planets || []).find(x => x.index === index);
+    return p && p.currentOwner || "";
+  }
+
+  function specialOrderCard(model) {
+    const a = model.assignment;
+    const d = model.dispatch;
+    if (!a && !d) {
+      return `<article class="special-order-card channel-${model.kind} is-empty">
+        <header class="special-order-card-head">
+          <span class="special-order-symbol">${model.icon}</span>
+          <div><b>${esc(model.cn)}</b><small>${esc(model.en)}</small></div>
+        </header>
+        <div class="special-order-empty">
+          <strong>当前无${esc(model.cn)}</strong>
+          <span>等待最高指挥部通过该指令通道发布新任务。</span>
+        </div>
+      </article>`;
+    }
+
+    const deadlineMs = a && (a.deadline || a.expiration) ? Date.parse(a.deadline || a.expiration) : null;
+    const active = a ? assignmentIsActive(a) : !!model.active;
+    const statusCn = active ? "进行中" : (model.statusCn || "已结束");
+    const statusEn = active ? "ACTIVE" : "ENDED";
+    const brief = d ? d.body : (a && (a.briefing || "")) || "";
+    const taskOffset = model.taskOffset || 0;
+    return `<article class="special-order-card channel-${model.kind}${active ? " is-active" : " is-ended"}">
+      <header class="special-order-card-head">
+        <span class="special-order-symbol">${model.icon}</span>
+        <div><b>${esc(model.cn)}</b><small>${esc(model.en)}</small></div>
+        <span class="special-order-state">${esc(statusCn)} · ${statusEn}</span>
+      </header>
+      <div class="special-order-card-body">
+        <div class="special-order-title">${richText(d ? d.title : (a.title || model.cn))}</div>
+        <div class="special-order-meta">
+          ${d && d.published ? `<span>${esc(relativeTime(d.published))}</span>` : ""}
+          ${a ? cdSpan(deadlineMs, "cn", "剩余 ", active ? "计算中…" : "已结束", ' class="special-order-countdown"') : ""}
+        </div>
+        ${brief ? `<div class="special-order-brief">${richText(brief)}</div>` : ""}
+        ${specialOrderTasks(a, taskOffset)}
       </div>
-      <div class="card mo-sub">
-        ${siDesc ? `<p class="mo-brief" style="font-size:0.8rem;opacity:0.9;margin-bottom:8px;">${richText(siDesc)}</p>` : ""}
-        ${planetLink}
-        ${tasks.map(t => `
-          <div class="mo-task" style="opacity:0.85;">
-            <div class="mo-task-head">
-              <span>${esc(t.title)}</span>
-              <span class="mo-task-progress">${t.current} / ${t.goal} (${t.pct}%)</span>
-            </div>
-            <div class="progress-bar"><div class="progress-bar-fill" style="width:${t.pct}%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
-          </div>
-        `).join("")}
-      </div>
-    `;
+    </article>`;
+  }
+
+  function renderSpecialOrders(data) {
+    const root = $("special-orders-content");
+    const meta = $("special-orders-meta");
+    if (!root) return;
+    const models = specialOrderModels(data);
+    const channels = [models.directive, models.opportunity, models.minor];
+    root.innerHTML = channels.map(specialOrderCard).join("");
+    const active = channels.filter(m => m.active).length;
+    const filled = channels.filter(m => m.assignment || m.dispatch).length;
+    if (meta) meta.textContent = `${active} 条进行中 · ${filled}/${channels.length} 个通道有记录`;
   }
 
   // ============ 个人指令 ============
@@ -1120,7 +1290,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       <p class="mo-brief">${richText(brief)}</p>
       <div class="mo-tasks">${tasksHtml}</div>
       ${planetsBlock}
-      ${renderStrategicOpportunities(data)}
       ${renderPersonalOrder(data)}
     `;
 
@@ -3278,8 +3447,11 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
 
   function renderNews(data) {
     const body = $("news-float-body");
-    // 优先中文翻译（data.news，最新 5 条）；无则降级英文 dispatches
-    const transList = dedupeNews(data.news || []).slice(0, 5);
+    // 战略级指令已在独立指令台展示，不再占用普通资讯名额。
+    const specialIds = specialOrderDispatchIds(data);
+    const transList = dedupeNews(data.news || [])
+      .filter(d => !specialIds.has(String(d && d.id)))
+      .slice(0, 5);
     const fallbackErr = data.dispatches && data.dispatches.__err;
     if (transList.length === 0 && fallbackErr) {
       body.innerHTML = `<div class="error" style="margin:10px;">无法获取资讯：${esc(data.dispatches.__err)}</div>`;
@@ -3293,7 +3465,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       }).join("");
       return;
     }
-    const list = dedupeNews(data.dispatches || []).slice(0, CONFIG.NEWS_COUNT);
+    const list = dedupeNews(data.dispatches || [])
+      .filter(d => !specialIds.has(String(d && d.id)))
+      .slice(0, CONFIG.NEWS_COUNT);
     if (list.length === 0) {
       body.innerHTML = `<div class="empty" style="padding: 24px 0;">暂无新资讯</div>`;
       return;
@@ -3368,6 +3542,7 @@ let effectCnDescMap = {};        // 效果 ID -> 中文条目（hd2_variables，
       buildDssEffectMap(data.variables);  // 词条中文描述映射（全分类）
       renderTopbar(data);
       renderMO(data);
+      renderSpecialOrders(data);
       renderChanges(data);
       renderCampaign(data);
       renderPlayers(data);

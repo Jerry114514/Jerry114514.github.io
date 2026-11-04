@@ -12876,5 +12876,146 @@
     "273": "Humans"
    }
   }
- }
+ },
+ "assignments_all": [
+  {
+   "id": 1636665659,
+   "briefing": "Eliminate the mandated number of Terminids in order to restore public confidence, quell unlawful rumours of TCS+ failures, and safeguard Federal prosperity.",
+   "title": "MAJOR ORDER",
+   "tasks": [
+    {
+     "type": 3,
+     "values": [
+      2,
+      0,
+      700000000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "valueTypes": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      5,
+      8,
+      9,
+      11,
+      12
+     ]
+    },
+    {
+     "type": 13,
+     "values": [
+      1,
+      1,
+      170
+     ],
+     "valueTypes": [
+      3,
+      11,
+      12
+     ]
+    }
+   ],
+   "progress": [
+    588373049,
+    1
+   ],
+   "expiration": "",
+   "startTime": 85770480,
+   "expiresIn": 315710,
+   "reward": {
+    "type": 1,
+    "id32": 897894480,
+    "amount": 45
+   },
+   "rewards": [
+    {
+     "type": 1,
+     "id32": 897894480,
+     "amount": 45
+    }
+   ],
+   "startedAt": "2026-11-03T13:00:13Z",
+   "deadline": "2026-11-08T13:00:33Z"
+  },
+  {
+   "id": 3504692473,
+   "briefing": "Investigate and, if warranted, hold the designated planets, in order to verify highly unlikely reports of TCS+ breaches.",
+   "title": "STRATEGIC THREAT",
+   "tasks": [
+    {
+     "type": 13,
+     "values": [
+      1,
+      1,
+      270
+     ],
+     "valueTypes": [
+      3,
+      11,
+      12
+     ]
+    },
+    {
+     "type": 13,
+     "values": [
+      1,
+      1,
+      78
+     ],
+     "valueTypes": [
+      3,
+      11,
+      12
+     ]
+    },
+    {
+     "type": 13,
+     "values": [
+      1,
+      1,
+      128
+     ],
+     "valueTypes": [
+      3,
+      11,
+      12
+     ]
+    },
+    {
+     "type": 13,
+     "values": [
+      1,
+      1,
+      130
+     ],
+     "valueTypes": [
+      3,
+      11,
+      12
+     ]
+    }
+   ],
+   "progress": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "expiration": "",
+   "startTime": 85856280,
+   "expiresIn": 315106,
+   "rewards": [],
+   "startedAt": "2026-11-04T12:50:13Z",
+   "deadline": "2026-11-08T12:50:29Z"
+  }
+ ]
 }
