@@ -2,10 +2,10 @@
  "schema_version": 1,
  "upstream": {
   "repo": "Darctor/Helldivers2_RawData",
-  "commit": "18ea7f865d0f5b25bd988e4552a6335f3bd2d7df",
+  "commit": "5d38b70daa66b12b06abc6424314bc53d732856c",
   "game_version": "1.007.200",
   "patch_date": "2026-10-20",
-  "fetched_at": "2026-10-26T08:56:23Z",
+  "fetched_at": "2026-11-04T10:55:55Z",
   "files": {
    "generated_projectile_settings.json": "fcccccb3f49e94357ee9566d25ab52ade5d706db88ff26ce1fd37a6d0ca930a2",
    "generated_damage_settings.json": "69e3069eb44f8ed91ae0cd0dd6fea9e68865262200a221c78ff9c8ee7670e527",
@@ -15,8 +15,8 @@
   }
  },
  "wiki": {
-  "weapons_updated_at": "2026-09-23T11:06:17Z",
-  "stratagems_updated_at": "2026-09-23T17:45:58Z"
+  "weapons_updated_at": "2026-10-30T11:35:50Z",
+  "stratagems_updated_at": "2026-10-30T02:30:00Z"
  },
  "categories": {
   "primary": [
@@ -669,7 +669,7 @@
    },
    {
     "id": "las_13_trident",
-    "name": "LAS-13 三叉戟",
+    "name": "LAS-13“三叉戟”",
     "name_en": "LAS-13 Trident",
     "category": "primary",
     "attacks": [],
@@ -4850,6 +4850,26 @@
     "status": "unsupported"
    },
    {
+    "id": "support_amw_20_apex",
+    "name": "AMW-20 尖峰",
+    "name_en": "AMW-20 Apex",
+    "category": "support",
+    "attacks": [],
+    "rawdata_name": "AMW-20 Apex (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
+    "id": "support_las_44_nova",
+    "name": "LAS-44 新星",
+    "name_en": "LAS-44 Nova",
+    "category": "support",
+    "attacks": [],
+    "rawdata_name": "LAS-44 Nova (Model)",
+    "status": "unsupported",
+    "reason": "Wiki 无攻击数据"
+   },
+   {
     "id": "amw_20_apex",
     "name": "AMW-20 尖峰",
     "name_en": "AMW-20 Apex",
@@ -5084,7 +5104,7 @@
  ],
  "stats": {
   "ready": 90,
-  "unsupported": 78,
+  "unsupported": 80,
   "unresolved": 13
  },
  "wiki_supplements": {
