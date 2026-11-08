@@ -32,7 +32,8 @@ for (const marker of [
   "OFFICIAL_TEXTS_URL",
   "officialItem.raw_message",
   "strategic:   data.strategic",
-  ".replace(/&lt;i=1&gt;/g",
+  "js/rich-text.js?v=",
+  "window.HD2Rich.toHtml",
   "renderSpecialOrders(data)",
   "assignments_all: Array.isArray",
   'class="special-target-list"'
@@ -48,6 +49,22 @@ assert.match(css, /\.special-orders-grid\s*\{[\s\S]*grid-template-columns:\s*rep
 for (const kind of ["directive", "opportunity", "minor"]) {
   assert.ok(css.includes(`.special-order-card.channel-${kind}`), `缺少 ${kind} 通道样式`);
 }
+
+// 富文本强调统一走 js/rich-text.js：主站、播报层、战报同一套规则。
+const richText = fs.readFileSync(path.join(site, "js/rich-text.js"), "utf8");
+for (const marker of ["<(i|ci)", "rt-hl-y", "rt-hl-b", "toHtml", "toPlain"]) {
+  assert.ok(richText.includes(marker), `富文本模块缺少标记：${marker}`);
+}
+const tokens = fs.readFileSync(path.join(site, "css/tokens.css"), "utf8");
+assert.match(tokens, /\.rt-hl-y[^{]*\{[^}]*var\(--mo-yellow\)/, "黄色强调需复用 --mo-yellow");
+assert.match(tokens, /\.rt-hl-b[^{]*\{[^}]*var\(--mo-place\)/, "蓝色强调需复用 --mo-place");
+const announce = fs.readFileSync(path.join(site, "js/mo-announce.js"), "utf8");
+assert.ok(announce.includes("global.HD2Rich"), "播报层应优先调用 HD2Rich");
+const reportModel = fs.readFileSync(path.join(root, "HD2-Report/report-model.js"), "utf8");
+assert.ok(reportModel.includes("item.official_message || item.translated"), "战报应优先取带标签原文");
+assert.ok(reportModel.includes("splitRich"), "战报需把富文本拆成标题/正文");
+const reportHtml = fs.readFileSync(path.join(root, "HD2-Report/index.html"), "utf8");
+assert.ok(reportHtml.includes("js/rich-text.js?v="), "战报页需引入富文本模块");
 
 const fetchSource = fs.readFileSync(path.join(root, "scripts/fetch_site_data.py"), "utf8");
 assert.ok(fetchSource.includes("def normalize_assignment"));

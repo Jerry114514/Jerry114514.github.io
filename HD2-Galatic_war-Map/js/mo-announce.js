@@ -137,6 +137,9 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
   function convertBody(text) {
+    /* 统一走 HD2Rich（js/rich-text.js）：主站、播报层、战报共用一套 <i=N>/<ci=N> 规则。
+       模块缺失（老缓存/独立引用）时退回旧实现，保证播报不会白屏。 */
+    if (global.HD2Rich) return global.HD2Rich.toHtml(text);
     var html = escapeHtml(text == null ? "" : text);
     var cls = { "1": "mo-hl-y", "3": "mo-hl-b" };
     /* <i=N>…</i> 与 <ci=N>…</ci>：1=黄色重点，3=蓝色关键地名，其余剥壳保字 */

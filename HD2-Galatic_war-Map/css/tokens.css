@@ -111,3 +111,10 @@
       --mo-yellow:    #F5C518;
       --mo-place:     #5BA3D0;
 }
+
+/* ---- 富文本强调（2026-11-09 全站统一）----
+   Arrowhead dispatch/公告原文的 <i=1>/<i=3>/<ci=N> 标记 → 黄/蓝强调。
+   渲染入口唯一：HD2-Galatic_war-Map/js/rich-text.js（HD2Rich.toHtml）。
+   1 = 黄色重点；3 = 蓝色标题/关键地名。 */
+.rt-hl-y { color: var(--mo-yellow); font-weight: 700; font-style: normal; }
+.rt-hl-b { color: var(--mo-place); font-weight: 700; font-style: normal; }

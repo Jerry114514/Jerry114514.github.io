@@ -20,7 +20,8 @@
       const f = b.front;
       return `<article class="report-block front-card${b.defense ? " defense" : ""}"><h3 class="front-head"><span class="battle-type${b.defense ? " bad" : " blue"}">${esc(f.mode)}</span><a href="${esc(b.href)}">${esc(b.title)}</a><span class="faction-label ${esc(f.tone)}">${esc(f.faction)}</span><span class="front-players">潜兵 <strong>${esc(f.players)}</strong></span></h3>${f.variants ? `<p class="front-variants ${esc(f.tone)}">${esc(f.variants)}</p>` : ""}<div class="front-stats"><span class="front-health">${esc(f.health.healthText)}</span><span class="front-resistance">${esc(f.health.resistanceText)}</span></div>${b.bars.map(meter).join("")}<div class="front-summary">${f.summary.map(l => `<span class="${esc(l.tone)}">${esc(l.text)}</span>`).join("")}</div><div class="front-details"><span class="front-environment">${esc(f.environment)}</span><span class="front-source">${esc(f.source || "速率数据不足")}</span></div>${renderRegions(f.regions)}</article>`;
     }
-    return `<article class="report-block">${b.title ? `<h3>${b.href ? `<a href="${esc(b.href)}">${esc(b.title)}</a>` : esc(b.title)}</h3>` : ""}${b.meta ? `<div class="block-meta">${esc(b.meta)}</div>` : ""}${(b.bars || []).map(meter).join("")}${b.lines.filter(l => l.text).map(l => `<p class="${esc(l.tone)}${l.small ? " detail" : ""}">${esc(l.text)}</p>`).join("")}</article>`;
+    const titleHtml = b.title ? (b.href ? `<a href="${esc(b.href)}">${b.titleHtml || esc(b.title)}</a>` : (b.titleHtml || esc(b.title))) : "";
+    return `<article class="report-block">${titleHtml ? `<h3>${titleHtml}</h3>` : ""}${b.meta ? `<div class="block-meta">${esc(b.meta)}</div>` : ""}${(b.bars || []).map(meter).join("")}${b.lines.filter(l => l.text || l.html).map(l => `<p class="${esc(l.tone)}${l.small ? " detail" : ""}">${l.html || esc(l.text)}</p>`).join("")}</article>`;
   }
   function renderRegions(regions) {
     if (!regions.length) return "";

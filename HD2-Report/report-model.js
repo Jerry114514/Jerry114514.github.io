@@ -14,6 +14,12 @@
   // 请求 zh-CN 的接口仍可能返回英文。只有实际含中文的条目才能进入战报。
   const chinese = value => /[\u3400-\u9fff]/.test(plain(value));
   const localized = value => chinese(value) ? plain(value).replace(/\bIlluminates?\b/gi, "光能者").replace(/\bAutomatons?\b/gi, "机器人").replace(/\bTerminids?\b/gi, "终结族") : "";
+  /* 富文本分段：首行标题、其余正文；<i=N>/<ci=N> 统一交给 HD2Rich 转黄/蓝强调。 */
+  function splitRich(text) {
+    const lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
+    const first = lines.shift() || "";
+    return { titleHtml: root.HD2Rich.toHtml(first), bodyHtml: root.HD2Rich.toHtml(lines.join("\n").trim()) };
+  }
   // 复用原战报生态译名；缺少中文的环境名不回退英文。
   const BIOME_CN = { Plains: "平原", "Ionic Crimson": "离子赤原", "Icy Glaciers": "冰川", "Desert Dunes": "沙漠沙丘", "Rocky Canyons": "岩石峡谷", "Basic Swamp": "沼泽", Tundra: "苔原", Boneyard: "骸骨之地", "Ethereal Jungle": "幽光丛林", "Volcanic Jungle": "火山丛林", "Acidic Badlands": "酸性荒原", "Haunted Swamp": "幽魂沼泽", "Scorched Moor": "焦土荒原", "Ionic Jungle": "离子丛林", Deadlands: "死寂之地", Moon: "卫星地表", "Desert Cliffs": "沙漠断崖", Magma: "熔岩", "Hive World": "虫巢世界", "Desert Oasis": "沙漠绿洲", "Deciduous Autumn Forest": "秋色落叶林", "Deciduous Forest": "落叶林", "Super Earth": "超级地球", Supercolony: "超级虫巢", "Cyberstan Megafactory": "生化斯坦巨型工厂", "ACCESS DENIED": "权限不足" };
   const HAZARD_CN = { "Ion Storms": "离子风暴", Tremors: "地震", Blizzards: "暴风雪", Sandstorms: "沙暴", "Volcanic Activity": "火山活动", "Acid Storms": "酸雨风暴", "Fire Tornadoes": "火焰龙卷", "Meteor Storms": "陨石风暴", "Extreme Cold": "极寒", "Intense Heat": "酷热", "Thick Fog": "浓雾", Rainstorms: "暴雨", "Torrential Rain": "暴雨", "Firestorms": "火焰风暴", "Acid Rain": "酸雨", None: "无" };
@@ -38,10 +44,14 @@
       for (const item of items || []) {
         const id = String(item.id ?? "");
         if (!id || rows.has(id)) continue;
-        const text = localized(item.translated || (fallback ? item.message : ""));
+        /* official_message 保留 Arrowhead 的 <i=N>/<ci=N> 强调标记；translated 是剥掉标签的纯文本。
+           渲染用带标签的原文（高亮），判定/复制仍用纯文本。 */
+        const source = item.official_message || item.translated || (fallback ? item.message : "");
+        const text = localized(source);
         if (!text) continue;
         const official = fallback || item.official_zh === true || item.text_source === "official_zh";
-        rows.set(id, { id, text, published: item.published_at || item.published,
+        const rich = root.HD2Rich ? splitRich(source) : null;
+        rows.set(id, { id, text, rich, published: item.published_at || item.published,
           source: official ? "官方简中" : item.mt ? "站点汉化 · 机翻" : "站点汉化" });
       }
     }
@@ -289,7 +299,9 @@
     const updates = news(data, extras);
     const newsSection = section("news", "战争报告", updates.slice(0, 8).map(item => {
       const [title, ...body] = item.text.split("\n");
-      return block(title, [line(body.join("\n").trim())], { meta: `${date(item.published)} · ${item.source}` });
+      const line0 = line(body.join("\n").trim());
+      if (item.rich) { line0.html = item.rich.bodyHtml; }
+      return block(title, [line0], { meta: `${date(item.published)} · ${item.source}`, titleHtml: item.rich?.titleHtml });
     }));
     if (!updates.length) newsSection.blocks.push(block("", [line("简中战争报告尚未同步。", "", true)]));
 

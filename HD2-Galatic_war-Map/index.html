@@ -24,7 +24,7 @@
   <meta name="twitter:image" content="https://jerry114514.github.io/assets/og-cover-1200x630.jpg">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "绝地潜兵2 中文实时战况数据面板 - 真理部", "description": "绝地潜兵2（Helldivers 2）中文实时战况面板：重要指令、进行中的战役与奖励、可攻打星球与解放度、星区目录、最新资讯；数据每 15 分钟自动更新。", "url": "https://jerry114514.github.io/HD2-Galatic_war-Map/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "绝地潜兵2 · 真理部", "url": "https://jerry114514.github.io/"}}</script>
   <meta name="theme-color" content="#0A0A0A" />
-    <link rel="stylesheet" href="./css/tokens.css?v=20260920a">
+    <link rel="stylesheet" href="./css/tokens.css?v=20261109a">
   <link rel="stylesheet" href="./css/home.css?v=20261105a">
   <link rel="stylesheet" href="./css/boot-splash.css?v=20261027b">
   <!-- HUD 皮肤层：必须最后加载（同特异度即可覆盖 home.css 的历史写法） -->
@@ -381,7 +381,8 @@
   <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
-  <script src="./js/mo-announce.js?v=20261104a"></script>
+  <script src="./js/rich-text.js?v=20261109a"></script>
+  <script src="./js/mo-announce.js?v=20261109a"></script>
   <script src="./js/planet-card-effects.js?v=20261021b"></script>
   <script>
   "use strict";
@@ -511,18 +512,11 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
   }[c]));
-  // 将 <ci=N>...</ci> 标签解析为带颜色的 HTML
-  const richText = (s) => {
-    if (!s) return "";
-    return esc(s)
-      .replace(/&lt;ci=1&gt;/g, '<span style="color:#F5C518;font-weight:600;">')
-      .replace(/&lt;ci=3&gt;/g, '<span style="color:#5BA3D0;font-weight:700;">')
-      .replace(/&lt;\/ci&gt;/g, '</span>')
-      .replace(/&lt;i=1&gt;/g, '<span style="color:#F5C518;font-weight:700;">')
-      .replace(/&lt;i=3&gt;/g, '<span style="color:#5BA3D0;font-weight:700;">')
-      .replace(/&lt;\/i&gt;/g, '</span>')
-      .replace(/\n/g, "<br>");
-  };
+  // 富文本：Arrowhead dispatch 的 <i=N>/<ci=N> → 黄/蓝强调（统一实现见 js/rich-text.js）。
+  // 1 = 黄色重点；3 = 蓝色标题/关键地名；裸 <i> 按 1；其余标签剥壳保字，绝不还原 HTML。
+  const richText = (s) => (window.HD2Rich
+    ? window.HD2Rich.toHtml(s)
+    : esc(s ?? "").replace(/\n/g, "<br>"));
   const relativeTime = (iso) => {
     if (!iso) return "";
     const diff = (Date.now() - new Date(iso).getTime()) / 1000;
@@ -3460,7 +3454,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     if (transList.length > 0) {
       body.innerHTML = transList.map(d => {
         const iso = d.published_at || d.published;
-        const parts = splitNewsTitle(d.translated || d.message || "");
+        const parts = splitNewsTitle(d.official_message || d.translated || d.message || "");
         return newsCardHtml(parts.title, parts.body, iso);
       }).join("");
       return;

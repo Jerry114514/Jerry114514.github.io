@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const window = {};
-for (const file of ["HD2-Galatic_war-Map/js/forecast.js", "HD2-Galatic_war-Map/js/dss-donations.js", "HD2-Galatic_war-Map/js/ownership-changes.js", "HD2-Galatic_war-Map/js/planet-card-effects.js", "HD2-Galatic_war-Map/js/mo-equipment.js", "HD2-Galatic_war-Map/js/regions.js", "HD2-Report/report-model.js"]) new Function("window", fs.readFileSync(path.join(root, file), "utf8"))(window);
+for (const file of ["HD2-Galatic_war-Map/js/rich-text.js", "HD2-Galatic_war-Map/js/forecast.js", "HD2-Galatic_war-Map/js/dss-donations.js", "HD2-Galatic_war-Map/js/ownership-changes.js", "HD2-Galatic_war-Map/js/planet-card-effects.js", "HD2-Galatic_war-Map/js/mo-equipment.js", "HD2-Galatic_war-Map/js/regions.js", "HD2-Report/report-model.js"]) new Function("window", fs.readFileSync(path.join(root, file), "utf8"))(window);
 const M = window.HD2Report;
 let checks = 0;
 function test(name, fn) { fn(); checks++; console.log("PASS " + name); }
@@ -313,5 +313,13 @@ test("页面脚本与同源资源真实存在，不使用本地战报接口", ()
   const app = fs.readFileSync(path.join(root, "HD2-Report/report.js"), "utf8");
   assert.doesNotMatch(html + app, /\/api\/report|127\.0\.0\.1|[A-Z]:\\/);
   new Function(app); new Function(fs.readFileSync(path.join(root, "HD2-Report/report-model.js"), "utf8"));
+});
+test("官方简中原文的 <i=N> 强调标记进入战报富文本字段", () => {
+  const rows = M.news({ news: [{ id: 7, official_message: "<i=3>公告标题</i>\n\n守住<i=1>十字架一</i>。" }] }, {});
+  assert.equal(rows.length, 1);
+  assert.match(rows[0].rich.titleHtml, /class="rt-hl-b"/);
+  assert.match(rows[0].rich.bodyHtml, /class="rt-hl-y"/);
+  assert.doesNotMatch(rows[0].rich.bodyHtml, /[<>]i=/);
+  assert.equal(rows[0].text, "公告标题\n\n守住十字架一。");
 });
 console.log(`站点战报：${checks} 项通过`);

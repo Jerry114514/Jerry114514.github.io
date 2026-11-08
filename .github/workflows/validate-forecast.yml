@@ -13,6 +13,9 @@ on:
       - 'HD2-Galatic_war-Map/js/regions.js'
       - 'HD2-Galatic_war-Map/js/ownership-changes.js'
       - 'HD2-Galatic_war-Map/js/dss-donations.js'
+      - 'HD2-Galatic_war-Map/js/rich-text.js'
+      - 'HD2-Galatic_war-Map/js/mo-announce.js'
+      - 'HD2-Galatic_war-Map/css/tokens.css'
       - 'HD2-Galatic_war-Map/tables/hd2_variables.json'
       - 'HD2-Galatic_war-Map/data/history/ownership_seed.json'
       - 'scripts/fetch_site_data.py'
@@ -41,6 +44,7 @@ jobs:
       - run: node scripts/tests/mo-equipment-check.mjs
       - run: node scripts/tests/major-order-content-check.mjs
       - run: node scripts/tests/special-orders-check.mjs
+      - run: node scripts/tests/rich-text-check.mjs
       - run: node scripts/tests/cloudflare-dispatcher-check.mjs
       # 弹道模拟器（HD2_Ballistics）：核心物理无需游戏数据；导入/DOM 用例在缺数据时自动 skip
       - run: node --test HD2_Ballistics/tests/velocity-inheritance.test.cjs
