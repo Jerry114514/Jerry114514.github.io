@@ -1,17 +1,16 @@
 # HD2 API 内容变更
 
-- 检测时间（UTC）：2026-11-08T12:55:53Z
+- 检测时间（UTC）：2026-11-08T13:06:03Z
 - 当前银河效果定义：315 条
 
 ## 全局事件 📣
 
-### `1501111` · 未命名事件
+### `1501112` · SUCCESS
 
-- 剩余 191 小时 56 分钟
+- 剩余 47 小时 55 分钟 · flag 2
 
-**关联效果**
-
-- `1400` — SEAF武装部队驻守
-- `1401` — SEAF武装部队驻守
-
-**涉及星球**：泰雷克、克里姆西卡、博尔岩、图灵、大流士II、水委一次星、王良三III、艾拉特主星、佛里主星、大艾伦特、北极一次星、璨光
+> The Helldivers successfully eliminated the mandated quota of Terminids with their judicious use of the INCINERATOR FRV Stratagem, delivering a crushing blow to alien insolence, and silencing equally dangerous rumors of TCS+ malfunctions.
+> 
+> Low-threat TCS+ breaches continue as scheduled maintenance is ongoing, all within expected ranges of hostility.
+> 
+> Coupled with the assurance that any anomalous readings along the perimeter will be suitably scrutinized, domestic markets immediately responded with patriotic vigor, reaffirming the infallibility of Super Earth, economic or otherwise.
