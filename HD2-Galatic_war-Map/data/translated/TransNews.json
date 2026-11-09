@@ -1,6 +1,28 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 236809735,
+  "title": "重要指令",
+  "original": "Defend against the required number of Terminid attacks in order to contain the unprovoked, unforeseeable outbreak affecting multiple TCS+ sectors.",
+  "translated": "抵御指定数量的终结族攻击，以遏制这场波及多个TCS+分区、毫无来由且难以预见的终结族暴乱。",
+  "text_source": "official_zh",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-09T21:05:01Z"
+ },
  "items": [
+  {
+   "id": 3992,
+   "published_at": "2026-11-09T13:26:26Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER\n\nIn an unprovoked, unforeseeable assault illustrative of their depravity, a newly mutated strain of Terminids have launched a wave of attacks across multiple TCS+ sectors, threatening to smother innocent colonies in a sea of fascist insect tyranny.\n\nThe Helldivers must successfully defend against 7 Termind attacks to halt this tyrannical onslaught and restore order.",
+   "translated": "新重要指令\n\n终结族发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n绝地潜兵必须成功抵御住7轮终结族攻势，阻止这场暴虐的猛攻，恢复秩序。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 86290395,
+   "official_message": "<i=3>新重要指令</i>\n\n<i=1>终结族</i>发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n绝地潜兵必须成功<i=1>抵御住7轮终结族攻势</i>，阻止这场暴虐的猛攻，恢复秩序。\n",
+   "translated_at": "2026-11-09T21:05:01Z"
+  },
   {
    "id": 3991,
    "published_at": "2026-11-08T13:01:39Z",
@@ -117,19 +139,6 @@
    "published_war_seconds": 85695707,
    "official_message": "<i=3>未完成重要指令</i>\n\n由于敌人赤裸裸的仇恨，麦拉芬蒙河人权审讯中心已无法建造。很不幸，由于资金问题，档案部只能从记录中删除了最后10%的牺牲英雄，影响到了姓氏以Y和Z开头的所有士兵。",
    "translated_at": "2026-11-02T18:38:01Z"
-  },
-  {
-   "id": 3982,
-   "published_at": "2026-11-02T12:14:24Z",
-   "source": "dispatch",
-   "original": "MINOR TERMINID OUTBREAK\n\nA minor Terminid outbreak has occurred on FORI PRIME, likely merely the result of recent system updates to the TCS+ firmware. While the outbreak is minor and will be contained in due time, Helldivers are welcome to aid in the containment, should they so choose, but the threat is assessed as very low and barely worth attention.",
-   "translated": "小规模终结族暴乱\n\n佛里主星发生了一起小规模终结族暴乱，原因很可能是TCS+固件在近期进行了系统更新。虽然这次暴乱的规模很小，而且会在适当的时候得到控制，但如果绝地潜兵愿意，我们欢迎他们协助镇压，不过该威胁已被评估为极低，几乎不值得关注。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85681334,
-   "official_message": "<i=3>小规模终结族暴乱</i>\n\n<i=1>佛里主星</i>发生了一起小规模终结族暴乱，原因很可能是TCS+固件在近期进行了系统更新。虽然这次暴乱的规模很小，而且会在适当的时候得到控制，但如果绝地潜兵愿意，我们欢迎他们协助镇压，不过该威胁已被评估为极低，几乎不值得关注。",
-   "translated_at": "2026-11-02T18:38:01Z"
   }
  ],
  "strategic": {
@@ -139,11 +148,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-09T02:50:09Z",
+  "computed_at": "2026-11-09T21:05:01Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501107,
@@ -180,15 +189,47 @@
    "expires_at_war_seconds": 86375287,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501113,
+   "id32": 111679497,
+   "title": "管控",
+   "message": "<i=1>终结族</i>发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n异星昆虫学研究中心专家进行了初步研究，证实这些变异具有极强的毒性，导致最高指挥部宣布进入局部生化危害紧急状态。\n\n绝地潜兵必须成功<i=1>抵御住7轮终结族攻势</i>，阻止这场暴虐的猛攻，恢复秩序。",
+   "plain_text": "终结族发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n异星昆虫学研究中心专家进行了初步研究，证实这些变异具有极强的毒性，导致最高指挥部宣布进入局部生化危害紧急状态。\n\n绝地潜兵必须成功抵御住7轮终结族攻势，阻止这场暴虐的猛攻，恢复秩序。",
+   "message_id32": 3057756385,
+   "assignment_id32": 236809735,
+   "expires_at_war_seconds": 86722354,
+   "text_source": "official_zh",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-09T02:50:09Z",
+  "source_version": "2026-11-09T21:05:01Z",
   "war_id": 801,
-  "war_time_seconds": 86252220,
-  "last_success_at": "2026-11-09T02:50:09Z",
+  "war_time_seconds": 86317910,
+  "last_success_at": "2026-11-09T21:05:01Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 236809735,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-09T21:05:01Z",
+  "retrieved_at": "2026-11-09T21:05:01Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 12,
+    "type_en": "Defense",
+    "action": "防守",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 7,
+    "progress": 0,
+    "requirement": null
+   }
+  ]
  }
 }
