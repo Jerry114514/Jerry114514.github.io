@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-10T11:46:19Z",
+  "computed_at": "2026-11-10T19:06:05Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -179,18 +179,6 @@
    "mt": false
   },
   {
-   "event_id": 1501112,
-   "id32": 2632825,
-   "title": "成功",
-   "message": "绝地潜兵明智地使用INCINERATOR FRV战略配备，成功消灭了既定配额的终结族，对外星渣滓的傲慢行为给予了毁灭性打击，而且平息了同样危险的TCS+故障谣言。\n\n随着定期维护的持续进行，低威胁TCS+突破仍有发生，所有情况均处于预期的敌意之范围内。\n\n政府保证对防线周边出现的任何异常读数进行适当核查，国内市场立即以爱国热情做出回应，再次印证了超级地球在经济和其他方面都具有无可置疑的正确性。",
-   "plain_text": "绝地潜兵明智地使用INCINERATOR FRV战略配备，成功消灭了既定配额的终结族，对外星渣滓的傲慢行为给予了毁灭性打击，而且平息了同样危险的TCS+故障谣言。\n\n随着定期维护的持续进行，低威胁TCS+突破仍有发生，所有情况均处于预期的敌意之范围内。\n\n政府保证对防线周边出现的任何异常读数进行适当核查，国内市场立即以爱国热情做出回应，再次印证了超级地球在经济和其他方面都具有无可置疑的正确性。",
-   "message_id32": 705181128,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 86375287,
-   "text_source": "official_zh",
-   "mt": false
-  },
-  {
    "event_id": 1501113,
    "id32": 111679497,
    "title": "管控",
@@ -206,17 +194,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-10T11:46:17Z",
+  "source_version": "2026-11-10T19:06:05Z",
   "war_id": 801,
-  "war_time_seconds": 86370750,
-  "last_success_at": "2026-11-10T11:46:17Z",
+  "war_time_seconds": 86397140,
+  "last_success_at": "2026-11-10T19:06:05Z",
   "stale": false
  },
  "tasks": {
   "id32": 236809735,
   "source": "arrowhead_official",
-  "source_version": "2026-11-10T11:46:17Z",
-  "retrieved_at": "2026-11-10T11:46:17Z",
+  "source_version": "2026-11-10T19:06:05Z",
+  "retrieved_at": "2026-11-10T19:06:05Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -227,7 +215,7 @@
     "faction_id": 2,
     "faction_name": "终结族",
     "goal": 7,
-    "progress": 0,
+    "progress": 1,
     "requirement": null
    }
   ]
