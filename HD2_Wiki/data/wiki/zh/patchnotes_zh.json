@@ -1,7 +1,59 @@
 {
-  "updated_at": "2026-10-29T12:38:44Z",
+  "updated_at": "2026-11-11T17:46:59Z",
   "note_zh": "中文覆盖：按「小节 id」对齐主干 patchnotes.json，节内条目按索引一一对应（校验器强制长度相等）。`mt: true` 表示**机器翻译、待人工校对**（页面显示「机翻 · 待校对」）；人工校对完成后删掉该字段即为已校对。更新名用官方中文译名（已登记于 terms.json）。",
   "versions_zh": [
+    {
+      "id": "1.007.203",
+      "title_zh": "自由入寂：7.2.3",
+      "fully_translated": true,
+      "mt": true,
+      "sections_zh": [
+        {
+          "id": "overview",
+          "heading_zh": "概述",
+          "items_zh": [
+            "绝地潜兵们，你们好。本次热修复处理了崩溃与错误修复，并解除了一些外观模组的限制。"
+          ]
+        },
+        {
+          "id": "community_feedback_changes",
+          "heading_zh": "社区反馈改动",
+          "items_zh": [
+            "[PC] 修复了导致某些外观模组无法生效的问题。"
+          ]
+        },
+        {
+          "id": "fixes",
+          "heading_zh": "修复",
+          "subsections_zh": [
+            {
+              "id": "crash_fixes",
+              "heading_zh": "崩溃修复",
+              "items_zh": [
+                "修复了在虫窝世界洞穴中受到中毒或毒气等状态效果时可能发生的崩溃",
+                "[PC] 修复了退出游戏时可能发生的崩溃",
+                "[PC] 修复了游戏在 Windows 上出现写入权限问题时启动可能发生的崩溃"
+              ]
+            },
+            {
+              "id": "misc",
+              "heading_zh": "杂项",
+              "items_zh": [
+                "修复了火焰在洞穴内无法生效且无法散布的问题",
+                "修复了虫窝世界洞穴的关卡生成问题：大型资产可能生成在洞穴外，从而阻塞任务推进与战备呼叫"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading_zh": "已知问题",
+          "items_zh": [
+            "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues"
+          ]
+        }
+      ]
+    },
     {
       "id": "1.007.202",
       "title_zh": "自由入寂：7.2.2",
