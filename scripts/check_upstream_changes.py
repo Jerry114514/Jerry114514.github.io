@@ -25,6 +25,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from datetime import datetime, timedelta, timezone
 
 API = "https://helldivers.wiki.gg/api.php"
 UA = {"User-Agent": "HD2-DataSync/1.0 (site maintainer; +https://jerry114514.github.io/)"}
@@ -166,7 +167,12 @@ def main():
     lines = []
     lines.append("# 上游变更侦测报告")
     lines.append("")
-    lines.append("生成时间（UTC）：%s" % time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
+    now_utc = datetime.now(timezone.utc)
+    lines.append("生成时间（UTC）：%s" % now_utc.strftime("%Y-%m-%d %H:%M:%S"))
+    lines.append(
+        "生成时间（UTC+8，北京时间）：%s"
+        % now_utc.astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S")
+    )
     lines.append("")
 
     # ---- ① 上游改动 ----

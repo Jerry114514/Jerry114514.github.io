@@ -59,8 +59,12 @@ jobs:
             const fs = require('fs');
             const report = fs.readFileSync('/tmp/schema_report.md', 'utf8');
             const title = '🔔 API 信息源结构变更报告';
+            const now = new Date();
+            const beijing = new Date(now.getTime() + 8 * 3600 * 1000)
+              .toISOString().replace('T', ' ').slice(0, 19);
             const body = report + '\n\n---\n基线已同步更新（下次运行不会重复报告此变更）。\n'
-              + '生成时间：' + new Date().toISOString();
+              + '生成时间（UTC）：' + now.toISOString() + '\n'
+              + '生成时间（UTC+8，北京时间）：' + beijing;
 
             // 查找已有同名 issue（未关闭的）
             const issues = await github.rest.issues.listForRepo({
