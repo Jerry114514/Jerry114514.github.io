@@ -1,8 +1,127 @@
 {
-  "updated_at": "2026-10-29T12:38:28Z",
+  "updated_at": "2026-11-11T17:46:40Z",
   "source": "https://helldivers.wiki.gg/wiki/Category:Patch_Notes",
-  "total": 14,
+  "total": 15,
   "versions": [
+    {
+      "id": "1.007.203",
+      "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.203",
+      "title": "Devoid of Liberty: 7.2.3",
+      "cover_wiki": "Helldivers 2 Devoid of Liberty Key Art EN 2x3.png",
+      "release_date": "2026-11-11",
+      "release_time": "10:01 AM UTC",
+      "size": "163.4 MB",
+      "previous": "1.007.202",
+      "next": null,
+      "blog_url": "https://steamcommunity.com/games/553850/announcements/detail/708913968494675019",
+      "image_local": "./assets/patchnotes/helldivers_2_devoid_of_liberty_key_art_en_2x3.webp",
+      "sections": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "Greetings, Helldivers. Today's hotfix tackles crash and bug fixes, as well as unblocking some cosmetic modifications.",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "community_feedback_changes",
+          "heading": "Community Feedback Changes",
+          "level": 2,
+          "items": [
+            {
+              "kind": "li",
+              "depth": 0,
+              "text": "[PC] Fixed an issue preventing certain cosmetic mods from functioning.",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        },
+        {
+          "id": "fixes",
+          "heading": "Fixes",
+          "level": 2,
+          "items": [],
+          "subsections": [
+            {
+              "id": "crash_fixes",
+              "heading": "Crash Fixes",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a crash that could occur when receiving status effects such as poison or gas in Hive World caves",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "[PC] Fixed a crash that could occur while exiting the game",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "[PC] Fixed a crash that could occur on boot when the game had issues with writing permissions on Windows",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            },
+            {
+              "id": "misc",
+              "heading": "Misc",
+              "level": 3,
+              "items": [
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed issue where fire did not work and couldn’t be spread inside caves",
+                  "links": [],
+                  "files": []
+                },
+                {
+                  "kind": "li",
+                  "depth": 0,
+                  "text": "Fixed a level generation issue on Hive World caves where large assets could spawn outside the cave and block mission progression and stratagem call-in",
+                  "links": [],
+                  "files": []
+                }
+              ],
+              "subsections": []
+            }
+          ]
+        },
+        {
+          "id": "known_issues",
+          "heading": "Known Issues",
+          "level": 2,
+          "items": [
+            {
+              "kind": "p",
+              "depth": 0,
+              "text": "https://arrowhead.zendesk.com/hc/en-us/articles/15916898652700--HELLDIVERS-2-Known-Issues",
+              "links": [],
+              "files": []
+            }
+          ],
+          "subsections": []
+        }
+      ]
+    },
     {
       "id": "1.007.202",
       "wiki_url": "https://helldivers.wiki.gg/wiki/1.007.202",
