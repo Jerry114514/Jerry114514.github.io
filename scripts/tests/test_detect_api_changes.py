@@ -85,6 +85,21 @@ class ApiChangeDetectionTests(unittest.TestCase):
         self.assertIn("新增的银河效果", report)
         self.assertIn("增加作战兵力", report)
 
+    def test_report_prints_beijing_time_below_utc(self):
+        report = changes.render_report(
+            changes.ChangeSet(), {}, {}, {}, "2026-10-28T16:30:05Z", []
+        )
+        lines = report.splitlines()
+        utc_index = lines.index("- 检测时间（UTC）：2026-10-28T16:30:05Z")
+        self.assertEqual(
+            lines[utc_index + 1],
+            "- 检测时间（UTC+8，北京时间）：2026-10-29 00:30:05",
+        )
+
+    def test_beijing_time_handles_bad_input(self):
+        self.assertEqual(changes.beijing_time("not-a-timestamp"), "未知")
+        self.assertEqual(changes.beijing_time(""), "未知")
+
     def test_normalizes_global_events_and_remaining_time(self):
         rows, max_id, war_time = changes.normalize_global_events(
             {

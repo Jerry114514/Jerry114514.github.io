@@ -26,7 +26,7 @@ import sys
 import time
 import urllib.request
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 
@@ -444,6 +444,21 @@ def _format_remaining(seconds: int | None) -> str:
     return f"{minutes} 分钟"
 
 
+def beijing_time(checked_at: str) -> str:
+    """把 UTC 时间戳（`YYYY-MM-DDTHH:MM:SSZ`）换算成北京时间（UTC+8）。
+
+    报告头部同时给出 UTC 与北京时间，方便国内维护者直接对照；
+    解析失败时返回「未知」，不猜测。
+    """
+    try:
+        stamp = datetime.strptime(checked_at, "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=timezone.utc
+        )
+    except (TypeError, ValueError):
+        return "未知"
+    return stamp.astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S")
+
+
 def render_report(
     changes: ChangeSet,
     effects: dict[str, dict[str, Any]],
@@ -461,6 +476,7 @@ def render_report(
         "# HD2 API 内容变更",
         "",
         f"- 检测时间（UTC）：{checked_at}",
+        f"- 检测时间（UTC+8，北京时间）：{beijing_time(checked_at)}",
         f"- 当前银河效果定义：{len(effects)} 条",
         "",
     ]
