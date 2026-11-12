@@ -27,6 +27,8 @@ const html = fs.readFileSync(path.join(site, "index.html"), "utf8");
 for (const marker of [
   'id="block-special-orders"',
   "SPECIAL_ORDER_META",
+  "SPECIAL_ORDER_RETENTION_MS",
+  "specialOrderExpired",
   "specialOrderModels",
   "specialOrderDispatchIds",
   "OFFICIAL_TEXTS_URL",
@@ -38,6 +40,12 @@ for (const marker of [
   "assignments_all: Array.isArray",
   'class="special-target-list"'
 ]) assert.ok(html.includes(marker), `缺少独立指令实现标记：${marker}`);
+assert.match(html, /const SPECIAL_ORDER_RETENTION_MS = 7 \* 24 \* 60 \* 60 \* 1000;/,
+  "战略通道记录必须在发布后 7 天退场");
+assert.ok(html.includes("指令发布 7 天后自动解除"),
+  "过期通道应显示统一空态并说明 7 天规则");
+assert.ok(!html.includes('class="pd-chip pd-chip-tac"'),
+  "战术目标不应继续渲染在首页星球卡片");
 
 // 旧函数已移除：不能让战略机遇继续塞回重要指令正文。
 assert.ok(!html.includes("function renderStrategicOpportunities"), "旧内嵌战略机遇渲染器仍存在");

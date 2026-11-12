@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const html = fs.readFileSync(path.join(root, 'HD2-Galatic_war-Map/planet.html'), 'utf8');
 
 // ---- 1) 既有锚点全部保留（外部深链兼容） ----
-for (const id of ['sec-war', 'sec-stats', 'sec-regions', 'sec-env', 'sec-links', 'sec-trend', 'sec-src']) {
+for (const id of ['sec-tactical', 'sec-war', 'sec-stats', 'sec-regions', 'sec-env', 'sec-links', 'sec-trend', 'sec-src']) {
   assert.ok(html.includes(`id="${id}"`), `锚点 #${id} 必须保留`);
 }
 
@@ -23,9 +23,19 @@ assert.ok(html.includes('HD2Recent.load'), '实测帧加载必须保留');
 assert.ok(html.includes('hd2_variables.json'), '词条必须接入行动变量表（中文描述权威源）');
 
 // ---- 3) 依赖模块与 SEO 基建 ----
-for (const src of ['./js/forecast.js', './js/regions.js', './js/rate-source.js', './css/forecast.css']) {
+for (const src of ['./js/tactical.js', './js/forecast.js', './js/regions.js', './js/rate-source.js', './css/forecast.css']) {
   assert.ok(html.includes(src), `依赖 ${src} 必须保留`);
 }
+for (const marker of [
+  'class="tactical-command"',
+  'function tacticalTags()',
+  'window.Tactical.computeFor(P.index',
+  'class="tactical-objective"',
+  'class="tactical-target-link"',
+  '当前无战术目标'
+]) assert.ok(html.includes(marker), `战术目标独立区域缺少标记：${marker}`);
+assert.match(html, /\.tactical-grid\s*\{[\s\S]*grid-template-columns:repeat\(auto-fit,minmax\(min\(100%,270px\),1fr\)\)/,
+  '战术目标必须使用独立响应式卡片区域');
 assert.ok(html.includes('rel="canonical"'), 'canonical 必须保留');
 assert.ok(html.includes('application/ld+json'), 'JSON-LD 生成必须保留');
 assert.ok(html.includes('setMeta()'), '动态 meta 必须保留');

@@ -378,7 +378,6 @@
   <script src="./js/data-source.js"></script>
   <script src="./js/rate-source.js"></script>
   <script src="./js/boot-splash.js?v=20261027b"></script>
-  <script src="./js/tactical.js"></script>
   <script src="./js/dss-donations.js?v=20261014b"></script>
   <script src="./js/mo-equipment.js?v=20261024a"></script>
   <script src="./js/rich-text.js?v=20261109a"></script>
@@ -851,6 +850,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     opportunity: { cn: "战略机遇", en: "STRATEGIC OPPORTUNITY", icon: "◇" },
     minor: { cn: "次要指令", en: "MINOR ORDER", icon: "▸" },
   };
+  // 独立通道只保留发布后 7 天内的指令记录。到期后连同旧战果记录一起退场，
+  // 回到该通道统一的“当前无 xx 指令”空态，避免过期卡片长期占据指挥台。
+  const SPECIAL_ORDER_RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
 
   function channelAssignments(data) {
     const rows = Array.isArray(data.assignments_all) ? data.assignments_all : [];
@@ -871,6 +873,11 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     if (!assignment) return false;
     const deadline = Date.parse(assignment.deadline || assignment.expiration || "");
     return !isFinite(deadline) || deadline > Date.now();
+  }
+
+  function specialOrderExpired(dispatch) {
+    const published = dispatch && Date.parse(dispatch.published || "");
+    return isFinite(published) && Date.now() - published >= SPECIAL_ORDER_RETENTION_MS;
   }
 
   function localizedSpecialDispatch(data, matcher, preferredId) {
@@ -906,21 +913,36 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const all = channelAssignments(data);
     const major = all.find(a => /^MAJOR ORDER|^重要指令/i.test(String(a.title || "")))
       || (data.assignments && data.assignments.tasks ? data.assignments : null);
-    const directiveAssign = assignmentForChannel(all, "directive");
-    const minorAssign = assignmentForChannel(all, "minor");
-    const directiveDispatch = localizedSpecialDispatch(
+    let directiveAssign = assignmentForChannel(all, "directive");
+    let minorAssign = assignmentForChannel(all, "minor");
+    let directiveDispatch = localizedSpecialDispatch(
       data, /NEW\s+STRATEGIC\s+DIRECTIVE|STRATEGIC\s+DIRECTIVE/i);
-    const opportunityDispatch = localizedSpecialDispatch(
+    let opportunityDispatch = localizedSpecialDispatch(
       data,
       /STRATEGIC\s+(?:OPPORTUNITY|IMPERATIVE)/i,
       data.strategic && data.strategic.dispatch_id
     );
-    const minorDispatch = localizedSpecialDispatch(
+    let minorDispatch = localizedSpecialDispatch(
       data, /(?:NEW\s+)?MINOR\s+ORDER(?:\s|$)/i);
+
+    // 7 天是通道记录的硬性保留期：即使上游仍回传旧的 active/status 字段，
+    // 已超过保留期的战果也不再作为当前指令展示。
+    if (specialOrderExpired(directiveDispatch)) {
+      directiveAssign = null;
+      directiveDispatch = null;
+    }
+    if (specialOrderExpired(opportunityDispatch)) {
+      opportunityDispatch = null;
+    }
+    const minorRecordExpired = specialOrderExpired(minorDispatch);
+    if (minorRecordExpired) {
+      minorAssign = null;
+      minorDispatch = null;
+    }
 
     // 旧版数据没有 assignments_all 时，把主指令的附加任务作为“次要指令”兜底。
     let minorFallback = null;
-    if (!minorAssign && major && Array.isArray(major.tasks) && major.tasks.length > 1) {
+    if (!minorAssign && !minorRecordExpired && major && Array.isArray(major.tasks) && major.tasks.length > 1) {
       minorFallback = {
         ...major,
         id: `${major.id || "major"}:minor`,
@@ -943,9 +965,9 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
       opportunity: {
         ...SPECIAL_ORDER_META.opportunity,
         kind: "opportunity",
-        assignment: data.strategic && data.strategic.active ? major : null,
+        assignment: data.strategic && data.strategic.active && opportunityDispatch ? major : null,
         dispatch: opportunityDispatch,
-        active: !!(data.strategic && data.strategic.active),
+        active: !!(data.strategic && data.strategic.active && opportunityDispatch),
         statusCn: data.strategic && data.strategic.status_cn || "",
         taskOffset: 1,
       },
@@ -1020,7 +1042,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
         </header>
         <div class="special-order-empty">
           <strong>当前无${esc(model.cn)}</strong>
-          <span>等待最高指挥部通过该指令通道发布新任务。</span>
+          <span>该通道暂无有效指令；指令发布 7 天后自动解除。</span>
         </div>
       </article>`;
     }
@@ -2082,46 +2104,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
         <div class="pd-row"><span>玩家数量</span><strong>${p.players != null && p.players > 0 ? fmt(p.players) : "—"}</strong></div>
       </div>`;
 
-    // 1.5) 战术目标（蓝色词条：天体包围圈/双重围攻/被围攻/星域解放/对弈点）
-    let tac = "";
-    try {
-      if (window.Tactical && currentData) {
-        const tacCtx = {
-          // 同上：p.sector（hd2dev）与游戏分区不符且常为空 → 换成 starmap 权威中文星区名，
-          // 供 tactical.js 的「星域解放」同星区判定与文案使用（sectorCnOf 收到中文原样返回）。
-          planets: (currentData.planets || []).map(p => Object.assign({}, p,
-            { sector: isUnlisted(p) ? "" : planetSectorCn(p) })),
-          campaigns: currentData.campaigns || [],
-          waypoints: currentData.waypoints || {},
-          nameOf: (idx) => {
-            const pn = planetName((currentData.planets || []).find(x => x.index === idx), starMap);
-            return pn.cn || pn.en;
-          },
-          sectorCnOf: (sec) => {
-            const sc = sectorCn(sec);
-            return typeof sc === "string" ? sc : ((sc && (sc.cn || sc.en)) || sec);
-          },
-        };
-        const tacTags = window.Tactical.computeFor(p.index, tacCtx);
-        if (tacTags.length) {
-          const chips = tacTags.map(t => {
-            let descHtml = esc(t.text);
-            if (t.targets && t.targets.length) {
-              const links = t.targets.map(idx => {
-                const tp = (currentData.planets || []).find(x => x.index === idx);
-                const tn = tp ? (planetName(tp, starMap).cn || planetName(tp, starMap).en) : ("#" + idx);
-                return `<a class="tac-target" data-planet-index="${idx}" title="定位到该星球">${esc(tn)}</a>`;
-              }).join("、");
-              descHtml += `<div class="tac-jump">目标星球：${links}</div>`;
-            }
-            return `<div class="pd-chip pd-chip-tac" title="${esc(t.title)}">${esc(t.title)}<span class="pd-eff-arrow">▾</span></div>` +
-                   `<div class="pd-eff-desc" style="display:none">${descHtml}</div>`;
-          }).join("");
-          tac = `<div class="pd-section"><div class="pd-title">战术目标<span class="pd-cn">TACTICAL OBJECTIVES</span></div><div class="pd-chips">${chips}</div></div>`;
-        }
-      }
-    } catch (e) { console.warn("[Tactical] 词条计算失败:", e); }
-
     // 2) 行动变量（环境/变种）
     const effIds = [...new Set(p.activeEffects || [])];  // 去重：数据源偶发重复效果
     let effHtml;
@@ -2218,7 +2200,6 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     return `
       <div class="planet-detail">
         ${strat}
-        ${tac}
         ${oper}
         <div class="pd-section">
           <div class="pd-title">兴趣点<span class="pd-cn">POINTS OF INTEREST</span></div>
@@ -2892,21 +2873,7 @@ let PC_REGIONS = {}, PC_REGIONS_ZH = {};
     const card = e.target.closest(".planet-card");
     if (!card) return;
     // 行动变量词条点击展开详情
-    const tacJump = e.target.closest(".tac-target");
-    if (tacJump) {
-      e.stopPropagation();
-      const idx = tacJump.getAttribute("data-planet-index");
-      const card = document.querySelector(`.planet-card[data-planet-index="${idx}"]`);
-      if (card) {
-        const group = card.closest(".sector-group");
-        if (group) group.classList.add("open");
-        card.scrollIntoView({ behavior: "smooth", block: "center" });
-        card.classList.add("tac-highlight");
-        setTimeout(() => card.classList.remove("tac-highlight"), 2500);
-      }
-      return;
-    }
-    const effChip = e.target.closest(".pd-chip-eff, .pd-chip-tac");
+    const effChip = e.target.closest(".pd-chip-eff");
     if (effChip) {
       // desc div 紧跟 chip 之后（nextElementSibling），精确定位不串台
       let desc = effChip.nextElementSibling;

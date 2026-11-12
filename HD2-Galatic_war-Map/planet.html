@@ -161,6 +161,112 @@
     .strip-rate b{color:var(--text);font-variant-numeric:tabular-nums}
     .up{color:var(--green)} .down{color:var(--red)}
     /* ============================================================
+       A2. 战术目标：星球指挥台专属全宽区域
+       与首页卡片内的折叠词条分离，直接展开任务说明与目标星球。
+       ============================================================ */
+    .tactical-command{
+      --tac:#5BA3D0; --tac-hot:#8ED8FF;
+      position:relative; margin-top:14px; overflow:hidden;
+      border:1px solid #263540; border-top:2px solid var(--tac);
+      background:
+        linear-gradient(135deg,rgba(91,163,208,.08) 0,rgba(91,163,208,0) 38%),
+        linear-gradient(180deg,#0E1317,#090B0D 72%);
+    }
+    .tactical-command::before{
+      content:""; position:absolute; top:0; right:0; width:190px; height:100%;
+      pointer-events:none; opacity:.3;
+      background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(91,163,208,.16) 12px 13px);
+      mask-image:linear-gradient(90deg,transparent,#000);
+    }
+    .tactical-head{
+      position:relative; z-index:1; display:flex; align-items:center; gap:12px;
+      padding:12px 14px; border-bottom:1px solid #263540;
+      background:linear-gradient(90deg,rgba(91,163,208,.12),rgba(91,163,208,0) 58%);
+    }
+    .tactical-head .eyebrow{color:var(--tac-hot)}
+    .tactical-head h2{
+      margin:2px 0 0; font-size:1.02rem; line-height:1.2; letter-spacing:.08em;
+      color:var(--text);
+    }
+    .tactical-reticle{
+      position:relative; width:36px; height:36px; flex:0 0 36px;
+      border:1px solid var(--tac); border-radius:50%;
+      box-shadow:0 0 22px rgba(91,163,208,.18);
+    }
+    .tactical-reticle::before,.tactical-reticle::after{
+      content:""; position:absolute; background:var(--tac); opacity:.75;
+    }
+    .tactical-reticle::before{left:50%;top:-4px;bottom:-4px;width:1px}
+    .tactical-reticle::after{top:50%;left:-4px;right:-4px;height:1px}
+    .tactical-count{
+      margin-left:auto; position:relative; z-index:1; white-space:nowrap;
+      color:var(--tac-hot); border:1px solid rgba(91,163,208,.4);
+      background:#091116; padding:4px 9px; font-size:.66rem; letter-spacing:.1em;
+      font-variant-numeric:tabular-nums;
+    }
+    .tactical-grid{
+      position:relative; z-index:1; display:grid; gap:10px; padding:12px;
+      grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));
+    }
+    .tactical-objective{
+      position:relative; min-width:0; display:flex; flex-direction:column;
+      background:linear-gradient(180deg,rgba(18,25,30,.96),rgba(9,12,14,.98));
+      border:1px solid #2A3A45; border-left:3px solid var(--tac);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);
+    }
+    .tactical-objective-head{
+      display:flex; align-items:center; gap:9px; padding:9px 11px 8px;
+      border-bottom:1px solid rgba(91,163,208,.18);
+    }
+    .tactical-objective-index{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:26px; height:26px; flex:0 0 26px; color:#081015;
+      background:var(--tac); font-size:.68rem; font-weight:800;
+    }
+    .tactical-objective h3{
+      margin:0; color:var(--tac-hot); font-size:.88rem; line-height:1.25;
+      letter-spacing:.08em;
+    }
+    .tactical-objective-head small{
+      display:block; margin-top:2px; color:var(--mute);
+      font-size:.55rem; letter-spacing:.15em;
+    }
+    .tactical-objective > p{
+      flex:1; margin:0; padding:11px 12px 12px;
+      color:#C9D3DB; font-size:.8rem; line-height:1.72;
+    }
+    .tactical-targets{
+      display:flex; align-items:flex-start; gap:9px; flex-wrap:wrap;
+      padding:8px 12px 10px; border-top:1px dashed rgba(91,163,208,.28);
+      background:rgba(91,163,208,.035);
+    }
+    .tactical-targets-label{
+      flex:0 0 auto; color:var(--mute); font-size:.65rem; letter-spacing:.08em;
+      line-height:1.7;
+    }
+    .tactical-target-links{display:flex;flex-wrap:wrap;gap:4px 10px;min-width:0}
+    .tactical-target-link{
+      position:relative; color:var(--tac-hot); font-size:.74rem; font-weight:700;
+      text-decoration:underline; text-decoration-color:rgba(142,216,255,.35);
+      text-underline-offset:3px;
+    }
+    .tactical-target-link:hover{color:var(--yellow);text-decoration-color:var(--yellow)}
+    .tactical-empty{
+      position:relative; z-index:1; display:flex; align-items:center; gap:10px;
+      min-height:86px; padding:18px; color:var(--mute);
+    }
+    .tactical-empty::before{
+      content:"◎"; color:#47606F; font-size:1.3rem; line-height:1;
+    }
+    .tactical-empty b{display:block;color:var(--dim);font-size:.82rem;margin-bottom:3px}
+    .tactical-empty span{font-size:.72rem;line-height:1.6}
+    @media (max-width:600px){
+      .tactical-head{padding:10px 11px}
+      .tactical-grid{padding:9px;gap:8px}
+      .tactical-count{display:none}
+      .tactical-objective > p{padding:10px 11px}
+    }
+    /* ============================================================
        指挥台三栏（≥1280：4 / 5 / 3；900–1279：两栏；以下单栏）
        ============================================================ */
     .cmd-grid{display:grid;gap:14px;margin-top:14px;align-items:start}
@@ -357,7 +463,7 @@
   </header>
 
   <nav class="sectnav" aria-label="区块导航">
-    <a href="#sec-war">战役与战略</a><a href="#sec-stats">星球统计</a><a href="#sec-regions">下属区域</a>
+    <a href="#sec-tactical">战术目标</a><a href="#sec-war">战役与战略</a><a href="#sec-stats">星球统计</a><a href="#sec-regions">下属区域</a>
     <a href="#sec-env">环境与词条</a><a href="#sec-links">补给线</a><a href="#sec-trend">星球趋势</a><a href="#sec-src">数据口径</a>
   </nav>
 
@@ -375,6 +481,7 @@
   <script src="./js/forecast.js?v=20261013b"></script>
   <script src="./js/regions.js"></script>
   <script src="./js/planet-card-effects.js?v=20261026a"></script>
+  <script src="./js/tactical.js"></script>
   <script src="./js/boot-splash.js?v=20261027b"></script>
   <script src="./js/rate-source.js"></script>
   <script>
@@ -387,8 +494,8 @@
        · 数据：data.json + tables/*（与星图同源同公式，口径统一）
        · 布局：≥1280 左(战略+补给线 4) / 中(趋势+区域 5) / 右(统计 3)；900–1279 两栏；
                700–899 单栏+横向 KPI；<600 完整单列
-       · 锚点 #sec-war/#sec-stats/#sec-regions/#sec-env/#sec-links/#sec-trend/#sec-src 保持不变
-     未接入（仓库内无可靠静态数据，不抓取 Companion）：POI / 行星剧情 / 战术行动卡。
+       · 锚点 #sec-tactical 新增；#sec-war/#sec-stats/#sec-regions/#sec-env/#sec-links/#sec-trend/#sec-src 保持不变
+     未接入（仓库内无可靠静态数据，不抓取 Companion）：POI / 行星剧情。
      ============================================================================ */
 
   const $ = (id) => document.getElementById(id);
@@ -430,6 +537,67 @@
   const grossOf = (p) => (p && p.maxHealth > 0 && DATA) ? (p.players || 0) * (DATA.impactMultiplier || 0) * LIB_RATE_K / p.maxHealth * 100 : 0;
   const netOf = (p) => grossOf(p) - (p.resistance || 0);         // 本页没有会话内两次观测，一律"推演"
   const etaOf = (p) => { const r = netOf(p), left = 100 - libPct(p); if (!(r > 0.0005)) return null; const h = left / r; return h <= ETA_MAX_H ? h : null; };
+
+  /* 战术目标：由归属、战役与冻结补给线拓扑共同推导。
+     首页星球卡不再承载该信息，只在独立星球指挥台展示完整说明。 */
+  function tacticalTags() {
+    if (!window.Tactical || !DATA || !P) return [];
+    const planets = (DATA.planets || []).map((q) => Object.assign({}, q, {
+      sector: PL_SEC[String(q.name || "").toUpperCase()] || q.sector || "",
+    }));
+    return window.Tactical.computeFor(P.index, {
+      planets,
+      campaigns: DATA.campaigns || [],
+      waypoints: WAY,
+      nameOf: (idx) => {
+        const q = (DATA.planets || []).find((x) => x.index === idx);
+        return q ? (PL_CN[String(q.name || "").toUpperCase()] || q.name || ("#" + idx)) : ("#" + idx);
+      },
+      sectorCnOf: (sector) => sector,
+    }) || [];
+  }
+
+  function targetLinksHtml(targets) {
+    return (targets || []).map((idx) => {
+      const q = (DATA.planets || []).find((x) => x.index === idx);
+      const name = q ? (PL_CN[String(q.name || "").toUpperCase()] || q.name || ("#" + idx)) : ("#" + idx);
+      return `<a class="tactical-target-link" href="./planet.html?idx=${idx}"
+        title="打开 ${esc(name)} 的星球指挥台">${esc(name)}</a>`;
+    }).join("");
+  }
+
+  function tacticalHtml() {
+    let tags = [];
+    try { tags = tacticalTags(); }
+    catch (e) { console.warn("[Tactical] 战术目标计算失败:", e); }
+    const cards = tags.map((tag, i) => {
+      const links = targetLinksHtml(tag.targets);
+      return `<article class="tactical-objective" data-tactical-key="${esc(tag.key || "")}">
+        <header class="tactical-objective-head">
+          <span class="tactical-objective-index">${String(i + 1).padStart(2, "0")}</span>
+          <div><h3>${esc(tag.title || "战术目标")}</h3><small>TACTICAL OBJECTIVE</small></div>
+        </header>
+        <p>${esc(tag.text || "")}</p>
+        ${links ? `<div class="tactical-targets">
+          <span class="tactical-targets-label">目标星球</span>
+          <span class="tactical-target-links">${links}</span>
+        </div>` : ""}
+      </article>`;
+    }).join("");
+    return `<section class="tactical-command" id="sec-tactical" aria-labelledby="h-tactical">
+      <header class="tactical-head">
+        <span class="tactical-reticle" aria-hidden="true"></span>
+        <div>
+          <div class="eyebrow">Tactical Objectives</div>
+          <h2 id="h-tactical">战术目标</h2>
+        </div>
+        <span class="tactical-count">${tags.length ? `${String(tags.length).padStart(2, "0")} 项可执行` : "通道待命"}</span>
+      </header>
+      ${cards ? `<div class="tactical-grid">${cards}</div>` : `<div class="tactical-empty">
+        <div><b>当前无战术目标</b><span>该星球暂未形成可执行的包围、对弈或星域解放条件。</span></div>
+      </div>`}
+    </section>`;
+  }
   /* ---- 速率取值：**实测优先**（2026-09-29）-----------------------------------------
      实测数据来自社区 CDN 的 15 分钟帧（由采集脚本落到 ./data/recent/，
      同源读取，见 js/rate-source.js），口径与社区站点的实测差分一致：
@@ -682,6 +850,7 @@
     $("app").innerHTML = `
       ${heroHtml({ color, status, camp, ev, isDef, showLib, defense, lib, rm, r, eta, eqRate, hpRatio, share })}
       ${badgesHtml(rm)}
+      ${tacticalHtml()}
       <div class="cmd-grid">
         <div class="col-l">
           <section class="card" id="sec-war" aria-labelledby="h-war">
