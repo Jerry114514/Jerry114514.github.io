@@ -603,8 +603,8 @@ const STRAIN_FACTION = {
 };
 const STRAIN_CN = {
   Jet_Brigade: "喷气旅", Incineration_Corps: "炽灼部队", Cyborgs: "生化人",
-  Predator_Strain: "掠食变种", Spore_Burst_Strain: "孢裂变种", Rupture_Strain: "爆裂变种",
-  Mindless_Masses: "无脑群氓", Appropriators: "占领者", Vote_Snatchers: "窃票者",
+  Predator_Strain: "掠食变种", Spore_Burst_Strain: "孢裂变种", Rupture_Strain: "爆裂虫族变种",
+  Mindless_Masses: "无脑群氓", Appropriators: "占领者", Vote_Snatchers: "无票者变种",
   The_Great_Host: "伟大集群", Invasion_Fleet: "入侵舰队",
 };
 // 链接规则：变种（且归属一致）> 阵营目录页；指向**本仓 HD2_Wiki**，不再外链 wiki.gg。
@@ -880,7 +880,6 @@ const EFFECT_ICON = {
   // ---- tier 1：军事 / 威胁 ----
   1202:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
   1203:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
-  1240:{ icon:"jet_brigade.svg",        cn:"喷气旅",     tier:1 },
   1248:{ icon:"incineration_corps.svg", cn:"炽灼部队",   tier:1 },
   1249:{ icon:"incineration_corps.svg", cn:"炽灼部队",   tier:1 },
   1360:{ icon:"cyborgs.svg",            cn:"生化人",     tier:1 },
@@ -889,8 +888,8 @@ const EFFECT_ICON = {
   1245:{ icon:"predator_strain.svg",    cn:"掠食变种",   tier:1 },
   1244:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
   1386:{ icon:"spore_burst_strain.svg", cn:"孢裂变种",   tier:1 },
-  1303:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
-  1310:{ icon:"rupture_strain.svg",     cn:"爆裂变种",   tier:1 },
+  1303:{ icon:"rupture_strain.svg",     cn:"爆裂虫族变种", tier:1 },
+  1310:{ icon:"rupture_strain.svg",     cn:"爆裂虫族变种", tier:1 },
   1430:{ icon:"corrosive_strain.svg",   cn:"腐蚀变种",   tier:1 },
   1431:{ icon:"corrosive_strain.svg",   cn:"腐蚀变种",   tier:1 },
   1432:{ icon:"toxic_miasma_strain.svg", cn:"毒瘴变种",  tier:1 },
@@ -900,8 +899,8 @@ const EFFECT_ICON = {
   1379:{ icon:"appropriators.svg",      cn:"占领者",     tier:1 },
   1377:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
   1378:{ icon:"mindless_masses.svg",    cn:"无脑群氓",   tier:1 },
-  1402:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
-  1403:{ icon:"vote_snatchers.svg",     cn:"窃票者",     tier:1 },
+  1402:{ icon:"vote_snatchers.svg",     cn:"无票者变种", tier:1 },
+  1403:{ icon:"vote_snatchers.svg",     cn:"无票者变种", tier:1 },
   1417:{ icon:"invasion_fleet.png",     cn:"入侵舰队",   tier:1 },
   // 1413/1414：早期从解包数据得到「教团先锋(矛头先锋)」这个名字，实为对 wiki 图片的**翻译误会**；
   // 现已证实 1413 指向的就是入侵舰队（1414 为同组变体，无独立中文名）。
@@ -912,14 +911,14 @@ const EFFECT_ICON = {
   1309:{ icon:"dragonroach.svg",        cn:"蟑龙",       tier:1 },
   1307:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
   1308:{ icon:"hive_lord.png",          cn:"霸王虫",     tier:1 },
-  1400:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
-  1401:{ icon:"seaf.svg",               cn:"SEAF 武装部队", tier:1 },
-  1239:{ icon:"jet_brigade.svg",        cn:"喷气旅工厂", tier:1 },
+  1400:{ icon:"seaf.svg",               cn:"超级地球武装部队驻守", tier:1 },
+  1401:{ icon:"seaf.svg",               cn:"超级地球武装部队驻守", tier:1 },
+  1239:{ icon:"jet_brigade.svg",        cn:"喷气旅孵化厂", tier:1 },
   // 说明：本表只放「有本地图标」的效果。以下类别不在此表，各有其呈现方式：
   //   · 设施/兴趣点（科学中心、工厂枢纽、城市、黑洞、碎裂星球、训练设施…）
   //     → wiki 无对应图标文件，改在「星球详情」面板以文字 chip 呈现
   //   · 阴影迷雾(1188/1193) → 已由黄色雾团图层表现
-  //   · TCS+控制塔(1395)   → 已由蓝色雾环表现
+  //   · 终结族遏制体系+(1395) → 已由蓝色雾环表现
   //   · 无法抵达(1190)     → 状态类，不加图标；星球本身降到 40% 不透明度（阴霾区除外，见 HIDDEN_IDS）
   //   · DSS 增益/减益（班机延误/缺少飞行员/补给不足/预算削减 1315-1320）
   //     → 属「作战限制」，在详情面板以**红色 chip** 呈现

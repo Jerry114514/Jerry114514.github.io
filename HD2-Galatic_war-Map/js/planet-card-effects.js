@@ -33,7 +33,6 @@
     // ---- tier 1：军事 / 威胁 ----
     1202: { icon: "jet_brigade.svg",        cn: "喷气旅",     tier: 1 },
     1203: { icon: "jet_brigade.svg",        cn: "喷气旅",     tier: 1 },
-    1240: { icon: "jet_brigade.svg",        cn: "喷气旅",     tier: 1 },
     1248: { icon: "incineration_corps.svg", cn: "炽灼部队",   tier: 1 },
     1249: { icon: "incineration_corps.svg", cn: "炽灼部队",   tier: 1 },
     1360: { icon: "cyborgs.svg",            cn: "生化人",     tier: 1 },
@@ -42,8 +41,8 @@
     1245: { icon: "predator_strain.svg",    cn: "掠食变种",   tier: 1 },
     1244: { icon: "spore_burst_strain.svg", cn: "孢裂变种",   tier: 1 },
     1386: { icon: "spore_burst_strain.svg", cn: "孢裂变种",   tier: 1 },
-    1303: { icon: "rupture_strain.svg",     cn: "爆裂变种",   tier: 1 },
-    1310: { icon: "rupture_strain.svg",     cn: "爆裂变种",   tier: 1 },
+    1303: { icon: "rupture_strain.svg",     cn: "爆裂虫族变种", tier: 1 },
+    1310: { icon: "rupture_strain.svg",     cn: "爆裂虫族变种", tier: 1 },
     1430: { icon: "corrosive_strain.svg",   cn: "腐蚀变种",   tier: 1 },
     1431: { icon: "corrosive_strain.svg",   cn: "腐蚀变种",   tier: 1 },
     1432: { icon: "toxic_miasma_strain.svg", cn: "毒瘴变种",  tier: 1 },
@@ -53,8 +52,8 @@
     1379: { icon: "appropriators.svg",      cn: "占领者",     tier: 1 },
     1377: { icon: "mindless_masses.svg",    cn: "无脑群氓",   tier: 1 },
     1378: { icon: "mindless_masses.svg",    cn: "无脑群氓",   tier: 1 },
-    1402: { icon: "vote_snatchers.svg",     cn: "窃票者",     tier: 1 },
-    1403: { icon: "vote_snatchers.svg",     cn: "窃票者",     tier: 1 },
+    1402: { icon: "vote_snatchers.svg",     cn: "无票者变种", tier: 1 },
+    1403: { icon: "vote_snatchers.svg",     cn: "无票者变种", tier: 1 },
     1417: { icon: "invasion_fleet.png",     cn: "入侵舰队",   tier: 1 },
     1413: { icon: "invasion_fleet.png",     cn: "入侵舰队",   tier: 1 },
     1414: { icon: "invasion_fleet.png",     cn: "入侵舰队",   tier: 1 },
@@ -62,9 +61,9 @@
     1309: { icon: "dragonroach.svg",        cn: "蟑龙",       tier: 1 },
     1307: { icon: "hive_lord.png",          cn: "霸王虫",     tier: 1 },
     1308: { icon: "hive_lord.png",          cn: "霸王虫",     tier: 1 },
-    1400: { icon: "seaf.svg",               cn: "SEAF 武装部队", tier: 1 },
-    1401: { icon: "seaf.svg",               cn: "SEAF 武装部队", tier: 1 },
-    1239: { icon: "jet_brigade.svg",        cn: "喷气旅工厂", tier: 1 },
+    1400: { icon: "seaf.svg",               cn: "超级地球武装部队驻守", tier: 1 },
+    1401: { icon: "seaf.svg",               cn: "超级地球武装部队驻守", tier: 1 },
+    1239: { icon: "jet_brigade.svg",        cn: "喷气旅孵化厂", tier: 1 },
   };
 
   // 图标着色（仅 SVG 生效；PNG 自带配色）—— 与星图 EFFECT_COLOR 一致
@@ -83,7 +82,7 @@
        FACTORY HUB            → factory_hub.png
        CENTER OF SCIENCE      → center_of_science.png
        TERMINID CONTROL SYSTEM → tcs.png（TCS 即该系统的游戏内缩写）
-     没有确切素材的效果（浓阴影迷雾 / 阴影迷雾边界 / 班机延误 / 缺少飞行员 /
+     没有确切素材的效果（重度“阴霾”笼罩 / 阴影迷雾边界 / 班机延误 / 缺少飞行员 /
      补给不足 / 预算削减 / 无法抵达 / 非军事化 / 各类设施 …）**一律留短文字标签**：
      星图那边的既有结论也是「由雾层 / 红色 chip 表现」，本站不臆造图标。
      DSS 战术行动（1208-1216 / 1237 / 1425）与 DSS 停靠（1217）**不放进本表**：
@@ -94,7 +93,7 @@
   const HOME_EXTRA_ICON = {
     1232: { icon: "factory_hub.png",       cn: "工厂枢纽",        tier: 2 },  // FACTORY HUB
     1234: { icon: "center_of_science.png", cn: "科学中心",        tier: 2 },  // CENTER OF SCIENCE
-    1395: { icon: "tcs.png",               cn: "终结族控制系统 +", tier: 2 },  // TERMINID CONTROL SYSTEM +
+    1395: { icon: "tcs.png",               cn: "终结族遏制体系+", tier: 2 },  // TERMINID CONTROL SYSTEM+
   };
 
   // 图标资源版本号：与 galaxy-map-v2.html 的 FX_ASSET_VER 保持一致（共用浏览器缓存）。
@@ -165,7 +164,7 @@
 
   /* ------------------------------------------------------- 词条 → 徽标 ---- */
   // 单个 effectId 的展示信息：
-  //   名称：有专用图标的效果用 EFFECT_ICON 的短名（如「SEAF 武装部队」），
+  //   名称：有专用图标的效果用 EFFECT_ICON 的短名（如「超级地球武装部队驻守」），
   //         否则用 hd2_variables 的中文名（其次 galactic_effects / effect_id_cn）。
   //   说明：hd2_variables 中文描述优先，其次 galactic_effects 中文，最后英文原文。
   function infoOf(id, ctx) {

@@ -42,7 +42,7 @@ const vars = {
   1202: { cn: "喷气旅", desc: "低空协同突进。", cat: "机器人特殊单位" },
   1203: { cn: "喷气旅", desc: "低空协同突进。", cat: "机器人特殊单位" },
   1243: { cn: "掠食变种", desc: "极强攻击性。", cat: "终结族变种" },
-  1188: { cn: "浓阴影迷雾", desc: "厚阴霾遮住了这个世界。", cat: "深域惧像" },
+  1188: { cn: "重度“阴霾”笼罩", desc: "厚阴霾遮住了这个世界。", cat: "深域惧像" },
   1193: { cn: "阴影迷雾边界", desc: "位于阴霾星际墙边界。", cat: "深域惧像" },
   1315: { cn: "班机延误", desc: "撤离延迟 40 秒。", cat: "作战限制" },
   1236: { cn: "平民监控与安全中心", desc: "真理部在此分析公民数据。", cat: "设施与场所" },
@@ -64,7 +64,7 @@ check("无专用图标的同名效果合并、不同名保留", () => {
 
 check("威胁类图标排在无图标效果之前，数据顺序在档内保持", () => {
   const plan = FX.effectBadges([1188, 1202, 1315], { vars });
-  assert.deepEqual(plan.shown.map(f => f.cn), ["喷气旅", "浓阴影迷雾", "班机延误"]);
+  assert.deepEqual(plan.shown.map(f => f.cn), ["喷气旅", "重度“阴霾”笼罩", "班机延误"]);
 });
 
 check("图标徽标带可读名称、完整说明、图标路径与映射色", () => {
@@ -149,7 +149,7 @@ check("补充图标按 tier 2 排在威胁之后，同图标仍去重", () => {
   assert.match(out, /data-fx-cn="工厂枢纽"/);
   const tcs = FX.effectsHtml([1395], { vars });
   assert.match(tcs, /data-fx-icon="tcs\.png"/);
-  assert.match(tcs, /data-fx-cn="终结族控制系统 \+"/);
+  assert.match(tcs, /data-fx-cn="终结族遏制体系\+"/);
   // 没有确切素材的仍走短文字标签（不得凭空造图标）
   const gloom = FX.effectsHtml([1188, 1193, 1315], { vars });
   assert.doesNotMatch(gloom, /data-fx-icon/);
@@ -251,7 +251,25 @@ check("腐蚀/毒瘴新变种映射到独立图标并保留中文名称", () => 
     assert.ok(fs.existsSync(site("assets/effect-icons/" + icon)));
   }
   const plan = FX.effectBadges([1395, 1430, 1431, 1432, 1433, 1434], { vars });
-  assert.deepEqual(plan.shown.map(f => f.cn), ["腐蚀变种", "毒瘴变种", "终结族控制系统 +"]);
+  assert.deepEqual(plan.shown.map(f => f.cn), ["腐蚀变种", "毒瘴变种", "终结族遏制体系+"]);
+});
+
+check("官方简中修正同步到图标映射", () => {
+  const expected = {
+    1239: "喷气旅孵化厂",
+    1303: "爆裂虫族变种",
+    1310: "爆裂虫族变种",
+    1395: "终结族遏制体系+",
+    1400: "超级地球武装部队驻守",
+    1401: "超级地球武装部队驻守",
+    1402: "无票者变种",
+    1403: "无票者变种",
+  };
+  for (const [id, cn] of Object.entries(expected)) {
+    const entry = id === "1395" ? FX.HOME_EXTRA_ICON[id] : FX.EFFECT_ICON[id];
+    assert.equal(entry.cn, cn);
+  }
+  assert.ok(!FX.EFFECT_ICON[1240], "1240 不再错误复用喷气旅标题");
 });
 
 check("图标资源版本号与星图 FX_ASSET_VER 同步（共用缓存）", () => {
