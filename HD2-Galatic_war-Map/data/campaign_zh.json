@@ -4,7 +4,7 @@
     "source": "https://api.live.prod.thehelldiversgame.com/api/Episode/801/",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**官中可覆盖 `mt:true` 机器字段，绝不覆盖人工字段；机翻仍只补空字段**。；文本主源为 Arrowhead 官方 zh-Hans Episode API；仅官中缺失字段才调用 DeepSeek。",
-    "updated_at": "2026-11-09",
+    "updated_at": "2026-11-13",
     "source_language": "zh-Hans",
     "official_zh": true
   },
@@ -307,6 +307,10 @@
         "111679497": {
           "title": "管控",
           "briefing": "终结族发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n异星昆虫学研究中心专家进行了初步研究，证实这些变异具有极强的毒性，导致最高指挥部宣布进入局部生化危害紧急状态。\n\n绝地潜兵必须成功抵御住7轮终结族攻势，阻止这场暴虐的猛攻，恢复秩序。"
+        },
+        "161915893": {
+          "title": "防火带",
+          "briefing": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控终结族变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。"
         }
       }
     }
