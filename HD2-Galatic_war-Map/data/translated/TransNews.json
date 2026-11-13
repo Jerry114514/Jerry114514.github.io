@@ -1,6 +1,28 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 1701745153,
+  "title": "重要指令",
+  "original": "Hold the designated planets in order to enable the Firebreak Protocol, to raze infested planets and stop the spread of the mutated Terminid strain.",
+  "translated": "坚守指定星球，启动防火带协议，将受到侵扰的星球夷为平地，阻止变异的终结族变种进一步传播。",
+  "text_source": "official_zh",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-13T18:37:40Z"
+ },
  "items": [
+  {
+   "id": 3996,
+   "published_at": "2026-11-13T16:14:37Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER\n\nThanks to the Helldivers’ superior frontline productivity, full containment of the mutated Terminid strain is within reach. To cleanse affected planets of their infestation, High Command has authorized the Firebreak Protocol.\n\nTo enable this innovative proactive solution, Helldivers must Hold ACAMAR IV, GACRUX and PARTION, to secure orbital firing corridors until the necessary purification is complete.",
+   "translated": "新重要指令\n\n得益于绝地潜兵卓越的前线效率，全面管控终结族变种已经指日可待。为了净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 86646027,
+   "official_message": "<i=3>新重要指令</i>\n\n得益于绝地潜兵卓越的前线效率，全面管控<i=1>终结族</i>变种已经指日可待。为了净化受感染行星上的虫患侵扰，最高指挥部已授权执行<i=1>防火带协议</i>。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须<i=1>坚守天园六IV、十字架一和帕尔晨</i>，确保轨道火力走廊的安全，直至必要的净化工作完成。\n",
+   "translated_at": "2026-11-13T18:37:40Z"
+  },
   {
    "id": 3995,
    "published_at": "2026-11-13T08:48:47Z",
@@ -117,19 +139,6 @@
    "published_war_seconds": 85771438,
    "official_message": "<i=3>侦测发现“阴霾”扩散</i>\n\n“阴霾”正在以前所未有的速度蔓延。<i=1>十字架一</i>现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。\n\n更糟糕的是，有迹象表明新的<i=1>虫窝世界</i>正在形成，而且腐化了之前还能抵抗严重侵扰的生物群系。这种迹象表明，可能出现了一种新型“阴霾”孢子变种，能适应更极端的条件。\n",
    "translated_at": "2026-11-03T16:11:59Z"
-  },
-  {
-   "id": 3986,
-   "published_at": "2026-11-03T13:00:24Z",
-   "source": "dispatch",
-   "original": "NEW MAJOR ORDER\n\nSeditious and entirely false rumours regarding TCS+ malfunctions are spreading across civilian channels, resulting in unfounded economic panic. SEAF Intelligence confirms: there is zero actionable peril to fully insured citizens.\n\nTo restore public confidence, the Helldivers are ordered to eliminate 700,000,000 Terminids. To aid in swiftly safeguarding Federal prosperity, High Command has authorized and subsidized fleetwide availability of the INCINERATOR FRV Stratagem.",
-   "translated": "新重要指令\n\n有关TCS+出现故障的煽动性虚假谣言正在平民通信频道中蔓延，导致了毫无根据的经济恐慌。SEAF情报部门确切表示：公民只要全额购买保险，就完全不会遇到危险。\n\n为了恢复公众信心，绝地潜兵奉命消灭700,000,000只终结族。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供INCINERATOR FRV战略配备。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85770496,
-   "official_message": "<i=3>新重要指令</i>\n\n有关TCS+出现故障的煽动性虚假谣言正在平民通信频道中蔓延，导致了毫无根据的经济恐慌。SEAF情报部门确切表示：公民只要全额购买保险，就完全不会遇到危险。\n\n为了恢复公众信心，绝地潜兵奉命<i=1>消灭700,000,000只终结族</i>。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供<i=1>INCINERATOR FRV战略配备</i>。",
-   "translated_at": "2026-11-03T16:11:59Z"
   }
  ],
  "strategic": {
@@ -139,11 +148,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-13T11:25:08Z",
+  "computed_at": "2026-11-13T18:37:41Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501107,
@@ -180,15 +189,69 @@
    "expires_at_war_seconds": 86792080,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501115,
+   "id32": 161915893,
+   "title": "防火带",
+   "message": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控<i=1>终结族</i>变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行<i=1>防火带协议</i>。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须<i=1>坚守天园六IV、十字架一和帕尔晨</i>，确保轨道火力走廊的安全，直至必要的净化工作完成。\n",
+   "plain_text": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控终结族变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。",
+   "message_id32": 150446861,
+   "assignment_id32": 1701745153,
+   "expires_at_war_seconds": 86905224,
+   "text_source": "official_zh",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-13T11:25:07Z",
+  "source_version": "2026-11-13T18:37:40Z",
   "war_id": 801,
-  "war_time_seconds": 86628660,
-  "last_success_at": "2026-11-13T11:25:07Z",
+  "war_time_seconds": 86654610,
+  "last_success_at": "2026-11-13T18:37:40Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 1701745153,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-13T18:37:40Z",
+  "retrieved_at": "2026-11-13T18:37:40Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   },
+   {
+    "index": 1,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   },
+   {
+    "index": 2,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   }
+  ]
  }
 }
