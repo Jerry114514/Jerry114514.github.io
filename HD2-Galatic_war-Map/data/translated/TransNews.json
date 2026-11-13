@@ -1,15 +1,19 @@
 {
- "mo_brief": {
-  "id32": 236809735,
-  "title": "重要指令",
-  "original": "Defend against the required number of Terminid attacks in order to contain the unprovoked, unforeseeable outbreak affecting multiple TCS+ sectors.",
-  "translated": "抵御指定数量的终结族攻击，以遏制这场波及多个TCS+分区、毫无来由且难以预见的终结族暴乱。",
-  "text_source": "official_zh",
-  "engine": "arrowhead-official",
-  "mt": false,
-  "translated_at": "2026-11-09T21:05:01Z"
- },
+ "mo_brief": null,
  "items": [
+  {
+   "id": 3995,
+   "published_at": "2026-11-13T08:48:47Z",
+   "source": "dispatch",
+   "original": "MAJOR ORDER WON\n\nIn a showcase of their unyielding valor and mastery over thermal firepower, the Helldivers have successfully repelled the mutated Terminid offensive from their primary targets.\n\nHowever, infestation vectors continue to increase exponentially. The Ministry of Science has declared a Tyrannical Pandemic, the first in over a century.",
+   "translated": "重要指令已完成\n\n绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，成功击退了变异终结族的进攻，没有让它们完成主要目标。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，暴虐瘟疫已爆发，这还是一个多世纪以来的首次。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 86619280,
+   "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，<i=1>成功击退了变异终结族的进攻，没有让它们完成主要目标</i>。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，<i=1>暴虐瘟疫</i>已爆发，这还是一个多世纪以来的首次。\n",
+   "translated_at": "2026-11-13T11:25:08Z"
+  },
   {
    "id": 3994,
    "published_at": "2026-11-11T16:10:22Z",
@@ -126,19 +130,6 @@
    "published_war_seconds": 85770496,
    "official_message": "<i=3>新重要指令</i>\n\n有关TCS+出现故障的煽动性虚假谣言正在平民通信频道中蔓延，导致了毫无根据的经济恐慌。SEAF情报部门确切表示：公民只要全额购买保险，就完全不会遇到危险。\n\n为了恢复公众信心，绝地潜兵奉命<i=1>消灭700,000,000只终结族</i>。为了协助我方迅速展开行动，捍卫联邦的繁荣，最高指挥部已授权并拨款资助，为整支舰队提供<i=1>INCINERATOR FRV战略配备</i>。",
    "translated_at": "2026-11-03T16:11:59Z"
-  },
-  {
-   "id": 3985,
-   "published_at": "2026-11-02T21:48:00Z",
-   "source": "dispatch",
-   "original": "MISINFORMATION ALERT\n\nHelldivers are to be aware of recent falsified reports fraudulently claiming that Termicide 2.0 exposure has increased the spread of the Gloom. The Ministry of Truth is investigating the source of this blatant attempt to deceive our citizens with outlandish lies. In the meantime, all personnel are ordered to report any credulous discussion of these rumors.",
-   "translated": "虚假信息警报\n\n绝地潜兵需警惕近期出现的伪造报告，此类报告恶意谎称，接触灭虫终结剂2.0会加剧“阴霾”的蔓延。居然敢用荒谬的谎言公然欺骗我们的公民，真理部正在调查这起事件的源头。与此同时，所有人员都收到了命令，任何信谣传谣的言论均要上报。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85715754,
-   "official_message": "<i=3>虚假信息警报</i>\n\n绝地潜兵需警惕近期出现的伪造报告，此类报告恶意谎称，接触灭虫终结剂2.0会加剧“阴霾”的蔓延。居然敢用荒谬的谎言公然欺骗我们的公民，真理部正在调查这起事件的源头。与此同时，所有人员都收到了命令，任何信谣传谣的言论均要上报。",
-   "translated_at": "2026-11-03T01:17:06Z"
   }
  ],
  "strategic": {
@@ -148,11 +139,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-13T03:29:10Z",
+  "computed_at": "2026-11-13T11:25:08Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "active",
+ "mo_state": "none",
  "global_events": [
   {
    "event_id": 1501107,
@@ -179,14 +170,14 @@
    "mt": false
   },
   {
-   "event_id": 1501113,
-   "id32": 111679497,
-   "title": "管控",
-   "message": "<i=1>终结族</i>发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n异星昆虫学研究中心专家进行了初步研究，证实这些变异具有极强的毒性，导致最高指挥部宣布进入局部生化危害紧急状态。\n\n绝地潜兵必须成功<i=1>抵御住7轮终结族攻势</i>，阻止这场暴虐的猛攻，恢复秩序。",
-   "plain_text": "终结族发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n异星昆虫学研究中心专家进行了初步研究，证实这些变异具有极强的毒性，导致最高指挥部宣布进入局部生化危害紧急状态。\n\n绝地潜兵必须成功抵御住7轮终结族攻势，阻止这场暴虐的猛攻，恢复秩序。",
-   "message_id32": 3057756385,
-   "assignment_id32": 236809735,
-   "expires_at_war_seconds": 86722354,
+   "event_id": 1501114,
+   "id32": 4141573205,
+   "title": "成功",
+   "message": "绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，<i=1>成功击退了变异终结族的进攻，没有让它们完成主要目标</i>。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，<i=1>暴虐瘟疫</i>已爆发，这还是一个多世纪以来的首次。政府建议公民与食人终结族保持安全距离并勤洗手，以避免大规模传播瘟疫。\n\n鉴于异星昆虫学研究中心目前正在接受调查，对其未能预测这一不可预见现象的处罚将会另行处理。",
+   "plain_text": "绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，成功击退了变异终结族的进攻，没有让它们完成主要目标。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，暴虐瘟疫已爆发，这还是一个多世纪以来的首次。政府建议公民与食人终结族保持安全距离并勤洗手，以避免大规模传播瘟疫。\n\n鉴于异星昆虫学研究中心目前正在接受调查，对其未能预测这一不可预见现象的处罚将会另行处理。",
+   "message_id32": 60643390,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 86792080,
    "text_source": "official_zh",
    "mt": false
   }
@@ -194,30 +185,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-13T03:29:09Z",
+  "source_version": "2026-11-13T11:25:07Z",
   "war_id": 801,
-  "war_time_seconds": 86600100,
-  "last_success_at": "2026-11-13T03:29:09Z",
+  "war_time_seconds": 86628660,
+  "last_success_at": "2026-11-13T11:25:07Z",
   "stale": false
- },
- "tasks": {
-  "id32": 236809735,
-  "source": "arrowhead_official",
-  "source_version": "2026-11-13T03:29:09Z",
-  "retrieved_at": "2026-11-13T03:29:09Z",
-  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
-  "items": [
-   {
-    "index": 0,
-    "type": 12,
-    "type_en": "Defense",
-    "action": "防守",
-    "faction_id": 2,
-    "faction_name": "终结族",
-    "goal": 7,
-    "progress": 6,
-    "requirement": null
-   }
-  ]
  }
 }
