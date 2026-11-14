@@ -920,6 +920,16 @@ EPISODE_BANNERS = {
     13912390: "bastion3",
 }
 
+# 2026-11-14：新战役「宁静守护者 / SERENE GUARDIAN」的阶段插画 id 还没进 companion
+# 前端的媒体表（当场核对 chunk C2FakDT_.js 的 79 条 Zs(name,id)：1156489171、
+# 1393879354、3693798796 都不在），companion 自己也只能退回程序化生成图，
+# /news/ 下没有对应文件名可抓。这类图只能随仓库本地化：
+#   把图放进 assets/campaign/，在这里登记 media id32 -> 文件名（不带 banner_ 前缀）。
+# 以后 companion 补了表，再把 id 挪回 EPISODE_BANNERS 即可（本地文件会被优先复用）。
+LOCAL_CAMPAIGN_BANNERS = {
+    1156489171: "sereneg_containment",   # 阶段 02 CONTAINMENT 头图
+}
+
 CAMPAIGN_BANNER_BASE = "https://helldiverscompanion.com/news"
 CAMPAIGN_ASSET_SUBDIR = "assets/campaign"
 CAMPAIGN_ASSET_DIR = os.path.abspath(os.path.join(
@@ -939,14 +949,25 @@ def _image_kind(blob):
 
 
 def campaign_banner_of(media_id):
-    """media id32 -> {"name","path","url"}；未收录返回 None（前端回退阵营渐变）。"""
+    """media id32 -> {"name","path","url"}；未收录返回 None（前端回退阵营渐变）。
+
+    两张表：EPISODE_BANNERS = companion /news/<name>.webp 可下载的；
+    LOCAL_CAMPAIGN_BANNERS = 图片随仓库提交、只有本地文件（url/path 为 None）。
+    """
     try:
-        name = EPISODE_BANNERS.get(int(media_id))
+        key = int(media_id)
     except (TypeError, ValueError):
         return None
-    if not name:
-        return None
-    return {"name": name, "path": f"/news/{name}.webp", "url": f"{CAMPAIGN_BANNER_BASE}/{name}.webp"}
+    name = EPISODE_BANNERS.get(key)
+    if name:
+        return {"name": name, "path": f"/news/{name}.webp",
+                "url": f"{CAMPAIGN_BANNER_BASE}/{name}.webp"}
+    name = LOCAL_CAMPAIGN_BANNERS.get(key)
+    if name:
+        return {"name": name, "path": None, "url": None, "local": True}
+    if key:
+        print(f"  [WARN] 战役媒体 id {key} 未收录（companion 表与本地表都没有），前端回退阵营渐变")
+    return None
 
 
 def download_campaign_banner(banner, retries=3, delay=2.0, timeout=25):
@@ -969,6 +990,11 @@ def download_campaign_banner(banner, retries=3, delay=2.0, timeout=25):
                     return rel
     except Exception:
         pass
+    if not banner.get("url"):
+        # 本地内置图（LOCAL_CAMPAIGN_BANNERS）：没有上游可下，文件缺失就只能回退渐变。
+        print(f"  [WARN] 本地战役插画缺失或不是图片: {rel}"
+              f"（应随仓库提交到 {CAMPAIGN_ASSET_SUBDIR}/）")
+        return None
     req = urllib.request.Request(banner["url"], headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Accept": "image/avif,image/webp,image/*,*/*;q=0.8",
