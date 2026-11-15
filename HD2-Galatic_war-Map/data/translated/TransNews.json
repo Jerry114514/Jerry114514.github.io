@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3997,
+   "published_at": "2026-11-14T23:44:54Z",
+   "source": "dispatch",
+   "original": "DSS FIREBREAK PROTOCOL\n\nThe Democracy Space Station will be temporarily unavailable while performing planetary purification from orbit.\n\nHelldivers are expected to regain control of the DSS once FIREBREAK PROTOCOL is complete.",
+   "translated": "DSS 防火协议\n\n民主空间站将暂时无法使用，因其正在从轨道执行星球净化。\n\n一旦防火协议完成，绝地潜兵须重新夺回民主空间站的控制权。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 86759400,
+   "official_message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe <i=1>Democracy Space Station</i> will be temporarily unavailable while performing planetary purification from orbit.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete.",
+   "translated_at": "2026-11-15T01:18:54Z"
+  },
+  {
    "id": 3996,
    "published_at": "2026-11-13T16:14:37Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "published_war_seconds": 85848574,
    "official_message": "<i=3>异星昆虫学研究中心重组</i>\n\n终结族流行病学主管已被剥夺军衔，并被拘留候审。\n\n由可信专家组成的法庭将裁定，前任主管未能预见终结族近期无端变异与袭击的失职行为，是否构成犯罪\n——或是叛国。\n\n接替者预计将在审判结束后任命。",
    "translated_at": "2026-11-04T16:27:35Z"
-  },
-  {
-   "id": 3987,
-   "published_at": "2026-11-03T13:16:06Z",
-   "source": "dispatch",
-   "original": "GLOOM SPREAD DETECTED\n\nThe Gloom is spreading at an unprecedented pace. GACRUX is now surrounded by low-density Gloom, and other planets in the sector are expected to follow. \n\nWorse, there are indications of new Hive Worlds forming, corrupting biomes formerly resistant to severe infestation. This may represent a novel strain of Gloom spores, adapted to more extreme conditions.",
-   "translated": "侦测发现“阴霾”扩散\n\n“阴霾”正在以前所未有的速度蔓延。十字架一现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。\n\n更糟糕的是，有迹象表明新的虫窝世界正在形成，而且腐化了之前还能抵抗严重侵扰的生物群系。这种迹象表明，可能出现了一种新型“阴霾”孢子变种，能适应更极端的条件。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85771438,
-   "official_message": "<i=3>侦测发现“阴霾”扩散</i>\n\n“阴霾”正在以前所未有的速度蔓延。<i=1>十字架一</i>现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。\n\n更糟糕的是，有迹象表明新的<i=1>虫窝世界</i>正在形成，而且腐化了之前还能抵抗严重侵扰的生物群系。这种迹象表明，可能出现了一种新型“阴霾”孢子变种，能适应更极端的条件。\n",
-   "translated_at": "2026-11-03T16:11:59Z"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-14T21:37:21Z",
+  "computed_at": "2026-11-15T01:18:54Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -206,17 +206,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-14T21:37:19Z",
+  "source_version": "2026-11-15T01:18:44Z",
   "war_id": 801,
-  "war_time_seconds": 86751750,
-  "last_success_at": "2026-11-14T21:37:19Z",
+  "war_time_seconds": 86765030,
+  "last_success_at": "2026-11-15T01:18:44Z",
   "stale": false
  },
  "tasks": {
   "id32": 1701745153,
   "source": "arrowhead_official",
-  "source_version": "2026-11-14T21:37:19Z",
-  "retrieved_at": "2026-11-14T21:37:19Z",
+  "source_version": "2026-11-15T01:18:44Z",
+  "retrieved_at": "2026-11-15T01:18:44Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -227,7 +227,7 @@
     "faction_id": null,
     "faction_name": null,
     "goal": 1,
-    "progress": 0,
+    "progress": 1,
     "requirement": null
    },
    {
