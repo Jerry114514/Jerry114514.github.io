@@ -1,15 +1,19 @@
 {
- "mo_brief": {
-  "id32": 1701745153,
-  "title": "重要指令",
-  "original": "Hold the designated planets in order to enable the Firebreak Protocol, to raze infested planets and stop the spread of the mutated Terminid strain.",
-  "translated": "坚守指定星球，启动防火带协议，将受到侵扰的星球夷为平地，阻止变异的终结族变种进一步传播。",
-  "text_source": "official_zh",
-  "engine": "arrowhead-official",
-  "mt": false,
-  "translated_at": "2026-11-13T18:37:40Z"
- },
+ "mo_brief": null,
  "items": [
+  {
+   "id": 3999,
+   "published_at": "2026-11-16T16:16:32Z",
+   "source": "dispatch",
+   "original": "MAJOR ORDER FAILED\n\nThough the Helldivers successfully repelled the primary Terminid swarm, the uncooperative fascist insects prevented the full deployment of the Firebreak Protocol, with fewer Terminid-infested planets purged of their affliction than intended.\n\nIn response, full production of the Incinerator FRV has commenced, to be ready for when the mutated strain of Terminids next raises its ugly head.",
+   "translated": "未完成重要指令\n\n尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，炽灼型快速侦察载具已进入全面生产，以备丑恶的终结族变种再次作乱。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 86905230,
+   "official_message": "<i=3>未完成重要指令</i>\n\n尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，<i=1>炽灼型快速侦察载具</i>已进入全面生产，以备丑恶的终结族变种再次作乱。",
+   "translated_at": "2026-11-16T16:43:03Z"
+  },
   {
    "id": 3998,
    "published_at": "2026-11-16T00:23:50Z",
@@ -126,19 +130,6 @@
    "published_war_seconds": 86201922,
    "official_message": "<i=3>战略指令成功完成</i>\n\n绝地潜兵成功守住了<i=1>克里姆西卡、边陲、大流士II和水委一次星</i>，而且借此确认了哪些TCS+遭突破的报告是真实的。\n\n为了确保TCS+系统各部分安全报告恢复至最高效率，最高指挥部已下令再次动员已知星系中最能干的害虫控制专家：SEAF，在本此战役的剩余时间里封锁受到影响的行星。\n",
    "translated_at": "2026-11-08T15:35:08Z"
-  },
-  {
-   "id": 3989,
-   "published_at": "2026-11-04T12:50:30Z",
-   "source": "dispatch",
-   "original": "NEW STRATEGIC DIRECTIVE\n\nIncongruously, increases in TCS+ breaches continue to be reported.\n\nWhile these reports will almost certainly be attributed to departmental cost-cutting during routine rewiring of multiple TCS+ sections, Helldivers with surplus operational capacity are invited to verify their veracity, should they choose.\n\nHelldivers: investigate and, if warranted, hold FRONTERIA, CRIMSICA, DARIUS II and ACHERNAR SECUNDUS.",
-   "translated": "新战略指令\n\n矛盾的是，关于TCS+遭突破的报告仍在继续增加。\n\n虽然这些报告十有八九会被归咎于多个TCS+区域在例行重新布线期间实行的部门预算削减，但我们仍然会邀请作战能力尚有余裕的绝地潜兵去核实情况，如果他们愿意的话。\n\n绝地潜兵请注意：展开调查，如有必要，守住边陲、克里姆西卡、大流士II和水委一次星。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85856296,
-   "official_message": "<i=3>新战略指令</i>\n\n矛盾的是，关于TCS+遭突破的报告仍在继续增加。\n\n虽然这些报告十有八九会被归咎于多个TCS+区域在例行重新布线期间实行的部门预算削减，但我们仍然会邀请作战能力尚有余裕的绝地潜兵去核实情况，如果他们愿意的话。\n\n绝地潜兵请注意：展开调查，如有必要，<i=1>守住边陲、克里姆西卡、大流士II和水委一次星</i>。",
-   "translated_at": "2026-11-04T16:27:35Z"
   }
  ],
  "strategic": {
@@ -148,45 +139,21 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-16T06:57:04Z",
+  "computed_at": "2026-11-16T16:43:03Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "active",
+ "mo_state": "none",
  "global_events": [
   {
-   "event_id": 1501107,
-   "id32": 3311302236,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
+   "event_id": 1501116,
+   "id32": 961113071,
+   "title": "失败",
+   "message": "尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，<i=1>炽灼型快速侦察载具</i>已进入全面生产，以备丑恶的终结族变种再次作乱。前任终结族流行病学主管已因严重行政渎职被定罪，并与所有被其供出名字的共犯，一并以严重行政渎职罪被执行处决。\n\n这种前所未有的终结族变异导致TCS+几乎完全失效，导致超级地球的居民无法继续对终结族进行近乎全面的管控。重新对终结族宣战的决议已获得全票通过。\n",
+   "plain_text": "尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，炽灼型快速侦察载具已进入全面生产，以备丑恶的终结族变种再次作乱。前任终结族流行病学主管已因严重行政渎职被定罪，并与所有被其供出名字的共犯，一并以严重行政渎职罪被执行处决。\n\n这种前所未有的终结族变异导致TCS+几乎完全失效，导致超级地球的居民无法继续对终结族进行近乎全面的管控。重新对终结族宣战的决议已获得全票通过。",
+   "message_id32": 169420083,
    "assignment_id32": 0,
-   "expires_at_war_seconds": 86906204,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
-   "event_id": 1501111,
-   "id32": 1125295210,
-   "title": "",
-   "message": "",
-   "plain_text": "",
-   "message_id32": 0,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 86893152,
-   "text_source": "official_untranslated",
-   "mt": false
-  },
-  {
-   "event_id": 1501115,
-   "id32": 161915893,
-   "title": "防火带",
-   "message": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控<i=1>终结族</i>变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行<i=1>防火带协议</i>。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须<i=1>坚守天园六IV、十字架一和帕尔晨</i>，确保轨道火力走廊的安全，直至必要的净化工作完成。\n",
-   "plain_text": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控终结族变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。",
-   "message_id32": 150446861,
-   "assignment_id32": 1701745153,
-   "expires_at_war_seconds": 86905224,
+   "expires_at_war_seconds": 87078030,
    "text_source": "official_zh",
    "mt": false
   }
@@ -194,52 +161,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-16T06:56:54Z",
+  "source_version": "2026-11-16T16:43:02Z",
   "war_id": 801,
-  "war_time_seconds": 86871650,
-  "last_success_at": "2026-11-16T06:56:54Z",
+  "war_time_seconds": 86906820,
+  "last_success_at": "2026-11-16T16:43:02Z",
   "stale": false
- },
- "tasks": {
-  "id32": 1701745153,
-  "source": "arrowhead_official",
-  "source_version": "2026-11-16T06:56:54Z",
-  "retrieved_at": "2026-11-16T06:56:54Z",
-  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
-  "items": [
-   {
-    "index": 0,
-    "type": 13,
-    "type_en": "Control",
-    "action": "坚守",
-    "faction_id": null,
-    "faction_name": null,
-    "goal": 1,
-    "progress": 1,
-    "requirement": null
-   },
-   {
-    "index": 1,
-    "type": 13,
-    "type_en": "Control",
-    "action": "坚守",
-    "faction_id": null,
-    "faction_name": null,
-    "goal": 1,
-    "progress": 1,
-    "requirement": null
-   },
-   {
-    "index": 2,
-    "type": 13,
-    "type_en": "Control",
-    "action": "坚守",
-    "faction_id": null,
-    "faction_name": null,
-    "goal": 1,
-    "progress": 0,
-    "requirement": null
-   }
-  ]
  }
 }
