@@ -11,6 +11,19 @@
  },
  "items": [
   {
+   "id": 3998,
+   "published_at": "2026-11-16T00:23:50Z",
+   "source": "dispatch",
+   "original": "DSS FIREBREAK PROTOCOL\n\nThe planetary purification of ACAMAR IV has reached satisfactory levels. With orbital firing corridors now secured above GACRUX, the DSS will continue FIREBREAK PROTOCOL there until similar sanitation levels are achieved.\n\nHelldivers are expected to regain control of the DSS once FIREBREAK PROTOCOL is complete.",
+   "translated": "DSS 防火协议\n\n天园六IV 的星球净化已达到令人满意的水平。随着 十字架一 上空的轨道射击走廊现已得到保障，DSS 将在该地继续执行防火协议，直至达到同等卫生水平。\n\n防火协议完成后，绝地潜兵应重新夺回 DSS 的控制权。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 86848066,
+   "official_message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe planetary purification of <i=1>ACAMAR IV</i> has reached satisfactory levels. With orbital firing corridors now secured above <i=1>GACRUX</i>, the <i=1>DSS</i> will continue <i=1>FIREBREAK PROTOCOL</i> there until similar sanitation levels are achieved.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete.",
+   "translated_at": "2026-11-16T06:57:03Z"
+  },
+  {
    "id": 3997,
    "published_at": "2026-11-14T23:44:54Z",
    "source": "dispatch",
@@ -126,19 +139,6 @@
    "published_war_seconds": 85856296,
    "official_message": "<i=3>新战略指令</i>\n\n矛盾的是，关于TCS+遭突破的报告仍在继续增加。\n\n虽然这些报告十有八九会被归咎于多个TCS+区域在例行重新布线期间实行的部门预算削减，但我们仍然会邀请作战能力尚有余裕的绝地潜兵去核实情况，如果他们愿意的话。\n\n绝地潜兵请注意：展开调查，如有必要，<i=1>守住边陲、克里姆西卡、大流士II和水委一次星</i>。",
    "translated_at": "2026-11-04T16:27:35Z"
-  },
-  {
-   "id": 3988,
-   "published_at": "2026-11-04T10:41:48Z",
-   "source": "dispatch",
-   "original": "Xenoentomology Center Restructuring\n\nThe Chief of Terminid Epidemiology has been stripped of their rank and detained for trial. \n\nA tribunal of trusted experts will ascertain whether the former Chief’s incompetence in failing to predict the Terminids’ recent unprovoked mutations and attacks constitutes criminality\n–or treason.\n\nTheir replacement is expected to be named upon the trial’s conclusion.",
-   "translated": "异星昆虫学研究中心重组\n\n终结族流行病学主管已被剥夺军衔，并被拘留候审。\n\n由可信专家组成的法庭将裁定，前任主管未能预见终结族近期无端变异与袭击的失职行为，是否构成犯罪\n——或是叛国。\n\n接替者预计将在审判结束后任命。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 85848574,
-   "official_message": "<i=3>异星昆虫学研究中心重组</i>\n\n终结族流行病学主管已被剥夺军衔，并被拘留候审。\n\n由可信专家组成的法庭将裁定，前任主管未能预见终结族近期无端变异与袭击的失职行为，是否构成犯罪\n——或是叛国。\n\n接替者预计将在审判结束后任命。",
-   "translated_at": "2026-11-04T16:27:35Z"
   }
  ],
  "strategic": {
@@ -148,7 +148,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-16T00:21:28Z",
+  "computed_at": "2026-11-16T06:57:04Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -194,17 +194,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-16T00:21:27Z",
+  "source_version": "2026-11-16T06:56:54Z",
   "war_id": 801,
-  "war_time_seconds": 86847920,
-  "last_success_at": "2026-11-16T00:21:27Z",
+  "war_time_seconds": 86871650,
+  "last_success_at": "2026-11-16T06:56:54Z",
   "stale": false
  },
  "tasks": {
   "id32": 1701745153,
   "source": "arrowhead_official",
-  "source_version": "2026-11-16T00:21:27Z",
-  "retrieved_at": "2026-11-16T00:21:27Z",
+  "source_version": "2026-11-16T06:56:54Z",
+  "retrieved_at": "2026-11-16T06:56:54Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
