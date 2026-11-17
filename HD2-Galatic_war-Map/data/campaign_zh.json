@@ -4,7 +4,7 @@
     "source": "https://api.live.prod.thehelldiversgame.com/api/Episode/801/",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**官中可覆盖 `mt:true` 机器字段，绝不覆盖人工字段；机翻仍只补空字段**。；文本主源为 Arrowhead 官方 zh-Hans Episode API；仅官中缺失字段才调用 DeepSeek。",
-    "updated_at": "2026-11-13",
+    "updated_at": "2026-11-17",
     "source_language": "zh-Hans",
     "official_zh": true
   },
@@ -311,6 +311,16 @@
         "161915893": {
           "title": "防火带",
           "briefing": "得益于绝地潜兵的成功防御和卓越的前线效率，全面管控终结族变种已经指日可待。\n\n为了巩固这些努力，净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。DSS将会通过热能方式摧毁一系列不间断的世界，将指定的星球夷为平地，切断为寄生虫群继续传播提供燃料的生物质供应，从而对受影响的星球进行消毒。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。"
+        }
+      }
+    },
+    "1323445768": {
+      "title": "不屈精神",
+      "description": "关键星球上的无票者数量急剧膨胀，绝地潜兵与SEAF需要紧急发动联合战役。真理部将此事件视为一个机会，通过先发制人的心智健康疗法支援SEAF，抵御光能者的精神控制。对抗光能者及其毫无根据的宣传攻势。",
+      "phases": {
+        "1309527454": {
+          "title": "心智澄明",
+          "briefing": "天大将军一VII和艾列尔特III上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在泽亚鲁戈西亚建设心智澄明中心（CMC），施行由真理部主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命击杀215,000,000个无票者，协助这项宝贵的研究，还要守住泽亚鲁戈西亚，完成CMC的建设，为针对无票者的战斗做准备。"
         }
       }
     }
