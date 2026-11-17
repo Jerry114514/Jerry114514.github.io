@@ -1,6 +1,28 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 2890701424,
+  "title": "重要指令",
+  "original": "Hold the planet chosen for construction of the Center for Mental Clarity and kill Voteless to catalyze research into innovative SEAF mental health treatments.",
+  "translated": "守住即将建设心智澄明中心的选址星球，击杀无票者，促进创新的SEAF心智健康疗法研究。",
+  "text_source": "official_zh",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-17T17:46:52Z"
+ },
  "items": [
+  {
+   "id": 4001,
+   "published_at": "2026-11-17T13:22:02Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER \n\nHelldivers are ordered to hold ZEA RUGOSIA, the planetary base for the Center for Mental Clarity (CMC). \n\nHelldivers are also ordered to kill 215,000,000 Voteless to develop the experimental therapeutic program. The Ministry of Truth knows that the Helldivers will rise to the occasion.",
+   "translated": "新重要指令\n\n绝地潜兵奉命坚守泽亚鲁戈西亚，即心智澄明中心（CMC）的行星基地。\n\n绝地潜兵还需击杀215,000,000名无票者，协助开发实验性治疗项目。真理部坚信，绝地潜兵一定能迎难而上。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 86981151,
+   "official_message": "<i=3>新重要指令</i>\n\n绝地潜兵奉命<i=1>坚守泽亚鲁戈西亚</i>，即心智澄明中心（CMC）的行星基地。\n\n绝地潜兵还需<i=1>击杀215,000,000名无票者</i>，协助开发实验性治疗项目。真理部坚信，绝地潜兵一定能迎难而上。",
+   "translated_at": "2026-11-17T17:46:52Z"
+  },
   {
    "id": 4000,
    "published_at": "2026-11-16T22:59:42Z",
@@ -117,19 +139,6 @@
    "published_war_seconds": 86290395,
    "official_message": "<i=3>新重要指令</i>\n\n<i=1>终结族</i>发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n绝地潜兵必须成功<i=1>抵御住7轮终结族攻势</i>，阻止这场暴虐的猛攻，恢复秩序。\n",
    "translated_at": "2026-11-11T14:12:19Z"
-  },
-  {
-   "id": 3991,
-   "published_at": "2026-11-08T13:01:39Z",
-   "source": "dispatch",
-   "original": "MAJOR ORDER WON\n\nThe Helldivers successfully eliminated the mandated quota of Terminids with their judicious use of the INCINERATOR FRV Stratagem, delivering a crushing blow to alien insolence, and silencing equally dangerous rumours of TCS+ malfunctions.\n\nCoupled with the assurance that any anomalous readings along the perimeter will be suitably scrutinized, domestic markets immediately responded with patriotic vigor, reaffirming the infallibility of Super Earth, economic or otherwise.",
-   "translated": "重要指令已完成\n\n绝地潜兵明智地使用INCINERATOR FRV战略配备，成功消灭了既定配额的终结族，对外星渣滓的傲慢行为给予了毁灭性打击，而且平息了同样危险的TCS+故障谣言。\n\n政府保证对防线周边出现的任何异常读数进行适当核查，国内市场立即以爱国热情做出回应，再次印证了超级地球在经济和其他方面都具有无可置疑的正确性。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86202512,
-   "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵明智地使用INCINERATOR FRV战略配备，成功消灭了既定配额的终结族，对外星渣滓的傲慢行为给予了毁灭性打击，而且平息了同样危险的TCS+故障谣言。\n\n政府保证对防线周边出现的任何异常读数进行适当核查，国内市场立即以爱国热情做出回应，再次印证了超级地球在经济和其他方面都具有无可置疑的正确性。",
-   "translated_at": "2026-11-08T15:35:08Z"
   }
  ],
  "strategic": {
@@ -139,11 +148,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-17T08:28:40Z",
+  "computed_at": "2026-11-17T17:46:52Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501116,
@@ -156,15 +165,63 @@
    "expires_at_war_seconds": 87078030,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501117,
+   "id32": 1309527454,
+   "title": "心智澄明",
+   "message": "<i=1>天大将军一VII</i>和<i=1>艾列尔特III</i>上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在<i=1>泽亚鲁戈西亚</i>建设<i=1>心智澄明中心（CMC）</i>，施行由<i=1>真理部</i>主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命<i=1>击杀215,000,000个无票者</i>，协助这项宝贵的研究，还要<i=1>守住泽亚鲁戈西亚</i>，完成CMC的建设，为针对无票者的战斗做准备。",
+   "plain_text": "天大将军一VII和艾列尔特III上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在泽亚鲁戈西亚建设心智澄明中心（CMC），施行由真理部主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命击杀215,000,000个无票者，协助这项宝贵的研究，还要守住泽亚鲁戈西亚，完成CMC的建设，为针对无票者的战斗做准备。",
+   "message_id32": 4017330648,
+   "assignment_id32": 2890701424,
+   "expires_at_war_seconds": 87326700,
+   "text_source": "official_zh",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-17T08:28:40Z",
+  "source_version": "2026-11-17T17:46:51Z",
   "war_id": 801,
-  "war_time_seconds": 86963550,
-  "last_success_at": "2026-11-17T08:28:40Z",
+  "war_time_seconds": 86997040,
+  "last_success_at": "2026-11-17T17:46:51Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 2890701424,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-17T17:46:51Z",
+  "retrieved_at": "2026-11-17T17:46:51Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   },
+   {
+    "index": 1,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 4,
+    "faction_name": "光能者",
+    "goal": 215000000,
+    "progress": 12741745,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   }
+  ]
  }
 }
