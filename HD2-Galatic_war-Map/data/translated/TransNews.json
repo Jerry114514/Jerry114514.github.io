@@ -2,6 +2,19 @@
  "mo_brief": null,
  "items": [
   {
+   "id": 4000,
+   "published_at": "2026-11-16T22:59:42Z",
+   "source": "dispatch",
+   "original": "DSS BACK TO REGULAR OPERATION\n\nThe DSS is resuming standard operation procedures at the hands of the Helldivers after having concluded authorized FIREBREAK PROTOCOL across the surface of GACRUX.\n\nHelldivers can now resume collective control of the Democracy Space Station via the Galactic Map. Use it to defend our way of life and Managed Democracy.",
+   "translated": "民主空间站恢复常规运作\n\n经授权，火线阻断协议已在十字架一地表执行完毕。此后，民主空间站将回归绝地潜兵掌控，恢复标准运作流程。\n\n绝地潜兵现可通过银河地图，重新集体控制民主空间站。用它捍卫我们的生活方式，捍卫受控民主。",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 86929418,
+   "official_message": "<i=3>DSS BACK TO REGULAR OPERATION</i>\n\nThe DSS is resuming standard operation procedures at the hands of the Helldivers after having concluded authorized <i=1>FIREBREAK PROTOCOL</i> across the surface of <i=1>GACRUX</i>.\n\nHelldivers can now resume collective control of the <i=1>Democracy Space Station</i> via the <i=1>Galactic Map. </i>Use it to defend our way of life and Managed Democracy.",
+   "translated_at": "2026-11-17T00:30:20Z"
+  },
+  {
    "id": 3999,
    "published_at": "2026-11-16T16:16:32Z",
    "source": "dispatch",
@@ -117,19 +130,6 @@
    "published_war_seconds": 86202512,
    "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵明智地使用INCINERATOR FRV战略配备，成功消灭了既定配额的终结族，对外星渣滓的傲慢行为给予了毁灭性打击，而且平息了同样危险的TCS+故障谣言。\n\n政府保证对防线周边出现的任何异常读数进行适当核查，国内市场立即以爱国热情做出回应，再次印证了超级地球在经济和其他方面都具有无可置疑的正确性。",
    "translated_at": "2026-11-08T15:35:08Z"
-  },
-  {
-   "id": 3990,
-   "published_at": "2026-11-08T12:51:49Z",
-   "source": "dispatch",
-   "original": "STRATEGIC DIRECTIVE COMPLETED\n\nThe Helldivers successfully held CRIMSICA, FRONTERIA, DARIUS II and ACHERNAR SECUNDUS and in doing so, confirmed which of the reported TCS+ breaches were truly legitimate.\n\nTo ensure all sections of TCS+ system safely report a return to maximal efficiency, High Command has directed additional SEAF mobilizations—the most capable pest control in the known galaxy—to wall off affected planets for the remainder of this campaign.",
-   "translated": "战略指令成功完成\n\n绝地潜兵成功守住了克里姆西卡、边陲、大流士II和水委一次星，而且借此确认了哪些TCS+遭突破的报告是真实的。\n\n为了确保TCS+系统各部分安全报告恢复至最高效率，最高指挥部已下令再次动员已知星系中最能干的害虫控制专家：SEAF，在本此战役的剩余时间里封锁受到影响的行星。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86201922,
-   "official_message": "<i=3>战略指令成功完成</i>\n\n绝地潜兵成功守住了<i=1>克里姆西卡、边陲、大流士II和水委一次星</i>，而且借此确认了哪些TCS+遭突破的报告是真实的。\n\n为了确保TCS+系统各部分安全报告恢复至最高效率，最高指挥部已下令再次动员已知星系中最能干的害虫控制专家：SEAF，在本此战役的剩余时间里封锁受到影响的行星。\n",
-   "translated_at": "2026-11-08T15:35:08Z"
   }
  ],
  "strategic": {
@@ -139,7 +139,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-16T16:43:03Z",
+  "computed_at": "2026-11-17T00:30:20Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -161,10 +161,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-16T16:43:02Z",
+  "source_version": "2026-11-17T00:30:14Z",
   "war_id": 801,
-  "war_time_seconds": 86906820,
-  "last_success_at": "2026-11-16T16:43:02Z",
+  "war_time_seconds": 86934850,
+  "last_success_at": "2026-11-17T00:30:14Z",
   "stale": false
  }
 }
