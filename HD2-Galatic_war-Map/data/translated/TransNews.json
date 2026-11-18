@@ -148,24 +148,12 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-18T07:47:21Z",
+  "computed_at": "2026-11-18T16:50:09Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
  "mo_state": "active",
  "global_events": [
-  {
-   "event_id": 1501116,
-   "id32": 961113071,
-   "title": "失败",
-   "message": "尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，<i=1>炽灼型快速侦察载具</i>已进入全面生产，以备丑恶的终结族变种再次作乱。前任终结族流行病学主管已因严重行政渎职被定罪，并与所有被其供出名字的共犯，一并以严重行政渎职罪被执行处决。\n\n这种前所未有的终结族变异导致TCS+几乎完全失效，导致超级地球的居民无法继续对终结族进行近乎全面的管控。重新对终结族宣战的决议已获得全票通过。\n",
-   "plain_text": "尽管绝地潜兵成功击退了终结族虫群的主力，但顽固不化的法西斯昆虫还是阻碍了防火带协议的全面部署，导致已清除终结族侵扰的星球数量低于预期。\n\n作为回应，炽灼型快速侦察载具已进入全面生产，以备丑恶的终结族变种再次作乱。前任终结族流行病学主管已因严重行政渎职被定罪，并与所有被其供出名字的共犯，一并以严重行政渎职罪被执行处决。\n\n这种前所未有的终结族变异导致TCS+几乎完全失效，导致超级地球的居民无法继续对终结族进行近乎全面的管控。重新对终结族宣战的决议已获得全票通过。",
-   "message_id32": 169420083,
-   "assignment_id32": 0,
-   "expires_at_war_seconds": 87078030,
-   "text_source": "official_zh",
-   "mt": false
-  },
   {
    "event_id": 1501117,
    "id32": 1309527454,
@@ -182,17 +170,17 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-18T07:47:20Z",
+  "source_version": "2026-11-18T16:50:08Z",
   "war_id": 801,
-  "war_time_seconds": 87047470,
-  "last_success_at": "2026-11-18T07:47:20Z",
+  "war_time_seconds": 87080030,
+  "last_success_at": "2026-11-18T16:50:08Z",
   "stale": false
  },
  "tasks": {
   "id32": 2890701424,
   "source": "arrowhead_official",
-  "source_version": "2026-11-18T07:47:20Z",
-  "retrieved_at": "2026-11-18T07:47:20Z",
+  "source_version": "2026-11-18T16:50:08Z",
+  "retrieved_at": "2026-11-18T16:50:08Z",
   "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
   "items": [
    {
@@ -214,7 +202,7 @@
     "faction_id": 4,
     "faction_name": "光能者",
     "goal": 215000000,
-    "progress": 65050647,
+    "progress": 89905677,
     "requirement": {
      "type": "equipment",
      "id": 0,
