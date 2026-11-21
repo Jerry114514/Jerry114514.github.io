@@ -4,7 +4,7 @@
     "source": "https://api.live.prod.thehelldiversgame.com/api/Episode/801/",
     "terminology": "HD2_Wiki/data/wiki/zh/terms.json",
     "note": "新增战役时按 <episode id32> / <phase id32> 追加条目即可；术语沿用站内既有译法（Cyborg→生化人、Automaton→机器人、Helldivers→绝地潜兵、Super Earth→超级地球、Ministry of Truth→真理部、Stratagem→战略配备、季度选举）。；**2026-09-23 新增兜底**：上游新战役刚上线时 `episodes[].id32` 可能暂时缺失（§18.5 实测过线上 `id` 为空），此时按 id32 索引必然落空 → 中文化层可改用键 `title:<英文标题大写>`（如 `title:ARMORED EAGLE`）兜底，`fetch_site_data.py` 的 `_zh_by_id_or_title()` 会先查 id32、再查标题；`data.json` 同时写 `id_missing` 便于发现上游异常。术语沿用 `terms.json`（本次用到：TD-110 Maelstrom → TD-110 “风暴漩涡”坦克、MARFARK → 玛尔法克、PHACT BAY → 丈人一湾、FRV → 快速侦察载具、Cyborg → 生化人）。；**机翻标记**：`episodes.<键>.mt: true` = 整场由机器新建；`phases.<键>.mt: true` = 该阶段名/简报为机器翻译，**人工校对后请删除该标记**。本流水线（私密仓 `Translate Campaign`）**官中可覆盖 `mt:true` 机器字段，绝不覆盖人工字段；机翻仍只补空字段**。；文本主源为 Arrowhead 官方 zh-Hans Episode API；仅官中缺失字段才调用 DeepSeek。",
-    "updated_at": "2026-11-17",
+    "updated_at": "2026-11-21",
     "source_language": "zh-Hans",
     "official_zh": true
   },
@@ -321,6 +321,10 @@
         "1309527454": {
           "title": "心智澄明",
           "briefing": "天大将军一VII和艾列尔特III上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在泽亚鲁戈西亚建设心智澄明中心（CMC），施行由真理部主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命击杀215,000,000个无票者，协助这项宝贵的研究，还要守住泽亚鲁戈西亚，完成CMC的建设，为针对无票者的战斗做准备。"
+        },
+        "3367256822": {
+          "title": "战场回收",
+          "briefing": "泽亚鲁戈西亚已被肃清，CMC的建设随之开展，施工队伍由SEAF组成，工程选址在一处户外康养度假地。\n\n超级地球还会继续监控天大将军一VII和艾列尔特III上的无票者数量激增现象。由于敌人发起了持续的猛攻，我方需要更多的SEAF兵力来支援绝地潜兵，从而增加了对神经植入物生产的需求。虽然植入物的成本十分昂贵，但是比起训练新的SEAF，还是能节约一点超级货币，而且比实施激进的“工作与生活平衡”应对措施要便宜得多。\n\n为了进一步降低该项目的经济影响，绝地潜兵奉命消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫。"
         }
       }
     }
