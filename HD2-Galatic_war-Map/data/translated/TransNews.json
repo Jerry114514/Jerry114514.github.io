@@ -2,6 +2,19 @@
  "mo_brief": null,
  "items": [
   {
+   "id": 4003,
+   "published_at": "2026-11-21T15:39:27Z",
+   "source": "dispatch",
+   "original": "SYSTEM OUTAGE UPDATE\nSome Helldivers may have noticed a recent service error in the Major Order Communication Display. The issue has since been resolved (details below).\n[SYSTEM ERROR REPORT #8.03.529]\nCause: Stray bullet hit central data relay.\nDiscussion: Truth Enforcer in-field execution had dissident facing the wrong wall.\nResolution: Electronics replaced. Family of dissident fined for damages. \n[END REPORT]",
+   "translated": "系统故障更新\n部分绝地潜兵可能已注意到，重要指令通讯显示屏近期出现服务错误。该问题现已解决（详情见下）。\n[系统错误报告 #8.03.529]\n原因：流弹击中中央数据中继器。\n讨论：真理执行者现场处决时，让异见分子面错了墙。\n处理：电子元件已更换。异见分子家属因损坏设备被处以罚款。\n[报告结束]",
+   "text_source": "machine_translation",
+   "engine": "deepseek-chat",
+   "mt": true,
+   "published_war_seconds": 87334943,
+   "official_message": "<i=3>SYSTEM OUTAGE UPDATE</i>\nSome Helldivers may have noticed a recent service error in the Major Order Communication Display. The issue has since been resolved (details below).\n<i=3>[SYSTEM ERROR REPORT #8.03.529]</i>\n<i=1>Cause:</i> Stray bullet hit central data relay.\n<i=1>Discussion:</i> Truth Enforcer in-field execution had dissident facing the wrong wall.\n<i=1>Resolution:</i> Electronics replaced. Family of dissident fined for damages. \n<i=3>[END REPORT]<i=3>",
+   "translated_at": "2026-11-21T21:08:07Z"
+  },
+  {
    "id": 4002,
    "published_at": "2026-11-21T13:22:28Z",
    "source": "dispatch",
@@ -117,19 +130,6 @@
    "published_war_seconds": 86472974,
    "official_message": "<i=3>战略预警</i>\n\n全体绝地潜兵在做战略决策时都应该考虑以下建议：\n\n敌人从起源星球向我们的领地发起进攻。解放起源星球将立即终止敌人的攻势。\n\n在当前情况下，解放<i=1>大艾伦特</i>就能终止当前蟲族向<i=1>十字架二IX</i>、<i=1>贯索四</i>以及<i=1>北极星主星</i>发起的进攻。",
    "translated_at": "2026-11-11T21:24:59Z"
-  },
-  {
-   "id": 3993,
-   "published_at": "2026-11-11T15:47:37Z",
-   "source": "dispatch",
-   "original": "GLOOM SPREAD DETECTED\n\nThe Gloom is spreading at an unprecedented pace. GRAND ERRANT is now surrounded by low-density Gloom, and other planets in the sector are expected to follow.",
-   "translated": "侦测发现“阴霾”扩散\n\n“阴霾”正在以前所未有的速度蔓延。大艾伦特现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86471609,
-   "official_message": "<i=3>侦测发现“阴霾”扩散</i>\n\n“阴霾”正在以前所未有的速度蔓延。<i=1>大艾伦特</i>现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。",
-   "translated_at": "2026-11-11T21:24:59Z"
   }
  ],
  "strategic": {
@@ -139,7 +139,7 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-21T15:31:04Z",
+  "computed_at": "2026-11-21T21:08:07Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
@@ -161,10 +161,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-21T15:31:03Z",
+  "source_version": "2026-11-21T21:08:04Z",
   "war_id": 801,
-  "war_time_seconds": 87334440,
-  "last_success_at": "2026-11-21T15:31:03Z",
+  "war_time_seconds": 87354660,
+  "last_success_at": "2026-11-21T21:08:04Z",
   "stale": false
  }
 }
