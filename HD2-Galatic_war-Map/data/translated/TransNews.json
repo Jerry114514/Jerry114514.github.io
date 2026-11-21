@@ -1,15 +1,19 @@
 {
- "mo_brief": {
-  "id32": 2890701424,
-  "title": "重要指令",
-  "original": "Hold the planet chosen for construction of the Center for Mental Clarity and kill Voteless to catalyze research into innovative SEAF mental health treatments.",
-  "translated": "守住即将建设心智澄明中心的选址星球，击杀无票者，促进创新的SEAF心智健康疗法研究。",
-  "text_source": "official_zh",
-  "engine": "arrowhead-official",
-  "mt": false,
-  "translated_at": "2026-11-17T17:46:52Z"
- },
+ "mo_brief": null,
  "items": [
+  {
+   "id": 4002,
+   "published_at": "2026-11-21T13:22:28Z",
+   "source": "dispatch",
+   "original": "MAJOR ORDER WON \n\nBoth orders were successful and as a result, construction of the CMC began on schedule and without issue. Early reports from the mental health initiatives show promise, with SEAF personnel especially appreciating therapeutic activities such as the Illuminate live-fire range. The neural implant tested well at the prototype phase and will move to full production immediately.",
+   "translated": "重要指令已完成\n\n两项指令均已成功，因此，CMC的建设会按计划顺利开始。心智健康倡议的早期报告显示出了积极的前景，SEAF人员特别赞赏了光能者实弹射击场等治疗活动。神经植入物在原型阶段的测试结果良好，将会立即进入全面生产。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 87326725,
+   "official_message": "<i=3>重要指令已完成</i>\n\n两项指令均已成功，因此，CMC的建设会按计划顺利开始。心智健康倡议的早期报告显示出了积极的前景，SEAF人员特别赞赏了光能者实弹射击场等治疗活动。神经植入物在原型阶段的测试结果良好，将会立即进入全面生产。",
+   "translated_at": "2026-11-21T15:31:04Z"
+  },
   {
    "id": 4001,
    "published_at": "2026-11-17T13:22:02Z",
@@ -126,19 +130,6 @@
    "published_war_seconds": 86471609,
    "official_message": "<i=3>侦测发现“阴霾”扩散</i>\n\n“阴霾”正在以前所未有的速度蔓延。<i=1>大艾伦特</i>现已被低密度“阴霾”包围，该分区其他行星预计也将陆续被吞没。",
    "translated_at": "2026-11-11T21:24:59Z"
-  },
-  {
-   "id": 3992,
-   "published_at": "2026-11-09T13:26:26Z",
-   "source": "dispatch",
-   "original": "NEW MAJOR ORDER\n\nIn an unprovoked, unforeseeable assault illustrative of their depravity, a newly mutated strain of Terminids have launched a wave of attacks across multiple TCS+ sectors, threatening to smother innocent colonies in a sea of fascist insect tyranny.\n\nThe Helldivers must successfully defend against 7 Terminid attacks to halt this tyrannical onslaught and restore order.",
-   "translated": "新重要指令\n\n终结族发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n绝地潜兵必须成功抵御住7轮终结族攻势，阻止这场暴虐的猛攻，恢复秩序。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86290395,
-   "official_message": "<i=3>新重要指令</i>\n\n<i=1>终结族</i>发动了一次不可预见的无端袭击，一种新型变种在多个TCS+分区发起了一波又一波的攻势，威胁要将无辜的拓殖地淹没在法西斯害虫的暴政之中。\n\n绝地潜兵必须成功<i=1>抵御住7轮终结族攻势</i>，阻止这场暴虐的猛攻，恢复秩序。\n",
-   "translated_at": "2026-11-11T14:12:19Z"
   }
  ],
  "strategic": {
@@ -148,21 +139,21 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-21T07:30:08Z",
+  "computed_at": "2026-11-21T15:31:04Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "active",
+ "mo_state": "none",
  "global_events": [
   {
-   "event_id": 1501117,
-   "id32": 1309527454,
-   "title": "心智澄明",
-   "message": "<i=1>天大将军一VII</i>和<i=1>艾列尔特III</i>上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在<i=1>泽亚鲁戈西亚</i>建设<i=1>心智澄明中心（CMC）</i>，施行由<i=1>真理部</i>主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命<i=1>击杀215,000,000个无票者</i>，协助这项宝贵的研究，还要<i=1>守住泽亚鲁戈西亚</i>，完成CMC的建设，为针对无票者的战斗做准备。",
-   "plain_text": "天大将军一VII和艾列尔特III上的无票者数量正在出乎意料地暴涨。无票者的邪恶信条深深影响了前线的SEAF，他们报告称，自己无法拿出最佳的战斗表现。\n\n为了对抗这场灾难，我方即将在泽亚鲁戈西亚建设心智澄明中心（CMC），施行由真理部主导的创新心智健康疗法，抢先一步保护SEAF人员，抵御光能者的精神控制，以及所有形式的暴政洗脑。\n\n绝地潜兵奉命击杀215,000,000个无票者，协助这项宝贵的研究，还要守住泽亚鲁戈西亚，完成CMC的建设，为针对无票者的战斗做准备。",
-   "message_id32": 4017330648,
-   "assignment_id32": 2890701424,
-   "expires_at_war_seconds": 87326700,
+   "event_id": 1501119,
+   "id32": 2799802202,
+   "title": "成功",
+   "message": "绝地潜兵成功守住了<i=1>泽亚鲁戈西亚</i>，击退了光能者敌人，让CMC能够按计划开始建设。心智健康倡议的早期报告显示出了积极的前景，SEAF人员特别赞赏了光能者实弹射击场等治疗活动。\n\n我方消灭了215,000,000个无票者，收集到了宝贵的数据，用于开发一种神经植入物，该植入物能阻碍短期记忆转化为长期记忆，可以保护SEAF的心智，抵抗光能者宣传攻势的持久影响。\n\n配备了原型植入物的志愿者生动详细地描述了由绝地潜兵录下的无票者战斗影像。到了第二天早上，没有人能回想起曾看过这些影像。利益相关者对该技术的军事和商业潜力感到振奋。此产品会立即开始全面生产。",
+   "plain_text": "绝地潜兵成功守住了泽亚鲁戈西亚，击退了光能者敌人，让CMC能够按计划开始建设。心智健康倡议的早期报告显示出了积极的前景，SEAF人员特别赞赏了光能者实弹射击场等治疗活动。\n\n我方消灭了215,000,000个无票者，收集到了宝贵的数据，用于开发一种神经植入物，该植入物能阻碍短期记忆转化为长期记忆，可以保护SEAF的心智，抵抗光能者宣传攻势的持久影响。\n\n配备了原型植入物的志愿者生动详细地描述了由绝地潜兵录下的无票者战斗影像。到了第二天早上，没有人能回想起曾看过这些影像。利益相关者对该技术的军事和商业潜力感到振奋。此产品会立即开始全面生产。",
+   "message_id32": 3569628259,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 87504890,
    "text_source": "official_zh",
    "mt": false
   }
@@ -170,46 +161,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-21T07:30:07Z",
+  "source_version": "2026-11-21T15:31:03Z",
   "war_id": 801,
-  "war_time_seconds": 87305580,
-  "last_success_at": "2026-11-21T07:30:07Z",
+  "war_time_seconds": 87334440,
+  "last_success_at": "2026-11-21T15:31:03Z",
   "stale": false
- },
- "tasks": {
-  "id32": 2890701424,
-  "source": "arrowhead_official",
-  "source_version": "2026-11-21T07:30:07Z",
-  "retrieved_at": "2026-11-21T07:30:07Z",
-  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
-  "items": [
-   {
-    "index": 0,
-    "type": 13,
-    "type_en": "Control",
-    "action": "坚守",
-    "faction_id": null,
-    "faction_name": null,
-    "goal": 1,
-    "progress": 1,
-    "requirement": null
-   },
-   {
-    "index": 1,
-    "type": 3,
-    "type_en": "Eradicate",
-    "action": "击杀",
-    "faction_id": 4,
-    "faction_name": "光能者",
-    "goal": 215000000,
-    "progress": 215000000,
-    "requirement": {
-     "type": "equipment",
-     "id": 0,
-     "name": null,
-     "name_source": "unresolved"
-    }
-   }
-  ]
  }
 }
