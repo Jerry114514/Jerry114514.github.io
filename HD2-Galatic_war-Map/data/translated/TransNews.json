@@ -1,6 +1,28 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 1278711574,
+  "title": "重要指令",
+  "original": "Eliminate the mandated amount of Troopers, Factory Striders, Terminids, and Bile Spewers to collect raw materials for neural implant production.",
+  "translated": "消灭指定数量的新兵、移动工厂、终结族以及胆汁喷涌虫，收集用于生产神经植入物的原材料。",
+  "text_source": "official_zh",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-22T01:13:47Z"
+ },
  "items": [
+  {
+   "id": 4004,
+   "published_at": "2026-11-21T21:32:49Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER \n\nThe continuing Voteless surges require vastly more SEAF to be sent planetside, increasing demand for the production of the neural implants. To lower the project's economic impact, Helldivers are ordered to eliminate 135,000,000 Troopers, 2,000,000 Factory Striders, 250,000,000 of Terminids and 25,000,000 Bile Spewers.",
+   "translated": "新重要指令\n\n无票者持续激增，需要将大量SEAF送往行星地表，因此，神经植入物的生产需求飙升。为了降低该项目的经济影响，绝地潜兵奉命消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 87356143,
+   "official_message": "<i=3>新重要指令</i>\n\n无票者持续激增，需要将大量SEAF送往行星地表，因此，神经植入物的生产需求飙升。为了降低该项目的经济影响，绝地潜兵奉命<i=1>消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫</i>。",
+   "translated_at": "2026-11-22T01:13:47Z"
+  },
   {
    "id": 4003,
    "published_at": "2026-11-21T15:39:27Z",
@@ -117,19 +139,6 @@
    "published_war_seconds": 86619280,
    "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，<i=1>成功击退了变异终结族的进攻，没有让它们完成主要目标</i>。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，<i=1>暴虐瘟疫</i>已爆发，这还是一个多世纪以来的首次。\n",
    "translated_at": "2026-11-13T11:25:08Z"
-  },
-  {
-   "id": 3994,
-   "published_at": "2026-11-11T16:10:22Z",
-   "source": "dispatch",
-   "original": "STRATEGIC ADVISORY\n\nAll Helldivers should factor the following advisory into their strategic decision-making:\n\nEnemy forces stage their attacks on our planets from an originating planet. Liberating the originating planet will end the enemy attack immediately.\n\nIn the current operational context, liberating GRAND ERRANT would end the current TERMINID attacks upon ACRUX IX, GEMMA and POLARIS PRIME.",
-   "translated": "战略预警\n\n全体绝地潜兵在做战略决策时都应该考虑以下建议：\n\n敌人从起源星球向我们的领地发起进攻。解放起源星球将立即终止敌人的攻势。\n\n在当前情况下，解放大艾伦特就能终止当前蟲族向十字架二IX、贯索四以及北极星主星发起的进攻。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86472974,
-   "official_message": "<i=3>战略预警</i>\n\n全体绝地潜兵在做战略决策时都应该考虑以下建议：\n\n敌人从起源星球向我们的领地发起进攻。解放起源星球将立即终止敌人的攻势。\n\n在当前情况下，解放<i=1>大艾伦特</i>就能终止当前蟲族向<i=1>十字架二IX</i>、<i=1>贯索四</i>以及<i=1>北极星主星</i>发起的进攻。",
-   "translated_at": "2026-11-11T21:24:59Z"
   }
  ],
  "strategic": {
@@ -139,11 +148,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-21T21:08:07Z",
+  "computed_at": "2026-11-22T01:13:48Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501119,
@@ -156,15 +165,100 @@
    "expires_at_war_seconds": 87504890,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501120,
+   "id32": 3367256822,
+   "title": "战场回收",
+   "message": "<i=1>泽亚鲁戈西亚</i>已被肃清，CMC的建设随之开展，施工队伍由SEAF组成，工程选址在一处户外康养度假地。\n\n超级地球还会继续监控<i=1>天大将军一VII</i>和<i=1>艾列尔特III</i>上的无票者数量激增现象。由于敌人发起了持续的猛攻，我方需要更多的SEAF兵力来支援绝地潜兵，从而增加了对神经植入物生产的需求。虽然植入物的成本十分昂贵，但是比起训练新的SEAF，还是能节约一点超级货币，而且比实施激进的“工作与生活平衡”应对措施要便宜得多。\n\n为了进一步降低该项目的经济影响，绝地潜兵奉命<i=1>消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫</i>。",
+   "plain_text": "泽亚鲁戈西亚已被肃清，CMC的建设随之开展，施工队伍由SEAF组成，工程选址在一处户外康养度假地。\n\n超级地球还会继续监控天大将军一VII和艾列尔特III上的无票者数量激增现象。由于敌人发起了持续的猛攻，我方需要更多的SEAF兵力来支援绝地潜兵，从而增加了对神经植入物生产的需求。虽然植入物的成本十分昂贵，但是比起训练新的SEAF，还是能节约一点超级货币，而且比实施激进的“工作与生活平衡”应对措施要便宜得多。\n\n为了进一步降低该项目的经济影响，绝地潜兵奉命消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫。",
+   "message_id32": 1219307511,
+   "assignment_id32": 1278711574,
+   "expires_at_war_seconds": 87788108,
+   "text_source": "official_zh",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-21T21:08:04Z",
+  "source_version": "2026-11-22T01:13:46Z",
   "war_id": 801,
-  "war_time_seconds": 87354660,
-  "last_success_at": "2026-11-21T21:08:04Z",
+  "war_time_seconds": 87369400,
+  "last_success_at": "2026-11-22T01:13:46Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 1278711574,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-22T01:13:46Z",
+  "retrieved_at": "2026-11-22T01:13:46Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 3,
+    "faction_name": "机器人",
+    "goal": 135000000,
+    "progress": 5290904,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   },
+   {
+    "index": 1,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 3,
+    "faction_name": "机器人",
+    "goal": 2000000,
+    "progress": 50178,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   },
+   {
+    "index": 2,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 25000000,
+    "progress": 975623,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   },
+   {
+    "index": 3,
+    "type": 3,
+    "type_en": "Eradicate",
+    "action": "击杀",
+    "faction_id": 2,
+    "faction_name": "终结族",
+    "goal": 250000000,
+    "progress": 16896243,
+    "requirement": {
+     "type": "equipment",
+     "id": 0,
+     "name": null,
+     "name_source": "unresolved"
+    }
+   }
+  ]
  }
 }
