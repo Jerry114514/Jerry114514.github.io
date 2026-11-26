@@ -1,15 +1,19 @@
 {
- "mo_brief": {
-  "id32": 1278711574,
-  "title": "重要指令",
-  "original": "Eliminate the mandated amount of Troopers, Factory Striders, Terminids, and Bile Spewers to collect raw materials for neural implant production.",
-  "translated": "消灭指定数量的新兵、移动工厂、终结族以及胆汁喷涌虫，收集用于生产神经植入物的原材料。",
-  "text_source": "official_zh",
-  "engine": "arrowhead-official",
-  "mt": false,
-  "translated_at": "2026-11-22T01:13:47Z"
- },
+ "mo_brief": null,
  "items": [
+  {
+   "id": 4005,
+   "published_at": "2026-11-26T00:34:55Z",
+   "source": "dispatch",
+   "original": "MAJOR ORDER WON \n\nThe Helldivers eliminated the specified targets with Democratic zeal and exemplary obedience. The materials extracted from the fallen enemies will be prepared for production. A portion of the cost savings will be forwarded to the Helldivers in the form of a free Orbital Napalm Barrage, available for the next 48 hours.",
+   "translated": "重要指令已完成\n\n绝地潜兵表现出了民主热情和堪称典范的服从，消灭了指定目标。从阵亡敌人身上提取的材料都会投入生产。节省下的一部分成本会转化为免费的轨道凝固汽油弹火力网，发放给绝地潜兵，在接下来的48小时内可用。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 87712626,
+   "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵表现出了民主热情和堪称典范的服从，消灭了指定目标。从阵亡敌人身上提取的材料都会投入生产。节省下的一部分成本会转化为免费的<i=1>轨道凝固汽油弹火力网</i>，发放给绝地潜兵，在接下来的48小时内可用。",
+   "translated_at": "2026-11-26T02:33:29Z"
+  },
   {
    "id": 4004,
    "published_at": "2026-11-21T21:32:49Z",
@@ -126,19 +130,6 @@
    "published_war_seconds": 86646027,
    "official_message": "<i=3>新重要指令</i>\n\n得益于绝地潜兵卓越的前线效率，全面管控<i=1>终结族</i>变种已经指日可待。为了净化受感染行星上的虫患侵扰，最高指挥部已授权执行<i=1>防火带协议</i>。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须<i=1>坚守天园六IV、十字架一和帕尔晨</i>，确保轨道火力走廊的安全，直至必要的净化工作完成。\n",
    "translated_at": "2026-11-13T18:37:40Z"
-  },
-  {
-   "id": 3995,
-   "published_at": "2026-11-13T08:48:47Z",
-   "source": "dispatch",
-   "original": "MAJOR ORDER WON\n\nIn a showcase of their unyielding valor and mastery over thermal firepower, the Helldivers have successfully repelled the mutated Terminid offensive from their primary targets.\n\nHowever, infestation vectors continue to increase exponentially. The Ministry of Science has declared a Tyrannical Pandemic, the first in over a century.",
-   "translated": "重要指令已完成\n\n绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，成功击退了变异终结族的进攻，没有让它们完成主要目标。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，暴虐瘟疫已爆发，这还是一个多世纪以来的首次。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86619280,
-   "official_message": "<i=3>重要指令已完成</i>\n\n绝地潜兵展示了不屈不挠的勇气，向敌人倾泻热能火力，<i=1>成功击退了变异终结族的进攻，没有让它们完成主要目标</i>。\n\n然而，侵扰矢量仍在呈指数级增长。科学部宣布，<i=1>暴虐瘟疫</i>已爆发，这还是一个多世纪以来的首次。\n",
-   "translated_at": "2026-11-13T11:25:08Z"
   }
  ],
  "strategic": {
@@ -148,21 +139,21 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-25T19:54:14Z",
+  "computed_at": "2026-11-26T02:33:29Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "active",
+ "mo_state": "none",
  "global_events": [
   {
-   "event_id": 1501120,
-   "id32": 3367256822,
-   "title": "战场回收",
-   "message": "<i=1>泽亚鲁戈西亚</i>已被肃清，CMC的建设随之开展，施工队伍由SEAF组成，工程选址在一处户外康养度假地。\n\n超级地球还会继续监控<i=1>天大将军一VII</i>和<i=1>艾列尔特III</i>上的无票者数量激增现象。由于敌人发起了持续的猛攻，我方需要更多的SEAF兵力来支援绝地潜兵，从而增加了对神经植入物生产的需求。虽然植入物的成本十分昂贵，但是比起训练新的SEAF，还是能节约一点超级货币，而且比实施激进的“工作与生活平衡”应对措施要便宜得多。\n\n为了进一步降低该项目的经济影响，绝地潜兵奉命<i=1>消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫</i>。",
-   "plain_text": "泽亚鲁戈西亚已被肃清，CMC的建设随之开展，施工队伍由SEAF组成，工程选址在一处户外康养度假地。\n\n超级地球还会继续监控天大将军一VII和艾列尔特III上的无票者数量激增现象。由于敌人发起了持续的猛攻，我方需要更多的SEAF兵力来支援绝地潜兵，从而增加了对神经植入物生产的需求。虽然植入物的成本十分昂贵，但是比起训练新的SEAF，还是能节约一点超级货币，而且比实施激进的“工作与生活平衡”应对措施要便宜得多。\n\n为了进一步降低该项目的经济影响，绝地潜兵奉命消灭135,000,000名新兵、2,000,000座移动工厂、250,000,000只终结族以及25,000,000只胆汁喷涌虫。",
-   "message_id32": 1219307511,
-   "assignment_id32": 1278711574,
-   "expires_at_war_seconds": 87788108,
+   "event_id": 1501121,
+   "id32": 1473599902,
+   "title": "成功",
+   "message": "绝地潜兵表现出了十分民主的活力，消灭了指定目标。节省下的一部分成本会转化为免费的<i=1>轨道凝固汽油弹火力网</i>，发放给绝地潜兵，在接下来的48小时内可用。真理部特别感谢绝地潜兵们坚定不移地致力于最大限度节省纳税人开支，自愿放弃商业渠道本应要求的巨额危险津贴。",
+   "plain_text": "绝地潜兵表现出了十分民主的活力，消灭了指定目标。节省下的一部分成本会转化为免费的轨道凝固汽油弹火力网，发放给绝地潜兵，在接下来的48小时内可用。真理部特别感谢绝地潜兵们坚定不移地致力于最大限度节省纳税人开支，自愿放弃商业渠道本应要求的巨额危险津贴。",
+   "message_id32": 161567561,
+   "assignment_id32": 0,
+   "expires_at_war_seconds": 87885416,
    "text_source": "official_zh",
    "mt": false
   }
@@ -170,83 +161,10 @@
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-25T19:54:13Z",
+  "source_version": "2026-11-26T02:33:29Z",
   "war_id": 801,
-  "war_time_seconds": 87695790,
-  "last_success_at": "2026-11-25T19:54:13Z",
+  "war_time_seconds": 87719740,
+  "last_success_at": "2026-11-26T02:33:29Z",
   "stale": false
- },
- "tasks": {
-  "id32": 1278711574,
-  "source": "arrowhead_official",
-  "source_version": "2026-11-25T19:54:13Z",
-  "retrieved_at": "2026-11-25T19:54:13Z",
-  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
-  "items": [
-   {
-    "index": 0,
-    "type": 3,
-    "type_en": "Eradicate",
-    "action": "击杀",
-    "faction_id": 3,
-    "faction_name": "机器人",
-    "goal": 135000000,
-    "progress": 135000000,
-    "requirement": {
-     "type": "equipment",
-     "id": 0,
-     "name": null,
-     "name_source": "unresolved"
-    }
-   },
-   {
-    "index": 1,
-    "type": 3,
-    "type_en": "Eradicate",
-    "action": "击杀",
-    "faction_id": 3,
-    "faction_name": "机器人",
-    "goal": 2000000,
-    "progress": 1871424,
-    "requirement": {
-     "type": "equipment",
-     "id": 0,
-     "name": null,
-     "name_source": "unresolved"
-    }
-   },
-   {
-    "index": 2,
-    "type": 3,
-    "type_en": "Eradicate",
-    "action": "击杀",
-    "faction_id": 2,
-    "faction_name": "终结族",
-    "goal": 25000000,
-    "progress": 25000000,
-    "requirement": {
-     "type": "equipment",
-     "id": 0,
-     "name": null,
-     "name_source": "unresolved"
-    }
-   },
-   {
-    "index": 3,
-    "type": 3,
-    "type_en": "Eradicate",
-    "action": "击杀",
-    "faction_id": 2,
-    "faction_name": "终结族",
-    "goal": 250000000,
-    "progress": 250000000,
-    "requirement": {
-     "type": "equipment",
-     "id": 0,
-     "name": null,
-     "name_source": "unresolved"
-    }
-   }
-  ]
  }
 }
