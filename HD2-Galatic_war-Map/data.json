@@ -1,38 +1,38 @@
 {
- "fetchedAt": "2026-11-26T09:30:46+08:00",
+ "fetchedAt": "2026-11-26T09:36:10+08:00",
  "source": "official",
  "player_distribution": {
-  "total": 33269,
-  "humans": 1098,
-  "terminids": 9163,
-  "automatons": 20943,
-  "illuminate": 2065,
-  "updatedAt": "2026-11-26T01:15:36.10379Z"
+  "total": 32119,
+  "humans": 1058,
+  "terminids": 9126,
+  "automatons": 19859,
+  "illuminate": 2076,
+  "updatedAt": "2026-11-26T01:30:37.9721601Z"
  },
  "recon_stats": {},
- "impactMultiplier": 0.04208701,
+ "impactMultiplier": 0.04164834,
  "war_stats": {
   "galaxy_stats": {
-   "missionsWon": 1104488035,
-   "missionsLost": 106484796,
-   "missionTime": 3646229158231,
-   "bugKills": 239948509582,
-   "automatonKills": 123745492713,
-   "illuminateKills": 80514099743,
-   "bulletsFired": 2127385656049,
-   "bulletsHit": 2339850371527,
-   "timePlayed": 3646229158231,
-   "deaths": 9367126028,
+   "missionsWon": 1104489896,
+   "missionsLost": 106484973,
+   "missionTime": 3646235474061,
+   "bugKills": 239948767277,
+   "automatonKills": 123745875078,
+   "illuminateKills": 80514151002,
+   "bulletsFired": 2127388649200,
+   "bulletsHit": 2339853763501,
+   "timePlayed": 3646235474061,
+   "deaths": 9367138598,
    "revives": 2,
-   "friendlies": 1094697394,
-   "missionSuccessRate": 91.20667340554067,
+   "friendlies": 1094699255,
+   "missionSuccessRate": 91.20667358787277,
    "accurracy": 100,
-   "accuracy": 109.98712738679414
+   "accuracy": 109.9871320823723
   },
   "planets_stats": [
    {
     "planetIndex": 0,
-    "missionsWon": 16676663,
+    "missionsWon": 16676669,
     "missionsLost": 2352701,
     "missionTime": 51861427713,
     "bugKills": 76247,
@@ -44,7 +44,7 @@
     "deaths": 120605543,
     "revives": 0,
     "friendlies": 17284692,
-    "missionSuccessRate": 87.63647066712267,
+    "missionSuccessRate": 87.63647456536921,
     "accurracy": 100,
     "accuracy": 106.03575423032257
    },
@@ -428,21 +428,21 @@
    },
    {
     "planetIndex": 22,
-    "missionsWon": 176674,
+    "missionsWon": 176687,
     "missionsLost": 1036,
-    "missionTime": 122392482,
-    "bugKills": 11926163,
+    "missionTime": 122401071,
+    "bugKills": 11926984,
     "automatonKills": 7570,
     "illuminateKills": 3511,
-    "bulletsFired": 87521609,
-    "bulletsHit": 93970482,
-    "timePlayed": 122392482,
-    "deaths": 199666,
+    "bulletsFired": 87527532,
+    "bulletsHit": 93977052,
+    "timePlayed": 122401071,
+    "deaths": 199679,
     "revives": 0,
-    "friendlies": 28605,
-    "missionSuccessRate": 99.41702774182657,
+    "friendlies": 28609,
+    "missionSuccessRate": 99.41707038481232,
     "accurracy": 100,
-    "accuracy": 107.36832089090136
+    "accuracy": 107.36856147160645
    },
    {
     "planetIndex": 23,
@@ -645,25 +645,25 @@
    {
     "planetIndex": 34,
     "missionsWon": 28876344,
-    "missionsLost": 3746372,
-    "missionTime": 80869623216,
-    "bugKills": 10289711980,
+    "missionsLost": 3746373,
+    "missionTime": 80869628318,
+    "bugKills": 10289712341,
     "automatonKills": 4399,
     "illuminateKills": 2689,
-    "bulletsFired": 48968472178,
-    "bulletsHit": 57535213072,
-    "timePlayed": 80869623216,
-    "deaths": 217908589,
+    "bulletsFired": 48968473425,
+    "bulletsHit": 57535214914,
+    "timePlayed": 80869628318,
+    "deaths": 217908595,
     "revives": 0,
-    "friendlies": 30064097,
-    "missionSuccessRate": 88.51606346939353,
+    "friendlies": 30064098,
+    "missionSuccessRate": 88.51606075606762,
     "accurracy": 100,
-    "accuracy": 117.49440101553499
+    "accuracy": 117.49440178510118
    },
    {
     "planetIndex": 35,
     "missionsWon": 942860,
-    "missionsLost": 606107,
+    "missionsLost": 606112,
     "missionTime": 3303247097,
     "bugKills": 29611,
     "automatonKills": 30,
@@ -674,7 +674,7 @@
     "deaths": 8033448,
     "revives": 0,
     "friendlies": 969157,
-    "missionSuccessRate": 60.870244491974326,
+    "missionSuccessRate": 60.870048006032384,
     "accurracy": 90,
     "accuracy": 90.4038643056038
    },
@@ -968,7 +968,7 @@
    },
    {
     "planetIndex": 52,
-    "missionsWon": 2370913,
+    "missionsWon": 2370919,
     "missionsLost": 165171,
     "missionTime": 7423517947,
     "bugKills": 1148500741,
@@ -980,7 +980,7 @@
     "deaths": 16364636,
     "revives": 0,
     "friendlies": 2654850,
-    "missionSuccessRate": 93.48716367438932,
+    "missionSuccessRate": 93.48717908276126,
     "accurracy": 100,
     "accuracy": 120.69708399505255
    },
@@ -1076,21 +1076,21 @@
    },
    {
     "planetIndex": 58,
-    "missionsWon": 1753102,
+    "missionsWon": 1753103,
     "missionsLost": 184286,
-    "missionTime": 5994787986,
+    "missionTime": 5994790543,
     "bugKills": 21845,
     "automatonKills": 235,
-    "illuminateKills": 710066342,
-    "bulletsFired": 4770205224,
-    "bulletsHit": 4751540636,
-    "timePlayed": 5994787986,
-    "deaths": 13272413,
+    "illuminateKills": 710066359,
+    "bulletsFired": 4770205308,
+    "bulletsHit": 4751540736,
+    "timePlayed": 5994790543,
+    "deaths": 13272417,
     "revives": 0,
     "friendlies": 1661894,
-    "missionSuccessRate": 90.48791465622787,
+    "missionSuccessRate": 90.48791956597255,
     "accurracy": 99,
-    "accuracy": 99.60872568110709
+    "accuracy": 99.6087260234125
    },
    {
     "planetIndex": 59,
@@ -1292,21 +1292,21 @@
    },
    {
     "planetIndex": 70,
-    "missionsWon": 2062101,
+    "missionsWon": 2062104,
     "missionsLost": 244590,
-    "missionTime": 7389308731,
+    "missionTime": 7389319087,
     "bugKills": 4618,
-    "automatonKills": 514597414,
+    "automatonKills": 514598259,
     "illuminateKills": 195,
-    "bulletsFired": 2607199850,
-    "bulletsHit": 2842649412,
-    "timePlayed": 7389308731,
-    "deaths": 16252750,
+    "bulletsFired": 2607201995,
+    "bulletsHit": 2842651582,
+    "timePlayed": 7389319087,
+    "deaths": 16252766,
     "revives": 0,
     "friendlies": 1526313,
-    "missionSuccessRate": 89.39649914097727,
+    "missionSuccessRate": 89.39651293149417,
     "accurracy": 100,
-    "accuracy": 109.03074468955649
+    "accuracy": 109.03073821865496
    },
    {
     "planetIndex": 71,
@@ -1652,57 +1652,57 @@
    },
    {
     "planetIndex": 90,
-    "missionsWon": 3378563,
-    "missionsLost": 369578,
-    "missionTime": 10579463721,
+    "missionsWon": 3378567,
+    "missionsLost": 369579,
+    "missionTime": 10579469250,
     "bugKills": 4132,
     "automatonKills": 2899,
-    "illuminateKills": 1298565443,
-    "bulletsFired": 11879801041,
-    "bulletsHit": 10498117518,
-    "timePlayed": 10579463721,
-    "deaths": 23686848,
+    "illuminateKills": 1298566063,
+    "bulletsFired": 11879802822,
+    "bulletsHit": 10498119186,
+    "timePlayed": 10579469250,
+    "deaths": 23686872,
     "revives": 0,
     "friendlies": 2918015,
-    "missionSuccessRate": 90.13969858657931,
+    "missionSuccessRate": 90.1396850602938,
     "accurracy": 88,
-    "accuracy": 88.36947253382877
+    "accuracy": 88.36947332626359
    },
    {
     "planetIndex": 91,
-    "missionsWon": 875169,
+    "missionsWon": 875170,
     "missionsLost": 85767,
-    "missionTime": 3428245784,
+    "missionTime": 3428250182,
     "bugKills": 302,
     "automatonKills": 727,
-    "illuminateKills": 556116905,
-    "bulletsFired": 2881081312,
-    "bulletsHit": 2672078978,
-    "timePlayed": 3428245784,
-    "deaths": 5808319,
+    "illuminateKills": 556117224,
+    "bulletsFired": 2881085103,
+    "bulletsHit": 2672082818,
+    "timePlayed": 3428250182,
+    "deaths": 5808321,
     "revives": 0,
     "friendlies": 1135232,
-    "missionSuccessRate": 91.0746397262669,
+    "missionSuccessRate": 91.07464901445151,
     "accurracy": 92,
-    "accuracy": 92.7456981818082
+    "accuracy": 92.74570942793841
    },
    {
     "planetIndex": 92,
-    "missionsWon": 2548913,
-    "missionsLost": 319225,
-    "missionTime": 7247758600,
+    "missionsWon": 2548928,
+    "missionsLost": 319228,
+    "missionTime": 7247810332,
     "bugKills": 10733,
     "automatonKills": 1514,
-    "illuminateKills": 834408088,
-    "bulletsFired": 4924727156,
-    "bulletsHit": 5077797814,
-    "timePlayed": 7247758600,
-    "deaths": 18043975,
+    "illuminateKills": 834413437,
+    "bulletsFired": 4924756332,
+    "bulletsHit": 5077831742,
+    "timePlayed": 7247810332,
+    "deaths": 18044107,
     "revives": 0,
-    "friendlies": 1998237,
-    "missionSuccessRate": 88.86995674545646,
+    "friendlies": 1998263,
+    "missionSuccessRate": 88.86992199866395,
     "accurracy": 100,
-    "accuracy": 103.10820585894808
+    "accuracy": 103.10828393691986
    },
    {
     "planetIndex": 93,
@@ -1742,21 +1742,21 @@
    },
    {
     "planetIndex": 95,
-    "missionsWon": 2638422,
-    "missionsLost": 430719,
-    "missionTime": 8908304763,
+    "missionsWon": 2638466,
+    "missionsLost": 430726,
+    "missionTime": 8908459010,
     "bugKills": 67780,
     "automatonKills": 3502,
-    "illuminateKills": 1085332792,
-    "bulletsFired": 6489139791,
-    "bulletsHit": 6575158966,
-    "timePlayed": 8908304763,
-    "deaths": 21552296,
+    "illuminateKills": 1085347957,
+    "bulletsFired": 6489250120,
+    "bulletsHit": 6575269534,
+    "timePlayed": 8908459010,
+    "deaths": 21552618,
     "revives": 0,
-    "friendlies": 2700399,
-    "missionSuccessRate": 85.96613840810832,
+    "friendlies": 2700462,
+    "missionSuccessRate": 85.9661435322391,
     "accurracy": 100,
-    "accuracy": 101.3255867151961
+    "accuracy": 101.32556786083629
    },
    {
     "planetIndex": 96,
@@ -1814,39 +1814,39 @@
    },
    {
     "planetIndex": 99,
-    "missionsWon": 369446,
-    "missionsLost": 43692,
-    "missionTime": 1250563632,
+    "missionsWon": 369447,
+    "missionsLost": 43693,
+    "missionTime": 1250569862,
     "bugKills": 76788,
     "automatonKills": 8500,
-    "illuminateKills": 161977232,
-    "bulletsFired": 844246708,
-    "bulletsHit": 829056914,
-    "timePlayed": 1250563632,
-    "deaths": 2552671,
+    "illuminateKills": 161977684,
+    "bulletsFired": 844252333,
+    "bulletsHit": 829062010,
+    "timePlayed": 1250569862,
+    "deaths": 2552688,
     "revives": 0,
-    "friendlies": 385371,
-    "missionSuccessRate": 89.42435699451515,
+    "friendlies": 385372,
+    "missionSuccessRate": 89.42416614222782,
     "accurracy": 98,
-    "accuracy": 98.20078729877618
+    "accuracy": 98.20073662739881
    },
    {
     "planetIndex": 100,
-    "missionsWon": 6939851,
-    "missionsLost": 380561,
-    "missionTime": 23415921487,
-    "bugKills": 3512820513,
+    "missionsWon": 6939874,
+    "missionsLost": 380562,
+    "missionTime": 23415976103,
+    "bugKills": 3512830292,
     "automatonKills": 4660,
     "illuminateKills": 1718,
-    "bulletsFired": 12589065393,
-    "bulletsHit": 15007584388,
-    "timePlayed": 23415921487,
-    "deaths": 44166698,
+    "bulletsFired": 12589098549,
+    "bulletsHit": 15007622378,
+    "timePlayed": 23415976103,
+    "deaths": 44166822,
     "revives": 0,
-    "friendlies": 7192002,
-    "missionSuccessRate": 94.80137183535572,
+    "friendlies": 7192018,
+    "missionSuccessRate": 94.80137521863452,
     "accurracy": 100,
-    "accuracy": 119.2112672346971
+    "accuracy": 119.21125503614485
    },
    {
     "planetIndex": 101,
@@ -2031,20 +2031,20 @@
    {
     "planetIndex": 111,
     "missionsWon": 3034072,
-    "missionsLost": 190231,
-    "missionTime": 9416509004,
+    "missionsLost": 190232,
+    "missionTime": 9416510707,
     "bugKills": 5179,
-    "automatonKills": 847578188,
+    "automatonKills": 847578249,
     "illuminateKills": 5569,
-    "bulletsFired": 4468116033,
-    "bulletsHit": 4572099138,
-    "timePlayed": 9416509004,
-    "deaths": 18968636,
+    "bulletsFired": 4468117495,
+    "bulletsHit": 4572100814,
+    "timePlayed": 9416510707,
+    "deaths": 18968644,
     "revives": 0,
     "friendlies": 2088988,
-    "missionSuccessRate": 94.10008922858677,
+    "missionSuccessRate": 94.10006004396608,
     "accurracy": 100,
-    "accuracy": 102.32722481314308
+    "accuracy": 102.32722884114756
    },
    {
     "planetIndex": 112,
@@ -2084,21 +2084,21 @@
    },
    {
     "planetIndex": 114,
-    "missionsWon": 6327621,
-    "missionsLost": 999425,
-    "missionTime": 23121642745,
+    "missionsWon": 6327628,
+    "missionsLost": 999427,
+    "missionTime": 23121662940,
     "bugKills": 8321,
-    "automatonKills": 1543891661,
+    "automatonKills": 1543893463,
     "illuminateKills": 24071,
-    "bulletsFired": 8512954060,
-    "bulletsHit": 9327055772,
-    "timePlayed": 23121642745,
-    "deaths": 57642153,
+    "bulletsFired": 8512962885,
+    "bulletsHit": 9327063488,
+    "timePlayed": 23121662940,
+    "deaths": 57642213,
     "revives": 0,
-    "friendlies": 4705179,
-    "missionSuccessRate": 86.35978264637617,
+    "friendlies": 4705191,
+    "missionSuccessRate": 86.35977210489071,
     "accurracy": 100,
-    "accuracy": 109.56309297879613
+    "accuracy": 109.56307003798243
    },
    {
     "planetIndex": 115,
@@ -2264,21 +2264,21 @@
    },
    {
     "planetIndex": 124,
-    "missionsWon": 17086757,
-    "missionsLost": 1812387,
-    "missionTime": 57600863398,
-    "bugKills": 7584228837,
+    "missionsWon": 17086789,
+    "missionsLost": 1812388,
+    "missionTime": 57600966010,
+    "bugKills": 7584242730,
     "automatonKills": 27086,
     "illuminateKills": 6219,
-    "bulletsFired": 36240389023,
-    "bulletsHit": 41302641104,
-    "timePlayed": 57600863398,
-    "deaths": 142072332,
+    "bulletsFired": 36240453326,
+    "bulletsHit": 41302710684,
+    "timePlayed": 57600966010,
+    "deaths": 142072543,
     "revives": 0,
-    "friendlies": 19653627,
-    "missionSuccessRate": 90.41021646271386,
+    "friendlies": 19653671,
+    "missionSuccessRate": 90.41022791627381,
     "accurracy": 100,
-    "accuracy": 113.96853681064857
+    "accuracy": 113.96852658674715
    },
    {
     "planetIndex": 125,
@@ -2354,39 +2354,39 @@
    },
    {
     "planetIndex": 129,
-    "missionsWon": 17983955,
+    "missionsWon": 17983956,
     "missionsLost": 1026882,
-    "missionTime": 62767171916,
-    "bugKills": 8689292948,
+    "missionTime": 62767173813,
+    "bugKills": 8689293485,
     "automatonKills": 61322,
     "illuminateKills": 62125,
-    "bulletsFired": 35761917149,
-    "bulletsHit": 43043320518,
-    "timePlayed": 62767171916,
-    "deaths": 122718325,
+    "bulletsFired": 35761921466,
+    "bulletsHit": 43043324996,
+    "timePlayed": 62767173813,
+    "deaths": 122718328,
     "revives": 0,
     "friendlies": 20928165,
-    "missionSuccessRate": 94.59843877468414,
+    "missionSuccessRate": 94.59843905881476,
     "accurracy": 100,
-    "accuracy": 120.36077467173374
+    "accuracy": 120.36077266408256
    },
    {
     "planetIndex": 130,
-    "missionsWon": 7042767,
+    "missionsWon": 7042768,
     "missionsLost": 446219,
-    "missionTime": 25094685791,
-    "bugKills": 3282122926,
+    "missionTime": 25094686811,
+    "bugKills": 3282123111,
     "automatonKills": 2483,
     "illuminateKills": 344923847,
-    "bulletsFired": 14677825308,
-    "bulletsHit": 17600291794,
-    "timePlayed": 25094685791,
-    "deaths": 49331657,
+    "bulletsFired": 14677825394,
+    "bulletsHit": 17600291882,
+    "timePlayed": 25094686811,
+    "deaths": 49331663,
     "revives": 0,
     "friendlies": 7993647,
-    "missionSuccessRate": 94.04166331730357,
+    "missionSuccessRate": 94.04166411291675,
     "accurracy": 100,
-    "accuracy": 119.91075942569734
+    "accuracy": 119.91075932266264
    },
    {
     "planetIndex": 131,
@@ -2516,57 +2516,57 @@
    },
    {
     "planetIndex": 138,
-    "missionsWon": 3305757,
-    "missionsLost": 472466,
-    "missionTime": 12007998335,
+    "missionsWon": 3305765,
+    "missionsLost": 472467,
+    "missionTime": 12008026929,
     "bugKills": 4105,
     "automatonKills": 283,
-    "illuminateKills": 1915176741,
-    "bulletsFired": 8504177633,
-    "bulletsHit": 9037562810,
-    "timePlayed": 12007998335,
-    "deaths": 31137817,
+    "illuminateKills": 1915181982,
+    "bulletsFired": 8504209892,
+    "bulletsHit": 9037591780,
+    "timePlayed": 12008026929,
+    "deaths": 31137894,
     "revives": 0,
-    "friendlies": 4273317,
-    "missionSuccessRate": 87.49502080740072,
+    "friendlies": 4273334,
+    "missionSuccessRate": 87.49502412768723,
     "accurracy": 100,
-    "accuracy": 106.27203710950519
+    "accuracy": 106.27197464283846
    },
    {
     "planetIndex": 139,
-    "missionsWon": 4968001,
+    "missionsWon": 4968011,
     "missionsLost": 622154,
-    "missionTime": 18137371160,
+    "missionTime": 18137399596,
     "bugKills": 792,
     "automatonKills": 6372,
-    "illuminateKills": 2858269262,
-    "bulletsFired": 14627867649,
-    "bulletsHit": 14572459704,
-    "timePlayed": 18137371160,
-    "deaths": 43210400,
+    "illuminateKills": 2858275208,
+    "bulletsFired": 14627889364,
+    "bulletsHit": 14572482702,
+    "timePlayed": 18137399596,
+    "deaths": 43210485,
     "revives": 0,
-    "friendlies": 5949912,
-    "missionSuccessRate": 88.87054115673,
+    "friendlies": 5949922,
+    "missionSuccessRate": 88.87056106572882,
     "accurracy": 99,
-    "accuracy": 99.6212165277296
+    "accuracy": 99.62122586094779
    },
    {
     "planetIndex": 140,
-    "missionsWon": 4500212,
-    "missionsLost": 537790,
-    "missionTime": 16636671812,
+    "missionsWon": 4500221,
+    "missionsLost": 537791,
+    "missionTime": 16636706275,
     "bugKills": 2393,
     "automatonKills": 2789,
-    "illuminateKills": 2203786502,
-    "bulletsFired": 13867263486,
-    "bulletsHit": 13989959444,
-    "timePlayed": 16636671812,
-    "deaths": 33638949,
+    "illuminateKills": 2203790914,
+    "bulletsFired": 13867297260,
+    "bulletsHit": 13989997300,
+    "timePlayed": 16636706275,
+    "deaths": 33639002,
     "revives": 0,
-    "friendlies": 5299613,
-    "missionSuccessRate": 89.32533174857811,
+    "friendlies": 5299625,
+    "missionSuccessRate": 89.32533308773381,
     "accurracy": 100,
-    "accuracy": 100.8847885390212
+    "accuracy": 100.88481582026749
    },
    {
     "planetIndex": 141,
@@ -2606,21 +2606,21 @@
    },
    {
     "planetIndex": 143,
-    "missionsWon": 615684,
-    "missionsLost": 105957,
-    "missionTime": 2308123075,
+    "missionsWon": 615686,
+    "missionsLost": 105958,
+    "missionTime": 2308131327,
     "bugKills": 758,
     "automatonKills": 120492,
-    "illuminateKills": 313081050,
-    "bulletsFired": 1711308590,
-    "bulletsHit": 1657661340,
-    "timePlayed": 2308123075,
-    "deaths": 5145748,
+    "illuminateKills": 313081571,
+    "bulletsFired": 1711312401,
+    "bulletsHit": 1657664832,
+    "timePlayed": 2308131327,
+    "deaths": 5145776,
     "revives": 0,
-    "friendlies": 794905,
-    "missionSuccessRate": 85.31721451525065,
+    "friendlies": 794906,
+    "missionSuccessRate": 85.31713698166963,
     "accurracy": 96,
-    "accuracy": 96.86513289809409
+    "accuracy": 96.86512123860896
    },
    {
     "planetIndex": 144,
@@ -2858,57 +2858,57 @@
    },
    {
     "planetIndex": 157,
-    "missionsWon": 8968338,
-    "missionsLost": 844874,
-    "missionTime": 29321317185,
+    "missionsWon": 8968386,
+    "missionsLost": 844879,
+    "missionTime": 29321462581,
     "bugKills": 916,
-    "automatonKills": 2422742095,
+    "automatonKills": 2422754814,
     "illuminateKills": 3933,
-    "bulletsFired": 12346720051,
-    "bulletsHit": 13386049902,
-    "timePlayed": 29321317185,
-    "deaths": 57660634,
+    "bulletsFired": 12346773797,
+    "bulletsHit": 13386105238,
+    "timePlayed": 29321462581,
+    "deaths": 57660922,
     "revives": 0,
-    "friendlies": 5996504,
-    "missionSuccessRate": 91.39044382206356,
+    "friendlies": 5996537,
+    "missionSuccessRate": 91.39043936956762,
     "accurracy": 100,
-    "accuracy": 108.417861964205
+    "accuracy": 108.41783819877331
    },
    {
     "planetIndex": 158,
-    "missionsWon": 17459476,
-    "missionsLost": 1252800,
-    "missionTime": 58467608383,
+    "missionsWon": 17459497,
+    "missionsLost": 1252807,
+    "missionTime": 58467697135,
     "bugKills": 12354,
-    "automatonKills": 4839654219,
+    "automatonKills": 4839661348,
     "illuminateKills": 2645,
-    "bulletsFired": 24950334969,
-    "bulletsHit": 26994690054,
-    "timePlayed": 58467608383,
-    "deaths": 122482989,
+    "bulletsFired": 24950375380,
+    "bulletsHit": 26994733654,
+    "timePlayed": 58467697135,
+    "deaths": 122483289,
     "revives": 0,
-    "friendlies": 12057743,
-    "missionSuccessRate": 93.30492987598087,
+    "friendlies": 12057765,
+    "missionSuccessRate": 93.30490248555175,
     "accurracy": 100,
-    "accuracy": 108.19369795050866
+    "accuracy": 108.19369746091571
    },
    {
     "planetIndex": 159,
-    "missionsWon": 6152690,
-    "missionsLost": 782039,
-    "missionTime": 21351647520,
+    "missionsWon": 6152716,
+    "missionsLost": 782040,
+    "missionTime": 21351722475,
     "bugKills": 2717,
-    "automatonKills": 1505762019,
+    "automatonKills": 1505767822,
     "illuminateKills": 2019,
-    "bulletsFired": 7490711657,
-    "bulletsHit": 8198238514,
-    "timePlayed": 21351647520,
-    "deaths": 45347775,
+    "bulletsFired": 7490752559,
+    "bulletsHit": 8198283250,
+    "timePlayed": 21351722475,
+    "deaths": 45347915,
     "revives": 0,
-    "friendlies": 4826693,
-    "missionSuccessRate": 88.72286141246471,
+    "friendlies": 4826712,
+    "missionSuccessRate": 88.72289089911743,
     "accurracy": 100,
-    "accuracy": 109.44538902840857
+    "accuracy": 109.44538863655183
    },
    {
     "planetIndex": 160,
@@ -3110,21 +3110,21 @@
    },
    {
     "planetIndex": 171,
-    "missionsWon": 16616583,
+    "missionsWon": 16616585,
     "missionsLost": 1303250,
-    "missionTime": 57762091535,
-    "bugKills": 8008537608,
+    "missionTime": 57762094249,
+    "bugKills": 8008538035,
     "automatonKills": 101861,
     "illuminateKills": 470,
-    "bulletsFired": 35245407636,
-    "bulletsHit": 41232757204,
-    "timePlayed": 57762091535,
-    "deaths": 128967065,
+    "bulletsFired": 35245410882,
+    "bulletsHit": 41232761832,
+    "timePlayed": 57762094249,
+    "deaths": 128967068,
     "revives": 0,
     "friendlies": 20283401,
-    "missionSuccessRate": 92.72733177814771,
+    "missionSuccessRate": 92.7273325898369,
     "accurracy": 100,
-    "accuracy": 116.98760198728546
+    "accuracy": 116.98760434385451
    },
    {
     "planetIndex": 172,
@@ -3236,21 +3236,21 @@
    },
    {
     "planetIndex": 178,
-    "missionsWon": 1114602,
-    "missionsLost": 181786,
-    "missionTime": 4312192401,
+    "missionsWon": 1114603,
+    "missionsLost": 181787,
+    "missionTime": 4312193727,
     "bugKills": 786,
     "automatonKills": 4979,
-    "illuminateKills": 651718102,
-    "bulletsFired": 3192527021,
-    "bulletsHit": 3126856264,
-    "timePlayed": 4312192401,
-    "deaths": 9224441,
+    "illuminateKills": 651718185,
+    "bulletsFired": 3192527904,
+    "bulletsHit": 3126857134,
+    "timePlayed": 4312193727,
+    "deaths": 9224446,
     "revives": 0,
     "friendlies": 1357248,
-    "missionSuccessRate": 85.97750056310302,
+    "missionSuccessRate": 85.97744505897144,
     "accurracy": 97,
-    "accuracy": 97.94298508460454
+    "accuracy": 97.94298524633976
    },
    {
     "planetIndex": 179,
@@ -3272,57 +3272,57 @@
    },
    {
     "planetIndex": 180,
-    "missionsWon": 3654530,
-    "missionsLost": 424047,
-    "missionTime": 13347378330,
+    "missionsWon": 3654534,
+    "missionsLost": 424048,
+    "missionTime": 13347387286,
     "bugKills": 3625,
     "automatonKills": 24923,
-    "illuminateKills": 1607197842,
-    "bulletsFired": 9265848632,
-    "bulletsHit": 9557434962,
-    "timePlayed": 13347378330,
-    "deaths": 30683342,
+    "illuminateKills": 1607198517,
+    "bulletsFired": 9265852764,
+    "bulletsHit": 9557438570,
+    "timePlayed": 13347387286,
+    "deaths": 30683364,
     "revives": 0,
-    "friendlies": 3664464,
-    "missionSuccessRate": 89.6030649905592,
+    "friendlies": 3664467,
+    "missionSuccessRate": 89.60305321800567,
     "accurracy": 100,
-    "accuracy": 103.14689287058924
+    "accuracy": 103.14688581209577
    },
    {
     "planetIndex": 181,
-    "missionsWon": 2863420,
-    "missionsLost": 272595,
-    "missionTime": 10670210321,
+    "missionsWon": 2863424,
+    "missionsLost": 272596,
+    "missionTime": 10670227092,
     "bugKills": 9477,
     "automatonKills": 50110,
-    "illuminateKills": 1357791792,
-    "bulletsFired": 8182413816,
-    "bulletsHit": 8737419990,
-    "timePlayed": 10670210321,
-    "deaths": 21446982,
+    "illuminateKills": 1357794128,
+    "bulletsFired": 8182423340,
+    "bulletsHit": 8737429522,
+    "timePlayed": 10670227092,
+    "deaths": 21447027,
     "revives": 0,
-    "friendlies": 3208241,
-    "missionSuccessRate": 91.30759897513245,
+    "friendlies": 3208250,
+    "missionSuccessRate": 91.30758094655008,
     "accurracy": 100,
-    "accuracy": 106.78291499893018
+    "accuracy": 106.78290720167016
    },
    {
     "planetIndex": 182,
-    "missionsWon": 3187389,
-    "missionsLost": 286550,
-    "missionTime": 10933102329,
+    "missionsWon": 3187396,
+    "missionsLost": 286552,
+    "missionTime": 10933127963,
     "bugKills": 5758,
     "automatonKills": 48203,
-    "illuminateKills": 1325618256,
-    "bulletsFired": 8013392156,
-    "bulletsHit": 8441150742,
-    "timePlayed": 10933102329,
-    "deaths": 21966124,
+    "illuminateKills": 1325621469,
+    "bulletsFired": 8013406398,
+    "bulletsHit": 8441167126,
+    "timePlayed": 10933127963,
+    "deaths": 21966202,
     "revives": 0,
-    "friendlies": 3132591,
-    "missionSuccessRate": 91.75143835283234,
+    "friendlies": 3132608,
+    "missionSuccessRate": 91.75140215109725,
     "accurracy": 100,
-    "accuracy": 105.33804633134942
+    "accuracy": 105.33806357439654
    },
    {
     "planetIndex": 183,
@@ -3380,39 +3380,39 @@
    },
    {
     "planetIndex": 186,
-    "missionsWon": 2280444,
+    "missionsWon": 2280445,
     "missionsLost": 235696,
-    "missionTime": 8800016385,
+    "missionTime": 8800020569,
     "bugKills": 10626,
     "automatonKills": 32773,
-    "illuminateKills": 1095506036,
-    "bulletsFired": 6395461271,
-    "bulletsHit": 6928441248,
-    "timePlayed": 8800016385,
-    "deaths": 16991563,
+    "illuminateKills": 1095506409,
+    "bulletsFired": 6395463208,
+    "bulletsHit": 6928443582,
+    "timePlayed": 8800020569,
+    "deaths": 16991566,
     "revives": 0,
-    "friendlies": 2634784,
-    "missionSuccessRate": 90.63263570389564,
+    "friendlies": 2634788,
+    "missionSuccessRate": 90.63263942680477,
     "accurracy": 100,
-    "accuracy": 108.33372221979954
+    "accuracy": 108.33372590328254
    },
    {
     "planetIndex": 187,
-    "missionsWon": 278306,
+    "missionsWon": 278307,
     "missionsLost": 34880,
-    "missionTime": 1025719962,
+    "missionTime": 1025724678,
     "bugKills": 81,
     "automatonKills": 75493,
-    "illuminateKills": 149318318,
-    "bulletsFired": 702951715,
-    "bulletsHit": 672443764,
-    "timePlayed": 1025719962,
-    "deaths": 1842117,
+    "illuminateKills": 149318878,
+    "bulletsFired": 702953529,
+    "bulletsHit": 672446118,
+    "timePlayed": 1025724678,
+    "deaths": 1842126,
     "revives": 0,
-    "friendlies": 354160,
-    "missionSuccessRate": 88.8628482754657,
+    "friendlies": 354163,
+    "missionSuccessRate": 88.86288383617456,
     "accurracy": 95,
-    "accuracy": 95.66002182667695
+    "accuracy": 95.66010984489986
    },
    {
     "planetIndex": 188,
@@ -3614,57 +3614,57 @@
    },
    {
     "planetIndex": 199,
-    "missionsWon": 12578312,
-    "missionsLost": 1126058,
-    "missionTime": 44425604108,
+    "missionsWon": 12579228,
+    "missionsLost": 1126143,
+    "missionTime": 44429126844,
     "bugKills": 7554,
-    "automatonKills": 5839586437,
+    "automatonKills": 5839919878,
     "illuminateKills": 3315,
-    "bulletsFired": 20530022156,
-    "bulletsHit": 23960460164,
-    "timePlayed": 44425604108,
-    "deaths": 99465377,
+    "bulletsFired": 20531343001,
+    "bulletsHit": 23961957192,
+    "timePlayed": 44429126844,
+    "deaths": 99472345,
     "revives": 0,
-    "friendlies": 9803783,
-    "missionSuccessRate": 91.78321951319178,
+    "friendlies": 9804711,
+    "missionSuccessRate": 91.7831994478661,
     "accurracy": 100,
-    "accuracy": 116.70937314111684
+    "accuracy": 116.70915629256649
    },
    {
     "planetIndex": 200,
-    "missionsWon": 14591332,
-    "missionsLost": 1163254,
-    "missionTime": 52270265115,
+    "missionsWon": 14591340,
+    "missionsLost": 1163261,
+    "missionTime": 52270294129,
     "bugKills": 8985,
-    "automatonKills": 4373143955,
+    "automatonKills": 4373147039,
     "illuminateKills": 4867,
-    "bulletsFired": 21978655751,
-    "bulletsHit": 24443484754,
-    "timePlayed": 52270265115,
-    "deaths": 105921396,
+    "bulletsFired": 21978666025,
+    "bulletsHit": 24443496744,
+    "timePlayed": 52270294129,
+    "deaths": 105921480,
     "revives": 0,
-    "friendlies": 11592111,
-    "missionSuccessRate": 92.61641023128124,
+    "friendlies": 11592112,
+    "missionSuccessRate": 92.61637282975303,
     "accurracy": 100,
-    "accuracy": 111.21464857052439
+    "accuracy": 111.21465113577109
    },
    {
     "planetIndex": 201,
-    "missionsWon": 5305200,
-    "missionsLost": 673649,
-    "missionTime": 20742261332,
+    "missionsWon": 5305208,
+    "missionsLost": 673652,
+    "missionTime": 20742288976,
     "bugKills": 2827,
-    "automatonKills": 1592936613,
+    "automatonKills": 1592938961,
     "illuminateKills": 154,
-    "bulletsFired": 8480357465,
-    "bulletsHit": 9321403524,
-    "timePlayed": 20742261332,
-    "deaths": 50700442,
+    "bulletsFired": 8480367088,
+    "bulletsHit": 9321414648,
+    "timePlayed": 20742288976,
+    "deaths": 50700495,
     "revives": 0,
-    "friendlies": 5111206,
-    "missionSuccessRate": 88.7327979014021,
+    "friendlies": 5111213,
+    "missionSuccessRate": 88.73276845418691,
     "accurracy": 100,
-    "accuracy": 109.91757791427015
+    "accuracy": 109.91758436011703
    },
    {
     "planetIndex": 202,
@@ -3686,21 +3686,21 @@
    },
    {
     "planetIndex": 203,
-    "missionsWon": 13272417,
-    "missionsLost": 1861848,
-    "missionTime": 46198377351,
+    "missionsWon": 13272446,
+    "missionsLost": 1861853,
+    "missionTime": 46198470549,
     "bugKills": 4432,
-    "automatonKills": 3216521523,
+    "automatonKills": 3216528180,
     "illuminateKills": 9120,
-    "bulletsFired": 19766085816,
-    "bulletsHit": 20490979082,
-    "timePlayed": 46198377351,
-    "deaths": 125107856,
+    "bulletsFired": 19766125164,
+    "bulletsHit": 20491016590,
+    "timePlayed": 46198470549,
+    "deaths": 125108062,
     "revives": 0,
-    "friendlies": 11273383,
-    "missionSuccessRate": 87.69779701888397,
+    "friendlies": 11273425,
+    "missionSuccessRate": 87.69779161889163,
     "accurracy": 100,
-    "accuracy": 103.66735869077945
+    "accuracy": 103.66734208139208
    },
    {
     "planetIndex": 204,
@@ -3722,21 +3722,21 @@
    },
    {
     "planetIndex": 205,
-    "missionsWon": 1623474,
+    "missionsWon": 1623483,
     "missionsLost": 265895,
-    "missionTime": 5374784855,
+    "missionTime": 5374802615,
     "bugKills": 41751,
-    "automatonKills": 337068391,
+    "automatonKills": 337069811,
     "illuminateKills": 1858,
-    "bulletsFired": 1996503610,
-    "bulletsHit": 2188852542,
-    "timePlayed": 5374784855,
-    "deaths": 11379826,
+    "bulletsFired": 1996512403,
+    "bulletsHit": 2188861848,
+    "timePlayed": 5374802615,
+    "deaths": 11379857,
     "revives": 0,
-    "friendlies": 1362222,
-    "missionSuccessRate": 85.92678296298924,
+    "friendlies": 1362227,
+    "missionSuccessRate": 85.9268500003705,
     "accurracy": 100,
-    "accuracy": 109.63428921623637
+    "accuracy": 109.63427247989902
    },
    {
     "planetIndex": 206,
@@ -3758,21 +3758,21 @@
    },
    {
     "planetIndex": 207,
-    "missionsWon": 7001695,
+    "missionsWon": 7001705,
     "missionsLost": 628910,
-    "missionTime": 24705857112,
+    "missionTime": 24705884016,
     "bugKills": 8702,
-    "automatonKills": 2182766334,
+    "automatonKills": 2182768832,
     "illuminateKills": 5386,
-    "bulletsFired": 9966018427,
-    "bulletsHit": 10998465152,
-    "timePlayed": 24705857112,
-    "deaths": 52404334,
+    "bulletsFired": 9966030134,
+    "bulletsHit": 10998476878,
+    "timePlayed": 24705884016,
+    "deaths": 52404379,
     "revives": 0,
-    "friendlies": 5599394,
-    "missionSuccessRate": 91.75805850256958,
+    "friendlies": 5599397,
+    "missionSuccessRate": 91.7580693037193,
     "accurracy": 100,
-    "accuracy": 110.35967104177622
+    "accuracy": 110.35965906301763
    },
    {
     "planetIndex": 208,
@@ -3830,21 +3830,21 @@
    },
    {
     "planetIndex": 211,
-    "missionsWon": 13701897,
-    "missionsLost": 1169927,
-    "missionTime": 40802344972,
-    "bugKills": 5549709782,
+    "missionsWon": 13701925,
+    "missionsLost": 1169928,
+    "missionTime": 40802414938,
+    "bugKills": 5549719844,
     "automatonKills": 10197,
     "illuminateKills": 3702,
-    "bulletsFired": 27148406917,
-    "bulletsHit": 30556512672,
-    "timePlayed": 40802344972,
-    "deaths": 95765651,
+    "bulletsFired": 27148445119,
+    "bulletsHit": 30556558622,
+    "timePlayed": 40802414938,
+    "deaths": 95765809,
     "revives": 0,
-    "friendlies": 14124624,
-    "missionSuccessRate": 92.13326489070877,
+    "friendlies": 14124656,
+    "missionSuccessRate": 92.13327350667062,
     "accurracy": 100,
-    "accuracy": 112.55361231846679
+    "accuracy": 112.5536231930086
    },
    {
     "planetIndex": 212,
@@ -3866,75 +3866,75 @@
    },
    {
     "planetIndex": 213,
-    "missionsWon": 150181,
-    "missionsLost": 6762,
-    "missionTime": 486252310,
-    "bugKills": 81782457,
+    "missionsWon": 150233,
+    "missionsLost": 6764,
+    "missionTime": 486411897,
+    "bugKills": 81807477,
     "automatonKills": 49,
     "illuminateKills": 8,
-    "bulletsFired": 300890740,
-    "bulletsHit": 372906560,
-    "timePlayed": 486252310,
-    "deaths": 750672,
+    "bulletsFired": 300985291,
+    "bulletsHit": 373023936,
+    "timePlayed": 486411897,
+    "deaths": 750918,
     "revives": 0,
-    "friendlies": 146434,
-    "missionSuccessRate": 95.69142937244732,
+    "friendlies": 146477,
+    "missionSuccessRate": 95.69163741982331,
     "accurracy": 100,
-    "accuracy": 123.93420947417657
+    "accuracy": 123.93427424996659
    },
    {
     "planetIndex": 214,
-    "missionsWon": 19141146,
+    "missionsWon": 19141147,
     "missionsLost": 1387068,
-    "missionTime": 63706895326,
-    "bugKills": 8623254881,
+    "missionTime": 63706900490,
+    "bugKills": 8623255258,
     "automatonKills": 1316,
     "illuminateKills": 620,
-    "bulletsFired": 35188400533,
-    "bulletsHit": 41925213778,
-    "timePlayed": 63706895326,
-    "deaths": 142745696,
+    "bulletsFired": 35188407874,
+    "bulletsHit": 41925221762,
+    "timePlayed": 63706900490,
+    "deaths": 142745708,
     "revives": 0,
-    "friendlies": 24164566,
-    "missionSuccessRate": 93.24311408678807,
+    "friendlies": 24164567,
+    "missionSuccessRate": 93.24311441593923,
     "accurracy": 100,
-    "accuracy": 119.14498284365655
+    "accuracy": 119.14498067693961
    },
    {
     "planetIndex": 215,
-    "missionsWon": 4482752,
+    "missionsWon": 4482753,
     "missionsLost": 352336,
-    "missionTime": 14168494259,
-    "bugKills": 1655185458,
+    "missionTime": 14168496201,
+    "bugKills": 1655185750,
     "automatonKills": 1771,
     "illuminateKills": 706,
-    "bulletsFired": 7076122754,
-    "bulletsHit": 8077142780,
-    "timePlayed": 14168494259,
-    "deaths": 28264771,
+    "bulletsFired": 7076123713,
+    "bulletsHit": 8077143764,
+    "timePlayed": 14168496201,
+    "deaths": 28264774,
     "revives": 0,
     "friendlies": 4469793,
-    "missionSuccessRate": 92.71293511100522,
+    "missionSuccessRate": 92.71293661812636,
     "accurracy": 100,
-    "accuracy": 114.14644800267408
+    "accuracy": 114.14644643876085
    },
    {
     "planetIndex": 216,
-    "missionsWon": 912287,
-    "missionsLost": 78197,
-    "missionTime": 3208406057,
-    "bugKills": 437893659,
+    "missionsWon": 912312,
+    "missionsLost": 78198,
+    "missionTime": 3208469588,
+    "bugKills": 437906193,
     "automatonKills": 0,
     "illuminateKills": 0,
-    "bulletsFired": 1679765343,
-    "bulletsHit": 2017672544,
-    "timePlayed": 3208406057,
-    "deaths": 7717032,
+    "bulletsFired": 1679814758,
+    "bulletsHit": 2017726902,
+    "timePlayed": 3208469588,
+    "deaths": 7717181,
     "revives": 0,
-    "friendlies": 1218255,
-    "missionSuccessRate": 92.10517282459888,
+    "friendlies": 1218271,
+    "missionSuccessRate": 92.10527909864615,
     "accurracy": 100,
-    "accuracy": 120.11633365387276
+    "accuracy": 120.1160361516481
    },
    {
     "planetIndex": 217,
@@ -4064,39 +4064,39 @@
    },
    {
     "planetIndex": 224,
-    "missionsWon": 1493545,
-    "missionsLost": 174249,
-    "missionTime": 5013414212,
+    "missionsWon": 1493551,
+    "missionsLost": 174250,
+    "missionTime": 5013434286,
     "bugKills": 14117,
     "automatonKills": 7303,
-    "illuminateKills": 654732535,
-    "bulletsFired": 3590884153,
-    "bulletsHit": 3534662722,
-    "timePlayed": 5013414212,
-    "deaths": 10425968,
+    "illuminateKills": 654733884,
+    "bulletsFired": 3590891409,
+    "bulletsHit": 3534670162,
+    "timePlayed": 5013434286,
+    "deaths": 10426028,
     "revives": 0,
-    "friendlies": 1457944,
-    "missionSuccessRate": 89.55212694133688,
+    "friendlies": 1457965,
+    "missionSuccessRate": 89.55211083336681,
     "accurracy": 98,
-    "accuracy": 98.43432902303378
+    "accuracy": 98.43433731081117
    },
    {
     "planetIndex": 225,
-    "missionsWon": 172975,
+    "missionsWon": 172977,
     "missionsLost": 31195,
-    "missionTime": 597230604,
+    "missionTime": 597232568,
     "bugKills": 2251,
     "automatonKills": 1403,
-    "illuminateKills": 83970343,
-    "bulletsFired": 416613198,
-    "bulletsHit": 415651638,
-    "timePlayed": 597230604,
+    "illuminateKills": 83970491,
+    "bulletsFired": 416613808,
+    "bulletsHit": 415652330,
+    "timePlayed": 597232568,
     "deaths": 1486500,
     "revives": 0,
     "friendlies": 197510,
-    "missionSuccessRate": 84.7210657785179,
+    "missionSuccessRate": 84.7212154458006,
     "accurracy": 99,
-    "accuracy": 99.76919598212056
+    "accuracy": 99.76921600255746
    },
    {
     "planetIndex": 226,
@@ -4136,7 +4136,7 @@
    },
    {
     "planetIndex": 228,
-    "missionsWon": 2954885,
+    "missionsWon": 2954892,
     "missionsLost": 291602,
     "missionTime": 10584029998,
     "bugKills": 12411,
@@ -4148,7 +4148,7 @@
     "deaths": 21061420,
     "revives": 0,
     "friendlies": 3256070,
-    "missionSuccessRate": 91.01792183366206,
+    "missionSuccessRate": 91.01794120056898,
     "accurracy": 100,
     "accuracy": 101.93239128686655
    },
@@ -4156,19 +4156,19 @@
     "planetIndex": 229,
     "missionsWon": 320948,
     "missionsLost": 49648,
-    "missionTime": 1168524884,
+    "missionTime": 1168525468,
     "bugKills": 1171,
     "automatonKills": 542,
-    "illuminateKills": 175562439,
-    "bulletsFired": 863234107,
-    "bulletsHit": 846554294,
-    "timePlayed": 1168524884,
+    "illuminateKills": 175562461,
+    "bulletsFired": 863234136,
+    "bulletsHit": 846554330,
+    "timePlayed": 1168525468,
     "deaths": 2490911,
     "revives": 0,
     "friendlies": 401689,
     "missionSuccessRate": 86.60320132974991,
     "accurracy": 98,
-    "accuracy": 98.06775324738183
+    "accuracy": 98.06775412319885
    },
    {
     "planetIndex": 230,
@@ -4190,21 +4190,21 @@
    },
    {
     "planetIndex": 231,
-    "missionsWon": 1909317,
+    "missionsWon": 1909322,
     "missionsLost": 277577,
-    "missionTime": 7406820427,
+    "missionTime": 7406828191,
     "bugKills": 5355,
     "automatonKills": 5961,
-    "illuminateKills": 1348561157,
-    "bulletsFired": 6589488749,
-    "bulletsHit": 6532322978,
-    "timePlayed": 7406820427,
-    "deaths": 15635479,
+    "illuminateKills": 1348563578,
+    "bulletsFired": 6589503078,
+    "bulletsHit": 6532333708,
+    "timePlayed": 7406828191,
+    "deaths": 15635502,
     "revives": 0,
-    "friendlies": 2664395,
-    "missionSuccessRate": 87.30724945973604,
+    "friendlies": 2664397,
+    "missionSuccessRate": 87.30727847971032,
     "accurracy": 99,
-    "accuracy": 99.13247031480742
+    "accuracy": 99.13241758409875
    },
    {
     "planetIndex": 232,
@@ -4388,21 +4388,21 @@
    },
    {
     "planetIndex": 242,
-    "missionsWon": 4831770,
-    "missionsLost": 602374,
-    "missionTime": 9168364803,
+    "missionsWon": 4831789,
+    "missionsLost": 602375,
+    "missionTime": 9168409062,
     "bugKills": 21056,
-    "automatonKills": 784073617,
+    "automatonKills": 784076653,
     "illuminateKills": 120,
-    "bulletsFired": 4115165196,
-    "bulletsHit": 4338386364,
-    "timePlayed": 9168364803,
-    "deaths": 27996674,
+    "bulletsFired": 4115181568,
+    "bulletsHit": 4338402914,
+    "timePlayed": 9168409062,
+    "deaths": 27996740,
     "revives": 0,
-    "friendlies": 2844241,
-    "missionSuccessRate": 88.91501587002479,
+    "friendlies": 2844255,
+    "missionSuccessRate": 88.91503826531552,
     "accurracy": 100,
-    "accuracy": 105.42435497405971
+    "accuracy": 105.42433771903985
    },
    {
     "planetIndex": 243,
@@ -4514,21 +4514,21 @@
    },
    {
     "planetIndex": 249,
-    "missionsWon": 1399480,
-    "missionsLost": 138780,
-    "missionTime": 5576526182,
+    "missionsWon": 1399483,
+    "missionsLost": 138782,
+    "missionTime": 5576529105,
     "bugKills": 3721,
-    "automatonKills": 425427136,
+    "automatonKills": 425427590,
     "illuminateKills": 28505,
-    "bulletsFired": 2184378685,
-    "bulletsHit": 2441958452,
-    "timePlayed": 5576526182,
-    "deaths": 10622794,
+    "bulletsFired": 2184379499,
+    "bulletsHit": 2441959498,
+    "timePlayed": 5576529105,
+    "deaths": 10622813,
     "revives": 0,
     "friendlies": 1325337,
-    "missionSuccessRate": 90.97811813347548,
+    "missionSuccessRate": 90.97801744172817,
     "accurracy": 100,
-    "accuracy": 111.79190077108814
+    "accuracy": 111.79190699775012
    },
    {
     "planetIndex": 250,
@@ -4694,21 +4694,21 @@
    },
    {
     "planetIndex": 259,
-    "missionsWon": 10754851,
-    "missionsLost": 1565711,
-    "missionTime": 45641921414,
-    "bugKills": 5310179736,
+    "missionsWon": 10754883,
+    "missionsLost": 1565716,
+    "missionTime": 45642067668,
+    "bugKills": 5310200024,
     "automatonKills": 48993,
     "illuminateKills": 74390,
-    "bulletsFired": 31072864566,
-    "bulletsHit": 36400514024,
-    "timePlayed": 45641921414,
-    "deaths": 111465241,
+    "bulletsFired": 31072981369,
+    "bulletsHit": 36400653652,
+    "timePlayed": 45642067668,
+    "deaths": 111465600,
     "revives": 0,
-    "friendlies": 12615891,
-    "missionSuccessRate": 87.29188652270895,
+    "friendlies": 12615942,
+    "missionSuccessRate": 87.2918841040115,
     "accurracy": 100,
-    "accuracy": 117.14566562308364
+    "accuracy": 117.14567462881165
    },
    {
     "planetIndex": 260,
@@ -4748,21 +4748,21 @@
    },
    {
     "planetIndex": 262,
-    "missionsWon": 4240362,
-    "missionsLost": 707166,
-    "missionTime": 16714642741,
+    "missionsWon": 4240365,
+    "missionsLost": 707169,
+    "missionTime": 16714657420,
     "bugKills": 93396,
-    "automatonKills": 1435784681,
+    "automatonKills": 1435785749,
     "illuminateKills": 195327,
-    "bulletsFired": 9948724949,
-    "bulletsHit": 10396392036,
-    "timePlayed": 16714642741,
-    "deaths": 41346277,
+    "bulletsFired": 9948731778,
+    "bulletsHit": 10396399470,
+    "timePlayed": 16714657420,
+    "deaths": 41346323,
     "revives": 0,
-    "friendlies": 4332603,
-    "missionSuccessRate": 85.70668018452852,
+    "friendlies": 4332609,
+    "missionSuccessRate": 85.70663688213158,
     "accurracy": 100,
-    "accuracy": 104.49974332685714
+    "accuracy": 104.49974631932429
    },
    {
     "planetIndex": 263,
@@ -4856,57 +4856,57 @@
    },
    {
     "planetIndex": 268,
-    "missionsWon": 12235383,
-    "missionsLost": 658619,
-    "missionTime": 42464807434,
-    "bugKills": 5948202989,
+    "missionsWon": 12235540,
+    "missionsLost": 658627,
+    "missionTime": 42465195585,
+    "bugKills": 5948266088,
     "automatonKills": 20060,
     "illuminateKills": 122983,
-    "bulletsFired": 25833681746,
-    "bulletsHit": 30453146008,
-    "timePlayed": 42464807434,
-    "deaths": 79514052,
+    "bulletsFired": 25833930395,
+    "bulletsHit": 30453438478,
+    "timePlayed": 42465195585,
+    "deaths": 79514773,
     "revives": 0,
-    "friendlies": 12382170,
-    "missionSuccessRate": 94.89205135845333,
+    "friendlies": 12382291,
+    "missionSuccessRate": 94.89205467867757,
     "accurracy": 100,
-    "accuracy": 117.88155597571865
+    "accuracy": 117.88155349328524
    },
    {
     "planetIndex": 269,
-    "missionsWon": 11686997,
-    "missionsLost": 787494,
-    "missionTime": 41447464316,
-    "bugKills": 5411833779,
+    "missionsWon": 11687229,
+    "missionsLost": 787503,
+    "missionTime": 41448212649,
+    "bugKills": 5411933477,
     "automatonKills": 9514,
     "illuminateKills": 74105,
-    "bulletsFired": 26185724706,
-    "bulletsHit": 30772656736,
-    "timePlayed": 41447464316,
-    "deaths": 81254009,
+    "bulletsFired": 26186166652,
+    "bulletsHit": 30773186968,
+    "timePlayed": 41448212649,
+    "deaths": 81255210,
     "revives": 0,
-    "friendlies": 12538499,
-    "missionSuccessRate": 93.6871652719137,
+    "friendlies": 12538741,
+    "missionSuccessRate": 93.68721508405952,
     "accurracy": 100,
-    "accuracy": 117.51691840306022
+    "accuracy": 117.51695991612297
    },
    {
     "planetIndex": 270,
-    "missionsWon": 2565415,
+    "missionsWon": 2565416,
     "missionsLost": 129572,
-    "missionTime": 8709051156,
-    "bugKills": 1055835734,
+    "missionTime": 8709053208,
+    "bugKills": 1055836056,
     "automatonKills": 15929,
     "illuminateKills": 6266,
-    "bulletsFired": 5555577816,
-    "bulletsHit": 6599882712,
-    "timePlayed": 8709051156,
-    "deaths": 14971696,
+    "bulletsFired": 5555579508,
+    "bulletsHit": 6599885148,
+    "timePlayed": 8709053208,
+    "deaths": 14971700,
     "revives": 0,
     "friendlies": 2449017,
-    "missionSuccessRate": 95.19211038865865,
+    "missionSuccessRate": 95.19211217267015,
     "accurracy": 100,
-    "accuracy": 118.79741280902256
+    "accuracy": 118.79742047604947
    },
    {
     "planetIndex": 271,
@@ -4946,21 +4946,21 @@
    },
    {
     "planetIndex": 273,
-    "missionsWon": 1115633,
+    "missionsWon": 1115638,
     "missionsLost": 94153,
-    "missionTime": 4191667637,
+    "missionTime": 4191685052,
     "bugKills": 10834,
     "automatonKills": 2006,
-    "illuminateKills": 476340210,
-    "bulletsFired": 3088758833,
-    "bulletsHit": 3448250094,
-    "timePlayed": 4191667637,
-    "deaths": 8145442,
+    "illuminateKills": 476342247,
+    "bulletsFired": 3088770951,
+    "bulletsHit": 3448264032,
+    "timePlayed": 4191685052,
+    "deaths": 8145474,
     "revives": 0,
-    "friendlies": 1295009,
-    "missionSuccessRate": 92.21738390095439,
+    "friendlies": 1295018,
+    "missionSuccessRate": 92.21741606608084,
     "accurracy": 100,
-    "accuracy": 111.63869633197743
+    "accuracy": 111.63870959365288
    },
    {
     "planetIndex": 274,
@@ -5678,9 +5678,9 @@
   }
  ],
  "war": {
-  "time": 87715980,
+  "time": 87716280,
   "statistics": {
-   "playerCount": 33376,
+   "playerCount": 33006,
    "missionsWon": 0,
    "missionsLost": 0
   },
@@ -5695,7 +5695,7 @@
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 103,
+   "players": 116,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -5708,7 +5708,7 @@
   {
    "index": 1,
    "name": "KLEN DAHTH II",
-   "sector": "Altus",
+   "sector": "Barnard",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5725,7 +5725,7 @@
   {
    "index": 2,
    "name": "PATHFINDER V",
-   "sector": "Altus",
+   "sector": "Barnard",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5742,7 +5742,7 @@
   {
    "index": 3,
    "name": "WIDOW'S HARBOR",
-   "sector": "Altus",
+   "sector": "Barnard",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5759,7 +5759,7 @@
   {
    "index": 4,
    "name": "NEW HAVEN",
-   "sector": "Altus",
+   "sector": "Barnard",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5776,11 +5776,11 @@
   {
    "index": 5,
    "name": "PILEN V",
-   "sector": "Altus",
+   "sector": "Barnard",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -5793,7 +5793,7 @@
   {
    "index": 6,
    "name": "HYDROFALL PRIME",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5810,7 +5810,7 @@
   {
    "index": 7,
    "name": "ZEA RUGOSIA",
-   "sector": "Ferris",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
@@ -5834,7 +5834,7 @@
   {
    "index": 8,
    "name": "DARROWSPORT",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5851,7 +5851,7 @@
   {
    "index": 9,
    "name": "FORNSKOGUR II",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5868,7 +5868,7 @@
   {
    "index": 10,
    "name": "MIDASBURG",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5885,7 +5885,7 @@
   {
    "index": 11,
    "name": "CERBERUS IIIc",
-   "sector": "Cancri",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5902,7 +5902,7 @@
   {
    "index": 12,
    "name": "PROSPERITY FALLS",
-   "sector": "Cancri",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5919,7 +5919,7 @@
   {
    "index": 13,
    "name": "OKUL VI",
-   "sector": "Gothmar",
+   "sector": "Titania",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5936,7 +5936,7 @@
   {
    "index": 14,
    "name": "MARTYR'S BAY",
-   "sector": "Cantolus",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5953,7 +5953,7 @@
   {
    "index": 15,
    "name": "FREEDOM PEAK",
-   "sector": "Cantolus",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5970,7 +5970,7 @@
   {
    "index": 16,
    "name": "FORT UNION",
-   "sector": "Orion",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -5989,7 +5989,7 @@
   {
    "index": 17,
    "name": "KELVINOR",
-   "sector": "Cantolus",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6006,7 +6006,7 @@
   {
    "index": 18,
    "name": "WRAITH",
-   "sector": "Idun",
+   "sector": "Kessel",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6023,7 +6023,7 @@
   {
    "index": 19,
    "name": "IGLA",
-   "sector": "Kelvin",
+   "sector": "Yezub",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6040,7 +6040,7 @@
   {
    "index": 20,
    "name": "NEW KIRUNA",
-   "sector": "Kelvin",
+   "sector": "Yezub",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6057,7 +6057,7 @@
   {
    "index": 21,
    "name": "FORT JUSTICE",
-   "sector": "Kelvin",
+   "sector": "Yezub",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6074,11 +6074,11 @@
   {
    "index": 22,
    "name": "ZEGEMA PARADISE",
-   "sector": "Kelvin",
+   "sector": "Yezub",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 72,
+   "players": 68,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -6093,7 +6093,7 @@
   {
    "index": 23,
    "name": "PROVIDENCE",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6110,11 +6110,11 @@
   {
    "index": 24,
    "name": "PRIMORDIA",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -6127,7 +6127,7 @@
   {
    "index": 25,
    "name": "SULFURA",
-   "sector": "Celeste",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6144,7 +6144,7 @@
   {
    "index": 26,
    "name": "NUBLARIA I",
-   "sector": "Celeste",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 999987,
    "maxHealth": 1000000,
@@ -6161,11 +6161,11 @@
   {
    "index": 27,
    "name": "KRAKATWO",
-   "sector": "Celeste",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": [],
@@ -6178,7 +6178,7 @@
   {
    "index": 28,
    "name": "VOLTERRA",
-   "sector": "Korpus",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -6195,7 +6195,7 @@
   {
    "index": 29,
    "name": "CRUCIBLE",
-   "sector": "Korpus",
+   "sector": "Ursa Major",
    "currentOwner": "Humans",
    "health": 2500000,
    "maxHealth": 2500000,
@@ -6212,7 +6212,7 @@
   {
    "index": 30,
    "name": "VEIL",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6229,7 +6229,7 @@
   {
    "index": 31,
    "name": "MARRE IV",
-   "sector": "Barnard",
+   "sector": "Tau Ceti",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6246,7 +6246,7 @@
   {
    "index": 32,
    "name": "FORT SANCTUARY",
-   "sector": "Cancri",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6265,11 +6265,11 @@
   {
    "index": 33,
    "name": "SEYSHEL BEACH",
-   "sector": "Cancri",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 2300000,
    "maxHealth": 2300000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.11,
    "activeEffects": [],
@@ -6282,11 +6282,11 @@
   {
    "index": 34,
    "name": "HELLMIRE",
-   "sector": "Mirin",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 4,
+   "players": 3,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -6301,7 +6301,7 @@
   {
    "index": 35,
    "name": "EFFLUVIA",
-   "sector": "Cancri",
+   "sector": "Pictor",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6318,7 +6318,7 @@
   {
    "index": 36,
    "name": "SOLGHAST",
-   "sector": "Gothmar",
+   "sector": "Titania",
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
@@ -6335,11 +6335,11 @@
   {
    "index": 37,
    "name": "DILUVIA",
-   "sector": "Gothmar",
+   "sector": "Titania",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [],
@@ -6352,7 +6352,7 @@
   {
    "index": 38,
    "name": "VIRIDIA PRIME",
-   "sector": "Cantolus",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6369,7 +6369,7 @@
   {
    "index": 39,
    "name": "OBARI",
-   "sector": "Cantolus",
+   "sector": "Canopus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6386,7 +6386,7 @@
   {
    "index": 40,
    "name": "MYRADESH",
-   "sector": "Idun",
+   "sector": "Kessel",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6403,7 +6403,7 @@
   {
    "index": 41,
    "name": "ATRAMA",
-   "sector": "Idun",
+   "sector": "Kessel",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6420,7 +6420,7 @@
   {
    "index": 42,
    "name": "EMERIA",
-   "sector": "Kelvin",
+   "sector": "Yezub",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
@@ -6439,7 +6439,7 @@
   {
    "index": 43,
    "name": "BARABOS",
-   "sector": "Marspira",
+   "sector": "Valdis",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6456,11 +6456,11 @@
   {
    "index": 44,
    "name": "FENMIRE",
-   "sector": "Marspira",
+   "sector": "Valdis",
    "currentOwner": "Humans",
    "health": 2400000,
    "maxHealth": 2400000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 0.1,
    "activeEffects": [],
@@ -6473,7 +6473,7 @@
   {
    "index": 45,
    "name": "MASTIA",
-   "sector": "Marspira",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6493,7 +6493,7 @@
   {
    "index": 46,
    "name": "SHALLUS",
-   "sector": "Talus",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6510,7 +6510,7 @@
   {
    "index": 47,
    "name": "KRAKABOS",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6527,7 +6527,7 @@
   {
    "index": 48,
    "name": "IRIDICA",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6544,11 +6544,11 @@
   {
    "index": 49,
    "name": "AZTERRA",
-   "sector": "Orion",
+   "sector": "Gacrux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.5,
    "activeEffects": [],
@@ -6561,7 +6561,7 @@
   {
    "index": 50,
    "name": "AZUR SECUNDUS",
-   "sector": "Sten",
+   "sector": "Gacrux",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6580,7 +6580,7 @@
   {
    "index": 51,
    "name": "IVIS",
-   "sector": "Celeste",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6599,7 +6599,7 @@
   {
    "index": 52,
    "name": "SLIF",
-   "sector": "Celeste",
+   "sector": "Crux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6616,7 +6616,7 @@
   {
    "index": 53,
    "name": "CARAMOOR",
-   "sector": "Korpus",
+   "sector": "Ursa Major",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -6633,7 +6633,7 @@
   {
    "index": 54,
    "name": "KHARST",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6650,7 +6650,7 @@
   {
    "index": 55,
    "name": "EUKORIA",
-   "sector": "Morgon",
+   "sector": "Draco",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6667,7 +6667,7 @@
   {
    "index": 56,
    "name": "MYRIUM",
-   "sector": "Morgon",
+   "sector": "Draco",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -6688,7 +6688,7 @@
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 0.12,
    "activeEffects": [],
@@ -6718,7 +6718,7 @@
   {
    "index": 59,
    "name": "REAF",
-   "sector": "Saleria",
+   "sector": "Aurora",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6735,7 +6735,7 @@
   {
    "index": 60,
    "name": "IRULTA",
-   "sector": "Saleria",
+   "sector": "Aurora",
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
@@ -6752,7 +6752,7 @@
   {
    "index": 61,
    "name": "EMORATH",
-   "sector": "Meridian",
+   "sector": "Jin Xi",
    "currentOwner": "Humans",
    "health": 1900000,
    "maxHealth": 1900000,
@@ -6769,7 +6769,7 @@
   {
    "index": 62,
    "name": "ILDUNA PRIME",
-   "sector": "Meridian",
+   "sector": "Jin Xi",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6786,7 +6786,7 @@
   {
    "index": 63,
    "name": "MAW",
-   "sector": "Idun",
+   "sector": "Kessel",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6803,11 +6803,11 @@
   {
    "index": 64,
    "name": "MERIDIA",
-   "sector": "Umlaut",
+   "sector": "Meridian",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 16,
+   "players": 21,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [
@@ -6822,7 +6822,7 @@
   {
    "index": 65,
    "name": "BOREA",
-   "sector": "Sagan",
+   "sector": "Meridian",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6839,11 +6839,11 @@
   {
    "index": 66,
    "name": "CURIA",
-   "sector": "Marspira",
+   "sector": "Valdis",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -6856,11 +6856,11 @@
   {
    "index": 67,
    "name": "TARSH",
-   "sector": "Marspira",
+   "sector": "Valdis",
    "currentOwner": "Humans",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.15,
    "activeEffects": [],
@@ -6873,7 +6873,7 @@
   {
    "index": 68,
    "name": "SHELT",
-   "sector": "Talus",
+   "sector": "Valdis",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6890,7 +6890,7 @@
   {
    "index": 69,
    "name": "IMBER",
-   "sector": "Talus",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6907,11 +6907,11 @@
   {
    "index": 70,
    "name": "BLISTICA",
-   "sector": "Gellert",
+   "sector": "Angels Venture",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 55,
+   "players": 49,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [],
@@ -6924,7 +6924,7 @@
   {
    "index": 71,
    "name": "RATCH",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6941,11 +6941,11 @@
   {
    "index": 72,
    "name": "JULHEIM",
-   "sector": "Nanos",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 0.62,
    "activeEffects": [],
@@ -6958,7 +6958,7 @@
   {
    "index": 73,
    "name": "VALGAARD",
-   "sector": "Iptus",
+   "sector": "Angels Venture",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6975,7 +6975,7 @@
   {
    "index": 74,
    "name": "ARKTURUS",
-   "sector": "Arturion",
+   "sector": "Gacrux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -6992,11 +6992,11 @@
   {
    "index": 75,
    "name": "ESKER",
-   "sector": "Falstaff",
+   "sector": "Gacrux",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 7,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -7011,7 +7011,7 @@
   {
    "index": 76,
    "name": "TERREK",
-   "sector": "Orion",
+   "sector": "Gacrux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7030,7 +7030,7 @@
   {
    "index": 77,
    "name": "CIRRUS",
-   "sector": "Orion",
+   "sector": "Gacrux",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7047,7 +7047,7 @@
   {
    "index": 78,
    "name": "CRIMSICA",
-   "sector": "Draco",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
@@ -7066,11 +7066,11 @@
   {
    "index": 79,
    "name": "HEETH",
-   "sector": "Orion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 7,
+   "players": 9,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [],
@@ -7083,11 +7083,11 @@
   {
    "index": 80,
    "name": "VELD",
-   "sector": "Orion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 6,
+   "players": 4,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": [],
@@ -7100,7 +7100,7 @@
   {
    "index": 81,
    "name": "ALTA V",
-   "sector": "Korpus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1300000,
    "maxHealth": 1300000,
@@ -7117,7 +7117,7 @@
   {
    "index": 82,
    "name": "URSICA XI",
-   "sector": "Borgus",
+   "sector": "Ursa Major",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
@@ -7136,7 +7136,7 @@
   {
    "index": 83,
    "name": "INARI",
-   "sector": "Korpus",
+   "sector": "Ursa Major",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7153,7 +7153,7 @@
   {
    "index": 84,
    "name": "SKAASH",
-   "sector": "Ursa",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7170,7 +7170,7 @@
   {
    "index": 85,
    "name": "MORADESH",
-   "sector": "Celeste",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7189,7 +7189,7 @@
   {
    "index": 86,
    "name": "RASP",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7206,7 +7206,7 @@
   {
    "index": 87,
    "name": "BASHYR",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7223,7 +7223,7 @@
   {
    "index": 88,
    "name": "REGNUS",
-   "sector": "Morgon",
+   "sector": "Draco",
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
@@ -7240,7 +7240,7 @@
   {
    "index": 89,
    "name": "MOG",
-   "sector": "Morgon",
+   "sector": "Draco",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7261,7 +7261,7 @@
    "currentOwner": "Illuminate",
    "health": 1900000,
    "maxHealth": 1900000,
-   "players": 47,
+   "players": 56,
    "attacking": false,
    "resistance": 0.53,
    "activeEffects": [],
@@ -7286,7 +7286,7 @@
      "regionIndex": 1,
      "owner": "Illuminate",
      "health": 400000,
-     "players": 12,
+     "players": 8,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -7316,7 +7316,7 @@
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 22,
+   "players": 21,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -7333,7 +7333,7 @@
    "currentOwner": "Illuminate",
    "health": 2100000,
    "maxHealth": 2100000,
-   "players": 171,
+   "players": 182,
    "attacking": false,
    "resistance": 0.48,
    "activeEffects": [
@@ -7348,7 +7348,7 @@
      "regionIndex": 0,
      "owner": "Illuminate",
      "health": 400000,
-     "players": 64,
+     "players": 58,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -7386,11 +7386,11 @@
   {
    "index": 93,
    "name": "NEW STOCKHOLM",
-   "sector": "Hanzo",
+   "sector": "Rictus",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 14,
+   "players": 19,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [],
@@ -7407,7 +7407,7 @@
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.43,
    "activeEffects": [],
@@ -7422,9 +7422,9 @@
    "name": "GENESIS PRIME",
    "sector": "Rictus",
    "currentOwner": "Illuminate",
-   "health": 937762,
+   "health": 937692,
    "maxHealth": 1600000,
-   "players": 822,
+   "players": 872,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [
@@ -7439,8 +7439,8 @@
     {
      "regionIndex": 0,
      "owner": "Illuminate",
-     "health": 200000,
-     "players": 310,
+     "health": 199995,
+     "players": 346,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 200000,
@@ -7466,7 +7466,7 @@
   {
    "index": 96,
    "name": "OUTPOST 32",
-   "sector": "Saleria",
+   "sector": "Aurora",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7483,7 +7483,7 @@
   {
    "index": 97,
    "name": "CALYPSO",
-   "sector": "Saleria",
+   "sector": "Aurora",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7503,7 +7503,7 @@
   {
    "index": 98,
    "name": "ELYSIAN MEADOWS",
-   "sector": "Guang",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7520,11 +7520,11 @@
   {
    "index": 99,
    "name": "SANGIS",
-   "sector": "Guang",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 69,
+   "players": 62,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -7537,11 +7537,11 @@
   {
    "index": 100,
    "name": "TRANDOR",
-   "sector": "Sten",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1900000,
    "maxHealth": 1900000,
-   "players": 393,
+   "players": 401,
    "attacking": false,
    "resistance": 1.05,
    "activeEffects": [
@@ -7581,7 +7581,7 @@
      "regionIndex": 2,
      "owner": "Terminids",
      "health": 400000,
-     "players": 70,
+     "players": 66,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -7595,7 +7595,7 @@
   {
    "index": 101,
    "name": "EAST IRIDIUM TRADING BAY",
-   "sector": "Tarragon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7612,7 +7612,7 @@
   {
    "index": 102,
    "name": "LIBERTY RIDGE",
-   "sector": "Meridian",
+   "sector": "Jin Xi",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7629,7 +7629,7 @@
   {
    "index": 103,
    "name": "BALDRICK PRIME",
-   "sector": "Meridian",
+   "sector": "Jin Xi",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7646,7 +7646,7 @@
   {
    "index": 104,
    "name": "THE WEIR",
-   "sector": "Theseus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7663,7 +7663,7 @@
   {
    "index": 105,
    "name": "KUPER",
-   "sector": "Theseus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7680,7 +7680,7 @@
   {
    "index": 106,
    "name": "OSLO STATION",
-   "sector": "Sagan",
+   "sector": "Meridian",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7697,7 +7697,7 @@
   {
    "index": 107,
    "name": "PÖPLI IX",
-   "sector": "Xzar",
+   "sector": "Meridian",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
@@ -7714,7 +7714,7 @@
   {
    "index": 108,
    "name": "GUNVALD",
-   "sector": "Sagan",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7731,7 +7731,7 @@
   {
    "index": 109,
    "name": "DOLPH",
-   "sector": "Nanos",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7748,11 +7748,11 @@
   {
    "index": 110,
    "name": "BEKVAM III",
-   "sector": "Nanos",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 4,
+   "players": 5,
    "attacking": false,
    "resistance": 0.31,
    "activeEffects": [],
@@ -7765,7 +7765,7 @@
   {
    "index": 111,
    "name": "DUMA TYR",
-   "sector": "Nanos",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7782,11 +7782,11 @@
   {
    "index": 112,
    "name": "VERNEN WELLS",
-   "sector": "Hydra",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 4,
+   "players": 1,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": [],
@@ -7799,7 +7799,7 @@
   {
    "index": 113,
    "name": "AESIR PASS",
-   "sector": "Hydra",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7816,11 +7816,11 @@
   {
    "index": 114,
    "name": "AURORA BAY",
-   "sector": "Valdis",
+   "sector": "Farsight",
    "currentOwner": "Automaton",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 105,
+   "players": 112,
    "attacking": false,
    "resistance": 3.13,
    "activeEffects": [
@@ -7848,7 +7848,7 @@
      "regionIndex": 1,
      "owner": "Automaton",
      "health": 200000,
-     "players": 35,
+     "players": 29,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 200000,
@@ -7862,11 +7862,11 @@
   {
    "index": 115,
    "name": "PENTA",
-   "sector": "Lacaille",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 13,
+   "players": 14,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -7882,7 +7882,7 @@
   {
    "index": 116,
    "name": "GAELLIVARE",
-   "sector": "Talus",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
@@ -7899,11 +7899,11 @@
   {
    "index": 117,
    "name": "VOG-SOJOTH",
-   "sector": "Tanis",
+   "sector": "Farsight",
    "currentOwner": "Humans",
    "health": 1200000,
    "maxHealth": 1200000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [],
@@ -7916,7 +7916,7 @@
   {
    "index": 118,
    "name": "KIRRIK",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7933,7 +7933,7 @@
   {
    "index": 119,
    "name": "MORTAX PRIME",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7950,7 +7950,7 @@
   {
    "index": 120,
    "name": "WILFORD STATION",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7967,7 +7967,7 @@
   {
    "index": 121,
    "name": "PIONEER II",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -7984,7 +7984,7 @@
   {
    "index": 122,
    "name": "ERSON SANDS",
-   "sector": "Falstaff",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8007,7 +8007,7 @@
   {
    "index": 123,
    "name": "SOCORRO III",
-   "sector": "Falstaff",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8030,11 +8030,11 @@
   {
    "index": 124,
    "name": "BORE ROCK",
-   "sector": "Falstaff",
+   "sector": "Gacrux",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 450,
+   "players": 413,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -8050,7 +8050,7 @@
   {
    "index": 125,
    "name": "FENRIR III",
-   "sector": "Umlaut",
+   "sector": "Gacrux",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -8069,11 +8069,11 @@
   {
    "index": 126,
    "name": "TURING",
-   "sector": "Umlaut",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 6,
+   "players": 1,
    "attacking": false,
    "resistance": 0.25,
    "activeEffects": [
@@ -8092,11 +8092,11 @@
   {
    "index": 127,
    "name": "ANGEL'S VENTURE",
-   "sector": "Orion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 8,
+   "players": 4,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [
@@ -8111,11 +8111,11 @@
   {
    "index": 128,
    "name": "DARIUS II",
-   "sector": "Borgus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 14,
+   "players": 16,
    "attacking": false,
    "resistance": 1.79,
    "activeEffects": [
@@ -8130,11 +8130,11 @@
   {
    "index": 129,
    "name": "ACAMAR IV",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 30,
+   "players": 27,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": [],
@@ -8147,11 +8147,11 @@
   {
    "index": 130,
    "name": "ACHERNAR SECUNDUS",
-   "sector": "Borgus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 31,
+   "players": 25,
    "attacking": false,
    "resistance": 1.75,
    "activeEffects": [
@@ -8167,7 +8167,7 @@
   {
    "index": 131,
    "name": "ACHIRD III",
-   "sector": "Borgus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -8186,7 +8186,7 @@
   {
    "index": 132,
    "name": "ACRAB XI",
-   "sector": "Ursa",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8203,7 +8203,7 @@
   {
    "index": 133,
    "name": "ACRUX IX",
-   "sector": "Ursa",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8220,7 +8220,7 @@
   {
    "index": 134,
    "name": "ACUBENS PRIME",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8237,7 +8237,7 @@
   {
    "index": 135,
    "name": "ADHARA",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
@@ -8254,11 +8254,11 @@
   {
    "index": 136,
    "name": "AFOYAY BAY",
-   "sector": "Gallux",
+   "sector": "Kronos",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -8274,7 +8274,7 @@
   {
    "index": 137,
    "name": "AIN-5",
-   "sector": "Hanzo",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8291,11 +8291,11 @@
   {
    "index": 138,
    "name": "ALAIRT III",
-   "sector": "Hanzo",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 142,
+   "players": 139,
    "attacking": false,
    "resistance": 0.91,
    "activeEffects": [
@@ -8335,7 +8335,7 @@
      "regionIndex": 2,
      "owner": "Illuminate",
      "health": 200000,
-     "players": 49,
+     "players": 41,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 200000,
@@ -8361,11 +8361,11 @@
   {
    "index": 139,
    "name": "ALAMAK VII",
-   "sector": "Hanzo",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 2300000,
    "maxHealth": 2300000,
-   "players": 100,
+   "players": 102,
    "attacking": false,
    "resistance": 0.87,
    "activeEffects": [
@@ -8381,7 +8381,7 @@
      "regionIndex": 0,
      "owner": "Illuminate",
      "health": 200000,
-     "players": 0,
+     "players": 2,
      "isAvailable": false,
      "availabilityFactor": 0,
      "maxHealth": 200000,
@@ -8431,11 +8431,11 @@
   {
    "index": 140,
    "name": "ALARAPH",
-   "sector": "Akira",
+   "sector": "",
    "currentOwner": "Illuminate",
-   "health": 813076,
+   "health": 813039,
    "maxHealth": 1800000,
-   "players": 239,
+   "players": 240,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [],
@@ -8448,7 +8448,7 @@
      "regionIndex": 0,
      "owner": "Illuminate",
      "health": 400000,
-     "players": 39,
+     "players": 44,
      "isAvailable": true,
      "availabilityFactor": 0.81363,
      "maxHealth": 400000,
@@ -8474,7 +8474,7 @@
   {
    "index": 141,
    "name": "ALATHFAR XI",
-   "sector": "Akira",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -8491,7 +8491,7 @@
   {
    "index": 142,
    "name": "ANDAR",
-   "sector": "Akira",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
@@ -8508,11 +8508,11 @@
   {
    "index": 143,
    "name": "ASPEROTH PRIME",
-   "sector": "Akira",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1653279,
    "maxHealth": 1800000,
-   "players": 23,
+   "players": 25,
    "attacking": false,
    "resistance": 0.0,
    "activeEffects": [],
@@ -8537,7 +8537,7 @@
      "regionIndex": 1,
      "owner": "Illuminate",
      "health": 400000,
-     "players": 11,
+     "players": 8,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -8551,11 +8551,11 @@
   {
    "index": 144,
    "name": "BELLATRIX",
-   "sector": "Guang",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 10,
+   "players": 8,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -8568,7 +8568,7 @@
   {
    "index": 145,
    "name": "BOTEIN",
-   "sector": "Guang",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8585,7 +8585,7 @@
   {
    "index": 146,
    "name": "OSUPSAM",
-   "sector": "Tarragon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8602,7 +8602,7 @@
   {
    "index": 147,
    "name": "BRINK-2",
-   "sector": "Tarragon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8619,7 +8619,7 @@
   {
    "index": 148,
    "name": "BUNDA SECUNDUS",
-   "sector": "Tarragon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8636,7 +8636,7 @@
   {
    "index": 149,
    "name": "CANOPUS",
-   "sector": "Tarragon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8653,7 +8653,7 @@
   {
    "index": 150,
    "name": "CAPH",
-   "sector": "Theseus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -8670,7 +8670,7 @@
   {
    "index": 151,
    "name": "CASTOR",
-   "sector": "Theseus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8687,11 +8687,11 @@
   {
    "index": 152,
    "name": "DURGEN",
-   "sector": "Severin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -8704,7 +8704,7 @@
   {
    "index": 153,
    "name": "DRAUPNIR",
-   "sector": "Xzar",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
@@ -8721,7 +8721,7 @@
   {
    "index": 154,
    "name": "MORT",
-   "sector": "Xzar",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
@@ -8738,7 +8738,7 @@
   {
    "index": 155,
    "name": "INGMAR",
-   "sector": "Xzar",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1800000,
    "maxHealth": 1800000,
@@ -8755,11 +8755,11 @@
   {
    "index": 156,
    "name": "CHARBAL-VII",
-   "sector": "Andromeda",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 7,
+   "players": 1,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -8772,11 +8772,11 @@
   {
    "index": 157,
    "name": "CHARON PRIME",
-   "sector": "Andromeda",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 914,
+   "players": 929,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": [],
@@ -8789,11 +8789,11 @@
   {
    "index": 158,
    "name": "CHOEPESSA IV",
-   "sector": "Trigon",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 3200000,
    "maxHealth": 3200000,
-   "players": 604,
+   "players": 609,
    "attacking": false,
    "resistance": 1.41,
    "activeEffects": [
@@ -8811,7 +8811,7 @@
      "regionIndex": 0,
      "owner": "Automaton",
      "health": 200000,
-     "players": 1,
+     "players": 0,
      "isAvailable": false,
      "availabilityFactor": 0.26124,
      "maxHealth": 200000,
@@ -8823,7 +8823,7 @@
      "regionIndex": 1,
      "owner": "Automaton",
      "health": 400000,
-     "players": 97,
+     "players": 91,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -8835,7 +8835,7 @@
      "regionIndex": 2,
      "owner": "Automaton",
      "health": 600000,
-     "players": 2,
+     "players": 0,
      "isAvailable": false,
      "availabilityFactor": 0.63008,
      "maxHealth": 600000,
@@ -8847,7 +8847,7 @@
      "regionIndex": 3,
      "owner": "Automaton",
      "health": 1000000,
-     "players": 177,
+     "players": 174,
      "isAvailable": true,
      "availabilityFactor": 0.25,
      "maxHealth": 1000000,
@@ -8861,11 +8861,11 @@
   {
    "index": 159,
    "name": "CHOOHE",
-   "sector": "Lacaille",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 347,
+   "players": 349,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [],
@@ -8878,7 +8878,7 @@
   {
    "index": 160,
    "name": "CHORT BAY",
-   "sector": "Lacaille",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8897,7 +8897,7 @@
   {
    "index": 161,
    "name": "CLAORELL",
-   "sector": "Tanis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -8916,11 +8916,11 @@
   {
    "index": 162,
    "name": "CLASA",
-   "sector": "Tanis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1700000,
    "maxHealth": 1700000,
-   "players": 1,
+   "players": 2,
    "attacking": false,
    "resistance": 2.35,
    "activeEffects": [
@@ -8935,7 +8935,7 @@
   {
    "index": 163,
    "name": "DEMIURG",
-   "sector": "Tanis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8952,7 +8952,7 @@
   {
    "index": 164,
    "name": "DENEB SECUNDUS",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8969,7 +8969,7 @@
   {
    "index": 165,
    "name": "ELECTRA BAY",
-   "sector": "Arturion",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -8986,7 +8986,7 @@
   {
    "index": 166,
    "name": "ENULIALE",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9006,7 +9006,7 @@
   {
    "index": 167,
    "name": "EPSILON PHOENCIS VI",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9026,11 +9026,11 @@
   {
    "index": 168,
    "name": "ERATA PRIME",
-   "sector": "Umlaut",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 5,
+   "players": 8,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -9047,7 +9047,7 @@
   {
    "index": 169,
    "name": "ESTANU",
-   "sector": "Draco",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9064,11 +9064,11 @@
   {
    "index": 170,
    "name": "FORI PRIME",
-   "sector": "Draco",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 10,
+   "players": 8,
    "attacking": false,
    "resistance": 4.5,
    "activeEffects": [
@@ -9083,11 +9083,11 @@
   {
    "index": 171,
    "name": "GACRUX",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 29,
+   "players": 24,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -9100,7 +9100,7 @@
   {
    "index": 172,
    "name": "GAR HAREN",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9117,11 +9117,11 @@
   {
    "index": 173,
    "name": "GATRIA",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 11,
+   "players": 16,
    "attacking": false,
    "resistance": 0.67,
    "activeEffects": [
@@ -9137,7 +9137,7 @@
   {
    "index": 174,
    "name": "GEMMA",
-   "sector": "Ursa",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9154,11 +9154,11 @@
   {
    "index": 175,
    "name": "GRAND ERRANT",
-   "sector": "Farsight",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 2,
+   "players": 1,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -9173,7 +9173,7 @@
   {
    "index": 176,
    "name": "HADAR",
-   "sector": "Ferris",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9190,7 +9190,7 @@
   {
    "index": 177,
    "name": "HAKA",
-   "sector": "Leo",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9207,11 +9207,11 @@
   {
    "index": 178,
    "name": "HALDUS",
-   "sector": "Ferris",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 11,
+   "players": 12,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -9224,7 +9224,7 @@
   {
    "index": 179,
    "name": "HALIES PORT",
-   "sector": "Leo",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9241,11 +9241,11 @@
   {
    "index": 180,
    "name": "HERTHON SECUNDUS",
-   "sector": "Ferris",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 60,
+   "players": 56,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": [],
@@ -9296,11 +9296,11 @@
   {
    "index": 181,
    "name": "HESOE PRIME",
-   "sector": "Rigel",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 59,
+   "players": 56,
    "attacking": false,
    "resistance": 4.0,
    "activeEffects": [],
@@ -9313,11 +9313,11 @@
   {
    "index": 182,
    "name": "HEZE BAY",
-   "sector": "Hanzo",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1800000,
    "maxHealth": 1800000,
-   "players": 82,
+   "players": 79,
    "attacking": false,
    "resistance": 0.56,
    "activeEffects": [],
@@ -9330,7 +9330,7 @@
      "regionIndex": 0,
      "owner": "Illuminate",
      "health": 400000,
-     "players": 3,
+     "players": 10,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 400000,
@@ -9356,11 +9356,11 @@
   {
    "index": 183,
    "name": "HORT",
-   "sector": "Rigel",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 0,
+   "players": 2,
    "attacking": false,
    "resistance": 0.68,
    "activeEffects": [],
@@ -9373,7 +9373,7 @@
   {
    "index": 184,
    "name": "HYDROBIUS",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
@@ -9390,7 +9390,7 @@
   {
    "index": 185,
    "name": "KARLIA",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
@@ -9407,7 +9407,7 @@
   {
    "index": 186,
    "name": "KEID",
-   "sector": "Akira",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9424,11 +9424,11 @@
   {
    "index": 187,
    "name": "KHANDARK",
-   "sector": "Guang",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 21,
+   "players": 17,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -9441,7 +9441,7 @@
   {
    "index": 188,
    "name": "KLAKA 5",
-   "sector": "Alstrad",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9458,7 +9458,7 @@
   {
    "index": 189,
    "name": "KNETH PORT",
-   "sector": "Alstrad",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9475,11 +9475,11 @@
   {
    "index": 190,
    "name": "KRAZ",
-   "sector": "Alstrad",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 1,
+   "players": 0,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [],
@@ -9492,7 +9492,7 @@
   {
    "index": 191,
    "name": "KUMA",
-   "sector": "Hawking",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9509,7 +9509,7 @@
   {
    "index": 192,
    "name": "LASTOFE",
-   "sector": "Theseus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9526,7 +9526,7 @@
   {
    "index": 193,
    "name": "LENG SECUNDUS",
-   "sector": "Quintus",
+   "sector": "Fenrir",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9543,7 +9543,7 @@
   {
    "index": 194,
    "name": "LESATH",
-   "sector": "Lacaille",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9560,7 +9560,7 @@
   {
    "index": 195,
    "name": "MAIA",
-   "sector": "Severin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9577,7 +9577,7 @@
   {
    "index": 196,
    "name": "MALEVELON CREEK",
-   "sector": "Severin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
@@ -9594,7 +9594,7 @@
   {
    "index": 197,
    "name": "MANTES",
-   "sector": "Xzar",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9611,11 +9611,11 @@
   {
    "index": 198,
    "name": "MARFARK",
-   "sector": "Andromeda",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 14,
+   "players": 8,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [],
@@ -9628,11 +9628,11 @@
   {
    "index": 199,
    "name": "MARTALE",
-   "sector": "Andromeda",
+   "sector": "",
    "currentOwner": "Automaton",
-   "health": 747256,
+   "health": 744065,
    "maxHealth": 1500000,
-   "players": 17346,
+   "players": 17123,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -9645,7 +9645,7 @@
      "regionIndex": 0,
      "owner": "Humans",
      "health": 100000,
-     "players": 3,
+     "players": 7,
      "isAvailable": false,
      "availabilityFactor": 1,
      "maxHealth": 100000,
@@ -9671,11 +9671,11 @@
   {
    "index": 200,
    "name": "MATAR BAY",
-   "sector": "Andromeda",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
-   "players": 486,
+   "players": 445,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [],
@@ -9688,11 +9688,11 @@
   {
    "index": 201,
    "name": "MEISSA",
-   "sector": "Ymir",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 131,
+   "players": 123,
    "attacking": false,
    "resistance": 3.5,
    "activeEffects": [
@@ -9707,7 +9707,7 @@
   {
    "index": 202,
    "name": "MEKBUDA",
-   "sector": "Valdis",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9724,11 +9724,11 @@
   {
    "index": 203,
    "name": "MENKENT",
-   "sector": "Hydra",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 458,
+   "players": 448,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [],
@@ -9741,7 +9741,7 @@
   {
    "index": 204,
    "name": "MERAK",
-   "sector": "Valdis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9760,11 +9760,11 @@
   {
    "index": 205,
    "name": "MERGA IV",
-   "sector": "Valdis",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 87,
+   "players": 90,
    "attacking": false,
    "resistance": 7.0,
    "activeEffects": [],
@@ -9777,7 +9777,7 @@
   {
    "index": 206,
    "name": "MINCHIR",
-   "sector": "Gellert",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9794,11 +9794,11 @@
   {
    "index": 207,
    "name": "MINTORIA",
-   "sector": "Gellert",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 128,
+   "players": 135,
    "attacking": false,
    "resistance": 1.15,
    "activeEffects": [
@@ -9815,7 +9815,7 @@
      "regionIndex": 0,
      "owner": "Automaton",
      "health": 100000,
-     "players": 18,
+     "players": 20,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 100000,
@@ -9827,7 +9827,7 @@
      "regionIndex": 1,
      "owner": "Automaton",
      "health": 200000,
-     "players": 1,
+     "players": 0,
      "isAvailable": false,
      "availabilityFactor": 0.59809,
      "maxHealth": 200000,
@@ -9841,7 +9841,7 @@
   {
    "index": 208,
    "name": "MORDIA 9",
-   "sector": "Hawking",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9858,7 +9858,7 @@
   {
    "index": 209,
    "name": "NABATEA SECUNDUS",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9878,7 +9878,7 @@
   {
    "index": 210,
    "name": "NAVI VII",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -9898,11 +9898,11 @@
   {
    "index": 211,
    "name": "NIVEL 43",
-   "sector": "Mirin",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 472,
+   "players": 456,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -9919,11 +9919,11 @@
   {
    "index": 212,
    "name": "OSHAUNE",
-   "sector": "Mirin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 5.0,
    "activeEffects": [
@@ -9944,11 +9944,11 @@
   {
    "index": 213,
    "name": "OVERGOE PRIME",
-   "sector": "Sten",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 882,
+   "players": 861,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [
@@ -9964,11 +9964,11 @@
   {
    "index": 214,
    "name": "PANDION-XXIV",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 10,
+   "players": 9,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [
@@ -9985,11 +9985,11 @@
   {
    "index": 215,
    "name": "PARTION",
-   "sector": "Sten",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 27,
+   "players": 23,
    "attacking": false,
    "resistance": 1.5,
    "activeEffects": [
@@ -10005,11 +10005,11 @@
   {
    "index": 216,
    "name": "PEACOCK",
-   "sector": "Sten",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 368,
+   "players": 375,
    "attacking": false,
    "resistance": 1.54,
    "activeEffects": [],
@@ -10021,8 +10021,8 @@
     {
      "regionIndex": 0,
      "owner": "Terminids",
-     "health": 99984,
-     "players": 91,
+     "health": 99993,
+     "players": 94,
      "isAvailable": true,
      "availabilityFactor": 1,
      "maxHealth": 100000,
@@ -10048,11 +10048,11 @@
   {
    "index": 217,
    "name": "PHACT BAY",
-   "sector": "Jin Xi",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
-   "players": 4,
+   "players": 9,
    "attacking": false,
    "resistance": 1.14,
    "activeEffects": [],
@@ -10065,7 +10065,7 @@
   {
    "index": 218,
    "name": "PHERKAD SECUNDUS",
-   "sector": "Farsight",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10084,7 +10084,7 @@
   {
    "index": 219,
    "name": "POLARIS PRIME",
-   "sector": "Farsight",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10101,7 +10101,7 @@
   {
    "index": 220,
    "name": "POLLUX 31",
-   "sector": "Farsight",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10118,7 +10118,7 @@
   {
    "index": 221,
    "name": "PRASA",
-   "sector": "Farsight",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10135,7 +10135,7 @@
   {
    "index": 222,
    "name": "PROPUS",
-   "sector": "Leo",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10152,7 +10152,7 @@
   {
    "index": 223,
    "name": "RAS ALGETHI",
-   "sector": "Leo",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10169,11 +10169,11 @@
   {
    "index": 224,
    "name": "RD-4",
-   "sector": "Rigel",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 88,
+   "players": 82,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -10186,7 +10186,7 @@
   {
    "index": 225,
    "name": "ROGUE 5",
-   "sector": "Rigel",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10203,7 +10203,7 @@
   {
    "index": 226,
    "name": "RIRGA BAY",
-   "sector": "Rigel",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -10220,11 +10220,11 @@
   {
    "index": 227,
    "name": "SEASSE",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 0,
+   "players": 1,
    "attacking": false,
    "resistance": 8.0,
    "activeEffects": [],
@@ -10232,16 +10232,16 @@
     "x": 0.104947254,
     "y": -0.82979184
    },
-   "biome": "ACCESS DENIED"
+   "biome": ""
   },
   {
    "index": 228,
    "name": "SENGE 23",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1300000,
    "maxHealth": 1300000,
-   "players": 4,
+   "players": 6,
    "attacking": false,
    "resistance": 2.31,
    "activeEffects": [],
@@ -10254,7 +10254,7 @@
   {
    "index": 229,
    "name": "SETIA",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10271,7 +10271,7 @@
   {
    "index": 230,
    "name": "SHETE",
-   "sector": "Xi Tauri",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1400000,
    "maxHealth": 1400000,
@@ -10288,11 +10288,11 @@
   {
    "index": 231,
    "name": "SIEMNOT",
-   "sector": "Xi Tauri",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 127,
+   "players": 119,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -10308,7 +10308,7 @@
   {
    "index": 232,
    "name": "SIRIUS",
-   "sector": "Xi Tauri",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10325,7 +10325,7 @@
   {
    "index": 233,
    "name": "SKAT BAY",
-   "sector": "Xi Tauri",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10342,7 +10342,7 @@
   {
    "index": 234,
    "name": "SPHERION",
-   "sector": "Quintus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10359,7 +10359,7 @@
   {
    "index": 235,
    "name": "STOR THA PRIME",
-   "sector": "Quintus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10376,7 +10376,7 @@
   {
    "index": 236,
    "name": "STOUT",
-   "sector": "Quintus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10393,7 +10393,7 @@
   {
    "index": 237,
    "name": "TERMADON",
-   "sector": "Quintus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10410,7 +10410,7 @@
   {
    "index": 238,
    "name": "TIBIT",
-   "sector": "Severin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10427,7 +10427,7 @@
   {
    "index": 239,
    "name": "TIEN KWAN",
-   "sector": "Theseus",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2200000,
    "maxHealth": 2200000,
@@ -10444,7 +10444,7 @@
   {
    "index": 240,
    "name": "TROOST",
-   "sector": "Trigon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10461,7 +10461,7 @@
   {
    "index": 241,
    "name": "UBANEA",
-   "sector": "Severin",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1600000,
    "maxHealth": 1600000,
@@ -10478,11 +10478,11 @@
   {
    "index": 242,
    "name": "USTOTU",
-   "sector": "Trigon",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 306,
+   "players": 309,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -10495,7 +10495,7 @@
   {
    "index": 243,
    "name": "VANDALON IV",
-   "sector": "Trigon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10512,11 +10512,11 @@
   {
    "index": 244,
    "name": "VARYLIA 5",
-   "sector": "Trigon",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1400000,
    "maxHealth": 1400000,
-   "players": 2,
+   "players": 5,
    "attacking": false,
    "resistance": 0.71,
    "activeEffects": [],
@@ -10529,7 +10529,7 @@
   {
    "index": 245,
    "name": "WASAT",
-   "sector": "Ymir",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10546,11 +10546,11 @@
   {
    "index": 246,
    "name": "VEGA BAY",
-   "sector": "Ymir",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1500000,
    "maxHealth": 1500000,
-   "players": 3,
+   "players": 2,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -10566,7 +10566,7 @@
   {
    "index": 247,
    "name": "WEZEN",
-   "sector": "Ymir",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10583,7 +10583,7 @@
   {
    "index": 248,
    "name": "VINDEMITARIX PRIME",
-   "sector": "Valdis",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10600,11 +10600,11 @@
   {
    "index": 249,
    "name": "X-45",
-   "sector": "Ymir",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 55,
+   "players": 50,
    "attacking": false,
    "resistance": 2.0,
    "activeEffects": [],
@@ -10617,7 +10617,7 @@
   {
    "index": 250,
    "name": "YED PRIOR",
-   "sector": "Tanis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10634,11 +10634,11 @@
   {
    "index": 251,
    "name": "ZEFIA",
-   "sector": "Tanis",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
-   "players": 3,
+   "players": 1,
    "attacking": false,
    "resistance": 2.5,
    "activeEffects": [],
@@ -10651,7 +10651,7 @@
   {
    "index": 252,
    "name": "ZOSMA",
-   "sector": "Gellert",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10668,13 +10668,13 @@
   {
    "index": 253,
    "name": "ZZANIAH PRIME",
-   "sector": "Gellert",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 2000000,
-   "maxHealth": 2000000,
+   "maxHealth": 1000000,
    "players": 2,
    "attacking": false,
-   "resistance": 1.5,
+   "resistance": 3.0,
    "activeEffects": [],
    "position": {
     "x": -0.19952635,
@@ -10685,7 +10685,7 @@
   {
    "index": 254,
    "name": "SKITTER",
-   "sector": "Hawking",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10702,7 +10702,7 @@
   {
    "index": 255,
    "name": "EUPHORIA III",
-   "sector": "Hawking",
+   "sector": "",
    "currentOwner": "Humans",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10719,7 +10719,7 @@
   {
    "index": 256,
    "name": "DIASPORA X",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10739,7 +10739,7 @@
   {
    "index": 257,
    "name": "GEMSTONE BLUFFS",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 1000000,
    "maxHealth": 1000000,
@@ -10759,7 +10759,7 @@
   {
    "index": 258,
    "name": "ZAGON PRIME",
-   "sector": "Mirin",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10783,11 +10783,11 @@
   {
    "index": 259,
    "name": "OMICRON",
-   "sector": "L'estrade",
+   "sector": "",
    "currentOwner": "Terminids",
    "health": 3000000,
    "maxHealth": 3000000,
-   "players": 656,
+   "players": 647,
    "attacking": false,
    "resistance": 3.33,
    "activeEffects": [
@@ -10810,11 +10810,11 @@
   {
    "index": 260,
    "name": "CYBERSTAN",
-   "sector": "Valdis",
+   "sector": "",
    "currentOwner": "Automaton",
    "health": 15000000,
    "maxHealth": 15000000,
-   "players": 10,
+   "players": 9,
    "attacking": false,
    "resistance": 6.67,
    "activeEffects": [
@@ -10831,11 +10831,11 @@
   {
    "index": 261,
    "name": "FURY",
-   "sector": "Xzar",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 14,
+   "players": 6,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [
@@ -10851,11 +10851,11 @@
   {
    "index": 262,
    "name": "K",
-   "sector": "Trigon",
+   "sector": "Sol",
    "currentOwner": "Automaton",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 98,
+   "players": 94,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [],
@@ -10868,7 +10868,7 @@
   {
    "index": 264,
    "name": "NEW INSIGHT",
-   "sector": "TBD",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10887,7 +10887,7 @@
   {
    "index": 265,
    "name": "WAYWARD",
-   "sector": "TBD",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10906,11 +10906,11 @@
   {
    "index": 266,
    "name": "MOX",
-   "sector": "Trigon",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 2,
+   "players": 3,
    "attacking": false,
    "resistance": 1.0,
    "activeEffects": [],
@@ -10923,7 +10923,7 @@
   {
    "index": 267,
    "name": "BIG ROCK",
-   "sector": "Sten",
+   "sector": "Sol",
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -10940,11 +10940,11 @@
   {
    "index": 268,
    "name": "LUXURIANT",
-   "sector": "Jin Xi",
+   "sector": "Sol",
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 2432,
+   "players": 2352,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [],
@@ -10957,11 +10957,11 @@
   {
    "index": 269,
    "name": "BRILLIANCE",
-   "sector": "Orion",
+   "sector": "Sol",
    "currentOwner": "Terminids",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 3805,
+   "players": 3791,
    "attacking": false,
    "resistance": 1.25,
    "activeEffects": [
@@ -10979,11 +10979,11 @@
   {
    "index": 270,
    "name": "FRONTERIA",
-   "sector": "Umlaut",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 8,
+   "players": 6,
    "attacking": false,
    "resistance": 1.75,
    "activeEffects": [
@@ -10998,7 +10998,7 @@
   {
    "index": 271,
    "name": "ZYGOS",
-   "sector": "Orion",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -11015,7 +11015,7 @@
   {
    "index": 272,
    "name": "BASQUINE VIII",
-   "sector": "Rigel",
+   "sector": "Sol",
    "currentOwner": "Humans",
    "health": 2000000,
    "maxHealth": 2000000,
@@ -11032,11 +11032,11 @@
   {
    "index": 273,
    "name": "ALDERIDGE COVE",
-   "sector": "Omega",
+   "sector": "",
    "currentOwner": "Illuminate",
    "health": 2000000,
    "maxHealth": 2000000,
-   "players": 35,
+   "players": 41,
    "attacking": false,
    "resistance": 0.75,
    "activeEffects": [],
@@ -11057,7 +11057,7 @@
    "planet": {
     "index": 259,
     "name": "OMICRON",
-    "sector": "L'estrade",
+    "sector": "",
     "currentOwner": "Terminids"
    }
   },
@@ -11070,7 +11070,7 @@
    "planet": {
     "index": 157,
     "name": "CHARON PRIME",
-    "sector": "Andromeda",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11096,7 +11096,7 @@
    "planet": {
     "index": 114,
     "name": "AURORA BAY",
-    "sector": "Valdis",
+    "sector": "Farsight",
     "currentOwner": "Automaton"
    }
   },
@@ -11109,7 +11109,7 @@
    "planet": {
     "index": 205,
     "name": "MERGA IV",
-    "sector": "Valdis",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11122,7 +11122,7 @@
    "planet": {
     "index": 181,
     "name": "HESOE PRIME",
-    "sector": "Rigel",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11135,7 +11135,7 @@
    "planet": {
     "index": 231,
     "name": "SIEMNOT",
-    "sector": "Xi Tauri",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11161,7 +11161,7 @@
    "planet": {
     "index": 159,
     "name": "CHOOHE",
-    "sector": "Lacaille",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11174,7 +11174,7 @@
    "planet": {
     "index": 224,
     "name": "RD-4",
-    "sector": "Rigel",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11187,7 +11187,7 @@
    "planet": {
     "index": 70,
     "name": "BLISTICA",
-    "sector": "Gellert",
+    "sector": "Angels Venture",
     "currentOwner": "Automaton"
    }
   },
@@ -11200,7 +11200,7 @@
    "planet": {
     "index": 225,
     "name": "ROGUE 5",
-    "sector": "Rigel",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11213,7 +11213,7 @@
    "planet": {
     "index": 140,
     "name": "ALARAPH",
-    "sector": "Akira",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11239,7 +11239,7 @@
    "planet": {
     "index": 143,
     "name": "ASPEROTH PRIME",
-    "sector": "Akira",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11252,7 +11252,7 @@
    "planet": {
     "index": 182,
     "name": "HEZE BAY",
-    "sector": "Hanzo",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11265,7 +11265,7 @@
    "planet": {
     "index": 180,
     "name": "HERTHON SECUNDUS",
-    "sector": "Ferris",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11278,7 +11278,7 @@
    "planet": {
     "index": 100,
     "name": "TRANDOR",
-    "sector": "Sten",
+    "sector": "",
     "currentOwner": "Terminids"
    }
   },
@@ -11291,7 +11291,7 @@
    "planet": {
     "index": 158,
     "name": "CHOEPESSA IV",
-    "sector": "Trigon",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11304,7 +11304,7 @@
    "planet": {
     "index": 262,
     "name": "K",
-    "sector": "Trigon",
+    "sector": "Sol",
     "currentOwner": "Automaton"
    }
   },
@@ -11317,7 +11317,7 @@
    "planet": {
     "index": 268,
     "name": "LUXURIANT",
-    "sector": "Jin Xi",
+    "sector": "Sol",
     "currentOwner": "Terminids"
    }
   },
@@ -11330,7 +11330,7 @@
    "planet": {
     "index": 99,
     "name": "SANGIS",
-    "sector": "Guang",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11343,7 +11343,7 @@
    "planet": {
     "index": 186,
     "name": "KEID",
-    "sector": "Akira",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11356,7 +11356,7 @@
    "planet": {
     "index": 187,
     "name": "KHANDARK",
-    "sector": "Guang",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11369,7 +11369,7 @@
    "planet": {
     "index": 201,
     "name": "MEISSA",
-    "sector": "Ymir",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11382,7 +11382,7 @@
    "planet": {
     "index": 199,
     "name": "MARTALE",
-    "sector": "Andromeda",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11395,7 +11395,7 @@
    "planet": {
     "index": 229,
     "name": "SETIA",
-    "sector": "Omega",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11408,7 +11408,7 @@
    "planet": {
     "index": 249,
     "name": "X-45",
-    "sector": "Ymir",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11421,7 +11421,7 @@
    "planet": {
     "index": 203,
     "name": "MENKENT",
-    "sector": "Hydra",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11434,7 +11434,7 @@
    "planet": {
     "index": 242,
     "name": "USTOTU",
-    "sector": "Trigon",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11447,7 +11447,7 @@
    "planet": {
     "index": 207,
     "name": "MINTORIA",
-    "sector": "Gellert",
+    "sector": "",
     "currentOwner": "Automaton"
    }
   },
@@ -11460,7 +11460,7 @@
    "planet": {
     "index": 211,
     "name": "NIVEL 43",
-    "sector": "Mirin",
+    "sector": "",
     "currentOwner": "Terminids"
    }
   },
@@ -11473,7 +11473,7 @@
    "planet": {
     "index": 124,
     "name": "BORE ROCK",
-    "sector": "Falstaff",
+    "sector": "Gacrux",
     "currentOwner": "Terminids"
    }
   },
@@ -11486,7 +11486,7 @@
    "planet": {
     "index": 269,
     "name": "BRILLIANCE",
-    "sector": "Orion",
+    "sector": "Sol",
     "currentOwner": "Terminids"
    }
   },
@@ -11499,7 +11499,7 @@
    "planet": {
     "index": 213,
     "name": "OVERGOE PRIME",
-    "sector": "Sten",
+    "sector": "",
     "currentOwner": "Terminids"
    }
   },
@@ -11512,7 +11512,7 @@
    "planet": {
     "index": 216,
     "name": "PEACOCK",
-    "sector": "Sten",
+    "sector": "",
     "currentOwner": "Terminids"
    }
   },
@@ -11538,7 +11538,7 @@
    "planet": {
     "index": 138,
     "name": "ALAIRT III",
-    "sector": "Hanzo",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11551,7 +11551,7 @@
    "planet": {
     "index": 139,
     "name": "ALAMAK VII",
-    "sector": "Hanzo",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   },
@@ -11564,7 +11564,7 @@
    "planet": {
     "index": 273,
     "name": "ALDERIDGE COVE",
-    "sector": "Omega",
+    "sector": "",
     "currentOwner": "Illuminate"
    }
   }
@@ -11574,181 +11574,181 @@
  "dispatches": [
   {
    "id": 4005,
-   "published": "2026-11-26T00:34:59Z",
+   "published": "2026-11-26T00:34:53Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER WON</i> \n\nThe Helldivers eliminated the specified targets with Democratic zeal and exemplary obedience. The materials extracted from the fallen enemies will be prepared for production. A portion of the cost savings will be forwarded to the Helldivers in the form of a free <i=1>Orbital Napalm Barrage</i>, available for the next 48 hours. "
   },
   {
    "id": 4004,
-   "published": "2026-11-21T21:33:36Z",
+   "published": "2026-11-21T21:33:30Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i> \n\nThe continuing Voteless surges require vastly more SEAF to be sent planetside, increasing demand for the production of the neural implants. To lower the project's economic impact, Helldivers are ordered to <i=1>eliminate 135,000,000 Troopers, 2,000,000 Factory Striders, 250,000,000 of Terminids and 25,000,000 Bile Spewers</i>. "
   },
   {
    "id": 4003,
-   "published": "2026-11-21T15:40:16Z",
+   "published": "2026-11-21T15:40:10Z",
    "type": 0,
    "message": "<i=3>SYSTEM OUTAGE UPDATE</i>\nSome Helldivers may have noticed a recent service error in the Major Order Communication Display. The issue has since been resolved (details below).\n<i=3>[SYSTEM ERROR REPORT #8.03.529]</i>\n<i=1>Cause:</i> Stray bullet hit central data relay.\n<i=1>Discussion:</i> Truth Enforcer in-field execution had dissident facing the wrong wall.\n<i=1>Resolution:</i> Electronics replaced. Family of dissident fined for damages. \n<i=3>[END REPORT]<i=3>"
   },
   {
    "id": 4002,
-   "published": "2026-11-21T13:23:18Z",
+   "published": "2026-11-21T13:23:12Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER WON</i> \n\nBoth orders were successful and as a result, construction of the CMC began on schedule and without issue. Early reports from the mental health initiatives show promise, with SEAF personnel especially appreciating therapeutic activities such as the Illuminate live-fire range. The neural implant tested well at the prototype phase and will move to full production immediately. "
   },
   {
    "id": 4001,
-   "published": "2026-11-17T13:23:44Z",
+   "published": "2026-11-17T13:23:38Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i> \n\nHelldivers are ordered to <i=1>hold ZEA RUGOSIA</i>, the planetary base for the Center for Mental Clarity (CMC). \n\nHelldivers are also ordered to <i=1>kill 215,000,000 Voteless</i> to develop the experimental therapeutic program. The Ministry of Truth knows that the Helldivers will rise to the occasion."
   },
   {
    "id": 4000,
-   "published": "2026-11-16T23:01:31Z",
+   "published": "2026-11-16T23:01:25Z",
    "type": 0,
    "message": "<i=3>DSS BACK TO REGULAR OPERATION</i>\n\nThe DSS is resuming standard operation procedures at the hands of the Helldivers after having concluded authorized <i=1>FIREBREAK PROTOCOL</i> across the surface of <i=1>GACRUX</i>.\n\nHelldivers can now resume collective control of the <i=1>Democracy Space Station</i> via the <i=1>Galactic Map. </i>Use it to defend our way of life and Managed Democracy."
   },
   {
    "id": 3999,
-   "published": "2026-11-16T16:18:23Z",
+   "published": "2026-11-16T16:18:17Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER FAILED</i>\n\nThough the Helldivers successfully repelled the primary Terminid swarm, the uncooperative fascist insects prevented the full deployment of the Firebreak Protocol, with fewer Terminid-infested planets purged of their affliction than intended.\n\nIn response, full production of the <i=1>Incinerator FRV</i> has commenced, to be ready for when the mutated strain of Terminids next raises its ugly head."
   },
   {
    "id": 3998,
-   "published": "2026-11-16T00:25:39Z",
+   "published": "2026-11-16T00:25:33Z",
    "type": 0,
    "message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe planetary purification of <i=1>ACAMAR IV</i> has reached satisfactory levels. With orbital firing corridors now secured above <i=1>GACRUX</i>, the <i=1>DSS</i> will continue <i=1>FIREBREAK PROTOCOL</i> there until similar sanitation levels are achieved.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete."
   },
   {
    "id": 3997,
-   "published": "2026-11-14T23:47:53Z",
+   "published": "2026-11-14T23:47:47Z",
    "type": 0,
    "message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe <i=1>Democracy Space Station</i> will be temporarily unavailable while performing planetary purification from orbit.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete."
   },
   {
    "id": 3996,
-   "published": "2026-11-13T16:18:20Z",
+   "published": "2026-11-13T16:18:14Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i>\n\nThanks to the Helldivers’ superior frontline productivity, full containment of the mutated <i=1>Terminid</i> strain is within reach. To cleanse affected planets of their infestation, High Command has authorized the <i=1>Firebreak Protocol</i>.\n\nTo enable this innovative proactive solution, Helldivers must <i=1>Hold ACAMAR IV, GACRUX and PARTION</i>, to secure orbital firing corridors until the necessary purification is complete.\n"
   },
   {
    "id": 3995,
-   "published": "2026-11-13T08:52:33Z",
+   "published": "2026-11-13T08:52:27Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER WON</i>\n\nIn a showcase of their unyielding valor and mastery over thermal firepower, <i=1>the Helldivers have successfully repelled the mutated Terminid offensive from their primary targets</i>.\n\nHowever, infestation vectors continue to increase exponentially. The Ministry of Science has declared a <i=1>Tyrannical Pandemic</i>, the first in over a century.\n"
   },
   {
    "id": 3994,
-   "published": "2026-11-11T16:14:07Z",
+   "published": "2026-11-11T16:14:01Z",
    "type": 0,
    "message": "<i=3>STRATEGIC ADVISORY</i>\n\nAll Helldivers should factor the following advisory into their strategic decision-making:\n\nEnemy forces stage their attacks on our planets from an originating planet. Liberating the originating planet will end the enemy attack immediately.\n\nIn the current operational context, liberating <i=1>GRAND ERRANT</i> would end the current TERMINID attacks upon <i=1>ACRUX IX</i>, <i=1>GEMMA</i> and <i=1>POLARIS PRIME</i>."
   },
   {
    "id": 3993,
-   "published": "2026-11-11T15:51:22Z",
+   "published": "2026-11-11T15:51:16Z",
    "type": 0,
    "message": "<i=3>GLOOM SPREAD DETECTED</i>\n\nThe Gloom is spreading at an unprecedented pace. <i=1>GRAND ERRANT</i> is now surrounded by low-density Gloom, and other planets in the sector are expected to follow. "
   },
   {
    "id": 3992,
-   "published": "2026-11-09T13:31:08Z",
+   "published": "2026-11-09T13:31:02Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i>\n\nIn an unprovoked, unforeseeable assault illustrative of their depravity, a newly mutated strain of <i=1>Terminids</i> have launched a wave of attacks across multiple TCS+ sectors, threatening to smother innocent colonies in a sea of fascist insect tyranny.\n\nThe Helldivers must successfully <i=1>defend against 7 Terminid attacks</i> to halt this tyrannical onslaught and restore order.\n"
   },
   {
    "id": 3991,
-   "published": "2026-11-08T13:06:25Z",
+   "published": "2026-11-08T13:06:19Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER WON</i>\n\nThe Helldivers successfully eliminated the mandated quota of Terminids with their judicious use of the INCINERATOR FRV Stratagem, delivering a crushing blow to alien insolence, and silencing equally dangerous rumours of TCS+ malfunctions.\n\nCoupled with the assurance that any anomalous readings along the perimeter will be suitably scrutinized, domestic markets immediately responded with patriotic vigor, reaffirming the infallibility of Super Earth, economic or otherwise."
   },
   {
    "id": 3990,
-   "published": "2026-11-08T12:56:35Z",
+   "published": "2026-11-08T12:56:29Z",
    "type": 0,
    "message": "<i=3>STRATEGIC DIRECTIVE COMPLETED</i>\n\nThe Helldivers successfully held <i=1>CRIMSICA, FRONTERIA, DARIUS II and ACHERNAR SECUNDUS</i> and in doing so, confirmed which of the reported TCS+ breaches were truly legitimate.\n\nTo ensure all sections of TCS+ system safely report a return to maximal efficiency, High Command has directed additional SEAF mobilizations—the most capable pest control in the known galaxy—to wall off affected planets for the remainder of this campaign.\n"
   },
   {
    "id": 3989,
-   "published": "2026-11-04T12:56:09Z",
+   "published": "2026-11-04T12:56:03Z",
    "type": 0,
    "message": "<i=3>NEW STRATEGIC DIRECTIVE</i>\n\nIncongruously, increases in TCS+ breaches continue to be reported.\n\nWhile these reports will almost certainly be attributed to departmental cost-cutting during routine rewiring of multiple TCS+ sections, Helldivers with surplus operational capacity are invited to verify their veracity, should they choose.\n\nHelldivers: investigate and, if warranted, <i=1>hold FRONTERIA, CRIMSICA, DARIUS II and ACHERNAR SECUNDUS</i>."
   },
   {
    "id": 3988,
-   "published": "2026-11-04T10:47:27Z",
+   "published": "2026-11-04T10:47:21Z",
    "type": 0,
    "message": "<i=3>Xenoentomology Center Restructuring</i>\n\nThe Chief of Terminid Epidemiology has been stripped of their rank and detained for trial. \n\nA tribunal of trusted experts will ascertain whether the former Chief’s incompetence in failing to predict the Terminids’ recent unprovoked mutations and attacks constitutes criminality\n–or treason.\n\nTheir replacement is expected to be named upon the trial’s conclusion."
   },
   {
    "id": 3987,
-   "published": "2026-11-03T13:21:51Z",
+   "published": "2026-11-03T13:21:45Z",
    "type": 0,
    "message": "<i=3>GLOOM SPREAD DETECTED</i>\n\nThe Gloom is spreading at an unprecedented pace. <i=1>GACRUX</i> is now surrounded by low-density Gloom, and other planets in the sector are expected to follow. \n\nWorse, there are indications of new <i=1>Hive Worlds</i> forming, corrupting biomes formerly resistant to severe infestation. This may represent a novel strain of Gloom spores, adapted to more extreme conditions.\n"
   },
   {
    "id": 3986,
-   "published": "2026-11-03T13:06:09Z",
+   "published": "2026-11-03T13:06:03Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i>\n\nSeditious and entirely false rumours regarding TCS+ malfunctions are spreading across civilian channels, resulting in unfounded economic panic. SEAF Intelligence confirms: there is zero actionable peril to fully insured citizens.\n\nTo restore public confidence, the Helldivers are ordered to <i=1>eliminate 700,000,000 Terminids</i>. To aid in swiftly safeguarding Federal prosperity, High Command has authorized and subsidized fleetwide availability of the <i=1>INCINERATOR FRV Stratagem</i>."
   },
   {
    "id": 3985,
-   "published": "2026-11-02T21:53:47Z",
+   "published": "2026-11-02T21:53:41Z",
    "type": 0,
    "message": "<i=3>MISINFORMATION ALERT</i>\n\nHelldivers are to be aware of recent falsified reports fraudulently claiming that Termicide 2.0 exposure has increased the spread of the Gloom. The Ministry of Truth is investigating the source of this blatant attempt to deceive our citizens with outlandish lies. In the meantime, all personnel are ordered to report any credulous discussion of these rumors."
   },
   {
    "id": 3984,
-   "published": "2026-11-02T18:14:40Z",
+   "published": "2026-11-02T18:14:34Z",
    "type": 0,
    "message": "<i=3>STRATEGIC UPDATE</i>\n\n<i=1>Orbital Laser Stratagem</i> availability has now ended."
   },
   {
    "id": 3983,
-   "published": "2026-11-02T16:19:40Z",
+   "published": "2026-11-02T16:19:34Z",
    "type": 0,
    "message": "<i=3>MAJOR ORDER FAILED</i>\n\nThe naked hatred of our enemies has made the construction of the Malevelon Creek Interrogation Center for Human Rights impossible. Funding issues have unfortunately forced the Records Department to erase the bottom 10% of fallen heroes from their records, affecting all soldiers with last names beginning with Y and Z."
   },
   {
    "id": 3982,
-   "published": "2026-11-02T12:20:07Z",
+   "published": "2026-11-02T12:20:01Z",
    "type": 0,
    "message": "<i=3>MINOR TERMINID OUTBREAK</i>\n\nA minor Terminid outbreak has occurred on <i=1>FORI PRIME</i>, likely merely the result of recent system updates to the TCS+ firmware. While the outbreak is minor and will be contained in due time, Helldivers are welcome to aid in the containment, should they so choose, but the threat is assessed as very low and barely worth attention."
   },
   {
    "id": 3981,
-   "published": "2026-11-01T18:14:04Z",
+   "published": "2026-11-01T18:13:58Z",
    "type": 0,
    "message": "<i=3>STRATAGEM GRANTED</i>\n\nThe <i=1>Orbital Laser Stratagem</i> has been authorized for immediate use on <i=1>Choepessa IV</i>, for the next <i=1>24 hours.</i>"
   },
   {
    "id": 3980,
-   "published": "2026-10-30T16:28:22Z",
+   "published": "2026-10-30T16:28:16Z",
    "type": 0,
    "message": "<i=3>SYSTEMS NOTIFICATION</i>\n\nSome Galactic Map users may have observed the apparent presence of enemy forces occupying dozens of planets. This issue was due to an unconcerning software glitch that has since been rectified. \n\nThis experience may have given rise to some uncomfortable feelings, such as concern, terror, or abject despair. Distressed users are advised to visualize relaxing images, such as:\n\n-a fluttering Super Earth flag\n-a filled-out ballot\n-the inevitable destruction of Freedom's enemies"
   },
   {
    "id": 3979,
-   "published": "2026-10-30T16:09:34Z",
+   "published": "2026-10-30T16:09:28Z",
    "type": 0,
    "message": "<i=3>NEW MAJOR ORDER</i>\n\nEnemy aggression has made the construction of the Malevelon Creek Memorial & Interrogation Center for Human Rights impossible. The project has therefore been downscoped to solely consist of the Interrogation Center for Human Rights.\n\nTo aid development of more effective digital interrogation techniques, the Helldivers are ordered to <i=1>acquire 35,000,000 Automaton samples and kill 60,000,000 Cyborgs</i>."
   },
   {
    "id": 3978,
-   "published": "2026-10-29T14:49:12Z",
+   "published": "2026-10-29T14:49:06Z",
    "type": 0,
    "message": "<i=1>SCAVENGER RAMPAGE UPDATE</i>\n\n<i=1>Scavenger</i> numbers on <i=1>Terminid</i> warfront have returned to normal levels."
   },
   {
    "id": 3977,
-   "published": "2026-10-29T11:51:36Z",
+   "published": "2026-10-29T11:51:30Z",
    "type": 0,
    "message": "<i=3>ARSENAL AUGMENTATION ENDED</i>\n\nFree availability of the <i=1>Anti-Materiel Rifle</i> Stratagem for forces on the <i=1>Illuminate front</i> has now ended."
   },
   {
    "id": 3976,
-   "published": "2026-10-29T11:36:56Z",
+   "published": "2026-10-29T11:36:50Z",
    "type": 0,
    "message": "<i=3>ARSENAL AUGMENTATION ENDED</i>\n\nFree availability of the <i=1>Orbital Railcannon Strike</i> Stratagem for forces on the <i=1>Automaton front</i> has now ended."
   }
@@ -11768,8 +11768,8 @@
   ],
   "electionEnd": "1972-10-12T07:00:00Z",
   "electionEndWarTime": 87721200,
-  "clientTimeMs": 1795656644644,
-  "currentWarTime": 87715980,
+  "clientTimeMs": 1795656945402,
+  "currentWarTime": 87716280,
   "tacticalActions": [
    {
     "id32": 4091660627,
@@ -11845,7 +11845,7 @@
    }
   ],
   "flags": 1,
-  "donationUpdatedAtMs": 1795656644644,
+  "donationUpdatedAtMs": 1795656945402,
   "donationSource": "official"
  },
  "active_campaign": {
@@ -11931,7 +11931,7 @@
   "banner_image_path": null,
   "banner_image_local": null,
   "source": "helldiverscompanion.com live API · episodes",
-  "computed_at": "2026-11-26T01:30:48Z"
+  "computed_at": "2026-11-26T01:36:12Z"
  },
  "news": [
   {
@@ -12160,7 +12160,7 @@
  },
  "ownership_history": {
   "startedAt": "2026-10-11T09:11:02+08:00",
-  "updatedAt": "2026-11-26T09:30:46+08:00",
+  "updatedAt": "2026-11-26T09:36:10+08:00",
   "events": [
    {
     "planetIndex": 178,
@@ -12178,7 +12178,7 @@
    }
   ],
   "lastSnapshot": {
-   "fetchedAt": "2026-11-26T09:30:46+08:00",
+   "fetchedAt": "2026-11-26T09:36:10+08:00",
    "owners": {
     "0": "Humans",
     "1": "Humans",
@@ -12456,11 +12456,11 @@
    }
   },
   "defenseStartedAt": "2026-10-15T01:58:55+08:00",
-  "defenseUpdatedAt": "2026-11-26T09:30:46+08:00",
+  "defenseUpdatedAt": "2026-11-26T09:36:10+08:00",
   "defenseEvents": [],
   "defenseSnapshot": {
-   "fetchedAt": "2026-11-26T09:30:46+08:00",
-   "warTime": 87715980,
+   "fetchedAt": "2026-11-26T09:36:10+08:00",
+   "warTime": 87716280,
    "events": [],
    "owners": {
     "0": "Humans",
