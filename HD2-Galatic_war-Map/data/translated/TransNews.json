@@ -1,6 +1,41 @@
 {
- "mo_brief": null,
+ "mo_brief": {
+  "id32": 2730230368,
+  "title": "",
+  "original": "",
+  "translated": "",
+  "text_source": "official_untranslated",
+  "engine": "arrowhead-official",
+  "mt": false,
+  "translated_at": "2026-11-26T20:25:30Z"
+ },
  "items": [
+  {
+   "id": 4007,
+   "published_at": "2026-11-26T18:58:29Z",
+   "source": "dispatch",
+   "original": "STRATEGIC ADVISORY\n\nAll Helldivers should factor the following advisory into their strategic decision-making:\n\nEnemy forces stage their attacks on our planets from an originating planet. Liberating the originating planet will end the enemy attack immediately.\n\nIn the current operational context, liberating HERTHON SECUNDUS would end the current Illuminate attack on ZEA RUGOSIA.",
+   "translated": "战略预警\n\n全体绝地潜兵在做战略决策时都应该考虑以下建议：\n\n敌人从起源星球向我们的领地发起进攻。解放起源星球将立即终止敌人的攻势。\n\n在当前情况下，解放赫尔松次星就能终止当前Illuminate向泽亚鲁戈西亚发起的进攻。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 87778840,
+   "official_message": "<i=3>战略预警</i>\n\n全体绝地潜兵在做战略决策时都应该考虑以下建议：\n\n敌人从起源星球向我们的领地发起进攻。解放起源星球将立即终止敌人的攻势。\n\n在当前情况下，解放<i=1>赫尔松次星</i>就能终止当前Illuminate向<i=1>泽亚鲁戈西亚</i>发起的进攻。",
+   "translated_at": "2026-11-26T20:25:30Z"
+  },
+  {
+   "id": 4006,
+   "published_at": "2026-11-26T16:00:25Z",
+   "source": "dispatch",
+   "original": "NEW MAJOR ORDER \n\nThe first SEAF personnel have reported to the newly completed CMC for their wellness leave and mandatory neural implant surgery. Helldivers must defend ZEA RUGOSIA and the CMC as SEAF undergo the medical procedure and legally mandated minimum recovery time. Helldivers are ordered to liberate HERTHON SECUNDUS and HEZE BAY to prepare for the planetary campaigns on ALAMAK VII and ALAIRT III.",
+   "translated": "新重要指令\n\n首批SEAF人员已前往新建成的CMC报到，准备进行健康休假，还要接受强制神经植入手术。在SEAF接受医疗程序，以及度过法定强制的最短恢复期时，绝地潜兵必须守住泽亚鲁戈西亚和CMC。绝地潜兵奉命解放赫尔松次星和角宿二湾，为天大将军一VII及艾列尔特III的行星战役做准备。",
+   "text_source": "official_zh",
+   "engine": "arrowhead-official",
+   "mt": false,
+   "published_war_seconds": 87768156,
+   "official_message": "<i=3>新重要指令</i>\n\n首批SEAF人员已前往新建成的CMC报到，准备进行健康休假，还要接受强制神经植入手术。在SEAF接受医疗程序，以及度过法定强制的最短恢复期时，绝地潜兵必须<i=1>守住泽亚鲁戈西亚和CMC</i>。绝地潜兵奉命<i=1>解放赫尔松次星和角宿二湾</i>，为<i=1>天大将军一VII</i>及<i=1>艾列尔特III</i>的行星战役做准备。",
+   "translated_at": "2026-11-26T20:25:30Z"
+  },
   {
    "id": 4005,
    "published_at": "2026-11-26T00:34:55Z",
@@ -104,32 +139,6 @@
    "published_war_seconds": 86848066,
    "official_message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe planetary purification of <i=1>ACAMAR IV</i> has reached satisfactory levels. With orbital firing corridors now secured above <i=1>GACRUX</i>, the <i=1>DSS</i> will continue <i=1>FIREBREAK PROTOCOL</i> there until similar sanitation levels are achieved.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete.",
    "translated_at": "2026-11-16T06:57:03Z"
-  },
-  {
-   "id": 3997,
-   "published_at": "2026-11-14T23:44:54Z",
-   "source": "dispatch",
-   "original": "DSS FIREBREAK PROTOCOL\n\nThe Democracy Space Station will be temporarily unavailable while performing planetary purification from orbit.\n\nHelldivers are expected to regain control of the DSS once FIREBREAK PROTOCOL is complete.",
-   "translated": "DSS 防火协议\n\n民主空间站将暂时无法使用，因其正在从轨道执行星球净化。\n\n一旦防火协议完成，绝地潜兵须重新夺回民主空间站的控制权。",
-   "text_source": "machine_translation",
-   "engine": "deepseek-chat",
-   "mt": true,
-   "published_war_seconds": 86759400,
-   "official_message": "<i=3>DSS FIREBREAK PROTOCOL</i>\n\nThe <i=1>Democracy Space Station</i> will be temporarily unavailable while performing planetary purification from orbit.\n\nHelldivers are expected to regain control of the DSS once <i=1>FIREBREAK PROTOCOL</i> is complete.",
-   "translated_at": "2026-11-15T01:18:54Z"
-  },
-  {
-   "id": 3996,
-   "published_at": "2026-11-13T16:14:37Z",
-   "source": "dispatch",
-   "original": "NEW MAJOR ORDER\n\nThanks to the Helldivers’ superior frontline productivity, full containment of the mutated Terminid strain is within reach. To cleanse affected planets of their infestation, High Command has authorized the Firebreak Protocol.\n\nTo enable this innovative proactive solution, Helldivers must Hold ACAMAR IV, GACRUX and PARTION, to secure orbital firing corridors until the necessary purification is complete.",
-   "translated": "新重要指令\n\n得益于绝地潜兵卓越的前线效率，全面管控终结族变种已经指日可待。为了净化受感染行星上的虫患侵扰，最高指挥部已授权执行防火带协议。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须坚守天园六IV、十字架一和帕尔晨，确保轨道火力走廊的安全，直至必要的净化工作完成。",
-   "text_source": "official_zh",
-   "engine": "arrowhead-official",
-   "mt": false,
-   "published_war_seconds": 86646027,
-   "official_message": "<i=3>新重要指令</i>\n\n得益于绝地潜兵卓越的前线效率，全面管控<i=1>终结族</i>变种已经指日可待。为了净化受感染行星上的虫患侵扰，最高指挥部已授权执行<i=1>防火带协议</i>。\n\n为了实施这一创新性的主动解决方案，绝地潜兵必须<i=1>坚守天园六IV、十字架一和帕尔晨</i>，确保轨道火力走廊的安全，直至必要的净化工作完成。\n",
-   "translated_at": "2026-11-13T18:37:40Z"
   }
  ],
  "strategic": {
@@ -139,11 +148,11 @@
   "dispatch_id": 3971,
   "planet_en": null,
   "published": null,
-  "computed_at": "2026-11-26T11:28:41Z",
+  "computed_at": "2026-11-26T20:25:31Z",
   "planet_index": null
  },
  "text_source": "arrowhead_official",
- "mo_state": "none",
+ "mo_state": "active",
  "global_events": [
   {
    "event_id": 1501121,
@@ -156,15 +165,69 @@
    "expires_at_war_seconds": 87885416,
    "text_source": "official_zh",
    "mt": false
+  },
+  {
+   "event_id": 1501122,
+   "id32": 3407156884,
+   "title": "战斗集结",
+   "message": "绝地潜兵回收了大批材料，导致神经植入物的生产超过了需求。\n\n首批SEAF人员已前往新建成的CMC报到，进行强制的健康休假，还要接受神经植入手术。该植入物的作用是，在激活期间，阻碍宿主形成事件记忆的能力。SEAF不再需要因非自愿目睹阴险的光能者宣传而感到困扰，让超级地球的第一道防线摆脱不可靠的记忆，还能消除由此产生的非法欲望：质疑真理。\n\n在SEAF接受医疗程序，以及度过法定强制的最短恢复期时，绝地潜兵必须<i=1>守住泽亚鲁戈西亚和CMC</i>。绝地潜兵奉命<i=1>解放赫尔松次星和角宿二湾</i>，集结兵力，为SEAF即将对天大将军一VII和艾列尔特III发动的行星突击做好准备。",
+   "plain_text": "绝地潜兵回收了大批材料，导致神经植入物的生产超过了需求。\n\n首批SEAF人员已前往新建成的CMC报到，进行强制的健康休假，还要接受神经植入手术。该植入物的作用是，在激活期间，阻碍宿主形成事件记忆的能力。SEAF不再需要因非自愿目睹阴险的光能者宣传而感到困扰，让超级地球的第一道防线摆脱不可靠的记忆，还能消除由此产生的非法欲望：质疑真理。\n\n在SEAF接受医疗程序，以及度过法定强制的最短恢复期时，绝地潜兵必须守住泽亚鲁戈西亚和CMC。绝地潜兵奉命解放赫尔松次星和角宿二湾，集结兵力，为SEAF即将对天大将军一VII和艾列尔特III发动的行星突击做好准备。",
+   "message_id32": 2297576905,
+   "assignment_id32": 2730230368,
+   "expires_at_war_seconds": 88113731,
+   "text_source": "official_zh",
+   "mt": false
   }
  ],
  "source_status": {
   "source": "arrowhead_official",
   "language": "zh-Hans",
-  "source_version": "2026-11-26T11:28:40Z",
+  "source_version": "2026-11-26T20:25:29Z",
   "war_id": 801,
-  "war_time_seconds": 87751850,
-  "last_success_at": "2026-11-26T11:28:40Z",
+  "war_time_seconds": 87784060,
+  "last_success_at": "2026-11-26T20:25:29Z",
   "stale": false
+ },
+ "tasks": {
+  "id32": 2730230368,
+  "source": "arrowhead_official",
+  "source_version": "2026-11-26T20:25:29Z",
+  "retrieved_at": "2026-11-26T20:25:29Z",
+  "progress_semantics": "progress[i] 为该任务当前计数（2026-10-24 官方接口实测核对）",
+  "items": [
+   {
+    "index": 0,
+    "type": 13,
+    "type_en": "Control",
+    "action": "坚守",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 1,
+    "requirement": null
+   },
+   {
+    "index": 1,
+    "type": 11,
+    "type_en": "Liberation",
+    "action": "解放",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   },
+   {
+    "index": 2,
+    "type": 11,
+    "type_en": "Liberation",
+    "action": "解放",
+    "faction_id": null,
+    "faction_name": null,
+    "goal": 1,
+    "progress": 0,
+    "requirement": null
+   }
+  ]
  }
 }
